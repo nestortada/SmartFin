@@ -1,0 +1,1 @@
+export { ModulePlaceholder } from './ModulePlaceholder';
