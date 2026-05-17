@@ -3,8 +3,12 @@ import type { ISODateString } from '../../../shared/types';
 import type { Transaction } from '../types';
 
 export type TransactionRepository = {
-  getTransactions: (referenceDate?: Date) => Transaction[];
+  getTransactions: (referenceDate?: Date) => Promise<Transaction[]> | Transaction[];
+  saveTransactions?: (transactions: Transaction[]) => Promise<void>;
 };
+
+// In-memory store for additional transactions (SMS-captured, etc.)
+let additionalTransactions: Transaction[] = [];
 
 function toDateString(date: Date): ISODateString {
   const year = date.getFullYear();
@@ -228,6 +232,13 @@ function buildMockTransactions(referenceDate: Date): Transaction[] {
 }
 
 export const mockTransactionRepository: TransactionRepository = {
-  getTransactions: (referenceDate = new Date()) =>
-    buildMockTransactions(referenceDate).map(transaction => ({ ...transaction })),
+  getTransactions: (referenceDate = new Date()) => {
+    const mockTransactions = buildMockTransactions(referenceDate).map(transaction => ({ ...transaction }));
+    return [...mockTransactions, ...additionalTransactions];
+  },
+  saveTransactions: async (transactions: Transaction[]) => {
+    // Keep only the new transactions that aren't from the mock data
+    const mockIds = buildMockTransactions(new Date()).map(t => t.id);
+    additionalTransactions = transactions.filter(t => !mockIds.includes(t.id));
+  },
 };

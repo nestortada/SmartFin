@@ -16,6 +16,6 @@ export async function seedSmartFinDatabase(referenceDate = new Date()): Promise<
   await accountRepository.saveAccounts(mockAccountRepository.getAccounts());
   await categoryRepository.saveCategories(mockCategoryRepository.getCategories());
   await transactionRepository.saveTransactions(
-    mockTransactionRepository.getTransactions(referenceDate),
+    await Promise.resolve(mockTransactionRepository.getTransactions(referenceDate)),
   );
 }

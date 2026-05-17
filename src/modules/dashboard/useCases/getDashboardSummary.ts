@@ -5,11 +5,14 @@ import {
   type AccountRepository,
   type AccountType,
 } from '../../accounts';
+import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import {
   mockTransactionRepository,
   type Transaction,
   type TransactionRepository,
 } from '../../transactions';
+import { createSqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
+import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import type { DashboardSummary } from '../types/DashboardSummary';
 
 type DashboardSummaryDependencies = {
@@ -104,13 +107,11 @@ function isRecentTransaction(
   );
 }
 
-export function getDashboardSummary({
-  accountRepository = mockAccountRepository,
-  transactionRepository = mockTransactionRepository,
-  currentDate = new Date(),
-}: DashboardSummaryDependencies = {}): DashboardSummary {
-  const accounts = accountRepository.getAccounts();
-  const transactions = transactionRepository.getTransactions(currentDate);
+function computeSummary(
+  accounts: Account[],
+  transactions: Transaction[],
+  currentDate: Date,
+): DashboardSummary {
   const monthlyTransactions = transactions
     .filter(isPosted)
     .filter(transaction => isCurrentMonthTransaction(transaction, currentDate));
@@ -162,4 +163,38 @@ export function getDashboardSummary({
       },
     ],
   };
+}
+
+/**
+ * Synchronous version (uses mock repositories) — kept for backward
+ * compatibility and as a fallback before the database is ready.
+ */
+export function getDashboardSummary({
+  accountRepository = mockAccountRepository,
+  currentDate = new Date(),
+}: Omit<DashboardSummaryDependencies, 'transactionRepository'> = {}): DashboardSummary {
+  const accounts = accountRepository.getAccounts();
+  // getTransactions on the mock is sync — call it directly to avoid the union type
+  const transactions = mockTransactionRepository.getTransactions(currentDate) as Transaction[];
+
+  return computeSummary(accounts, transactions, currentDate);
+}
+
+/**
+ * Async version — reads live data from SQLite.
+ * Falls back gracefully to an empty state if the database returns no data.
+ */
+export async function getDashboardSummaryFromDb(
+  database: SmartFinSQLiteDatabase,
+  currentDate: Date = new Date(),
+): Promise<DashboardSummary> {
+  const accountRepository = createSqliteAccountRepository(database);
+  const transactionRepository = createSqliteTransactionRepository(database);
+
+  const [accounts, transactions] = await Promise.all([
+    accountRepository.getAccounts(),
+    Promise.resolve(transactionRepository.getTransactions()),
+  ]);
+
+  return computeSummary(accounts, transactions, currentDate);
 }

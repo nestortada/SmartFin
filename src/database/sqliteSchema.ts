@@ -2,6 +2,11 @@ export const SMARTFIN_DATABASE_NAME = 'smartfin.db';
 
 export const SQLITE_SCHEMA_STATEMENTS: string[] = [
   'PRAGMA foreign_keys = ON;',
+  `CREATE TABLE IF NOT EXISTS app_settings (
+    setting_key TEXT PRIMARY KEY NOT NULL,
+    setting_value TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+  );`,
   `CREATE TABLE IF NOT EXISTS accounts (
     id TEXT PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,

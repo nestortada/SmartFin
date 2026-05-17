@@ -7,6 +7,21 @@ export type AccountRepository = {
 
 const mockAccounts: Account[] = [
   {
+    id: 'account-nequi',
+    name: 'Nequi',
+    type: 'savingsAccount',
+    status: 'active',
+    currency: PRIMARY_CURRENCY,
+    balance: {
+      amount: 1500000,
+      currency: PRIMARY_CURRENCY,
+    },
+    institutionName: 'Nequi',
+    description: 'Billetera digital local Nequi.',
+    createdAt: '2026-05-01',
+    updatedAt: '2026-05-16',
+  },
+  {
     id: 'account-nu-savings',
     name: 'Cuenta Nu ahorro',
     type: 'savingsAccount',
