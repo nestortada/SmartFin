@@ -10,6 +10,7 @@ const FINANCIAL_TABLES_IN_DELETE_ORDER = [
   'receipt_attachments',
   'installment_purchases',
   'credit_card_statements',
+  'credit_card_profiles',
   'amortization_schedule_items',
   'loans',
   'recurring_subscriptions',

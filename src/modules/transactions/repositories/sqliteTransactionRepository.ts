@@ -17,6 +17,11 @@ import type {
 export type SqliteTransactionRepository = {
   getTransactions: () => Promise<Transaction[]>;
   saveTransactions: (transactions: Transaction[]) => Promise<void>;
+  deleteTransaction: (id: string) => Promise<void>;
+  updateTransactionCategory: (id: string, categoryId: string | null) => Promise<void>;
+  updateTransactionsCategoryByDescription: (description: string, categoryId: string | null) => Promise<void>;
+  saveMerchantMapping: (rawMerchantText: string, categoryId: string) => Promise<void>;
+  getMerchantMapping: (rawMerchantText: string) => Promise<string | null>;
 };
 
 function rowToTransaction(row: SQLiteRow): Transaction {
@@ -106,6 +111,49 @@ export function createSqliteTransactionRepository(
           ],
         );
       }
+    },
+    deleteTransaction: async id => {
+      // Delete references from dependent tables to prevent constraint violations
+      await database.executeSql('DELETE FROM envelope_movements WHERE transaction_id = ?;', [id]);
+      await database.executeSql('DELETE FROM amortization_schedule_items WHERE transaction_id = ?;', [id]);
+      await database.executeSql('DELETE FROM installment_purchases WHERE transaction_id = ?;', [id]);
+      await database.executeSql('DELETE FROM receipt_attachments WHERE transaction_id = ?;', [id]);
+      await database.executeSql('DELETE FROM transaction_splits WHERE transaction_id = ?;', [id]);
+      await database.executeSql('DELETE FROM transactions WHERE id = ?;', [id]);
+    },
+    updateTransactionCategory: async (id, categoryId) => {
+      await database.executeSql(
+        'UPDATE transactions SET category_id = ?, updated_at = ? WHERE id = ?;',
+        [categoryId, new Date().toISOString(), id]
+      );
+    },
+    updateTransactionsCategoryByDescription: async (description, categoryId) => {
+      await database.executeSql(
+        'UPDATE transactions SET category_id = ?, updated_at = ? WHERE description = ? OR merchant_name = ?;',
+        [categoryId, new Date().toISOString(), description, description]
+      );
+    },
+    saveMerchantMapping: async (rawMerchantText, categoryId) => {
+      const id = 'mapping_' + Date.now();
+      const now = new Date().toISOString();
+      await database.executeSql(
+        `INSERT OR REPLACE INTO merchant_mappings (
+          id, raw_merchant_text, normalized_merchant_name, category_id, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?);`,
+        [id, rawMerchantText, rawMerchantText, categoryId, now, now]
+      );
+    },
+    getMerchantMapping: async rawMerchantText => {
+      const [resultSet] = await database.executeSql(
+        'SELECT category_id FROM merchant_mappings WHERE raw_merchant_text = ? OR normalized_merchant_name = ?;',
+        [rawMerchantText, rawMerchantText]
+      );
+      const rows = resultSetToRows(resultSet);
+      const firstRow = rows[0];
+      if (firstRow) {
+        return readNullableString(firstRow, 'category_id') ?? null;
+      }
+      return null;
     },
   };
 }

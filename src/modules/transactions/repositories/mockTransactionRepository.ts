@@ -5,6 +5,11 @@ import type { Transaction } from '../types';
 export type TransactionRepository = {
   getTransactions: (referenceDate?: Date) => Promise<Transaction[]> | Transaction[];
   saveTransactions?: (transactions: Transaction[]) => Promise<void>;
+  deleteTransaction?: (id: string) => Promise<void>;
+  updateTransactionCategory?: (id: string, categoryId: string | null) => Promise<void>;
+  updateTransactionsCategoryByDescription?: (description: string, categoryId: string | null) => Promise<void>;
+  saveMerchantMapping?: (rawMerchantText: string, categoryId: string) => Promise<void>;
+  getMerchantMapping?: (rawMerchantText: string) => Promise<string | null>;
 };
 
 // In-memory store for additional transactions (SMS-captured, etc.)
@@ -240,5 +245,26 @@ export const mockTransactionRepository: TransactionRepository = {
     // Keep only the new transactions that aren't from the mock data
     const mockIds = buildMockTransactions(new Date()).map(t => t.id);
     additionalTransactions = transactions.filter(t => !mockIds.includes(t.id));
+  },
+  deleteTransaction: async (id: string) => {
+    additionalTransactions = additionalTransactions.filter(t => t.id !== id);
+  },
+  updateTransactionCategory: async (id: string, categoryId: string | null) => {
+    additionalTransactions = additionalTransactions.map(t =>
+      t.id === id ? { ...t, categoryId: categoryId ?? undefined } : t
+    );
+  },
+  updateTransactionsCategoryByDescription: async (description: string, categoryId: string | null) => {
+    additionalTransactions = additionalTransactions.map(t =>
+      t.description === description || t.merchantName === description
+        ? { ...t, categoryId: categoryId ?? undefined }
+        : t
+    );
+  },
+  saveMerchantMapping: async (_rawMerchantText: string, _categoryId: string) => {
+    // Mock implementation doesn't need to persist mappings in DB
+  },
+  getMerchantMapping: async (_rawMerchantText: string) => {
+    return null;
   },
 };

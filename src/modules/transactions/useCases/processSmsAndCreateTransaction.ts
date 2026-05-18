@@ -15,10 +15,12 @@ export type ProcessSmsAndCreateTransactionParams = {
  * Processes an incoming SMS, creates a transaction, and saves it to the database.
  * Returns the created transaction if successful, or null if the SMS could not be parsed.
  */
+import { resultSetToRows } from '../../../database/sqliteRows';
+
 export async function processSmsAndCreateTransaction(
   params: ProcessSmsAndCreateTransactionParams,
 ): Promise<void> {
-  const { smsMessage, transactionRepository, accountId, categoryId } = params;
+  const { smsMessage, transactionRepository, database, accountId, categoryId } = params;
 
   // Parse the SMS message
   const parsedMessage = parseFinancialSms(smsMessage);
@@ -29,11 +31,30 @@ export async function processSmsAndCreateTransaction(
     return;
   }
 
+  let finalCategoryId = categoryId;
+  try {
+    const [resultSet] = await database.executeSql(
+      'SELECT category_id FROM merchant_mappings WHERE raw_merchant_text = ? OR normalized_merchant_name = ?;',
+      [parsedMessage.merchantName, parsedMessage.merchantName]
+    );
+    const rows = resultSetToRows(resultSet);
+    const firstRow = rows[0];
+    if (firstRow) {
+      const dbCategoryId = firstRow.category_id as string | null;
+      if (dbCategoryId) {
+        finalCategoryId = dbCategoryId;
+        console.log(`[Categorization] Rule found! Mapped ${parsedMessage.merchantName} to category: ${dbCategoryId}`);
+      }
+    }
+  } catch (err) {
+    console.error('[Categorization] Error reading merchant mappings:', err);
+  }
+
   // Create a transaction from the parsed SMS
   const transaction = createTransactionFromSms({
     parsedMessage,
     accountId,
-    categoryId,
+    categoryId: finalCategoryId,
     receivedAt: smsMessage.receivedAt,
   });
 

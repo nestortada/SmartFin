@@ -9,6 +9,7 @@ type TransactionCardProps = {
   categories: any[];
   accounts: any[];
   onShowOpTypeDropdown: (tx: Transaction) => void;
+  onPress?: (tx: Transaction) => void;
 };
 
 export const TransactionCard: React.FC<TransactionCardProps> = ({
@@ -18,6 +19,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   categories,
   accounts,
   onShowOpTypeDropdown,
+  onPress,
 }) => {
   const getCategoryIcon = (macro: string): string => {
     switch (macro) {
@@ -78,10 +80,12 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   );
 
   return (
-    <View
-      style={[
+    <Pressable
+      onPress={() => onPress && onPress(tx)}
+      style={({ pressed }) => [
         styles.txCard,
         { backgroundColor: themeColors.card, borderColor: themeColors.border },
+        pressed && { opacity: 0.82, transform: [{ scale: 0.985 }] }
       ]}>
       {/* Category Circle Icon */}
       <View style={[styles.catIconContainer, { backgroundColor: catInfo.color + '22', borderColor: catInfo.color }]}>
@@ -139,7 +143,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
           {isIncome ? '+' : '-'} {formatCOP(tx.amount)}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

@@ -60,6 +60,7 @@ type DashboardScreenProps = {
   activeTheme: AppTheme;
   database?: SmartFinSQLiteDatabase;
   refreshKey?: number;
+  onOpenCreditCards: () => void;
   onOpenSettings: () => void;
   onNavigateToTransactions: () => void;
 };
@@ -68,6 +69,7 @@ export function DashboardScreen({
   activeTheme,
   database,
   refreshKey = 0,
+  onOpenCreditCards,
   onOpenSettings,
   onNavigateToTransactions,
 }: DashboardScreenProps) {
@@ -146,6 +148,13 @@ export function DashboardScreen({
         activeTab="home"
         bottomInset={insets.bottom}
         colorScheme={activeTheme}
+        onMoreActionPress={action => {
+          if (action === 'creditCards') {
+            onOpenCreditCards();
+          } else {
+            onOpenSettings();
+          }
+        }}
         onTabPress={handleTabPress}
       />
     </View>

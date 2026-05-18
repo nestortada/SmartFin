@@ -64,6 +64,7 @@ type SettingsScreenProps = {
   settings: SettingsState;
   onBack: () => void;
   onDeleteFinancialData: () => Promise<void>;
+  onOpenCreditCards: () => void;
   onSaveCredential: (secret: string) => Promise<void>;
   onThemeChange: (theme: AppTheme) => Promise<void>;
   onToggleBiometrics: (enabled: boolean) => Promise<void>;
@@ -78,6 +79,7 @@ export function SettingsScreen({
   settings,
   onBack,
   onDeleteFinancialData,
+  onOpenCreditCards,
   onSaveCredential,
   onThemeChange,
   onToggleBiometrics,
@@ -194,6 +196,11 @@ export function SettingsScreen({
         activeTab="more"
         bottomInset={insets.bottom}
         colorScheme={settings.theme}
+        onMoreActionPress={action => {
+          if (action === 'creditCards') {
+            onOpenCreditCards();
+          }
+        }}
         onTabPress={handleTabPress}
       />
     </View>

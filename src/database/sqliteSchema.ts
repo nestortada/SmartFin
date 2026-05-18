@@ -231,6 +231,13 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
     updated_at TEXT NOT NULL,
     FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
   );`,
+  `CREATE TABLE IF NOT EXISTS credit_card_profiles (
+    account_id TEXT PRIMARY KEY NOT NULL,
+    monthly_interest_rate REAL NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
+  );`,
   `CREATE TABLE IF NOT EXISTS installment_purchases (
     id TEXT PRIMARY KEY NOT NULL,
     transaction_id TEXT NOT NULL,
@@ -376,6 +383,7 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
   'CREATE INDEX IF NOT EXISTS idx_loans_account_id ON loans(account_id);',
   'CREATE UNIQUE INDEX IF NOT EXISTS idx_amortization_loan_installment ON amortization_schedule_items(loan_id, installment_number);',
   'CREATE INDEX IF NOT EXISTS idx_credit_card_statements_account_due ON credit_card_statements(account_id, payment_due_date);',
+  'CREATE INDEX IF NOT EXISTS idx_credit_card_profiles_account_id ON credit_card_profiles(account_id);',
   'CREATE INDEX IF NOT EXISTS idx_installment_purchases_account_id ON installment_purchases(account_id);',
   'CREATE INDEX IF NOT EXISTS idx_financial_goals_status ON financial_goals(status);',
   'CREATE INDEX IF NOT EXISTS idx_investment_assets_account_id ON investment_assets(account_id);',

@@ -20,9 +20,11 @@ import { useTransactionsList, formatYearMonth } from '../hooks/useTransactionsLi
 import type { Transaction, TransactionType } from '../types';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
+import { createSqliteCategoryRepository } from '../../categories/repositories/sqliteCategoryRepository';
 
 import { TransactionCard } from './components/TransactionCard';
 import { AddTransactionModal } from './components/AddTransactionModal';
+import { CategorizationModal } from './components/CategorizationModal';
 import {
   MonthPickerModal,
   AccountPickerModal,
@@ -38,6 +40,7 @@ type TransactionsScreenProps = {
   database?: SmartFinSQLiteDatabase;
   refreshKey?: number;
   onNavigateToHome: () => void;
+  onOpenCreditCards: () => void;
   onOpenSettings: () => void;
   onForceRefresh: () => void;
 };
@@ -47,6 +50,7 @@ export function TransactionsScreen({
   database,
   refreshKey = 0,
   onNavigateToHome,
+  onOpenCreditCards,
   onOpenSettings,
   onForceRefresh,
 }: TransactionsScreenProps) {
@@ -69,6 +73,10 @@ export function TransactionsScreen({
   const [newOperationType, setNewOperationType] = useState<'Débito' | 'Crédito'>('Débito');
   const [opTypePickerVisible, setOpTypePickerVisible] = useState(false);
   const [selectedTxForOpType, setSelectedTxForOpType] = useState<Transaction | null>(null);
+
+  // Categorization Modal States
+  const [categorizationModalVisible, setCategorizationModalVisible] = useState(false);
+  const [selectedTxForCategorization, setSelectedTxForCategorization] = useState<Transaction | null>(null);
 
   // Fetch live hook data
   const {
@@ -178,6 +186,67 @@ export function TransactionsScreen({
 
   const showOpTypeDropdown = (tx: Transaction) => {
     setSelectedTxForOpType(tx);
+  };
+
+  const handleCardPress = (tx: Transaction) => {
+    // Only open categorization modal for purchases / expenses / gastos
+    if (tx.direction === 'outflow' || tx.type === 'expense') {
+      setSelectedTxForCategorization(tx);
+      setCategorizationModalVisible(true);
+    }
+  };
+
+  const handleSelectCategory = async (categoryId: string, applyToFuture: boolean) => {
+    if (!database || !selectedTxForCategorization) return;
+    try {
+      const txRepo = createSqliteTransactionRepository(database);
+      const merchantName = selectedTxForCategorization.merchantName || selectedTxForCategorization.description;
+      
+      if (applyToFuture) {
+        // Save the automatic rule in sqlite
+        await txRepo.saveMerchantMapping(merchantName, categoryId);
+        // Batch update all current transactions matching description/merchantName
+        await txRepo.updateTransactionsCategoryByDescription(merchantName, categoryId);
+      } else {
+        // Update only this single transaction category
+        await txRepo.updateTransactionCategory(selectedTxForCategorization.id, categoryId);
+      }
+      
+      onForceRefresh(); // Trigger parent refresh
+    } catch (err) {
+      console.error('Error selecting category:', err);
+    }
+  };
+
+  const handleDeleteTransaction = async (id: string) => {
+    if (!database) return;
+    try {
+      const txRepo = createSqliteTransactionRepository(database);
+      await txRepo.deleteTransaction(id);
+      onForceRefresh(); // Trigger parent refresh
+    } catch (err) {
+      console.error('Error deleting transaction:', err);
+    }
+  };
+
+  const handleCreateCategory = async (name: string, color: string) => {
+    if (!database) return null;
+    try {
+      const catRepo = createSqliteCategoryRepository(database);
+      const newCat = {
+        id: 'category-custom-' + Date.now(),
+        name,
+        type: 'expense' as const,
+        macroCategory: 'other' as const,
+        color,
+      };
+      await catRepo.saveCategories([newCat]);
+      onForceRefresh(); // Refresh parent database context
+      return newCat;
+    } catch (err) {
+      console.error('Error creating category:', err);
+      return null;
+    }
   };
 
   // Sum available balance
@@ -466,6 +535,7 @@ export function TransactionsScreen({
                 categories={categories}
                 accounts={accounts}
                 onShowOpTypeDropdown={showOpTypeDropdown}
+                onPress={handleCardPress}
               />
             ))}
           </View>
@@ -559,11 +629,30 @@ export function TransactionsScreen({
         onSelectOpType={handleUpdateTransactionOpType}
       />
 
+      <CategorizationModal
+        visible={categorizationModalVisible}
+        onClose={() => setCategorizationModalVisible(false)}
+        tx={selectedTxForCategorization}
+        isDark={isDark}
+        themeColors={themeColors}
+        categories={categories}
+        onSelectCategory={handleSelectCategory}
+        onDeleteTransaction={handleDeleteTransaction}
+        onCreateCategory={handleCreateCategory}
+      />
+
       {/* Shared Bottom Tab Navigation bar */}
       <BottomNavigation
         activeTab="transactions"
         bottomInset={insets.bottom}
         colorScheme={activeTheme}
+        onMoreActionPress={action => {
+          if (action === 'creditCards') {
+            onOpenCreditCards();
+          } else {
+            onOpenSettings();
+          }
+        }}
         onTabPress={handleTabPress}
       />
     </View>

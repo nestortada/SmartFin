@@ -9,6 +9,7 @@ test('parses NEQUI payment SMS with Colombian amount format', () => {
 
   expect(parsed).toEqual({
     amount: 352000,
+    bankName: 'NEQUI',
     currency: 'COP',
     merchantName: 'UNIVERSIDAD DE LA SABA',
     parserName: 'nequi-payment-v1',

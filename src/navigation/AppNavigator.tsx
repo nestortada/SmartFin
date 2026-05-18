@@ -37,6 +37,7 @@ import {
 } from '../modules/transactions';
 import { createSqliteAccountRepository, mockAccountRepository } from '../modules/accounts';
 import { createSqliteCategoryRepository, mockCategoryRepository } from '../modules/categories';
+import { CreditCardsScreen, seedCreditCardDemoData } from '../modules/creditCards';
 
 async function seedDatabaseIfEmpty(database: SmartFinSQLiteDatabase, resetBalancesToZero = false) {
   const accountRepo = createSqliteAccountRepository(database);
@@ -60,10 +61,14 @@ async function seedDatabaseIfEmpty(database: SmartFinSQLiteDatabase, resetBalanc
     } else {
       await accountRepo.saveAccounts(defaultAccounts);
     }
+
+    if (!resetBalancesToZero) {
+      await seedCreditCardDemoData(database);
+    }
   }
 }
 
-type AppRoute = 'onboarding' | 'dashboard' | 'transactions' | 'settings';
+type AppRoute = 'onboarding' | 'dashboard' | 'transactions' | 'settings' | 'creditCards';
 
 export function AppNavigator() {
   const [route, setRoute] = useState<AppRoute>('dashboard');
@@ -418,6 +423,7 @@ export function AppNavigator() {
             setRoute('dashboard');
           }
         }}
+        onOpenCreditCards={() => setRoute('creditCards')}
         onDeleteFinancialData={handleDeleteFinancialData}
         onSaveCredential={handleSaveCredential}
         onThemeChange={handleThemeChange}
@@ -436,7 +442,21 @@ export function AppNavigator() {
         refreshKey={dashboardRefreshKey}
         onNavigateToHome={() => setRoute('dashboard')}
         onOpenSettings={() => setRoute('settings')}
+        onOpenCreditCards={() => setRoute('creditCards')}
         onForceRefresh={() => setDashboardRefreshKey(k => k + 1)}
+      />
+    );
+  }
+
+  if (route === 'creditCards') {
+    return (
+      <CreditCardsScreen
+        activeTheme={settings.theme}
+        database={database}
+        refreshKey={dashboardRefreshKey}
+        onNavigateToHome={() => setRoute('dashboard')}
+        onNavigateToTransactions={() => setRoute('transactions')}
+        onOpenSettings={() => setRoute('settings')}
       />
     );
   }
@@ -446,6 +466,7 @@ export function AppNavigator() {
       activeTheme={settings.theme}
       database={database}
       refreshKey={dashboardRefreshKey}
+      onOpenCreditCards={() => setRoute('creditCards')}
       onOpenSettings={() => setRoute('settings')}
       onNavigateToTransactions={() => setRoute('transactions')}
     />

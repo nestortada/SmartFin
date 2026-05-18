@@ -16,6 +16,8 @@ export type BottomNavigationTab =
   | 'net-worth'
   | 'more';
 
+export type BottomNavigationMoreAction = 'creditCards' | 'settings';
+
 type BottomNavigationItem = {
   id: BottomNavigationTab;
   icon: string;
@@ -26,6 +28,7 @@ type BottomNavigationProps = {
   activeTab: BottomNavigationTab;
   bottomInset: number;
   colorScheme: 'dark' | 'light';
+  onMoreActionPress?: (action: BottomNavigationMoreAction) => void;
   onTabPress: (tab: BottomNavigationTab) => void;
   style?: StyleProp<ViewStyle>;
 };
@@ -88,10 +91,27 @@ export function BottomNavigation({
   activeTab,
   bottomInset,
   colorScheme,
+  onMoreActionPress,
   onTabPress,
   style,
 }: BottomNavigationProps) {
   const isDark = colorScheme === 'dark';
+  const [moreMenuVisible, setMoreMenuVisible] = React.useState(false);
+
+  const handleTabPress = (tab: BottomNavigationTab) => {
+    if (tab === 'more' && onMoreActionPress) {
+      setMoreMenuVisible(visible => !visible);
+      return;
+    }
+
+    setMoreMenuVisible(false);
+    onTabPress(tab);
+  };
+
+  const handleMoreActionPress = (action: BottomNavigationMoreAction) => {
+    setMoreMenuVisible(false);
+    onMoreActionPress?.(action);
+  };
 
   return (
     <View
@@ -101,6 +121,37 @@ export function BottomNavigation({
         { bottom: Math.max(bottomInset, 16) },
         style,
       ]}>
+      {moreMenuVisible ? (
+        <View
+          style={[
+            styles.moreMenu,
+            isDark ? styles.moreMenuDark : styles.moreMenuLight,
+          ]}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => handleMoreActionPress('creditCards')}
+            style={styles.moreMenuItem}>
+            <Text style={[styles.moreMenuIcon, { color: isDark ? '#bbc3ff' : '#2848ee' }]}>
+              CC
+            </Text>
+            <Text style={[styles.moreMenuText, { color: isDark ? '#f1f0ff' : '#19191d' }]}>
+              Tarjetas de credito
+            </Text>
+          </Pressable>
+          <View style={[styles.moreMenuDivider, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)' }]} />
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => handleMoreActionPress('settings')}
+            style={styles.moreMenuItem}>
+            <Text style={[styles.moreMenuIcon, { color: isDark ? '#cdbdff' : '#5203d5' }]}>
+              AJ
+            </Text>
+            <Text style={[styles.moreMenuText, { color: isDark ? '#f1f0ff' : '#19191d' }]}>
+              Ajustes
+            </Text>
+          </Pressable>
+        </View>
+      ) : null}
       {bottomNavigationItems.map(item => {
         const isActive = item.id === activeTab;
 
@@ -110,7 +161,7 @@ export function BottomNavigation({
             isActive={isActive}
             isDark={isDark}
             item={item}
-            onPress={() => onTabPress(item.id)}
+            onPress={() => handleTabPress(item.id)}
           />
         );
       })}
@@ -226,6 +277,52 @@ const styles = StyleSheet.create({
   },
   bottomNavigationIconTextActiveLight: {
     color: '#2848ee',
+  },
+  moreMenu: {
+    borderRadius: 20,
+    borderWidth: 1,
+    bottom: 74,
+    elevation: 22,
+    minWidth: 220,
+    overflow: 'hidden',
+    paddingVertical: 6,
+    position: 'absolute',
+    right: 8,
+    shadowColor: '#000000',
+    shadowOffset: {
+      height: 12,
+      width: 0,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 24,
+  },
+  moreMenuDark: {
+    backgroundColor: 'rgba(32, 31, 32, 0.96)',
+    borderColor: 'rgba(255, 255, 255, 0.18)',
+  },
+  moreMenuDivider: {
+    height: 1,
+    marginHorizontal: 14,
+  },
+  moreMenuIcon: {
+    fontSize: 12,
+    fontWeight: '900',
+    width: 28,
+  },
+  moreMenuItem: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10,
+    minHeight: 46,
+    paddingHorizontal: 16,
+  },
+  moreMenuLight: {
+    backgroundColor: 'rgba(255, 255, 255, 0.96)',
+    borderColor: 'rgba(40, 72, 238, 0.16)',
+  },
+  moreMenuText: {
+    fontSize: 13,
+    fontWeight: '800',
   },
   activeDot: {
     borderRadius: 3,
