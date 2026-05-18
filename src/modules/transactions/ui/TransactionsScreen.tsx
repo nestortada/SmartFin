@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import {
   FlatList,
-  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
-  Dimensions,
   Alert,
+  Dimensions,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -21,9 +20,11 @@ import type { Transaction, TransactionType } from '../types';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import { createSqliteCategoryRepository } from '../../categories/repositories/sqliteCategoryRepository';
+import type { Account } from '../../accounts';
+import type { Category } from '../../categories';
 
 import { TransactionCard } from './components/TransactionCard';
-import { AddTransactionModal } from './components/AddTransactionModal';
+import { AddTransactionModal, parseAmountInput } from './components/AddTransactionModal';
 import { CategorizationModal } from './components/CategorizationModal';
 import {
   MonthPickerModal,
@@ -163,6 +164,8 @@ export function TransactionsScreen({
     return 'Deb'; // Default to Débito if not explicitly Crédito
   };
 
+  const displayHelpersReady = Boolean(getCategoryInfo) && Boolean(getAccountInfo) && Boolean(getOperationType);
+
   const handleUpdateTransactionOpType = async (tx: Transaction, opType: 'Débito' | 'Crédito') => {
     if (!database) return;
     try {
@@ -229,15 +232,19 @@ export function TransactionsScreen({
     }
   };
 
-  const handleCreateCategory = async (name: string, color: string) => {
+  const handleCreateCategory = async (
+    name: string,
+    color: string,
+    type: 'income' | 'expense' = 'expense',
+  ): Promise<Category | null> => {
     if (!database) return null;
     try {
       const catRepo = createSqliteCategoryRepository(database);
       const newCat = {
         id: 'category-custom-' + Date.now(),
         name,
-        type: 'expense' as const,
-        macroCategory: 'other' as const,
+        type,
+        macroCategory: type === 'income' ? 'income' as const : 'other' as const,
         color,
       };
       await catRepo.saveCategories([newCat]);
@@ -245,6 +252,57 @@ export function TransactionsScreen({
       return newCat;
     } catch (err) {
       console.error('Error creating category:', err);
+      return null;
+    }
+  };
+
+  const handleCreateCategoryFromTransactionModal = async (
+    name: string,
+    type: 'income' | 'expense',
+  ): Promise<Category | null> => {
+    return handleCreateCategory(name, type === 'income' ? '#00e475' : '#c5c5d9', type);
+  };
+
+  const handleCreateAccount = async (
+    name: string,
+    type: 'bankAccount' | 'creditCard',
+  ): Promise<Account | null> => {
+    if (!database) return null;
+    try {
+      const accountRepository = createSqliteAccountRepository(database);
+      const now = new Date().toISOString();
+      const newAccountRecord: Account = {
+        id: 'account-custom-' + Date.now(),
+        name,
+        type,
+        status: 'active',
+        currency: 'COP',
+        balance: {
+          amount: 0,
+          currency: 'COP',
+        },
+        ...(type === 'creditCard'
+          ? {
+              creditLimit: {
+                amount: 0,
+                currency: 'COP' as const,
+              },
+              debtBalance: {
+                amount: 0,
+                currency: 'COP' as const,
+              },
+            }
+          : {}),
+        institutionName: name,
+        createdAt: now,
+        updatedAt: now,
+      };
+
+      await accountRepository.saveAccounts([newAccountRecord]);
+      onForceRefresh();
+      return newAccountRecord;
+    } catch (err) {
+      console.error('Error creating account:', err);
       return null;
     }
   };
@@ -324,8 +382,8 @@ export function TransactionsScreen({
     }
 
     try {
-      const cleanAmount = parseFloat(newAmount.replace(/[^0-9.]/g, ''));
-      if (isNaN(cleanAmount)) {
+      const cleanAmount = parseAmountInput(newAmount);
+      if (!cleanAmount) {
         Alert.alert('Error', 'Monto inválido.');
         return;
       }
@@ -358,9 +416,18 @@ export function TransactionsScreen({
       const accRepo = createSqliteAccountRepository(database);
       const matchedAcc = accounts.find(a => a.id === newAccount);
       if (matchedAcc) {
+        const isCreditCardExpense = !isIncome && matchedAcc.type === 'creditCard';
         const updatedBalance = isIncome
           ? matchedAcc.balance.amount + cleanAmount
-          : matchedAcc.balance.amount - cleanAmount;
+          : isCreditCardExpense
+            ? matchedAcc.balance.amount
+            : matchedAcc.balance.amount - cleanAmount;
+        const updatedDebtBalance = isCreditCardExpense
+          ? {
+              amount: (matchedAcc.debtBalance?.amount ?? 0) + cleanAmount,
+              currency: matchedAcc.currency,
+            }
+          : matchedAcc.debtBalance;
 
         await accRepo.saveAccounts([
           {
@@ -369,6 +436,7 @@ export function TransactionsScreen({
               ...matchedAcc.balance,
               amount: updatedBalance,
             },
+            ...(updatedDebtBalance ? { debtBalance: updatedDebtBalance } : {}),
             updatedAt: new Date().toISOString(),
           },
         ]);
@@ -503,6 +571,14 @@ export function TransactionsScreen({
         </View>
       </View>
 
+      {loading ? (
+        <Text style={[styles.statusText, { color: themeColors.muted }]}>Cargando movimientos...</Text>
+      ) : null}
+      {error ? (
+        <Text style={[styles.statusText, { color: themeColors.danger }]}>{error}</Text>
+      ) : null}
+      {displayHelpersReady ? null : null}
+
       {/* Main Transactions List grouped by dates */}
       <FlatList
         data={groupTransactionsByDate()}
@@ -547,7 +623,12 @@ export function TransactionsScreen({
         onPress={() => {
           // prefill default category/account if available
           if (categories.length > 0 && categories[0]) setNewCategory(categories[0].id);
-          if (accounts.length > 0 && accounts[0]) setNewAccount(accounts[0].id);
+          const defaultDebitAccount = accounts.find(
+            account =>
+              account.status === 'active' &&
+              ['cash', 'bankAccount', 'savingsAccount'].includes(account.type),
+          );
+          if (defaultDebitAccount) setNewAccount(defaultDebitAccount.id);
           setAddTxModalVisible(true);
         }}
         style={[styles.fabButton, { backgroundColor: themeColors.primary }]}>
@@ -609,6 +690,8 @@ export function TransactionsScreen({
         setNewOperationType={setNewOperationType}
         opTypePickerVisible={opTypePickerVisible}
         setOpTypePickerVisible={setOpTypePickerVisible}
+        onCreateCategory={handleCreateCategoryFromTransactionModal}
+        onCreateAccount={handleCreateAccount}
         onSave={handleSaveTransaction}
       />
 
@@ -976,5 +1059,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '800',
     lineHeight: 28,
+  },
+  statusText: {
+    fontSize: 12,
+    fontWeight: '800',
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+    textAlign: 'center',
   },
 });
