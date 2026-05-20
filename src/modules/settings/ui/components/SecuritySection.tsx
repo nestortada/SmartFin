@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Switch, Text, TextInput, View, Pressable } from 'react-native';
+import { Pressable, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 
 import {
   GlassButton,
-  PressableMotion,
   SettingsRow,
   SettingsSection,
   type SettingsPalette,
@@ -23,7 +22,6 @@ type SecuritySectionProps = {
 
 export function SecuritySection({
   biometricsEnabled,
-  localCredentialEnabled,
   palette,
   smsPermissionState,
   smsReadingEnabled,
@@ -41,17 +39,11 @@ export function SecuritySection({
     });
   };
 
-  const supportingText =
-    smsPermissionState === 'unavailable'
-      ? 'Disponible solo en Android'
-      : 'Lectura automática de notificaciones';
-
   return (
     <SettingsSection palette={palette} title="Seguridad">
-      {/* Biometría Row */}
       <SettingsRow
-        icon="🧬"
-        label="Biometría"
+        icon="👆"
+        label={'Biometr\u00eda'}
         palette={palette}
         trailing={
           <Switch
@@ -59,7 +51,7 @@ export function SecuritySection({
             onValueChange={onToggleBiometrics}
             thumbColor={biometricsEnabled ? '#ffffff' : '#f4f2f8'}
             trackColor={{
-              false: 'rgba(255, 255, 255, 0.08)',
+              false: 'rgba(255, 255, 255, 0.12)',
               true: palette.primary,
             }}
             value={biometricsEnabled}
@@ -69,12 +61,11 @@ export function SecuritySection({
 
       <View style={styles.divider} />
 
-      {/* SMS Row */}
       <SettingsRow
-        icon="✉️"
+        icon="💬"
         label="Notificaciones de SMS"
         palette={palette}
-        supportingText={supportingText}
+        supportingText={'Lectura autom\u00e1tica de notificaciones'}
         trailing={
           <Switch
             disabled={smsPermissionState === 'unavailable'}
@@ -82,7 +73,7 @@ export function SecuritySection({
             onValueChange={onToggleSmsReading}
             thumbColor={smsReadingEnabled ? '#ffffff' : '#f4f2f8'}
             trackColor={{
-              false: 'rgba(255, 255, 255, 0.08)',
+              false: 'rgba(255, 255, 255, 0.12)',
               true: palette.primary,
             }}
             value={smsReadingEnabled}
@@ -92,19 +83,14 @@ export function SecuritySection({
 
       <View style={styles.divider} />
 
-      {/* PIN Row */}
       <SettingsRow
         icon="🔐"
         label="PIN de acceso"
         palette={palette}
-        supportingText={
-          localCredentialEnabled
-            ? 'Credencial local activa'
-            : 'Sin credencial local'
-        }
+        supportingText={undefined}
         trailing={
-          <Pressable onPress={() => setShowEditor(v => !v)} style={styles.chevronWrap}>
-            <Text style={[styles.chevron, { color: palette.muted }]}>›</Text>
+          <Pressable onPress={() => setShowEditor(value => !value)} style={styles.chevronWrap}>
+            <Text style={[styles.chevron, { color: palette.muted }]}>{'>'}</Text>
           </Pressable>
         }
       />
@@ -117,7 +103,7 @@ export function SecuritySection({
           ]}>
           <TextInput
             onChangeText={setCredentialDraft}
-            placeholder="Mínimo 4 caracteres"
+            placeholder={'M\u00ednimo 4 caracteres'}
             placeholderTextColor={palette.muted}
             secureTextEntry
             style={[
@@ -137,10 +123,9 @@ export function SecuritySection({
 
       <View style={styles.divider} />
 
-      {/* Auto-Lock Row */}
       <SettingsRow
-        icon="🕒"
-        label="Bloqueo automático"
+        icon="🔒"
+        label={'Bloqueo autom\u00e1tico'}
         palette={palette}
         trailing={
           <Text style={[styles.trailingLabel, { color: palette.primary }]}>
@@ -163,7 +148,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
   },
   credentialInput: {
-    borderRadius: 16,
+    borderRadius: 12,
     borderWidth: 1,
     flex: 1,
     fontSize: 14,
@@ -173,7 +158,7 @@ const styles = StyleSheet.create({
   },
   credentialPanel: {
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 12,
     borderWidth: 1,
     flexDirection: 'row',
     gap: 10,
@@ -184,11 +169,10 @@ const styles = StyleSheet.create({
   divider: {
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     height: 1,
-    marginHorizontal: 8,
   },
   trailingLabel: {
     fontSize: 12,
-    fontWeight: '800',
-    letterSpacing: 0.5,
+    fontWeight: '900',
+    letterSpacing: 0.6,
   },
 });

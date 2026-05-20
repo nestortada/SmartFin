@@ -2,12 +2,14 @@ import type { Account } from '../src/modules/accounts';
 import {
   buildCreditCardsOverview,
   DEFAULT_MONTHLY_INTEREST_RATE,
+  deleteCreditCard,
 } from '../src/modules/creditCards';
 import type {
   CreditCardProfile,
   CreditCardStatement,
   InstallmentPurchase,
 } from '../src/modules/creditCards';
+import type { CreditCardRepository } from '../src/modules/creditCards/repositories';
 
 const cardAccount: Account = {
   id: 'card-nu',
@@ -65,6 +67,39 @@ function installment(overrides: Partial<InstallmentPurchase> = {}): InstallmentP
     transactionId: 'txn-macbook',
     updatedAt: '2026-05-01',
     ...overrides,
+  };
+}
+
+function createCreditCardRepository({
+  accounts = [cardAccount],
+  installments = [],
+  profiles = [],
+  statements = [],
+}: {
+  accounts?: Account[];
+  installments?: InstallmentPurchase[];
+  profiles?: CreditCardProfile[];
+  statements?: CreditCardStatement[];
+} = {}): CreditCardRepository & { closedAccountIds: string[] } {
+  const closedAccountIds: string[] = [];
+
+  return {
+    closedAccountIds,
+    closeCreditCardAccount: async accountId => {
+      closedAccountIds.push(accountId);
+    },
+    getCreditCardAccounts: async () => accounts,
+    getInstallmentPurchases: async accountIds =>
+      installments.filter(purchase => accountIds.includes(purchase.accountId)),
+    getProfiles: async accountIds =>
+      profiles.filter(profile => accountIds.includes(profile.accountId)),
+    getStatements: async accountIds =>
+      statements.filter(candidate => accountIds.includes(candidate.accountId)),
+    saveCreditCardAccount: async () => undefined,
+    saveInstallmentPurchases: async () => undefined,
+    saveProfiles: async () => undefined,
+    saveStatements: async () => undefined,
+    updateInstallmentPurchasesAccount: async () => undefined,
   };
 }
 
@@ -189,4 +224,74 @@ test('filters and summarizes installment purchases by credit card', () => {
   expect(overview.cards[0]?.minimumPaymentSimulation.monthlyInterestRate).toBe(
     DEFAULT_MONTHLY_INTEREST_RATE,
   );
+});
+
+test('blocks deleting a credit card with active installment purchases', async () => {
+  const repository = createCreditCardRepository({
+    accounts: [
+      {
+        ...cardAccount,
+        debtBalance: { amount: 0, currency: 'COP' },
+      },
+    ],
+    installments: [installment()],
+  });
+
+  await expect(deleteCreditCard(repository, 'card-nu')).rejects.toThrow(
+    'compras a cuotas vigentes',
+  );
+  expect(repository.closedAccountIds).toHaveLength(0);
+});
+
+test('blocks deleting a credit card until credit utilization is zero', async () => {
+  const repository = createCreditCardRepository();
+
+  await expect(deleteCreditCard(repository, 'card-nu')).rejects.toThrow(
+    'uso del cupo este en 0%',
+  );
+  expect(repository.closedAccountIds).toHaveLength(0);
+});
+
+test('blocks deleting a credit card with unsettled current period movements', async () => {
+  const repository = createCreditCardRepository({
+    accounts: [
+      {
+        ...cardAccount,
+        debtBalance: { amount: 0, currency: 'COP' },
+      },
+    ],
+    statements: [statement()],
+  });
+
+  await expect(deleteCreditCard(repository, 'card-nu')).rejects.toThrow(
+    'movimientos del periodo',
+  );
+  expect(repository.closedAccountIds).toHaveLength(0);
+});
+
+test('deletes a credit card only when installments and current debt are cleared', async () => {
+  const repository = createCreditCardRepository({
+    accounts: [
+      {
+        ...cardAccount,
+        debtBalance: { amount: 0, currency: 'COP' },
+      },
+    ],
+    installments: [
+      installment({
+        paidInstallments: 24,
+        status: 'paid',
+      }),
+    ],
+    statements: [
+      statement({
+        status: 'paid',
+        totalAmount: 0,
+      }),
+    ],
+  });
+
+  await deleteCreditCard(repository, 'card-nu');
+
+  expect(repository.closedAccountIds).toEqual(['card-nu']);
 });

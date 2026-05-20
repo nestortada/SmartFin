@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from 'react-native';
 
@@ -42,14 +43,26 @@ type AddTransactionModalProps = {
   setNewCategory: (val: string) => void;
   newAccount: string;
   setNewAccount: (val: string) => void;
+  newTargetAccount: string;
+  setNewTargetAccount: (val: string) => void;
+  newCreditCardHint: string;
+  setNewCreditCardHint: (val: string) => void;
   newNotes: string;
   setNewNotes: (val: string) => void;
   newOperationType: 'Débito' | 'Crédito';
   setNewOperationType: (val: 'Débito' | 'Crédito') => void;
+  creditInstallmentCount: string;
+  setCreditInstallmentCount: (val: string) => void;
+  hasInterestFreeInstallments: boolean;
+  setHasInterestFreeInstallments: (val: boolean) => void;
+  interestFreeInstallmentCount: string;
+  setInterestFreeInstallmentCount: (val: string) => void;
   opTypePickerVisible: boolean;
   setOpTypePickerVisible: (val: boolean) => void;
   onCreateCategory: (name: string, type: 'income' | 'expense') => Promise<Category | null>;
   onCreateAccount: (name: string, type: 'bankAccount' | 'creditCard') => Promise<Account | null>;
+  onCreateCreditCard: () => void;
+  mode?: 'create' | 'edit';
   onSave: () => void;
 };
 
@@ -70,28 +83,49 @@ export function AddTransactionModal({
   setNewCategory,
   newAccount,
   setNewAccount,
+  newTargetAccount,
+  setNewTargetAccount,
+  newCreditCardHint,
+  setNewCreditCardHint,
   newNotes,
   setNewNotes,
   newOperationType,
   setNewOperationType,
+  creditInstallmentCount,
+  setCreditInstallmentCount,
+  hasInterestFreeInstallments,
+  setHasInterestFreeInstallments,
+  interestFreeInstallmentCount,
+  setInterestFreeInstallmentCount,
   onCreateCategory,
   onCreateAccount,
+  onCreateCreditCard,
+  mode = 'create',
   onSave,
 }: AddTransactionModalProps) {
+  const { width: windowWidth } = useWindowDimensions();
   const [categoryPickerOpen, setCategoryPickerOpen] = useState(false);
   const [accountPickerOpen, setAccountPickerOpen] = useState(false);
+  const [installmentPickerOpen, setInstallmentPickerOpen] = useState(false);
   const [customCategoryName, setCustomCategoryName] = useState('');
   const [customAccountName, setCustomAccountName] = useState('');
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [creatingAccount, setCreatingAccount] = useState(false);
 
   const isIncome = newType === 'income';
-  const title = isIncome ? 'Anadir Ingreso' : 'Anadir Gasto';
+  const isTransfer = newType === 'internalTransfer';
+  const title = mode === 'edit'
+    ? `Modificar ${isTransfer ? 'Transferencia' : isIncome ? 'Ingreso' : 'Gasto'}`
+    : isTransfer
+      ? 'Transferir'
+      : isIncome
+      ? 'Anadir Ingreso'
+      : 'Anadir Gasto';
   const selectedCategory = categories.find(category => category.id === newCategory);
   const visibleCategories = useMemo(
     () =>
       categories.filter(category =>
-        isIncome
+        isIncome || isTransfer
           ? category.type === 'income'
           : category.type === 'expense' || category.type === 'debt',
       ),
@@ -102,7 +136,7 @@ export function AddTransactionModal({
       accounts
         .filter(account => account.status === 'active')
         .filter(account => {
-          if (isIncome) {
+          if (isIncome || isTransfer) {
             return isDebitAccount(account);
           }
 
@@ -110,20 +144,40 @@ export function AddTransactionModal({
             ? account.type === 'creditCard'
             : isDebitAccount(account);
         }),
-    [accounts, isIncome, newOperationType],
+    [accounts, isIncome, isTransfer, newOperationType],
+  );
+  const targetAccounts = useMemo(
+    () =>
+      accounts
+        .filter(account => account.status === 'active')
+        .filter(isDebitAccount)
+        .filter(account => account.id !== newAccount),
+    [accounts, newAccount],
   );
   const selectedAccount = visibleAccounts.find(account => account.id === newAccount);
+  const selectedTargetAccount = targetAccounts.find(account => account.id === newTargetAccount);
+  const isCreditPayment = !isIncome && !isTransfer && isCreditOperation(newOperationType);
 
   const normalizedAmount = formatAmountInput(newAmount);
   const amountNumber = parseAmountInput(normalizedAmount);
   const amountDisplay = amountNumber
     ? amountNumber.toLocaleString('es-CO')
     : '0';
+  const isCompactPhone = windowWidth < 360;
+  const screenPadding = isCompactPhone ? 14 : 20;
+  const titleFontSize = isCompactPhone ? 20 : 24;
+  const amountFontSize = isCompactPhone ? 30 : 38;
+  const amountLineHeight = isCompactPhone ? 38 : 48;
 
   const selectType = (type: TransactionType) => {
     setNewType(type);
     setNewCategory('');
     setNewAccount('');
+    setNewTargetAccount('');
+    setNewCreditCardHint('');
+    if (type === 'internalTransfer') {
+      setNewOperationType('Débito');
+    }
     setCategoryPickerOpen(false);
     setAccountPickerOpen(false);
   };
@@ -148,6 +202,12 @@ export function AddTransactionModal({
   };
 
   const createAccount = async () => {
+    if (!isIncome && isCreditOperation(newOperationType)) {
+      openCreditCardForm();
+      setAccountPickerOpen(false);
+      return;
+    }
+
     const name = customAccountName.trim();
     if (!name) {
       return;
@@ -169,6 +229,28 @@ export function AddTransactionModal({
     }
   };
 
+  const openCreditCardForm = () => {
+    onCreateCreditCard();
+    setAccountPickerOpen(false);
+  };
+
+  const selectInstallmentCount = (value: string) => {
+    setCreditInstallmentCount(value);
+    const count = Number(value);
+    if (count <= 1) {
+      setHasInterestFreeInstallments(false);
+      setInterestFreeInstallmentCount('');
+      return;
+    }
+
+    if (hasInterestFreeInstallments) {
+      const currentInterestFreeCount = Number(interestFreeInstallmentCount) || 0;
+      if (currentInterestFreeCount > count) {
+        setInterestFreeInstallmentCount(value);
+      }
+    }
+  };
+
   return (
     <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
@@ -177,7 +259,12 @@ export function AddTransactionModal({
             <Pressable onPress={onClose} style={styles.backButton}>
               <Text style={[styles.backIcon, { color: themeColors.primary }]}>‹</Text>
             </Pressable>
-            <Text style={[styles.title, { color: themeColors.text }]}>{title}</Text>
+            <Text
+              adjustsFontSizeToFit
+              numberOfLines={1}
+              style={[styles.title, { color: themeColors.text, fontSize: titleFontSize }]}>
+              {title}
+            </Text>
             <View style={styles.headerSpacer} />
           </View>
 
@@ -191,7 +278,7 @@ export function AddTransactionModal({
           <ScrollView
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.content}>
+            contentContainerStyle={[styles.content, { paddingHorizontal: screenPadding }]}>
             <View style={[styles.typeSwitch, { backgroundColor: isDark ? '#2a2a2b' : '#e8e7ef' }]}>
               <Pressable
                 onPress={() => selectType('expense')}
@@ -209,10 +296,28 @@ export function AddTransactionModal({
                 ]}>
                 <Text style={[styles.typeText, { color: isIncome ? '#f1f0ff' : themeColors.muted }]}>Ingreso</Text>
               </Pressable>
+              <Pressable
+                onPress={() => selectType('internalTransfer')}
+                style={[
+                  styles.typeOption,
+                  isTransfer && { backgroundColor: themeColors.primary },
+                ]}>
+                <Text style={[styles.typeText, { color: isTransfer ? '#f1f0ff' : themeColors.muted }]}>Transferir</Text>
+              </Pressable>
             </View>
 
             <View style={styles.amountBlock}>
-              <Text style={[styles.amountText, { color: isIncome ? themeColors.text : themeColors.primary }]}>
+              <Text
+                adjustsFontSizeToFit
+                numberOfLines={1}
+                style={[
+                  styles.amountText,
+                  {
+                    color: isIncome ? themeColors.text : themeColors.primary,
+                    fontSize: amountFontSize,
+                    lineHeight: amountLineHeight,
+                  },
+                ]}>
                 <Text style={{ color: isIncome ? themeColors.tertiary : themeColors.primary }}>
                   {isIncome ? '+ ' : '- '}
                 </Text>
@@ -238,15 +343,17 @@ export function AddTransactionModal({
               value={newMerchant}
             />
 
-            <PickerField
-              icon={isIncome ? '$' : 'CT'}
-              label="Categoria"
-              onPress={() => setCategoryPickerOpen(current => !current)}
-              palette={themeColors}
-              subtitle={visibleCategories.length === 0 ? 'Crea una categoria local' : undefined}
-              title={selectedCategory?.name ?? 'Otro'}
-            />
-            {categoryPickerOpen ? (
+            {!isTransfer ? (
+              <PickerField
+                icon={isIncome ? '$' : 'CT'}
+                label="Categoria"
+                onPress={() => setCategoryPickerOpen(current => !current)}
+                palette={themeColors}
+                subtitle={visibleCategories.length === 0 ? 'Crea una categoria local' : undefined}
+                title={selectedCategory?.name ?? 'Otro'}
+              />
+            ) : null}
+            {!isTransfer && categoryPickerOpen ? (
               <PickerPanel palette={themeColors}>
                 {visibleCategories.map(category => (
                   <PickerOption
@@ -272,7 +379,7 @@ export function AddTransactionModal({
               </PickerPanel>
             ) : null}
 
-            {!isIncome ? (
+            {!isIncome && !isTransfer ? (
               <GlassCard palette={themeColors}>
                 <View style={styles.rowHeader}>
                   <IconBubble label="$" palette={themeColors} />
@@ -285,6 +392,13 @@ export function AddTransactionModal({
                           onPress={() => {
                             setNewOperationType(option);
                             setNewAccount('');
+                            setNewCreditCardHint('');
+                            if (!isCreditOperation(option)) {
+                              setCreditInstallmentCount('1');
+                              setHasInterestFreeInstallments(false);
+                              setInterestFreeInstallmentCount('');
+                            }
+                            setInstallmentPickerOpen(false);
                             setAccountPickerOpen(false);
                           }}
                           style={[
@@ -305,6 +419,136 @@ export function AddTransactionModal({
               </GlassCard>
             ) : null}
 
+            {isCreditPayment && !isTransfer ? (
+              <>
+                <PickerField
+                  icon="CQ"
+                  label="Numero de cuotas"
+                  onPress={() => setInstallmentPickerOpen(current => !current)}
+                  palette={themeColors}
+                  subtitle={
+                    hasInterestFreeInstallments && interestFreeInstallmentCount
+                      ? `${interestFreeInstallmentCount} sin intereses`
+                      : 'Compra financiada con tarjeta'
+                  }
+                  title={`${creditInstallmentCount || '1'} cuota${creditInstallmentCount === '1' ? '' : 's'}`}
+                />
+                {installmentPickerOpen ? (
+                  <PickerPanel palette={themeColors}>
+                    <View style={styles.installmentGrid}>
+                      {['1', '3', '6', '12', '18', '24', '36'].map(option => (
+                        <Pressable
+                          key={option}
+                          onPress={() => selectInstallmentCount(option)}
+                          style={[
+                            styles.installmentChip,
+                            {
+                              backgroundColor:
+                                creditInstallmentCount === option
+                                  ? themeColors.primary
+                                  : 'rgba(255,255,255,0.04)',
+                              borderColor:
+                                creditInstallmentCount === option
+                                  ? themeColors.primary
+                                  : themeColors.border,
+                            },
+                          ]}>
+                          <Text
+                            style={[
+                              styles.installmentChipText,
+                              {
+                                color:
+                                  creditInstallmentCount === option
+                                    ? '#001d93'
+                                    : themeColors.text,
+                              },
+                            ]}>
+                            {option}
+                          </Text>
+                        </Pressable>
+                      ))}
+                    </View>
+
+                    {Number(creditInstallmentCount) > 1 ? (
+                      <View style={[styles.interestFreeCard, { borderColor: themeColors.border }]}>
+                        <Pressable
+                          onPress={() => {
+                            const nextValue = !hasInterestFreeInstallments;
+                            setHasInterestFreeInstallments(nextValue);
+                            setInterestFreeInstallmentCount(nextValue ? creditInstallmentCount : '');
+                          }}
+                          style={styles.interestFreeHeader}>
+                          <View style={styles.fieldContent}>
+                            <Text style={[styles.fieldLabel, { color: themeColors.muted }]}>
+                              Cuotas sin intereses
+                            </Text>
+                            <Text style={[styles.fieldSubtitle, { color: themeColors.text }]}>
+                              Activa si una parte del plan no genera intereses
+                            </Text>
+                          </View>
+                          <View
+                            style={[
+                              styles.switchPill,
+                              {
+                                backgroundColor: hasInterestFreeInstallments
+                                  ? themeColors.tertiary
+                                  : themeColors.border,
+                              },
+                            ]}>
+                            <View
+                              style={[
+                                styles.switchKnob,
+                                hasInterestFreeInstallments && styles.switchKnobOn,
+                              ]}
+                            />
+                          </View>
+                        </Pressable>
+
+                        {hasInterestFreeInstallments ? (
+                          <View style={styles.installmentGrid}>
+                            {Array.from(
+                              { length: Math.max(Number(creditInstallmentCount) || 1, 1) },
+                              (_, index) => String(index + 1),
+                            ).map(option => (
+                              <Pressable
+                                key={option}
+                                onPress={() => setInterestFreeInstallmentCount(option)}
+                                style={[
+                                  styles.installmentChip,
+                                  {
+                                    backgroundColor:
+                                      interestFreeInstallmentCount === option
+                                        ? 'rgba(0, 228, 117, 0.18)'
+                                        : 'rgba(255,255,255,0.04)',
+                                    borderColor:
+                                      interestFreeInstallmentCount === option
+                                        ? themeColors.tertiary
+                                        : themeColors.border,
+                                  },
+                                ]}>
+                                <Text
+                                  style={[
+                                    styles.installmentChipText,
+                                    {
+                                      color:
+                                        interestFreeInstallmentCount === option
+                                          ? themeColors.tertiary
+                                          : themeColors.text,
+                                    },
+                                  ]}>
+                                  {option}
+                                </Text>
+                              </Pressable>
+                            ))}
+                          </View>
+                        ) : null}
+                      </View>
+                    ) : null}
+                  </PickerPanel>
+                ) : null}
+              </>
+            ) : null}
+
             <PickerField
               icon="BK"
               label={isIncome ? 'Cuenta de Destino' : 'Cuenta de origen'}
@@ -312,9 +556,9 @@ export function AddTransactionModal({
               palette={themeColors}
               subtitle={
                 selectedAccount?.institutionName ??
-                (!isIncome && isCreditOperation(newOperationType) ? 'Tarjetas de credito' : 'Cuentas debito')
+                (!isIncome && !isTransfer && isCreditOperation(newOperationType) ? 'Tarjetas de credito' : 'Cuentas debito')
               }
-              title={selectedAccount?.name ?? 'Otro'}
+              title={selectedAccount?.name ?? (isCreditPayment && newCreditCardHint ? newCreditCardHint : 'Otro')}
             />
             {accountPickerOpen ? (
               <PickerPanel palette={themeColors}>
@@ -325,31 +569,64 @@ export function AddTransactionModal({
                       label={account.name}
                       onPress={() => {
                         setNewAccount(account.id);
+                        setNewCreditCardHint(account.name);
                         setAccountPickerOpen(false);
                       }}
                       palette={themeColors}
                       subtitle={account.institutionName}
                     />
                   ))}
-                <CreateInline
-                  buttonLabel={
-                    creatingAccount
-                      ? 'Creando...'
-                      : !isIncome && isCreditOperation(newOperationType)
-                        ? 'Crear tarjeta'
-                        : 'Crear banco'
-                  }
-                  onChangeText={setCustomAccountName}
-                  onSubmit={createAccount}
-                  palette={themeColors}
-                  placeholder={
-                    !isIncome && isCreditOperation(newOperationType)
-                      ? 'Nueva tarjeta de credito'
-                      : 'Nuevo banco o cuenta'
-                  }
-                  value={customAccountName}
-                />
+                {!isIncome && isCreditOperation(newOperationType) ? (
+                  <>
+                    <CreateCreditCardButton onPress={openCreditCardForm} palette={themeColors} />
+                    <CreateInline
+                      buttonLabel="Usar pendiente"
+                      onChangeText={setNewCreditCardHint}
+                      onSubmit={() => {
+                        setNewAccount('');
+                        setAccountPickerOpen(false);
+                      }}
+                      palette={themeColors}
+                      placeholder="Tarjeta no creada"
+                      value={newCreditCardHint}
+                    />
+                  </>
+                ) : (
+                  <CreateInline
+                    buttonLabel={creatingAccount ? 'Creando...' : 'Crear banco'}
+                    onChangeText={setCustomAccountName}
+                    onSubmit={createAccount}
+                    palette={themeColors}
+                    placeholder="Nuevo banco o cuenta"
+                    value={customAccountName}
+                  />
+                )}
               </PickerPanel>
+            ) : null}
+
+            {isTransfer ? (
+              <>
+                <PickerField
+                  icon="TD"
+                  label="Cuenta de destino"
+                  onPress={() => undefined}
+                  palette={themeColors}
+                  subtitle={selectedTargetAccount?.institutionName ?? 'Tarjeta debito'}
+                  title={selectedTargetAccount?.name ?? 'Selecciona destino'}
+                />
+                <PickerPanel palette={themeColors}>
+                  {targetAccounts.map(account => (
+                    <PickerOption
+                      key={account.id}
+                      active={account.id === newTargetAccount}
+                      label={account.name}
+                      onPress={() => setNewTargetAccount(account.id)}
+                      palette={themeColors}
+                      subtitle={account.institutionName}
+                    />
+                  ))}
+                </PickerPanel>
+              </>
             ) : null}
 
             {false ? (
@@ -399,7 +676,7 @@ export function AddTransactionModal({
               value={newNotes}
             />
 
-            {!isIncome ? (
+            {!isIncome && !isTransfer ? (
               <Pressable style={[styles.receiptButton, { borderColor: themeColors.border }]}>
                 <Text style={[styles.receiptText, { color: themeColors.muted }]}>Adjuntar Recibo</Text>
               </Pressable>
@@ -419,7 +696,7 @@ export function AddTransactionModal({
             )}
           </ScrollView>
 
-          <View style={styles.actionArea}>
+          <View style={[styles.actionArea, { paddingHorizontal: screenPadding }]}>
             <Pressable
               onPress={onSave}
               style={[
@@ -427,7 +704,7 @@ export function AddTransactionModal({
                 { backgroundColor: isIncome ? '#bbc3ff' : themeColors.primary },
               ]}>
               <Text style={[styles.saveText, { color: isIncome ? '#001d93' : '#f1f0ff' }]}>
-                Guardar {isIncome ? 'Ingreso' : 'Gasto'}
+                {mode === 'edit' ? 'Guardar Cambios' : `Guardar ${isIncome ? 'Ingreso' : 'Gasto'}`}
               </Text>
             </Pressable>
           </View>
@@ -605,6 +882,22 @@ function CreateInline({
   );
 }
 
+function CreateCreditCardButton({
+  onPress,
+  palette,
+}: {
+  onPress: () => void;
+  palette: ThemeColors;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={[styles.createCreditCardButton, { backgroundColor: palette.primary }]}>
+      <Text style={styles.createButtonText}>Crear tarjeta</Text>
+    </Pressable>
+  );
+}
+
 function formatAmountInput(value: string): string {
   const digits = value.replace(/\D/g, '');
   if (!digits) {
@@ -696,6 +989,13 @@ const styles = StyleSheet.create({
     minHeight: 42,
     padding: 0,
   },
+  createCreditCardButton: {
+    alignItems: 'center',
+    borderRadius: 14,
+    justifyContent: 'center',
+    marginTop: 6,
+    minHeight: 46,
+  },
   currencyText: {
     fontSize: 18,
     fontWeight: '900',
@@ -753,6 +1053,37 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     minHeight: 34,
     padding: 0,
+  },
+  installmentChip: {
+    alignItems: 'center',
+    borderRadius: 14,
+    borderWidth: 1,
+    flexGrow: 1,
+    minHeight: 44,
+    minWidth: 58,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  installmentChipText: {
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  installmentGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  interestFreeCard: {
+    borderRadius: 16,
+    borderWidth: 1,
+    gap: 12,
+    marginTop: 8,
+    padding: 12,
+  },
+  interestFreeHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 12,
   },
   modalOverlay: {
     backgroundColor: 'rgba(5, 4, 8, 0.78)',
@@ -856,9 +1187,12 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   sheet: {
+    alignSelf: 'center',
     borderColor: 'rgba(255,255,255,0.12)',
     borderWidth: 1,
     flex: 1,
+    maxWidth: 560,
+    width: '100%',
   },
   suggestionChip: {
     borderRadius: 999,
@@ -873,6 +1207,21 @@ const styles = StyleSheet.create({
   suggestionText: {
     fontSize: 13,
     fontWeight: '900',
+  },
+  switchKnob: {
+    backgroundColor: '#f1f0ff',
+    borderRadius: 9,
+    height: 18,
+    width: 18,
+  },
+  switchKnobOn: {
+    transform: [{ translateX: 18 }],
+  },
+  switchPill: {
+    borderRadius: 999,
+    justifyContent: 'center',
+    minWidth: 42,
+    padding: 3,
   },
   tertiaryGlow: {
     backgroundColor: 'rgba(0, 228, 117, 0.10)',

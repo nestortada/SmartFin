@@ -12,21 +12,24 @@ export function SettingsHeroCard({ palette }: SettingsHeroCardProps) {
     <View
       style={[
         styles.heroCard,
-        { backgroundColor: palette.cardStrong, borderColor: palette.border },
+        {
+          backgroundColor: palette.cardStrong,
+          borderColor: palette.border,
+          borderLeftColor: 'rgba(255, 255, 255, 0.05)',
+          borderTopColor: 'rgba(255, 255, 255, 0.1)',
+        },
       ]}>
-      {/* Visual background gradient liquid glow circle */}
-      <View style={[styles.heroGlow, { backgroundColor: palette.primarySoft }]} />
-
+      <View style={[styles.heroGlow, { backgroundColor: palette.primary }]} />
       <View style={styles.heroContent}>
-        {/* Shield with heart container */}
         <View
           style={[
             styles.heroIcon,
-            { backgroundColor: palette.tertiarySoft, borderColor: 'rgba(0, 228, 117, 0.25)' },
+            {
+              backgroundColor: palette.tertiarySoft,
+              borderColor: 'rgba(0, 228, 117, 0.2)',
+            },
           ]}>
-          <Text style={[styles.heroIconText, { color: palette.tertiary }]}>
-            🛡️
-          </Text>
+          <Text style={[styles.heroIconText, { color: palette.tertiary }]}>🛡️</Text>
         </View>
 
         <View style={styles.heroCopy}>
@@ -44,10 +47,11 @@ export function SettingsHeroCard({ palette }: SettingsHeroCardProps) {
 
 const styles = StyleSheet.create({
   heroCard: {
-    borderRadius: 24,
+    borderRadius: 12,
     borderWidth: 1,
     overflow: 'hidden',
-    padding: 20,
+    paddingHorizontal: 24,
+    paddingVertical: 28,
     position: 'relative',
   },
   heroContent: {
@@ -61,35 +65,34 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   heroDescription: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '600',
-    lineHeight: 18,
+    lineHeight: 20,
   },
   heroGlow: {
-    borderRadius: 60,
-    height: 120,
-    opacity: 0.8,
+    borderRadius: 64,
+    height: 128,
+    opacity: 0.1,
     position: 'absolute',
-    right: -20,
-    top: -20,
-    width: 120,
-    zIndex: 1,
+    right: -16,
+    top: -16,
+    width: 128,
   },
   heroIcon: {
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 999,
     borderWidth: 1,
-    height: 48,
+    height: 56,
     justifyContent: 'center',
-    width: 48,
+    width: 56,
   },
   heroIconText: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: '900',
   },
   heroTitle: {
-    fontSize: 18,
-    fontWeight: '900',
-    lineHeight: 24,
+    fontSize: 20,
+    fontWeight: '800',
+    lineHeight: 28,
   },
 });

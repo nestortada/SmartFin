@@ -1,33 +1,69 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
+  Alert,
   Modal,
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
-  Dimensions,
-  Alert,
 } from 'react-native';
-import type { Transaction } from '../../types';
-import type { Category } from '../../../categories/types';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+import type { Category } from '../../../categories/types';
+import type { Transaction } from '../../types';
+
+const GRID_GAP = 12;
+const SHEET_HORIZONTAL_PADDING = 20;
+const SHEET_MAX_WIDTH = 520;
+
+type ThemeColors = {
+  background: string;
+  border: string;
+  card: string;
+  danger: string;
+  glassBorder: string;
+  muted: string;
+  primary: string;
+  tertiary: string;
+  text: string;
+};
 
 type CategorizationModalProps = {
   visible: boolean;
   onClose: () => void;
   tx: Transaction | null;
   isDark: boolean;
-  themeColors: any;
+  themeColors: ThemeColors;
   categories: Category[];
   onSelectCategory: (categoryId: string, applyToFuture: boolean) => Promise<void>;
   onDeleteTransaction: (id: string) => Promise<void>;
   onCreateCategory: (name: string, color: string) => Promise<Category | null>;
+  onEditTransaction: (tx: Transaction) => void;
 };
 
-export const CategorizationModal: React.FC<CategorizationModalProps> = ({
+const paletteColors = [
+  '#bbc3ff',
+  '#cdbdff',
+  '#8ea2ff',
+  '#d7b7ff',
+  '#ffb4ab',
+  '#8fd8ff',
+  '#62ff96',
+  '#ffd062',
+];
+
+const quickCategorySpecs = [
+  { key: 'education', macro: 'education', name: 'Universidad', icon: 'ED', color: '#bbc3ff' },
+  { key: 'food', macro: 'food', name: 'Restaurantes', icon: 'FO', color: '#cdbdff' },
+  { key: 'transport', macro: 'transport', name: 'Transporte', icon: 'TR', color: '#8ea2ff' },
+  { key: 'shopping', macro: 'shopping', name: 'Compras', icon: 'CO', color: '#d7b7ff' },
+  { key: 'entertainment', macro: 'entertainment', name: 'Entretenimiento', icon: 'EN', color: '#ffb4ab' },
+];
+
+export function CategorizationModal({
   visible,
   onClose,
   tx,
@@ -37,399 +73,410 @@ export const CategorizationModal: React.FC<CategorizationModalProps> = ({
   onSelectCategory,
   onDeleteTransaction,
   onCreateCategory,
-}) => {
+  onEditTransaction,
+}: CategorizationModalProps) {
+  const { width: windowWidth } = useWindowDimensions();
   const [applyToFuture, setApplyToFuture] = useState(true);
   const [showAllCategories, setShowAllCategories] = useState(false);
-  
-  // Custom Category creation states
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
   const [newCatName, setNewCatName] = useState('');
-  const [selectedColor, setSelectedColor] = useState('#cdbdff');
+  const [selectedColor, setSelectedColor] = useState(paletteColors[0] ?? '#cdbdff');
 
-  const paletteColors = [
-    '#bbc3ff', // Soft Blue
-    '#cdbdff', // Light Purple
-    '#8ea2ff', // Deep Blue
-    '#d7b7ff', // Vibrant Pink/Purple
-    '#ffb4ab', // Coral Pink
-    '#8fd8ff', // Sky Blue
-    '#62ff96', // Neon Light Green
-    '#ffd062', // Honey Gold
-  ];
-
-  // Reset state when modal opens/closes
   useEffect(() => {
     if (visible) {
       setApplyToFuture(true);
       setShowAllCategories(false);
       setNewCatName('');
-      setSelectedColor(paletteColors[0] || '#cdbdff');
+      setSelectedColor(paletteColors[0] ?? '#cdbdff');
+      setSelectedCategoryId(tx?.categoryId);
     }
-  }, [visible]);
+  }, [tx?.categoryId, visible]);
 
-  if (!tx) return null;
+  const quickCategories = useMemo(() => {
+    return quickCategorySpecs.map(spec => {
+      const dbCategory =
+        categories.find(category => category.name.toLowerCase().includes(spec.name.toLowerCase())) ??
+        categories.find(category => category.macroCategory === spec.macro) ??
+        categories.find(category => {
+          if (spec.macro === 'shopping') {
+            return ['other', 'utilities'].includes(category.macroCategory);
+          }
+          if (spec.macro === 'education') {
+            return category.macroCategory === 'other';
+          }
+          return false;
+        });
 
-  const getCategoryIcon = (macro: string): string => {
-    switch (macro) {
-      case 'income': return '💵';
-      case 'food': return '🍔';
-      case 'transport': return '🚗';
-      case 'housing': return '🏠';
-      case 'entertainment': return '🍿';
-      case 'health': return '💊';
-      case 'utilities': return '💡';
-      case 'debts': return '💳';
-      case 'investments': return '📈';
-      default: return '📦';
-    }
-  };
+      return {
+        id: dbCategory?.id ?? spec.name,
+        key: spec.key,
+        color: dbCategory?.color ?? spec.color,
+        icon: spec.icon,
+        name: dbCategory?.name ?? spec.name,
+      };
+    });
+  }, [categories]);
+
+  if (!tx) {
+    return null;
+  }
+
+  const selectedCategory = categories.find(category => category.id === selectedCategoryId);
+  const merchantName = tx.merchantName || tx.description;
+  const isIncome = tx.direction === 'inflow' || tx.type === 'income';
+  const sheetWidth = Math.min(windowWidth, SHEET_MAX_WIDTH);
+  const contentWidth = Math.max(sheetWidth - SHEET_HORIZONTAL_PADDING * 2, 0);
+  const categoryTileWidth = Math.floor((contentWidth - GRID_GAP) / 2);
 
   const formatDate = (dateStr: string) => {
-    try {
-      const parts = dateStr.slice(0, 10).split('-');
-      if (parts.length < 3) return dateStr;
-      const [year, month, day] = parts;
-      const monthsSpanish = [
-        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-      ];
-      const monthIndex = parseInt(month || '1', 10) - 1;
-      const monthName = monthsSpanish[monthIndex] || 'Enero';
-      return `${parseInt(day || '1', 10)} de ${monthName} de ${year}`;
-    } catch {
+    const parts = dateStr.slice(0, 10).split('-');
+    if (parts.length !== 3) {
       return dateStr;
     }
+
+    const [year, month, day] = parts;
+    const monthsSpanish = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ];
+    const monthName = monthsSpanish[Number(month) - 1] ?? 'Enero';
+    return `${Number(day)} de ${monthName} de ${year}`;
   };
 
-  const formatCOP = (val: number) => {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
+  const formatCOP = (val: number) =>
+    new Intl.NumberFormat('es-CO', {
       currency: 'COP',
       minimumFractionDigits: 0,
+      style: 'currency',
     }).format(val);
-  };
 
-  const quickCategories = [
-    { macro: 'food', name: 'Alimentación', icon: '🍔', id: 'category-food', color: '#bbc3ff' },
-    { macro: 'transport', name: 'Transporte', icon: '🚗', id: 'category-transport', color: '#cdbdff' },
-    { macro: 'housing', name: 'Vivienda', icon: '🏠', id: 'category-housing', color: '#8ea2ff' },
-    { macro: 'entertainment', name: 'Entretenimiento', icon: '🍿', id: 'category-entertainment', color: '#d7b7ff' },
-    { macro: 'health', name: 'Salud', icon: '💊', id: 'category-health', color: '#ffb4ab' },
-    { macro: 'utilities', name: 'Servicios', icon: '💡', id: 'category-utilities', color: '#8fd8ff' },
-    { macro: 'debts', name: 'Deudas', icon: '💳', id: 'category-debts', color: '#c0acff' },
-    { macro: 'investments', name: 'Inversiones', icon: '📈', id: 'category-investments', color: '#62ff96' },
-  ];
-
-  const handleSelectQuick = async (catId: string) => {
-    // Find if the category actually exists in loaded db categories
-    const found = categories.find(c => c.id === catId);
-    if (found) {
-      await onSelectCategory(found.id, applyToFuture);
-      onClose();
-    } else {
-      // Fallback
-      await onSelectCategory(catId, applyToFuture);
-      onClose();
+  const confirmCategory = async () => {
+    if (!selectedCategoryId) {
+      Alert.alert('SmartFin', 'Selecciona una categoria para continuar.');
+      return;
     }
+    if (!categories.some(category => category.id === selectedCategoryId)) {
+      setShowAllCategories(true);
+      Alert.alert('SmartFin', 'Selecciona una categoria existente o crea una nueva.');
+      return;
+    }
+
+    await onSelectCategory(selectedCategoryId, applyToFuture);
+    onClose();
   };
 
   const handleCreateAndSelectCategory = async () => {
-    if (!newCatName.trim()) {
-      Alert.alert('Error', 'Por favor ingresa un nombre para la categoría.');
+    const categoryName = newCatName.trim();
+    if (!categoryName) {
+      Alert.alert('SmartFin', 'Ingresa un nombre para la categoria.');
       return;
     }
-    const newCat = await onCreateCategory(newCatName.trim(), selectedColor);
-    if (newCat) {
-      await onSelectCategory(newCat.id, applyToFuture);
-      onClose();
+
+    const newCategory = await onCreateCategory(categoryName, selectedColor);
+    if (newCategory) {
+      setSelectedCategoryId(newCategory.id);
+      setShowAllCategories(false);
+      setNewCatName('');
     }
   };
 
   const handleDeletePress = () => {
     Alert.alert(
-      '¿Eliminar este movimiento?',
-      'Esta acción eliminará de forma permanente el registro de la base de datos y no se podrá deshacer.',
+      'Eliminar transaccion',
+      'Esta accion eliminara el registro local y no se podra deshacer.',
       [
         { text: 'Cancelar', style: 'cancel' },
-        { 
-          text: 'Eliminar', 
-          style: 'destructive',
+        {
           onPress: async () => {
             await onDeleteTransaction(tx.id);
             onClose();
-          } 
-        }
-      ]
+          },
+          style: 'destructive',
+          text: 'Eliminar',
+        },
+      ],
     );
   };
 
-  return (
-    <Modal visible={visible} transparent animationType="slide">
-      <View style={styles.modalOverlay}>
-        {/* Glowing Background Blur Effects */}
-        {isDark && (
-          <View style={styles.glowContainer} pointerEvents="none">
-            <View style={[styles.glowSpherePurple, { backgroundColor: selectedColor }]} />
-          </View>
-        )}
+  const handleEditPress = () => {
+    onClose();
+    onEditTransaction(tx);
+  };
 
-        <View style={[
-          styles.glassModal,
-          { 
-            backgroundColor: isDark ? 'rgba(20, 18, 30, 0.88)' : 'rgba(255, 255, 255, 0.94)', 
-            borderColor: isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(35, 42, 65, 0.12)'
-          }
-        ]}>
-          {/* Header Bar */}
+  return (
+    <Modal animationType="slide" onRequestClose={onClose} transparent visible={visible}>
+      <View style={styles.modalOverlay}>
+        <View
+          style={[
+            styles.sheet,
+            {
+              backgroundColor: isDark ? '#131314' : themeColors.background,
+              borderColor: themeColors.border,
+              maxWidth: SHEET_MAX_WIDTH,
+            },
+          ]}>
           <View style={styles.modalHeader}>
             <View style={styles.headerIndicator} />
-            <Pressable onPress={onClose} style={[styles.closeButton, { backgroundColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0,0,0,0.05)' }]}>
-              <Text style={[styles.closeText, { color: themeColors.text }]}>✕</Text>
+            <Pressable
+              onPress={onClose}
+              style={[styles.closeButton, { backgroundColor: themeColors.card }]}>
+              <Text style={[styles.closeText, { color: themeColors.text }]}>x</Text>
             </Pressable>
           </View>
 
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-            {/* Purchase Detection Details */}
-            <View style={styles.gastoHeader}>
-              <View style={styles.gastoDetectadoBadge}>
-                <Text style={styles.gastoDetectadoBadgeText}>🚨 GASTO DETECTADO</Text>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContent}>
+            <View
+              style={[
+                styles.heroCard,
+                { backgroundColor: themeColors.card, borderColor: themeColors.border },
+              ]}>
+              <View style={[styles.heroIcon, { borderColor: themeColors.border }]}>
+                <Text style={[styles.heroIconText, { color: themeColors.primary }]}>
+                  {isIncome ? '$' : 'ED'}
+                </Text>
               </View>
-              <Text style={[styles.merchantTitle, { color: themeColors.text }]}>
-                {tx.merchantName || tx.description}
+              <Text style={[styles.heroEyebrow, { color: themeColors.muted }]}>
+                {isIncome ? 'INGRESO DETECTADO' : 'GASTO DETECTADO'}
               </Text>
-              <Text style={[styles.dateText, { color: themeColors.muted }]}>
-                Pago procesado el {formatDate(tx.date)}
+              <Text numberOfLines={2} style={[styles.heroTitle, { color: themeColors.text }]}>
+                {merchantName.toUpperCase()}
               </Text>
-              <Text style={[styles.amountText, { color: themeColors.text }]}>
+              <Text style={[styles.heroAmount, { color: isIncome ? themeColors.tertiary : themeColors.primary }]}>
                 {formatCOP(tx.amount)}
               </Text>
+              <Text style={[styles.heroDate, { color: themeColors.muted }]}>
+                Pago procesado el {formatDate(tx.date)}
+              </Text>
             </View>
 
-            {/* Instruction Call */}
-            <View style={styles.instructionContainer}>
+            <View style={styles.instructionBlock}>
               <Text style={[styles.instructionTitle, { color: themeColors.text }]}>
-                ¿A qué categoría pertenece?
+                A que subcategoria pertenece?
               </Text>
-              <Text style={[styles.instructionDesc, { color: themeColors.muted }]}>
-                Tu organización ayuda a nuestra IA local a entenderte mejor.
+              <Text style={[styles.instructionBody, { color: themeColors.muted }]}>
+                Tu organizacion ayuda a nuestra IA local a entenderte mejor.
               </Text>
             </View>
-
-            {/* Automatic Rule Toggle */}
-            <Pressable 
-              onPress={() => setApplyToFuture(!applyToFuture)}
-              style={[
-                styles.ruleToggleCard, 
-                { 
-                  backgroundColor: isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.02)',
-                  borderColor: applyToFuture ? '#00e475' : themeColors.border
-                }
-              ]}>
-              <View style={[styles.checkboxCircle, { borderColor: applyToFuture ? '#00e475' : themeColors.muted }]}>
-                {applyToFuture && <View style={styles.checkboxDot} />}
-              </View>
-              <View style={styles.toggleTextContainer}>
-                <Text style={[styles.toggleTitle, { color: themeColors.text }]}>
-                  Guardar regla automática
-                </Text>
-                <Text style={[styles.toggleDesc, { color: '#00e475', fontWeight: '600' }]}>
-                  Recomendado • La próxima vez lo clasificaremos por ti
-                </Text>
-              </View>
-            </Pressable>
 
             {!showAllCategories ? (
-              <>
-                {/* Grid of Quick Categories */}
-                <View style={styles.quickGrid}>
-                  {quickCategories.map(cat => {
-                    const dbCat = categories.find(c => c.id === cat.id) || categories.find(c => c.macroCategory === cat.macro);
-                    const color = dbCat?.color || cat.color;
-                    const name = dbCat?.name || cat.name;
-                    return (
-                      <Pressable
-                        key={cat.id}
-                        onPress={() => handleSelectQuick(cat.id)}
-                        style={[
-                          styles.categoryCard,
-                          { 
-                            backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.7)',
-                            borderColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(35, 42, 65, 0.06)'
-                          }
-                        ]}>
-                        <View style={[styles.iconBox, { backgroundColor: color + '22', borderColor: color }]}>
-                          <Text style={styles.iconEmoji}>{cat.icon}</Text>
-                        </View>
-                        <Text numberOfLines={1} style={[styles.categoryCardText, { color: themeColors.text }]}>
-                          {name}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-
-                  {/* "Otros" selection chip */}
-                  <Pressable
-                    onPress={() => setShowAllCategories(true)}
-                    style={[
-                      styles.categoryCard,
-                      { 
-                        backgroundColor: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.7)',
-                        borderColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(35, 42, 65, 0.06)'
-                      }
-                    ]}>
-                    <View style={[styles.iconBox, { backgroundColor: 'rgba(197, 197, 217, 0.22)', borderColor: '#c5c5d9' }]}>
-                      <Text style={styles.iconEmoji}>📦</Text>
-                    </View>
-                    <Text numberOfLines={1} style={[styles.categoryCardText, { color: themeColors.text, fontWeight: '700' }]}>
-                      Otros
-                    </Text>
-                  </Pressable>
-                </View>
-              </>
+              <View style={styles.quickGrid}>
+                {quickCategories.map(category => (
+                  <CategoryTile
+                    key={category.key}
+                    active={selectedCategoryId === category.id}
+                    color={category.color}
+                    icon={category.icon}
+                    label={category.name}
+                    onPress={() => setSelectedCategoryId(category.id)}
+                    palette={themeColors}
+                    tileWidth={categoryTileWidth}
+                  />
+                ))}
+                <CategoryTile
+                  active={false}
+                  color="#c5c5d9"
+                  icon="..."
+                  label="Otros"
+                  onPress={() => setShowAllCategories(true)}
+                  palette={themeColors}
+                  tileWidth={categoryTileWidth}
+                />
+              </View>
             ) : (
-              /* "Otros" view: Shows all categories + create new category option */
               <View style={styles.othersContainer}>
-                {/* Back to quick select */}
                 <Pressable onPress={() => setShowAllCategories(false)} style={styles.backButton}>
-                  <Text style={[styles.backButtonText, { color: themeColors.primary }]}>← Volver a categorías rápidas</Text>
+                  <Text style={[styles.backButtonText, { color: themeColors.primary }]}>
+                    Volver a categorias rapidas
+                  </Text>
                 </Pressable>
 
-                <Text style={[styles.sectionSubtitle, { color: themeColors.text }]}>Todas las categorías existentes</Text>
-                
-                {/* Horizontal scroll of all categories */}
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.fullCategoriesScroll}>
-                  {categories.map(c => (
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  {categories.map(category => (
                     <Pressable
-                      key={c.id}
+                      key={category.id}
                       onPress={() => {
-                        onSelectCategory(c.id, applyToFuture);
-                        onClose();
+                        setSelectedCategoryId(category.id);
+                        setShowAllCategories(false);
                       }}
                       style={[
                         styles.fullCategoryChip,
-                        { 
-                          backgroundColor: c.color + '15',
-                          borderColor: c.color,
-                        }
+                        {
+                          backgroundColor: `${category.color}22`,
+                          borderColor: category.color,
+                        },
                       ]}>
-                      <Text style={styles.chipEmoji}>{getCategoryIcon(c.macroCategory)}</Text>
-                      <Text style={[styles.chipText, { color: themeColors.text }]}>{c.name}</Text>
+                      <Text style={[styles.fullCategoryText, { color: themeColors.text }]}>
+                        {category.name}
+                      </Text>
                     </Pressable>
                   ))}
                 </ScrollView>
 
-                {/* Create Custom Category Form */}
-                <View style={[styles.createForm, { backgroundColor: isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.02)', borderColor: themeColors.border }]}>
-                  <Text style={[styles.createTitle, { color: themeColors.text }]}>Crear nueva categoría</Text>
-                  <Text style={[styles.createDesc, { color: themeColors.muted }]}>Si no encuentras una adecuada, créala de forma local y privada.</Text>
-                  
+                <View style={[styles.createForm, { borderColor: themeColors.border }]}>
+                  <Text style={[styles.createTitle, { color: themeColors.text }]}>Crear nueva categoria</Text>
                   <TextInput
-                    placeholder="Ej. Estudios, Mascotas, Regalos"
-                    placeholderTextColor={themeColors.muted}
-                    value={newCatName}
                     onChangeText={setNewCatName}
-                    style={[styles.createInput, { color: themeColors.text, borderColor: themeColors.border, backgroundColor: isDark ? 'rgba(0,0,0,0.2)' : '#fff' }]}
+                    placeholder="Ej. Universidad, Mascotas, Regalos"
+                    placeholderTextColor={themeColors.muted}
+                    style={[
+                      styles.createInput,
+                      {
+                        backgroundColor: themeColors.card,
+                        borderColor: themeColors.border,
+                        color: themeColors.text,
+                      },
+                    ]}
+                    value={newCatName}
                   />
-
-                  {/* Color Palette Selector */}
-                  <Text style={[styles.createSubLabel, { color: themeColors.muted }]}>Color de la categoría</Text>
                   <View style={styles.paletteRow}>
-                    {paletteColors.map(c => (
+                    {paletteColors.map(color => (
                       <Pressable
-                        key={c}
-                        onPress={() => setSelectedColor(c)}
+                        key={color}
+                        onPress={() => setSelectedColor(color)}
                         style={[
                           styles.colorCircle,
-                          { backgroundColor: c },
-                          selectedColor === c && { borderColor: '#fff', borderWidth: 2, transform: [{ scale: 1.15 }] }
+                          { backgroundColor: color },
+                          selectedColor === color && styles.colorCircleActive,
                         ]}
                       />
                     ))}
                   </View>
-
-                  <Pressable 
+                  <Pressable
                     onPress={handleCreateAndSelectCategory}
-                    style={[styles.createBtn, { backgroundColor: themeColors.primary }]}>
-                    <Text style={styles.createBtnText}>Crear y Seleccionar</Text>
+                    style={[styles.secondaryActionButton, { borderColor: themeColors.border }]}>
+                    <Text style={[styles.secondaryActionText, { color: themeColors.text }]}>
+                      Crear y seleccionar
+                    </Text>
                   </Pressable>
                 </View>
               </View>
             )}
 
-            {/* Delete Transaction action */}
-            <Pressable 
-              onPress={handleDeletePress}
-              style={[
-                styles.deleteBtn, 
-                { 
-                  backgroundColor: isDark ? 'rgba(255, 180, 171, 0.08)' : 'rgba(186, 26, 26, 0.06)',
-                  borderColor: themeColors.danger
-                }
-              ]}>
-              <Text style={[styles.deleteBtnText, { color: themeColors.danger }]}>
-                🗑️ Eliminar este movimiento de la base de datos
+            <Pressable
+              onPress={() => setApplyToFuture(current => !current)}
+              style={[styles.ruleCard, { backgroundColor: themeColors.card, borderColor: themeColors.border }]}>
+              <View style={styles.ruleLeft}>
+                <View style={[styles.ruleIcon, { backgroundColor: 'rgba(0, 228, 117, 0.12)' }]}>
+                  <Text style={[styles.ruleIconText, { color: themeColors.tertiary }]}>AI</Text>
+                </View>
+                <View>
+                  <Text style={[styles.ruleTitle, { color: themeColors.text }]}>Guardar regla automatica</Text>
+                  <Text style={[styles.ruleSubtitle, { color: themeColors.tertiary }]}>RECOMENDADO</Text>
+                </View>
+              </View>
+              <Switch
+                onValueChange={setApplyToFuture}
+                thumbColor={applyToFuture ? '#003918' : '#f1f0ff'}
+                trackColor={{ false: themeColors.border, true: themeColors.tertiary }}
+                value={applyToFuture}
+              />
+            </Pressable>
+
+            <Pressable
+              onPress={confirmCategory}
+              style={[styles.primaryButton, { backgroundColor: themeColors.primary }]}>
+              <Text style={styles.primaryButtonText}>
+                {selectedCategory ? `Confirmar ${selectedCategory.name}` : 'Confirmar Seleccion'}
               </Text>
             </Pressable>
+
+            <Pressable
+              onPress={handleEditPress}
+              style={[styles.editButton, { backgroundColor: themeColors.card, borderColor: themeColors.border }]}>
+              <Text style={[styles.editButtonText, { color: themeColors.muted }]}>Editar Detalles</Text>
+            </Pressable>
+
+            <Pressable
+              onPress={handleDeletePress}
+              style={[styles.deleteButton, { backgroundColor: isDark ? 'rgba(255, 180, 171, 0.10)' : 'rgba(186, 26, 26, 0.06)', borderColor: themeColors.danger }]}>
+              <Text style={[styles.deleteButtonText, { color: themeColors.danger }]}>Eliminar Transaccion</Text>
+            </Pressable>
+
+            <Text style={[styles.footerHint, { color: themeColors.muted }]}>
+              La proxima vez lo clasificaremos por ti
+            </Text>
           </ScrollView>
         </View>
       </View>
     </Modal>
   );
-};
+}
+
+function CategoryTile({
+  active,
+  color,
+  icon,
+  label,
+  onPress,
+  palette,
+  tileWidth,
+}: {
+  active: boolean;
+  color: string;
+  icon: string;
+  label: string;
+  onPress: () => void;
+  palette: ThemeColors;
+  tileWidth: number;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={[
+        styles.categoryTile,
+        {
+          backgroundColor: palette.card,
+          borderColor: active ? palette.primary : palette.border,
+          borderWidth: active ? 2 : 1,
+          width: tileWidth,
+        },
+      ]}>
+      <Text style={[styles.categoryIcon, { color: active ? palette.primary : color }]}>{icon}</Text>
+      <Text
+        numberOfLines={1}
+        style={[styles.categoryText, { color: active ? palette.primary : palette.muted }]}>
+        {label}
+      </Text>
+    </Pressable>
+  );
+}
 
 const styles = StyleSheet.create({
-  modalOverlay: {
-    backgroundColor: 'rgba(5, 4, 8, 0.72)',
-    flex: 1,
-    justifyContent: 'flex-end',
+  backButton: {
+    paddingVertical: 4,
   },
-  glowContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+  backButtonText: {
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  categoryIcon: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  categoryText: {
+    fontSize: 13,
+    fontWeight: '900',
+    maxWidth: '100%',
+  },
+  categoryTile: {
     alignItems: 'center',
+    borderRadius: 18,
+    gap: 8,
+    height: 86,
     justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  glowSpherePurple: {
-    borderRadius: 150,
-    bottom: -50,
-    height: 300,
-    opacity: 0.15,
-    position: 'absolute',
-    width: 300,
-  },
-  glassModal: {
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    borderWidth: 1,
-    borderBottomWidth: 0,
-    maxHeight: '92%',
-    paddingHorizontal: 20,
-    paddingTop: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      height: -8,
-      width: 0,
-    },
-    shadowOpacity: 0.35,
-    shadowRadius: 16,
-    width: '100%',
-  },
-  modalHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    height: 48,
-    justifyContent: 'center',
-    position: 'relative',
-    width: '100%',
-  },
-  headerIndicator: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    borderRadius: 3,
-    height: 6,
-    width: 48,
+    paddingHorizontal: 10,
   },
   closeButton: {
     alignItems: 'center',
@@ -441,217 +488,230 @@ const styles = StyleSheet.create({
     width: 32,
   },
   closeText: {
-    fontSize: 12,
-    fontWeight: '800',
-  },
-  scrollContent: {
-    gap: 22,
-    paddingBottom: 50,
-    paddingTop: 8,
-  },
-  gastoHeader: {
-    alignItems: 'center',
-    gap: 8,
-  },
-  gastoDetectadoBadge: {
-    backgroundColor: 'rgba(255, 180, 171, 0.12)',
-    borderColor: 'rgba(255, 180, 171, 0.3)',
-    borderRadius: 8,
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  gastoDetectadoBadgeText: {
-    color: '#ffb4ab',
-    fontSize: 9,
-    fontWeight: '800',
-    letterSpacing: 0.8,
-  },
-  merchantTitle: {
-    fontSize: 22,
-    fontWeight: '800',
-    textAlign: 'center',
-  },
-  dateText: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  amountText: {
-    fontSize: 28,
+    fontSize: 14,
     fontWeight: '900',
-    marginTop: 4,
-  },
-  instructionContainer: {
-    gap: 4,
-  },
-  instructionTitle: {
-    fontSize: 16,
-    fontWeight: '800',
-  },
-  instructionDesc: {
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  ruleToggleCard: {
-    alignItems: 'center',
-    borderRadius: 18,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 14,
-    padding: 14,
-  },
-  checkboxCircle: {
-    alignItems: 'center',
-    borderRadius: 11,
-    borderWidth: 2,
-    height: 22,
-    justifyContent: 'center',
-    width: 22,
-  },
-  checkboxDot: {
-    backgroundColor: '#00e475',
-    borderRadius: 5,
-    height: 10,
-    width: 10,
-  },
-  toggleTextContainer: {
-    flex: 1,
-    gap: 2,
-  },
-  toggleTitle: {
-    fontSize: 13,
-    fontWeight: '800',
-  },
-  toggleDesc: {
-    fontSize: 10,
-  },
-  quickGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 12,
-    justifyContent: 'space-between',
-  },
-  categoryCard: {
-    alignItems: 'center',
-    borderRadius: 18,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 10,
-    height: 52,
-    paddingHorizontal: 12,
-    width: (SCREEN_WIDTH - 52) / 2, // dynamic columns
-  },
-  iconBox: {
-    alignItems: 'center',
-    borderRadius: 14,
-    borderWidth: 1,
-    height: 32,
-    justifyContent: 'center',
-    width: 32,
-  },
-  iconEmoji: {
-    fontSize: 15,
-  },
-  categoryCardText: {
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  othersContainer: {
-    gap: 16,
-  },
-  backButton: {
-    paddingVertical: 4,
-  },
-  backButtonText: {
-    fontSize: 13,
-    fontWeight: '800',
-  },
-  sectionSubtitle: {
-    fontSize: 14,
-    fontWeight: '800',
-  },
-  fullCategoriesScroll: {
-    flexDirection: 'row',
-    marginVertical: 4,
-  },
-  fullCategoryChip: {
-    alignItems: 'center',
-    borderRadius: 16,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 6,
-    marginRight: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-  },
-  chipEmoji: {
-    fontSize: 14,
-  },
-  chipText: {
-    fontSize: 12,
-    fontWeight: '700',
-  },
-  createForm: {
-    borderRadius: 20,
-    borderWidth: 1,
-    gap: 12,
-    padding: 16,
-  },
-  createTitle: {
-    fontSize: 14,
-    fontWeight: '800',
-  },
-  createDesc: {
-    fontSize: 11,
-    fontWeight: '500',
-    marginTop: -4,
-  },
-  createInput: {
-    borderRadius: 12,
-    borderWidth: 1,
-    fontSize: 13,
-    fontWeight: '600',
-    height: 44,
-    paddingHorizontal: 12,
-  },
-  createSubLabel: {
-    fontSize: 11,
-    fontWeight: '800',
-    textTransform: 'uppercase',
-  },
-  paletteRow: {
-    flexDirection: 'row',
-    gap: 10,
-    justifyContent: 'space-between',
-    marginVertical: 2,
   },
   colorCircle: {
     borderRadius: 14,
     height: 28,
     width: 28,
   },
-  createBtn: {
-    alignItems: 'center',
+  colorCircleActive: {
+    borderColor: '#ffffff',
+    borderWidth: 2,
+    transform: [{ scale: 1.14 }],
+  },
+  createForm: {
+    borderRadius: 18,
+    borderWidth: 1,
+    gap: 12,
+    padding: 14,
+  },
+  createInput: {
     borderRadius: 12,
-    height: 42,
-    justifyContent: 'center',
-    marginTop: 6,
+    borderWidth: 1,
+    fontSize: 14,
+    fontWeight: '700',
+    minHeight: 44,
+    paddingHorizontal: 12,
   },
-  createBtnText: {
-    color: '#001d93',
-    fontSize: 13,
-    fontWeight: '800',
+  createTitle: {
+    fontSize: 14,
+    fontWeight: '900',
   },
-  deleteBtn: {
+  deleteButton: {
     alignItems: 'center',
     borderRadius: 18,
     borderWidth: 1,
-    height: 48,
+    minHeight: 58,
     justifyContent: 'center',
-    marginTop: 8,
   },
-  deleteBtnText: {
+  deleteButtonText: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  editButton: {
+    alignItems: 'center',
+    borderRadius: 18,
+    borderWidth: 1,
+    minHeight: 58,
+    justifyContent: 'center',
+  },
+  editButtonText: {
+    fontSize: 20,
+    fontWeight: '900',
+  },
+  footerHint: {
     fontSize: 12,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+  fullCategoryChip: {
+    borderRadius: 16,
+    borderWidth: 1,
+    marginRight: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+  },
+  fullCategoryText: {
+    fontSize: 13,
     fontWeight: '800',
+  },
+  headerIndicator: {
+    backgroundColor: 'rgba(255,255,255,0.22)',
+    borderRadius: 3,
+    height: 5,
+    width: 48,
+  },
+  heroAmount: {
+    fontSize: 36,
+    fontWeight: '900',
+    lineHeight: 44,
+  },
+  heroCard: {
+    alignItems: 'center',
+    borderRadius: 26,
+    borderWidth: 1,
+    gap: 8,
+    overflow: 'hidden',
+    padding: 22,
+  },
+  heroDate: {
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  heroEyebrow: {
+    fontSize: 12,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+  heroIcon: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(187, 195, 255, 0.12)',
+    borderRadius: 18,
+    borderWidth: 1,
+    height: 66,
+    justifyContent: 'center',
+    marginBottom: 8,
+    width: 66,
+  },
+  heroIconText: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  heroTitle: {
+    fontSize: 20,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+  instructionBlock: {
+    alignItems: 'center',
+    gap: 6,
+  },
+  instructionBody: {
+    fontSize: 14,
+    fontWeight: '700',
+    lineHeight: 20,
+    textAlign: 'center',
+  },
+  instructionTitle: {
+    fontSize: 22,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+  modalHeader: {
+    alignItems: 'center',
+    height: 38,
+    justifyContent: 'center',
+  },
+  modalOverlay: {
+    backgroundColor: 'rgba(5, 4, 8, 0.78)',
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  othersContainer: {
+    gap: 14,
+  },
+  paletteRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: GRID_GAP,
+  },
+  primaryButton: {
+    alignItems: 'center',
+    borderRadius: 18,
+    minHeight: 64,
+    justifyContent: 'center',
+  },
+  primaryButtonText: {
+    color: '#001d93',
+    fontSize: 20,
+    fontWeight: '900',
+  },
+  quickGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: GRID_GAP,
+  },
+  ruleCard: {
+    alignItems: 'center',
+    borderRadius: 18,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  ruleIcon: {
+    alignItems: 'center',
+    borderRadius: 20,
+    height: 42,
+    justifyContent: 'center',
+    width: 42,
+  },
+  ruleIconText: {
+    fontSize: 13,
+    fontWeight: '900',
+  },
+  ruleLeft: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1,
+    gap: 12,
+  },
+  ruleSubtitle: {
+    fontSize: 10,
+    fontWeight: '900',
+  },
+  ruleTitle: {
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  scrollContent: {
+    gap: 20,
+    paddingBottom: 42,
+    paddingTop: 8,
+  },
+  secondaryActionButton: {
+    alignItems: 'center',
+    borderRadius: 14,
+    borderWidth: 1,
+    justifyContent: 'center',
+    minHeight: 44,
+  },
+  secondaryActionText: {
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  sheet: {
+    alignSelf: 'center',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderWidth: 1,
+    maxHeight: '94%',
+    paddingHorizontal: 20,
+    paddingTop: 12,
+    width: '100%',
   },
 });

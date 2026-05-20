@@ -7,6 +7,10 @@ import {
 import type { Category, CategoryType, MacroCategory } from '../types';
 
 export type SqliteCategoryRepository = {
+  deleteCategoryAndReassign: (
+    categoryId: string,
+    fallbackCategoryId: string,
+  ) => Promise<void>;
   getCategories: () => Promise<Category[]>;
   saveCategories: (categories: Category[]) => Promise<void>;
 };
@@ -25,6 +29,72 @@ export function createSqliteCategoryRepository(
   database: SmartFinSQLiteDatabase,
 ): SqliteCategoryRepository {
   return {
+    deleteCategoryAndReassign: async (categoryId, fallbackCategoryId) => {
+      const updatedAt = new Date().toISOString();
+
+      await database.executeSql(
+        `UPDATE transactions
+        SET subcategory_id = NULL, updated_at = ?
+        WHERE subcategory_id IN (
+          SELECT id FROM subcategories WHERE category_id = ?
+        );`,
+        [updatedAt, categoryId],
+      );
+      await database.executeSql(
+        `UPDATE transaction_splits
+        SET subcategory_id = NULL, updated_at = ?
+        WHERE subcategory_id IN (
+          SELECT id FROM subcategories WHERE category_id = ?
+        );`,
+        [updatedAt, categoryId],
+      );
+      await database.executeSql(
+        `UPDATE merchant_mappings
+        SET subcategory_id = NULL, updated_at = ?
+        WHERE subcategory_id IN (
+          SELECT id FROM subcategories WHERE category_id = ?
+        );`,
+        [updatedAt, categoryId],
+      );
+      await database.executeSql(
+        `UPDATE recurring_subscriptions
+        SET subcategory_id = NULL, updated_at = ?
+        WHERE subcategory_id IN (
+          SELECT id FROM subcategories WHERE category_id = ?
+        );`,
+        [updatedAt, categoryId],
+      );
+
+      await database.executeSql(
+        'UPDATE transactions SET category_id = ?, updated_at = ? WHERE category_id = ?;',
+        [fallbackCategoryId, updatedAt, categoryId],
+      );
+      await database.executeSql(
+        'UPDATE transaction_splits SET category_id = ?, updated_at = ? WHERE category_id = ?;',
+        [fallbackCategoryId, updatedAt, categoryId],
+      );
+      await database.executeSql(
+        'UPDATE merchant_mappings SET category_id = ?, updated_at = ? WHERE category_id = ?;',
+        [fallbackCategoryId, updatedAt, categoryId],
+      );
+      await database.executeSql(
+        'UPDATE envelopes SET category_id = ?, updated_at = ? WHERE category_id = ?;',
+        [fallbackCategoryId, updatedAt, categoryId],
+      );
+      await database.executeSql(
+        'UPDATE recurring_subscriptions SET category_id = ?, updated_at = ? WHERE category_id = ?;',
+        [fallbackCategoryId, updatedAt, categoryId],
+      );
+
+      await database.executeSql(
+        'DELETE FROM subcategories WHERE category_id = ?;',
+        [categoryId],
+      );
+      await database.executeSql(
+        'DELETE FROM categories WHERE id = ?;',
+        [categoryId],
+      );
+    },
     getCategories: async () => {
       const [resultSet] = await database.executeSql(
         `SELECT

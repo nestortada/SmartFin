@@ -27,6 +27,7 @@ export type CreditCardRepository = {
   saveStatements: (statements: CreditCardStatement[]) => Promise<void>;
   saveInstallmentPurchases: (purchases: InstallmentPurchase[]) => Promise<void>;
   saveProfiles: (profiles: CreditCardProfile[]) => Promise<void>;
+  updateInstallmentPurchasesAccount: (transactionIds: string[], accountId: string) => Promise<void>;
 };
 
 function accountFromRow(row: SQLiteRow): Account {
@@ -338,6 +339,18 @@ export function createSqliteCreditCardRepository(
           ],
         );
       }
+    },
+    updateInstallmentPurchasesAccount: async (transactionIds, accountId) => {
+      if (transactionIds.length === 0) {
+        return;
+      }
+
+      await database.executeSql(
+        `UPDATE installment_purchases
+        SET account_id = ?, updated_at = ?
+        WHERE transaction_id IN (${placeholders(transactionIds)});`,
+        [accountId, new Date().toISOString(), ...transactionIds],
+      );
     },
   };
 }

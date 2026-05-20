@@ -20,13 +20,13 @@ export function SmsSection({
   const supportingText =
     smsPermissionState === 'unavailable'
       ? 'Disponible solo en Android'
-      : 'Detecta pagos de Nequi, Bancolombia, Davivienda y Daviplata sin conexión';
+      : 'Usa SMS y notificaciones bancarias filtradas, sin conexion';
 
   return (
-    <SettingsSection palette={palette} title="SMS Financiero">
+    <SettingsSection palette={palette} title="Deteccion financiera">
       <SettingsRow
-        icon="✉"
-        label="Leer SMS de pagos"
+        icon="SMS"
+        label="Detectar pagos automaticamente"
         palette={palette}
         supportingText={supportingText}
         trailing={

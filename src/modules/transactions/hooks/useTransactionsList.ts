@@ -64,6 +64,17 @@ export function formatYearMonth(ym: string): string {
   return `${monthName} ${year}`;
 }
 
+export function transactionMatchesAccountFilter(
+  transaction: Transaction,
+  selectedAccount: string,
+): boolean {
+  return (
+    selectedAccount === 'all' ||
+    transaction.accountId === selectedAccount ||
+    transaction.targetAccountId === selectedAccount
+  );
+}
+
 export function useTransactionsList(
   database: SmartFinSQLiteDatabase | undefined,
   refreshKey: number,
@@ -159,7 +170,7 @@ export function useTransactionsList(
 
     // Filter by account
     if (selectedAccount !== 'all') {
-      result = result.filter(t => t.accountId === selectedAccount);
+      result = result.filter(t => transactionMatchesAccountFilter(t, selectedAccount));
     }
 
     // Filter by category

@@ -16,7 +16,7 @@ export type BottomNavigationTab =
   | 'net-worth'
   | 'more';
 
-export type BottomNavigationMoreAction = 'creditCards' | 'settings';
+export type BottomNavigationMoreAction = 'creditCards' | 'debitCards' | 'settings';
 
 type BottomNavigationItem = {
   id: BottomNavigationTab;
@@ -135,7 +135,19 @@ export function BottomNavigation({
               CC
             </Text>
             <Text style={[styles.moreMenuText, { color: isDark ? '#f1f0ff' : '#19191d' }]}>
-              Tarjetas de credito
+              Tarjetas de crédito
+            </Text>
+          </Pressable>
+          <View style={[styles.moreMenuDivider, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)' }]} />
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => handleMoreActionPress('debitCards')}
+            style={styles.moreMenuItem}>
+            <Text style={[styles.moreMenuIcon, { color: isDark ? '#00e475' : '#007f3e' }]}>
+              TD
+            </Text>
+            <Text style={[styles.moreMenuText, { color: isDark ? '#f1f0ff' : '#19191d' }]}>
+              Tarjetas debito
             </Text>
           </Pressable>
           <View style={[styles.moreMenuDivider, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)' }]} />
@@ -216,11 +228,11 @@ const styles = StyleSheet.create({
   bottomNavigation: {
     alignItems: 'center',
     alignSelf: 'center',
-    borderRadius: 24,
+    borderRadius: 999,
     borderWidth: 1,
     elevation: 20,
     flexDirection: 'row',
-    height: 60,
+    height: 64,
     justifyContent: 'space-around',
     left: 20,
     maxWidth: 520,
@@ -236,11 +248,11 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
   },
   bottomNavigationDark: {
-    backgroundColor: 'rgba(26, 24, 33, 0.88)', // Sleek dark solid glass
-    borderColor: 'rgba(255, 255, 255, 0.16)',
+    backgroundColor: 'rgba(32, 31, 32, 0.72)',
+    borderColor: 'rgba(255, 255, 255, 0.1)',
   },
   bottomNavigationLight: {
-    backgroundColor: 'rgba(244, 243, 248, 0.92)', // Light solid glass
+    backgroundColor: 'rgba(244, 243, 248, 0.92)',
     borderColor: 'rgba(40, 72, 238, 0.16)',
   },
   bottomNavigationItem: {
@@ -251,20 +263,20 @@ const styles = StyleSheet.create({
   },
   bottomNavigationIcon: {
     alignItems: 'center',
-    borderRadius: 16,
-    height: 42,
+    borderRadius: 999,
+    height: 44,
     justifyContent: 'center',
-    width: 46,
+    width: 44,
   },
   bottomNavigationIconActiveDark: {
-    backgroundColor: 'rgba(205, 189, 255, 0.25)', // Elegant glowing neon background
+    backgroundColor: 'rgba(82, 3, 213, 0.76)',
   },
   bottomNavigationIconActiveLight: {
-    backgroundColor: 'rgba(40, 72, 238, 0.12)', // Soft elegant active blue bubble
+    backgroundColor: 'rgba(40, 72, 238, 0.12)',
   },
   bottomNavigationIconText: {
-    fontSize: 20,
-    fontWeight: '800',
+    fontSize: 21,
+    fontWeight: '900',
   },
   bottomNavigationIconTextDark: {
     color: 'rgba(255, 255, 255, 0.5)',
@@ -273,7 +285,7 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, 0.5)',
   },
   bottomNavigationIconTextActiveDark: {
-    color: '#bbc3ff',
+    color: '#f1f0ff',
   },
   bottomNavigationIconTextActiveLight: {
     color: '#2848ee',

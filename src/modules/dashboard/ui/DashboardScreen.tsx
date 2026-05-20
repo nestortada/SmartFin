@@ -61,6 +61,7 @@ type DashboardScreenProps = {
   database?: SmartFinSQLiteDatabase;
   refreshKey?: number;
   onOpenCreditCards: () => void;
+  onOpenDebitCards: () => void;
   onOpenSettings: () => void;
   onNavigateToTransactions: () => void;
 };
@@ -70,6 +71,7 @@ export function DashboardScreen({
   database,
   refreshKey = 0,
   onOpenCreditCards,
+  onOpenDebitCards,
   onOpenSettings,
   onNavigateToTransactions,
 }: DashboardScreenProps) {
@@ -151,6 +153,8 @@ export function DashboardScreen({
         onMoreActionPress={action => {
           if (action === 'creditCards') {
             onOpenCreditCards();
+          } else if (action === 'debitCards') {
+            onOpenDebitCards();
           } else {
             onOpenSettings();
           }

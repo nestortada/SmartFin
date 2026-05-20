@@ -1,5 +1,6 @@
 import type { CurrencyCode, ISODateString } from '../../../shared/types';
 import type { Account } from '../../accounts';
+import type { Transaction } from '../../transactions/types';
 
 export type CreditCardStatementStatus = 'open' | 'pending' | 'paid' | 'overdue' | 'closed';
 
@@ -82,6 +83,7 @@ export type CreditCardSummary = {
   installments: CreditCardInstallmentSummary[];
   minimumPaymentSimulation: CreditCardMinimumPaymentSimulation;
   nextPaymentAmount: number;
+  recentTransactions: Transaction[];
   totalLimit: number;
   usedCredit: number;
   utilizationRatio: number;

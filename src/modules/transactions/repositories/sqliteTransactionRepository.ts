@@ -10,6 +10,7 @@ import type { CurrencyCode } from '../../../shared/types';
 import type {
   Transaction,
   TransactionDirection,
+  TransactionPaymentMethod,
   TransactionStatus,
   TransactionType,
 } from '../types';
@@ -18,6 +19,7 @@ export type SqliteTransactionRepository = {
   getTransactions: () => Promise<Transaction[]>;
   saveTransactions: (transactions: Transaction[]) => Promise<void>;
   deleteTransaction: (id: string) => Promise<void>;
+  deleteInstallmentPurchasesByTransactionId: (transactionId: string) => Promise<void>;
   updateTransactionCategory: (id: string, categoryId: string | null) => Promise<void>;
   updateTransactionsCategoryByDescription: (description: string, categoryId: string | null) => Promise<void>;
   saveMerchantMapping: (rawMerchantText: string, categoryId: string) => Promise<void>;
@@ -38,6 +40,9 @@ function rowToTransaction(row: SQLiteRow): Transaction {
     status: readString(row, 'status') as TransactionStatus,
     targetAccountId: readNullableString(row, 'target_account_id'),
     merchantName: readNullableString(row, 'merchant_name'),
+    paymentMethod: readNullableString(row, 'payment_method') as TransactionPaymentMethod | undefined,
+    creditCardHint: readNullableString(row, 'credit_card_hint'),
+    dedupeKey: readNullableString(row, 'dedupe_key'),
     notes: readNullableString(row, 'notes'),
     createdAt: readString(row, 'created_at'),
     updatedAt: readString(row, 'updated_at'),
@@ -63,6 +68,9 @@ export function createSqliteTransactionRepository(
           status,
           target_account_id,
           merchant_name,
+          payment_method,
+          credit_card_hint,
+          dedupe_key,
           notes,
           created_at,
           updated_at
@@ -88,10 +96,13 @@ export function createSqliteTransactionRepository(
             status,
             target_account_id,
             merchant_name,
+            payment_method,
+            credit_card_hint,
+            dedupe_key,
             notes,
             created_at,
             updated_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
           [
             transaction.id,
             transaction.amount,
@@ -105,6 +116,9 @@ export function createSqliteTransactionRepository(
             transaction.status,
             transaction.targetAccountId ?? null,
             transaction.merchantName ?? null,
+            transaction.paymentMethod ?? null,
+            transaction.creditCardHint ?? null,
+            transaction.dedupeKey ?? null,
             transaction.notes ?? null,
             transaction.createdAt,
             transaction.updatedAt,
@@ -120,6 +134,9 @@ export function createSqliteTransactionRepository(
       await database.executeSql('DELETE FROM receipt_attachments WHERE transaction_id = ?;', [id]);
       await database.executeSql('DELETE FROM transaction_splits WHERE transaction_id = ?;', [id]);
       await database.executeSql('DELETE FROM transactions WHERE id = ?;', [id]);
+    },
+    deleteInstallmentPurchasesByTransactionId: async transactionId => {
+      await database.executeSql('DELETE FROM installment_purchases WHERE transaction_id = ?;', [transactionId]);
     },
     updateTransactionCategory: async (id, categoryId) => {
       await database.executeSql(

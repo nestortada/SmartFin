@@ -1,5 +1,7 @@
 import type { ISODateString } from '../../../shared/types';
 import type { Account } from '../../accounts';
+import type { TransactionRepository } from '../../transactions';
+import type { Transaction } from '../../transactions/types';
 import type { CreditCardRepository } from '../repositories';
 import type {
   CreditCardInstallmentSummary,
@@ -20,6 +22,7 @@ type BuildCreditCardsOverviewParams = {
   installments: InstallmentPurchase[];
   profiles: CreditCardProfile[];
   statements: CreditCardStatement[];
+  transactions?: Transaction[];
 };
 
 function toDateOnly(date: Date): ISODateString {
@@ -112,12 +115,41 @@ function summarizeInstallment(purchase: InstallmentPurchase): CreditCardInstallm
   };
 }
 
+function getStatementTransactions(
+  accountId: string,
+  currentStatement: CreditCardStatement | undefined,
+  transactions: Transaction[],
+): Transaction[] {
+  const isCardMovement = (transaction: Transaction) =>
+    transaction.accountId === accountId || transaction.targetAccountId === accountId;
+
+  if (!currentStatement) {
+    return transactions
+      .filter(isCardMovement)
+      .filter(transaction => transaction.status !== 'cancelled')
+      .sort((left, right) => right.date.localeCompare(left.date));
+  }
+
+  return transactions
+    .filter(isCardMovement)
+    .filter(transaction => transaction.status !== 'cancelled')
+    .filter(transaction => {
+      const date = transaction.date.slice(0, 10);
+      return (
+        date >= currentStatement.statementStartDate.slice(0, 10) &&
+        date <= currentStatement.statementEndDate.slice(0, 10)
+      );
+    })
+    .sort((left, right) => right.date.localeCompare(left.date));
+}
+
 export function buildCreditCardsOverview({
   accounts,
   currentDate = new Date(),
   installments,
   profiles,
   statements,
+  transactions = [],
 }: BuildCreditCardsOverviewParams): CreditCardsOverview {
   const cards = accounts
     .filter(account => account.status === 'active' && account.type === 'creditCard')
@@ -143,6 +175,11 @@ export function buildCreditCardsOverview({
         minimumPayment,
         profile?.monthlyInterestRate ?? DEFAULT_MONTHLY_INTEREST_RATE,
       );
+      const recentTransactions = getStatementTransactions(
+        account.id,
+        currentStatement,
+        transactions,
+      );
 
       return {
         account,
@@ -151,6 +188,7 @@ export function buildCreditCardsOverview({
         installments: accountInstallments,
         minimumPaymentSimulation,
         nextPaymentAmount: currentStatement?.totalAmount ?? usedCredit,
+        recentTransactions,
         totalLimit,
         usedCredit,
         utilizationRatio,
@@ -165,14 +203,16 @@ export function buildCreditCardsOverview({
 
 export async function getCreditCardsOverview(
   repository: CreditCardRepository,
+  transactionRepository?: Pick<TransactionRepository, 'getTransactions'>,
   currentDate: Date = new Date(),
 ): Promise<CreditCardsOverview> {
   const accounts = await repository.getCreditCardAccounts();
   const accountIds = accounts.map(account => account.id);
-  const [statements, installments, profiles] = await Promise.all([
+  const [statements, installments, profiles, transactions] = await Promise.all([
     repository.getStatements(accountIds),
     repository.getInstallmentPurchases(accountIds),
     repository.getProfiles(accountIds),
+    transactionRepository ? transactionRepository.getTransactions() : Promise.resolve([]),
   ]);
 
   return buildCreditCardsOverview({
@@ -181,5 +221,6 @@ export async function getCreditCardsOverview(
     installments,
     profiles,
     statements,
+    transactions,
   });
 }

@@ -22,26 +22,26 @@ import { StatusPill, type SettingsPalette } from './components/primitives';
 const palettes: Record<AppTheme, SettingsPalette> = {
   dark: {
     background: '#131314',
-    border: 'rgba(255, 255, 255, 0.11)',
+    border: 'rgba(255, 255, 255, 0.1)',
     card: 'rgba(255, 255, 255, 0.08)',
-    cardStrong: 'rgba(255, 255, 255, 0.11)',
+    cardStrong: 'rgba(255, 255, 255, 0.08)',
     danger: '#ffb4ab',
-    dangerSoft: 'rgba(255, 180, 171, 0.13)',
+    dangerSoft: 'rgba(255, 180, 171, 0.1)',
     inverseText: '#001d93',
     muted: '#c5c5d9',
     primary: '#bbc3ff',
-    primarySoft: 'rgba(187, 195, 255, 0.16)',
+    primarySoft: 'rgba(187, 195, 255, 0.2)',
     secondary: '#cdbdff',
     secondarySoft: 'rgba(205, 189, 255, 0.14)',
     tertiary: '#00e475',
-    tertiarySoft: 'rgba(0, 228, 117, 0.14)',
-    text: '#f1f0ff',
+    tertiarySoft: 'rgba(0, 127, 62, 0.2)',
+    text: '#e5e2e3',
   },
   light: {
-    background: '#f8f7fb',
+    background: '#f8f8fb',
     border: 'rgba(30, 36, 60, 0.12)',
-    card: 'rgba(255, 255, 255, 0.76)',
-    cardStrong: 'rgba(255, 255, 255, 0.94)',
+    card: 'rgba(255, 255, 255, 0.86)',
+    cardStrong: 'rgba(255, 255, 255, 0.96)',
     danger: '#a9362e',
     dangerSoft: 'rgba(169, 54, 46, 0.1)',
     inverseText: '#ffffff',
@@ -64,7 +64,11 @@ type SettingsScreenProps = {
   settings: SettingsState;
   onBack: () => void;
   onDeleteFinancialData: () => Promise<void>;
+  onNavigateToHome: () => void;
+  onNavigateToTransactions: () => void;
+  onOpenCategories: () => void;
   onOpenCreditCards: () => void;
+  onOpenDebitCards: () => void;
   onSaveCredential: (secret: string) => Promise<void>;
   onThemeChange: (theme: AppTheme) => Promise<void>;
   onToggleBiometrics: (enabled: boolean) => Promise<void>;
@@ -79,7 +83,11 @@ export function SettingsScreen({
   settings,
   onBack,
   onDeleteFinancialData,
+  onNavigateToHome,
+  onNavigateToTransactions,
+  onOpenCategories,
   onOpenCreditCards,
+  onOpenDebitCards,
   onSaveCredential,
   onThemeChange,
   onToggleBiometrics,
@@ -90,7 +98,9 @@ export function SettingsScreen({
 
   const handleTabPress = (tab: BottomNavigationTab) => {
     if (tab === 'home') {
-      onBack();
+      onNavigateToHome();
+    } else if (tab === 'transactions') {
+      onNavigateToTransactions();
     }
   };
 
@@ -118,8 +128,8 @@ export function SettingsScreen({
           {
             backgroundColor:
               settings.theme === 'dark'
-                ? 'rgba(19, 19, 20, 0.84)'
-                : 'rgba(248, 247, 251, 0.86)',
+                ? 'rgba(19, 19, 20, 0.92)'
+                : 'rgba(248, 248, 251, 0.92)',
             borderColor: palette.border,
             paddingTop: insets.top + 8,
           },
@@ -128,17 +138,17 @@ export function SettingsScreen({
           accessibilityRole="button"
           onPress={onBack}
           style={styles.backButton}>
-          <Text style={[styles.backIcon, { color: palette.primary }]}>‹</Text>
+          <Text style={[styles.backIcon, { color: palette.primary }]}>←</Text>
         </Pressable>
         <Text style={[styles.title, { color: palette.primary }]}>Ajustes</Text>
         
         {/* Right side items: Bell notification and profile mark */}
         <View style={styles.topRightControls}>
-          <Pressable style={[styles.iconButton, { borderColor: palette.border }]}>
-            <Text style={styles.bellIcon}>🔔</Text>
+          <Pressable style={styles.iconButton}>
+            <Text style={[styles.bellIcon, { color: palette.muted }]}>🔔</Text>
           </Pressable>
-          <View style={[styles.profileMark, { backgroundColor: palette.primary }]}>
-            <Text style={[styles.profileMarkText, { color: palette.inverseText }]}>
+          <View style={[styles.profileMark, { backgroundColor: '#3d5afe', borderColor: palette.primary }]}>
+            <Text style={[styles.profileMarkText, { color: palette.text }]}>
               SF
             </Text>
           </View>
@@ -149,7 +159,7 @@ export function SettingsScreen({
       <ScrollView
         contentContainerStyle={[
           styles.content,
-          { paddingBottom: insets.bottom + 120, paddingTop: insets.top + 86 },
+          { paddingBottom: insets.bottom + 128, paddingTop: insets.top + 116 },
         ]}>
         <SettingsHeroCard palette={palette} />
 
@@ -175,6 +185,7 @@ export function SettingsScreen({
 
         {/* PERSONALIZATION & DELETION CARD */}
         <PersonalizationSection
+          onOpenCategories={onOpenCategories}
           onThemeChange={onThemeChange}
           onDeleteFinancialData={confirmFinancialDataDeletion}
           palette={palette}
@@ -199,6 +210,8 @@ export function SettingsScreen({
         onMoreActionPress={action => {
           if (action === 'creditCards') {
             onOpenCreditCards();
+          } else if (action === 'debitCards') {
+            onOpenDebitCards();
           }
         }}
         onTabPress={handleTabPress}
@@ -212,22 +225,23 @@ export function SettingsScreen({
 const styles = StyleSheet.create({
   backButton: {
     alignItems: 'center',
-    height: 44,
+    height: 40,
     justifyContent: 'center',
-    width: 44,
+    width: 32,
   },
   backIcon: {
-    fontSize: 42,
-    fontWeight: '500',
-    lineHeight: 42,
+    fontSize: 28,
+    fontWeight: '900',
+    lineHeight: 32,
   },
   bellIcon: {
-    fontSize: 16,
+    fontSize: 11,
+    fontWeight: '900',
   },
   content: {
     alignSelf: 'center',
-    gap: 24,
-    maxWidth: 560,
+    gap: 32,
+    maxWidth: 672,
     paddingHorizontal: 20,
     width: '100%',
   },
@@ -249,17 +263,17 @@ const styles = StyleSheet.create({
   iconButton: {
     alignItems: 'center',
     borderRadius: 18,
-    borderWidth: 1,
-    height: 36,
+    height: 32,
     justifyContent: 'center',
-    width: 36,
+    width: 32,
   },
   profileMark: {
     alignItems: 'center',
-    borderRadius: 18,
-    height: 36,
+    borderRadius: 16,
+    borderWidth: 1,
+    height: 32,
     justifyContent: 'center',
-    width: 36,
+    width: 32,
   },
   profileMarkText: {
     fontSize: 12,
@@ -271,17 +285,17 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 28,
-    fontWeight: '900',
+    fontWeight: '800',
     lineHeight: 36,
   },
   topBar: {
     alignItems: 'center',
     borderBottomWidth: 1,
     flexDirection: 'row',
-    gap: 12,
+    gap: 8,
     left: 0,
     paddingBottom: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingTop: 8,
     position: 'absolute',
     right: 0,
@@ -291,6 +305,6 @@ const styles = StyleSheet.create({
   topRightControls: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 10,
+    gap: 16,
   },
 });

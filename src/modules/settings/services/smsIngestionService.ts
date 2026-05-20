@@ -5,22 +5,24 @@ import type { SmsPermissionState } from '../types';
 
 import {
   parseFinancialSms,
-  type FinancialSmsMessage,
+  type FinancialMessage,
   type ParsedFinancialMessage,
 } from './smsParser';
 
 type NativeSmsIngestionModule = {
   requestSmsPermission: () => Promise<SmsPermissionState>;
+  requestNotificationListenerPermission?: () => Promise<SmsPermissionState>;
   setSmsReadingEnabled: (enabled: boolean) => Promise<void>;
   getSmsPermissionState: () => Promise<SmsPermissionState>;
+  getNotificationListenerPermissionState?: () => Promise<SmsPermissionState>;
 };
 
 type SmsIngestionService = {
   requestSmsPermission: () => Promise<SmsPermissionState>;
   setSmsReadingEnabled: (enabled: boolean) => Promise<void>;
-  parseFinancialSms: (message: FinancialSmsMessage) => ParsedFinancialMessage;
+  parseFinancialSms: (message: FinancialMessage) => ParsedFinancialMessage;
   subscribeToIncomingSms: (
-    listener: (message: FinancialSmsMessage) => void,
+    listener: (message: FinancialMessage) => void,
   ) => () => void;
 };
 
@@ -45,7 +47,16 @@ export function createSmsIngestionService(): SmsIngestionService {
         return 'unavailable';
       }
 
-      return nativeModule.requestSmsPermission();
+      const smsState = await nativeModule.requestSmsPermission();
+      const notificationState = nativeModule.requestNotificationListenerPermission
+        ? await nativeModule.requestNotificationListenerPermission()
+        : 'unavailable';
+
+      if (smsState === 'granted' || notificationState === 'granted' || notificationState === 'available') {
+        return 'granted';
+      }
+
+      return smsState;
     },
     setSmsReadingEnabled: async enabled => {
       const nativeModule = getNativeSmsModule();
@@ -68,13 +79,13 @@ export function createSmsIngestionService(): SmsIngestionService {
         NativeModules.SmartFinSmsIngestion,
       );
       const subscription = emitter.addListener(
-        'SmartFinIncomingSms',
+        'SmartFinIncomingFinancialMessage',
         (message: unknown) => {
           if (!message || typeof message !== 'object') {
             return;
           }
 
-          const maybeMessage = message as Partial<FinancialSmsMessage>;
+          const maybeMessage = message as Partial<FinancialMessage>;
 
           if (typeof maybeMessage.body !== 'string') {
             return;
@@ -82,6 +93,10 @@ export function createSmsIngestionService(): SmsIngestionService {
 
           listener({
             body: maybeMessage.body,
+            packageName:
+              typeof maybeMessage.packageName === 'string'
+                ? maybeMessage.packageName
+                : undefined,
             receivedAt:
               typeof maybeMessage.receivedAt === 'string'
                 ? maybeMessage.receivedAt
@@ -89,6 +104,18 @@ export function createSmsIngestionService(): SmsIngestionService {
             sender:
               typeof maybeMessage.sender === 'string'
                 ? maybeMessage.sender
+                : undefined,
+            sourceApp:
+              typeof maybeMessage.sourceApp === 'string'
+                ? maybeMessage.sourceApp
+                : undefined,
+            sourceType:
+              maybeMessage.sourceType === 'notification'
+                ? 'notification'
+                : 'sms',
+            title:
+              typeof maybeMessage.title === 'string'
+                ? maybeMessage.title
                 : undefined,
           });
         },
@@ -101,12 +128,20 @@ export function createSmsIngestionService(): SmsIngestionService {
 
 export async function saveRawFinancialSms(
   database: SmartFinSQLiteDatabase,
-  message: FinancialSmsMessage,
+  message: FinancialMessage,
 ): Promise<void> {
   const parsedMessage = parseFinancialSms(message);
   const createdAt = new Date().toISOString();
-  const messageId = `sms-${message.receivedAt}-${Math.abs(
-    `${message.sender ?? ''}:${message.body}`.split('').reduce(
+  const sourceType = message.sourceType ?? 'sms';
+  const sourceApp =
+    message.sourceApp ??
+    message.packageName ??
+    (sourceType === 'notification' ? 'android-notification' : 'android-sms');
+  const rawText = [message.title, message.body]
+    .filter((part): part is string => typeof part === 'string' && part.trim().length > 0)
+    .join('\n');
+  const messageId = `${sourceType}-${message.receivedAt}-${Math.abs(
+    `${sourceApp}:${message.sender ?? ''}:${message.title ?? ''}:${message.body}`.split('').reduce(
       (hash, char) => (hash * 31 + char.charCodeAt(0)) | 0,
       0,
     ),
@@ -132,10 +167,10 @@ export async function saveRawFinancialSms(
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
     [
       messageId,
-      'sms',
-      'android-sms',
+      sourceType,
+      sourceApp,
       message.sender ?? null,
-      message.body,
+      rawText,
       message.receivedAt,
       parsedMessage.status,
       parsedMessage.status === 'parsed' ? parsedMessage.amount : null,

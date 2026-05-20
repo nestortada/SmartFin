@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-  ActivityIndicator,
   Alert,
   Pressable,
   ScrollView,
@@ -9,79 +8,66 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
+import { formatCurrency } from '../../../shared/utils/formatCurrency';
+import type { Account } from '../../accounts';
 import type { AppTheme } from '../../settings';
 import { useCreditCardsOverview } from '../hooks';
-import { createSqliteCreditCardRepository } from '../repositories';
+import {
+  createSqliteCreditCardAlertRepository,
+  createSqliteCreditCardRepository,
+} from '../repositories';
+import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
+import { createSqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
 import type { CreditCardSummary } from '../types';
 import {
+  associatePendingTransactionsForCreditCard,
   deleteCreditCard,
+  reconcileCreditCardTransactions,
+  registerCreditCardPayment,
   saveCreditCardFromForm,
 } from '../useCases';
 import { CreditCardFormModal } from './components/CreditCardFormModal';
+import { CreditCardCarousel } from './components/CreditCardCarousel';
 import {
   CreditCardDatesCard,
   CreditCardLimitCard,
   InstallmentsSection,
   MinimumPaymentCard,
+  StatementTransactionsSection,
 } from './components/CreditCardInsightCards';
 import {
-  CREDIT_CARD_PREVIEW_DIMENSIONS,
-  CreditCardPreview,
-} from './components/CreditCardPreview';
+  CreditCardPaymentAction,
+  CreditCardPaymentModal,
+} from './components/CreditCardPayment';
+import {
+  CreditCardsEmptyState,
+  CreditCardsErrorState,
+  CreditCardsHeader,
+  CreditCardsLoadingState,
+} from './components/CreditCardsScreenStates';
 import {
   EMPTY_FORM_STATE,
   type CreditCardFormMode,
   type CreditCardFormState,
-  type CreditCardsPalette,
 } from './creditCardUiTypes';
+import { creditCardsPalettes } from './creditCardsPalette';
 import {
+  formatCreditLimitInput,
   formStateFromCard,
+  parseMoneyInput,
   toFormInput,
 } from './creditCardFormatters';
-
-const palettes: Record<AppTheme, CreditCardsPalette> = {
-  dark: {
-    background: '#131314',
-    border: 'rgba(255, 255, 255, 0.14)',
-    card: 'rgba(255, 255, 255, 0.08)',
-    cardStrong: 'rgba(255, 255, 255, 0.12)',
-    danger: '#ffb4ab',
-    dangerSoft: 'rgba(255, 180, 171, 0.12)',
-    inverseText: '#001d93',
-    muted: '#c5c5d9',
-    primary: '#bbc3ff',
-    primaryStrong: '#3d5afe',
-    secondary: '#cdbdff',
-    surface: '#201f20',
-    tertiary: '#00e475',
-    text: '#f1f0ff',
-  },
-  light: {
-    background: '#f8f7fb',
-    border: 'rgba(30, 36, 60, 0.12)',
-    card: 'rgba(255, 255, 255, 0.78)',
-    cardStrong: 'rgba(255, 255, 255, 0.94)',
-    danger: '#a9362e',
-    dangerSoft: 'rgba(169, 54, 46, 0.1)',
-    inverseText: '#ffffff',
-    muted: '#686678',
-    primary: '#2848ee',
-    primaryStrong: '#3d5afe',
-    secondary: '#5203d5',
-    surface: '#ffffff',
-    tertiary: '#007f3e',
-    text: '#18191f',
-  },
-};
 
 type CreditCardsScreenProps = {
   activeTheme: AppTheme;
   database?: SmartFinSQLiteDatabase;
   onNavigateToHome: () => void;
   onNavigateToTransactions: () => void;
+  onOpenDebitCards: () => void;
   onOpenSettings: () => void;
   refreshKey?: number;
 };
@@ -91,11 +77,12 @@ export function CreditCardsScreen({
   database,
   onNavigateToHome,
   onNavigateToTransactions,
+  onOpenDebitCards,
   onOpenSettings,
   refreshKey = 0,
 }: CreditCardsScreenProps) {
   const insets = useSafeAreaInsets();
-  const palette = palettes[activeTheme];
+  const palette = creditCardsPalettes[activeTheme];
   const [localRefreshKey, setLocalRefreshKey] = useState(0);
   const { error, loading, overview } = useCreditCardsOverview(database, refreshKey + localRefreshKey);
   const [selectedCardId, setSelectedCardId] = useState<string>();
@@ -103,6 +90,11 @@ export function CreditCardsScreen({
   const [formCardId, setFormCardId] = useState<string>();
   const [formState, setFormState] = useState<CreditCardFormState>(EMPTY_FORM_STATE);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [paymentAccounts, setPaymentAccounts] = useState<Account[]>([]);
+  const [paymentAmount, setPaymentAmount] = useState('');
+  const [paymentModalVisible, setPaymentModalVisible] = useState(false);
+  const [paymentSourceAccountId, setPaymentSourceAccountId] = useState<string>();
+  const [payingCard, setPayingCard] = useState(false);
   const [savingCard, setSavingCard] = useState(false);
 
   useEffect(() => {
@@ -146,6 +138,15 @@ export function CreditCardsScreen({
     setIsFormVisible(true);
   };
 
+  const handleCardPress = (card: CreditCardSummary) => {
+    if (card.account.id !== selectedCard?.account.id) {
+      setSelectedCardId(card.account.id);
+      return;
+    }
+
+    openEditForm(card);
+  };
+
   const closeForm = () => {
     if (!savingCard) {
       setIsFormVisible(false);
@@ -169,6 +170,20 @@ export function CreditCardsScreen({
       const repository = createSqliteCreditCardRepository(database);
       const existingCard = overview.cards.find(card => card.account.id === formCardId);
       const savedAccount = await saveCreditCardFromForm(repository, input, existingCard?.account);
+      const associatedCount = await associatePendingTransactionsForCreditCard({
+        account: savedAccount,
+        accountRepository: createSqliteAccountRepository(database),
+        creditCardRepository: repository,
+        transactionRepository: createSqliteTransactionRepository(database),
+      });
+      if (associatedCount > 0) {
+        await createSqliteCreditCardAlertRepository(database).resolveMissingCreditCardAlert(savedAccount.name);
+        Toast.show({
+          type: 'success',
+          text1: 'Movimientos asociados',
+          text2: `${associatedCount} movimiento${associatedCount === 1 ? '' : 's'} pendiente${associatedCount === 1 ? '' : 's'} se vinculó a la tarjeta.`,
+        });
+      }
       setSelectedCardId(savedAccount.id);
       refreshCards();
       setIsFormVisible(false);
@@ -195,7 +210,16 @@ export function CreditCardsScreen({
         onPress: async () => {
           setSavingCard(true);
           try {
-            await deleteCreditCard(createSqliteCreditCardRepository(database), formCardId);
+            const accountRepository = createSqliteAccountRepository(database);
+            const creditCardRepository = createSqliteCreditCardRepository(database);
+            const transactionRepository = createSqliteTransactionRepository(database);
+
+            await reconcileCreditCardTransactions({
+              accountRepository,
+              creditCardRepository,
+              transactionRepository,
+            });
+            await deleteCreditCard(creditCardRepository, formCardId);
             setSelectedCardId(undefined);
             refreshCards();
             setIsFormVisible(false);
@@ -212,6 +236,91 @@ export function CreditCardsScreen({
     ]);
   };
 
+  const openPaymentModal = async () => {
+    if (!database || !selectedCard) {
+      return;
+    }
+
+    if (selectedCard.usedCredit <= 0) {
+      Alert.alert('SmartFin', 'Esta tarjeta no tiene saldo pendiente por pagar.');
+      return;
+    }
+
+    try {
+      const accountRepository = createSqliteAccountRepository(database);
+      const accounts = await accountRepository.getAccounts();
+      const sourceAccounts = accounts.filter(
+        account =>
+          account.status === 'active' &&
+          ['cash', 'bankAccount', 'savingsAccount'].includes(account.type),
+      );
+
+      if (sourceAccounts.length === 0) {
+        Alert.alert('SmartFin', 'Crea una cuenta debito o de ahorro para registrar el pago.');
+        return;
+      }
+
+      setPaymentAccounts(sourceAccounts);
+      setPaymentSourceAccountId(current =>
+        current && sourceAccounts.some(account => account.id === current)
+          ? current
+          : sourceAccounts[0]?.id,
+      );
+      setPaymentAmount(formatCreditLimitInput(String(Math.round(selectedCard.usedCredit))));
+      setPaymentModalVisible(true);
+    } catch (loadError) {
+      Alert.alert(
+        'SmartFin',
+        loadError instanceof Error ? loadError.message : 'No se pudieron cargar las cuentas origen.',
+      );
+    }
+  };
+
+  const closePaymentModal = () => {
+    if (!payingCard) {
+      setPaymentModalVisible(false);
+    }
+  };
+
+  const handleRegisterPayment = async () => {
+    if (!database || !selectedCard) {
+      return;
+    }
+
+    const amount = parseMoneyInput(paymentAmount);
+    if (!paymentSourceAccountId || amount <= 0) {
+      Alert.alert('SmartFin', 'Selecciona una cuenta origen e ingresa un monto valido.');
+      return;
+    }
+
+    setPayingCard(true);
+    try {
+      const result = await registerCreditCardPayment({
+        accountId: selectedCard.account.id,
+        accountRepository: createSqliteAccountRepository(database),
+        amount,
+        creditCardRepository: createSqliteCreditCardRepository(database),
+        sourceAccountId: paymentSourceAccountId,
+        transactionRepository: createSqliteTransactionRepository(database),
+      });
+
+      Toast.show({
+        type: 'success',
+        text1: 'Pago registrado',
+        text2: `Se restauro ${formatCurrency(result.paidAmount, selectedCard.account.currency)} de cupo disponible.`,
+      });
+      setPaymentModalVisible(false);
+      refreshCards();
+    } catch (paymentError) {
+      Alert.alert(
+        'SmartFin',
+        paymentError instanceof Error ? paymentError.message : 'No se pudo registrar el pago.',
+      );
+    } finally {
+      setPayingCard(false);
+    }
+  };
+
   return (
     <View style={[styles.screen, { backgroundColor: palette.background }]}>
       <ScrollView
@@ -220,16 +329,16 @@ export function CreditCardsScreen({
           { paddingBottom: insets.bottom + 140, paddingTop: insets.top + 18 },
         ]}
         style={styles.scrollView}>
-        <Header palette={palette} />
-        <LoadingState loading={loading} palette={palette} />
-        <ErrorState error={error} palette={palette} />
-        <EmptyState loading={loading} palette={palette} selectedCard={selectedCard} />
+        <CreditCardsHeader palette={palette} />
+        <CreditCardsLoadingState loading={loading} palette={palette} />
+        <CreditCardsErrorState error={error} palette={palette} />
+        <CreditCardsEmptyState loading={loading} palette={palette} selectedCard={selectedCard} />
 
         {overview.cards.length > 0 ? (
-          <CardCarousel
+          <CreditCardCarousel
             cards={overview.cards}
             onAddCard={openCreateForm}
-            onEditCard={openEditForm}
+            onCardPress={handleCardPress}
             palette={palette}
             selectedCardId={selectedCard?.account.id}
           />
@@ -238,9 +347,16 @@ export function CreditCardsScreen({
         {selectedCard ? (
           <>
             <CreditCardLimitCard card={selectedCard} palette={palette} />
+            <CreditCardPaymentAction
+              card={selectedCard}
+              onPress={openPaymentModal}
+              palette={palette}
+              saving={payingCard}
+            />
             <CreditCardDatesCard card={selectedCard} palette={palette} />
             <MinimumPaymentCard card={selectedCard} palette={palette} />
             <InstallmentsSection card={selectedCard} palette={palette} />
+            <StatementTransactionsSection card={selectedCard} palette={palette} />
           </>
         ) : null}
       </ScrollView>
@@ -273,12 +389,28 @@ export function CreditCardsScreen({
         visible={isFormVisible}
       />
 
+      <CreditCardPaymentModal
+        accounts={paymentAccounts}
+        amount={paymentAmount}
+        card={selectedCard}
+        onAmountChange={value => setPaymentAmount(formatCreditLimitInput(value))}
+        onClose={closePaymentModal}
+        onSave={handleRegisterPayment}
+        onSelectAccount={setPaymentSourceAccountId}
+        palette={palette}
+        saving={payingCard}
+        selectedAccountId={paymentSourceAccountId}
+        visible={paymentModalVisible}
+      />
+
       <BottomNavigation
         activeTab="more"
         bottomInset={insets.bottom}
         colorScheme={activeTheme}
         onMoreActionPress={action => {
-          if (action === 'settings') {
+          if (action === 'debitCards') {
+            onOpenDebitCards();
+          } else if (action === 'settings') {
             onOpenSettings();
           }
         }}
@@ -288,215 +420,13 @@ export function CreditCardsScreen({
   );
 }
 
-function Header({ palette }: { palette: CreditCardsPalette }) {
-  return (
-    <View style={styles.header}>
-      <View style={styles.headerLeft}>
-        <View style={[styles.avatar, { backgroundColor: palette.primaryStrong, borderColor: palette.border }]}>
-          <Text style={[styles.avatarText, { color: palette.text }]}>SF</Text>
-        </View>
-        <View>
-          <Text style={[styles.appName, { color: palette.primary }]}>SmartFin</Text>
-          <Text style={[styles.screenLabel, { color: palette.muted }]}>Tarjetas de credito</Text>
-        </View>
-      </View>
-      <View style={[styles.headerIcon, { borderColor: palette.border }]}>
-        <Text style={[styles.headerIconText, { color: palette.primary }]}>!</Text>
-      </View>
-    </View>
-  );
-}
-
-function LoadingState({
-  loading,
-  palette,
-}: {
-  loading: boolean;
-  palette: CreditCardsPalette;
-}) {
-  if (!loading) {
-    return null;
-  }
-
-  return (
-    <View style={styles.loadingRow}>
-      <ActivityIndicator color={palette.primary} size="small" />
-      <Text style={[styles.loadingText, { color: palette.muted }]}>Cargando tarjetas...</Text>
-    </View>
-  );
-}
-
-function ErrorState({
-  error,
-  palette,
-}: {
-  error?: string;
-  palette: CreditCardsPalette;
-}) {
-  if (!error) {
-    return null;
-  }
-
-  return (
-    <View style={[styles.statusCard, { backgroundColor: palette.dangerSoft, borderColor: palette.danger }]}>
-      <Text style={[styles.statusText, { color: palette.danger }]}>{error}</Text>
-    </View>
-  );
-}
-
-function EmptyState({
-  loading,
-  palette,
-  selectedCard,
-}: {
-  loading: boolean;
-  palette: CreditCardsPalette;
-  selectedCard?: CreditCardSummary;
-}) {
-  if (loading || selectedCard) {
-    return null;
-  }
-
-  return (
-    <View style={[styles.emptyCard, { backgroundColor: palette.card, borderColor: palette.border }]}>
-      <Text style={[styles.emptyTitle, { color: palette.text }]}>No hay tarjetas activas</Text>
-      <Text style={[styles.emptyBody, { color: palette.muted }]}>
-        Agrega una cuenta de tipo tarjeta de credito para ver cupo, cuotas y pagos.
-      </Text>
-    </View>
-  );
-}
-
-function CardCarousel({
-  cards,
-  onAddCard,
-  onEditCard,
-  palette,
-  selectedCardId,
-}: {
-  cards: CreditCardSummary[];
-  onAddCard: () => void;
-  onEditCard: (card: CreditCardSummary) => void;
-  palette: CreditCardsPalette;
-  selectedCardId?: string;
-}) {
-  return (
-    <View style={styles.carouselContainer}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.cardSelector}>
-        {cards.map((card, index) => {
-          const isSelected = card.account.id === selectedCardId;
-
-          return (
-            <Pressable
-              key={card.account.id}
-              onPress={() => onEditCard(card)}
-              style={[
-                styles.creditCardPreview,
-                {
-                  backgroundColor: isSelected ? palette.cardStrong : palette.card,
-                  borderColor: isSelected ? palette.primary : palette.border,
-                  borderWidth: isSelected ? 2 : 1,
-                  opacity: isSelected ? 1 : 0.78,
-                  shadowColor: isSelected ? palette.primary : '#000000',
-                  shadowOpacity: isSelected ? 0.26 : 0.12,
-                  shadowRadius: isSelected ? 16 : 8,
-                  shadowOffset: { width: 0, height: isSelected ? 10 : 4 },
-                  elevation: isSelected ? 10 : 3,
-                },
-              ]}>
-              <CreditCardPreview card={card} isPrimary={index === 0} palette={palette} />
-            </Pressable>
-          );
-        })}
-
-        <Pressable
-          onPress={onAddCard}
-          style={[
-            styles.addCardBtn,
-            {
-              borderColor: palette.border,
-              backgroundColor: 'rgba(255,255,255,0.02)',
-            },
-          ]}>
-          <Text style={[styles.addCardIcon, { color: palette.muted }]}>+</Text>
-        </Pressable>
-      </ScrollView>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
-  addCardBtn: {
-    alignItems: 'center',
-    borderRadius: 22,
-    borderStyle: 'dashed',
-    borderWidth: 2,
-    height: CREDIT_CARD_PREVIEW_DIMENSIONS.compactHeight,
-    justifyContent: 'center',
-    width: 64,
-  },
-  addCardIcon: {
-    fontSize: 24,
-    fontWeight: '300',
-  },
-  appName: {
-    fontSize: 28,
-    fontWeight: '900',
-    lineHeight: 32,
-  },
-  avatar: {
-    alignItems: 'center',
-    borderRadius: 20,
-    borderWidth: 1,
-    height: 40,
-    justifyContent: 'center',
-    width: 40,
-  },
-  avatarText: {
-    fontSize: 14,
-    fontWeight: '900',
-  },
-  cardSelector: {
-    gap: 12,
-    paddingBottom: 8,
-    paddingHorizontal: 20,
-  },
-  carouselContainer: {
-    marginHorizontal: -20,
-  },
   content: {
     alignSelf: 'center',
     gap: 24,
     maxWidth: 520,
     paddingHorizontal: 20,
     width: '100%',
-  },
-  creditCardPreview: {
-    borderRadius: 22,
-    borderWidth: 1,
-    height: CREDIT_CARD_PREVIEW_DIMENSIONS.compactHeight,
-    justifyContent: 'space-between',
-    overflow: 'hidden',
-    padding: 16,
-    width: CREDIT_CARD_PREVIEW_DIMENSIONS.compactWidth,
-  },
-  emptyBody: {
-    fontSize: 14,
-    fontWeight: '600',
-    lineHeight: 21,
-  },
-  emptyCard: {
-    borderRadius: 24,
-    borderWidth: 1,
-    gap: 8,
-    padding: 20,
-  },
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: '900',
   },
   fab: {
     alignItems: 'center',
@@ -515,61 +445,10 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     textAlign: 'center',
   },
-  header: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 4,
-  },
-  headerIcon: {
-    alignItems: 'center',
-    borderRadius: 20,
-    borderWidth: 1,
-    height: 40,
-    justifyContent: 'center',
-    width: 40,
-  },
-  headerIconText: {
-    fontSize: 18,
-    fontWeight: '900',
-  },
-  headerLeft: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: 12,
-  },
-  loadingRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: 8,
-    justifyContent: 'center',
-    paddingVertical: 6,
-  },
-  loadingText: {
-    fontSize: 13,
-    fontWeight: '700',
-  },
   screen: {
     flex: 1,
   },
-  screenLabel: {
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 0.5,
-    marginTop: 1,
-    textTransform: 'uppercase',
-  },
   scrollView: {
     flex: 1,
-  },
-  statusCard: {
-    borderRadius: 18,
-    borderWidth: 1,
-    padding: 14,
-  },
-  statusText: {
-    fontSize: 13,
-    fontWeight: '800',
-    textAlign: 'center',
   },
 });

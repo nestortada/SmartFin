@@ -70,16 +70,26 @@ export function parseMoneyInput(value: string): number {
 
 export function formatPercentageInput(value: string): string {
   const normalized = value
-    .replace(/,/g, '.')
-    .replace(/[^\d.]/g, '');
-  const [integerPart = '', ...decimalParts] = normalized.split('.');
-  const decimals = decimalParts.join('').slice(0, 2);
+    .replace(/\./g, ',')
+    .replace(/[^\d,]/g, '');
+  const separatorIndex = normalized.indexOf(',');
+  const hasSeparator = separatorIndex >= 0;
+  const integerPart = (hasSeparator
+    ? normalized.slice(0, separatorIndex)
+    : normalized).replace(/\D/g, '');
+  const decimals = hasSeparator
+    ? normalized.slice(separatorIndex + 1).replace(/\D/g, '').slice(0, 2)
+    : '';
 
-  if (!integerPart && !decimals) {
+  if (!integerPart && !decimals && !hasSeparator) {
     return '';
   }
 
-  return decimals ? `${integerPart || '0'}.${decimals}` : integerPart;
+  if (hasSeparator) {
+    return `${integerPart || '0'},${decimals}`;
+  }
+
+  return integerPart;
 }
 
 export function parsePercentageInput(value: string): number | undefined {
@@ -87,7 +97,7 @@ export function parsePercentageInput(value: string): number | undefined {
     return undefined;
   }
 
-  const parsed = Number(value.replace(/,/g, '.'));
+  const parsed = Number(value.replace(',', '.'));
   if (!Number.isFinite(parsed)) {
     return undefined;
   }
@@ -101,7 +111,7 @@ export function monthlyInterestRateToAnnualEffective(monthlyRate?: number): stri
   }
 
   const annualRate = (Math.pow(1 + monthlyRate, 12) - 1) * 100;
-  return annualRate.toFixed(2);
+  return annualRate.toFixed(2).replace('.', ',');
 }
 
 function formatDay(value?: number): string {

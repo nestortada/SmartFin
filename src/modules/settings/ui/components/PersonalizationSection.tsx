@@ -1,32 +1,42 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import type { AppTheme } from '../../types';
 import {
   SegmentButton,
   SettingsRow,
   SettingsSection,
   type SettingsPalette,
 } from './primitives';
-import type { AppTheme } from '../../types';
 
 type PersonalizationSectionProps = {
   palette: SettingsPalette;
   theme: AppTheme;
-  onThemeChange: (theme: AppTheme) => Promise<void>;
   onDeleteFinancialData: () => void;
+  onOpenCategories: () => void;
+  onThemeChange: (theme: AppTheme) => Promise<void>;
 };
 
 export function PersonalizationSection({
   palette,
   theme,
-  onThemeChange,
   onDeleteFinancialData,
+  onOpenCategories,
+  onThemeChange,
 }: PersonalizationSectionProps) {
-  const isDark = theme === 'dark';
-
   return (
-    <SettingsSection palette={palette} title="Personalización">
-      {/* Tema de la App Row */}
+    <SettingsSection palette={palette} title={'Personalizaci\u00f3n'}>
+      <Pressable onPress={onOpenCategories}>
+        <SettingsRow
+          icon="🏷️"
+          label={'Administrar categor\u00edas'}
+          palette={palette}
+          trailing={<Text style={[styles.chevron, { color: palette.muted }]}>{'>'}</Text>}
+        />
+      </Pressable>
+
+      <View style={styles.divider} />
+
       <SettingsRow
         icon="🌙"
         label="Tema de la App"
@@ -35,7 +45,7 @@ export function PersonalizationSection({
           <View
             style={[
               styles.segmentedControl,
-              { backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: palette.border },
+              { backgroundColor: '#201f20', borderColor: palette.border },
             ]}>
             <SegmentButton
               isActive={theme === 'dark'}
@@ -55,15 +65,14 @@ export function PersonalizationSection({
 
       <View style={styles.divider} />
 
-      {/* Eliminar datos financieros Row (Danger action item in same card) */}
       <Pressable onPress={onDeleteFinancialData} style={styles.dangerRow}>
         <View style={styles.dangerLabelWrap}>
-          <Text style={styles.dangerIcon}>🗑️</Text>
+          <Text style={[styles.dangerIcon, { color: palette.danger }]}>🗑️</Text>
           <Text style={[styles.dangerText, { color: palette.danger }]}>
             Eliminar datos financieros
           </Text>
         </View>
-        <Text style={[styles.chevron, { color: palette.danger }]}>›</Text>
+        <Text style={[styles.chevron, { color: palette.danger }]}>{'>'}</Text>
       </Pressable>
     </SettingsSection>
   );
@@ -72,13 +81,15 @@ export function PersonalizationSection({
 const styles = StyleSheet.create({
   chevron: {
     fontSize: 22,
-    fontWeight: '300',
+    fontWeight: '500',
   },
   dangerIcon: {
-    fontSize: 20,
-    marginRight: 12,
+    fontSize: 14,
+    fontWeight: '900',
+    lineHeight: 24,
+    marginRight: 16,
     textAlign: 'center',
-    width: 30,
+    width: 24,
   },
   dangerLabelWrap: {
     alignItems: 'center',
@@ -88,17 +99,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    minHeight: 58,
-    paddingHorizontal: 2,
+    minHeight: 64,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   dangerText: {
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '800',
+    lineHeight: 24,
   },
   divider: {
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     height: 1,
-    marginHorizontal: 8,
   },
   segmentedControl: {
     borderRadius: 999,

@@ -257,6 +257,7 @@ export const InlineOpTypeModal: React.FC<InlineOpTypeModalProps> = ({
   if (!tx) return null;
 
   const getOperationType = (transaction: Transaction) => {
+    if (transaction.paymentMethod === 'credit') return 'CrÃ©d';
     if (transaction.notes && transaction.notes.startsWith('Crédito •')) return 'Créd';
     return 'Deb';
   };
@@ -297,6 +298,150 @@ export const InlineOpTypeModal: React.FC<InlineOpTypeModalProps> = ({
             </Text>
           </Pressable>
         </View>
+      </Pressable>
+    </Modal>
+  );
+};
+
+// ==========================================
+// 6. InstallmentPickerModal
+// ==========================================
+type InstallmentPickerModalProps = {
+  tx: Transaction | null;
+  onClose: () => void;
+  isDark: boolean;
+  themeColors: any;
+  installmentCount: string;
+  onChangeInstallmentCount: (value: string) => void;
+  hasInterestFreeInstallments: boolean;
+  onChangeHasInterestFreeInstallments: (value: boolean) => void;
+  interestFreeInstallmentCount: string;
+  onChangeInterestFreeInstallmentCount: (value: string) => void;
+  onSave: () => void;
+};
+
+export const InstallmentPickerModal: React.FC<InstallmentPickerModalProps> = ({
+  tx,
+  onClose,
+  isDark,
+  themeColors,
+  installmentCount,
+  onChangeInstallmentCount,
+  hasInterestFreeInstallments,
+  onChangeHasInterestFreeInstallments,
+  interestFreeInstallmentCount,
+  onChangeInterestFreeInstallmentCount,
+  onSave,
+}) => {
+  if (!tx) return null;
+
+  const selectedInstallmentCount = Math.max(Number(installmentCount) || 1, 1);
+  const installmentOptions = ['1', '3', '6', '12', '18', '24', '36'];
+  const interestFreeOptions = Array.from({ length: selectedInstallmentCount }, (_, index) => String(index + 1));
+
+  const selectInstallmentCount = (value: string) => {
+    onChangeInstallmentCount(value);
+    const nextCount = Number(value) || 1;
+    if (nextCount <= 1) {
+      onChangeHasInterestFreeInstallments(false);
+      onChangeInterestFreeInstallmentCount('');
+      return;
+    }
+
+    const currentInterestFreeCount = Number(interestFreeInstallmentCount) || 0;
+    if (currentInterestFreeCount > nextCount) {
+      onChangeInterestFreeInstallmentCount(value);
+    }
+  };
+
+  return (
+    <Modal visible={tx !== null} transparent animationType="fade">
+      <Pressable style={styles.modalOverlay} onPress={onClose}>
+        <Pressable
+          onPress={event => event.stopPropagation()}
+          style={[styles.glassModal, { backgroundColor: isDark ? '#161420' : '#fff', borderColor: themeColors.border }]}>
+          <Text style={[styles.modalTitle, { color: themeColors.text, marginBottom: 6 }]}>Cuotas de la compra</Text>
+          <Text style={[styles.installmentMerchant, { color: themeColors.muted }]} numberOfLines={1}>
+            {tx.merchantName || tx.description}
+          </Text>
+
+          <Text style={[styles.installmentSectionTitle, { color: themeColors.text }]}>Numero de cuotas</Text>
+          <View style={styles.installmentGrid}>
+            {installmentOptions.map(option => (
+              <Pressable
+                key={option}
+                onPress={() => selectInstallmentCount(option)}
+                style={[
+                  styles.installmentChip,
+                  {
+                    backgroundColor: installmentCount === option ? themeColors.primary : themeColors.card,
+                    borderColor: installmentCount === option ? themeColors.primary : themeColors.border,
+                  },
+                ]}>
+                <Text
+                  style={[
+                    styles.installmentChipText,
+                    { color: installmentCount === option ? '#001d93' : themeColors.text },
+                  ]}>
+                  {option}x
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+
+          {selectedInstallmentCount > 1 ? (
+            <>
+              <Pressable
+                onPress={() => {
+                  const nextValue = !hasInterestFreeInstallments;
+                  onChangeHasInterestFreeInstallments(nextValue);
+                  onChangeInterestFreeInstallmentCount(nextValue ? installmentCount : '');
+                }}
+                style={[styles.interestFreeToggle, { borderColor: themeColors.border }]}>
+                <View>
+                  <Text style={[styles.interestFreeTitle, { color: themeColors.text }]}>Cuotas sin intereses</Text>
+                  <Text style={[styles.interestFreeSubtitle, { color: themeColors.muted }]}>
+                    Indica cuantas cuotas no generan intereses
+                  </Text>
+                </View>
+                <Text style={[styles.interestFreeState, { color: hasInterestFreeInstallments ? themeColors.tertiary : themeColors.muted }]}>
+                  {hasInterestFreeInstallments ? 'Si' : 'No'}
+                </Text>
+              </Pressable>
+
+              {hasInterestFreeInstallments ? (
+                <View style={styles.installmentGrid}>
+                  {interestFreeOptions.map(option => (
+                    <Pressable
+                      key={option}
+                      onPress={() => onChangeInterestFreeInstallmentCount(option)}
+                      style={[
+                        styles.installmentChip,
+                        {
+                          backgroundColor:
+                            interestFreeInstallmentCount === option ? 'rgba(0, 228, 117, 0.16)' : themeColors.card,
+                          borderColor:
+                            interestFreeInstallmentCount === option ? themeColors.tertiary : themeColors.border,
+                        },
+                      ]}>
+                      <Text
+                        style={[
+                          styles.installmentChipText,
+                          { color: interestFreeInstallmentCount === option ? themeColors.tertiary : themeColors.text },
+                        ]}>
+                        {option}
+                      </Text>
+                    </Pressable>
+                  ))}
+                </View>
+              ) : null}
+            </>
+          ) : null}
+
+          <Pressable onPress={onSave} style={[styles.installmentSaveButton, { backgroundColor: themeColors.primary }]}>
+            <Text style={styles.installmentSaveText}>Guardar cuotas</Text>
+          </Pressable>
+        </Pressable>
       </Pressable>
     </Modal>
   );
@@ -346,5 +491,70 @@ const styles = StyleSheet.create({
   },
   modalOptionActive: {
     color: '#00e475',
+  },
+  installmentChip: {
+    alignItems: 'center',
+    borderRadius: 12,
+    borderWidth: 1,
+    flexGrow: 1,
+    justifyContent: 'center',
+    minHeight: 42,
+    minWidth: 58,
+    paddingHorizontal: 10,
+  },
+  installmentChipText: {
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  installmentGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 10,
+  },
+  installmentMerchant: {
+    fontSize: 12,
+    fontWeight: '700',
+    marginBottom: 14,
+    textAlign: 'center',
+  },
+  installmentSaveButton: {
+    alignItems: 'center',
+    borderRadius: 14,
+    justifyContent: 'center',
+    marginTop: 18,
+    minHeight: 48,
+  },
+  installmentSaveText: {
+    color: '#001d93',
+    fontSize: 15,
+    fontWeight: '900',
+  },
+  installmentSectionTitle: {
+    fontSize: 13,
+    fontWeight: '900',
+    textTransform: 'uppercase',
+  },
+  interestFreeState: {
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  interestFreeSubtitle: {
+    fontSize: 11,
+    fontWeight: '600',
+    marginTop: 2,
+  },
+  interestFreeTitle: {
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  interestFreeToggle: {
+    alignItems: 'center',
+    borderRadius: 14,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 14,
+    padding: 12,
   },
 });

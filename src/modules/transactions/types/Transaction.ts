@@ -14,6 +14,8 @@ export type TransactionDirection = 'inflow' | 'outflow' | 'neutral';
 
 export type TransactionStatus = 'posted' | 'pending' | 'cancelled';
 
+export type TransactionPaymentMethod = 'debit' | 'credit';
+
 export type Transaction = {
   id: string;
   amount: number;
@@ -27,6 +29,9 @@ export type Transaction = {
   status: TransactionStatus;
   targetAccountId?: string;
   merchantName?: string;
+  paymentMethod?: TransactionPaymentMethod;
+  creditCardHint?: string;
+  dedupeKey?: string;
   notes?: string;
   createdAt: ISODateString;
   updatedAt: ISODateString;

@@ -95,7 +95,12 @@ export function SettingsSection({
       <View
         style={[
           primitiveStyles.sectionCard,
-          { backgroundColor: palette.cardStrong, borderColor: palette.border },
+          {
+            backgroundColor: palette.cardStrong,
+            borderColor: palette.border,
+            borderLeftColor: 'rgba(255, 255, 255, 0.05)',
+            borderTopColor: 'rgba(255, 255, 255, 0.1)',
+          },
         ]}>
         {children}
       </View>
@@ -249,55 +254,58 @@ export const primitiveStyles = StyleSheet.create({
   row: {
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 12,
-    minHeight: 58,
+    gap: 16,
+    minHeight: 64,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   rowCopy: {
     flex: 1,
-    gap: 3,
+    gap: 4,
   },
   rowIcon: {
-    fontSize: 21,
+    fontSize: 22,
     fontWeight: '900',
+    lineHeight: 24,
     textAlign: 'center',
-    width: 30,
+    width: 32,
   },
   rowLabel: {
     fontSize: 16,
     fontWeight: '800',
-    lineHeight: 21,
+    lineHeight: 24,
   },
   rowSupporting: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: '600',
-    lineHeight: 16,
+    lineHeight: 14,
   },
   section: {
-    gap: 10,
+    gap: 16,
   },
   sectionCard: {
-    borderRadius: 24,
+    borderRadius: 12,
     borderWidth: 1,
-    gap: 4,
-    padding: 14,
+    gap: 0,
+    overflow: 'hidden',
   },
   sectionTitle: {
     fontSize: 12,
-    fontWeight: '900',
-    letterSpacing: 0.8,
+    fontWeight: '800',
+    letterSpacing: 1.1,
     paddingLeft: 8,
     textTransform: 'uppercase',
   },
   segmentButton: {
     alignItems: 'center',
     borderRadius: 999,
-    minWidth: 72,
-    paddingHorizontal: 12,
+    minWidth: 70,
+    paddingHorizontal: 16,
     paddingVertical: 6,
   },
   segmentButtonText: {
     fontSize: 12,
-    fontWeight: '800',
+    fontWeight: '700',
   },
   statusPill: {
     borderRadius: 999,

@@ -1,13 +1,32 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+
 import type { Transaction } from '../../types';
+
+type ThemeColors = {
+  border: string;
+  card: string;
+  muted: string;
+  tertiary: string;
+  text: string;
+};
 
 type TransactionCardProps = {
   tx: Transaction;
   isDark: boolean;
-  themeColors: any;
-  categories: any[];
-  accounts: any[];
+  themeColors: ThemeColors;
+  categories: Array<{
+    color?: string;
+    id: string;
+    macroCategory: string;
+    name: string;
+  }>;
+  accounts: Array<{
+    id: string;
+    name: string;
+    type?: string;
+  }>;
+  onEditInstallments: (tx: Transaction) => void;
   onShowOpTypeDropdown: (tx: Transaction) => void;
   onPress?: (tx: Transaction) => void;
 };
@@ -18,21 +37,32 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   themeColors,
   categories,
   accounts,
+  onEditInstallments,
   onShowOpTypeDropdown,
   onPress,
 }) => {
   const getCategoryIcon = (macro: string): string => {
     switch (macro) {
-      case 'income': return '💵';
-      case 'food': return '🍔';
-      case 'transport': return '🚗';
-      case 'housing': return '🏠';
-      case 'entertainment': return '🍿';
-      case 'health': return '💊';
-      case 'utilities': return '💡';
-      case 'debts': return '💳';
-      case 'investments': return '📈';
-      default: return '📦';
+      case 'income':
+        return '$';
+      case 'food':
+        return 'FO';
+      case 'transport':
+        return 'TR';
+      case 'housing':
+        return 'HO';
+      case 'entertainment':
+        return 'EN';
+      case 'health':
+        return 'SA';
+      case 'utilities':
+        return 'SE';
+      case 'debts':
+        return 'DE';
+      case 'investments':
+        return 'IN';
+      default:
+        return 'OT';
     }
   };
 
@@ -40,15 +70,16 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     const cat = categories.find(c => c.id === categoryId);
     if (cat) {
       return {
-        name: cat.name,
         color: cat.color || '#cdbdff',
         icon: getCategoryIcon(cat.macroCategory),
+        name: cat.name,
       };
     }
+
     return {
-      name: 'Otros',
       color: '#c5c5d9',
-      icon: '📦',
+      icon: 'OT',
+      name: 'Otros',
     };
   };
 
@@ -58,82 +89,123 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   };
 
   const getOperationType = (transaction: Transaction) => {
-    if (transaction.notes && transaction.notes.startsWith('Crédito •')) return 'Créd';
-    return 'Deb';
+    if (transaction.paymentMethod === 'credit') {
+      return 'credit';
+    }
+    const account = accounts.find(candidate => candidate.id === transaction.accountId);
+    if (account?.type === 'creditCard') {
+      return 'credit';
+    }
+
+    if (
+      transaction.notes?.startsWith('Credito •') ||
+      transaction.notes?.startsWith('Crédito •') ||
+      transaction.notes?.startsWith('CrÃ©dito â€¢') ||
+      transaction.notes?.startsWith('CrÃƒÂ©dito Ã¢â‚¬Â¢')
+    ) {
+      return 'credit';
+    }
+
+    return 'debit';
+  };
+
+  const getInstallmentDetails = (transaction: Transaction) => {
+    const installmentMatch = transaction.notes?.match(/Cuotas:\s*(\d+)/i);
+    const installmentCount = Number(installmentMatch?.[1]) || 1;
+
+    return {
+      installmentCount,
+    };
   };
 
   const formatCOP = (val: number) => {
     return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
       currency: 'COP',
       minimumFractionDigits: 0,
+      style: 'currency',
     }).format(val);
   };
 
   const catInfo = getCategoryInfo(tx.categoryId);
   const isIncome = tx.direction === 'inflow';
-  const isSmsDetected = tx.notes && (
-    tx.notes.toUpperCase().includes('SMS') ||
-    tx.notes.includes('Registro de SMS') ||
-    tx.description.toUpperCase().includes('UNIVERSIDAD DE LA SABA') ||
-    tx.notes.toUpperCase().includes('NOTIFICACION')
+  const operationType = getOperationType(tx);
+  const installmentDetails = getInstallmentDetails(tx);
+  const isSmsDetected = Boolean(
+    tx.notes &&
+      (tx.notes.toUpperCase().includes('SMS') ||
+        tx.notes.includes('Registro de SMS') ||
+        tx.description.toUpperCase().includes('UNIVERSIDAD DE LA SABA') ||
+        tx.notes.toUpperCase().includes('NOTIFICACION')),
   );
 
   return (
     <Pressable
-      onPress={() => onPress && onPress(tx)}
+      onPress={() => onPress?.(tx)}
       style={({ pressed }) => [
         styles.txCard,
         { backgroundColor: themeColors.card, borderColor: themeColors.border },
-        pressed && { opacity: 0.82, transform: [{ scale: 0.985 }] }
+        pressed && { opacity: 0.82, transform: [{ scale: 0.985 }] },
       ]}>
-      {/* Category Circle Icon */}
-      <View style={[styles.catIconContainer, { backgroundColor: catInfo.color + '22', borderColor: catInfo.color }]}>
-        <Text style={styles.catEmoji}>{catInfo.icon}</Text>
+      <View style={[styles.catIconContainer, { backgroundColor: `${catInfo.color}22`, borderColor: catInfo.color }]}>
+        <Text style={[styles.catEmoji, { color: catInfo.color }]}>{catInfo.icon}</Text>
       </View>
 
-      {/* Text details */}
       <View style={styles.txDetails}>
         <Text numberOfLines={1} style={[styles.txTitle, { color: themeColors.text }]}>
           {tx.merchantName || tx.description}
         </Text>
         <View style={styles.subrow}>
-          <View style={[styles.catBadge, { backgroundColor: catInfo.color + '33' }]}>
+          <View style={[styles.catBadge, { backgroundColor: `${catInfo.color}33` }]}>
             <Text style={[styles.catBadgeText, { color: catInfo.color }]}>
               {catInfo.name.toUpperCase()}
             </Text>
           </View>
-          <Text style={[styles.accText, { color: themeColors.muted }]}>
+          <Text numberOfLines={1} style={[styles.accText, { color: themeColors.muted }]}>
             {getAccountInfo(tx.accountId)}
           </Text>
         </View>
 
-        {/* Glowing DETECTADO POR SMS badge */}
         {isSmsDetected ? (
           <View style={styles.smsBadge}>
-            <Text style={styles.smsBadgeIcon}>📱</Text>
+            <Text style={styles.smsBadgeIcon}>SMS</Text>
             <Text style={styles.smsBadgeText}>DETECTADO POR SMS</Text>
           </View>
         ) : null}
       </View>
 
-      {/* Value */}
       <View style={styles.txRight}>
-        {/* Tiny inline dropdown above the price */}
-        <Pressable
-          onPress={() => onShowOpTypeDropdown(tx)}
-          style={[
-            styles.cardOpDropdown,
-            {
-              backgroundColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)',
-              borderColor: themeColors.border,
-            },
-          ]}>
-          <Text style={[styles.cardOpDropdownText, { color: themeColors.text }]}>
-            {getOperationType(tx) === 'Créd' ? '💳 Crédito' : '💳 Débito'}
-          </Text>
-          <Text style={[styles.cardOpDropdownArrow, { color: themeColors.muted }]}> ▾</Text>
-        </Pressable>
+        <View style={styles.paymentChipRow}>
+          <Pressable
+            onPress={() => onShowOpTypeDropdown(tx)}
+            style={[
+              styles.cardOpDropdown,
+              {
+                backgroundColor: isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)',
+                borderColor: themeColors.border,
+              },
+            ]}>
+            <Text style={[styles.cardOpDropdownText, { color: themeColors.text }]}>
+              {operationType === 'credit' ? '💳 Crédito' : '💳 Débito'}
+            </Text>
+          </Pressable>
+
+          {operationType === 'credit' ? (
+            <Pressable
+              onPress={() => onEditInstallments(tx)}
+              style={[
+                styles.installmentDropdown,
+                {
+                  backgroundColor: isDark ? 'rgba(187, 195, 255, 0.12)' : 'rgba(40, 72, 238, 0.08)',
+                  borderColor: themeColors.border,
+                },
+              ]}>
+              <Text style={[styles.cardOpDropdownText, { color: themeColors.text }]}>
+                {installmentDetails.installmentCount}x
+              </Text>
+              <Text style={[styles.cardOpDropdownArrow, { color: themeColors.muted }]}>▾</Text>
+            </Pressable>
+          ) : null}
+        </View>
 
         <Text
           style={[
@@ -149,8 +221,24 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
 
 const styles = StyleSheet.create({
   accText: {
+    flexShrink: 1,
     fontSize: 12,
     fontWeight: '500',
+  },
+  cardOpDropdown: {
+    alignItems: 'center',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+  },
+  cardOpDropdownArrow: {
+    fontSize: 9,
+  },
+  cardOpDropdownText: {
+    fontSize: 9,
+    fontWeight: '800',
   },
   catBadge: {
     borderRadius: 8,
@@ -162,7 +250,8 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   catEmoji: {
-    fontSize: 16,
+    fontSize: 11,
+    fontWeight: '900',
   },
   catIconContainer: {
     alignItems: 'center',
@@ -172,6 +261,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 4,
     width: 30,
+  },
+  installmentDropdown: {
+    alignItems: 'center',
+    borderRadius: 8,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 2,
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+  },
+  paymentChipRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 4,
+    justifyContent: 'flex-end',
+    marginBottom: 4,
   },
   smsBadge: {
     alignItems: 'center',
@@ -187,7 +293,9 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
   },
   smsBadgeIcon: {
+    color: '#00e475',
     fontSize: 8,
+    fontWeight: '900',
   },
   smsBadgeText: {
     color: '#00e475',
@@ -210,27 +318,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginLeft: 12,
+    minWidth: 0,
     paddingRight: 8,
   },
   txRight: {
     alignItems: 'flex-end',
     justifyContent: 'center',
-  },
-  cardOpDropdown: {
-    alignItems: 'center',
-    borderRadius: 8,
-    borderWidth: 1,
-    flexDirection: 'row',
-    marginBottom: 4,
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-  },
-  cardOpDropdownText: {
-    fontSize: 9,
-    fontWeight: '800',
-  },
-  cardOpDropdownArrow: {
-    fontSize: 9,
+    maxWidth: 150,
   },
   txTitle: {
     fontSize: 14,

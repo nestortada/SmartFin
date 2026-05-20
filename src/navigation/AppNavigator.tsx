@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Platform } from 'react-native';
+import Toast from 'react-native-toast-message';
 
 import {
   closeSmartFinDatabase,
@@ -8,7 +9,11 @@ import {
 } from '../database';
 import { DashboardScreen } from '../modules/dashboard/ui/DashboardScreen';
 import { OnboardingScreen } from '../modules/dashboard/ui/OnboardingScreen';
-import { TransactionsScreen } from '../modules/transactions/ui/TransactionsScreen';
+import { DebitCardsScreen } from '../modules/accounts/ui/DebitCardsScreen';
+import {
+  TransactionsScreen,
+  type TransactionsInitialDraft,
+} from '../modules/transactions/ui/TransactionsScreen';
 import {
   createSecurityService,
   disableBiometricAccess,
@@ -36,8 +41,19 @@ import {
   processSmsAndCreateTransaction,
 } from '../modules/transactions';
 import { createSqliteAccountRepository, mockAccountRepository } from '../modules/accounts';
-import { createSqliteCategoryRepository, mockCategoryRepository } from '../modules/categories';
-import { CreditCardsScreen, seedCreditCardDemoData } from '../modules/creditCards';
+import {
+  CategoriesScreen,
+  createSqliteCategoryRepository,
+  mockCategoryRepository,
+} from '../modules/categories';
+import {
+  createSqliteCreditCardAlertRepository,
+  findMatchingCreditCardAccount,
+  resolveCreditCardTransactionTarget,
+  seedCreditCardDemoData,
+  shouldTreatTextAsCreditCardTransaction,
+} from '../modules/creditCards';
+import { CreditCardsScreen } from '../modules/creditCards/ui/CreditCardsScreen';
 
 async function seedDatabaseIfEmpty(database: SmartFinSQLiteDatabase, resetBalancesToZero = false) {
   const accountRepo = createSqliteAccountRepository(database);
@@ -68,7 +84,14 @@ async function seedDatabaseIfEmpty(database: SmartFinSQLiteDatabase, resetBalanc
   }
 }
 
-type AppRoute = 'onboarding' | 'dashboard' | 'transactions' | 'settings' | 'creditCards';
+type AppRoute =
+  | 'onboarding'
+  | 'dashboard'
+  | 'transactions'
+  | 'settings'
+  | 'creditCards'
+  | 'debitCards'
+  | 'categories';
 
 export function AppNavigator() {
   const [route, setRoute] = useState<AppRoute>('dashboard');
@@ -78,6 +101,7 @@ export function AppNavigator() {
   const [settings, setSettings] = useState<SettingsState>(DEFAULT_SETTINGS);
   const [busyMessage, setBusyMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [transactionsInitialDraft, setTransactionsInitialDraft] = useState<TransactionsInitialDraft>();
   /**
    * Incrementing this key forces useDashboardSummary to re-fetch from SQLite.
    * We bump it after any operation that mutates financial data:
@@ -157,13 +181,30 @@ export function AppNavigator() {
 
           // Fetch live accounts from SQLite
           const activeAccounts = await accountRepository.getAccounts();
-          let targetAccount = activeAccounts.find(a => 
-            a.name.toUpperCase().includes(parsed.bankName.toUpperCase()) || 
-            (a.institutionName && a.institutionName.toUpperCase().includes(parsed.bankName.toUpperCase()))
+          const rawCreditText = `${message.title ?? ''} ${message.body} ${parsed.bankName}`;
+          const matchedCreditCard = findMatchingCreditCardAccount(
+            activeAccounts,
+            parsed.bankName,
+            rawCreditText,
           );
+          const isCreditSms = Boolean(matchedCreditCard) || shouldTreatTextAsCreditCardTransaction(rawCreditText);
+          const creditCardTarget = await resolveCreditCardTransactionTarget({
+            accountRepository,
+            accounts: activeAccounts,
+            creditCardHint: parsed.bankName,
+            isCreditTransaction: isCreditSms,
+            rawText: rawCreditText,
+            selectedAccountId: matchedCreditCard?.id,
+          });
+          let targetAccount = isCreditSms
+            ? activeAccounts.find(account => account.id === creditCardTarget.accountId)
+            : activeAccounts.find(a =>
+                a.name.toUpperCase().includes(parsed.bankName.toUpperCase()) ||
+                (a.institutionName && a.institutionName.toUpperCase().includes(parsed.bankName.toUpperCase()))
+              );
 
           // If the account does not exist in the DB, create it dynamically!
-          if (!targetAccount) {
+          if (!targetAccount && !isCreditSms) {
             const bankId = `account-${parsed.bankName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
             // Capitalize the bank name beautifully
             const formattedBankName = parsed.bankName
@@ -192,23 +233,37 @@ export function AppNavigator() {
           }
 
           // Fallback to savings/bank account, or any account
-          if (!targetAccount) {
+          if (!targetAccount && !isCreditSms) {
             targetAccount = activeAccounts.find(a => a.type === 'savingsAccount') || activeAccounts[0];
           }
 
-          if (!targetAccount) {
+          const accountId = creditCardTarget.accountId ?? targetAccount?.id;
+          if (!accountId) {
             console.warn('No active account found for SMS transaction');
             return;
           }
 
-          const categoryId = categorizeMerchantName(message.body);
+          const categoryId = categorizeMerchantName(parsed.merchantName);
           await processSmsAndCreateTransaction({
             smsMessage: message,
             transactionRepository,
             database,
-            accountId: targetAccount.id,
+            accountId,
             categoryId,
+            creditCardHint: isCreditSms ? creditCardTarget.creditCardHint ?? parsed.bankName : undefined,
+            paymentMethod: isCreditSms ? 'credit' : 'debit',
           });
+
+          if (creditCardTarget.missingCreditCard) {
+            await createSqliteCreditCardAlertRepository(database).saveMissingCreditCardAlert({
+              creditCardHint: creditCardTarget.creditCardHint ?? parsed.bankName,
+            });
+            Toast.show({
+              type: 'info',
+              text1: 'Tarjeta pendiente',
+              text2: 'Crea la tarjeta de credito correspondiente para asociar este movimiento.',
+            });
+          }
 
           // 3. Tell Dashboard to re-fetch
           setDashboardRefreshKey(k => k + 1);
@@ -423,7 +478,11 @@ export function AppNavigator() {
             setRoute('dashboard');
           }
         }}
+        onNavigateToHome={() => setRoute('dashboard')}
+        onNavigateToTransactions={() => setRoute('transactions')}
+        onOpenCategories={() => setRoute('categories')}
         onOpenCreditCards={() => setRoute('creditCards')}
+        onOpenDebitCards={() => setRoute('debitCards')}
         onDeleteFinancialData={handleDeleteFinancialData}
         onSaveCredential={handleSaveCredential}
         onThemeChange={handleThemeChange}
@@ -434,16 +493,34 @@ export function AppNavigator() {
     );
   }
 
+  if (route === 'categories') {
+    return (
+      <CategoriesScreen
+        activeTheme={settings.theme}
+        database={database}
+        onNavigateBack={() => setRoute('settings')}
+        onNavigateToHome={() => setRoute('dashboard')}
+        onNavigateToTransactions={() => setRoute('transactions')}
+        onOpenCreditCards={() => setRoute('creditCards')}
+        onOpenDebitCards={() => setRoute('debitCards')}
+        onOpenSettings={() => setRoute('settings')}
+      />
+    );
+  }
+
   if (route === 'transactions') {
     return (
       <TransactionsScreen
         activeTheme={settings.theme}
         database={database}
+        initialDraft={transactionsInitialDraft}
         refreshKey={dashboardRefreshKey}
         onNavigateToHome={() => setRoute('dashboard')}
         onOpenSettings={() => setRoute('settings')}
         onOpenCreditCards={() => setRoute('creditCards')}
+        onOpenDebitCards={() => setRoute('debitCards')}
         onForceRefresh={() => setDashboardRefreshKey(k => k + 1)}
+        onInitialDraftConsumed={() => setTransactionsInitialDraft(undefined)}
       />
     );
   }
@@ -456,7 +533,26 @@ export function AppNavigator() {
         refreshKey={dashboardRefreshKey}
         onNavigateToHome={() => setRoute('dashboard')}
         onNavigateToTransactions={() => setRoute('transactions')}
+        onOpenDebitCards={() => setRoute('debitCards')}
         onOpenSettings={() => setRoute('settings')}
+      />
+    );
+  }
+
+  if (route === 'debitCards') {
+    return (
+      <DebitCardsScreen
+        activeTheme={settings.theme}
+        database={database}
+        refreshKey={dashboardRefreshKey}
+        onNavigateToHome={() => setRoute('dashboard')}
+        onNavigateToTransactions={() => setRoute('transactions')}
+        onOpenCreditCards={() => setRoute('creditCards')}
+        onOpenSettings={() => setRoute('settings')}
+        onOpenTransactionsDraft={draft => {
+          setTransactionsInitialDraft(draft);
+          setRoute('transactions');
+        }}
       />
     );
   }
@@ -467,6 +563,7 @@ export function AppNavigator() {
       database={database}
       refreshKey={dashboardRefreshKey}
       onOpenCreditCards={() => setRoute('creditCards')}
+      onOpenDebitCards={() => setRoute('debitCards')}
       onOpenSettings={() => setRoute('settings')}
       onNavigateToTransactions={() => setRoute('transactions')}
     />

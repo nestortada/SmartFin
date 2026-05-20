@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
+import { createSqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
 import { createSqliteCreditCardRepository } from '../repositories';
 import type { CreditCardsOverview } from '../types';
 import { getCreditCardsOverview } from '../useCases';
@@ -42,7 +43,10 @@ export function useCreditCardsOverview(
       loading: true,
     }));
 
-    getCreditCardsOverview(createSqliteCreditCardRepository(database))
+    getCreditCardsOverview(
+      createSqliteCreditCardRepository(database),
+      createSqliteTransactionRepository(database),
+    )
       .then(overview => {
         if (!isMounted) {
           return;

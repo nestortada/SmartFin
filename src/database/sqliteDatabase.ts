@@ -17,6 +17,25 @@ async function applySchema(database: SmartFinSQLiteDatabase): Promise<void> {
   for (const statement of SQLITE_SCHEMA_STATEMENTS) {
     await database.executeSql(statement);
   }
+
+  await applyLightweightMigrations(database);
+}
+
+async function applyLightweightMigrations(database: SmartFinSQLiteDatabase): Promise<void> {
+  const migrations = [
+    'ALTER TABLE transactions ADD COLUMN payment_method TEXT;',
+    'ALTER TABLE transactions ADD COLUMN credit_card_hint TEXT;',
+    'ALTER TABLE transactions ADD COLUMN dedupe_key TEXT;',
+    'CREATE UNIQUE INDEX IF NOT EXISTS idx_transactions_dedupe_key ON transactions(dedupe_key) WHERE dedupe_key IS NOT NULL;',
+  ];
+
+  for (const statement of migrations) {
+    try {
+      await database.executeSql(statement);
+    } catch {
+      // SQLite raises "duplicate column name" on existing local databases.
+    }
+  }
 }
 
 export async function openSmartFinDatabase(): Promise<SmartFinSQLiteDatabase> {

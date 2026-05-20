@@ -171,6 +171,55 @@ export function InstallmentsSection({
   );
 }
 
+export function StatementTransactionsSection({
+  card,
+  palette,
+}: {
+  card: CreditCardSummary;
+  palette: CreditCardsPalette;
+}) {
+  return (
+    <View style={styles.installmentsSection}>
+      <View style={styles.sectionHeader}>
+        <Text style={[styles.sectionTitle, { color: palette.text }]}>Movimientos del periodo</Text>
+        <Text style={[styles.sectionAction, { color: palette.primary }]}>
+          {card.recentTransactions.length}
+        </Text>
+      </View>
+      {card.recentTransactions.length === 0 ? (
+        <View style={[styles.emptyInstallments, { backgroundColor: palette.card, borderColor: palette.border }]}>
+          <Text style={[styles.emptyBody, { color: palette.muted }]}>
+            No hay movimientos asociados a este periodo.
+          </Text>
+        </View>
+      ) : (
+        card.recentTransactions.map(transaction => {
+          const isPayment = transaction.type === 'creditCardPayment';
+
+          return (
+            <View
+              key={transaction.id}
+              style={[styles.statementTransactionRow, { backgroundColor: palette.card, borderColor: palette.border }]}>
+              <View style={styles.statementTransactionText}>
+                <Text numberOfLines={1} style={[styles.installmentName, { color: palette.text }]}>
+                  {transaction.merchantName ?? transaction.description}
+                </Text>
+                <Text style={[styles.statementTransactionDate, { color: palette.muted }]}>
+                  {formatShortDate(transaction.date)}
+                </Text>
+              </View>
+              <Text style={[styles.statementTransactionAmount, { color: isPayment ? palette.tertiary : palette.primary }]}>
+                {isPayment ? '- ' : ''}
+                {formatCurrency(transaction.amount, transaction.currency)}
+              </Text>
+            </View>
+          );
+        })
+      )}
+    </View>
+  );
+}
+
 function InstallmentRow({
   installment,
   palette,
@@ -434,6 +483,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     marginBottom: 6,
+  },
+  statementTransactionAmount: {
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  statementTransactionDate: {
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 2,
+  },
+  statementTransactionRow: {
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    justifyContent: 'space-between',
+    padding: 14,
+  },
+  statementTransactionText: {
+    flex: 1,
+    minWidth: 0,
   },
   twoColumnGrid: {
     flexDirection: 'row',

@@ -5,6 +5,7 @@ import type {
   CreditCardFormInput,
   CreditCardVisualMetadata,
 } from '../types';
+import { buildCreditCardsOverview } from './getCreditCardsOverview';
 
 const DESCRIPTION_METADATA_PREFIX = 'smartfin:credit-card:';
 
@@ -117,5 +118,46 @@ export async function deleteCreditCard(
   repository: CreditCardRepository,
   accountId: string,
 ): Promise<void> {
+  const [accounts, statements, installments, profiles] = await Promise.all([
+    repository.getCreditCardAccounts(),
+    repository.getStatements([accountId]),
+    repository.getInstallmentPurchases([accountId]),
+    repository.getProfiles([accountId]),
+  ]);
+  const account = accounts.find(candidate => candidate.id === accountId);
+
+  if (!account) {
+    throw new Error('Selecciona una tarjeta de credito activa para eliminar.');
+  }
+
+  const overview = buildCreditCardsOverview({
+    accounts: [account],
+    installments,
+    profiles,
+    statements,
+  });
+  const card = overview.cards[0];
+  const activeInstallments = card?.installments.filter(
+    installment => installment.status === 'active' && installment.pendingInstallments > 0,
+  ) ?? [];
+
+  if (activeInstallments.length > 0) {
+    throw new Error('No puedes eliminar la tarjeta porque tiene compras a cuotas vigentes.');
+  }
+
+  if ((card?.usedCredit ?? 0) > 0 || (card?.utilizationRatio ?? 0) > 0) {
+    throw new Error('No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.');
+  }
+
+  const currentStatement = card?.currentStatement;
+  if (
+    currentStatement &&
+    currentStatement.totalAmount > 0 &&
+    currentStatement.status !== 'paid' &&
+    currentStatement.status !== 'closed'
+  ) {
+    throw new Error('No puedes eliminar la tarjeta hasta subsanar todos los movimientos del periodo.');
+  }
+
   await repository.closeCreditCardAccount(accountId);
 }

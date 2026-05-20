@@ -98,6 +98,7 @@ export function buildPreviewCardFromForm(form: CreditCardFormState): CreditCardS
       monthlyInterestRate: 0,
     },
     nextPaymentAmount: 0,
+    recentTransactions: [],
     totalLimit: parseCreditLimitInput(form.creditLimit),
     usedCredit: 0,
     utilizationRatio: 0,

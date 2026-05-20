@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   Pressable,
@@ -9,17 +9,38 @@ import {
   View,
   Alert,
   Dimensions,
+  Modal,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Toast from 'react-native-toast-message';
 
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import type { AppTheme } from '../../settings';
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
 import { useTransactionsList, formatYearMonth } from '../hooks/useTransactionsList';
+import { getNextMonthDueDate, saveManualTransaction } from '../useCases';
 import type { Transaction, TransactionType } from '../types';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import { createSqliteCategoryRepository } from '../../categories/repositories/sqliteCategoryRepository';
+import {
+  createSqliteCreditCardAlertRepository,
+  createSqliteCreditCardRepository,
+  type MissingCreditCardAlert,
+} from '../../creditCards/repositories';
+import {
+  UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID,
+  associatePendingTransactionsForCreditCard,
+  reconcileCreditCardTransactions,
+  resolveCreditCardTransactionTarget,
+  saveCreditCardFromForm,
+} from '../../creditCards/useCases';
+import { CreditCardFormModal } from '../../creditCards/ui/components/CreditCardFormModal';
+import {
+  EMPTY_FORM_STATE,
+  type CreditCardFormState,
+} from '../../creditCards/ui/creditCardUiTypes';
+import { toFormInput } from '../../creditCards/ui/creditCardFormatters';
 import type { Account } from '../../accounts';
 import type { Category } from '../../categories';
 
@@ -32,28 +53,50 @@ import {
   CategoryPickerModal,
   OpTypePickerModal,
   InlineOpTypeModal,
+  InstallmentPickerModal,
 } from './components/FilterModals';
+import {
+  formatAmountInputForForm,
+  formatCOP,
+  formatTransactionDateHeader,
+  groupTransactionsByDate,
+} from './transactionsScreenFormatters';
+import {
+  getCreditCardPaletteForTransactions,
+  getTransactionsThemeColors,
+} from './transactionsTheme';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 type TransactionsScreenProps = {
   activeTheme: AppTheme;
   database?: SmartFinSQLiteDatabase;
+  initialDraft?: TransactionsInitialDraft;
   refreshKey?: number;
   onNavigateToHome: () => void;
   onOpenCreditCards: () => void;
+  onOpenDebitCards: () => void;
   onOpenSettings: () => void;
   onForceRefresh: () => void;
+  onInitialDraftConsumed?: () => void;
+};
+
+export type TransactionsInitialDraft = {
+  accountId: string;
+  action: 'movements' | 'payment' | 'topUp' | 'transferOut';
 };
 
 export function TransactionsScreen({
   activeTheme,
   database,
+  initialDraft,
   refreshKey = 0,
   onNavigateToHome,
   onOpenCreditCards,
+  onOpenDebitCards,
   onOpenSettings,
   onForceRefresh,
+  onInitialDraftConsumed,
 }: TransactionsScreenProps) {
   const insets = useSafeAreaInsets();
   const isDark = activeTheme === 'dark';
@@ -63,6 +106,8 @@ export function TransactionsScreen({
   const [accountModalVisible, setAccountModalVisible] = useState(false);
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [addTxModalVisible, setAddTxModalVisible] = useState(false);
+  const [notificationsVisible, setNotificationsVisible] = useState(false);
+  const [missingCardAlerts, setMissingCardAlerts] = useState<MissingCreditCardAlert[]>([]);
 
   // Form states for adding manual transaction
   const [newAmount, setNewAmount] = useState('');
@@ -70,10 +115,22 @@ export function TransactionsScreen({
   const [newType, setNewType] = useState<TransactionType>('expense');
   const [newCategory, setNewCategory] = useState('');
   const [newAccount, setNewAccount] = useState('');
+  const [newTargetAccount, setNewTargetAccount] = useState('');
+  const [newCreditCardHint, setNewCreditCardHint] = useState('');
   const [newNotes, setNewNotes] = useState('');
   const [newOperationType, setNewOperationType] = useState<'Débito' | 'Crédito'>('Débito');
+  const [creditInstallmentCount, setCreditInstallmentCount] = useState('1');
+  const [hasInterestFreeInstallments, setHasInterestFreeInstallments] = useState(false);
+  const [interestFreeInstallmentCount, setInterestFreeInstallmentCount] = useState('');
+  const [creditCardFormState, setCreditCardFormState] = useState<CreditCardFormState>(EMPTY_FORM_STATE);
+  const [creditCardFormVisible, setCreditCardFormVisible] = useState(false);
+  const [creditCardFormReturnsToTransaction, setCreditCardFormReturnsToTransaction] = useState(true);
+  const [pendingNotificationCardName, setPendingNotificationCardName] = useState<string>();
+  const [savingCreditCard, setSavingCreditCard] = useState(false);
   const [opTypePickerVisible, setOpTypePickerVisible] = useState(false);
   const [selectedTxForOpType, setSelectedTxForOpType] = useState<Transaction | null>(null);
+  const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  const [selectedTxForInstallments, setSelectedTxForInstallments] = useState<Transaction | null>(null);
 
   // Categorization Modal States
   const [categorizationModalVisible, setCategorizationModalVisible] = useState(false);
@@ -99,77 +156,53 @@ export function TransactionsScreen({
     setSortOrder,
   } = useTransactionsList(database, refreshKey);
 
-  // Dynamic values
-  const themeColors = {
-    background: isDark ? '#0d0b14' : '#f4f3f8',
-    text: isDark ? '#f1f0ff' : '#19191d',
-    muted: isDark ? '#c5c5d9' : '#686678',
-    border: isDark ? 'rgba(255, 255, 255, 0.12)' : 'rgba(35, 42, 65, 0.12)',
-    card: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.72)',
-    primary: isDark ? '#bbc3ff' : '#2848ee',
-    tertiary: '#00e475', // Neon green
-    danger: isDark ? '#ffb4ab' : '#ba1a1a',
-    glassBorder: 'rgba(255, 255, 255, 0.12)',
+  const themeColors = getTransactionsThemeColors(activeTheme);
+  const creditCardPalette = getCreditCardPaletteForTransactions(activeTheme, themeColors);
+
+
+  const getCreditCardHintFromTransaction = (tx: Transaction) => {
+    const smsBankMatch = tx.notes?.match(/\(([^)]+)\)/);
+    return tx.creditCardHint || smsBankMatch?.[1] || tx.merchantName || tx.description;
   };
 
-  // Helper: map macro categories to symbols/icons
-  const getCategoryIcon = (macro: string): string => {
-    switch (macro) {
-      case 'income':
-        return '💵';
-      case 'food':
-        return '🍔';
-      case 'transport':
-        return '🚗';
-      case 'housing':
-        return '🏠';
-      case 'entertainment':
-        return '🍿';
-      case 'health':
-        return '💊';
-      case 'utilities':
-        return '💡';
-      case 'debts':
-        return '💳';
-      case 'investments':
-        return '📈';
-      default:
-        return '📦';
+  const isDebitAccount = (account: Account | undefined) => {
+    return Boolean(account && ['cash', 'bankAccount', 'savingsAccount'].includes(account.type));
+  };
+
+  const getDebitAccountForTransaction = (tx: Transaction) => {
+    const currentAccount = accounts.find(account => account.id === tx.accountId);
+    if (isDebitAccount(currentAccount) && currentAccount?.id !== UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID) {
+      return currentAccount;
     }
-  };
 
-  const getCategoryInfo = (categoryId?: string) => {
-    const cat = categories.find(c => c.id === categoryId);
-    if (cat) {
-      return {
-        name: cat.name,
-        color: cat.color || '#cdbdff',
-        icon: getCategoryIcon(cat.macroCategory),
-      };
-    }
-    return {
-      name: 'Otros',
-      color: '#c5c5d9',
-      icon: '📦',
-    };
+    return accounts.find(
+      account =>
+        account.status === 'active' &&
+        account.id !== UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID &&
+        ['cash', 'bankAccount', 'savingsAccount'].includes(account.type),
+    );
   };
-
-  const getAccountInfo = (accountId: string) => {
-    const acc = accounts.find(a => a.id === accountId);
-    return acc ? acc.name : 'Cuenta';
-  };
-
-  const getOperationType = (tx: Transaction) => {
-    if (tx.notes && tx.notes.startsWith('Crédito •')) return 'Créd';
-    return 'Deb'; // Default to Débito if not explicitly Crédito
-  };
-
-  const displayHelpersReady = Boolean(getCategoryInfo) && Boolean(getAccountInfo) && Boolean(getOperationType);
 
   const handleUpdateTransactionOpType = async (tx: Transaction, opType: 'Débito' | 'Crédito') => {
     if (!database) return;
     try {
       const txRepo = createSqliteTransactionRepository(database);
+      const accountRepository = createSqliteAccountRepository(database);
+      const creditCardRepository = createSqliteCreditCardRepository(database);
+      const isCredit = opType.toLowerCase().includes('cr');
+      const debitAccount = isCredit ? undefined : getDebitAccountForTransaction(tx);
+      if (!isCredit && !debitAccount) {
+        Alert.alert('SmartFin', 'Crea una cuenta debito para mover esta transaccion.');
+        return;
+      }
+      const creditCardTarget = await resolveCreditCardTransactionTarget({
+        accountRepository,
+        accounts,
+        creditCardHint: getCreditCardHintFromTransaction(tx),
+        isCreditTransaction: isCredit,
+        rawText: `${tx.description} ${tx.merchantName ?? ''} ${tx.notes ?? ''}`,
+        selectedAccountId: isCredit ? tx.accountId : debitAccount?.id,
+      });
       // Clean notes to avoid compounding prefixes
       let cleanNotes = tx.notes || '';
       // Remove any existing "Débito • " or "Crédito • " prefix
@@ -177,10 +210,33 @@ export function TransactionsScreen({
       
       const updatedTx: Transaction = {
         ...tx,
+        accountId: isCredit ? creditCardTarget.accountId ?? tx.accountId : debitAccount?.id ?? tx.accountId,
+        creditCardHint: isCredit ? creditCardTarget.creditCardHint : undefined,
         notes: `${opType} • ${cleanNotes}`,
+        paymentMethod: isCredit ? 'credit' : 'debit',
         updatedAt: new Date().toISOString(),
       };
       await txRepo.saveTransactions([updatedTx]);
+      if (!isCredit) {
+        await txRepo.deleteInstallmentPurchasesByTransactionId(updatedTx.id);
+      }
+      await reconcileCreditCardTransactions({
+        accountRepository,
+        creditCardRepository,
+        transactionRepository: txRepo,
+      });
+      if (creditCardTarget.missingCreditCard) {
+        await createSqliteCreditCardAlertRepository(database).saveMissingCreditCardAlert({
+          creditCardHint: creditCardTarget.creditCardHint,
+          transactionId: updatedTx.id,
+        });
+        await loadMissingCardAlerts();
+        Toast.show({
+          type: 'info',
+          text1: 'Tarjeta pendiente',
+          text2: 'Crea la tarjeta de credito correspondiente desde notificaciones.',
+        });
+      }
       onForceRefresh(); // reload database to reflect updates
     } catch (err) {
       console.error('Error updating transaction operation type:', err);
@@ -191,12 +247,207 @@ export function TransactionsScreen({
     setSelectedTxForOpType(tx);
   };
 
+  const handleSaveInstallmentDetails = async () => {
+    if (!database || !selectedTxForInstallments) {
+      return;
+    }
+
+    const installmentCount = Math.max(1, Number(creditInstallmentCount) || 1);
+    const interestFreeCount = hasInterestFreeInstallments
+      ? Math.min(Math.max(1, Number(interestFreeInstallmentCount) || installmentCount), installmentCount)
+      : 0;
+    const now = new Date().toISOString();
+    const updatedTx: Transaction = {
+      ...selectedTxForInstallments,
+      notes: replaceInstallmentDetailsInNotes(selectedTxForInstallments.notes, installmentCount, interestFreeCount),
+      updatedAt: now,
+    };
+
+    try {
+      const txRepo = createSqliteTransactionRepository(database);
+      const accountRepository = createSqliteAccountRepository(database);
+      const creditCardRepository = createSqliteCreditCardRepository(database);
+      await txRepo.saveTransactions([updatedTx]);
+
+      if (installmentCount > 1) {
+        await creditCardRepository.saveInstallmentPurchases([
+          {
+            id: `installment-${updatedTx.id}`,
+            transactionId: updatedTx.id,
+            accountId: updatedTx.accountId,
+            merchantName: updatedTx.merchantName,
+            totalAmount: updatedTx.amount,
+            currency: updatedTx.currency,
+            installmentCount,
+            paidInstallments: 0,
+            monthlyAmount: Math.round(updatedTx.amount / installmentCount),
+            firstDueDate: getNextMonthDueDate(updatedTx.date),
+            status: 'active',
+            createdAt: updatedTx.createdAt,
+            updatedAt: now,
+          },
+        ]);
+      } else {
+        await txRepo.deleteInstallmentPurchasesByTransactionId(updatedTx.id);
+      }
+
+      await reconcileCreditCardTransactions({
+        accountRepository,
+        creditCardRepository,
+        transactionRepository: txRepo,
+      });
+
+      setSelectedTxForInstallments(null);
+      resetInstallmentForm();
+      onForceRefresh();
+    } catch (err) {
+      console.error('Error updating installments:', err);
+      Alert.alert('Error', 'No se pudieron guardar las cuotas.');
+    }
+  };
+
   const handleCardPress = (tx: Transaction) => {
     // Only open categorization modal for purchases / expenses / gastos
     if (tx.direction === 'outflow' || tx.type === 'expense') {
       setSelectedTxForCategorization(tx);
       setCategorizationModalVisible(true);
     }
+  };
+
+  const cleanNotesForForm = (notes?: string) => {
+    return (notes || '')
+      .replace(/^Transferencia\s*(•|â€¢)\s*/, '')
+      .replace(/^(Débito|Crédito|DÃ©bito|CrÃ©dito)\s*(•|â€¢)\s*/, '')
+      .replace(/\s*\|\s*Cuotas:\s*\d+(\s*\|\s*Sin intereses:\s*\d+)?/i, '')
+      .replace(/^Registro manual$/, '');
+  };
+
+  const getInstallmentDetailsFromNotes = (notes?: string) => {
+    const installmentMatch = notes?.match(/Cuotas:\s*(\d+)/i);
+    const interestFreeMatch = notes?.match(/Sin intereses:\s*(\d+)/i);
+
+    return {
+      installmentCount: installmentMatch?.[1] ?? '1',
+      interestFreeInstallmentCount: interestFreeMatch?.[1] ?? '',
+    };
+  };
+
+  const replaceInstallmentDetailsInNotes = (
+    notes: string | undefined,
+    installmentCount: number,
+    interestFreeCount: number,
+  ) => {
+    const baseNotes = (notes || 'Crédito • Registro manual')
+      .replace(/\s*\|\s*Cuotas:\s*\d+(\s*\|\s*Sin intereses:\s*\d+)?/i, '')
+      .trim();
+
+    if (installmentCount <= 1 && interestFreeCount <= 0) {
+      return baseNotes;
+    }
+
+    return `${baseNotes} | Cuotas: ${installmentCount}${interestFreeCount > 0 ? ` | Sin intereses: ${interestFreeCount}` : ''}`;
+  };
+
+  const resetInstallmentForm = () => {
+    setCreditInstallmentCount('1');
+    setHasInterestFreeInstallments(false);
+    setInterestFreeInstallmentCount('');
+  };
+
+  useEffect(() => {
+    if (!initialDraft || accounts.length === 0) {
+      return;
+    }
+
+    const activeDebitAccounts = accounts.filter(
+      account =>
+        account.status === 'active' &&
+        ['bankAccount', 'savingsAccount'].includes(account.type),
+    );
+    const selectedDebitAccount = activeDebitAccounts.find(account => account.id === initialDraft.accountId);
+    const fallbackAccount = activeDebitAccounts.find(account => account.id !== initialDraft.accountId);
+
+    setSelectedAccount(initialDraft.accountId);
+
+    if (initialDraft.action === 'movements') {
+      onInitialDraftConsumed?.();
+      return;
+    }
+
+    setEditingTransaction(null);
+    setNewAmount('');
+    setNewMerchant(
+      initialDraft.action === 'payment'
+        ? 'Pago con tarjeta debito'
+        : initialDraft.action === 'topUp'
+          ? 'Recarga de tarjeta debito'
+          : 'Transferencia desde tarjeta debito',
+    );
+    setNewCategory('');
+    setNewCreditCardHint('');
+    setNewNotes('');
+    setNewOperationType('Débito');
+    resetInstallmentForm();
+
+    if (initialDraft.action === 'payment') {
+      setNewType('expense');
+      setNewAccount(selectedDebitAccount?.id ?? initialDraft.accountId);
+      setNewTargetAccount('');
+    } else if (initialDraft.action === 'transferOut') {
+      setNewType('internalTransfer');
+      setNewAccount(selectedDebitAccount?.id ?? initialDraft.accountId);
+      setNewTargetAccount(fallbackAccount?.id ?? '');
+    } else {
+      setNewType('internalTransfer');
+      setNewAccount(fallbackAccount?.id ?? '');
+      setNewTargetAccount(selectedDebitAccount?.id ?? initialDraft.accountId);
+    }
+
+    setAddTxModalVisible(true);
+    onInitialDraftConsumed?.();
+  }, [accounts, initialDraft, onInitialDraftConsumed, setSelectedAccount]);
+
+  const openInstallmentEditor = (tx: Transaction) => {
+    const installmentDetails = getInstallmentDetailsFromNotes(tx.notes);
+    setSelectedTxForInstallments(tx);
+    setCreditInstallmentCount(installmentDetails.installmentCount);
+    setHasInterestFreeInstallments(Boolean(installmentDetails.interestFreeInstallmentCount));
+    setInterestFreeInstallmentCount(installmentDetails.interestFreeInstallmentCount);
+  };
+
+  const getOperationTypeFromTransaction = (tx: Transaction): 'Débito' | 'Crédito' => {
+    const account = accounts.find(candidate => candidate.id === tx.accountId);
+    if (tx.paymentMethod === 'credit') {
+      return 'Crédito';
+    }
+    if (account?.type === 'creditCard' || tx.notes?.startsWith('Crédito •')) {
+      return 'Crédito';
+    }
+
+    return 'Débito';
+  };
+
+  const openEditTransactionForm = (tx: Transaction) => {
+    const installmentDetails = getInstallmentDetailsFromNotes(tx.notes);
+    setEditingTransaction(tx);
+    setNewAmount(formatAmountInputForForm(tx.amount));
+    setNewMerchant(tx.merchantName || tx.description);
+    setNewType(tx.type === 'internalTransfer' ? 'internalTransfer' : tx.type === 'income' || tx.direction === 'inflow' ? 'income' : 'expense');
+    setNewCategory(tx.categoryId ?? '');
+    setNewAccount(tx.accountId);
+    setNewTargetAccount(tx.targetAccountId ?? '');
+    setNewCreditCardHint(tx.creditCardHint ?? '');
+    setNewNotes(cleanNotesForForm(tx.notes));
+    setNewOperationType(getOperationTypeFromTransaction(tx));
+    setCreditInstallmentCount(installmentDetails.installmentCount);
+    setHasInterestFreeInstallments(Boolean(installmentDetails.interestFreeInstallmentCount));
+    setInterestFreeInstallmentCount(installmentDetails.interestFreeInstallmentCount);
+    setAddTxModalVisible(true);
+  };
+
+  const closeAddTransactionModal = () => {
+    setAddTxModalVisible(false);
+    setEditingTransaction(null);
   };
 
   const handleSelectCategory = async (categoryId: string, applyToFuture: boolean) => {
@@ -226,6 +477,11 @@ export function TransactionsScreen({
     try {
       const txRepo = createSqliteTransactionRepository(database);
       await txRepo.deleteTransaction(id);
+      await reconcileCreditCardTransactions({
+        accountRepository: createSqliteAccountRepository(database),
+        creditCardRepository: createSqliteCreditCardRepository(database),
+        transactionRepository: txRepo,
+      });
       onForceRefresh(); // Trigger parent refresh
     } catch (err) {
       console.error('Error deleting transaction:', err);
@@ -307,63 +563,115 @@ export function TransactionsScreen({
     }
   };
 
+  const openCreateCreditCardForm = () => {
+    setCreditCardFormState(EMPTY_FORM_STATE);
+    setCreditCardFormReturnsToTransaction(true);
+    setPendingNotificationCardName(undefined);
+    setAddTxModalVisible(false);
+    setCreditCardFormVisible(true);
+  };
+
+  const closeCreateCreditCardForm = () => {
+    if (!savingCreditCard) {
+      setCreditCardFormVisible(false);
+      setPendingNotificationCardName(undefined);
+      if (creditCardFormReturnsToTransaction) {
+        setAddTxModalVisible(true);
+      }
+    }
+  };
+
+  const loadMissingCardAlerts = async () => {
+    if (!database) {
+      return;
+    }
+
+    const alerts = await createSqliteCreditCardAlertRepository(database).getPendingMissingCreditCardAlerts();
+    setMissingCardAlerts(alerts);
+  };
+
+  const openNotifications = async () => {
+    await loadMissingCardAlerts();
+    setNotificationsVisible(true);
+  };
+
+  const openCreditCardFormFromAlert = (alert: MissingCreditCardAlert) => {
+    setCreditCardFormState({
+      ...EMPTY_FORM_STATE,
+      bankName: alert.creditCardName,
+      name: alert.creditCardName,
+    });
+    setCreditCardFormReturnsToTransaction(false);
+    setPendingNotificationCardName(alert.creditCardName);
+    setNotificationsVisible(false);
+    setAddTxModalVisible(false);
+    setCreditCardFormVisible(true);
+  };
+
+  const handleSaveCreditCardFromTransactionModal = async () => {
+    if (!database) {
+      Alert.alert('SmartFin', 'La base de datos local no esta disponible.');
+      return;
+    }
+
+    const input = toFormInput(creditCardFormState);
+    if (!input.name) {
+      Alert.alert('SmartFin', 'Ingresa el nombre de la tarjeta.');
+      return;
+    }
+
+    setSavingCreditCard(true);
+    try {
+      const accountRepository = createSqliteAccountRepository(database);
+      const alertRepository = createSqliteCreditCardAlertRepository(database);
+      const creditCardRepository = createSqliteCreditCardRepository(database);
+      const transactionRepository = createSqliteTransactionRepository(database);
+      const savedAccount = await saveCreditCardFromForm(creditCardRepository, input);
+      setNewOperationType('Crédito');
+      setNewAccount(savedAccount.id);
+      setNewCreditCardHint(savedAccount.name);
+      const associatedCount = await associatePendingTransactionsForCreditCard({
+        account: savedAccount,
+        accountRepository,
+        creditCardRepository,
+        transactionRepository,
+      });
+      if (associatedCount > 0) {
+        await alertRepository.resolveMissingCreditCardAlert(pendingNotificationCardName ?? savedAccount.name);
+        Toast.show({
+          type: 'success',
+          text1: 'Movimientos asociados',
+          text2: `${associatedCount} movimiento${associatedCount === 1 ? '' : 's'} pendiente${associatedCount === 1 ? '' : 's'} se vinculó a la tarjeta.`,
+        });
+      } else if (pendingNotificationCardName) {
+        await alertRepository.resolveMissingCreditCardAlert(pendingNotificationCardName);
+        Toast.show({
+          type: 'success',
+          text1: 'Tarjeta creada',
+          text2: `${savedAccount.name} se creo con cupo pendiente por completar.`,
+        });
+      }
+      setCreditCardFormVisible(false);
+      if (creditCardFormReturnsToTransaction) {
+        setAddTxModalVisible(true);
+      }
+      setPendingNotificationCardName(undefined);
+      setCreditCardFormState(EMPTY_FORM_STATE);
+      onForceRefresh();
+    } catch (saveError) {
+      Alert.alert(
+        'SmartFin',
+        saveError instanceof Error ? saveError.message : 'No se pudo guardar la tarjeta.',
+      );
+    } finally {
+      setSavingCreditCard(false);
+    }
+  };
+
   // Sum available balance
   const totalBalance = accounts
     .filter(a => a.status === 'active' && ['cash', 'bankAccount', 'savingsAccount'].includes(a.type))
     .reduce((sum, a) => sum + a.balance.amount, 0);
-
-  // Group transactions by date
-  const groupTransactionsByDate = () => {
-    const groups: { [key: string]: Transaction[] } = {};
-    filteredTransactions.forEach(tx => {
-      const dateStr = tx.date.slice(0, 10);
-      if (!groups[dateStr]) {
-        groups[dateStr] = [];
-      }
-      groups[dateStr].push(tx);
-    });
-    return Object.keys(groups).map(date => ({
-      date,
-      data: groups[date] || [],
-    }));
-  };
-
-  const formattedDateHeader = (dateStr: string) => {
-    const today = new Date().toISOString().slice(0, 10);
-    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-
-    if (dateStr === today) return 'HOY';
-    if (dateStr === yesterday) return 'AYER';
-
-    const parts = dateStr.split('-');
-    if (parts.length < 3) return dateStr;
-    const [year, month, day] = parts;
-    const monthsSpanish = [
-      'ENE',
-      'FEB',
-      'MAR',
-      'ABR',
-      'MAY',
-      'JUN',
-      'JUL',
-      'AGO',
-      'SEP',
-      'OCT',
-      'NOV',
-      'DIC',
-    ];
-    const monthIndex = parseInt(month as string, 10) - 1;
-    return `${day} DE ${monthsSpanish[monthIndex]} DE ${year}`;
-  };
-
-  // Format currency
-  const formatCOP = (val: number) => {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-    }).format(val);
-  };
 
   // Handle Bottom Nav switching
   const handleTabPress = (tab: BottomNavigationTab) => {
@@ -376,7 +684,14 @@ export function TransactionsScreen({
 
   // Save manual transaction to SQLite
   const handleSaveTransaction = async () => {
-    if (!database || !newAmount || !newMerchant || !newAccount) {
+    const isCreditCardExpense = newType !== 'income' && newType !== 'internalTransfer' && newOperationType.toLowerCase().includes('cr');
+    if (
+      !database ||
+      !newAmount ||
+      !newMerchant ||
+      (!newAccount && !isCreditCardExpense) ||
+      (newType === 'internalTransfer' && !newTargetAccount)
+    ) {
       Alert.alert('Error', 'Por favor, llena los campos obligatorios.');
       return;
     }
@@ -388,62 +703,47 @@ export function TransactionsScreen({
         return;
       }
 
-      const txRepo = createSqliteTransactionRepository(database);
-      const isIncome = newType === 'income';
+      const transactionRepository = createSqliteTransactionRepository(database);
+      const accountRepository = createSqliteAccountRepository(database);
+      const creditCardRepository = createSqliteCreditCardRepository(database);
 
-      const transactionNotes = newNotes 
-        ? `${newOperationType} • ${newNotes}` 
-        : `${newOperationType} • Registro manual`;
-
-      const newTx: Transaction = {
-        id: 'tx_manual_' + Date.now(),
+      const { creditCardTarget, transaction } = await saveManualTransaction({
+        accountId: newAccount || undefined,
+        accountRepository,
+        accounts,
         amount: cleanAmount,
-        currency: 'COP',
-        description: newMerchant,
-        date: new Date().toISOString(),
-        accountId: newAccount,
         categoryId: newCategory || undefined,
-        type: newType,
-        direction: isIncome ? 'inflow' : 'outflow',
-        status: 'posted',
+        creditCardHint: newCreditCardHint,
+        creditCardRepository,
+        editingTransaction,
+        hasInterestFreeInstallments,
+        installmentCountInput: creditInstallmentCount,
+        interestFreeInstallmentCountInput: interestFreeInstallmentCount,
         merchantName: newMerchant,
-        notes: transactionNotes,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
+        notes: newNotes,
+        operationType: newOperationType,
+        targetAccountId: newType === 'internalTransfer' ? newTargetAccount : undefined,
+        transactionRepository,
+        transactionType: newType,
+      });
 
-      // Also adjust account balance in SQLite
-      const accRepo = createSqliteAccountRepository(database);
-      const matchedAcc = accounts.find(a => a.id === newAccount);
-      if (matchedAcc) {
-        const isCreditCardExpense = !isIncome && matchedAcc.type === 'creditCard';
-        const updatedBalance = isIncome
-          ? matchedAcc.balance.amount + cleanAmount
-          : isCreditCardExpense
-            ? matchedAcc.balance.amount
-            : matchedAcc.balance.amount - cleanAmount;
-        const updatedDebtBalance = isCreditCardExpense
-          ? {
-              amount: (matchedAcc.debtBalance?.amount ?? 0) + cleanAmount,
-              currency: matchedAcc.currency,
-            }
-          : matchedAcc.debtBalance;
-
-        await accRepo.saveAccounts([
-          {
-            ...matchedAcc,
-            balance: {
-              ...matchedAcc.balance,
-              amount: updatedBalance,
-            },
-            ...(updatedDebtBalance ? { debtBalance: updatedDebtBalance } : {}),
-            updatedAt: new Date().toISOString(),
-          },
-        ]);
+      if (isCreditCardExpense) {
+        if (creditCardTarget.missingCreditCard) {
+          await createSqliteCreditCardAlertRepository(database).saveMissingCreditCardAlert({
+            creditCardHint: creditCardTarget.creditCardHint,
+            transactionId: transaction.id,
+          });
+          await loadMissingCardAlerts();
+          Toast.show({
+            type: 'info',
+            text1: 'Tarjeta pendiente',
+            text2: 'Crea la tarjeta de credito correspondiente para asociar este movimiento.',
+          });
+        }
       }
 
-      await txRepo.saveTransactions([newTx]);
       setAddTxModalVisible(false);
+      setEditingTransaction(null);
       onForceRefresh(); // Trigger parent database reload!
 
       // Reset form fields
@@ -451,7 +751,10 @@ export function TransactionsScreen({
       setNewMerchant('');
       setNewCategory('');
       setNewAccount('');
+      setNewTargetAccount('');
+      setNewCreditCardHint('');
       setNewNotes('');
+      resetInstallmentForm();
     } catch (err) {
       console.error(err);
       Alert.alert('Error', 'Error guardando la transacción.');
@@ -477,10 +780,11 @@ export function TransactionsScreen({
           <Text style={[styles.headerTitle, { color: themeColors.text }]}>SmartFin</Text>
         </View>
         <Pressable
+          onPress={openNotifications}
           style={[styles.bellButton, { borderColor: themeColors.glassBorder }]}
           android_ripple={{ color: 'rgba(255,255,255,0.1)' }}>
           <Text style={styles.bellIcon}>🔔</Text>
-          <View style={styles.bellIndicator} />
+          {missingCardAlerts.length > 0 ? <View style={styles.bellIndicator} /> : null}
         </Pressable>
       </View>
 
@@ -577,11 +881,9 @@ export function TransactionsScreen({
       {error ? (
         <Text style={[styles.statusText, { color: themeColors.danger }]}>{error}</Text>
       ) : null}
-      {displayHelpersReady ? null : null}
-
       {/* Main Transactions List grouped by dates */}
       <FlatList
-        data={groupTransactionsByDate()}
+        data={groupTransactionsByDate(filteredTransactions)}
         keyExtractor={item => item.date}
         contentContainerStyle={[
           styles.listContent,
@@ -599,7 +901,7 @@ export function TransactionsScreen({
         renderItem={({ item }) => (
           <View style={styles.dateGroup}>
             <Text style={[styles.dateHeader, { color: themeColors.muted }]}>
-              {formattedDateHeader(item.date)}
+              {formatTransactionDateHeader(item.date)}
             </Text>
 
             {item.data.map(tx => (
@@ -610,6 +912,7 @@ export function TransactionsScreen({
                 themeColors={themeColors}
                 categories={categories}
                 accounts={accounts}
+                onEditInstallments={openInstallmentEditor}
                 onShowOpTypeDropdown={showOpTypeDropdown}
                 onPress={handleCardPress}
               />
@@ -621,6 +924,17 @@ export function TransactionsScreen({
       {/* Floating Action Button (FAB) */}
       <Pressable
         onPress={() => {
+          setEditingTransaction(null);
+          setNewAmount('');
+          setNewMerchant('');
+          setNewCategory('');
+          setNewAccount('');
+          setNewTargetAccount('');
+          setNewCreditCardHint('');
+          setNewNotes('');
+          setNewType('expense');
+          setNewOperationType('Débito');
+          resetInstallmentForm();
           // prefill default category/account if available
           if (categories.length > 0 && categories[0]) setNewCategory(categories[0].id);
           const defaultDebitAccount = accounts.find(
@@ -669,7 +983,7 @@ export function TransactionsScreen({
 
       <AddTransactionModal
         visible={addTxModalVisible}
-        onClose={() => setAddTxModalVisible(false)}
+        onClose={closeAddTransactionModal}
         isDark={isDark}
         themeColors={themeColors}
         categories={categories}
@@ -684,16 +998,84 @@ export function TransactionsScreen({
         setNewCategory={setNewCategory}
         newAccount={newAccount}
         setNewAccount={setNewAccount}
+        newTargetAccount={newTargetAccount}
+        setNewTargetAccount={setNewTargetAccount}
+        newCreditCardHint={newCreditCardHint}
+        setNewCreditCardHint={setNewCreditCardHint}
         newNotes={newNotes}
         setNewNotes={setNewNotes}
         newOperationType={newOperationType}
         setNewOperationType={setNewOperationType}
+        creditInstallmentCount={creditInstallmentCount}
+        setCreditInstallmentCount={setCreditInstallmentCount}
+        hasInterestFreeInstallments={hasInterestFreeInstallments}
+        setHasInterestFreeInstallments={setHasInterestFreeInstallments}
+        interestFreeInstallmentCount={interestFreeInstallmentCount}
+        setInterestFreeInstallmentCount={setInterestFreeInstallmentCount}
         opTypePickerVisible={opTypePickerVisible}
         setOpTypePickerVisible={setOpTypePickerVisible}
         onCreateCategory={handleCreateCategoryFromTransactionModal}
         onCreateAccount={handleCreateAccount}
+        onCreateCreditCard={openCreateCreditCardForm}
+        mode={editingTransaction ? 'edit' : 'create'}
         onSave={handleSaveTransaction}
       />
+
+      <CreditCardFormModal
+        form={creditCardFormState}
+        mode="create"
+        onChange={setCreditCardFormState}
+        onClose={closeCreateCreditCardForm}
+        onDelete={() => undefined}
+        onSave={handleSaveCreditCardFromTransactionModal}
+        palette={creditCardPalette}
+        saving={savingCreditCard}
+        visible={creditCardFormVisible}
+      />
+
+      <Modal
+        animationType="fade"
+        onRequestClose={() => setNotificationsVisible(false)}
+        transparent
+        visible={notificationsVisible}>
+        <Pressable style={styles.notificationOverlay} onPress={() => setNotificationsVisible(false)}>
+          <Pressable
+            onPress={event => event.stopPropagation()}
+            style={[styles.notificationSheet, { backgroundColor: themeColors.background, borderColor: themeColors.border }]}>
+            <View style={styles.notificationHeader}>
+              <Text style={[styles.notificationTitle, { color: themeColors.text }]}>Notificaciones</Text>
+              <Pressable onPress={() => setNotificationsVisible(false)} style={[styles.notificationClose, { borderColor: themeColors.border }]}>
+                <Text style={[styles.notificationCloseText, { color: themeColors.muted }]}>x</Text>
+              </Pressable>
+            </View>
+            {missingCardAlerts.length === 0 ? (
+              <Text style={[styles.notificationEmpty, { color: themeColors.muted }]}>
+                No hay tarjetas pendientes por crear.
+              </Text>
+            ) : (
+              missingCardAlerts.map(alert => (
+                <Pressable
+                  key={alert.id}
+                  disabled={savingCreditCard}
+                  onPress={() => openCreditCardFormFromAlert(alert)}
+                  style={[styles.notificationCard, { backgroundColor: themeColors.card, borderColor: themeColors.border }]}>
+                  <View style={styles.notificationIcon}>
+                    <Text style={[styles.notificationIconText, { color: themeColors.primary }]}>TC</Text>
+                  </View>
+                  <View style={styles.notificationTextBlock}>
+                    <Text style={[styles.notificationCardTitle, { color: themeColors.text }]}>
+                      {alert.creditCardName}
+                    </Text>
+                    <Text style={[styles.notificationCardBody, { color: themeColors.muted }]}>
+                      Toca para abrir el formulario de tarjeta con estos datos.
+                    </Text>
+                  </View>
+                </Pressable>
+              ))
+            )}
+          </Pressable>
+        </Pressable>
+      </Modal>
 
       <OpTypePickerModal
         visible={opTypePickerVisible}
@@ -712,6 +1094,23 @@ export function TransactionsScreen({
         onSelectOpType={handleUpdateTransactionOpType}
       />
 
+      <InstallmentPickerModal
+        tx={selectedTxForInstallments}
+        onClose={() => {
+          setSelectedTxForInstallments(null);
+          resetInstallmentForm();
+        }}
+        isDark={isDark}
+        themeColors={themeColors}
+        installmentCount={creditInstallmentCount}
+        onChangeInstallmentCount={setCreditInstallmentCount}
+        hasInterestFreeInstallments={hasInterestFreeInstallments}
+        onChangeHasInterestFreeInstallments={setHasInterestFreeInstallments}
+        interestFreeInstallmentCount={interestFreeInstallmentCount}
+        onChangeInterestFreeInstallmentCount={setInterestFreeInstallmentCount}
+        onSave={handleSaveInstallmentDetails}
+      />
+
       <CategorizationModal
         visible={categorizationModalVisible}
         onClose={() => setCategorizationModalVisible(false)}
@@ -722,6 +1121,7 @@ export function TransactionsScreen({
         onSelectCategory={handleSelectCategory}
         onDeleteTransaction={handleDeleteTransaction}
         onCreateCategory={handleCreateCategory}
+        onEditTransaction={openEditTransactionForm}
       />
 
       {/* Shared Bottom Tab Navigation bar */}
@@ -732,6 +1132,8 @@ export function TransactionsScreen({
         onMoreActionPress={action => {
           if (action === 'creditCards') {
             onOpenCreditCards();
+          } else if (action === 'debitCards') {
+            onOpenDebitCards();
           } else {
             onOpenSettings();
           }
@@ -807,6 +1209,82 @@ const styles = StyleSheet.create({
     right: 9,
     top: 9,
     width: 8,
+  },
+  notificationCard: {
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    padding: 14,
+  },
+  notificationCardBody: {
+    fontSize: 12,
+    fontWeight: '700',
+    lineHeight: 18,
+    marginTop: 2,
+  },
+  notificationCardTitle: {
+    fontSize: 16,
+    fontWeight: '900',
+  },
+  notificationClose: {
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    height: 32,
+    justifyContent: 'center',
+    width: 32,
+  },
+  notificationCloseText: {
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  notificationEmpty: {
+    fontSize: 14,
+    fontWeight: '800',
+    paddingVertical: 18,
+    textAlign: 'center',
+  },
+  notificationHeader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  notificationIcon: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(187, 195, 255, 0.12)',
+    borderRadius: 20,
+    height: 42,
+    justifyContent: 'center',
+    width: 42,
+  },
+  notificationIconText: {
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  notificationOverlay: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(5, 4, 8, 0.72)',
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  notificationSheet: {
+    borderRadius: 24,
+    borderWidth: 1,
+    gap: 14,
+    maxWidth: 520,
+    padding: 18,
+    width: '100%',
+  },
+  notificationTextBlock: {
+    flex: 1,
+    minWidth: 0,
+  },
+  notificationTitle: {
+    fontSize: 20,
+    fontWeight: '900',
   },
   catBadge: {
     borderRadius: 8,

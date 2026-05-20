@@ -153,7 +153,7 @@ export function CreditCardFormModal({
                     label="Tasa E.A."
                     onChangeText={value => update('annualEffectiveInterestRate', formatPercentageInput(value))}
                     palette={palette}
-                    placeholder="Ej: 34.40"
+                    placeholder="Ej: 34,40"
                     suffix="%"
                     value={form.annualEffectiveInterestRate}
                   />
