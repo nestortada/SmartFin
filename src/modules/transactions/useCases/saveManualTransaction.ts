@@ -15,7 +15,7 @@ type ManualAccountRepository = Pick<SqliteAccountRepository, 'getAccounts' | 'sa
 
 type ManualTransactionRepository = Pick<
   SqliteTransactionRepository,
-  'deleteInstallmentPurchasesByTransactionId' | 'getTransactions' | 'saveTransactions'
+  'deleteInstallmentPurchasesByTransactionId' | 'deleteTransaction' | 'getTransactions' | 'saveTransactions'
 >;
 
 export type SaveManualTransactionParams = {
@@ -37,12 +37,14 @@ export type SaveManualTransactionParams = {
   targetAccountId?: string;
   transactionRepository: ManualTransactionRepository;
   transactionType: TransactionType;
+  transferTaxCharged?: boolean;
 };
 
 export type SaveManualTransactionResult = {
   creditCardTarget: ResolveCreditCardTransactionTargetResult;
   isCreditCardExpense: boolean;
   transaction: Transaction;
+  transactions: Transaction[];
 };
 
 type AccountImpact = {
@@ -109,10 +111,6 @@ function shouldApplyBalanceImpact(transaction: Transaction, account: Account): b
 function getTransactionDirection(transactionType: TransactionType): Transaction['direction'] {
   if (transactionType === 'income') {
     return 'inflow';
-  }
-
-  if (transactionType === 'internalTransfer') {
-    return 'neutral';
   }
 
   return 'outflow';
@@ -197,6 +195,53 @@ function applyTransactionImpact({
   }
 }
 
+function buildTransferCompanionTransaction({
+  now,
+  sourceTransaction,
+}: {
+  now: string;
+  sourceTransaction: Transaction;
+}): Transaction {
+  return {
+    ...sourceTransaction,
+    id: `${sourceTransaction.id}-in`,
+    accountId: sourceTransaction.targetAccountId as string,
+    description: `Entrada: ${sourceTransaction.description}`,
+    direction: 'inflow',
+    merchantName: `Entrada: ${sourceTransaction.merchantName ?? sourceTransaction.description}`,
+    notes: sourceTransaction.notes?.replace('Transferencia', 'Entrada transferencia'),
+    targetAccountId: sourceTransaction.accountId,
+    updatedAt: now,
+  };
+}
+
+function buildTransferTaxTransaction({
+  now,
+  sourceTransaction,
+}: {
+  now: string;
+  sourceTransaction: Transaction;
+}): Transaction {
+  const taxAmount = Math.max(1, Math.round(sourceTransaction.amount * 0.004));
+
+  return {
+    id: `${sourceTransaction.id}-4x1000`,
+    accountId: sourceTransaction.accountId,
+    amount: taxAmount,
+    createdAt: sourceTransaction.createdAt,
+    currency: sourceTransaction.currency,
+    date: sourceTransaction.date,
+    description: 'Impuesto 4x1000',
+    direction: 'outflow',
+    merchantName: 'Impuesto 4x1000',
+    notes: 'DÃ©bito â€¢ Cobro 4x1000 por transferencia',
+    paymentMethod: 'debit',
+    status: sourceTransaction.status,
+    type: 'expense',
+    updatedAt: now,
+  };
+}
+
 export function getNextMonthDueDate(fromDate: string): string {
   const dueDate = new Date(fromDate);
   dueDate.setMonth(dueDate.getMonth() + 1);
@@ -225,6 +270,7 @@ export async function saveManualTransaction(
     targetAccountId: requestedTargetAccountId,
     transactionRepository,
     transactionType,
+    transferTaxCharged = false,
   } = params;
   const isCreditCardExpense =
     transactionType !== 'income' &&
@@ -297,6 +343,7 @@ export async function saveManualTransaction(
   };
 
   const accountUpdates = new Map<string, Account>();
+  let existingTransferTax: Transaction | undefined;
 
   if (editingTransaction) {
     applyTransactionImpact({
@@ -305,6 +352,21 @@ export async function saveManualTransaction(
       multiplier: -1,
       transaction: editingTransaction,
     });
+
+    if (editingTransaction.type === 'internalTransfer') {
+      const transactions = await transactionRepository.getTransactions();
+      existingTransferTax = transactions.find(
+        candidate => candidate.id === `${editingTransaction.id}-4x1000`,
+      );
+      if (existingTransferTax) {
+        applyTransactionImpact({
+          accounts,
+          accountUpdates,
+          multiplier: -1,
+          transaction: existingTransferTax,
+        });
+      }
+    }
   }
 
   applyTransactionImpact({
@@ -314,11 +376,37 @@ export async function saveManualTransaction(
     transaction,
   });
 
+  const companionTransaction = transaction.type === 'internalTransfer'
+    ? buildTransferCompanionTransaction({ now, sourceTransaction: transaction })
+    : undefined;
+  const transferTaxTransaction = transaction.type === 'internalTransfer' && transferTaxCharged
+    ? buildTransferTaxTransaction({ now, sourceTransaction: transaction })
+    : undefined;
+
+  if (transferTaxTransaction) {
+    applyTransactionImpact({
+      accounts,
+      accountUpdates,
+      multiplier: 1,
+      transaction: transferTaxTransaction,
+    });
+  }
+
   if (accountUpdates.size > 0) {
     await accountRepository.saveAccounts(Array.from(accountUpdates.values()));
   }
 
-  await transactionRepository.saveTransactions([transaction]);
+  const transactionsToSave = [
+    transaction,
+    ...(companionTransaction ? [companionTransaction] : []),
+    ...(transferTaxTransaction ? [transferTaxTransaction] : []),
+  ];
+
+  await transactionRepository.saveTransactions(transactionsToSave);
+
+  if (existingTransferTax && !transferTaxTransaction) {
+    await transactionRepository.deleteTransaction(existingTransferTax.id);
+  }
 
   if (isCreditCardExpense && installmentCount > 1) {
     await creditCardRepository.saveInstallmentPurchases([
@@ -354,5 +442,6 @@ export async function saveManualTransaction(
     creditCardTarget,
     isCreditCardExpense,
     transaction,
+    transactions: transactionsToSave,
   };
 }

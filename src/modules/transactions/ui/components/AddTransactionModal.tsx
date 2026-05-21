@@ -45,6 +45,8 @@ type AddTransactionModalProps = {
   setNewAccount: (val: string) => void;
   newTargetAccount: string;
   setNewTargetAccount: (val: string) => void;
+  transferTaxCharged: boolean;
+  setTransferTaxCharged: (val: boolean) => void;
   newCreditCardHint: string;
   setNewCreditCardHint: (val: string) => void;
   newNotes: string;
@@ -85,6 +87,8 @@ export function AddTransactionModal({
   setNewAccount,
   newTargetAccount,
   setNewTargetAccount,
+  transferTaxCharged,
+  setTransferTaxCharged,
   newCreditCardHint,
   setNewCreditCardHint,
   newNotes,
@@ -129,7 +133,7 @@ export function AddTransactionModal({
           ? category.type === 'income'
           : category.type === 'expense' || category.type === 'debt',
       ),
-    [categories, isIncome],
+    [categories, isIncome, isTransfer],
   );
   const visibleAccounts = useMemo(
     () =>
@@ -284,9 +288,9 @@ export function AddTransactionModal({
                 onPress={() => selectType('expense')}
                 style={[
                   styles.typeOption,
-                  !isIncome && { backgroundColor: themeColors.primary },
+                  !isIncome && !isTransfer && { backgroundColor: themeColors.primary },
                 ]}>
-                <Text style={[styles.typeText, { color: !isIncome ? '#f1f0ff' : themeColors.muted }]}>Gasto</Text>
+                <Text style={[styles.typeText, { color: !isIncome && !isTransfer ? '#f1f0ff' : themeColors.muted }]}>Gasto</Text>
               </Pressable>
               <Pressable
                 onPress={() => selectType('income')}
@@ -576,7 +580,7 @@ export function AddTransactionModal({
                       subtitle={account.institutionName}
                     />
                   ))}
-                {!isIncome && isCreditOperation(newOperationType) ? (
+                {!isIncome && !isTransfer && isCreditOperation(newOperationType) ? (
                   <>
                     <CreateCreditCardButton onPress={openCreditCardForm} palette={themeColors} />
                     <CreateInline
@@ -606,6 +610,23 @@ export function AddTransactionModal({
 
             {isTransfer ? (
               <>
+                <Pressable
+                  onPress={() => setTransferTaxCharged(!transferTaxCharged)}
+                  style={[styles.taxPrompt, { backgroundColor: themeColors.card, borderColor: themeColors.border }]}>
+                  <View style={styles.fieldContent}>
+                    <Text style={[styles.fieldLabel, { color: themeColors.muted }]}>Cobro 4x1000</Text>
+                    <Text style={[styles.fieldSubtitle, { color: themeColors.text }]}>
+                      {transferTaxCharged ? 'Si, descontar 0,4% adicional' : 'No se cobro en esta transferencia'}
+                    </Text>
+                  </View>
+                  <View
+                    style={[
+                      styles.switchPill,
+                      { backgroundColor: transferTaxCharged ? themeColors.tertiary : themeColors.border },
+                    ]}>
+                    <View style={[styles.switchKnob, transferTaxCharged && styles.switchKnobOn]} />
+                  </View>
+                </Pressable>
                 <PickerField
                   icon="TD"
                   label="Cuenta de destino"
@@ -704,7 +725,7 @@ export function AddTransactionModal({
                 { backgroundColor: isIncome ? '#bbc3ff' : themeColors.primary },
               ]}>
               <Text style={[styles.saveText, { color: isIncome ? '#001d93' : '#f1f0ff' }]}>
-                {mode === 'edit' ? 'Guardar Cambios' : `Guardar ${isIncome ? 'Ingreso' : 'Gasto'}`}
+                {mode === 'edit' ? 'Guardar Cambios' : `Guardar ${isTransfer ? 'Transferencia' : isIncome ? 'Ingreso' : 'Gasto'}`}
               </Text>
             </Pressable>
           </View>
@@ -1222,6 +1243,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minWidth: 42,
     padding: 3,
+  },
+  taxPrompt: {
+    alignItems: 'center',
+    borderRadius: 18,
+    borderWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    padding: 16,
   },
   tertiaryGlow: {
     backgroundColor: 'rgba(0, 228, 117, 0.10)',

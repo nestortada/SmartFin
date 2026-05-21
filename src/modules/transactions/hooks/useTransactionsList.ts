@@ -68,8 +68,15 @@ export function transactionMatchesAccountFilter(
   transaction: Transaction,
   selectedAccount: string,
 ): boolean {
+  if (selectedAccount === 'all') {
+    return true;
+  }
+
+  if (transaction.type === 'internalTransfer') {
+    return transaction.accountId === selectedAccount;
+  }
+
   return (
-    selectedAccount === 'all' ||
     transaction.accountId === selectedAccount ||
     transaction.targetAccountId === selectedAccount
   );

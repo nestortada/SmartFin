@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
 import type { AppTheme, SettingsState } from '../types';
@@ -72,6 +73,7 @@ type SettingsScreenProps = {
   onSaveCredential: (secret: string) => Promise<void>;
   onThemeChange: (theme: AppTheme) => Promise<void>;
   onToggleBiometrics: (enabled: boolean) => Promise<void>;
+  onToggleLocalCredential: (enabled: boolean) => Promise<void>;
   onToggleSmsReading: (enabled: boolean) => Promise<void>;
 };
 
@@ -91,6 +93,7 @@ export function SettingsScreen({
   onSaveCredential,
   onThemeChange,
   onToggleBiometrics,
+  onToggleLocalCredential,
   onToggleSmsReading,
 }: SettingsScreenProps) {
   const insets = useSafeAreaInsets();
@@ -138,14 +141,14 @@ export function SettingsScreen({
           accessibilityRole="button"
           onPress={onBack}
           style={styles.backButton}>
-          <Text style={[styles.backIcon, { color: palette.primary }]}>←</Text>
+          <MaterialIcons name="arrow-back" size={24} color={palette.primary} />
         </Pressable>
         <Text style={[styles.title, { color: palette.primary }]}>Ajustes</Text>
         
         {/* Right side items: Bell notification and profile mark */}
         <View style={styles.topRightControls}>
           <Pressable style={styles.iconButton}>
-            <Text style={[styles.bellIcon, { color: palette.muted }]}>🔔</Text>
+            <MaterialIcons name="notifications-active" size={24} color={palette.muted} />
           </Pressable>
           <View style={[styles.profileMark, { backgroundColor: '#3d5afe', borderColor: palette.primary }]}>
             <Text style={[styles.profileMarkText, { color: palette.text }]}>
@@ -179,6 +182,7 @@ export function SettingsScreen({
           smsReadingEnabled={settings.smsReadingEnabled}
           onSaveCredential={onSaveCredential}
           onToggleBiometrics={onToggleBiometrics}
+          onToggleLocalCredential={onToggleLocalCredential}
           onToggleSmsReading={onToggleSmsReading}
           palette={palette}
         />
@@ -228,15 +232,6 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     width: 32,
-  },
-  backIcon: {
-    fontSize: 28,
-    fontWeight: '900',
-    lineHeight: 32,
-  },
-  bellIcon: {
-    fontSize: 11,
-    fontWeight: '900',
   },
   content: {
     alignSelf: 'center',

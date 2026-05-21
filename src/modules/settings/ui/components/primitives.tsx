@@ -10,6 +10,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export type SettingsPalette = {
   background: string;
@@ -28,6 +29,20 @@ export type SettingsPalette = {
   tertiarySoft: string;
   text: string;
 };
+
+// ─── Icon ─────────────────────────────────────────────────────────────────────
+
+export function Icon({
+  name,
+  size = 24,
+  color,
+}: {
+  name: string;
+  size?: number;
+  color: string;
+}) {
+  return <MaterialIcons name={name} size={size} color={color} />;
+}
 
 // ─── usePressMotion ───────────────────────────────────────────────────────────
 
@@ -117,7 +132,7 @@ export function SettingsRow({
   supportingText,
   trailing,
 }: {
-  icon: string;
+  icon: React.ReactNode | string;
   label: string;
   palette: SettingsPalette;
   supportingText?: string;
@@ -125,9 +140,15 @@ export function SettingsRow({
 }) {
   return (
     <View style={primitiveStyles.row}>
-      <Text style={[primitiveStyles.rowIcon, { color: palette.muted }]}>
-        {icon}
-      </Text>
+      <View style={primitiveStyles.rowIconContainer}>
+        {typeof icon === 'string' ? (
+          <Text style={[primitiveStyles.rowIcon, { color: palette.muted }]}>
+            {icon}
+          </Text>
+        ) : (
+          icon
+        )}
+      </View>
       <View style={primitiveStyles.rowCopy}>
         <Text style={[primitiveStyles.rowLabel, { color: palette.text }]}>
           {label}
@@ -268,6 +289,12 @@ export const primitiveStyles = StyleSheet.create({
     fontWeight: '900',
     lineHeight: 24,
     textAlign: 'center',
+    width: 32,
+  },
+  rowIconContainer: {
+    alignItems: 'center',
+    height: 32,
+    justifyContent: 'center',
     width: 32,
   },
   rowLabel: {

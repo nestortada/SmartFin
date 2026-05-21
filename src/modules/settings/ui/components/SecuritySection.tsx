@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {
   GlassButton,
@@ -17,33 +18,45 @@ type SecuritySectionProps = {
   smsReadingEnabled: boolean;
   onSaveCredential: (secret: string) => Promise<void>;
   onToggleBiometrics: (enabled: boolean) => Promise<void>;
+  onToggleLocalCredential: (enabled: boolean) => Promise<void>;
   onToggleSmsReading: (enabled: boolean) => Promise<void>;
 };
 
 export function SecuritySection({
   biometricsEnabled,
+  localCredentialEnabled,
   palette,
   smsPermissionState,
   smsReadingEnabled,
   onSaveCredential,
   onToggleBiometrics,
+  onToggleLocalCredential,
   onToggleSmsReading,
 }: SecuritySectionProps) {
   const [credentialDraft, setCredentialDraft] = useState('');
   const [showEditor, setShowEditor] = useState(false);
+  const [showCredential, setShowCredential] = useState(false);
 
   const saveCredential = () => {
     void onSaveCredential(credentialDraft).then(() => {
       setCredentialDraft('');
       setShowEditor(false);
+      setShowCredential(false);
     });
+  };
+
+  const disableCredential = () => {
+    setCredentialDraft('');
+    setShowCredential(false);
+    setShowEditor(false);
+    void onToggleLocalCredential(false);
   };
 
   return (
     <SettingsSection palette={palette} title="Seguridad">
       <SettingsRow
-        icon="👆"
-        label={'Biometr\u00eda'}
+        icon={<MaterialIcons name="fingerprint" size={24} color={palette.muted} />}
+        label="Biometría"
         palette={palette}
         trailing={
           <Switch
@@ -62,10 +75,10 @@ export function SecuritySection({
       <View style={styles.divider} />
 
       <SettingsRow
-        icon="💬"
+        icon={<MaterialIcons name="sms-failed" size={24} color={palette.muted} />}
         label="Notificaciones de SMS"
         palette={palette}
-        supportingText={'Lectura autom\u00e1tica de notificaciones'}
+        supportingText="Lectura automática de notificaciones"
         trailing={
           <Switch
             disabled={smsPermissionState === 'unavailable'}
@@ -84,16 +97,43 @@ export function SecuritySection({
       <View style={styles.divider} />
 
       <SettingsRow
-        icon="🔐"
+        icon={<MaterialIcons name="lock-open" size={24} color={palette.muted} />}
         label="PIN de acceso"
         palette={palette}
-        supportingText={undefined}
+        supportingText={
+          localCredentialEnabled
+            ? 'Activo. Puedes cambiarlo o desactivarlo.'
+            : 'Desactivado'
+        }
         trailing={
-          <Pressable onPress={() => setShowEditor(value => !value)} style={styles.chevronWrap}>
-            <Text style={[styles.chevron, { color: palette.muted }]}>{'>'}</Text>
-          </Pressable>
+          <Switch
+            ios_backgroundColor="rgba(120, 120, 130, 0.2)"
+            onValueChange={enabled => {
+              if (enabled) {
+                setShowEditor(true);
+              } else {
+                disableCredential();
+              }
+            }}
+            thumbColor={localCredentialEnabled ? '#ffffff' : '#f4f2f8'}
+            trackColor={{
+              false: 'rgba(255, 255, 255, 0.12)',
+              true: palette.primary,
+            }}
+            value={localCredentialEnabled}
+          />
         }
       />
+
+      <View style={styles.pinActions}>
+        <Pressable
+          onPress={() => setShowEditor(value => !value)}
+          style={[styles.inlineButton, { borderColor: palette.border }]}>
+          <Text style={[styles.inlineButtonText, { color: palette.primary }]}>
+            {localCredentialEnabled ? 'Cambiar PIN' : 'Crear PIN'}
+          </Text>
+        </Pressable>
+      </View>
 
       {showEditor ? (
         <View
@@ -103,17 +143,25 @@ export function SecuritySection({
           ]}>
           <TextInput
             onChangeText={setCredentialDraft}
-            placeholder={'M\u00ednimo 4 caracteres'}
+            placeholder="Minimo 4 caracteres"
             placeholderTextColor={palette.muted}
-            secureTextEntry
+            secureTextEntry={!showCredential}
             style={[
               styles.credentialInput,
               { borderColor: palette.border, color: palette.text },
             ]}
             value={credentialDraft}
           />
+          <Pressable
+            accessibilityLabel={showCredential ? 'Ocultar PIN' : 'Ver PIN'}
+            onPress={() => setShowCredential(value => !value)}
+            style={[styles.eyeButton, { borderColor: palette.border }]}>
+            <Text style={[styles.eyeButtonText, { color: palette.muted }]}>
+              {showCredential ? 'Ocultar' : 'Ver'}
+            </Text>
+          </Pressable>
           <GlassButton
-            label="Guardar"
+            label={localCredentialEnabled ? 'Cambiar' : 'Guardar'}
             onPress={saveCredential}
             palette={palette}
             variant="filled"
@@ -124,8 +172,8 @@ export function SecuritySection({
       <View style={styles.divider} />
 
       <SettingsRow
-        icon="🔒"
-        label={'Bloqueo autom\u00e1tico'}
+        icon="LOCK"
+        label="Bloqueo automatico"
         palette={palette}
         trailing={
           <Text style={[styles.trailingLabel, { color: palette.primary }]}>
@@ -138,15 +186,6 @@ export function SecuritySection({
 }
 
 const styles = StyleSheet.create({
-  chevron: {
-    fontSize: 22,
-    fontWeight: '300',
-  },
-  chevronWrap: {
-    height: 40,
-    justifyContent: 'center',
-    paddingHorizontal: 6,
-  },
   credentialInput: {
     borderRadius: 12,
     borderWidth: 1,
@@ -154,6 +193,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     minHeight: 44,
+    minWidth: 0,
     paddingHorizontal: 14,
   },
   credentialPanel: {
@@ -169,6 +209,35 @@ const styles = StyleSheet.create({
   divider: {
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     height: 1,
+  },
+  eyeButton: {
+    alignItems: 'center',
+    borderRadius: 999,
+    borderWidth: 1,
+    minHeight: 40,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  eyeButtonText: {
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  inlineButton: {
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    borderRadius: 999,
+    borderWidth: 1,
+    minHeight: 34,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  inlineButtonText: {
+    fontSize: 12,
+    fontWeight: '900',
+  },
+  pinActions: {
+    paddingBottom: 12,
+    paddingHorizontal: 64,
   },
   trailingLabel: {
     fontSize: 12,

@@ -20,10 +20,39 @@ function transaction(overrides: Partial<Transaction> = {}): Transaction {
 }
 
 describe('transactionMatchesAccountFilter', () => {
-  it('matches source and target accounts for account filters', () => {
+  it('matches only the visible leg account for internal transfer filters', () => {
     expect(transactionMatchesAccountFilter(transaction(), 'source-account')).toBe(true);
-    expect(transactionMatchesAccountFilter(transaction(), 'target-account')).toBe(true);
+    expect(transactionMatchesAccountFilter(transaction(), 'target-account')).toBe(false);
     expect(transactionMatchesAccountFilter(transaction(), 'other-account')).toBe(false);
+  });
+
+  it('matches the incoming transfer leg on the destination card', () => {
+    expect(transactionMatchesAccountFilter(
+      transaction({
+        accountId: 'target-account',
+        direction: 'inflow',
+        targetAccountId: 'source-account',
+      }),
+      'target-account',
+    )).toBe(true);
+    expect(transactionMatchesAccountFilter(
+      transaction({
+        accountId: 'target-account',
+        direction: 'inflow',
+        targetAccountId: 'source-account',
+      }),
+      'source-account',
+    )).toBe(false);
+  });
+
+  it('still matches target account for non-transfer transactions', () => {
+    expect(transactionMatchesAccountFilter(
+      transaction({
+        direction: 'outflow',
+        type: 'creditCardPayment',
+      }),
+      'target-account',
+    )).toBe(true);
   });
 
   it('matches all transactions when the filter is all', () => {

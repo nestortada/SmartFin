@@ -1,11 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   FlatList,
+  Modal,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,8 +18,18 @@ import { BottomNavigation, type BottomNavigationTab } from '../../../shared/comp
 import { formatCurrency } from '../../../shared/utils/formatCurrency';
 import type { AppTheme } from '../../settings';
 import type { TransactionsInitialDraft } from '../../transactions/ui/TransactionsScreen';
+import { createSqliteAccountRepository } from '../repositories';
 import { useDebitCardsOverview } from '../hooks';
-import type { DebitCardMovement, DebitCardSummary } from '../useCases';
+import {
+  deleteDebitCard,
+  parseDebitCardMetadata,
+  saveDebitCardFromForm,
+  type DebitCardFormInput,
+  type DebitCardIncomeFrequency,
+  type DebitCardIncomeType,
+  type DebitCardMovement,
+  type DebitCardSummary,
+} from '../useCases';
 
 type DebitCardsScreenProps = {
   activeTheme: AppTheme;
@@ -81,8 +94,20 @@ export function DebitCardsScreen({
 }: DebitCardsScreenProps) {
   const insets = useSafeAreaInsets();
   const palette = palettes[activeTheme];
-  const { error, loading, overview } = useDebitCardsOverview(database, refreshKey);
+  const [localRefreshKey, setLocalRefreshKey] = useState(0);
+  const { error, loading, overview } = useDebitCardsOverview(database, refreshKey + localRefreshKey);
   const [selectedCardId, setSelectedCardId] = useState<string>();
+  const [formVisible, setFormVisible] = useState(false);
+  const [formSaving, setFormSaving] = useState(false);
+  const [formInput, setFormInput] = useState<DebitCardFormInput>({
+    currentBalance: 0,
+    name: '',
+    recurringIncome: {
+      amount: 0,
+      frequency: 'none',
+      incomeType: 'salary',
+    },
+  });
 
   useEffect(() => {
     if (overview.cards.length === 0) {
@@ -117,6 +142,97 @@ export function DebitCardsScreen({
       accountId: selectedCard.account.id,
       action,
     });
+  };
+
+  const openCreateForm = () => {
+    setFormInput({
+      currentBalance: 0,
+      name: '',
+      recurringIncome: {
+        amount: 0,
+        frequency: 'none',
+        incomeType: 'salary',
+      },
+    });
+    setFormVisible(true);
+  };
+
+  const openEditForm = () => {
+    if (!selectedCard) {
+      return;
+    }
+
+    const metadata = parseDebitCardMetadata(selectedCard.account);
+    setFormInput({
+      accountId: selectedCard.account.id,
+      bankName: selectedCard.account.institutionName ?? metadata.bankName,
+      currentBalance: selectedCard.account.balance.amount,
+      name: selectedCard.account.name,
+      recurringIncome: metadata.recurringIncome ?? {
+        amount: 0,
+        frequency: 'none',
+        incomeType: 'salary',
+      },
+    });
+    setFormVisible(true);
+  };
+
+  const handleSaveDebitCard = async () => {
+    if (!database) {
+      Alert.alert('SmartFin', 'La base de datos local no esta disponible.');
+      return;
+    }
+
+    setFormSaving(true);
+    try {
+      const savedAccount = await saveDebitCardFromForm(
+        createSqliteAccountRepository(database),
+        formInput,
+      );
+      setSelectedCardId(savedAccount.id);
+      setFormVisible(false);
+      setLocalRefreshKey(current => current + 1);
+    } catch (saveError) {
+      Alert.alert(
+        'SmartFin',
+        saveError instanceof Error ? saveError.message : 'No se pudo guardar la tarjeta debito.',
+      );
+    } finally {
+      setFormSaving(false);
+    }
+  };
+
+  const handleDeleteDebitCard = () => {
+    if (!database || !selectedCard) {
+      return;
+    }
+
+    Alert.alert(
+      'Eliminar tarjeta debito',
+      'La tarjeta se ocultara de tus tarjetas activas. Sus movimientos historicos se conservan.',
+      [
+        { style: 'cancel', text: 'Cancelar' },
+        {
+          onPress: async () => {
+            try {
+              await deleteDebitCard(
+                createSqliteAccountRepository(database),
+                selectedCard.account.id,
+              );
+              setSelectedCardId(undefined);
+              setLocalRefreshKey(current => current + 1);
+            } catch (deleteError) {
+              Alert.alert(
+                'SmartFin',
+                deleteError instanceof Error ? deleteError.message : 'No se pudo eliminar la tarjeta debito.',
+              );
+            }
+          },
+          style: 'destructive',
+          text: 'Eliminar',
+        },
+      ],
+    );
   };
 
   return (
@@ -190,6 +306,21 @@ export function DebitCardsScreen({
               onTransfer={() => openDraft('transferOut')}
               palette={palette}
             />
+            <View style={styles.manageActions}>
+              <Pressable
+                accessibilityRole="button"
+                onPress={openEditForm}
+                style={[styles.manageButton, { backgroundColor: palette.card, borderColor: palette.border }]}>
+                <Text style={[styles.manageButtonText, { color: palette.primary }]}>Modificar</Text>
+              </Pressable>
+              <Pressable
+                accessibilityRole="button"
+                onPress={handleDeleteDebitCard}
+                style={[styles.manageButton, { backgroundColor: palette.card, borderColor: palette.border }]}>
+                <Text style={[styles.manageButtonText, { color: palette.danger }]}>Eliminar</Text>
+              </Pressable>
+            </View>
+            <RecurringIncomeCard card={selectedCard} palette={palette} />
             <MonthlyAnalysis card={selectedCard} palette={palette} />
             <WeeklyTrend card={selectedCard} palette={palette} />
             <MovementList card={selectedCard} palette={palette} />
@@ -209,6 +340,27 @@ export function DebitCardsScreen({
           }
         }}
         onTabPress={handleTabPress}
+      />
+
+      <Pressable
+        accessibilityRole="button"
+        onPress={openCreateForm}
+        style={[styles.fab, { backgroundColor: palette.primary }]}>
+        <Text style={[styles.fabText, { color: palette.inverseText }]}>+</Text>
+      </Pressable>
+
+      <DebitCardFormModal
+        input={formInput}
+        onChange={setFormInput}
+        onClose={() => {
+          if (!formSaving) {
+            setFormVisible(false);
+          }
+        }}
+        onSave={handleSaveDebitCard}
+        palette={palette}
+        saving={formSaving}
+        visible={formVisible}
       />
     </View>
   );
@@ -297,6 +449,254 @@ function QuickActions({
       ))}
     </View>
   );
+}
+
+function RecurringIncomeCard({
+  card,
+  palette,
+}: {
+  card: DebitCardSummary;
+  palette: DebitCardsPalette;
+}) {
+  const recurringIncome = card.recurringIncome;
+  const frequencyLabel = recurringIncome?.frequency === 'biweekly'
+    ? 'Cada 15 dias'
+    : recurringIncome?.frequency === 'monthly'
+      ? 'Cada mes'
+      : recurringIncome?.frequency === 'specificDay'
+        ? `Dia ${recurringIncome.dayOfMonth ?? 1}`
+        : 'Sin ingreso programado';
+  const incomeTypeLabel = recurringIncome?.incomeType === 'allowance'
+    ? 'Mesada'
+    : recurringIncome?.incomeType === 'business'
+      ? 'Negocio'
+      : recurringIncome?.incomeType === 'other'
+        ? 'Otro'
+        : 'Salario';
+
+  return (
+    <View style={[styles.recurringCard, { backgroundColor: palette.card, borderColor: palette.border }]}>
+      <View>
+        <Text style={[styles.metricLabel, { color: palette.muted }]}>Ingreso recurrente</Text>
+        <Text style={[styles.recurringTitle, { color: palette.text }]}>{frequencyLabel}</Text>
+      </View>
+      <View style={styles.recurringRight}>
+        <Text style={[styles.recurringAmount, { color: palette.tertiary }]}>
+          {recurringIncome && recurringIncome.frequency !== 'none'
+            ? formatCurrency(recurringIncome.amount, card.account.currency)
+            : '$0'}
+        </Text>
+        <Text style={[styles.movementSubtitle, { color: palette.muted }]}>{incomeTypeLabel}</Text>
+      </View>
+    </View>
+  );
+}
+
+function DebitCardFormModal({
+  input,
+  onChange,
+  onClose,
+  onSave,
+  palette,
+  saving,
+  visible,
+}: {
+  input: DebitCardFormInput;
+  onChange: (input: DebitCardFormInput) => void;
+  onClose: () => void;
+  onSave: () => void;
+  palette: DebitCardsPalette;
+  saving: boolean;
+  visible: boolean;
+}) {
+  const recurringIncome = input.recurringIncome ?? {
+    amount: 0,
+    frequency: 'none' as DebitCardIncomeFrequency,
+    incomeType: 'salary' as DebitCardIncomeType,
+  };
+  const updateRecurringIncome = (nextIncome: Partial<NonNullable<DebitCardFormInput['recurringIncome']>>) => {
+    onChange({
+      ...input,
+      recurringIncome: {
+        ...recurringIncome,
+        ...nextIncome,
+      },
+    });
+  };
+
+  return (
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+      <View style={styles.modalOverlay}>
+        <View style={[styles.formSheet, { backgroundColor: palette.background, borderColor: palette.border }]}>
+          <View style={styles.formHeader}>
+            <Text style={[styles.formTitle, { color: palette.text }]}>
+              {input.accountId ? 'Modificar tarjeta debito' : 'Agregar tarjeta debito'}
+            </Text>
+            <Pressable accessibilityRole="button" onPress={onClose}>
+              <Text style={[styles.formClose, { color: palette.muted }]}>x</Text>
+            </Pressable>
+          </View>
+          <ScrollView contentContainerStyle={styles.formContent} keyboardShouldPersistTaps="handled">
+            <FormField
+              label="Nombre"
+              onChangeText={name => onChange({ ...input, name })}
+              palette={palette}
+              placeholder="Ej: Debito principal"
+              value={input.name}
+            />
+            <FormField
+              label="Banco"
+              onChangeText={bankName => onChange({ ...input, bankName })}
+              palette={palette}
+              placeholder="Ej: Bancolombia"
+              value={input.bankName ?? ''}
+            />
+            <FormField
+              keyboardType="number-pad"
+              label="Saldo actual"
+              onChangeText={value => onChange({ ...input, currentBalance: parseMoneyInput(value) })}
+              palette={palette}
+              placeholder="0"
+              value={input.currentBalance ? String(Math.round(input.currentBalance)) : ''}
+            />
+
+            <Text style={[styles.formSectionTitle, { color: palette.text }]}>Ingreso programado</Text>
+            <SegmentedOptions
+              options={[
+                { label: 'No', value: 'none' },
+                { label: '15 dias', value: 'biweekly' },
+                { label: 'Mensual', value: 'monthly' },
+                { label: 'Dia fijo', value: 'specificDay' },
+              ]}
+              onSelect={value => updateRecurringIncome({ frequency: value as DebitCardIncomeFrequency })}
+              palette={palette}
+              selected={recurringIncome.frequency}
+            />
+            {recurringIncome.frequency !== 'none' ? (
+              <>
+                <SegmentedOptions
+                  options={[
+                    { label: 'Salario', value: 'salary' },
+                    { label: 'Mesada', value: 'allowance' },
+                    { label: 'Negocio', value: 'business' },
+                    { label: 'Otro', value: 'other' },
+                  ]}
+                  onSelect={value => updateRecurringIncome({ incomeType: value as DebitCardIncomeType })}
+                  palette={palette}
+                  selected={recurringIncome.incomeType}
+                />
+                <FormField
+                  keyboardType="number-pad"
+                  label="Monto esperado"
+                  onChangeText={value => updateRecurringIncome({ amount: parseMoneyInput(value) })}
+                  palette={palette}
+                  placeholder="0"
+                  value={recurringIncome.amount ? String(Math.round(recurringIncome.amount)) : ''}
+                />
+                {recurringIncome.frequency === 'specificDay' ? (
+                  <FormField
+                    keyboardType="number-pad"
+                    label="Dia del mes"
+                    onChangeText={value => updateRecurringIncome({ dayOfMonth: clampDay(Number(value) || 1) })}
+                    palette={palette}
+                    placeholder="1"
+                    value={String(recurringIncome.dayOfMonth ?? 1)}
+                  />
+                ) : null}
+              </>
+            ) : null}
+          </ScrollView>
+          <Pressable
+            accessibilityRole="button"
+            disabled={saving}
+            onPress={onSave}
+            style={[styles.saveButton, { backgroundColor: palette.primary }]}>
+            <Text style={[styles.saveButtonText, { color: palette.inverseText }]}>
+              {saving ? 'Guardando...' : 'Guardar tarjeta'}
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
+function FormField({
+  keyboardType,
+  label,
+  onChangeText,
+  palette,
+  placeholder,
+  value,
+}: {
+  keyboardType?: 'default' | 'number-pad';
+  label: string;
+  onChangeText: (value: string) => void;
+  palette: DebitCardsPalette;
+  placeholder: string;
+  value: string;
+}) {
+  return (
+    <View style={[styles.formField, { borderColor: palette.border }]}>
+      <Text style={[styles.metricLabel, { color: palette.muted }]}>{label}</Text>
+      <TextInput
+        keyboardType={keyboardType ?? 'default'}
+        onChangeText={onChangeText}
+        placeholder={placeholder}
+        placeholderTextColor={palette.muted}
+        style={[styles.formInput, { color: palette.text }]}
+        value={value}
+      />
+    </View>
+  );
+}
+
+function SegmentedOptions({
+  onSelect,
+  options,
+  palette,
+  selected,
+}: {
+  onSelect: (value: string) => void;
+  options: Array<{ label: string; value: string }>;
+  palette: DebitCardsPalette;
+  selected: string;
+}) {
+  return (
+    <View style={styles.segmentedRow}>
+      {options.map(option => (
+        <Pressable
+          accessibilityRole="button"
+          key={option.value}
+          onPress={() => onSelect(option.value)}
+          style={[
+            styles.segmentedButton,
+            {
+              backgroundColor: selected === option.value ? palette.primary : palette.card,
+              borderColor: selected === option.value ? palette.primary : palette.border,
+            },
+          ]}>
+          <Text
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            style={[
+              styles.segmentedText,
+              { color: selected === option.value ? palette.inverseText : palette.text },
+            ]}>
+            {option.label}
+          </Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+}
+
+function parseMoneyInput(value: string): number {
+  return Number(value.replace(/\D/g, '')) || 0;
+}
+
+function clampDay(day: number): number {
+  return Math.min(31, Math.max(1, day));
 }
 
 function MonthlyAnalysis({
@@ -569,6 +969,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '900',
   },
+  fab: {
+    alignItems: 'center',
+    borderRadius: 28,
+    bottom: 96,
+    height: 56,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: 20,
+    width: 56,
+    zIndex: 40,
+  },
+  fabText: {
+    fontSize: 28,
+    fontWeight: '300',
+    lineHeight: 28,
+  },
   eyebrow: {
     fontSize: 11,
     fontWeight: '900',
@@ -579,6 +995,66 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  formClose: {
+    fontSize: 22,
+    fontWeight: '900',
+  },
+  formContent: {
+    gap: 12,
+    padding: 18,
+  },
+  formField: {
+    borderBottomWidth: 1,
+    gap: 4,
+    paddingVertical: 10,
+  },
+  formHeader: {
+    alignItems: 'center',
+    borderBottomColor: 'rgba(255,255,255,0.10)',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 18,
+  },
+  formInput: {
+    fontSize: 17,
+    fontWeight: '800',
+    minHeight: 36,
+    padding: 0,
+  },
+  formSectionTitle: {
+    fontSize: 16,
+    fontWeight: '900',
+    marginTop: 6,
+  },
+  formSheet: {
+    alignSelf: 'center',
+    borderWidth: 1,
+    flex: 1,
+    maxWidth: 560,
+    width: '100%',
+  },
+  formTitle: {
+    flex: 1,
+    fontSize: 20,
+    fontWeight: '900',
+  },
+  manageActions: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  manageButton: {
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    flex: 1,
+    minHeight: 46,
+    justifyContent: 'center',
+  },
+  manageButtonText: {
+    fontSize: 14,
+    fontWeight: '900',
   },
   metricCard: {
     borderRadius: 20,
@@ -667,6 +1143,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '900',
   },
+  modalOverlay: {
+    backgroundColor: 'rgba(5,4,8,0.78)',
+    flex: 1,
+  },
   quickAction: {
     alignItems: 'center',
     flex: 1,
@@ -693,6 +1173,26 @@ const styles = StyleSheet.create({
   quickActions: {
     flexDirection: 'row',
     gap: 12,
+  },
+  recurringAmount: {
+    fontSize: 16,
+    fontWeight: '900',
+  },
+  recurringCard: {
+    alignItems: 'center',
+    borderRadius: 20,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  recurringRight: {
+    alignItems: 'flex-end',
+  },
+  recurringTitle: {
+    fontSize: 18,
+    fontWeight: '900',
+    marginTop: 3,
   },
   roundButton: {
     alignItems: 'center',
@@ -722,6 +1222,36 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
+    fontWeight: '900',
+  },
+  saveButton: {
+    alignItems: 'center',
+    borderRadius: 18,
+    height: 56,
+    justifyContent: 'center',
+    margin: 18,
+  },
+  saveButtonText: {
+    fontSize: 18,
+    fontWeight: '900',
+  },
+  segmentedButton: {
+    alignItems: 'center',
+    borderRadius: 14,
+    borderWidth: 1,
+    flexGrow: 1,
+    minHeight: 42,
+    minWidth: 74,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  segmentedRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  segmentedText: {
+    fontSize: 12,
     fontWeight: '900',
   },
   statusRow: {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import type { AppTheme } from '../../types';
 import {
@@ -28,17 +29,17 @@ export function PersonalizationSection({
     <SettingsSection palette={palette} title={'Personalizaci\u00f3n'}>
       <Pressable onPress={onOpenCategories}>
         <SettingsRow
-          icon="🏷️"
+          icon={<MaterialIcons name="category" size={24} color={palette.muted} />}
           label={'Administrar categor\u00edas'}
           palette={palette}
-          trailing={<Text style={[styles.chevron, { color: palette.muted }]}>{'>'}</Text>}
+          trailing={<MaterialIcons name="chevron-right" size={24} color={palette.muted} />}
         />
       </Pressable>
 
       <View style={styles.divider} />
 
       <SettingsRow
-        icon="🌙"
+        icon={<MaterialIcons name="dark-mode" size={24} color={palette.muted} />}
         label="Tema de la App"
         palette={palette}
         trailing={
@@ -67,12 +68,12 @@ export function PersonalizationSection({
 
       <Pressable onPress={onDeleteFinancialData} style={styles.dangerRow}>
         <View style={styles.dangerLabelWrap}>
-          <Text style={[styles.dangerIcon, { color: palette.danger }]}>🗑️</Text>
+          <MaterialIcons name="delete-forever" size={24} color={palette.danger} />
           <Text style={[styles.dangerText, { color: palette.danger }]}>
             Eliminar datos financieros
           </Text>
         </View>
-        <Text style={[styles.chevron, { color: palette.danger }]}>{'>'}</Text>
+        <MaterialIcons name="chevron-right" size={24} color={palette.danger} style={{ opacity: 0.5 }} />
       </Pressable>
     </SettingsSection>
   );
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
   dangerLabelWrap: {
     alignItems: 'center',
     flexDirection: 'row',
+    gap: 16,
   },
   dangerRow: {
     alignItems: 'center',

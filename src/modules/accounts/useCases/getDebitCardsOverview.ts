@@ -2,6 +2,10 @@ import type { Account } from '../types';
 import type { SqliteAccountRepository } from '../repositories/sqliteAccountRepository';
 import type { SqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
 import type { Transaction } from '../../transactions';
+import {
+  parseDebitCardMetadata,
+  type DebitCardRecurringIncome,
+} from './manageDebitCards';
 
 export type DebitCardMovementKind =
   | 'income'
@@ -36,6 +40,7 @@ export type DebitCardSummary = {
   maskedNumber: string;
   monthlyMetrics: DebitCardMonthlyMetrics;
   movements: DebitCardMovement[];
+  recurringIncome?: DebitCardRecurringIncome;
   weeklyTrend: DebitCardWeeklyTrendPoint[];
 };
 
@@ -76,7 +81,11 @@ function toLocalDateKey(date: Date): string {
 
 function getCardTransactions(accountId: string, transactions: Transaction[]): Transaction[] {
   return transactions
-    .filter(transaction => transaction.accountId === accountId || transaction.targetAccountId === accountId)
+    .filter(transaction =>
+      transaction.type === 'internalTransfer'
+        ? transaction.accountId === accountId
+        : transaction.accountId === accountId || transaction.targetAccountId === accountId,
+    )
     .sort((left, right) => {
       const dateComparison = new Date(right.date).getTime() - new Date(left.date).getTime();
       if (dateComparison !== 0) {
@@ -88,7 +97,7 @@ function getCardTransactions(accountId: string, transactions: Transaction[]): Tr
 }
 
 function classifyMovement(accountId: string, transaction: Transaction): DebitCardMovement {
-  if (transaction.type === 'internalTransfer' && transaction.targetAccountId === accountId) {
+  if (transaction.type === 'internalTransfer' && transaction.direction === 'inflow') {
     return {
       amount: transaction.amount,
       kind: 'topUp',
@@ -97,7 +106,7 @@ function classifyMovement(accountId: string, transaction: Transaction): DebitCar
     };
   }
 
-  if (transaction.type === 'internalTransfer' && transaction.accountId === accountId) {
+  if (transaction.type === 'internalTransfer' && transaction.direction === 'outflow') {
     return {
       amount: transaction.amount,
       kind: 'transferOut',
@@ -209,12 +218,14 @@ export function buildDebitCardsOverview(
     cards: debitAccounts.map((account, index) => {
       const movements = getCardTransactions(account.id, transactions)
         .map(transaction => classifyMovement(account.id, transaction));
+      const metadata = parseDebitCardMetadata(account);
 
       return {
         account,
         maskedNumber: getMaskedNumber(account, index),
         monthlyMetrics: buildMonthlyMetrics(movements, currentDate),
         movements,
+        recurringIncome: metadata.recurringIncome,
         weeklyTrend: buildWeeklyTrend(movements, currentDate),
       };
     }),

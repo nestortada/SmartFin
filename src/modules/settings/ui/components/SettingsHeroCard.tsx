@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import type { SettingsPalette } from './primitives';
 
@@ -29,7 +30,11 @@ export function SettingsHeroCard({ palette }: SettingsHeroCardProps) {
               borderColor: 'rgba(0, 228, 117, 0.2)',
             },
           ]}>
-          <Text style={[styles.heroIconText, { color: palette.tertiary }]}>🛡️</Text>
+          <MaterialIcons
+            name="verified-user"
+            size={32}
+            color={palette.tertiary}
+          />
         </View>
 
         <View style={styles.heroCopy}>
@@ -85,10 +90,6 @@ const styles = StyleSheet.create({
     height: 56,
     justifyContent: 'center',
     width: 56,
-  },
-  heroIconText: {
-    fontSize: 16,
-    fontWeight: '900',
   },
   heroTitle: {
     fontSize: 20,

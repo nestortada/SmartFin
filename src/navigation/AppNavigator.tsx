@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Platform } from 'react-native';
+import { AppState, Platform } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import {
@@ -15,8 +15,10 @@ import {
   type TransactionsInitialDraft,
 } from '../modules/transactions/ui/TransactionsScreen';
 import {
+  AppAccessGate,
   createSecurityService,
   disableBiometricAccess,
+  disableLocalAccessSecret,
   enableBiometricAccess,
   setLocalAccessSecret,
 } from '../modules/security';
@@ -101,6 +103,7 @@ export function AppNavigator() {
   const [settings, setSettings] = useState<SettingsState>(DEFAULT_SETTINGS);
   const [busyMessage, setBusyMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [accessLocked, setAccessLocked] = useState(false);
   const [transactionsInitialDraft, setTransactionsInitialDraft] = useState<TransactionsInitialDraft>();
   /**
    * Incrementing this key forces useDashboardSummary to re-fetch from SQLite.
@@ -132,6 +135,10 @@ export function AppNavigator() {
         setDatabase(openedDatabase);
         setSettingsRepository(repository);
         setSettings(persistedSettings);
+        setAccessLocked(
+          persistedSettings.biometricsEnabled ||
+            persistedSettings.localCredentialEnabled,
+        );
 
         // If SMS reading is NOT activated, go to onboarding!
         if (!persistedSettings.smsReadingEnabled) {
@@ -153,6 +160,21 @@ export function AppNavigator() {
       void closeSmartFinDatabase();
     };
   }, []);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextState => {
+      if (
+        nextState === 'active' &&
+        (settings.biometricsEnabled || settings.localCredentialEnabled)
+      ) {
+        setAccessLocked(true);
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [settings.biometricsEnabled, settings.localCredentialEnabled]);
 
   // ─── SMS listener ─────────────────────────────────────────────────────────
 
@@ -384,6 +406,38 @@ export function AppNavigator() {
     ],
   );
 
+  const handleToggleLocalCredential = useCallback(
+    async (enabled: boolean) => {
+      if (enabled) {
+        return;
+      }
+
+      await runSettingsTask('Desactivando PIN de acceso...', async () => {
+        if (!settingsRepository) {
+          await persistSettings({
+            ...settings,
+            localCredentialEnabled: false,
+          });
+          return;
+        }
+
+        const nextSettings = await disableLocalAccessSecret(
+          settingsRepository,
+          securityService,
+          settings,
+        );
+        setSettings(nextSettings);
+      });
+    },
+    [
+      persistSettings,
+      runSettingsTask,
+      securityService,
+      settings,
+      settingsRepository,
+    ],
+  );
+
   const handleToggleSmsReading = useCallback(
     async (enabled: boolean) => {
       await runSettingsTask(
@@ -457,115 +511,179 @@ export function AppNavigator() {
 
   if (route === 'onboarding') {
     return (
-      <OnboardingScreen
-        activeTheme={settings.theme}
-        onSkip={handleOnboardingSkip}
-        onStart={handleOnboardingStart}
-      />
+      <>
+        <OnboardingScreen
+          activeTheme={settings.theme}
+          onSkip={handleOnboardingSkip}
+          onStart={handleOnboardingStart}
+        />
+        <AppAccessGate
+          colorScheme={settings.theme}
+          isVisible={accessLocked}
+          onUnlocked={() => setAccessLocked(false)}
+          securityService={securityService}
+          settings={settings}
+        />
+      </>
     );
   }
 
   if (route === 'settings') {
     return (
-      <SettingsScreen
-        busyMessage={busyMessage}
-        errorMessage={errorMessage}
-        onBack={() => {
-          // Go back to onboarding if SMS is disabled, else dashboard
-          if (!settings.smsReadingEnabled) {
-            setRoute('onboarding');
-          } else {
-            setRoute('dashboard');
-          }
-        }}
-        onNavigateToHome={() => setRoute('dashboard')}
-        onNavigateToTransactions={() => setRoute('transactions')}
-        onOpenCategories={() => setRoute('categories')}
-        onOpenCreditCards={() => setRoute('creditCards')}
-        onOpenDebitCards={() => setRoute('debitCards')}
-        onDeleteFinancialData={handleDeleteFinancialData}
-        onSaveCredential={handleSaveCredential}
-        onThemeChange={handleThemeChange}
-        onToggleBiometrics={handleToggleBiometrics}
-        onToggleSmsReading={handleToggleSmsReading}
-        settings={settings}
-      />
+      <>
+        <SettingsScreen
+          busyMessage={busyMessage}
+          errorMessage={errorMessage}
+          onBack={() => {
+            // Go back to onboarding if SMS is disabled, else dashboard
+            if (!settings.smsReadingEnabled) {
+              setRoute('onboarding');
+            } else {
+              setRoute('dashboard');
+            }
+          }}
+          onNavigateToHome={() => setRoute('dashboard')}
+          onNavigateToTransactions={() => setRoute('transactions')}
+          onOpenCategories={() => setRoute('categories')}
+          onOpenCreditCards={() => setRoute('creditCards')}
+          onOpenDebitCards={() => setRoute('debitCards')}
+          onDeleteFinancialData={handleDeleteFinancialData}
+          onSaveCredential={handleSaveCredential}
+          onThemeChange={handleThemeChange}
+          onToggleBiometrics={handleToggleBiometrics}
+          onToggleLocalCredential={handleToggleLocalCredential}
+          onToggleSmsReading={handleToggleSmsReading}
+          settings={settings}
+        />
+        <AppAccessGate
+          colorScheme={settings.theme}
+          isVisible={accessLocked}
+          onUnlocked={() => setAccessLocked(false)}
+          securityService={securityService}
+          settings={settings}
+        />
+      </>
     );
   }
 
   if (route === 'categories') {
     return (
-      <CategoriesScreen
-        activeTheme={settings.theme}
-        database={database}
-        onNavigateBack={() => setRoute('settings')}
-        onNavigateToHome={() => setRoute('dashboard')}
-        onNavigateToTransactions={() => setRoute('transactions')}
-        onOpenCreditCards={() => setRoute('creditCards')}
-        onOpenDebitCards={() => setRoute('debitCards')}
-        onOpenSettings={() => setRoute('settings')}
-      />
+      <>
+        <CategoriesScreen
+          activeTheme={settings.theme}
+          database={database}
+          onNavigateBack={() => setRoute('settings')}
+          onNavigateToHome={() => setRoute('dashboard')}
+          onNavigateToTransactions={() => setRoute('transactions')}
+          onOpenCreditCards={() => setRoute('creditCards')}
+          onOpenDebitCards={() => setRoute('debitCards')}
+          onOpenSettings={() => setRoute('settings')}
+        />
+        <AppAccessGate
+          colorScheme={settings.theme}
+          isVisible={accessLocked}
+          onUnlocked={() => setAccessLocked(false)}
+          securityService={securityService}
+          settings={settings}
+        />
+      </>
     );
   }
 
   if (route === 'transactions') {
     return (
-      <TransactionsScreen
-        activeTheme={settings.theme}
-        database={database}
-        initialDraft={transactionsInitialDraft}
-        refreshKey={dashboardRefreshKey}
-        onNavigateToHome={() => setRoute('dashboard')}
-        onOpenSettings={() => setRoute('settings')}
-        onOpenCreditCards={() => setRoute('creditCards')}
-        onOpenDebitCards={() => setRoute('debitCards')}
-        onForceRefresh={() => setDashboardRefreshKey(k => k + 1)}
-        onInitialDraftConsumed={() => setTransactionsInitialDraft(undefined)}
-      />
+      <>
+        <TransactionsScreen
+          activeTheme={settings.theme}
+          database={database}
+          initialDraft={transactionsInitialDraft}
+          refreshKey={dashboardRefreshKey}
+          onNavigateToHome={() => setRoute('dashboard')}
+          onOpenSettings={() => setRoute('settings')}
+          onOpenCreditCards={() => setRoute('creditCards')}
+          onOpenDebitCards={() => setRoute('debitCards')}
+          onForceRefresh={() => setDashboardRefreshKey(k => k + 1)}
+          onInitialDraftConsumed={() => setTransactionsInitialDraft(undefined)}
+        />
+        <AppAccessGate
+          colorScheme={settings.theme}
+          isVisible={accessLocked}
+          onUnlocked={() => setAccessLocked(false)}
+          securityService={securityService}
+          settings={settings}
+        />
+      </>
     );
   }
 
   if (route === 'creditCards') {
     return (
-      <CreditCardsScreen
-        activeTheme={settings.theme}
-        database={database}
-        refreshKey={dashboardRefreshKey}
-        onNavigateToHome={() => setRoute('dashboard')}
-        onNavigateToTransactions={() => setRoute('transactions')}
-        onOpenDebitCards={() => setRoute('debitCards')}
-        onOpenSettings={() => setRoute('settings')}
-      />
+      <>
+        <CreditCardsScreen
+          activeTheme={settings.theme}
+          database={database}
+          refreshKey={dashboardRefreshKey}
+          onNavigateToHome={() => setRoute('dashboard')}
+          onNavigateToTransactions={() => setRoute('transactions')}
+          onOpenDebitCards={() => setRoute('debitCards')}
+          onOpenSettings={() => setRoute('settings')}
+        />
+        <AppAccessGate
+          colorScheme={settings.theme}
+          isVisible={accessLocked}
+          onUnlocked={() => setAccessLocked(false)}
+          securityService={securityService}
+          settings={settings}
+        />
+      </>
     );
   }
 
   if (route === 'debitCards') {
     return (
-      <DebitCardsScreen
-        activeTheme={settings.theme}
-        database={database}
-        refreshKey={dashboardRefreshKey}
-        onNavigateToHome={() => setRoute('dashboard')}
-        onNavigateToTransactions={() => setRoute('transactions')}
-        onOpenCreditCards={() => setRoute('creditCards')}
-        onOpenSettings={() => setRoute('settings')}
-        onOpenTransactionsDraft={draft => {
-          setTransactionsInitialDraft(draft);
-          setRoute('transactions');
-        }}
-      />
+      <>
+        <DebitCardsScreen
+          activeTheme={settings.theme}
+          database={database}
+          refreshKey={dashboardRefreshKey}
+          onNavigateToHome={() => setRoute('dashboard')}
+          onNavigateToTransactions={() => setRoute('transactions')}
+          onOpenCreditCards={() => setRoute('creditCards')}
+          onOpenSettings={() => setRoute('settings')}
+          onOpenTransactionsDraft={draft => {
+            setTransactionsInitialDraft(draft);
+            setRoute('transactions');
+          }}
+        />
+        <AppAccessGate
+          colorScheme={settings.theme}
+          isVisible={accessLocked}
+          onUnlocked={() => setAccessLocked(false)}
+          securityService={securityService}
+          settings={settings}
+        />
+      </>
     );
   }
 
   return (
-    <DashboardScreen
-      activeTheme={settings.theme}
-      database={database}
-      refreshKey={dashboardRefreshKey}
-      onOpenCreditCards={() => setRoute('creditCards')}
-      onOpenDebitCards={() => setRoute('debitCards')}
-      onOpenSettings={() => setRoute('settings')}
-      onNavigateToTransactions={() => setRoute('transactions')}
-    />
+    <>
+      <DashboardScreen
+        activeTheme={settings.theme}
+        database={database}
+        refreshKey={dashboardRefreshKey}
+        onOpenCreditCards={() => setRoute('creditCards')}
+        onOpenDebitCards={() => setRoute('debitCards')}
+        onOpenSettings={() => setRoute('settings')}
+        onNavigateToTransactions={() => setRoute('transactions')}
+      />
+      <AppAccessGate
+        colorScheme={settings.theme}
+        isVisible={accessLocked}
+        onUnlocked={() => setAccessLocked(false)}
+        securityService={securityService}
+        settings={settings}
+      />
+    </>
   );
 }

@@ -116,6 +116,7 @@ export function TransactionsScreen({
   const [newCategory, setNewCategory] = useState('');
   const [newAccount, setNewAccount] = useState('');
   const [newTargetAccount, setNewTargetAccount] = useState('');
+  const [transferTaxCharged, setTransferTaxCharged] = useState(false);
   const [newCreditCardHint, setNewCreditCardHint] = useState('');
   const [newNotes, setNewNotes] = useState('');
   const [newOperationType, setNewOperationType] = useState<'Débito' | 'Crédito'>('Débito');
@@ -387,6 +388,7 @@ export function TransactionsScreen({
     setNewCreditCardHint('');
     setNewNotes('');
     setNewOperationType('Débito');
+    setTransferTaxCharged(false);
     resetInstallmentForm();
 
     if (initialDraft.action === 'payment') {
@@ -436,6 +438,7 @@ export function TransactionsScreen({
     setNewCategory(tx.categoryId ?? '');
     setNewAccount(tx.accountId);
     setNewTargetAccount(tx.targetAccountId ?? '');
+    setTransferTaxCharged(false);
     setNewCreditCardHint(tx.creditCardHint ?? '');
     setNewNotes(cleanNotesForForm(tx.notes));
     setNewOperationType(getOperationTypeFromTransaction(tx));
@@ -725,6 +728,7 @@ export function TransactionsScreen({
         targetAccountId: newType === 'internalTransfer' ? newTargetAccount : undefined,
         transactionRepository,
         transactionType: newType,
+        transferTaxCharged,
       });
 
       if (isCreditCardExpense) {
@@ -752,6 +756,7 @@ export function TransactionsScreen({
       setNewCategory('');
       setNewAccount('');
       setNewTargetAccount('');
+      setTransferTaxCharged(false);
       setNewCreditCardHint('');
       setNewNotes('');
       resetInstallmentForm();
@@ -930,6 +935,7 @@ export function TransactionsScreen({
           setNewCategory('');
           setNewAccount('');
           setNewTargetAccount('');
+          setTransferTaxCharged(false);
           setNewCreditCardHint('');
           setNewNotes('');
           setNewType('expense');
@@ -1000,6 +1006,8 @@ export function TransactionsScreen({
         setNewAccount={setNewAccount}
         newTargetAccount={newTargetAccount}
         setNewTargetAccount={setNewTargetAccount}
+        transferTaxCharged={transferTaxCharged}
+        setTransferTaxCharged={setTransferTaxCharged}
         newCreditCardHint={newCreditCardHint}
         setNewCreditCardHint={setNewCreditCardHint}
         newNotes={newNotes}

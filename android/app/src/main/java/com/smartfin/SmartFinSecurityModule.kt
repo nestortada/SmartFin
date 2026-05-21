@@ -1,9 +1,13 @@
 package com.smartfin
 
 import android.app.KeyguardManager
+import android.hardware.biometrics.BiometricPrompt
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.CancellationSignal
+import android.os.Handler
+import android.os.Looper
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
@@ -14,6 +18,7 @@ import com.facebook.react.bridge.ReactMethod
 import java.security.KeyStore
 import java.security.MessageDigest
 import java.security.SecureRandom
+import java.util.concurrent.Executor
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -28,13 +33,67 @@ class SmartFinSecurityModule(
   override fun getName(): String = "SmartFinSecurity"
 
   @ReactMethod
+  fun authenticateBiometrics(promise: Promise) {
+    val activity = reactContext.currentActivity
+    if (activity == null) {
+      promise.reject("ACTIVITY_UNAVAILABLE", "No se pudo abrir la autenticacion biometrica.")
+      return
+    }
+
+    if (!canAuthenticateBiometrics()) {
+      promise.resolve(false)
+      return
+    }
+
+    Handler(Looper.getMainLooper()).post {
+      try {
+        val mainExecutor = Executor { command -> Handler(Looper.getMainLooper()).post(command) }
+        val prompt =
+            BiometricPrompt.Builder(activity)
+                .setTitle("Desbloquear SmartFin")
+                .setSubtitle("Valida tu huella para entrar")
+                .setNegativeButton("Cancelar", mainExecutor) { _, _ ->
+                  promise.resolve(false)
+                }
+                .build()
+
+        prompt.authenticate(
+            CancellationSignal(),
+            mainExecutor,
+            object : BiometricPrompt.AuthenticationCallback() {
+              override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                promise.resolve(true)
+              }
+
+              override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                promise.resolve(false)
+              }
+
+              override fun onAuthenticationFailed() {
+                // Keep the prompt open so Android can allow another fingerprint attempt.
+              }
+            },
+        )
+      } catch (error: Exception) {
+        promise.reject("BIOMETRIC_AUTH_ERROR", "No se pudo validar la biometria.", error)
+      }
+    }
+  }
+
+  @ReactMethod
+  fun clearLocalCredential(promise: Promise) {
+    preferences.edit().remove("credential_hash").apply()
+    promise.resolve(null)
+  }
+
+  @ReactMethod
   fun isBiometricsAvailable(promise: Promise) {
-    promise.resolve(hasBiometricOrSecureAccess())
+    promise.resolve(canAuthenticateBiometrics())
   }
 
   @ReactMethod
   fun enableBiometrics(promise: Promise) {
-    if (!hasBiometricOrSecureAccess()) {
+    if (!canAuthenticateBiometrics()) {
       promise.reject("BIOMETRICS_UNAVAILABLE", "La biometría no está disponible en este dispositivo.")
       return
     }
@@ -82,6 +141,9 @@ class SmartFinSecurityModule(
       promise.reject("SECURE_STORAGE_ERROR", "No se pudo verificar la credencial local.", error)
     }
   }
+
+  private fun canAuthenticateBiometrics(): Boolean =
+      Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && hasBiometricOrSecureAccess()
 
   private fun hasBiometricOrSecureAccess(): Boolean {
     val keyguardManager =

@@ -62,6 +62,9 @@ function createRepositories(initialAccounts: Account[]) {
   };
 
   const transactionRepository = {
+    deleteTransaction: jest.fn(async (transactionId: string) => {
+      transactions = transactions.filter(transaction => transaction.id !== transactionId);
+    }),
     deleteInstallmentPurchasesByTransactionId: jest.fn(async (transactionId: string) => {
       installments = installments.filter(installment => installment.transactionId !== transactionId);
     }),
@@ -239,12 +242,65 @@ describe('saveManualTransaction', () => {
 
     expect(result.transaction).toEqual(expect.objectContaining({
       accountId: 'account-bank',
-      direction: 'neutral',
+      direction: 'outflow',
       paymentMethod: 'debit',
       targetAccountId: 'account-savings',
       type: 'internalTransfer',
     }));
+    expect(result.transactions).toEqual([
+      expect.objectContaining({
+        accountId: 'account-bank',
+        direction: 'outflow',
+        merchantName: 'Recarga de ahorros',
+      }),
+      expect.objectContaining({
+        accountId: 'account-savings',
+        direction: 'inflow',
+        merchantName: 'Entrada: Recarga de ahorros',
+      }),
+    ]);
+    expect(repositories.getTransactions()).toHaveLength(2);
     expect(repositories.getAccounts().find(account => account.id === 'account-bank')?.balance.amount).toBe(800000);
+    expect(repositories.getAccounts().find(account => account.id === 'account-savings')?.balance.amount).toBe(500000);
+  });
+
+  it('persists 4x1000 as an additional debit expense when a transfer is taxed', async () => {
+    const repositories = createRepositories([
+      bankAccount(),
+      bankAccount({
+        id: 'account-savings',
+        balance: { amount: 300000, currency: 'COP' },
+        name: 'Ahorros',
+        type: 'savingsAccount',
+      }),
+    ]);
+
+    const result = await saveManualTransaction({
+      accountId: 'account-bank',
+      accountRepository: repositories.accountRepository,
+      accounts: repositories.getAccounts(),
+      amount: 200000,
+      creditCardRepository: repositories.creditCardRepository,
+      currentDate: new Date('2026-05-18T12:00:00.000Z'),
+      editingTransaction: null,
+      hasInterestFreeInstallments: false,
+      installmentCountInput: '1',
+      interestFreeInstallmentCountInput: '',
+      merchantName: 'Recarga de ahorros',
+      notes: 'Reserva',
+      operationType: 'Débito',
+      targetAccountId: 'account-savings',
+      transactionRepository: repositories.transactionRepository,
+      transactionType: 'internalTransfer',
+      transferTaxCharged: true,
+    });
+
+    expect(result.transactions).toEqual([
+      expect.objectContaining({ accountId: 'account-bank', direction: 'outflow' }),
+      expect.objectContaining({ accountId: 'account-savings', direction: 'inflow' }),
+      expect.objectContaining({ accountId: 'account-bank', amount: 800, type: 'expense' }),
+    ]);
+    expect(repositories.getAccounts().find(account => account.id === 'account-bank')?.balance.amount).toBe(799200);
     expect(repositories.getAccounts().find(account => account.id === 'account-savings')?.balance.amount).toBe(500000);
   });
 
