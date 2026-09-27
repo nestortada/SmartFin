@@ -1,7 +1,9 @@
 # Base de datos de SmartFin
 
-> Estado documentado: 26 de septiembre de 2026.  
+> Estado revisado: 27 de septiembre de 2026.
 > Fuentes de verdad: `src/database/sqliteSchema.ts`, `src/database/sqliteDatabase.ts` y los repositorios `sqlite*Repository.ts` de cada modulo.
+
+Documentos relacionados: [Arquitectura](ARQUITECTURA.md), [Módulos y flujos](MODULOS_Y_FLUJOS.md) y [Seguridad y privacidad](SEGURIDAD_Y_PRIVACIDAD.md).
 
 ## 1. Resumen ejecutivo
 

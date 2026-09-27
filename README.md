@@ -1,101 +1,135 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# SmartFin
 
-## Project documentation
+SmartFin es una aplicación móvil de finanzas personales construida con React Native y TypeScript. Su núcleo actual permite administrar movimientos, cuentas débito, tarjetas de crédito, categorías, seguridad local y respaldos elegidos por el usuario. La persistencia principal es SQLite en el dispositivo.
 
-- [Database architecture, schema and current implementation](docs/BASE_DE_DATOS.md)
+El proyecto sigue tres principios:
 
-# Getting Started
+- **Local-first:** la aplicación funciona sobre datos almacenados localmente.
+- **Offline-first:** las operaciones financieras principales no dependen de una conexión.
+- **Privacy-first:** no hay telemetría, analítica, sincronización automática ni servicios financieros de terceros.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+> Estado documentado: 27 de septiembre de 2026. La visión original incluida en `SmartFin_Objetivos_y_Funcionalidades.pdf` es más amplia que la implementación actual. Consulta [Producto y alcance](docs/PRODUCTO_Y_ALCANCE.md) para distinguir lo disponible de lo planificado.
 
-## Step 1: Start Metro
+## Estado actual
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+| Área | Estado |
+|---|---|
+| Dashboard financiero | Implementado |
+| Movimientos manuales, filtros, edición y categorización | Implementado |
+| Transferencias internas y cobro opcional del 4x1000 | Implementado |
+| Cuentas y tarjetas débito | Implementado |
+| Tarjetas de crédito, cuotas, extractos y pagos | Implementado |
+| Categorías personalizadas | Implementado |
+| Tema claro/oscuro, PIN y biometría Android | Implementado |
+| Respaldo manual a una carpeta visible de Google Drive en Android | Implementado, sin cifrado |
+| Presupuestos, préstamos, metas, suscripciones y reportes | Modelo preparado; interfaz y casos de uso pendientes |
+| Captura de SMS/notificaciones, OCR e inversiones | Planificado |
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Tecnologías
+
+- React Native `0.85.3` y React `19.2.3`.
+- TypeScript estricto `5.8.3`.
+- SQLite mediante `react-native-sqlite-storage`.
+- Jest para pruebas unitarias.
+- Kotlin para los módulos nativos Android de seguridad y respaldo.
+- Hermes y la nueva arquitectura de React Native habilitados en Android.
+
+## Requisitos
+
+- Node.js `22.11.0` o superior.
+- npm.
+- Entorno de React Native configurado para la plataforma elegida.
+- Android: Android SDK 36, JDK compatible y un emulador o dispositivo.
+- iOS: macOS, Xcode, Ruby/Bundler y CocoaPods.
+
+La guía oficial de preparación del entorno está en [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment).
+
+## Instalación
 
 ```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+npm install
 ```
 
-## Step 2: Build and run your app
+El `postinstall` adapta la dependencia `react-native-sqlite-storage` para repositorios y versiones modernas de Gradle. No edites directamente su copia dentro de `node_modules`.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+En iOS, instala también los pods:
 
 ```sh
 bundle install
+bundle exec pod install --project-directory=ios
 ```
 
-Then, and every time you update your native dependencies, run:
+## Ejecución
+
+Inicia Metro:
 
 ```sh
-bundle exec pod install
+npm start
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+En otra terminal, ejecuta una plataforma:
 
 ```sh
-# Using npm
+npm run android
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+Las funciones nativas de PIN, biometría y respaldo en Google Drive están implementadas solo para Android. En iOS, la aplicación conserva el resto del flujo, pero esas capacidades no están disponibles.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Verificación
 
-## Step 3: Modify your app
+```sh
+npm test -- --runInBand
+npx tsc --noEmit
+npm run lint
+```
 
-Now that you have successfully run the app, let's make changes!
+Estado de referencia al documentar: **13 suites y 51 pruebas aprobadas**, sin errores de TypeScript ni ESLint.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## Estructura principal
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+```text
+SmartFin/
+├── android/                 # Proyecto nativo y módulos Kotlin
+├── ios/                     # Proyecto nativo iOS
+├── src/
+│   ├── app/                 # Composición raíz
+│   ├── database/            # SQLite, esquema, filas y seed
+│   ├── modules/             # Módulos por capacidad de negocio
+│   ├── navigation/          # Navegación y coordinación de la app
+│   ├── shared/              # Componentes, tipos, hooks y utilidades comunes
+│   └── native/              # Límites de integración nativa
+├── __tests__/               # Pruebas unitarias y de repositorios
+├── docs/                    # Documentación del proyecto
+└── scripts/                 # Automatización de instalación
+```
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## Documentación
 
-## Congratulations! :tada:
+El punto de entrada completo es [docs/INDICE.md](docs/INDICE.md).
 
-You've successfully run and modified your React Native App. :partying_face:
+- [Producto y alcance](docs/PRODUCTO_Y_ALCANCE.md)
+- [Arquitectura](docs/ARQUITECTURA.md)
+- [Módulos y flujos](docs/MODULOS_Y_FLUJOS.md)
+- [Base de datos](docs/BASE_DE_DATOS.md)
+- [Seguridad y privacidad](docs/SEGURIDAD_Y_PRIVACIDAD.md)
+- [Guía de desarrollo](docs/GUIA_DESARROLLO.md)
+- [Pruebas y calidad](docs/PRUEBAS_Y_CALIDAD.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Guía de contribución](CONTRIBUTING.md)
 
-### Now what?
+## Decisiones esenciales
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+- Las pantallas no contienen reglas financieras ni consultan SQLite directamente.
+- La lógica financiera vive en `useCases`; la persistencia, detrás de `repositories`.
+- Las integraciones de plataforma viven en `services` o código nativo.
+- La moneda de dominio implementada es COP.
+- Agregar red, telemetría, sincronización o proveedores financieros requiere una decisión explícita de producto.
 
-# Troubleshooting
+## Advertencia sobre respaldos
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+El respaldo Android exporta una copia SQLite y archivos CSV **sin cifrar** a la carpeta que el usuario selecciona mediante el selector de documentos del sistema. SmartFin no usa la API de Google Drive ni recibe credenciales de Google. El proveedor de documentos controla la subida efectiva a la nube.
 
-# Learn More
+## Licencia
 
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+El repositorio no incluye actualmente un archivo de licencia. No se debe asumir permiso de redistribución fuera de los derechos del propietario del proyecto.
