@@ -28,64 +28,26 @@ type GeminiServiceOptions = {
 };
 
 const responseSchema = {
-  type: 'OBJECT',
+  type: 'object',
   required: ['summary', 'actions'],
   properties: {
-    summary: { type: 'STRING' },
+    summary: { type: 'string' },
     actions: {
-      type: 'ARRAY',
+      type: 'array',
       maxItems: 20,
       items: {
-        type: 'OBJECT',
-        required: ['id', 'operation', 'entity', 'fields'],
+        type: 'object',
+        required: ['id', 'operation', 'entity', 'fieldsJson'],
         properties: {
-          id: { type: 'STRING' },
-          clientRef: { type: 'STRING', nullable: true },
-          operation: { type: 'STRING', enum: ['create', 'update', 'delete'] },
-          entity: { type: 'STRING', enum: ['transaction', 'debitAccount', 'creditCard', 'category', 'subcategory'] },
-          targetId: { type: 'STRING', nullable: true },
-          targetName: { type: 'STRING', nullable: true },
-          fields: {
-            type: 'OBJECT',
-            properties: {
-              transactionType: { type: 'STRING', enum: ['income', 'expense', 'internalTransfer'], nullable: true },
-              amount: { type: 'NUMBER', nullable: true },
-              date: { type: 'STRING', nullable: true },
-              description: { type: 'STRING', nullable: true },
-              notes: { type: 'STRING', nullable: true },
-              accountId: { type: 'STRING', nullable: true },
-              accountName: { type: 'STRING', nullable: true },
-              accountRef: { type: 'STRING', nullable: true },
-              targetAccountId: { type: 'STRING', nullable: true },
-              targetAccountName: { type: 'STRING', nullable: true },
-              targetAccountRef: { type: 'STRING', nullable: true },
-              categoryId: { type: 'STRING', nullable: true },
-              categoryName: { type: 'STRING', nullable: true },
-              categoryRef: { type: 'STRING', nullable: true },
-              subcategoryId: { type: 'STRING', nullable: true },
-              subcategoryName: { type: 'STRING', nullable: true },
-              subcategoryRef: { type: 'STRING', nullable: true },
-              installmentCount: { type: 'NUMBER', nullable: true },
-              interestFreeInstallmentCount: { type: 'NUMBER', nullable: true },
-              transferTaxCharged: { type: 'BOOLEAN', nullable: true },
-              name: { type: 'STRING', nullable: true },
-              institutionName: { type: 'STRING', nullable: true },
-              initialBalance: { type: 'NUMBER', nullable: true },
-              recurringIncomeEnabled: { type: 'BOOLEAN', nullable: true },
-              recurringIncomeAmount: { type: 'NUMBER', nullable: true },
-              recurringIncomeDay: { type: 'NUMBER', nullable: true },
-              recurringIncomeFrequency: { type: 'STRING', enum: ['biweekly', 'monthly', 'specificDay'], nullable: true },
-              recurringIncomeType: { type: 'STRING', enum: ['salary', 'allowance', 'business', 'other'], nullable: true },
-              bankName: { type: 'STRING', nullable: true },
-              creditLimit: { type: 'NUMBER', nullable: true },
-              lastFourDigits: { type: 'STRING', nullable: true },
-              closingDay: { type: 'NUMBER', nullable: true },
-              paymentDay: { type: 'NUMBER', nullable: true },
-              annualEffectiveInterestRate: { type: 'NUMBER', nullable: true },
-              managementFee: { type: 'NUMBER', nullable: true },
-              type: { type: 'STRING', enum: ['expense', 'income'], nullable: true },
-              color: { type: 'STRING', nullable: true },
-            },
+          id: { type: 'string' },
+          clientRef: { type: 'string' },
+          operation: { type: 'string', enum: ['create', 'update', 'delete'] },
+          entity: { type: 'string', enum: ['transaction', 'debitAccount', 'creditCard', 'category', 'subcategory'] },
+          targetId: { type: 'string' },
+          targetName: { type: 'string' },
+          fieldsJson: {
+            type: 'string',
+            description: 'Objeto JSON serializado con los campos conocidos de la accion. Omite datos desconocidos.',
           },
         },
       },
@@ -106,12 +68,36 @@ export function buildGeminiPrompt(input: GeminiInterpretationInput): string {
     'Interpreta la solicitud como un plan financiero para SmartFin.',
     'No inventes datos. Usa null cuando falte un dato y conserva varias operaciones en el orden solicitado.',
     'Las referencias clientRef permiten que una operacion use una entidad creada antes en el mismo plan.',
+    'En cada accion, fieldsJson debe ser un string que contenga un objeto JSON valido.',
+    'Campos permitidos dentro de fieldsJson: transactionType, amount, date, description, notes, accountId, accountName, accountRef, targetAccountId, targetAccountName, targetAccountRef, categoryId, categoryName, categoryRef, subcategoryId, subcategoryName, subcategoryRef, installmentCount, interestFreeInstallmentCount, transferTaxCharged, name, institutionName, initialBalance, recurringIncomeEnabled, recurringIncomeAmount, recurringIncomeDay, recurringIncomeFrequency, recurringIncomeType, bankName, creditLimit, lastFourDigits, closingDay, paymentDay, annualEffectiveInterestRate, managementFee, type y color.',
+    'Omite de fieldsJson los valores desconocidos; no inventes identificadores.',
+    'Solo asigna categoria o subcategoria cuando el usuario la mencione o el contexto sea inequívoco. Si falta contexto o hay varias posibilidades, omítela para que la aplicación pregunte.',
     `Fecha actual: ${input.now.toISOString()}. Zona horaria: ${input.timeZone}. Moneda unica: COP.`,
     `Cuentas activas [id,nombre,tipo,institucion]: ${JSON.stringify(accounts)}`,
     `Categorias [id,nombre,tipo]: ${JSON.stringify(categories)}`,
     `Subcategorias [id,nombre,categoriaId]: ${JSON.stringify(subcategories)}`,
     `Solicitud: ${input.text.trim()}`,
   ].join('\n');
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+}
+
+function parseModelPlan(text: string): AiCommandPlan {
+  const decoded = JSON.parse(text) as unknown;
+  if (!isRecord(decoded) || !Array.isArray(decoded.actions)) {
+    return parseAiCommandPlan(decoded);
+  }
+  const actions = decoded.actions.map(action => {
+    if (!isRecord(action)) return action;
+    if (typeof action.fieldsJson !== 'string') return action;
+    return {
+      ...action,
+      fields: JSON.parse(action.fieldsJson) as unknown,
+    };
+  });
+  return parseAiCommandPlan({ ...decoded, actions });
 }
 
 function readResponseText(value: unknown): string {
@@ -156,8 +142,12 @@ export function createGeminiCommandService(options: GeminiServiceOptions = {}) {
         generationConfig: {
           candidateCount: 1,
           maxOutputTokens: 4096,
-          responseMimeType: 'application/json',
-          responseSchema,
+          responseFormat: {
+            text: {
+              mimeType: 'APPLICATION_JSON',
+              schema: responseSchema,
+            },
+          },
           temperature: 0.1,
           thinkingConfig: { thinkingLevel: 'MINIMAL' },
         },
@@ -190,7 +180,7 @@ export function createGeminiCommandService(options: GeminiServiceOptions = {}) {
             throw new Error(`Gemini no esta disponible (HTTP ${response.status}).`);
           }
           const payload = await response.json() as unknown;
-          return parseAiCommandPlan(JSON.parse(readResponseText(payload)) as unknown);
+          return parseModelPlan(readResponseText(payload));
         } catch (error) {
           if (error instanceof Error && error.message.includes('limite gratuito')) throw error;
           const isTimeout = error instanceof Error && error.name === 'AbortError';

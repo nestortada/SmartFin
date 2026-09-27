@@ -40,7 +40,7 @@ type CategorizationModalProps = {
   categories: Category[];
   onSelectCategory: (categoryId: string, applyToFuture: boolean) => Promise<void>;
   onDeleteTransaction: (id: string) => Promise<void>;
-  onCreateCategory: (name: string, color: string) => Promise<Category | null>;
+  onCreateCategory: (name: string, color: string, type?: 'income' | 'expense') => Promise<Category | null>;
   onEditTransaction: (tx: Transaction) => void;
 };
 
@@ -81,6 +81,11 @@ export function CategorizationModal({
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>();
   const [newCatName, setNewCatName] = useState('');
   const [selectedColor, setSelectedColor] = useState(paletteColors[0] ?? '#cdbdff');
+  const isIncome = Boolean(tx && (tx.direction === 'inflow' || tx.type === 'income'));
+  const compatibleCategories = useMemo(
+    () => categories.filter(category => isIncome ? category.type === 'income' : category.type !== 'income'),
+    [categories, isIncome],
+  );
 
   useEffect(() => {
     if (visible) {
@@ -93,11 +98,20 @@ export function CategorizationModal({
   }, [tx?.categoryId, visible]);
 
   const quickCategories = useMemo(() => {
+    if (isIncome) {
+      return compatibleCategories.slice(0, 4).map((category, index) => ({
+        color: category.color,
+        icon: quickCategorySpecs[index]?.icon ?? '$',
+        id: category.id,
+        key: category.id,
+        name: category.name,
+      }));
+    }
     return quickCategorySpecs.map(spec => {
       const dbCategory =
-        categories.find(category => category.name.toLowerCase().includes(spec.name.toLowerCase())) ??
-        categories.find(category => category.macroCategory === spec.macro) ??
-        categories.find(category => {
+        compatibleCategories.find(category => category.name.toLowerCase().includes(spec.name.toLowerCase())) ??
+        compatibleCategories.find(category => category.macroCategory === spec.macro) ??
+        compatibleCategories.find(category => {
           if (spec.macro === 'shopping') {
             return ['other', 'utilities'].includes(category.macroCategory);
           }
@@ -115,7 +129,7 @@ export function CategorizationModal({
         name: dbCategory?.name ?? spec.name,
       };
     });
-  }, [categories]);
+  }, [compatibleCategories, isIncome]);
 
   if (!tx) {
     return null;
@@ -123,7 +137,6 @@ export function CategorizationModal({
 
   const selectedCategory = categories.find(category => category.id === selectedCategoryId);
   const merchantName = tx.merchantName || tx.description;
-  const isIncome = tx.direction === 'inflow' || tx.type === 'income';
   const sheetWidth = Math.min(windowWidth, SHEET_MAX_WIDTH);
   const contentWidth = Math.max(sheetWidth - SHEET_HORIZONTAL_PADDING * 2, 0);
   const categoryTileWidth = Math.floor((contentWidth - GRID_GAP) / 2);
@@ -182,7 +195,7 @@ export function CategorizationModal({
       return;
     }
 
-    const newCategory = await onCreateCategory(categoryName, selectedColor);
+    const newCategory = await onCreateCategory(categoryName, selectedColor, isIncome ? 'income' : 'expense');
     if (newCategory) {
       setSelectedCategoryId(newCategory.id);
       setShowAllCategories(false);
@@ -303,7 +316,7 @@ export function CategorizationModal({
                 </Pressable>
 
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                  {categories.map(category => (
+                  {compatibleCategories.map(category => (
                     <Pressable
                       key={category.id}
                       onPress={() => {

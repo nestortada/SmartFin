@@ -80,6 +80,8 @@ function parseAction(value: unknown, index: number): AiCommandAction {
         installmentCount: optionalNumber(sourceFields.installmentCount),
         interestFreeInstallmentCount: optionalNumber(sourceFields.interestFreeInstallmentCount),
         notes: optionalString(sourceFields.notes),
+        pendingAccountKind: optionalEnum(sourceFields.pendingAccountKind, ['debitAccount', 'creditCard']),
+        pendingAccountName: optionalString(sourceFields.pendingAccountName),
         subcategoryId: optionalString(sourceFields.subcategoryId),
         subcategoryName: optionalString(sourceFields.subcategoryName),
         subcategoryRef: optionalString(sourceFields.subcategoryRef),
@@ -242,7 +244,12 @@ export function normalizeAiCommandPlan(
     if (action.entity === 'transaction') {
       const account = findUnique(context.accounts, action.fields.accountId, action.fields.accountName, item => item.name);
       const target = findUnique(context.accounts, action.fields.targetAccountId, action.fields.targetAccountName, item => item.name);
-      const category = findUnique(context.categories, action.fields.categoryId, action.fields.categoryName, item => item.name);
+      const compatibleCategories = context.categories.filter(category =>
+        !action.fields.transactionType ||
+        action.fields.transactionType === 'internalTransfer' ||
+        category.type === action.fields.transactionType,
+      );
+      const category = findUnique(compatibleCategories, action.fields.categoryId, action.fields.categoryName, item => item.name);
       const subcategory = findUnique(context.subcategories, action.fields.subcategoryId, action.fields.subcategoryName, item => item.name);
       if (account) action.fields.accountId = account.id;
       else if (action.fields.accountId && !action.fields.accountRef) action.fields.accountId = undefined;
@@ -250,7 +257,10 @@ export function normalizeAiCommandPlan(
       else if (action.fields.targetAccountId && !action.fields.targetAccountRef) action.fields.targetAccountId = undefined;
       if (category) action.fields.categoryId = category.id;
       else if (action.fields.categoryId && !action.fields.categoryRef) action.fields.categoryId = undefined;
-      if (subcategory) action.fields.subcategoryId = subcategory.id;
+      if (subcategory && (!category || subcategory.categoryId === category.id)) {
+        action.fields.subcategoryId = subcategory.id;
+        if (!action.fields.categoryId && !action.fields.categoryRef) action.fields.categoryId = subcategory.categoryId;
+      }
       else if (action.fields.subcategoryId && !action.fields.subcategoryRef) action.fields.subcategoryId = undefined;
       if (action.fields.date && Number.isNaN(new Date(action.fields.date).getTime())) action.fields.date = undefined;
       if (action.fields.amount !== undefined && action.fields.amount !== null && action.fields.amount <= 0) action.fields.amount = undefined;
@@ -273,8 +283,10 @@ function accountOptions(accounts: Account[]): AiClarificationOption[] {
   );
 }
 
-function categoryOptions(categories: Category[]): AiClarificationOption[] {
-  return categories.map(category => option(`${category.name} · ${category.type === 'income' ? 'Ingreso' : 'Gasto'}`, category.id));
+function categoryOptions(categories: Category[], transactionType?: TransactionType | null): AiClarificationOption[] {
+  return categories
+    .filter(category => !transactionType || transactionType === 'internalTransfer' || category.type === transactionType)
+    .map(category => option(`${category.name} · ${category.type === 'income' ? 'Ingreso' : 'Gasto'}`, category.id));
 }
 
 function subcategoryOptions(subcategories: Subcategory[], categoryId?: string | null): AiClarificationOption[] {
@@ -293,7 +305,7 @@ function hasValue(action: AiCommandAction, field: string, plan: AiCommandPlan): 
   const fields = action.fields as Record<string, unknown>;
   if (plan.answeredFields.includes(`${action.id}.${field}`) && fields[field] === null) return true;
   const aliases: Record<string, string[]> = {
-    accountId: ['accountRef'],
+    accountId: ['accountRef', 'pendingAccountName'],
     categoryId: ['categoryRef'],
     subcategoryId: ['subcategoryRef'],
     targetAccountId: ['targetAccountRef'],
@@ -316,11 +328,12 @@ function addQuestion(
   options: AiClarificationOption[] = [],
   optional = false,
   force = false,
+  allowCustom = true,
 ): void {
   if (!force && hasValue(action, field, plan)) return;
   questions.push({
     actionId: action.id,
-    allowCustom: true,
+    allowCustom,
     field,
     id: `${action.id}.${field}`,
     optional,
@@ -357,21 +370,31 @@ export function buildClarificationQuestions(
       addQuestion(questions, plan, action, 'amount', '¿Cuál es el valor en COP?', 'number');
       addQuestion(questions, plan, action, 'date', '¿En qué fecha ocurrió?', 'date');
       addQuestion(questions, plan, action, 'description', '¿Cómo quieres describir el movimiento?', 'string');
-      addQuestion(questions, plan, action, 'accountId', '¿Qué cuenta o tarjeta se usó?', 'string', accountOptions(context.accounts));
+      addQuestion(questions, plan, action, 'accountId', '¿Qué cuenta o tarjeta se usó? Si no aparece, escribe el banco o institución.', 'string', accountOptions(context.accounts));
+      if (action.fields.pendingAccountName && !action.fields.accountRef) {
+        addQuestion(questions, plan, action, 'pendingAccountKind', `¿Qué quieres crear en ${action.fields.pendingAccountName}?`, 'string', [
+          option('Cuenta bancaria o débito', 'debitAccount'),
+          option('Tarjeta de crédito', 'creditCard'),
+        ], false, false, false);
+      }
       if (action.fields.transactionType === 'internalTransfer') {
         addQuestion(questions, plan, action, 'targetAccountId', '¿Cuál es la cuenta de destino?', 'string', accountOptions(context.accounts));
         addQuestion(questions, plan, action, 'transferTaxCharged', '¿Se cobró el 4x1000?', 'boolean', [option('Sí', 'true'), option('No', 'false')]);
       } else {
-        addQuestion(questions, plan, action, 'categoryId', '¿Qué categoría corresponde?', 'string', [
-          ...categoryOptions(context.categories), option('Sin categoría', '__none__'),
+        addQuestion(questions, plan, action, 'categoryId', '¿Qué categoría corresponde? Si no aparece, escribe un nombre para crearla.', 'string', [
+          ...categoryOptions(context.categories, action.fields.transactionType), option('Sin categoría', '__none__'),
         ]);
-        addQuestion(questions, plan, action, 'subcategoryId', '¿Qué subcategoría corresponde?', 'string', [
+        addQuestion(questions, plan, action, 'subcategoryId', '¿Qué subcategoría corresponde? Si no aparece, escribe un nombre para crearla.', 'string', [
           ...subcategoryOptions(context.subcategories, action.fields.categoryId), option('Sin subcategoría', '__none__'),
         ], true);
       }
       addQuestion(questions, plan, action, 'notes', '¿Quieres agregar notas?', 'string', [option('No aplica', '__none__')], true);
       const account = context.accounts.find(item => item.id === action.fields.accountId);
-      if (account?.type === 'creditCard' && action.fields.transactionType === 'expense') {
+      const referencedAccount = plan.actions.find(candidate =>
+        candidate.clientRef && candidate.clientRef === action.fields.accountRef,
+      );
+      const usesCreditCard = account?.type === 'creditCard' || referencedAccount?.entity === 'creditCard';
+      if (usesCreditCard && action.fields.transactionType === 'expense') {
         addQuestion(questions, plan, action, 'installmentCount', '¿A cuántas cuotas se difiere?', 'number', ['1', '3', '6', '12', '18', '24', '36'].map(value => option(value, value)));
         addQuestion(questions, plan, action, 'interestFreeInstallmentCount', '¿Cuántas cuotas son sin interés?', 'number', [option('Ninguna', '0')]);
       }
@@ -414,11 +437,148 @@ export function applyClarificationAnswer(
   plan: AiCommandPlan,
   question: AiClarificationQuestion,
   rawValue: string,
+  context?: AiPlanningContext,
 ): AiCommandPlan {
   const clone = parseAiCommandPlan(JSON.parse(JSON.stringify(plan)) as unknown);
   const action = clone.actions.find(candidate => candidate.id === question.actionId);
   if (!action) throw new Error('La pregunta ya no pertenece al borrador activo.');
-  let value: string | number | boolean | null = rawValue.trim();
+  const trimmedValue = rawValue.trim();
+  const selectedOption = question.options.some(optionItem => optionItem.value === trimmedValue);
+
+  if (
+    context &&
+    action.entity === 'transaction' &&
+    !selectedOption &&
+    trimmedValue &&
+    question.field === 'accountId'
+  ) {
+    const normalizedAccount = normalized(trimmedValue);
+    const matches = context.accounts.filter(account =>
+      account.status === 'active' && (
+        normalized(account.name) === normalizedAccount ||
+        normalized(account.institutionName) === normalizedAccount
+      ),
+    );
+    if (matches.length === 1) {
+      action.fields.accountId = matches[0]?.id;
+      action.fields.accountName = matches[0]?.name;
+    } else {
+      action.fields.accountId = undefined;
+      action.fields.accountName = undefined;
+      action.fields.pendingAccountName = trimmedValue;
+      action.fields.pendingAccountKind = undefined;
+    }
+    if (!clone.answeredFields.includes(question.id)) clone.answeredFields.push(question.id);
+    return clone;
+  }
+
+  if (
+    action.entity === 'transaction' &&
+    question.field === 'pendingAccountKind' &&
+    action.fields.pendingAccountName
+  ) {
+    if (trimmedValue !== 'debitAccount' && trimmedValue !== 'creditCard') {
+      throw new Error('Selecciona si deseas crear una cuenta o una tarjeta de credito.');
+    }
+    if (clone.actions.length >= 20) {
+      throw new Error('El lote ya alcanzo el limite de 20 operaciones.');
+    }
+    const actionIndex = clone.actions.findIndex(candidate => candidate.id === action.id);
+    const reference = `${action.id}-account-ref`;
+    const createId = `${action.id}-create-account`;
+    clone.actions.splice(actionIndex, 0, trimmedValue === 'creditCard' ? {
+      clientRef: reference,
+      entity: 'creditCard',
+      fields: { bankName: action.fields.pendingAccountName },
+      id: createId,
+      operation: 'create',
+    } : {
+      clientRef: reference,
+      entity: 'debitAccount',
+      fields: { institutionName: action.fields.pendingAccountName },
+      id: createId,
+      operation: 'create',
+    });
+    action.fields.accountRef = reference;
+    action.fields.pendingAccountKind = undefined;
+    action.fields.pendingAccountName = undefined;
+    if (!clone.answeredFields.includes(question.id)) clone.answeredFields.push(question.id);
+    return clone;
+  }
+
+  if (
+    context &&
+    action.entity === 'transaction' &&
+    !selectedOption &&
+    trimmedValue &&
+    (question.field === 'categoryId' || question.field === 'subcategoryId')
+  ) {
+    const actionIndex = clone.actions.findIndex(candidate => candidate.id === action.id);
+    const normalizedName = normalized(trimmedValue);
+    if (question.field === 'categoryId') {
+      const expectedType = action.fields.transactionType === 'income' ? 'income' : 'expense';
+      const matches = context.categories.filter(category =>
+        category.type === expectedType && normalized(category.name) === normalizedName,
+      );
+      if (matches.length === 1) {
+        action.fields.categoryId = matches[0]?.id;
+        action.fields.categoryName = matches[0]?.name;
+      } else {
+        if (clone.actions.length >= 20) {
+          throw new Error('El lote ya alcanzo el limite de 20 operaciones.');
+        }
+        const reference = `${action.id}-category-ref`;
+        const createId = `${action.id}-create-category`;
+        clone.actions.splice(actionIndex, 0, {
+          clientRef: reference,
+          entity: 'category',
+          fields: { name: trimmedValue, type: expectedType },
+          id: createId,
+          operation: 'create',
+        });
+        action.fields.categoryId = undefined;
+        action.fields.categoryName = trimmedValue;
+        action.fields.categoryRef = reference;
+      }
+    } else {
+      const categoryId = action.fields.categoryId;
+      const matches = context.subcategories.filter(subcategory =>
+        subcategory.isActive &&
+        normalized(subcategory.name) === normalizedName &&
+        (!categoryId || subcategory.categoryId === categoryId),
+      );
+      if (matches.length === 1) {
+        action.fields.subcategoryId = matches[0]?.id;
+        action.fields.subcategoryName = matches[0]?.name;
+      } else {
+        if (!action.fields.categoryId && !action.fields.categoryRef) {
+          throw new Error('Selecciona primero la categoria de la nueva subcategoria.');
+        }
+        if (clone.actions.length >= 20) {
+          throw new Error('El lote ya alcanzo el limite de 20 operaciones.');
+        }
+        const reference = `${action.id}-subcategory-ref`;
+        const createId = `${action.id}-create-subcategory`;
+        clone.actions.splice(actionIndex, 0, {
+          clientRef: reference,
+          entity: 'subcategory',
+          fields: {
+            categoryId: action.fields.categoryId,
+            categoryRef: action.fields.categoryRef,
+            name: trimmedValue,
+          },
+          id: createId,
+          operation: 'create',
+        });
+        action.fields.subcategoryId = undefined;
+        action.fields.subcategoryName = trimmedValue;
+        action.fields.subcategoryRef = reference;
+      }
+    }
+    if (!clone.answeredFields.includes(question.id)) clone.answeredFields.push(question.id);
+    return clone;
+  }
+  let value: string | number | boolean | null = trimmedValue;
   if (value === '__none__') value = null;
   else if (question.valueType === 'number') {
     const compact = String(value).replace(/\s/g, '');

@@ -18,7 +18,7 @@ import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import type { AppTheme } from '../../settings';
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
 import { useTransactionsList, formatYearMonth } from '../hooks/useTransactionsList';
-import { getNextMonthDueDate, saveManualTransaction } from '../useCases';
+import { deleteManualTransactionSafely, getNextMonthDueDate, saveManualTransaction } from '../useCases';
 import type { Transaction, TransactionType } from '../types';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
@@ -307,8 +307,7 @@ export function TransactionsScreen({
   };
 
   const handleCardPress = (tx: Transaction) => {
-    // Only open categorization modal for purchases / expenses / gastos
-    if (tx.direction === 'outflow' || tx.type === 'expense') {
+    if (tx.type !== 'internalTransfer') {
       setSelectedTxForCategorization(tx);
       setCategorizationModalVisible(true);
     }
@@ -475,13 +474,14 @@ export function TransactionsScreen({
   };
 
   const handleDeleteTransaction = async (id: string) => {
-    if (!database) return;
+    if (!database || !selectedTxForCategorization || selectedTxForCategorization.id !== id) return;
     try {
       const txRepo = createSqliteTransactionRepository(database);
-      await txRepo.deleteTransaction(id);
-      await reconcileCreditCardTransactions({
+      await deleteManualTransactionSafely({
         accountRepository: createSqliteAccountRepository(database),
+        accounts,
         creditCardRepository: createSqliteCreditCardRepository(database),
+        transaction: selectedTxForCategorization,
         transactionRepository: txRepo,
       });
       onForceRefresh(); // Trigger parent refresh

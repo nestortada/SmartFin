@@ -37,43 +37,8 @@ import {
   type DriveBackupStatus,
 } from '../modules/settings';
 import { SettingsScreen } from '../modules/settings/ui/SettingsScreen';
-import { createSqliteAccountRepository, mockAccountRepository } from '../modules/accounts';
-import {
-  CategoriesScreen,
-  createSqliteCategoryRepository,
-  mockCategoryRepository,
-} from '../modules/categories';
-import { seedCreditCardDemoData } from '../modules/creditCards';
+import { CategoriesScreen } from '../modules/categories';
 import { CreditCardsScreen } from '../modules/creditCards/ui/CreditCardsScreen';
-
-async function seedDatabaseIfEmpty(database: SmartFinSQLiteDatabase, resetBalancesToZero = false) {
-  const accountRepo = createSqliteAccountRepository(database);
-  const categoryRepo = createSqliteCategoryRepository(database);
-  
-  const [accounts, categories] = await Promise.all([
-    accountRepo.getAccounts(),
-    categoryRepo.getCategories(),
-  ]);
-
-  if (categories.length === 0) {
-    await categoryRepo.saveCategories(mockCategoryRepository.getCategories());
-  }
-
-  if (accounts.length === 0) {
-    const defaultAccounts = mockAccountRepository.getAccounts();
-    if (resetBalancesToZero) {
-      await accountRepo.saveAccounts(
-        defaultAccounts.map(a => ({ ...a, balance: { ...a.balance, amount: 0 } }))
-      );
-    } else {
-      await accountRepo.saveAccounts(defaultAccounts);
-    }
-
-    if (!resetBalancesToZero) {
-      await seedCreditCardDemoData(database);
-    }
-  }
-}
 
 type AppRoute =
   | 'dashboard'
@@ -120,8 +85,6 @@ export function AppNavigator() {
         const repository = createSqliteSettingsRepository(openedDatabase);
         const persistedSettings = await loadSettings(repository);
         
-        await seedDatabaseIfEmpty(openedDatabase);
-
         setDatabase(openedDatabase);
         setSettingsRepository(repository);
         setSettings(persistedSettings);
@@ -310,9 +273,6 @@ export function AppNavigator() {
       }
 
       await deleteFinancialData(createSqliteFinancialDataRepository(database));
-
-      // Re-seed essential accounts and categories after clearing local data.
-      await seedDatabaseIfEmpty(database, true);
 
       // Refresh dashboard so it reflects the now-empty DB immediately
       setDashboardRefreshKey(k => k + 1);

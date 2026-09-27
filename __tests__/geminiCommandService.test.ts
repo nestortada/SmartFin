@@ -40,7 +40,7 @@ describe('Gemini command service', () => {
     const fetchMock = jest.fn(async (_input: RequestInfo, _init?: RequestInit) => ({
       json: async () => ({
         candidates: [{ content: { parts: [{ text: JSON.stringify({
-          actions: [{ entity: 'transaction', fields: { amount: 20000 }, id: 'a1', operation: 'create' }],
+          actions: [{ entity: 'transaction', fieldsJson: '{"amount":20000}', id: 'a1', operation: 'create' }],
           summary: 'Registrar cafe',
         }) }] } }],
       }),
@@ -50,9 +50,15 @@ describe('Gemini command service', () => {
     const fetcher = fetchMock as unknown as typeof fetch;
     const result = await createGeminiCommandService({ apiKey: 'test-key', fetcher }).interpret(input);
     expect(result.actions).toHaveLength(1);
+    expect(result.actions[0]?.fields).toEqual({ amount: 20000 });
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const request = fetchMock.mock.calls[0]?.[1];
     expect(request?.headers).toEqual(expect.objectContaining({ 'x-goog-api-key': 'test-key' }));
+    const requestBody = JSON.parse(String(request?.body)) as {
+      generationConfig?: Record<string, unknown>;
+    };
+    expect(requestBody.generationConfig).toHaveProperty('responseFormat');
+    expect(requestBody.generationConfig).not.toHaveProperty('responseSchema');
   });
 
   it('fails locally when the build secret is missing', async () => {
@@ -83,7 +89,7 @@ describe('Gemini command service', () => {
       .mockResolvedValueOnce({
         json: async () => ({
           candidates: [{ content: { parts: [{ text: JSON.stringify({
-            actions: [{ entity: 'transaction', fields: { amount: 20000 }, id: 'a1', operation: 'create' }],
+            actions: [{ entity: 'transaction', fieldsJson: '{"amount":20000}', id: 'a1', operation: 'create' }],
             summary: 'Registrar cafe',
           }) }] } }],
         }),

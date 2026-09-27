@@ -115,7 +115,7 @@ export function useAiAssistantController(
     setErrorMessage(undefined);
     try {
       const plan = normalizeAiCommandPlan(
-        applyClarificationAnswer(draft.plan, question, value),
+        applyClarificationAnswer(draft.plan, question, value, context),
         context,
       );
       await persistDraft({

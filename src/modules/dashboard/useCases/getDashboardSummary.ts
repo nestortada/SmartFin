@@ -154,7 +154,7 @@ function computeSummary(
       {
         id: 'transactions',
         title: 'Transacciones',
-        description: 'Movimientos COP de ejemplo sin conexión bancaria.',
+        description: 'Movimientos en COP registrados localmente.',
       },
       {
         id: 'debts',
@@ -163,6 +163,10 @@ function computeSummary(
       },
     ],
   };
+}
+
+export function getEmptyDashboardSummary(currentDate: Date = new Date()): DashboardSummary {
+  return computeSummary([], [], currentDate);
 }
 
 /**

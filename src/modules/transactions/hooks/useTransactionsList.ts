@@ -1,20 +1,11 @@
 import { useEffect, useState, useMemo } from 'react';
 
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
-import {
-  mockTransactionRepository,
-  type Transaction,
-} from '../../transactions';
+import type { Transaction } from '../../transactions';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
-import {
-  mockAccountRepository,
-  type Account,
-} from '../../accounts';
+import type { Account } from '../../accounts';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
-import {
-  mockCategoryRepository,
-  type Category,
-} from '../../categories';
+import type { Category } from '../../categories';
 import { createSqliteCategoryRepository } from '../../categories/repositories/sqliteCategoryRepository';
 
 type UseTransactionsListResult = {
@@ -99,7 +90,7 @@ export function useTransactionsList(
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
 
-  // Load from database or fallbacks
+  // Load only persisted user data. An unavailable database stays empty.
   useEffect(() => {
     let cancelled = false;
 
@@ -125,15 +116,10 @@ export function useTransactionsList(
             setCategories(cats);
           }
         } else {
-          // Fallback to mocks
-          const mockTxs = mockTransactionRepository.getTransactions(new Date()) as Transaction[];
-          const mockAcs = mockAccountRepository.getAccounts();
-          const mockCats = mockCategoryRepository.getCategories();
-
           if (!cancelled) {
-            setTransactions(mockTxs);
-            setAccounts(mockAcs);
-            setCategories(mockCats);
+            setTransactions([]);
+            setAccounts([]);
+            setCategories([]);
           }
         }
       } catch (err) {

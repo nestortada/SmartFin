@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -65,13 +65,25 @@ export function AiAssistantScreen({
   const insets = useSafeAreaInsets();
   const palette = palettes[activeTheme];
   const controller = useAiAssistantController(database, onCommitted);
+  const currentQuestionId = controller.currentQuestion?.id;
+  const scrollRef = useRef<ScrollView>(null);
   const { setInput } = controller;
   const onTranscript = useCallback((text: string) => setInput(text), [setInput]);
   const speech = useAiSpeechInput(onTranscript);
 
+  const revealActiveInput = useCallback(() => {
+    setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 250);
+  }, []);
+
+  useEffect(() => {
+    if (!currentQuestionId) return;
+    const timer = setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 80);
+    return () => clearTimeout(timer);
+  }, [currentQuestionId]);
+
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[styles.screen, { backgroundColor: palette.background }]}>
       <View style={[styles.header, { borderColor: palette.border, paddingTop: insets.top + 8 }]}>
         <Pressable accessibilityRole="button" onPress={onBack} style={styles.headerButton}>
@@ -87,7 +99,10 @@ export function AiAssistantScreen({
       </View>
 
       <ScrollView
-        contentContainerStyle={[styles.content, { paddingBottom: 160 }]}
+        ref={scrollRef}
+        automaticallyAdjustKeyboardInsets={Platform.OS === 'ios'}
+        contentContainerStyle={[styles.content, { paddingBottom: controller.draft ? Math.max(insets.bottom + 24, 32) : 160 }]}
+        keyboardDismissMode="on-drag"
         keyboardShouldPersistTaps="handled">
         <View style={[styles.notice, { backgroundColor: palette.primarySoft, borderColor: palette.border }]}>
           <Text style={[styles.noticeTitle, { color: palette.text }]}>Tus datos siguen bajo tu control</Text>
@@ -113,6 +128,7 @@ export function AiAssistantScreen({
           <QuestionCard
             key={controller.currentQuestion.id}
             onAnswer={value => { controller.answerQuestion(controller.currentQuestion as AiClarificationQuestion, value); }}
+            onCustomFocus={revealActiveInput}
             palette={palette}
             question={controller.currentQuestion}
             remaining={controller.questions.length}
@@ -261,11 +277,13 @@ function describeActionDetails(
 
 function QuestionCard({
   onAnswer,
+  onCustomFocus,
   palette,
   question,
   remaining,
 }: {
   onAnswer: (value: string) => void;
+  onCustomFocus: () => void;
   palette: Palette;
   question: AiClarificationQuestion;
   remaining: number;
@@ -287,7 +305,12 @@ function QuestionCard({
           <TextInput
             keyboardType={question.valueType === 'number' ? 'decimal-pad' : 'default'}
             onChangeText={setCustom}
-            placeholder={question.valueType === 'date' ? 'AAAA-MM-DD' : 'Otra respuesta'}
+            onFocus={onCustomFocus}
+            placeholder={question.valueType === 'date'
+              ? 'AAAA-MM-DD'
+              : question.field === 'accountId' || question.field === 'categoryId' || question.field === 'subcategoryId'
+                ? 'Nombre existente o nuevo'
+                : 'Otra respuesta'}
             placeholderTextColor={palette.muted}
             style={[styles.customInput, { borderColor: palette.border, color: palette.text }]}
             value={custom}

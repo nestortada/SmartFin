@@ -23,6 +23,8 @@ export type AiTransactionFields = {
   installmentCount?: number | null;
   interestFreeInstallmentCount?: number | null;
   notes?: string | null;
+  pendingAccountKind?: 'debitAccount' | 'creditCard' | null;
+  pendingAccountName?: string | null;
   subcategoryId?: string | null;
   subcategoryName?: string | null;
   subcategoryRef?: string | null;

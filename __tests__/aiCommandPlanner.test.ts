@@ -98,4 +98,132 @@ describe('AI command planner', () => {
       ? answered.actions[0].fields.installmentCount
       : undefined).toBe(3);
   });
+
+  it('asks for category and subcategory when the model lacks enough context', () => {
+    const plan = parseAiCommandPlan({
+      actions: [{
+        entity: 'transaction',
+        fields: {
+          accountId: account.id,
+          amount: 30000,
+          date: '2026-09-27T12:00:00.000Z',
+          description: 'Ingreso recibido',
+          transactionType: 'income',
+        },
+        id: 'income',
+        operation: 'create',
+      }],
+      summary: 'Ingreso sin clasificar',
+    });
+    const fields = buildClarificationQuestions(plan, context).map(question => question.field);
+    expect(fields).toEqual(expect.arrayContaining(['categoryId', 'subcategoryId']));
+  });
+
+  it('uses an existing subcategory when its name is written manually', () => {
+    const plan = parseAiCommandPlan({
+      actions: [{
+        entity: 'transaction',
+        fields: { categoryId: category.id, transactionType: 'expense' },
+        id: 'purchase',
+        operation: 'create',
+      }],
+      summary: 'Compra',
+    });
+    const question = buildClarificationQuestions(plan, context)
+      .find(candidate => candidate.field === 'subcategoryId');
+    const answered = applyClarificationAnswer(plan, question!, 'Mercado', context);
+    const transaction = answered.actions.find(action => action.id === 'purchase');
+    expect(transaction?.entity === 'transaction' ? transaction.fields.subcategoryId : undefined)
+      .toBe(subcategory.id);
+    expect(answered.actions).toHaveLength(1);
+  });
+
+  it('adds and links a new subcategory when a custom name does not exist', () => {
+    const plan = parseAiCommandPlan({
+      actions: [{
+        entity: 'transaction',
+        fields: { categoryId: category.id, transactionType: 'expense' },
+        id: 'purchase',
+        operation: 'create',
+      }],
+      summary: 'Compra',
+    });
+    const question = buildClarificationQuestions(plan, context)
+      .find(candidate => candidate.field === 'subcategoryId');
+    const answered = applyClarificationAnswer(plan, question!, 'Restaurantes', context);
+    expect(answered.actions[0]).toEqual(expect.objectContaining({
+      clientRef: 'purchase-subcategory-ref',
+      entity: 'subcategory',
+      operation: 'create',
+    }));
+    const transaction = answered.actions.find(action => action.id === 'purchase');
+    expect(transaction?.entity === 'transaction' ? transaction.fields.subcategoryRef : undefined)
+      .toBe('purchase-subcategory-ref');
+  });
+
+  it('adds a compatible category when the user writes a new category name', () => {
+    const plan = parseAiCommandPlan({
+      actions: [{
+        entity: 'transaction',
+        fields: { transactionType: 'income' },
+        id: 'income',
+        operation: 'create',
+      }],
+      summary: 'Ingreso',
+    });
+    const question = buildClarificationQuestions(plan, context)
+      .find(candidate => candidate.field === 'categoryId');
+    const answered = applyClarificationAnswer(plan, question!, 'Bonificaciones', context);
+    expect(answered.actions[0]).toEqual(expect.objectContaining({
+      clientRef: 'income-category-ref',
+      entity: 'category',
+      fields: expect.objectContaining({ name: 'Bonificaciones', type: 'income' }),
+      operation: 'create',
+    }));
+    const transaction = answered.actions.find(action => action.id === 'income');
+    expect(transaction?.entity === 'transaction' ? transaction.fields.categoryRef : undefined)
+      .toBe('income-category-ref');
+  });
+
+  it('creates and links a new credit card after a custom bank answer', () => {
+    const plan = parseAiCommandPlan({
+      actions: [{
+        entity: 'transaction',
+        fields: {
+          amount: 90000,
+          categoryId: category.id,
+          date: '2026-09-27T12:00:00.000Z',
+          description: 'Compra',
+          transactionType: 'expense',
+        },
+        id: 'purchase',
+        operation: 'create',
+      }],
+      summary: 'Compra con una tarjeta nueva',
+    });
+    const accountQuestion = buildClarificationQuestions(plan, context)
+      .find(candidate => candidate.field === 'accountId');
+    const withBankName = applyClarificationAnswer(plan, accountQuestion!, 'Banco Nuevo', context);
+    const kindQuestion = buildClarificationQuestions(withBankName, context)
+      .find(candidate => candidate.field === 'pendingAccountKind');
+    expect(kindQuestion?.options.map(optionItem => optionItem.value)).toEqual([
+      'debitAccount', 'creditCard',
+    ]);
+
+    const answered = applyClarificationAnswer(withBankName, kindQuestion!, 'creditCard', context);
+    expect(answered.actions[0]).toEqual(expect.objectContaining({
+      clientRef: 'purchase-account-ref',
+      entity: 'creditCard',
+      fields: expect.objectContaining({ bankName: 'Banco Nuevo' }),
+      operation: 'create',
+    }));
+    const transaction = answered.actions.find(action => action.id === 'purchase');
+    expect(transaction?.entity === 'transaction' ? transaction.fields.accountRef : undefined)
+      .toBe('purchase-account-ref');
+    const remainingFields = buildClarificationQuestions(answered, context)
+      .map(question => question.field);
+    expect(remainingFields).toEqual(expect.arrayContaining([
+      'name', 'creditLimit', 'installmentCount', 'interestFreeInstallmentCount',
+    ]));
+  });
 });
