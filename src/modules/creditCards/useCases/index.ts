@@ -18,7 +18,6 @@ export {
   reconcileCreditCardTransactions,
   registerCreditCardPayment,
   resolveCreditCardTransactionTarget,
-  shouldTreatTextAsCreditCardTransaction,
   type RegisterCreditCardPaymentResult,
   type ResolveCreditCardTransactionTargetResult,
 } from './creditCardTransactionRelations';

@@ -3,8 +3,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
       android:name=".MainApplication"
@@ -27,24 +25,5 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-      <receiver
-        android:name=".SmartFinSmsReceiver"
-        android:enabled="true"
-        android:exported="true"
-        android:permission="android.permission.BROADCAST_SMS">
-        <intent-filter>
-            <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-        </intent-filter>
-      </receiver>
-      <service
-        android:name=".SmartFinNotificationListenerService"
-        android:enabled="true"
-        android:exported="false"
-        android:label="@string/app_name"
-        android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-        <intent-filter>
-            <action android:name="android.service.notification.NotificationListenerService" />
-        </intent-filter>
-      </service>
     </application>
 </manifest>

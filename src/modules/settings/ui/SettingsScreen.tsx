@@ -12,7 +12,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
 import type { AppTheme, SettingsState } from '../types';
+import type { DriveBackupStatus } from '../services';
 
+import { DriveBackupSection } from './components/DriveBackupSection';
 import { PersonalizationSection } from './components/PersonalizationSection';
 import { SecuritySection } from './components/SecuritySection';
 import { SettingsHeroCard } from './components/SettingsHeroCard';
@@ -60,11 +62,14 @@ const palettes: Record<AppTheme, SettingsPalette> = {
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type SettingsScreenProps = {
+  backupStatus?: DriveBackupStatus;
   busyMessage?: string;
   errorMessage?: string;
   settings: SettingsState;
   onBack: () => void;
   onDeleteFinancialData: () => Promise<void>;
+  onChooseDriveBackupDirectory: () => Promise<void>;
+  onExportDriveBackup: () => Promise<void>;
   onNavigateToHome: () => void;
   onNavigateToTransactions: () => void;
   onOpenCategories: () => void;
@@ -74,17 +79,19 @@ type SettingsScreenProps = {
   onThemeChange: (theme: AppTheme) => Promise<void>;
   onToggleBiometrics: (enabled: boolean) => Promise<void>;
   onToggleLocalCredential: (enabled: boolean) => Promise<void>;
-  onToggleSmsReading: (enabled: boolean) => Promise<void>;
 };
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
 export function SettingsScreen({
+  backupStatus,
   busyMessage,
   errorMessage,
   settings,
   onBack,
   onDeleteFinancialData,
+  onChooseDriveBackupDirectory,
+  onExportDriveBackup,
   onNavigateToHome,
   onNavigateToTransactions,
   onOpenCategories,
@@ -94,7 +101,6 @@ export function SettingsScreen({
   onThemeChange,
   onToggleBiometrics,
   onToggleLocalCredential,
-  onToggleSmsReading,
 }: SettingsScreenProps) {
   const insets = useSafeAreaInsets();
   const palette = palettes[settings.theme];
@@ -110,7 +116,7 @@ export function SettingsScreen({
   const confirmFinancialDataDeletion = () => {
     Alert.alert(
       'Eliminar datos financieros',
-      'Se borrarán cuentas, movimientos, presupuestos, mensajes SMS financieros y cálculos locales. Tus ajustes se conservarán.',
+      'Se borrarán cuentas, movimientos, presupuestos y cálculos locales. Tus ajustes se conservarán.',
       [
         { style: 'cancel', text: 'Cancelar' },
         {
@@ -178,12 +184,16 @@ export function SettingsScreen({
         <SecuritySection
           biometricsEnabled={settings.biometricsEnabled}
           localCredentialEnabled={settings.localCredentialEnabled}
-          smsPermissionState={settings.smsPermissionState}
-          smsReadingEnabled={settings.smsReadingEnabled}
           onSaveCredential={onSaveCredential}
           onToggleBiometrics={onToggleBiometrics}
           onToggleLocalCredential={onToggleLocalCredential}
-          onToggleSmsReading={onToggleSmsReading}
+          palette={palette}
+        />
+
+        <DriveBackupSection
+          backupStatus={backupStatus}
+          onChooseDirectory={onChooseDriveBackupDirectory}
+          onExport={onExportDriveBackup}
           palette={palette}
         />
 

@@ -10,8 +10,8 @@ class SmartFinNativePackage : ReactPackage {
       reactContext: ReactApplicationContext
   ): List<NativeModule> =
       listOf(
+          SmartFinDriveBackupModule(reactContext),
           SmartFinSecurityModule(reactContext),
-          SmartFinSmsIngestionModule(reactContext),
       )
 
   override fun createViewManagers(

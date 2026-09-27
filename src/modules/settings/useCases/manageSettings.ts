@@ -1,5 +1,5 @@
 import type { SettingsRepository } from '../repositories';
-import type { AppTheme, SettingsState, SmsPermissionState } from '../types';
+import type { AppTheme, SettingsState } from '../types';
 
 export async function loadSettings(
   settingsRepository: SettingsRepository,
@@ -33,21 +33,6 @@ export async function updateLocalCredentialEnabled(
   localCredentialEnabled: boolean,
 ): Promise<SettingsState> {
   const nextSettings = { ...currentSettings, localCredentialEnabled };
-  await settingsRepository.saveSettings(nextSettings);
-  return nextSettings;
-}
-
-export async function updateSmsReadingPreference(
-  settingsRepository: SettingsRepository,
-  currentSettings: SettingsState,
-  smsReadingEnabled: boolean,
-  smsPermissionState: SmsPermissionState,
-): Promise<SettingsState> {
-  const nextSettings = {
-    ...currentSettings,
-    smsPermissionState,
-    smsReadingEnabled,
-  };
   await settingsRepository.saveSettings(nextSettings);
   return nextSettings;
 }

@@ -5,13 +5,9 @@ export {
   type TransactionRepository,
 } from './repositories';
 export {
-  createTransactionFromSms,
-  processSmsAndCreateTransaction,
-  categorizeMerchantName,
   getNextMonthDueDate,
   saveManualTransaction,
   type ManualTransactionOperationType,
-  type ProcessSmsAndCreateTransactionParams,
   type SaveManualTransactionParams,
   type SaveManualTransactionResult,
 } from './useCases';

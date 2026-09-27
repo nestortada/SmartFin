@@ -16,7 +16,7 @@ type UseDashboardSummaryResult = {
 /**
  * Reactively loads the dashboard summary from SQLite whenever
  * `database` becomes available or `refreshKey` changes (e.g. after
- * a new SMS transaction is saved or financial data is deleted).
+ * financial data is changed or deleted).
  *
  * Falls back to the mock summary while the database is not yet ready.
  */

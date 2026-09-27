@@ -31,7 +31,7 @@ export function DangerZoneSection({
               Eliminar datos financieros
             </Text>
             <Text style={[styles.rowSupporting, { color: palette.muted }]}>
-              Borra cuentas, movimientos, SMS y presupuestos. Conserva tema y seguridad.
+              Borra cuentas, movimientos y presupuestos. Conserva tema y seguridad.
             </Text>
           </View>
         </View>

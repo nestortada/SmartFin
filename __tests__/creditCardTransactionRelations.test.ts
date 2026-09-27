@@ -7,7 +7,6 @@ import {
   reconcileCreditCardTransactions,
   resolveCreditCardTransactionTarget,
   serializeCreditCardVisualMetadata,
-  shouldTreatTextAsCreditCardTransaction,
 } from '../src/modules/creditCards';
 import type {
   CreditCardProfile,
@@ -326,10 +325,8 @@ test('creating a matching card associates pending unclassified transactions', as
   expect(repositories.accounts.find(account => account.id === 'card-visa')?.debtBalance?.amount).toBe(100000);
 });
 
-test('sms credit card heuristics match existing cards or classify credit-like texts', () => {
+test('credit card hints match existing cards', () => {
   const accounts = [card()];
 
   expect(findMatchingCreditCardAccount(accounts, 'Visa', 'Compra tarjeta Visa')).toEqual(card());
-  expect(shouldTreatTextAsCreditCardTransaction('Compra con tarjeta de credito terminada en 1234')).toBe(true);
-  expect(shouldTreatTextAsCreditCardTransaction('CREDITP: Compra por $325.000')).toBe(true);
 });

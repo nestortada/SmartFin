@@ -23,7 +23,6 @@ export {
   resolveCreditCardTransactionTarget,
   saveCreditCardFromForm,
   serializeCreditCardVisualMetadata,
-  shouldTreatTextAsCreditCardTransaction,
   type RegisterCreditCardPaymentResult,
   type ResolveCreditCardTransactionTargetResult,
 } from './useCases';

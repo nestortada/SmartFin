@@ -130,13 +130,6 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
   const isIncome = tx.direction === 'inflow';
   const operationType = getOperationType(tx);
   const installmentDetails = getInstallmentDetails(tx);
-  const isSmsDetected = Boolean(
-    tx.notes &&
-      (tx.notes.toUpperCase().includes('SMS') ||
-        tx.notes.includes('Registro de SMS') ||
-        tx.description.toUpperCase().includes('UNIVERSIDAD DE LA SABA') ||
-        tx.notes.toUpperCase().includes('NOTIFICACION')),
-  );
 
   return (
     <Pressable
@@ -165,12 +158,6 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
           </Text>
         </View>
 
-        {isSmsDetected ? (
-          <View style={styles.smsBadge}>
-            <Text style={styles.smsBadgeIcon}>SMS</Text>
-            <Text style={styles.smsBadgeText}>DETECTADO POR SMS</Text>
-          </View>
-        ) : null}
       </View>
 
       <View style={styles.txRight}>
@@ -278,29 +265,6 @@ const styles = StyleSheet.create({
     gap: 4,
     justifyContent: 'flex-end',
     marginBottom: 4,
-  },
-  smsBadge: {
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    backgroundColor: 'rgba(0, 228, 117, 0.08)',
-    borderColor: 'rgba(0, 228, 117, 0.3)',
-    borderRadius: 8,
-    borderWidth: 1,
-    flexDirection: 'row',
-    gap: 3,
-    marginTop: 6,
-    paddingHorizontal: 7,
-    paddingVertical: 3,
-  },
-  smsBadgeIcon: {
-    color: '#00e475',
-    fontSize: 8,
-    fontWeight: '900',
-  },
-  smsBadgeText: {
-    color: '#00e475',
-    fontSize: 8,
-    fontWeight: '800',
   },
   subrow: {
     alignItems: 'center',

@@ -1,1 +1,1 @@
-export type NativeCapability = 'biometrics' | 'secure-storage' | 'notifications';
+export type NativeCapability = 'biometrics' | 'secure-storage';

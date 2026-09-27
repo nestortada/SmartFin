@@ -162,8 +162,7 @@ export function TransactionsScreen({
 
 
   const getCreditCardHintFromTransaction = (tx: Transaction) => {
-    const smsBankMatch = tx.notes?.match(/\(([^)]+)\)/);
-    return tx.creditCardHint || smsBankMatch?.[1] || tx.merchantName || tx.description;
+    return tx.creditCardHint || tx.merchantName || tx.description;
   };
 
   const isDebitAccount = (account: Account | undefined) => {

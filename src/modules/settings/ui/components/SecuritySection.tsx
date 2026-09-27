@@ -8,30 +8,23 @@ import {
   SettingsSection,
   type SettingsPalette,
 } from './primitives';
-import type { SmsPermissionState } from '../../types';
 
 type SecuritySectionProps = {
   biometricsEnabled: boolean;
   localCredentialEnabled: boolean;
   palette: SettingsPalette;
-  smsPermissionState: SmsPermissionState;
-  smsReadingEnabled: boolean;
   onSaveCredential: (secret: string) => Promise<void>;
   onToggleBiometrics: (enabled: boolean) => Promise<void>;
   onToggleLocalCredential: (enabled: boolean) => Promise<void>;
-  onToggleSmsReading: (enabled: boolean) => Promise<void>;
 };
 
 export function SecuritySection({
   biometricsEnabled,
   localCredentialEnabled,
   palette,
-  smsPermissionState,
-  smsReadingEnabled,
   onSaveCredential,
   onToggleBiometrics,
   onToggleLocalCredential,
-  onToggleSmsReading,
 }: SecuritySectionProps) {
   const [credentialDraft, setCredentialDraft] = useState('');
   const [showEditor, setShowEditor] = useState(false);
@@ -68,28 +61,6 @@ export function SecuritySection({
               true: palette.primary,
             }}
             value={biometricsEnabled}
-          />
-        }
-      />
-
-      <View style={styles.divider} />
-
-      <SettingsRow
-        icon={<MaterialIcons name="sms-failed" size={24} color={palette.muted} />}
-        label="Notificaciones de SMS"
-        palette={palette}
-        supportingText="Lectura automática de notificaciones"
-        trailing={
-          <Switch
-            disabled={smsPermissionState === 'unavailable'}
-            ios_backgroundColor="rgba(120, 120, 130, 0.2)"
-            onValueChange={onToggleSmsReading}
-            thumbColor={smsReadingEnabled ? '#ffffff' : '#f4f2f8'}
-            trackColor={{
-              false: 'rgba(255, 255, 255, 0.12)',
-              true: palette.primary,
-            }}
-            value={smsReadingEnabled}
           />
         }
       />

@@ -42,7 +42,7 @@ export function SettingsHeroCard({ palette }: SettingsHeroCardProps) {
             Privacidad Total
           </Text>
           <Text style={[styles.heroDescription, { color: palette.muted }]}>
-            Tus datos nunca salen de este dispositivo. Todo el procesamiento financiero es 100% on-device y cifrado.
+            El procesamiento financiero se realiza en este dispositivo. Solo se copian datos fuera cuando autorizas un respaldo sin cifrar en Google Drive.
           </Text>
         </View>
       </View>

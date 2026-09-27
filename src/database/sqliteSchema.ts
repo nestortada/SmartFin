@@ -1,5 +1,45 @@
 export const SMARTFIN_DATABASE_NAME = 'smartfin.db';
 
+const BACKUP_TRACKED_TABLES = [
+  'accounts',
+  'categories',
+  'subcategories',
+  'merchant_mappings',
+  'transactions',
+  'transaction_splits',
+  'account_balance_history',
+  'budgets',
+  'envelopes',
+  'envelope_movements',
+  'recurring_subscriptions',
+  'loans',
+  'amortization_schedule_items',
+  'credit_card_statements',
+  'credit_card_profiles',
+  'installment_purchases',
+  'financial_goals',
+  'investment_assets',
+  'receipt_attachments',
+  'tax_tags',
+  'transaction_tax_tags',
+  'cash_flow_events',
+  'smart_alerts',
+  'financial_health_scores',
+] as const;
+
+const BACKUP_REVISION_TRIGGER_STATEMENTS = BACKUP_TRACKED_TABLES.flatMap(table =>
+  (['INSERT', 'UPDATE', 'DELETE'] as const).map(event => `
+    CREATE TRIGGER IF NOT EXISTS backup_revision_${table}_${event.toLowerCase()}
+    AFTER ${event} ON ${table}
+    BEGIN
+      UPDATE financial_data_revision
+      SET revision = revision + 1,
+          updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
+      WHERE id = 1;
+    END;
+  `),
+);
+
 export const SQLITE_SCHEMA_STATEMENTS: string[] = [
   'PRAGMA foreign_keys = ON;',
   `CREATE TABLE IF NOT EXISTS app_settings (
@@ -371,6 +411,13 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
     completed_at TEXT,
     error_message TEXT
   );`,
+  `CREATE TABLE IF NOT EXISTS financial_data_revision (
+    id INTEGER PRIMARY KEY NOT NULL CHECK (id = 1),
+    revision INTEGER NOT NULL DEFAULT 0,
+    updated_at TEXT NOT NULL
+  );`,
+  `INSERT OR IGNORE INTO financial_data_revision (id, revision, updated_at)
+   VALUES (1, 0, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));`,
   'CREATE INDEX IF NOT EXISTS idx_transactions_date ON transactions(date);',
   'CREATE INDEX IF NOT EXISTS idx_transactions_account_id ON transactions(account_id);',
   'CREATE INDEX IF NOT EXISTS idx_transactions_category_id ON transactions(category_id);',
@@ -394,4 +441,5 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
   'CREATE INDEX IF NOT EXISTS idx_cash_flow_events_expected_date ON cash_flow_events(expected_date);',
   'CREATE INDEX IF NOT EXISTS idx_smart_alerts_status ON smart_alerts(status);',
   'CREATE INDEX IF NOT EXISTS idx_financial_health_scores_calculated_at ON financial_health_scores(calculated_at);',
+  ...BACKUP_REVISION_TRIGGER_STATEMENTS,
 ];

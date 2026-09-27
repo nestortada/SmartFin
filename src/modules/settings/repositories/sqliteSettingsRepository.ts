@@ -8,7 +8,6 @@ import {
   DEFAULT_SETTINGS,
   type AppTheme,
   type SettingsState,
-  type SmsPermissionState,
 } from '../types';
 
 export type SettingsRepository = {
@@ -22,22 +21,10 @@ const SETTING_KEYS: PersistedSettingKey[] = [
   'theme',
   'biometricsEnabled',
   'localCredentialEnabled',
-  'smsReadingEnabled',
-  'smsPermissionState',
 ];
 
 function isAppTheme(value: string): value is AppTheme {
   return value === 'dark' || value === 'light';
-}
-
-function isSmsPermissionState(value: string): value is SmsPermissionState {
-  return (
-    value === 'unknown' ||
-    value === 'available' ||
-    value === 'granted' ||
-    value === 'denied' ||
-    value === 'unavailable'
-  );
 }
 
 function parseBoolean(value: string): boolean {
@@ -51,7 +38,6 @@ function settingRowToPair(row: SQLiteRow): [string, string] {
 function mergePersistedSettings(rows: SQLiteRow[]): SettingsState {
   const persisted = new Map(rows.map(settingRowToPair));
   const theme = persisted.get('theme');
-  const smsPermissionState = persisted.get('smsPermissionState');
 
   return {
     theme: theme && isAppTheme(theme) ? theme : DEFAULT_SETTINGS.theme,
@@ -63,14 +49,6 @@ function mergePersistedSettings(rows: SQLiteRow[]): SettingsState {
       persisted.get('localCredentialEnabled') ??
         String(DEFAULT_SETTINGS.localCredentialEnabled),
     ),
-    smsReadingEnabled: parseBoolean(
-      persisted.get('smsReadingEnabled') ??
-        String(DEFAULT_SETTINGS.smsReadingEnabled),
-    ),
-    smsPermissionState:
-      smsPermissionState && isSmsPermissionState(smsPermissionState)
-        ? smsPermissionState
-        : DEFAULT_SETTINGS.smsPermissionState,
   };
 }
 
@@ -86,7 +64,7 @@ export function createSqliteSettingsRepository(
       const [resultSet] = await database.executeSql(
         `SELECT setting_key, setting_value
         FROM app_settings
-        WHERE setting_key IN (?, ?, ?, ?, ?);`,
+        WHERE setting_key IN (?, ?, ?);`,
         SETTING_KEYS,
       );
 

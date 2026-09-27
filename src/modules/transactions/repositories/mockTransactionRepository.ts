@@ -12,7 +12,7 @@ export type TransactionRepository = {
   getMerchantMapping?: (rawMerchantText: string) => Promise<string | null>;
 };
 
-// In-memory store for additional transactions (SMS-captured, etc.)
+// In-memory store for additional transactions created during tests.
 let additionalTransactions: Transaction[] = [];
 
 function toDateString(date: Date): ISODateString {

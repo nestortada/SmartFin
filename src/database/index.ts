@@ -4,6 +4,7 @@ export const databaseStatus: DatabaseStatus = 'configured';
 
 export {
   closeSmartFinDatabase,
+  getFinancialDataRevision,
   openSmartFinDatabase,
   type SmartFinSQLiteDatabase,
 } from './sqliteDatabase';

@@ -61,6 +61,24 @@ export async function closeSmartFinDatabase(): Promise<void> {
     return;
   }
 
-  await database.close();
-  databasePromise = undefined;
+  try {
+    await database.close();
+  } finally {
+    databasePromise = undefined;
+  }
+}
+
+export async function getFinancialDataRevision(
+  database: SmartFinSQLiteDatabase,
+): Promise<number> {
+  const [result] = await database.executeSql(
+    'SELECT revision FROM financial_data_revision WHERE id = 1;',
+  );
+
+  if (result.rows.length === 0) {
+    return 0;
+  }
+
+  const value: unknown = result.rows.item(0).revision;
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
 }

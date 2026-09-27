@@ -219,12 +219,6 @@ function accountMatchesHint(account: Account, hint?: string, rawText?: string): 
   });
 }
 
-export function shouldTreatTextAsCreditCardTransaction(rawText?: string): boolean {
-  const normalized = normalizeSearchText(rawText);
-
-  return /\b(tarjeta|credito[a-z0-9]*|credit[a-z0-9]*|visa|mastercard|amex|american express|tc|t c)\b/.test(normalized);
-}
-
 export function findMatchingCreditCardAccount(
   accounts: Account[],
   creditCardHint?: string,

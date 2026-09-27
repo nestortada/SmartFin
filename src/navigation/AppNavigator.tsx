@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { AppState, Platform } from 'react-native';
-import Toast from 'react-native-toast-message';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Alert, AppState } from 'react-native';
 
 import {
   closeSmartFinDatabase,
+  getFinancialDataRevision,
   openSmartFinDatabase,
   type SmartFinSQLiteDatabase,
 } from '../database';
 import { DashboardScreen } from '../modules/dashboard/ui/DashboardScreen';
-import { OnboardingScreen } from '../modules/dashboard/ui/OnboardingScreen';
 import { DebitCardsScreen } from '../modules/accounts/ui/DebitCardsScreen';
 import {
   TransactionsScreen,
@@ -23,38 +22,27 @@ import {
   setLocalAccessSecret,
 } from '../modules/security';
 import {
-  createSmsIngestionService,
   createSqliteFinancialDataRepository,
   createSqliteSettingsRepository,
   deleteFinancialData,
   loadSettings,
-  saveRawFinancialSms,
-  updateSmsReadingPreference,
   updateTheme,
-  parseFinancialSms,
   type SettingsRepository,
   type SettingsState,
   DEFAULT_SETTINGS,
+  chooseDriveBackupDirectory,
+  exportDriveBackup,
+  getDriveBackupStatus,
+  type DriveBackupStatus,
 } from '../modules/settings';
 import { SettingsScreen } from '../modules/settings/ui/SettingsScreen';
-import {
-  createSqliteTransactionRepository,
-  categorizeMerchantName,
-  processSmsAndCreateTransaction,
-} from '../modules/transactions';
 import { createSqliteAccountRepository, mockAccountRepository } from '../modules/accounts';
 import {
   CategoriesScreen,
   createSqliteCategoryRepository,
   mockCategoryRepository,
 } from '../modules/categories';
-import {
-  createSqliteCreditCardAlertRepository,
-  findMatchingCreditCardAccount,
-  resolveCreditCardTransactionTarget,
-  seedCreditCardDemoData,
-  shouldTreatTextAsCreditCardTransaction,
-} from '../modules/creditCards';
+import { seedCreditCardDemoData } from '../modules/creditCards';
 import { CreditCardsScreen } from '../modules/creditCards/ui/CreditCardsScreen';
 
 async function seedDatabaseIfEmpty(database: SmartFinSQLiteDatabase, resetBalancesToZero = false) {
@@ -87,7 +75,6 @@ async function seedDatabaseIfEmpty(database: SmartFinSQLiteDatabase, resetBalanc
 }
 
 type AppRoute =
-  | 'onboarding'
   | 'dashboard'
   | 'transactions'
   | 'settings'
@@ -104,17 +91,18 @@ export function AppNavigator() {
   const [busyMessage, setBusyMessage] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [accessLocked, setAccessLocked] = useState(false);
+  const [backupStatus, setBackupStatus] = useState<DriveBackupStatus>();
   const [transactionsInitialDraft, setTransactionsInitialDraft] = useState<TransactionsInitialDraft>();
   /**
    * Incrementing this key forces useDashboardSummary to re-fetch from SQLite.
    * We bump it after any operation that mutates financial data:
-   *   1. An SMS payment is processed → bump after saving the transaction
-   *   2. Financial data is deleted   → bump after the delete completes
+   * Increment after operations that mutate financial data so the dashboard
+   * reloads its SQLite-backed summary.
    */
   const [dashboardRefreshKey, setDashboardRefreshKey] = useState(0);
+  const lastPromptedBackupRevision = useRef<number | undefined>(undefined);
 
   const securityService = useMemo(() => createSecurityService(), []);
-  const smsIngestionService = useMemo(() => createSmsIngestionService(), []);
 
   // ─── Open database on mount ───────────────────────────────────────────────
 
@@ -140,12 +128,7 @@ export function AppNavigator() {
             persistedSettings.localCredentialEnabled,
         );
 
-        // If SMS reading is NOT activated, go to onboarding!
-        if (!persistedSettings.smsReadingEnabled) {
-          setRoute('onboarding');
-        } else {
-          setRoute('dashboard');
-        }
+        setRoute('dashboard');
       })
       .catch(() => {
         if (!isMounted) {
@@ -175,126 +158,6 @@ export function AppNavigator() {
       subscription.remove();
     };
   }, [settings.biometricsEnabled, settings.localCredentialEnabled]);
-
-  // ─── SMS listener ─────────────────────────────────────────────────────────
-
-  useEffect(() => {
-    if (!database || !settings.smsReadingEnabled) {
-      return undefined;
-    }
-
-    const transactionRepository = createSqliteTransactionRepository(database);
-    const accountRepository = createSqliteAccountRepository(database);
-
-    return smsIngestionService.subscribeToIncomingSms(message => {
-      console.log('RECEIVED INCOMING SMS IN REACT NATIVE:', message);
-      
-      void (async () => {
-        // 1. Persist raw SMS
-        await saveRawFinancialSms(database, message);
-
-        // 2. Parse + create transaction
-        try {
-          const parsed = parseFinancialSms(message);
-          if (parsed.status !== 'parsed') {
-            console.log('SMS could not be parsed as financial:', message.body);
-            return;
-          }
-
-          // Fetch live accounts from SQLite
-          const activeAccounts = await accountRepository.getAccounts();
-          const rawCreditText = `${message.title ?? ''} ${message.body} ${parsed.bankName}`;
-          const matchedCreditCard = findMatchingCreditCardAccount(
-            activeAccounts,
-            parsed.bankName,
-            rawCreditText,
-          );
-          const isCreditSms = Boolean(matchedCreditCard) || shouldTreatTextAsCreditCardTransaction(rawCreditText);
-          const creditCardTarget = await resolveCreditCardTransactionTarget({
-            accountRepository,
-            accounts: activeAccounts,
-            creditCardHint: parsed.bankName,
-            isCreditTransaction: isCreditSms,
-            rawText: rawCreditText,
-            selectedAccountId: matchedCreditCard?.id,
-          });
-          let targetAccount = isCreditSms
-            ? activeAccounts.find(account => account.id === creditCardTarget.accountId)
-            : activeAccounts.find(a =>
-                a.name.toUpperCase().includes(parsed.bankName.toUpperCase()) ||
-                (a.institutionName && a.institutionName.toUpperCase().includes(parsed.bankName.toUpperCase()))
-              );
-
-          // If the account does not exist in the DB, create it dynamically!
-          if (!targetAccount && !isCreditSms) {
-            const bankId = `account-${parsed.bankName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
-            // Capitalize the bank name beautifully
-            const formattedBankName = parsed.bankName
-              .split(' ')
-              .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-              .join(' ');
-
-            const dynamicAccount = {
-              id: bankId,
-              name: formattedBankName,
-              type: 'savingsAccount' as const,
-              status: 'active' as const,
-              currency: 'COP' as const,
-              balance: {
-                amount: 1500000,
-                currency: 'COP' as const,
-              },
-              institutionName: formattedBankName,
-              description: `Billetera digital ${formattedBankName} creada automáticamente desde SMS.`,
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString(),
-            };
-            await accountRepository.saveAccounts([dynamicAccount]);
-            targetAccount = dynamicAccount;
-            console.log(`Dynamically created ${formattedBankName} account in database!`);
-          }
-
-          // Fallback to savings/bank account, or any account
-          if (!targetAccount && !isCreditSms) {
-            targetAccount = activeAccounts.find(a => a.type === 'savingsAccount') || activeAccounts[0];
-          }
-
-          const accountId = creditCardTarget.accountId ?? targetAccount?.id;
-          if (!accountId) {
-            console.warn('No active account found for SMS transaction');
-            return;
-          }
-
-          const categoryId = categorizeMerchantName(parsed.merchantName);
-          await processSmsAndCreateTransaction({
-            smsMessage: message,
-            transactionRepository,
-            database,
-            accountId,
-            categoryId,
-            creditCardHint: isCreditSms ? creditCardTarget.creditCardHint ?? parsed.bankName : undefined,
-            paymentMethod: isCreditSms ? 'credit' : 'debit',
-          });
-
-          if (creditCardTarget.missingCreditCard) {
-            await createSqliteCreditCardAlertRepository(database).saveMissingCreditCardAlert({
-              creditCardHint: creditCardTarget.creditCardHint ?? parsed.bankName,
-            });
-            Toast.show({
-              type: 'info',
-              text1: 'Tarjeta pendiente',
-              text2: 'Crea la tarjeta de credito correspondiente para asociar este movimiento.',
-            });
-          }
-
-          // 3. Tell Dashboard to re-fetch
-          setDashboardRefreshKey(k => k + 1);
-        } catch (error) {
-          console.error('Error processing SMS transaction:', error);
-        }
-      })();
-    });
-  }, [database, settings.smsReadingEnabled, smsIngestionService]);
 
   // ─── Settings helpers ─────────────────────────────────────────────────────
 
@@ -438,47 +301,6 @@ export function AppNavigator() {
     ],
   );
 
-  const handleToggleSmsReading = useCallback(
-    async (enabled: boolean) => {
-      await runSettingsTask(
-        enabled ? 'Solicitando permiso SMS...' : 'Desactivando lectura SMS...',
-        async () => {
-          const permissionState = enabled
-            ? await smsIngestionService.requestSmsPermission()
-            : Platform.OS === 'android'
-              ? 'available'
-              : 'unavailable';
-          const smsReadingEnabled = enabled && permissionState === 'granted';
-          await smsIngestionService.setSmsReadingEnabled(smsReadingEnabled);
-
-          if (!settingsRepository) {
-            await persistSettings({
-              ...settings,
-              smsPermissionState: permissionState,
-              smsReadingEnabled,
-            });
-            return;
-          }
-
-          const nextSettings = await updateSmsReadingPreference(
-            settingsRepository,
-            settings,
-            smsReadingEnabled,
-            permissionState,
-          );
-          setSettings(nextSettings);
-        },
-      );
-    },
-    [
-      persistSettings,
-      runSettingsTask,
-      settings,
-      settingsRepository,
-      smsIngestionService,
-    ],
-  );
-
   const handleDeleteFinancialData = useCallback(async () => {
     await runSettingsTask('Eliminando datos financieros...', async () => {
       if (!database) {
@@ -487,8 +309,7 @@ export function AppNavigator() {
 
       await deleteFinancialData(createSqliteFinancialDataRepository(database));
 
-      // Re-seed essential data (accounts with 0 balance, and categories) 
-      // so foreign keys for new SMS transactions don't fail.
+      // Re-seed essential accounts and categories after clearing local data.
       await seedDatabaseIfEmpty(database, true);
 
       // Refresh dashboard so it reflects the now-empty DB immediately
@@ -496,63 +317,128 @@ export function AppNavigator() {
     });
   }, [database, runSettingsTask]);
 
-  const handleOnboardingStart = useCallback(async () => {
-    // 1. Request SMS permission and enable reading
-    await handleToggleSmsReading(true);
-    // 2. Navigate to dashboard
-    setRoute('dashboard');
-  }, [handleToggleSmsReading]);
+  const refreshDriveBackupStatus = useCallback(
+    async (activeDatabase: SmartFinSQLiteDatabase) => {
+      const revision = await getFinancialDataRevision(activeDatabase);
+      const status = await getDriveBackupStatus(revision);
+      setBackupStatus(status);
+      return status;
+    },
+    [],
+  );
 
-  const handleOnboardingSkip = useCallback(() => {
-    setRoute('dashboard');
-  }, []);
+  const performDriveBackup = useCallback(async () => {
+    if (!database) {
+      throw new Error('La base de datos local aún no está lista.');
+    }
+
+    await database.executeSql('PRAGMA wal_checkpoint(FULL);');
+    const revision = await getFinancialDataRevision(database);
+    setDatabase(undefined);
+    setSettingsRepository(undefined);
+
+    try {
+      await closeSmartFinDatabase();
+      const result = await exportDriveBackup(revision);
+      setBackupStatus({
+        accessNeedsRenewal: false,
+        available: true,
+        configured: true,
+        lastBackupAt: result.lastBackupAt,
+        localRevision: revision,
+        locationName: result.locationName,
+        outdated: false,
+        permissionPersistent: result.permissionPersistent,
+        remoteRevision: revision,
+      });
+      lastPromptedBackupRevision.current = revision;
+    } finally {
+      const reopenedDatabase = await openSmartFinDatabase();
+      setDatabase(reopenedDatabase);
+      setSettingsRepository(createSqliteSettingsRepository(reopenedDatabase));
+    }
+  }, [database]);
+
+  const handleExportDriveBackup = useCallback(async () => {
+    await runSettingsTask('Actualizando respaldo en Google Drive...', performDriveBackup);
+  }, [performDriveBackup, runSettingsTask]);
+
+  const handleChooseDriveBackupDirectory = useCallback(async () => {
+    await runSettingsTask('Preparando respaldo en Google Drive...', async () => {
+      const selection = await chooseDriveBackupDirectory();
+      await performDriveBackup();
+      if (!selection.permissionPersistent) {
+        Alert.alert(
+          'Acceso temporal a la carpeta',
+          'El respaldo se creó, pero Google Drive no permitió conservar el acceso permanentemente. Si Android lo solicita después de reiniciar, vuelve a elegir la misma carpeta.',
+        );
+      }
+    });
+  }, [performDriveBackup, runSettingsTask]);
+
+  useEffect(() => {
+    if (!database) return;
+
+    void refreshDriveBackupStatus(database).catch(() => {
+      // Drive can be temporarily unavailable while Android is offline.
+    });
+  }, [database, dashboardRefreshKey, refreshDriveBackupStatus, route]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextState => {
+      if (nextState === 'active' && database) {
+        void refreshDriveBackupStatus(database).catch(() => {
+          // The selected Drive provider can be unavailable while offline.
+        });
+      }
+    });
+
+    return () => subscription.remove();
+  }, [database, refreshDriveBackupStatus]);
+
+  useEffect(() => {
+    if (
+      !backupStatus?.configured ||
+      !backupStatus.outdated ||
+      accessLocked ||
+      lastPromptedBackupRevision.current === backupStatus.localRevision
+    ) {
+      return;
+    }
+
+    lastPromptedBackupRevision.current = backupStatus.localRevision;
+    Alert.alert(
+      'Respaldo de Google Drive desactualizado',
+      'Hay cambios financieros locales que todavía no están en los archivos de Drive.',
+      [
+        { style: 'cancel', text: 'Después' },
+        { onPress: () => { void handleExportDriveBackup(); }, text: 'Actualizar ahora' },
+      ],
+    );
+  }, [accessLocked, backupStatus, handleExportDriveBackup]);
 
   // ─── Render ───────────────────────────────────────────────────────────────
-
-  if (route === 'onboarding') {
-    return (
-      <>
-        <OnboardingScreen
-          activeTheme={settings.theme}
-          onSkip={handleOnboardingSkip}
-          onStart={handleOnboardingStart}
-        />
-        <AppAccessGate
-          colorScheme={settings.theme}
-          isVisible={accessLocked}
-          onUnlocked={() => setAccessLocked(false)}
-          securityService={securityService}
-          settings={settings}
-        />
-      </>
-    );
-  }
 
   if (route === 'settings') {
     return (
       <>
         <SettingsScreen
+          backupStatus={backupStatus}
           busyMessage={busyMessage}
           errorMessage={errorMessage}
-          onBack={() => {
-            // Go back to onboarding if SMS is disabled, else dashboard
-            if (!settings.smsReadingEnabled) {
-              setRoute('onboarding');
-            } else {
-              setRoute('dashboard');
-            }
-          }}
+          onBack={() => setRoute('dashboard')}
           onNavigateToHome={() => setRoute('dashboard')}
           onNavigateToTransactions={() => setRoute('transactions')}
           onOpenCategories={() => setRoute('categories')}
           onOpenCreditCards={() => setRoute('creditCards')}
           onOpenDebitCards={() => setRoute('debitCards')}
           onDeleteFinancialData={handleDeleteFinancialData}
+          onChooseDriveBackupDirectory={handleChooseDriveBackupDirectory}
+          onExportDriveBackup={handleExportDriveBackup}
           onSaveCredential={handleSaveCredential}
           onThemeChange={handleThemeChange}
           onToggleBiometrics={handleToggleBiometrics}
           onToggleLocalCredential={handleToggleLocalCredential}
-          onToggleSmsReading={handleToggleSmsReading}
           settings={settings}
         />
         <AppAccessGate

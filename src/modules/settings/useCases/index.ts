@@ -3,6 +3,5 @@ export {
   loadSettings,
   updateBiometricsEnabled,
   updateLocalCredentialEnabled,
-  updateSmsReadingPreference,
   updateTheme,
 } from './manageSettings';
