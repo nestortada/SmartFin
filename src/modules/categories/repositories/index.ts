@@ -6,3 +6,7 @@ export {
   createSqliteCategoryRepository,
   type SqliteCategoryRepository,
 } from './sqliteCategoryRepository';
+export {
+  createSqliteSubcategoryRepository,
+  type SubcategoryRepository,
+} from './sqliteSubcategoryRepository';

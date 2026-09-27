@@ -1,7 +1,6 @@
-export type NativeCapability = 'biometrics' | 'secure-storage';
 export {
   RNSpeechRecognitionModule,
   useSpeechRecognitionEvent,
   type RNSpeechRecognitionErrorEvent,
   type RNSpeechRecognitionResultEvent,
-} from './speechRecognition';
+} from 'rn-speech-recognition';

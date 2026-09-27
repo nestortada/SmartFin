@@ -411,6 +411,14 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
     completed_at TEXT,
     error_message TEXT
   );`,
+  `CREATE TABLE IF NOT EXISTS ai_command_drafts (
+    id TEXT PRIMARY KEY NOT NULL,
+    raw_input TEXT NOT NULL,
+    plan_json TEXT NOT NULL,
+    phase TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+  );`,
   `CREATE TABLE IF NOT EXISTS financial_data_revision (
     id INTEGER PRIMARY KEY NOT NULL CHECK (id = 1),
     revision INTEGER NOT NULL DEFAULT 0,

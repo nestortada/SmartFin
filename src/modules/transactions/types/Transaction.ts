@@ -24,6 +24,7 @@ export type Transaction = {
   date: ISODateString;
   accountId: string;
   categoryId?: string;
+  subcategoryId?: string;
   type: TransactionType;
   direction: TransactionDirection;
   status: TransactionStatus;

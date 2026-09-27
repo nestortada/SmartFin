@@ -7,3 +7,9 @@ export {
   type CategoryManagementRepository,
   type ManageableCategoryType,
 } from './manageCategories';
+export {
+  createSubcategory,
+  deactivateSubcategory,
+  updateSubcategory,
+  type SubcategoryInput,
+} from './manageSubcategories';

@@ -6,3 +6,7 @@ export {
   createSqliteTransactionRepository,
   type SqliteTransactionRepository,
 } from './sqliteTransactionRepository';
+export {
+  createSqliteAiDraftRepository,
+  type AiDraftRepository,
+} from './sqliteAiDraftRepository';

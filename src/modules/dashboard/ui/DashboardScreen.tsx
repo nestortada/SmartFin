@@ -62,6 +62,7 @@ type DashboardScreenProps = {
   refreshKey?: number;
   onOpenCreditCards: () => void;
   onOpenDebitCards: () => void;
+  onOpenAiAssistant: () => void;
   onOpenSettings: () => void;
   onNavigateToTransactions: () => void;
 };
@@ -72,6 +73,7 @@ export function DashboardScreen({
   refreshKey = 0,
   onOpenCreditCards,
   onOpenDebitCards,
+  onOpenAiAssistant,
   onOpenSettings,
   onNavigateToTransactions,
 }: DashboardScreenProps) {
@@ -96,7 +98,11 @@ export function DashboardScreen({
         ]}
         style={styles.scrollView}>
 
-        <DashboardHeader currency={summary.currency} palette={palette} />
+        <DashboardHeader
+          currency={summary.currency}
+          onOpenAiAssistant={onOpenAiAssistant}
+          palette={palette}
+        />
 
         {loading ? (
           <View style={styles.loadingRow}>

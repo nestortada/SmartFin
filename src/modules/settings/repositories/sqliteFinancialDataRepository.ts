@@ -5,6 +5,7 @@ export type FinancialDataRepository = {
 };
 
 const FINANCIAL_TABLES_IN_DELETE_ORDER = [
+  'ai_command_drafts',
   'transaction_tax_tags',
   'tax_tags',
   'receipt_attachments',

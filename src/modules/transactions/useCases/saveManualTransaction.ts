@@ -24,9 +24,13 @@ export type SaveManualTransactionParams = {
   accounts: Account[];
   amount: number;
   categoryId?: string;
+  subcategoryId?: string;
   creditCardHint?: string;
   creditCardRepository: CreditCardRepository;
   currentDate?: Date;
+  transactionDate?: Date | string;
+  now?: Date;
+  dedupeKey?: string;
   editingTransaction?: Transaction | null;
   hasInterestFreeInstallments: boolean;
   installmentCountInput: string;
@@ -257,9 +261,13 @@ export async function saveManualTransaction(
     accounts,
     amount,
     categoryId,
+    subcategoryId,
     creditCardHint,
     creditCardRepository,
     currentDate = new Date(),
+    transactionDate,
+    now: requestedNow,
+    dedupeKey,
     editingTransaction,
     hasInterestFreeInstallments,
     installmentCountInput,
@@ -281,7 +289,11 @@ export async function saveManualTransaction(
     throw new Error('Monto invÃ¡lido.');
   }
 
-  const now = currentDate.toISOString();
+  const nowDate = requestedNow ?? currentDate;
+  const now = nowDate.toISOString();
+  const effectiveTransactionDate = transactionDate instanceof Date
+    ? transactionDate.toISOString()
+    : transactionDate ?? editingTransaction?.date ?? currentDate.toISOString();
   const installmentCount = normalizeInstallmentCount(installmentCountInput);
   const interestFreeInstallmentCount = normalizeInterestFreeInstallmentCount({
     enabled: hasInterestFreeInstallments,
@@ -320,11 +332,13 @@ export async function saveManualTransaction(
     accountId: transactionType === 'internalTransfer' ? accountId as string : targetAccountId,
     amount,
     categoryId: categoryId || undefined,
+    subcategoryId: subcategoryId || undefined,
     createdAt: editingTransaction?.createdAt ?? now,
     creditCardHint: isCreditCardExpense ? creditCardTarget.creditCardHint : undefined,
     currency: editingTransaction?.currency ?? 'COP',
-    date: editingTransaction?.date ?? now,
+    date: effectiveTransactionDate,
     description: merchantName,
+    dedupeKey: dedupeKey ?? editingTransaction?.dedupeKey,
     direction: getTransactionDirection(transactionType),
     merchantName,
     notes: buildTransactionNotes({
@@ -404,6 +418,10 @@ export async function saveManualTransaction(
 
   await transactionRepository.saveTransactions(transactionsToSave);
 
+  if (editingTransaction?.type === 'internalTransfer' && transaction.type !== 'internalTransfer') {
+    await transactionRepository.deleteTransaction(`${editingTransaction.id}-in`);
+  }
+
   if (existingTransferTax && !transferTaxTransaction) {
     await transactionRepository.deleteTransaction(existingTransferTax.id);
   }
@@ -444,4 +462,58 @@ export async function saveManualTransaction(
     transaction,
     transactions: transactionsToSave,
   };
+}
+
+export type DeleteManualTransactionParams = {
+  accountRepository: ManualAccountRepository;
+  accounts: Account[];
+  creditCardRepository: CreditCardRepository;
+  transaction: Transaction;
+  transactionRepository: ManualTransactionRepository;
+};
+
+export async function deleteManualTransactionSafely({
+  accountRepository,
+  accounts,
+  creditCardRepository,
+  transaction,
+  transactionRepository,
+}: DeleteManualTransactionParams): Promise<void> {
+  const allTransactions = await transactionRepository.getTransactions();
+  const accountUpdates = new Map<string, Account>();
+  applyTransactionImpact({
+    accounts,
+    accountUpdates,
+    multiplier: -1,
+    transaction,
+  });
+
+  const transferTax = transaction.type === 'internalTransfer'
+    ? allTransactions.find(candidate => candidate.id === `${transaction.id}-4x1000`)
+    : undefined;
+  if (transferTax) {
+    applyTransactionImpact({
+      accounts,
+      accountUpdates,
+      multiplier: -1,
+      transaction: transferTax,
+    });
+  }
+
+  if (accountUpdates.size > 0) {
+    await accountRepository.saveAccounts(Array.from(accountUpdates.values()));
+  }
+
+  await transactionRepository.deleteTransaction(`${transaction.id}-in`);
+  await transactionRepository.deleteTransaction(`${transaction.id}-4x1000`);
+  await transactionRepository.deleteInstallmentPurchasesByTransactionId(transaction.id);
+  await transactionRepository.deleteTransaction(transaction.id);
+
+  if (transaction.paymentMethod === 'credit') {
+    await reconcileCreditCardTransactions({
+      accountRepository,
+      creditCardRepository,
+      transactionRepository,
+    });
+  }
 }

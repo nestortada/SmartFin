@@ -5,7 +5,7 @@ import type {
   InstallmentPurchase,
 } from '../src/modules/creditCards';
 import type { CreditCardRepository } from '../src/modules/creditCards/repositories';
-import { saveManualTransaction } from '../src/modules/transactions';
+import { deleteManualTransactionSafely, saveManualTransaction } from '../src/modules/transactions';
 import type { Transaction } from '../src/modules/transactions';
 
 function bankAccount(overrides: Partial<Account> = {}): Account {
@@ -143,6 +143,48 @@ function createRepositories(initialAccounts: Account[]) {
 }
 
 describe('saveManualTransaction', () => {
+  it('persists an explicit financial date and reverses the complete impact on safe deletion', async () => {
+    const repositories = createRepositories([bankAccount()]);
+    const result = await saveManualTransaction({
+      accountId: 'account-bank',
+      accountRepository: repositories.accountRepository,
+      accounts: repositories.getAccounts(),
+      amount: 250000,
+      categoryId: 'category-food',
+      subcategoryId: 'subcategory-market',
+      creditCardRepository: repositories.creditCardRepository,
+      dedupeKey: 'draft-1:action-1',
+      editingTransaction: null,
+      hasInterestFreeInstallments: false,
+      installmentCountInput: '1',
+      interestFreeInstallmentCountInput: '',
+      merchantName: 'Mercado',
+      now: new Date('2026-09-27T12:00:00.000Z'),
+      operationType: 'Débito',
+      transactionDate: '2026-09-25T08:00:00.000Z',
+      transactionRepository: repositories.transactionRepository,
+      transactionType: 'expense',
+    });
+
+    expect(result.transaction).toEqual(expect.objectContaining({
+      date: '2026-09-25T08:00:00.000Z',
+      dedupeKey: 'draft-1:action-1',
+      subcategoryId: 'subcategory-market',
+    }));
+    expect(repositories.getAccounts()[0]?.balance.amount).toBe(750000);
+
+    await deleteManualTransactionSafely({
+      accountRepository: repositories.accountRepository,
+      accounts: repositories.getAccounts(),
+      creditCardRepository: repositories.creditCardRepository,
+      transaction: result.transaction,
+      transactionRepository: repositories.transactionRepository,
+    });
+
+    expect(repositories.getAccounts()[0]?.balance.amount).toBe(1000000);
+    expect(repositories.getTransactions()).toHaveLength(0);
+  });
+
   it('persists a debit expense and applies the account balance impact outside the screen', async () => {
     const repositories = createRepositories([bankAccount()]);
 

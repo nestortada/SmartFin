@@ -13,6 +13,7 @@ import {
   TransactionsScreen,
   type TransactionsInitialDraft,
 } from '../modules/transactions/ui/TransactionsScreen';
+import { AiAssistantScreen } from '../modules/transactions/ui/AiAssistantScreen';
 import {
   AppAccessGate,
   createSecurityService,
@@ -76,6 +77,7 @@ async function seedDatabaseIfEmpty(database: SmartFinSQLiteDatabase, resetBalanc
 
 type AppRoute =
   | 'dashboard'
+  | 'aiAssistant'
   | 'transactions'
   | 'settings'
   | 'creditCards'
@@ -419,6 +421,26 @@ export function AppNavigator() {
 
   // ─── Render ───────────────────────────────────────────────────────────────
 
+  if (route === 'aiAssistant') {
+    return (
+      <>
+        <AiAssistantScreen
+          activeTheme={settings.theme}
+          database={database}
+          onBack={() => setRoute('dashboard')}
+          onCommitted={() => setDashboardRefreshKey(key => key + 1)}
+        />
+        <AppAccessGate
+          colorScheme={settings.theme}
+          isVisible={accessLocked}
+          onUnlocked={() => setAccessLocked(false)}
+          securityService={securityService}
+          settings={settings}
+        />
+      </>
+    );
+  }
+
   if (route === 'settings') {
     return (
       <>
@@ -558,6 +580,7 @@ export function AppNavigator() {
         activeTheme={settings.theme}
         database={database}
         refreshKey={dashboardRefreshKey}
+        onOpenAiAssistant={() => setRoute('aiAssistant')}
         onOpenCreditCards={() => setRoute('creditCards')}
         onOpenDebitCards={() => setRoute('debitCards')}
         onOpenSettings={() => setRoute('settings')}
