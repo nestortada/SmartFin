@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   Pressable,
@@ -77,13 +77,19 @@ type TransactionsScreenProps = {
   onOpenCreditCards: () => void;
   onOpenDebitCards: () => void;
   onOpenSettings: () => void;
+  onOpenSubscriptions?: () => void;
   onForceRefresh: () => void;
   onInitialDraftConsumed?: () => void;
+  onSubscriptionExpenseSaved?: () => void;
 };
 
 export type TransactionsInitialDraft = {
   accountId: string;
-  action: 'movements' | 'payment' | 'topUp' | 'transferOut';
+  action: 'movements' | 'payment' | 'topUp' | 'transferOut' | 'subscriptionExpense';
+  amount?: string;
+  merchantName?: string;
+  categoryId?: string;
+  subcategoryId?: string;
 };
 
 export function TransactionsScreen({
@@ -95,9 +101,13 @@ export function TransactionsScreen({
   onOpenCreditCards,
   onOpenDebitCards,
   onOpenSettings,
+  onOpenSubscriptions,
   onForceRefresh,
   onInitialDraftConsumed,
+  onSubscriptionExpenseSaved,
 }: TransactionsScreenProps) {
+  const subscriptionDraft = useRef<TransactionsInitialDraft | undefined>(undefined);
+  const savingTransaction = useRef(false);
   const insets = useSafeAreaInsets();
   const isDark = activeTheme === 'dark';
 
@@ -357,6 +367,26 @@ export function TransactionsScreen({
     if (!initialDraft || accounts.length === 0) {
       return;
     }
+    if (initialDraft.action === 'subscriptionExpense') {
+      const account = initialDraft.accountId
+        ? accounts.find(value => value.id === initialDraft.accountId && value.status === 'active' && value.currency === 'COP')
+        : accounts.find(value => value.status === 'active' && value.currency === 'COP' && ['cash', 'bankAccount', 'savingsAccount', 'creditCard'].includes(value.type));
+      subscriptionDraft.current = initialDraft;
+      setEditingTransaction(null);
+      setNewType('expense');
+      setNewAmount(initialDraft.amount ?? '');
+      setNewMerchant(initialDraft.merchantName ?? '');
+      setNewCategory(initialDraft.categoryId ?? '');
+      setNewAccount(account?.id ?? '');
+      setNewTargetAccount('');
+      setNewOperationType(account?.type === 'creditCard' ? 'Crédito' : 'Débito');
+      setNewCreditCardHint(account?.type === 'creditCard' ? account.name : '');
+      setNewNotes('Gasto registrado desde Suscripciones');
+      resetInstallmentForm();
+      setAddTxModalVisible(true);
+      onInitialDraftConsumed?.();
+      return;
+    }
 
     const activeDebitAccounts = accounts.filter(
       account =>
@@ -447,6 +477,7 @@ export function TransactionsScreen({
   };
 
   const closeAddTransactionModal = () => {
+    subscriptionDraft.current = undefined;
     setAddTxModalVisible(false);
     setEditingTransaction(null);
   };
@@ -686,6 +717,7 @@ export function TransactionsScreen({
 
   // Save manual transaction to SQLite
   const handleSaveTransaction = async () => {
+    if (savingTransaction.current) return;
     const isCreditCardExpense = newType !== 'income' && newType !== 'internalTransfer' && newOperationType.toLowerCase().includes('cr');
     if (
       !database ||
@@ -698,6 +730,7 @@ export function TransactionsScreen({
       return;
     }
 
+    savingTransaction.current = true;
     try {
       const cleanAmount = parseAmountInput(newAmount);
       if (!cleanAmount) {
@@ -715,6 +748,9 @@ export function TransactionsScreen({
         accounts,
         amount: cleanAmount,
         categoryId: newCategory || undefined,
+        subcategoryId: subscriptionDraft.current?.categoryId === newCategory
+          ? subscriptionDraft.current?.subcategoryId
+          : undefined,
         creditCardHint: newCreditCardHint,
         creditCardRepository,
         editingTransaction,
@@ -759,9 +795,15 @@ export function TransactionsScreen({
       setNewCreditCardHint('');
       setNewNotes('');
       resetInstallmentForm();
+      if (subscriptionDraft.current) {
+        subscriptionDraft.current = undefined;
+        onSubscriptionExpenseSaved?.();
+      }
     } catch (err) {
       console.error(err);
       Alert.alert('Error', 'Error guardando la transacción.');
+    } finally {
+      savingTransaction.current = false;
     }
   };
 
@@ -1137,6 +1179,7 @@ export function TransactionsScreen({
         bottomInset={insets.bottom}
         colorScheme={activeTheme}
         onMoreActionPress={action => {
+          if (action === 'subscriptions') { onOpenSubscriptions?.(); return; }
           if (action === 'creditCards') {
             onOpenCreditCards();
           } else if (action === 'debitCards') {

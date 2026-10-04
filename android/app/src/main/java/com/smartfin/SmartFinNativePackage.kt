@@ -12,6 +12,7 @@ class SmartFinNativePackage : ReactPackage {
       listOf(
           SmartFinDriveBackupModule(reactContext),
           SmartFinSecurityModule(reactContext),
+          SmartFinSubscriptionRemindersModule(reactContext),
       )
 
   override fun createViewManagers(

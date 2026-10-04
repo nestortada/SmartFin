@@ -1,4 +1,12 @@
 import type { SmartFinSQLiteDatabase } from '../../../database';
+import { sqliteWithinExistingTransaction } from '../../../database/atomicSQLite';
+import { withDatabaseMaintenance } from '../../../database/databaseCoordination';
+import { createSubscriptionInCommand } from '../../subscriptions/useCases/createSubscriptionInCommand';
+import { subscriptionFromAiFields } from '../../subscriptions/useCases/subscriptionFromAiFields';
+import { createSubscriptionApi } from '../../subscriptions/useCases/createSubscriptionApi';
+import { createSqliteSubscriptionRepository } from '../../subscriptions/repositories/sqliteSubscriptionRepository';
+import { createSubscriptionReminderService } from '../../subscriptions/services/androidSubscriptionReminderService';
+import type { SubscriptionReminderService } from '../../subscriptions/services/SubscriptionReminderService';
 import {
   createSqliteAccountRepository,
   deleteDebitCard,
@@ -88,6 +96,13 @@ async function executeAction(
   const subcategoryRepository = createSqliteSubcategoryRepository(database);
   const creditCardRepository = createSqliteCreditCardRepository(database);
   const transactionRepository = createSqliteTransactionRepository(database);
+
+  if (action.entity === 'subscription') {
+    if (action.operation !== 'create') throw new Error('El asistente solo permite crear suscripciones.');
+    const saved = await createSubscriptionInCommand(database, subscriptionFromAiFields(action.fields, references), `ai-subscription:${draftId}:${action.id}`);
+    if (action.clientRef) references.set(action.clientRef, saved.id);
+    return `Suscripción creada: ${saved.name}. Cobro esperado; no se registró un gasto.`;
+  }
 
   if (action.entity === 'category') {
     if (action.operation === 'delete') {
@@ -246,22 +261,39 @@ export async function executeAiCommandPlan(
   database: SmartFinSQLiteDatabase,
   draftId: string,
   plan: AiCommandPlan,
+  reminderService?: SubscriptionReminderService,
 ): Promise<ExecuteAiCommandPlanResult> {
-  const completed: string[] = [];
-  const references = new Map<string, string>();
-  await database.executeSql('BEGIN IMMEDIATE;');
-  try {
-    for (const action of plan.actions) {
-      completed.push(await executeAction(database, action, draftId, references));
-    }
-    await database.executeSql('COMMIT;');
-    return { completed };
-  } catch (error) {
+  return withDatabaseMaintenance(async () => {
+    const completed: string[] = [];
+    const references = new Map<string, string>();
+    const scopedDatabase = sqliteWithinExistingTransaction(database);
+    await database.executeSql('BEGIN IMMEDIATE;');
     try {
-      await database.executeSql('ROLLBACK;');
-    } catch {
-      // Preserve the original domain or persistence error.
+      for (const action of plan.actions) {
+        completed.push(await executeAction(scopedDatabase, action, draftId, references));
+      }
+      await database.executeSql('COMMIT;');
+    } catch (error) {
+      try {
+        await database.executeSql('ROLLBACK;');
+      } catch {
+        // Preserve the original domain or persistence error.
+      }
+      throw error;
     }
-    throw error;
-  }
+    if (plan.actions.some(action => action.entity === 'subscription')) {
+      // A platform failure must never turn a committed financial command into a retry/duplicate.
+      try {
+        const sync = await createSubscriptionApi({
+          repository: createSqliteSubscriptionRepository(database),
+          reminderService: reminderService ?? createSubscriptionReminderService(),
+        }).syncSubscriptions();
+        if (sync.reminderErrors.length) completed.push('Suscripción guardada. Hay recordatorios pendientes; reintenta su programación desde Suscripciones.');
+        else if (sync.reminders.permission !== 'granted') completed.push('Suscripción guardada. Los recordatorios requieren disponibilidad y permiso; puedes gestionarlos desde Suscripciones.');
+      } catch {
+        completed.push('Suscripción guardada. No se pudo completar la programación; reinténtala desde Suscripciones.');
+      }
+    }
+    return { completed };
+  });
 }

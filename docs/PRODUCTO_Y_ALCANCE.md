@@ -95,7 +95,7 @@ La visión histórica propone automatización por SMS y notificaciones, presupue
 | Seguridad local | Parcial | PIN y biometría Android; SQLite y respaldos no cifrados |
 | Respaldo | Parcial | Exportación Android manual; sin restauración ni cifrado |
 | Presupuestos y sobres | Modelo preparado | Tablas existentes, sin caso de uso ni interfaz |
-| Suscripciones | Modelo preparado | Tabla existente, sin programación ni interfaz |
+| Suscripciones | Interfaz y lógica implementadas | Recurrencias, historial, conciliación manual, proyecciones, alertas y recordatorios locales Android; [API](SUSCRIPCIONES.md) |
 | Préstamos y amortización | Modelo preparado | Tablas existentes, sin cálculos ni interfaz |
 | Metas y patrimonio avanzado | Modelo preparado | Tabla de metas; dashboard con patrimonio básico |
 | Inversiones | Modelo preparado | Tabla existente, sin interfaz |
@@ -103,7 +103,7 @@ La visión histórica propone automatización por SMS y notificaciones, presupue
 | SMS y notificaciones | Pendiente | No hay listeners ni parser en la implementación actual |
 | OCR y recibos | Modelo preparado | Tabla existente, sin captura ni OCR |
 | Impuestos | Modelo preparado | Tablas de etiquetas; 4x1000 sí está implementado como gasto |
-| Flujo de caja y score | Modelo preparado | Tablas existentes, sin motor ni interfaz |
+| Flujo de caja y score | Parcial | Proyecciones de suscripciones implementadas; interfaz general y score pendientes |
 | iOS | Parcial | Proyecto base disponible; seguridad y respaldo nativos son Android-only |
 
 ## 6. Criterios de comportamiento actuales
@@ -135,3 +135,7 @@ La visión histórica propone automatización por SMS y notificaciones, presupue
 | Deuda de tarjeta | Saldo reconciliado desde compras de crédito menos pagos |
 | Respaldo al día | El manifiesto accesible tiene la misma revisión local; no confirma que Google ya terminó la subida |
 | Cierre lógico | Cambio de estado a `closed` sin eliminar el historial |
+
+## Suscripciones locales
+
+Más → Suscripciones permite crear y editar compromisos, consultar próximos cobros e historial, pausar, reanudar, cancelar y vincular gastos existentes mediante selección explícita. Los cobros esperados no cambian saldos ni deuda. La interfaz consume la [API de suscripciones](SUSCRIPCIONES.md). Las notificaciones locales de SmartFin no leen notificaciones de otras aplicaciones.

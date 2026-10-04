@@ -2,9 +2,12 @@ import type { Account } from '../src/modules/accounts';
 import type { Category, Subcategory } from '../src/modules/categories';
 import {
   applyClarificationAnswer,
+  buildEditableFields,
   buildClarificationQuestions,
   normalizeAiCommandPlan,
   parseAiCommandPlan,
+  resolveNamedColor,
+  updateAiActionField,
   type AiPlanningContext,
 } from '../src/modules/transactions';
 
@@ -225,5 +228,99 @@ describe('AI command planner', () => {
     expect(remainingFields).toEqual(expect.arrayContaining([
       'name', 'creditLimit', 'installmentCount', 'interestFreeInstallmentCount',
     ]));
+  });
+
+  it('distinguishes two new accounts by their linked amounts and suggests mentioned banks', () => {
+    const plan = parseAiCommandPlan({
+      actions: [
+        {
+          clientRef: 'davivienda-ref', entity: 'debitAccount', fields: { initialBalance: 0, name: 'Cuenta principal' },
+          id: 'davivienda', operation: 'create',
+        },
+        {
+          clientRef: 'nu-ref', entity: 'debitAccount', fields: { initialBalance: 0, name: 'Cajita' },
+          id: 'nu', operation: 'create',
+        },
+        {
+          entity: 'transaction', fields: {
+            accountRef: 'davivienda-ref', amount: 900000, date: '2026-09-22', description: 'Ingreso recibido', transactionType: 'income',
+          }, id: 'income', operation: 'create',
+        },
+        {
+          entity: 'transaction', fields: {
+            accountRef: 'davivienda-ref', amount: 450000, date: '2026-09-22', description: 'Transferencia a Nu',
+            targetAccountRef: 'nu-ref', transactionType: 'internalTransfer', transferTaxCharged: false,
+          }, id: 'transfer', operation: 'create',
+        },
+      ],
+      summary: 'Ingreso y transferencia',
+    });
+    const questions = buildClarificationQuestions(plan, context, 'Recibí en Davivienda y pasé la mitad a Nu Bank');
+    const daviviendaBank = questions.find(question => question.id === 'davivienda.institutionName');
+    const nuBank = questions.find(question => question.id === 'nu.institutionName');
+    expect(daviviendaBank?.options.map(item => item.label)).toEqual(expect.arrayContaining(['Davivienda', 'Nu Bank']));
+    expect(nuBank?.options.map(item => item.label)).toEqual(expect.arrayContaining(['Davivienda', 'Nu Bank']));
+    expect(questions.find(question => question.id === 'davivienda.recurringIncomeEnabled')?.contextLabel)
+      .toContain('$900.000 COP');
+    expect(questions.find(question => question.id === 'nu.recurringIncomeEnabled')?.contextLabel)
+      .toContain('$450.000 COP');
+  });
+
+  it('converts named colors locally and keeps editable values type-safe', () => {
+    expect(resolveNamedColor('Azul')).toBe('#3b82f6');
+    expect(resolveNamedColor('desconocido')).toBeUndefined();
+    const plan = parseAiCommandPlan({
+      actions: [{ entity: 'category', fields: { color: '#123456', name: 'Mascotas', type: 'expense' }, id: 'category', operation: 'create' }],
+      summary: 'Crear categoria',
+    });
+    const action = plan.actions[0]!;
+    const colorField = buildEditableFields(action, plan, context).find(field => field.field === 'color')!;
+    expect(new Set(colorField.options.map(item => item.value)).size).toBe(colorField.options.length);
+    const updated = updateAiActionField(plan, colorField, 'verde', context);
+    expect(updated.actions[0]?.entity === 'category' ? updated.actions[0].fields.color : undefined).toBe('#22c55e');
+    expect(() => updateAiActionField(plan, colorField, 'color inventado', context)).toThrow('No reconozco');
+  });
+
+  it('repairs Gemini account references that use action ids or __ref__ prefixes', () => {
+    const plan = normalizeAiCommandPlan(parseAiCommandPlan({
+      actions: [
+        {
+          entity: 'debitAccount', fields: {
+            initialBalance: 0, institutionName: 'Davivienda', name: 'Cuenta de nómina', recurringIncomeEnabled: false,
+          }, id: 'act-1', operation: 'create',
+        },
+        {
+          entity: 'debitAccount', fields: {
+            initialBalance: 0, institutionName: 'Nu Bank', name: 'Cuenta de nubank', recurringIncomeEnabled: false,
+          }, id: 'act-2', operation: 'create',
+        },
+        {
+          entity: 'transaction', fields: {
+            accountId: '__ref__act-1', amount: 900000, date: '2026-09-22', description: 'Pago de prácticas', transactionType: 'income',
+          }, id: 'act-5', operation: 'create',
+        },
+        {
+          entity: 'transaction', fields: {
+            accountRef: '__ref__act-1', amount: 450000, date: '2026-09-22', description: 'Transferencia a cajita',
+            targetAccountId: '__ref__act-2', transactionType: 'internalTransfer', transferTaxCharged: false,
+          }, id: 'act-6', operation: 'create',
+        },
+      ],
+      summary: 'Ingreso y transferencia',
+    }), context);
+    const source = plan.actions.find(action => action.id === 'act-1');
+    const target = plan.actions.find(action => action.id === 'act-2');
+    const transfer = plan.actions.find(action => action.id === 'act-6');
+    expect(source?.clientRef).toBe('act-1');
+    expect(target?.clientRef).toBe('act-2');
+    expect(transfer?.entity === 'transaction' ? transfer.fields.accountRef : undefined).toBe('act-1');
+    expect(transfer?.entity === 'transaction' ? transfer.fields.targetAccountRef : undefined).toBe('act-2');
+    const fields = transfer && buildEditableFields(transfer, plan, context);
+    const accountField = fields?.find(field => field.field === 'accountId');
+    const targetField = fields?.find(field => field.field === 'targetAccountId');
+    expect(accountField?.options.find(item => item.value === accountField.value)?.label).toContain('Cuenta de nómina');
+    expect(targetField?.options.find(item => item.value === targetField.value)?.label).toContain('Cuenta de nubank');
+    const questions = buildClarificationQuestions(plan, context);
+    expect(questions.some(question => question.actionId === 'act-6' && ['accountId', 'targetAccountId'].includes(question.field))).toBe(false);
   });
 });

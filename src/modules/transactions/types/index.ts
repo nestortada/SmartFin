@@ -6,17 +6,21 @@ export type {
   TransactionType,
 } from './Transaction';
 export type {
+  AiAssistantMessage,
   AiActionEntity,
   AiActionOperation,
   AiClarificationOption,
   AiClarificationQuestion,
+  AiClarificationExchange,
   AiCommandAction,
   AiCommandDraft,
   AiCommandPlan,
   AiCreditCardFields,
   AiDebitAccountFields,
   AiDraftPhase,
+  AiEditableField,
   AiPlanningContext,
   AiSubcategoryFields,
+  AiSubscriptionFields,
   AiTransactionFields,
 } from './AiCommand';

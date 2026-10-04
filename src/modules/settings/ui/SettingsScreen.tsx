@@ -72,6 +72,7 @@ type SettingsScreenProps = {
   onExportDriveBackup: () => Promise<void>;
   onNavigateToHome: () => void;
   onNavigateToTransactions: () => void;
+  onOpenSubscriptions?: () => void;
   onOpenCategories: () => void;
   onOpenCreditCards: () => void;
   onOpenDebitCards: () => void;
@@ -94,6 +95,7 @@ export function SettingsScreen({
   onExportDriveBackup,
   onNavigateToHome,
   onNavigateToTransactions,
+  onOpenSubscriptions,
   onOpenCategories,
   onOpenCreditCards,
   onOpenDebitCards,
@@ -222,6 +224,7 @@ export function SettingsScreen({
         bottomInset={insets.bottom}
         colorScheme={settings.theme}
         onMoreActionPress={action => {
+          if (action === 'subscriptions') { onOpenSubscriptions?.(); return; }
           if (action === 'creditCards') {
             onOpenCreditCards();
           } else if (action === 'debitCards') {

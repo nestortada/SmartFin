@@ -1,7 +1,7 @@
 jest.mock('react-native-config', () => ({ GEMINI_API_KEY: undefined }));
 
 import type { Account } from '../src/modules/accounts';
-import { buildGeminiPrompt, createGeminiCommandService } from '../src/services';
+import { buildGeminiPrompt, buildGeminiRevisionPrompt, createGeminiCommandService } from '../src/services';
 
 const account: Account = {
   id: 'account-private',
@@ -34,6 +34,29 @@ describe('Gemini command service', () => {
     expect(prompt).toContain('Cuenta principal');
     expect(prompt).not.toContain('987654321');
     expect(prompt).not.toContain('444444');
+    expect(prompt).toContain('NO es recurrente');
+    expect(prompt).toContain('internalTransfer');
+  });
+
+  it('builds a revision prompt with only the active plan, answers and correction context', () => {
+    const prompt = buildGeminiRevisionPrompt({
+      ...input,
+      clarificationHistory: [{
+        actionId: 'a1', answerLabel: 'No, ocurre solo esta vez', answerValue: 'false',
+        answeredAt: '2026-09-27T12:01:00.000Z', contextLabel: 'Cuenta Davivienda · ingreso de $900.000 COP',
+        field: 'recurringIncomeEnabled', id: 'answer-1', prompt: '¿Este ingreso se repetirá?',
+      }],
+      correction: 'La segunda operación es una transferencia.',
+      currentPlan: {
+        actions: [{ entity: 'transaction', fields: { amount: 450000, transactionType: 'income' }, id: 'a1', operation: 'create' }],
+        answeredFields: [], summary: 'Plan anterior', version: 1,
+      },
+      text: 'La segunda operación es una transferencia.',
+    });
+    expect(prompt).toContain('Plan actual');
+    expect(prompt).toContain('Preguntas y respuestas del borrador');
+    expect(prompt).toContain('La segunda operación es una transferencia.');
+    expect(prompt).not.toContain('987654321');
   });
 
   it('uses one structured request and validates the returned plan', async () => {
@@ -59,6 +82,15 @@ describe('Gemini command service', () => {
     };
     expect(requestBody.generationConfig).toHaveProperty('responseFormat');
     expect(requestBody.generationConfig).not.toHaveProperty('responseSchema');
+  });
+
+  it('interprets a subscription response with its custom recurrence and reminder configuration', async () => {
+    const subscriptionFields = { name: 'Netflix', amount: 44900, anchorDate: '2026-10-31', periodicity: 'custom', customInterval: 2, customUnit: 'months', remindersEnabled: true, reminderOffsets: [3, 1, 0], reminderHour: 9, reminderMinute: 0 };
+    const fetcher = jest.fn(async () => ({ ok: true, status: 200, json: async () => ({ candidates: [{ content: { parts: [{ text: JSON.stringify({ summary: 'Crear suscripción', actions: [{ id: 'subscription-1', entity: 'subscription', operation: 'create', fieldsJson: JSON.stringify(subscriptionFields) }] }) }] } }] }) })) as unknown as typeof fetch;
+    const result = await createGeminiCommandService({ apiKey: 'test-key', fetcher }).interpret({ ...input, text: 'Crea una suscripción de Netflix' });
+    expect(result.actions[0]).toMatchObject({ entity: 'subscription', fields: { ...subscriptionFields, reminderOffsets: '3,1,0' } });
+    expect(buildGeminiPrompt(input)).toContain('no agregues una transaction');
+    expect(buildGeminiPrompt({ ...input, now: new Date('2026-10-01T02:00:00Z') })).toContain('Fecha civil actual en esa zona: 2026-09-30');
   });
 
   it('fails locally when the build secret is missing', async () => {

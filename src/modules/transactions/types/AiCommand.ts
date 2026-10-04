@@ -1,6 +1,7 @@
 import type { Account } from '../../accounts';
 import type { Category, Subcategory } from '../../categories';
 import type { Transaction, TransactionType } from './Transaction';
+import type { SubscriptionRecurrence } from '../../subscriptions/types';
 
 export type AiActionOperation = 'create' | 'update' | 'delete';
 export type AiActionEntity =
@@ -8,7 +9,24 @@ export type AiActionEntity =
   | 'debitAccount'
   | 'creditCard'
   | 'category'
-  | 'subcategory';
+  | 'subcategory'
+  | 'subscription';
+
+export type AiSubscriptionFields = Pick<AiTransactionFields,
+  'accountId' | 'accountName' | 'accountRef' | 'categoryId' | 'categoryName' | 'categoryRef' |
+  'subcategoryId' | 'subcategoryName' | 'subcategoryRef' | 'amount'> & {
+  name?: string | null;
+  merchantName?: string | null;
+  anchorDate?: string | null;
+  billingDay?: number | null;
+  periodicity?: SubscriptionRecurrence['periodicity'] | null;
+  customInterval?: number | null;
+  customUnit?: 'days' | 'weeks' | 'months' | null;
+  remindersEnabled?: boolean | null;
+  reminderOffsets?: string | null;
+  reminderHour?: number | null;
+  reminderMinute?: number | null;
+};
 
 export type AiTransactionFields = {
   accountId?: string | null;
@@ -84,7 +102,8 @@ export type AiCommandAction =
   | (AiActionBase & { entity: 'debitAccount'; fields: AiDebitAccountFields })
   | (AiActionBase & { entity: 'creditCard'; fields: AiCreditCardFields })
   | (AiActionBase & { entity: 'category'; fields: AiCategoryFields })
-  | (AiActionBase & { entity: 'subcategory'; fields: AiSubcategoryFields });
+  | (AiActionBase & { entity: 'subcategory'; fields: AiSubcategoryFields })
+  | (AiActionBase & { entity: 'subscription'; fields: AiSubscriptionFields });
 
 export type AiCommandPlan = {
   actions: AiCommandAction[];
@@ -108,7 +127,9 @@ export type AiClarificationOption = {
 export type AiClarificationQuestion = {
   actionId: string;
   allowCustom: boolean;
+  contextLabel: string;
   field: string;
+  helpText?: string;
   id: string;
   optional?: boolean;
   options: AiClarificationOption[];
@@ -116,10 +137,40 @@ export type AiClarificationQuestion = {
   valueType: 'boolean' | 'date' | 'number' | 'string';
 };
 
+export type AiAssistantMessage = {
+  createdAt: string;
+  id: string;
+  role: 'user' | 'assistant';
+  text: string;
+};
+
+export type AiClarificationExchange = {
+  actionId: string;
+  answerLabel: string;
+  answerValue: string;
+  answeredAt: string;
+  contextLabel: string;
+  field: string;
+  id: string;
+  prompt: string;
+};
+
+export type AiEditableField = {
+  actionId: string;
+  allowCustom: boolean;
+  field: string;
+  label: string;
+  options: AiClarificationOption[];
+  value: string;
+  valueType: AiClarificationQuestion['valueType'];
+};
+
 export type AiDraftPhase = 'clarifying' | 'review';
 
 export type AiCommandDraft = {
+  clarificationHistory: AiClarificationExchange[];
   id: string;
+  messages: AiAssistantMessage[];
   rawInput: string;
   plan: AiCommandPlan;
   phase: AiDraftPhase;

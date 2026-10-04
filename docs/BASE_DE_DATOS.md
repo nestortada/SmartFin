@@ -9,7 +9,7 @@ Documentos relacionados: [Arquitectura](ARQUITECTURA.md), [Módulos y flujos](MO
 
 SmartFin usa una base de datos **SQLite local** llamada `smartfin.db`, mediante `react-native-sqlite-storage`. No existe un servidor, sincronizacion remota, telemetria ni una API de persistencia. En Android el usuario puede exportar manualmente una copia visible a una carpeta de Google Drive mediante el selector de documentos del sistema, sin API de Drive ni OAuth.
 
-El esquema contiene **28 tablas**, incluida una tabla interna de revision para detectar respaldos desactualizados. La aplicacion actual lee o escribe de forma funcional principalmente 9 tablas de dominio:
+El esquema contiene **32 tablas**, incluida una tabla interna de revision para detectar respaldos desactualizados. La aplicacion actual lee o escribe de forma funcional principalmente 9 tablas de dominio:
 
 - `app_settings`
 - `accounts`
@@ -145,7 +145,7 @@ erDiagram
 | `budgets` | Presupuesto por alcance, importe, periodo, fechas y umbrales de alerta 50/80/90/100 %. | `scope_type` y `scope_id` son una referencia logica, no FK | Esquema preparado |
 | `envelopes` | Sobre de ahorro/gasto con objetivo, saldo, prioridad y categoria. | `category_id -> categories.id` | Esquema preparado; mantenimiento al borrar categorias |
 | `envelope_movements` | Entradas/salidas de un sobre, opcionalmente ligadas a una transaccion. | Sobre con `CASCADE`; transaccion sin accion de borrado declarada | Esquema preparado; se limpia al borrar transacciones |
-| `recurring_subscriptions` | Suscripciones por comercio, importe, periodicidad, proximo cobro y estado. | Categoria, subcategoria y cuenta | Esquema preparado; mantenimiento al borrar categorias |
+| `recurring_subscriptions` | Regla contractual, importe, estado, cursor y recordatorios | Categoria, subcategoria y cuenta | API e interfaz nativa funcionales |
 
 ### Deudas y tarjetas de credito
 
@@ -169,7 +169,7 @@ Los metadatos visuales de una tarjeta (`closingDay`, `paymentDay`, ultimos cuatr
 | `receipt_attachments` | URI local del recibo, datos extraidos y texto OCR. | Transaccion; `ON DELETE SET NULL` | Esquema preparado; se elimina manualmente al borrar transacciones |
 | `tax_tags` | Etiquetas fiscales configurables. | Padre de la tabla puente | Esquema preparado |
 | `transaction_tax_tags` | Relacion N:M entre transacciones y etiquetas fiscales. | Ambas FK con `ON DELETE CASCADE` | Esquema preparado |
-| `cash_flow_events` | Evento proyectado de ingreso/gasto con fecha y entidad de origen. | Cuenta opcional; origen polimorfico sin FK | Esquema preparado |
+| `cash_flow_events` | Evento proyectado con fecha y entidad de origen | Cuenta opcional; origen polimorfico sin FK | Proyecciones de suscripciones; sin impacto en saldo |
 | `financial_health_scores` | Puntaje total y componentes de ahorro, deuda, emergencia, credito, metas y gasto variable. | Ninguna | Esquema preparado |
 | `backup_records` | Registro de respaldo local: URI, cifrado, estado, fechas y error. | Ninguna | Esquema preparado |
 | `financial_data_revision` | Contador interno que aumenta mediante triggers cuando cambia una tabla financiera. | Ninguna | Deteccion de respaldos desactualizados |
@@ -247,14 +247,7 @@ Los movimientos se registran mediante los flujos manuales de la aplicacion. Las 
 
 ## 10. Migraciones e indices
 
-No hay un sistema de migraciones versionado. Despues de aplicar el DDL, `applyLightweightMigrations` intenta ejecutar:
-
-1. `ALTER TABLE transactions ADD COLUMN payment_method TEXT`;
-2. `ALTER TABLE transactions ADD COLUMN credit_card_hint TEXT`;
-3. `ALTER TABLE transactions ADD COLUMN dedupe_key TEXT`;
-4. indice unico parcial de `dedupe_key`.
-
-Los errores de esas sentencias se ignoran para tolerar columnas ya existentes. El esquema tampoco usa `PRAGMA user_version` ni una tabla de historial de migraciones.
+El arranque aplica DDL idempotente y migraciones versionadas en `schema_migrations`. La versión 1 verifica las columnas heredadas de movimientos y borradores mediante PRAGMA table_info; la versión 2 añade anclaje, recurrencia personalizada, cursor y recordatorios a recurring_subscriptions, junto con las tablas subscription_occurrences y subscription_reminders. El registro de versión y los cambios se confirman en una transacción. Los errores reales ya no se ignoran. No se reconstruyen ni borran tablas existentes.
 
 Indices definidos:
 
@@ -276,11 +269,11 @@ Indices definidos:
 
 La opcion de borrar datos financieros:
 
-1. desactiva temporalmente las claves foraneas;
-2. ejecuta `DELETE` sobre las 26 tablas financieras en un orden fijo;
-3. reactiva las claves foraneas en un bloque `finally`;
-4. conserva `app_settings`;
-5. vuelve a sembrar categorias y cuentas esenciales, con saldos de cuenta en cero.
+1. espera mantenimiento activo y cancela recordatorios de suscripciones;
+2. ejecuta DELETE sobre las tablas financieras en orden dentro de una transacción;
+3. mantiene claves foráneas habilitadas y revierte el lote si falla;
+4. conserva app_settings, schema_migrations y el contador de revisión;
+5. no recrea movimientos ni suscripciones automáticamente.
 
 No elimina el archivo `smartfin.db`. Tampoco ejecuta `VACUUM`, por lo que SQLite puede conservar espacio interno reutilizable aunque las filas ya no sean consultables por la aplicacion.
 
@@ -300,8 +293,8 @@ Por tanto, la proteccion del archivo depende actualmente del almacenamiento y la
 
 Prioridad alta:
 
-1. **Migraciones sin version:** cualquier error, no solo "columna duplicada", se ignora. Esto puede dejar instalaciones con esquemas diferentes sin diagnostico.
-2. **`INSERT OR REPLACE`:** en SQLite puede eliminar la fila en conflicto antes de insertarla. En tablas padre como `accounts` o `transactions` esto puede activar acciones `ON DELETE` y perder filas hijas. Es mas seguro usar `INSERT ... ON CONFLICT DO UPDATE`.
+1. **Migraciones:** ahora versionadas y atómicas para las versiones 1 y 2; los cambios futuros deben mantener ese patrón.
+2. **`INSERT OR REPLACE`:** cuentas y movimientos ahora conservan sus filas mediante UPDATE e INSERT condicionado en una transacción; revisar los demás usos heredados. En SQLite REPLACE puede eliminar la fila en conflicto antes de insertarla. En tablas padre como `accounts` o `transactions` esto puede activar acciones `ON DELETE` y perder filas hijas. La implementación usa UPDATE e INSERT WHERE NOT EXISTS para admitir también el SQLite del Android mínimo (API 24), sin depender de la sintaxis moderna ON CONFLICT DO UPDATE.
 3. **Importes en `REAL`:** el punto flotante puede introducir errores de redondeo. Para contabilidad se recomienda guardar unidades menores enteras (centavos) o una representacion decimal controlada.
 4. **Escrituras por lote sin transaccion:** los bucles de guardado y el borrado total pueden quedar aplicados parcialmente si una sentencia falla.
 5. **Base sin cifrado explicito:** contiene saldos y movimientos; instalaciones actualizadas tambien pueden conservar mensajes financieros historicos.
@@ -339,3 +332,15 @@ Al modificar la persistencia:
 5. Añadir indices solo a partir de consultas reales y comprobar su plan de ejecucion.
 6. Ejecutar pruebas y `tsc --noEmit`.
 7. Actualizar este documento, especialmente el estado de uso de cada tabla.
+
+## Persistencia de Suscripciones
+
+- `subscription_occurrences`: ID, suscripción, fecha/importe esperado, importe real nullable, cuenta esperada, estado, movimiento nullable, fecha de pago/salto, motivo y notas. UNIQUE(subscription_id, expected_date), FK de suscripción CASCADE y FK de movimiento conservada hasta desvinculación explícita. Índice único parcial de transaction_id e índice status/expected_date.
+- `subscription_reminders`: intención de plataforma, offset, revisión, fecha UTC programada, contenido, revisión aplicada, estado de entrega y error recuperable. UNIQUE(occurrence_id, offset_days), FK CASCADE e índice de entrega/intención.
+- `schema_migrations`: versión aplicada y fecha, preservada durante el borrado financiero.
+- Las nuevas tablas tienen triggers de revisión del respaldo. La copia SQLite completa contiene sus datos; no se añadieron exportaciones CSV específicas.
+- Mutaciones de suscripciones y cambios de movimientos vinculados son transaccionales. Guardar un pago actualiza importe real; eliminar/incompatibilizar un movimiento desvincula antes de borrarlo. No existe gasto automático por vencimiento.
+
+El esquema actual incorpora borradores de IA y las tres tablas anteriores. [Modelo, API y límites monetarios](SUSCRIPCIONES.md).
+
+La interfaz no requiere migraciones adicionales. Las consultas tipadas incorporan opciones de cuentas/categorías/subcategorías, vencidos paginados y candidatos compatibles de pago. Los candidatos excluyen gastos ya vinculados; las sugerencias usan ±7 días y la búsqueda manual permite otras fechas. Las mismas reglas de confirmación se vuelven a validar dentro de la transacción.

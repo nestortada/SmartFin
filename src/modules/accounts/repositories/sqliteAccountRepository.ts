@@ -1,3 +1,4 @@
+import { saveSqliteAccounts } from './saveSqliteAccounts';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import {
   readNullableNumber,
@@ -78,39 +79,6 @@ export function createSqliteAccountRepository(
 
       return resultSetToRows(resultSet).map(rowToAccount);
     },
-    saveAccounts: async accounts => {
-      for (const account of accounts) {
-        await database.executeSql(
-          `INSERT OR REPLACE INTO accounts (
-            id,
-            name,
-            type,
-            status,
-            currency,
-            balance_amount,
-            debt_balance_amount,
-            credit_limit_amount,
-            institution_name,
-            description,
-            created_at,
-            updated_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-          [
-            account.id,
-            account.name,
-            account.type,
-            account.status,
-            account.currency,
-            account.balance.amount,
-            account.debtBalance?.amount ?? null,
-            account.creditLimit?.amount ?? null,
-            account.institutionName ?? null,
-            account.description ?? null,
-            account.createdAt,
-            account.updatedAt,
-          ],
-        );
-      }
-    },
+    saveAccounts: accounts => saveSqliteAccounts(database, accounts),
   };
 }

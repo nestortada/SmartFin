@@ -22,7 +22,8 @@ El proyecto sigue tres principios:
 | Categorías personalizadas | Implementado |
 | Tema claro/oscuro, PIN y biometría Android | Implementado |
 | Respaldo manual a una carpeta visible de Google Drive en Android | Implementado, sin cifrado |
-| Presupuestos, préstamos, metas, suscripciones y reportes | Modelo preparado; interfaz y casos de uso pendientes |
+| Suscripciones | Interfaz nativa, dominio, historial, conciliación y recordatorios Android; acceso desde Más → Suscripciones y creación revisada desde Hablar con IA |
+| Presupuestos, préstamos, metas y reportes | Modelo preparado; interfaz y casos de uso pendientes |
 | Captura de SMS/notificaciones, OCR e inversiones | Planificado |
 
 ## Tecnologías
@@ -84,7 +85,7 @@ npx tsc --noEmit
 npm run lint
 ```
 
-Estado de referencia al documentar: **13 suites y 51 pruebas aprobadas**, sin errores de TypeScript ni ESLint.
+La verificación del módulo de Suscripciones incluye pruebas con SQLite real (`node:sqlite`, Node >=22.13), recurrencias y pruebas Android instrumentadas. Consulta [Suscripciones](docs/SUSCRIPCIONES.md).
 
 ## Estructura principal
 
@@ -116,6 +117,7 @@ El punto de entrada completo es [docs/INDICE.md](docs/INDICE.md).
 - [Guía de desarrollo](docs/GUIA_DESARROLLO.md)
 - [Pruebas y calidad](docs/PRUEBAS_Y_CALIDAD.md)
 - [Roadmap](docs/ROADMAP.md)
+- [Suscripciones: API y funcionamiento](docs/SUSCRIPCIONES.md)
 - [Guía de contribución](CONTRIBUTING.md)
 
 ## Decisiones esenciales

@@ -13,6 +13,7 @@ import {
 import type { Account } from '../../../accounts';
 import type { Category } from '../../../categories';
 import type { TransactionType } from '../../types';
+import { formatCopAmountInput, parseCopAmountDraft } from '../../../../shared/utils/copAmountInput';
 
 type ThemeColors = {
   background: string;
@@ -920,12 +921,7 @@ function CreateCreditCardButton({
 }
 
 function formatAmountInput(value: string): string {
-  const digits = value.replace(/\D/g, '');
-  if (!digits) {
-    return '';
-  }
-
-  return Number(digits).toLocaleString('es-CO');
+  return formatCopAmountInput(value);
 }
 
 function isCreditOperation(operationType: AddTransactionModalProps['newOperationType']): boolean {
@@ -937,7 +933,7 @@ function isDebitAccount(account: Account): boolean {
 }
 
 export function parseAmountInput(value: string): number {
-  return Number(value.replace(/\D/g, '')) || 0;
+  return parseCopAmountDraft(value);
 }
 
 function formatTodayLabel(): string {

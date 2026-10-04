@@ -1,5 +1,6 @@
 import type { Account } from '../../accounts';
 import type { Category, Subcategory } from '../../categories';
+import { parseCivilDate, roundSubscriptionMoney } from '../../subscriptions/useCases/recurrence';
 import type {
   AiActionEntity,
   AiActionOperation,
@@ -7,6 +8,7 @@ import type {
   AiClarificationQuestion,
   AiCommandAction,
   AiCommandPlan,
+  AiEditableField,
   AiPlanningContext,
   Transaction,
   TransactionType,
@@ -14,9 +16,30 @@ import type {
 
 const OPERATIONS: AiActionOperation[] = ['create', 'update', 'delete'];
 const ENTITIES: AiActionEntity[] = [
-  'transaction', 'debitAccount', 'creditCard', 'category', 'subcategory',
+  'transaction', 'debitAccount', 'creditCard', 'category', 'subcategory', 'subscription',
 ];
+const SUBSCRIPTION_PERIODS = ['weekly', 'biweekly', 'monthly', 'bimonthly', 'quarterly', 'semiannual', 'yearly', 'custom'] as const;
+const subscriptionPeriodOptions = () => SUBSCRIPTION_PERIODS.map((value, index) => ({ value, label: ['Semanal', 'Cada 14 días', 'Mensual', 'Bimestral', 'Trimestral', 'Semestral', 'Anual', 'Personalizada'][index]! }));
 const TRANSACTION_TYPES: TransactionType[] = ['income', 'expense', 'internalTransfer'];
+
+const NAMED_COLORS: Record<string, string> = {
+  amarillo: '#facc15', azul: '#3b82f6', blanco: '#ffffff', cafe: '#92400e',
+  celeste: '#38bdf8', gris: '#9ca3af', marron: '#92400e', morado: '#8b5cf6',
+  naranja: '#f97316', negro: '#111827', purpura: '#8b5cf6', rojo: '#ef4444',
+  rosa: '#ec4899', rosado: '#ec4899', turquesa: '#14b8a6', verde: '#22c55e',
+  violeta: '#8b5cf6',
+};
+
+const INSTITUTIONS = [
+  { aliases: ['davivienda'], name: 'Davivienda' },
+  { aliases: ['nu', 'nu bank', 'nubank', 'nu colombia'], name: 'Nu Bank' },
+  { aliases: ['bancolombia'], name: 'Bancolombia' },
+  { aliases: ['nequi'], name: 'Nequi' },
+  { aliases: ['daviplata'], name: 'Daviplata' },
+  { aliases: ['banco de bogota'], name: 'Banco de Bogotá' },
+  { aliases: ['bbva'], name: 'BBVA' },
+  { aliases: ['banco caja social', 'caja social'], name: 'Banco Caja Social' },
+] as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value);
@@ -40,6 +63,18 @@ function optionalEnum<T extends string>(value: unknown, allowed: readonly T[]): 
     : undefined;
 }
 
+function normalizeReference(value: string | null | undefined): string | null | undefined {
+  if (value === null || value === undefined) return value;
+  const normalizedValue = value.trim().replace(/^(?:__ref__|ref:)/i, '');
+  return normalizedValue || undefined;
+}
+
+function referenceFromId(value: string | null | undefined): string | undefined {
+  return typeof value === 'string' && /^(?:__ref__|ref:)/i.test(value.trim())
+    ? normalizeReference(value) ?? undefined
+    : undefined;
+}
+
 function parseBaseAction(value: Record<string, unknown>, index: number) {
   const operation = optionalEnum(value.operation, OPERATIONS);
   const entity = optionalEnum(value.entity, ENTITIES);
@@ -47,7 +82,7 @@ function parseBaseAction(value: Record<string, unknown>, index: number) {
     throw new Error(`La operacion ${index + 1} no tiene un tipo valido.`);
   }
   return {
-    clientRef: optionalString(value.clientRef) || undefined,
+    clientRef: normalizeReference(optionalString(value.clientRef)) || undefined,
     entity,
     id: optionalString(value.id) || `action-${index + 1}`,
     operation,
@@ -63,18 +98,43 @@ function parseAction(value: unknown, index: number): AiCommandAction {
   const base = parseBaseAction(value, index);
   const sourceFields = isRecord(value.fields) ? value.fields : {};
 
+  if (base.entity === 'subscription') {
+    if (base.operation !== 'create') throw new Error('El asistente solo permite crear suscripciones.');
+    const references = Object.fromEntries(['account', 'category', 'subcategory'].flatMap(prefix => {
+      const id = optionalString(sourceFields[`${prefix}Id`]);
+      return [[`${prefix}Id`, referenceFromId(id) ? undefined : id],
+        [`${prefix}Name`, optionalString(sourceFields[`${prefix}Name`])],
+        [`${prefix}Ref`, normalizeReference(optionalString(sourceFields[`${prefix}Ref`])) ?? referenceFromId(id)]];
+    }));
+    return { ...base, entity: 'subscription', fields: {
+      ...references,
+      name: optionalString(sourceFields.name), merchantName: optionalString(sourceFields.merchantName),
+      amount: optionalNumber(sourceFields.amount), anchorDate: optionalString(sourceFields.anchorDate),
+      billingDay: optionalNumber(sourceFields.billingDay), periodicity: optionalEnum(sourceFields.periodicity, SUBSCRIPTION_PERIODS),
+      customInterval: optionalNumber(sourceFields.customInterval), customUnit: optionalEnum(sourceFields.customUnit, ['days', 'weeks', 'months']),
+      remindersEnabled: optionalBoolean(sourceFields.remindersEnabled),
+      reminderOffsets: Array.isArray(sourceFields.reminderOffsets) && sourceFields.reminderOffsets.every(item => typeof item === 'number')
+        ? sourceFields.reminderOffsets.join(',') : optionalString(sourceFields.reminderOffsets),
+      reminderHour: optionalNumber(sourceFields.reminderHour), reminderMinute: optionalNumber(sourceFields.reminderMinute),
+    } };
+  }
+
   if (base.entity === 'transaction') {
+    const accountId = optionalString(sourceFields.accountId);
+    const targetAccountId = optionalString(sourceFields.targetAccountId);
+    const categoryId = optionalString(sourceFields.categoryId);
+    const subcategoryId = optionalString(sourceFields.subcategoryId);
     return {
       ...base,
       entity: 'transaction',
       fields: {
-        accountId: optionalString(sourceFields.accountId),
+        accountId: referenceFromId(accountId) ? undefined : accountId,
         accountName: optionalString(sourceFields.accountName),
-        accountRef: optionalString(sourceFields.accountRef),
+        accountRef: normalizeReference(optionalString(sourceFields.accountRef)) ?? referenceFromId(accountId),
         amount: optionalNumber(sourceFields.amount),
-        categoryId: optionalString(sourceFields.categoryId),
+        categoryId: referenceFromId(categoryId) ? undefined : categoryId,
         categoryName: optionalString(sourceFields.categoryName),
-        categoryRef: optionalString(sourceFields.categoryRef),
+        categoryRef: normalizeReference(optionalString(sourceFields.categoryRef)) ?? referenceFromId(categoryId),
         date: optionalString(sourceFields.date),
         description: optionalString(sourceFields.description),
         installmentCount: optionalNumber(sourceFields.installmentCount),
@@ -82,12 +142,12 @@ function parseAction(value: unknown, index: number): AiCommandAction {
         notes: optionalString(sourceFields.notes),
         pendingAccountKind: optionalEnum(sourceFields.pendingAccountKind, ['debitAccount', 'creditCard']),
         pendingAccountName: optionalString(sourceFields.pendingAccountName),
-        subcategoryId: optionalString(sourceFields.subcategoryId),
+        subcategoryId: referenceFromId(subcategoryId) ? undefined : subcategoryId,
         subcategoryName: optionalString(sourceFields.subcategoryName),
-        subcategoryRef: optionalString(sourceFields.subcategoryRef),
-        targetAccountId: optionalString(sourceFields.targetAccountId),
+        subcategoryRef: normalizeReference(optionalString(sourceFields.subcategoryRef)) ?? referenceFromId(subcategoryId),
+        targetAccountId: referenceFromId(targetAccountId) ? undefined : targetAccountId,
         targetAccountName: optionalString(sourceFields.targetAccountName),
-        targetAccountRef: optionalString(sourceFields.targetAccountRef),
+        targetAccountRef: normalizeReference(optionalString(sourceFields.targetAccountRef)) ?? referenceFromId(targetAccountId),
         transactionType: optionalEnum(sourceFields.transactionType, TRANSACTION_TYPES),
         transferTaxCharged: optionalBoolean(sourceFields.transferTaxCharged),
       },
@@ -140,13 +200,14 @@ function parseAction(value: unknown, index: number): AiCommandAction {
     };
   }
 
+  const categoryId = optionalString(sourceFields.categoryId);
   return {
     ...base,
     entity: 'subcategory',
     fields: {
-      categoryId: optionalString(sourceFields.categoryId),
+      categoryId: referenceFromId(categoryId) ? undefined : categoryId,
       categoryName: optionalString(sourceFields.categoryName),
-      categoryRef: optionalString(sourceFields.categoryRef),
+      categoryRef: normalizeReference(optionalString(sourceFields.categoryRef)) ?? referenceFromId(categoryId),
       color: optionalString(sourceFields.color),
       name: optionalString(sourceFields.name),
     },
@@ -176,6 +237,102 @@ export function parseAiCommandPlan(value: unknown): AiCommandPlan {
 
 function normalized(value?: string | null): string {
   return (value ?? '').trim().toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+export function resolveNamedColor(value: string): string | undefined {
+  const trimmed = value.trim();
+  if (/^#[0-9a-f]{6}$/i.test(trimmed)) return trimmed.toLowerCase();
+  if (/^#[0-9a-f]{3}$/i.test(trimmed)) {
+    return `#${trimmed.slice(1).split('').map(character => `${character}${character}`).join('')}`.toLowerCase();
+  }
+  return NAMED_COLORS[normalized(trimmed)];
+}
+
+function canonicalInstitution(value: string): string {
+  const expected = normalized(value);
+  return INSTITUTIONS.find(institution =>
+    institution.aliases.some(alias => normalized(alias) === expected),
+  )?.name ?? value.trim();
+}
+
+function formatCop(value?: number | null): string | undefined {
+  return typeof value === 'number' ? `$${value.toLocaleString('es-CO')} COP` : undefined;
+}
+
+function findLinkedTransaction(
+  action: AiCommandAction,
+  plan: AiCommandPlan,
+): Extract<AiCommandAction, { entity: 'transaction' }> | undefined {
+  if (!action.clientRef) return undefined;
+  const transactions = plan.actions.filter(
+    (candidate): candidate is Extract<AiCommandAction, { entity: 'transaction' }> => candidate.entity === 'transaction',
+  );
+  return transactions.find(candidate =>
+    candidate.fields.accountRef === action.clientRef && candidate.fields.transactionType === 'income',
+  ) ?? transactions.find(candidate => candidate.fields.targetAccountRef === action.clientRef)
+    ?? transactions.find(candidate => candidate.fields.accountRef === action.clientRef);
+}
+
+function actionContextLabel(action: AiCommandAction, plan: AiCommandPlan): string {
+  const fields = action.fields as Record<string, unknown>;
+  const name = typeof fields.name === 'string' && fields.name
+    ? fields.name
+    : typeof fields.institutionName === 'string' && fields.institutionName
+      ? fields.institutionName
+      : typeof fields.bankName === 'string' && fields.bankName
+        ? fields.bankName
+        : typeof fields.description === 'string' && fields.description
+          ? fields.description
+          : undefined;
+  const linkedTransaction = findLinkedTransaction(action, plan);
+  const linkedType = linkedTransaction?.fields.transactionType === 'internalTransfer'
+    ? 'transferencia'
+    : linkedTransaction?.fields.transactionType === 'income'
+      ? 'ingreso'
+      : linkedTransaction?.fields.transactionType === 'expense'
+        ? 'gasto'
+        : undefined;
+  const related = linkedType && formatCop(linkedTransaction?.fields.amount)
+    ? `${linkedType} de ${formatCop(linkedTransaction?.fields.amount)}`
+    : undefined;
+  const entity = action.entity === 'transaction' ? 'Movimiento'
+    : action.entity === 'subscription' ? 'Suscripción'
+    : action.entity === 'debitAccount' ? 'Cuenta'
+      : action.entity === 'creditCard' ? 'Tarjeta de crédito'
+        : action.entity === 'category' ? 'Categoría'
+          : 'Subcategoría';
+  const siblings = plan.actions.filter(candidate => candidate.entity === action.entity);
+  const position = siblings.findIndex(candidate => candidate.id === action.id);
+  const numberedEntity = siblings.length > 1 && position >= 0 ? `${entity} ${position + 1} de ${siblings.length}` : entity;
+  const amount = action.entity === 'transaction' ? formatCop(action.fields.amount) : undefined;
+  return [numberedEntity, name, related ?? amount].filter(Boolean).join(' · ');
+}
+
+function institutionOptions(
+  plan: AiCommandPlan,
+  context: AiPlanningContext,
+  sourceText: string,
+): AiClarificationOption[] {
+  const source = normalized(sourceText);
+  const mentionsAlias = (alias: string) => {
+    const expected = normalized(alias);
+    return expected.length <= 3
+      ? source.split(/[^a-z0-9]+/).includes(expected)
+      : source.includes(expected);
+  };
+  const detected = INSTITUTIONS.filter(institution =>
+    institution.aliases.some(mentionsAlias),
+  ).map(institution => institution.name);
+  const planned = plan.actions.flatMap(action => {
+    if (action.entity === 'debitAccount') return action.fields.institutionName ? [action.fields.institutionName] : [];
+    if (action.entity === 'creditCard') return action.fields.bankName ? [action.fields.bankName] : [];
+    return [];
+  });
+  const existing = context.accounts.flatMap(account => account.institutionName ? [account.institutionName] : []);
+  const names = [...detected, ...planned, ...existing, ...INSTITUTIONS.map(item => item.name)];
+  return [...new Map(names.map(name => [normalized(name), canonicalInstitution(name)])).values()]
+    .slice(0, 10)
+    .map(name => option(name, name));
 }
 
 function findUnique<T extends { id: string }>(
@@ -232,12 +389,68 @@ function resolveTarget(action: AiCommandAction, context: AiPlanningContext): str
   return findUnique(context.subcategories, action.targetId, action.targetName, item => item.name)?.id;
 }
 
+function referenceSuffix(value: string): string | undefined {
+  return value.match(/(?:^|[-_])(\d+)$/)?.[1];
+}
+
+function ensureClientReference(
+  plan: AiCommandPlan,
+  reference: string | null | undefined,
+  entities: AiActionEntity[],
+): void {
+  if (!reference || plan.actions.some(action => action.clientRef === reference)) return;
+  const candidates = plan.actions.filter(action =>
+    action.operation === 'create' && entities.includes(action.entity) && !action.clientRef,
+  );
+  const exact = candidates.find(action => action.id === reference || normalizeReference(action.id) === reference);
+  const suffix = referenceSuffix(reference);
+  const suffixMatches = suffix ? candidates.filter(action => referenceSuffix(action.id) === suffix) : [];
+  const target = exact ?? (suffixMatches.length === 1 ? suffixMatches[0] : undefined);
+  if (target) target.clientRef = reference;
+}
+
+function repairPlanReferences(plan: AiCommandPlan): void {
+  for (const action of plan.actions) {
+    if (action.entity === 'subscription') {
+      ensureClientReference(plan, action.fields.accountRef, ['debitAccount', 'creditCard']);
+      ensureClientReference(plan, action.fields.categoryRef, ['category']);
+      ensureClientReference(plan, action.fields.subcategoryRef, ['subcategory']);
+    }
+    if (action.entity === 'transaction') {
+      ensureClientReference(plan, action.fields.accountRef, ['debitAccount', 'creditCard']);
+      ensureClientReference(plan, action.fields.targetAccountRef, ['debitAccount', 'creditCard']);
+      ensureClientReference(plan, action.fields.categoryRef, ['category']);
+      ensureClientReference(plan, action.fields.subcategoryRef, ['subcategory']);
+    } else if (action.entity === 'subcategory') {
+      ensureClientReference(plan, action.fields.categoryRef, ['category']);
+    }
+  }
+}
+
 export function normalizeAiCommandPlan(
   plan: AiCommandPlan,
   context: AiPlanningContext,
 ): AiCommandPlan {
   const clone = parseAiCommandPlan(JSON.parse(JSON.stringify(plan)) as unknown);
+  repairPlanReferences(clone);
   for (const action of clone.actions) {
+    if (action.entity === 'subscription') {
+      const fields = action.fields;
+      const account = findUnique(context.accounts.filter(item => item.status === 'active' && item.currency === 'COP' && ['cash', 'bankAccount', 'savingsAccount', 'creditCard'].includes(item.type)), fields.accountId, fields.accountName, item => item.name);
+      const category = findUnique(context.categories.filter(item => item.type === 'expense'), fields.categoryId, fields.categoryName, item => item.name);
+      const subcategory = findUnique(context.subcategories.filter(item => item.isActive && (!category || item.categoryId === category.id)), fields.subcategoryId, fields.subcategoryName, item => item.name);
+      fields.accountId = account?.id ?? (fields.accountId === null ? null : undefined);
+      fields.categoryId = category?.id ?? subcategory?.categoryId ?? (fields.categoryId === null ? null : undefined);
+      fields.subcategoryId = subcategory?.id ?? (fields.subcategoryId === null ? null : undefined);
+      try { if (fields.anchorDate) parseCivilDate(fields.anchorDate); } catch { fields.anchorDate = undefined; }
+      try { if (fields.amount != null && roundSubscriptionMoney(fields.amount) <= 0) fields.amount = undefined; } catch { fields.amount = undefined; }
+      if (fields.customInterval != null && (!Number.isSafeInteger(fields.customInterval) || fields.customInterval <= 0)) fields.customInterval = undefined;
+      if (fields.billingDay != null && (!Number.isInteger(fields.billingDay) || fields.billingDay < 1 || fields.billingDay > 31)) fields.billingDay = undefined;
+      if (fields.reminderHour != null && (!Number.isInteger(fields.reminderHour) || fields.reminderHour < 0 || fields.reminderHour > 23)) fields.reminderHour = undefined;
+      if (fields.reminderMinute != null && (!Number.isInteger(fields.reminderMinute) || fields.reminderMinute < 0 || fields.reminderMinute > 59)) fields.reminderMinute = undefined;
+      if (fields.reminderOffsets != null && (!/^\d+(?:\s*,\s*\d+)*$/.test(fields.reminderOffsets) || fields.reminderOffsets.split(',').length > 16 || fields.reminderOffsets.split(',').some(value => Number(value) > 365))) fields.reminderOffsets = undefined;
+      continue;
+    }
     if (action.operation !== 'create') {
       action.targetId = resolveTarget(action, context) ?? action.targetId;
     }
@@ -277,6 +490,18 @@ function option(label: string, value: string): AiClarificationOption {
   return { label, value };
 }
 
+function colorOptions(limit?: number): AiClarificationOption[] {
+  const seen = new Set<string>();
+  const options: AiClarificationOption[] = [];
+  for (const [name, color] of Object.entries(NAMED_COLORS)) {
+    if (seen.has(color)) continue;
+    seen.add(color);
+    options.push(option(name.charAt(0).toUpperCase() + name.slice(1), color));
+    if (limit && options.length >= limit) break;
+  }
+  return options;
+}
+
 function accountOptions(accounts: Account[]): AiClarificationOption[] {
   return accounts.filter(account => account.status === 'active').map(account =>
     option(`${account.name}${account.institutionName ? ` · ${account.institutionName}` : ''}`, account.id),
@@ -313,7 +538,10 @@ function hasValue(action: AiCommandAction, field: string, plan: AiCommandPlan): 
   const value = fields[field];
   if (aliases[field]?.some(alias => {
     const candidate = fields[alias];
-    return candidate !== undefined && candidate !== null && candidate !== '';
+    if (candidate === undefined || candidate === null || candidate === '') return false;
+    return alias.endsWith('Ref') && typeof candidate === 'string'
+      ? plan.actions.some(planAction => planAction.clientRef === candidate)
+      : true;
   })) return true;
   return value !== undefined && value !== null && value !== '';
 }
@@ -334,7 +562,13 @@ function addQuestion(
   questions.push({
     actionId: action.id,
     allowCustom,
+    contextLabel: actionContextLabel(action, plan),
     field,
+    helpText: field === 'recurringIncomeEnabled'
+      ? 'Un movimiento recibido una sola vez no es un ingreso recurrente.'
+      : field === 'color'
+        ? 'Puedes escribir el nombre del color; SmartFin lo convertirá localmente.'
+        : undefined,
     id: `${action.id}.${field}`,
     optional,
     options,
@@ -354,6 +588,7 @@ function targetOptions(action: AiCommandAction, context: AiPlanningContext): AiC
 export function buildClarificationQuestions(
   plan: AiCommandPlan,
   context: AiPlanningContext,
+  sourceText = '',
 ): AiClarificationQuestion[] {
   const questions: AiClarificationQuestion[] = [];
   for (const action of plan.actions) {
@@ -362,6 +597,29 @@ export function buildClarificationQuestions(
       continue;
     }
     if (action.operation !== 'create') continue;
+
+    if (action.entity === 'subscription') {
+      addQuestion(questions, plan, action, 'name', '¿Cómo se llama la suscripción?', 'string');
+      addQuestion(questions, plan, action, 'merchantName', '¿Cuál es el comercio o proveedor?', 'string', [option('Sin comercio adicional', '__none__')], true);
+      addQuestion(questions, plan, action, 'amount', '¿Cuál es el importe del cobro en COP?', 'number');
+      addQuestion(questions, plan, action, 'anchorDate', '¿Cuál es la fecha contractual del primer cobro? Usa YYYY-MM-DD.', 'string');
+      addQuestion(questions, plan, action, 'billingDay', '¿Qué día contractual de facturación tiene (1–31)?', 'number', [option('Usar el día de la fecha contractual', '__none__')], true);
+      addQuestion(questions, plan, action, 'periodicity', '¿Cada cuánto se cobra?', 'string', subscriptionPeriodOptions(), false, false, false);
+      if (action.fields.periodicity === 'custom') {
+        addQuestion(questions, plan, action, 'customInterval', '¿Cada cuántas unidades se repite?', 'number');
+        addQuestion(questions, plan, action, 'customUnit', '¿Días, semanas o meses?', 'string', [option('Días', 'days'), option('Semanas', 'weeks'), option('Meses', 'months')], false, false, false);
+      }
+      addQuestion(questions, plan, action, 'accountId', '¿Qué cuenta se espera usar? También puedes dejarla sin cuenta.', 'string', [...editableOptions(action, 'accountId', plan, context, sourceText), option('Sin cuenta asignada', '__none__')], true, false, false);
+      addQuestion(questions, plan, action, 'categoryId', '¿Qué categoría de gasto corresponde? Puedes escribir una nueva.', 'string', editableOptions(action, 'categoryId', plan, context, sourceText), true);
+      if (action.fields.categoryId || action.fields.categoryRef) addQuestion(questions, plan, action, 'subcategoryId', '¿Qué subcategoría corresponde? Puedes escribir una nueva.', 'string', editableOptions(action, 'subcategoryId', plan, context, sourceText), true);
+      addQuestion(questions, plan, action, 'remindersEnabled', '¿Quieres recordatorios de estos cobros?', 'boolean', [option('Sí', 'true'), option('No', 'false')], false, false, false);
+      if (action.fields.remindersEnabled) {
+        addQuestion(questions, plan, action, 'reminderOffsets', '¿Cuántos días antes quieres los recordatorios? Separa con comas.', 'string', [option('3 días, 1 día y el día del cobro', '3,1,0')]);
+        addQuestion(questions, plan, action, 'reminderHour', '¿A qué hora (0–23) del dispositivo?', 'number', [option('09:00', '9')]);
+        addQuestion(questions, plan, action, 'reminderMinute', '¿En qué minuto (0–59)?', 'number', [option('En punto', '0')]);
+      }
+      continue;
+    }
 
     if (action.entity === 'transaction') {
       addQuestion(questions, plan, action, 'transactionType', '¿Qué tipo de movimiento es?', 'string', [
@@ -400,9 +658,15 @@ export function buildClarificationQuestions(
       }
     } else if (action.entity === 'debitAccount') {
       addQuestion(questions, plan, action, 'name', '¿Qué nombre tendrá la cuenta o tarjeta débito?', 'string');
-      addQuestion(questions, plan, action, 'institutionName', '¿Cuál es el banco o institución?', 'string');
+      addQuestion(questions, plan, action, 'institutionName', '¿Cuál es el banco o institución de esta cuenta?', 'string', institutionOptions(plan, context, sourceText));
       addQuestion(questions, plan, action, 'initialBalance', '¿Cuál es el saldo inicial en COP?', 'number');
-      addQuestion(questions, plan, action, 'recurringIncomeEnabled', '¿Recibe un ingreso recurrente?', 'boolean', [option('Sí', 'true'), option('No', 'false')]);
+      const linkedIncome = findLinkedTransaction(action, plan);
+      const recurringSubject = linkedIncome?.entity === 'transaction' && linkedIncome.fields.amount
+        ? `${linkedIncome.fields.transactionType === 'internalTransfer' ? 'esta transferencia' : 'este ingreso'} de ${formatCop(linkedIncome.fields.amount)}`
+        : 'algún ingreso';
+      addQuestion(questions, plan, action, 'recurringIncomeEnabled', `¿${recurringSubject} se repetirá automáticamente en esta cuenta?`, 'boolean', [
+        option('Sí, se repetirá', 'true'), option('No, ocurre solo esta vez', 'false'),
+      ]);
       if (action.fields.recurringIncomeEnabled) {
         addQuestion(questions, plan, action, 'recurringIncomeAmount', '¿Cuál es el valor del ingreso recurrente?', 'number');
         addQuestion(questions, plan, action, 'recurringIncomeFrequency', '¿Con qué frecuencia llega?', 'string', [option('Quincenal', 'biweekly'), option('Mensual', 'monthly'), option('Día específico', 'specificDay')]);
@@ -413,7 +677,7 @@ export function buildClarificationQuestions(
       }
     } else if (action.entity === 'creditCard') {
       addQuestion(questions, plan, action, 'name', '¿Qué nombre tendrá la tarjeta?', 'string');
-      addQuestion(questions, plan, action, 'bankName', '¿Cuál es el banco emisor?', 'string');
+      addQuestion(questions, plan, action, 'bankName', '¿Cuál es el banco emisor de esta tarjeta?', 'string', institutionOptions(plan, context, sourceText));
       addQuestion(questions, plan, action, 'creditLimit', '¿Cuál es el cupo total en COP?', 'number');
       addQuestion(questions, plan, action, 'lastFourDigits', '¿Cuáles son los últimos cuatro dígitos?', 'string', [option('No aplica', '__none__')], true);
       addQuestion(questions, plan, action, 'closingDay', '¿Cuál es el día de corte?', 'number', [option('No aplica', '__none__')], true);
@@ -423,11 +687,14 @@ export function buildClarificationQuestions(
     } else if (action.entity === 'category') {
       addQuestion(questions, plan, action, 'name', '¿Cómo se llamará la categoría?', 'string');
       addQuestion(questions, plan, action, 'type', '¿Es de gasto o ingreso?', 'string', [option('Gasto', 'expense'), option('Ingreso', 'income')]);
-      addQuestion(questions, plan, action, 'color', '¿Qué color tendrá? Usa un valor hexadecimal.', 'string');
+      addQuestion(questions, plan, action, 'color', '¿Qué color tendrá?', 'string', colorOptions(8));
     } else {
       addQuestion(questions, plan, action, 'name', '¿Cómo se llamará la subcategoría?', 'string');
       addQuestion(questions, plan, action, 'categoryId', '¿A qué categoría pertenece?', 'string', categoryOptions(context.categories));
-      addQuestion(questions, plan, action, 'color', '¿Qué color tendrá?', 'string', [option('No aplica', '__none__')], true);
+      addQuestion(questions, plan, action, 'color', '¿Qué color tendrá?', 'string', [
+        ...colorOptions(8),
+        option('No aplica', '__none__'),
+      ], true);
     }
   }
   return questions;
@@ -508,7 +775,7 @@ export function applyClarificationAnswer(
 
   if (
     context &&
-    action.entity === 'transaction' &&
+    (action.entity === 'transaction' || action.entity === 'subscription') &&
     !selectedOption &&
     trimmedValue &&
     (question.field === 'categoryId' || question.field === 'subcategoryId')
@@ -516,7 +783,7 @@ export function applyClarificationAnswer(
     const actionIndex = clone.actions.findIndex(candidate => candidate.id === action.id);
     const normalizedName = normalized(trimmedValue);
     if (question.field === 'categoryId') {
-      const expectedType = action.fields.transactionType === 'income' ? 'income' : 'expense';
+      const expectedType = action.entity === 'transaction' && action.fields.transactionType === 'income' ? 'income' : 'expense';
       const matches = context.categories.filter(category =>
         category.type === expectedType && normalized(category.name) === normalizedName,
       );
@@ -580,6 +847,15 @@ export function applyClarificationAnswer(
   }
   let value: string | number | boolean | null = trimmedValue;
   if (value === '__none__') value = null;
+  else if (question.field === 'color') {
+    const resolvedColor = resolveNamedColor(String(value));
+    if (!resolvedColor) {
+      throw new Error('No reconozco ese color. Escribe, por ejemplo, azul, verde, morado o #3b82f6.');
+    }
+    value = resolvedColor;
+  } else if (question.field === 'institutionName' || question.field === 'bankName') {
+    value = canonicalInstitution(String(value));
+  }
   else if (question.valueType === 'number') {
     const compact = String(value).replace(/\s/g, '');
     const hasComma = compact.includes(',');
@@ -610,14 +886,228 @@ export function applyClarificationAnswer(
   } else {
     (action.fields as Record<string, unknown>)[question.field] = value;
   }
+  if (action.entity === 'debitAccount' && question.field === 'recurringIncomeEnabled' && value === false) {
+    action.fields.recurringIncomeAmount = undefined;
+    action.fields.recurringIncomeDay = undefined;
+    action.fields.recurringIncomeFrequency = undefined;
+    action.fields.recurringIncomeType = undefined;
+  }
   if (!clone.answeredFields.includes(question.id)) clone.answeredFields.push(question.id);
   return clone;
+}
+
+const FIELD_LABELS: Record<string, string> = {
+  anchorDate: 'Fecha contractual', billingDay: 'Día de facturación', merchantName: 'Comercio', periodicity: 'Periodicidad',
+  customInterval: 'Intervalo personalizado', customUnit: 'Unidad personalizada', remindersEnabled: 'Recordatorios',
+  reminderOffsets: 'Días de anticipación', reminderHour: 'Hora del dispositivo', reminderMinute: 'Minuto',
+  accountId: 'Cuenta origen', amount: 'Valor', annualEffectiveInterestRate: 'Tasa E.A.',
+  bankName: 'Banco', categoryId: 'Categoría', closingDay: 'Día de corte', color: 'Color',
+  creditLimit: 'Cupo', date: 'Fecha', description: 'Descripción', initialBalance: 'Saldo inicial',
+  installmentCount: 'Cuotas', institutionName: 'Institución', interestFreeInstallmentCount: 'Cuotas sin interés',
+  lastFourDigits: 'Últimos dígitos', managementFee: 'Cuota de manejo', name: 'Nombre', notes: 'Notas',
+  paymentDay: 'Día de pago', recurringIncomeAmount: 'Ingreso recurrente', recurringIncomeDay: 'Día del ingreso',
+  recurringIncomeEnabled: 'Ingreso recurrente', recurringIncomeFrequency: 'Frecuencia',
+  recurringIncomeType: 'Tipo de ingreso', subcategoryId: 'Subcategoría', targetAccountId: 'Cuenta destino',
+  transactionType: 'Tipo de movimiento', transferTaxCharged: '4x1000', type: 'Tipo',
+};
+
+function editableFieldNames(action: AiCommandAction, plan: AiCommandPlan, context: AiPlanningContext): string[] {
+  if (action.operation === 'delete') return [];
+  if (action.entity === 'subscription') return [
+    'name', 'merchantName', 'amount', 'anchorDate', 'billingDay', 'periodicity',
+    ...(action.fields.periodicity === 'custom' ? ['customInterval', 'customUnit'] : []),
+    'accountId', 'categoryId', 'subcategoryId', 'remindersEnabled',
+    ...(action.fields.remindersEnabled ? ['reminderOffsets', 'reminderHour', 'reminderMinute'] : []),
+  ];
+  if (action.entity === 'transaction') {
+    const fields = ['transactionType', 'amount', 'date', 'description', 'accountId'];
+    if (action.fields.transactionType === 'internalTransfer') {
+      fields.push('targetAccountId', 'transferTaxCharged');
+    } else {
+      fields.push('categoryId', 'subcategoryId', 'notes');
+      const account = context.accounts.find(item => item.id === action.fields.accountId);
+      const referenced = plan.actions.find(candidate => candidate.clientRef === action.fields.accountRef);
+      if (action.fields.transactionType === 'expense' && (account?.type === 'creditCard' || referenced?.entity === 'creditCard')) {
+        fields.push('installmentCount', 'interestFreeInstallmentCount');
+      }
+    }
+    return fields;
+  }
+  if (action.entity === 'debitAccount') {
+    const fields = ['name', 'institutionName', 'initialBalance', 'recurringIncomeEnabled'];
+    if (action.fields.recurringIncomeEnabled) {
+      fields.push('recurringIncomeAmount', 'recurringIncomeFrequency', 'recurringIncomeType');
+      if (action.fields.recurringIncomeFrequency === 'specificDay') fields.push('recurringIncomeDay');
+    }
+    return fields;
+  }
+  if (action.entity === 'creditCard') {
+    return ['name', 'bankName', 'creditLimit', 'lastFourDigits', 'closingDay', 'paymentDay', 'annualEffectiveInterestRate', 'managementFee'];
+  }
+  if (action.entity === 'category') return ['name', 'type', 'color'];
+  return ['name', 'categoryId', 'color'];
+}
+
+function editableOptions(
+  action: AiCommandAction,
+  field: string,
+  plan: AiCommandPlan,
+  context: AiPlanningContext,
+  sourceText: string,
+): AiClarificationOption[] {
+  if (action.entity === 'subscription') {
+    if (field === 'periodicity') return subscriptionPeriodOptions();
+    if (field === 'customUnit') return [option('Días', 'days'), option('Semanas', 'weeks'), option('Meses', 'months')];
+    if (field === 'remindersEnabled') return [option('Sí', 'true'), option('No', 'false')];
+    if (field === 'accountId') return [
+      ...accountOptions(context.accounts.filter(item => item.currency === 'COP' && ['cash', 'bankAccount', 'savingsAccount', 'creditCard'].includes(item.type))),
+      ...plan.actions.flatMap(candidate => candidate.clientRef && (candidate.entity === 'debitAccount' || candidate.entity === 'creditCard') ? [option(`${candidate.fields.name ?? 'Cuenta nueva'} · se creará con este lote`, `__ref__${candidate.clientRef}`)] : []),
+      option('Sin cuenta asignada', '__none__'),
+    ];
+    if (field === 'billingDay' || field === 'merchantName') return [option('No aplica', '__none__')];
+  }
+  if (field === 'transactionType') return [option('Gasto', 'expense'), option('Ingreso', 'income'), option('Transferencia', 'internalTransfer')];
+  if (field === 'accountId' || field === 'targetAccountId') return [
+    ...accountOptions(context.accounts),
+    ...plan.actions.flatMap(candidate => {
+      if (!candidate.clientRef || (candidate.entity !== 'debitAccount' && candidate.entity !== 'creditCard')) return [];
+      const label = candidate.fields.name ?? (candidate.entity === 'debitAccount' ? candidate.fields.institutionName : candidate.fields.bankName) ?? 'Cuenta nueva';
+      return [option(`${label} · se creará con este lote`, `__ref__${candidate.clientRef}`)];
+    }),
+  ];
+  if (field === 'categoryId') return [
+    ...categoryOptions(context.categories, action.entity === 'subscription' ? 'expense' : action.entity === 'transaction' ? action.fields.transactionType : undefined),
+    ...plan.actions.flatMap(candidate => candidate.entity === 'category' && candidate.clientRef
+      ? [option(`${candidate.fields.name ?? 'Categoría nueva'} · se creará con este lote`, `__ref__${candidate.clientRef}`)]
+      : []),
+    ...(action.entity === 'transaction' || action.entity === 'subscription' ? [option('Sin categoría', '__none__')] : []),
+  ];
+  if (field === 'subcategoryId') return [
+    ...subcategoryOptions(context.subcategories, action.entity === 'transaction' || action.entity === 'subscription' ? action.fields.categoryId : undefined),
+    ...plan.actions.flatMap(candidate => candidate.entity === 'subcategory' && candidate.clientRef
+      ? [option(`${candidate.fields.name ?? 'Subcategoría nueva'} · se creará con este lote`, `__ref__${candidate.clientRef}`)]
+      : []),
+    option('Sin subcategoría', '__none__'),
+  ];
+  if (field === 'transferTaxCharged' || field === 'recurringIncomeEnabled') return [option('Sí', 'true'), option('No', 'false')];
+  if (field === 'recurringIncomeFrequency') return [option('Quincenal', 'biweekly'), option('Mensual', 'monthly'), option('Día específico', 'specificDay')];
+  if (field === 'recurringIncomeType') return [option('Salario', 'salary'), option('Mesada', 'allowance'), option('Negocio', 'business'), option('Otro', 'other')];
+  if (field === 'type') return [option('Gasto', 'expense'), option('Ingreso', 'income')];
+  if (field === 'institutionName' || field === 'bankName') return institutionOptions(plan, context, sourceText);
+  if (field === 'color') return colorOptions();
+  if (field === 'installmentCount') return ['1', '3', '6', '12', '18', '24', '36'].map(value => option(value, value));
+  if (field === 'interestFreeInstallmentCount') return [option('Ninguna', '0')];
+  if (['lastFourDigits', 'closingDay', 'paymentDay', 'annualEffectiveInterestRate', 'managementFee'].includes(field)) return [option('No aplica', '__none__')];
+  return [];
+}
+
+function editableValueType(field: string): AiClarificationQuestion['valueType'] {
+  if (field === 'date') return 'date';
+  if (field === 'transferTaxCharged' || field === 'recurringIncomeEnabled' || field === 'remindersEnabled') return 'boolean';
+  if ([
+    'amount', 'annualEffectiveInterestRate', 'closingDay', 'creditLimit', 'initialBalance',
+    'installmentCount', 'interestFreeInstallmentCount', 'managementFee', 'paymentDay',
+    'recurringIncomeAmount', 'recurringIncomeDay', 'billingDay', 'customInterval', 'reminderHour', 'reminderMinute',
+  ].includes(field)) return 'number';
+  return 'string';
+}
+
+export function buildEditableFields(
+  action: AiCommandAction,
+  plan: AiCommandPlan,
+  context: AiPlanningContext,
+  sourceText = '',
+): AiEditableField[] {
+  const fields = action.fields as Record<string, unknown>;
+  return editableFieldNames(action, plan, context).map(field => {
+    const referenceAliases: Record<string, string> = {
+      accountId: 'accountRef', categoryId: 'categoryRef', subcategoryId: 'subcategoryRef', targetAccountId: 'targetAccountRef',
+    };
+    const reference = referenceAliases[field] ? fields[referenceAliases[field] as string] : undefined;
+    const rawValue = fields[field] ?? (typeof reference === 'string' ? `__ref__${reference}` : undefined);
+    return {
+      actionId: action.id,
+      allowCustom: ![
+        'transactionType', 'transferTaxCharged', 'recurringIncomeEnabled', 'recurringIncomeFrequency',
+        'recurringIncomeType', 'type',
+        'periodicity', 'customUnit', 'remindersEnabled',
+      ].includes(field),
+      field,
+      label: FIELD_LABELS[field] ?? field,
+      options: editableOptions(action, field, plan, context, sourceText),
+      value: rawValue === undefined || rawValue === null ? '__none__' : String(rawValue),
+      valueType: editableValueType(field),
+    };
+  });
+}
+
+export function updateAiActionField(
+  plan: AiCommandPlan,
+  editableField: AiEditableField,
+  rawValue: string,
+  context: AiPlanningContext,
+): AiCommandPlan {
+  const action = plan.actions.find(candidate => candidate.id === editableField.actionId);
+  if (!action) throw new Error('La operación que quieres editar ya no existe.');
+  if (rawValue.startsWith('__ref__')) {
+    const clone = parseAiCommandPlan(JSON.parse(JSON.stringify(plan)) as unknown);
+    const clonedAction = clone.actions.find(candidate => candidate.id === editableField.actionId);
+    if (!clonedAction) return clone;
+    const fields = clonedAction.fields as Record<string, unknown>;
+    const referenceFields: Record<string, string> = {
+      accountId: 'accountRef', categoryId: 'categoryRef', subcategoryId: 'subcategoryRef', targetAccountId: 'targetAccountRef',
+    };
+    const referenceField = referenceFields[editableField.field];
+    if (!referenceField) throw new Error('Esta referencia no se puede usar en el campo seleccionado.');
+    fields[editableField.field] = undefined;
+    fields[referenceField] = rawValue.slice('__ref__'.length);
+    return clone;
+  }
+  const updated = applyClarificationAnswer(plan, {
+    actionId: editableField.actionId,
+    allowCustom: editableField.allowCustom,
+    contextLabel: actionContextLabel(action, plan),
+    field: editableField.field,
+    id: `${editableField.actionId}.${editableField.field}`,
+    options: editableField.options,
+    prompt: `Editar ${editableField.label}`,
+    valueType: editableField.valueType,
+  }, rawValue, context);
+  const updatedAction = updated.actions.find(candidate => candidate.id === editableField.actionId);
+  if (!updatedAction) return updated;
+  const referenceFields: Record<string, string> = {
+    accountId: 'accountRef', categoryId: 'categoryRef', subcategoryId: 'subcategoryRef', targetAccountId: 'targetAccountRef',
+  };
+  const referenceField = referenceFields[editableField.field];
+  if (referenceField) (updatedAction.fields as Record<string, unknown>)[referenceField] = undefined;
+  if (updatedAction.entity === 'debitAccount' && editableField.field === 'recurringIncomeEnabled' && !updatedAction.fields.recurringIncomeEnabled) {
+    updatedAction.fields.recurringIncomeAmount = undefined;
+    updatedAction.fields.recurringIncomeDay = undefined;
+    updatedAction.fields.recurringIncomeFrequency = undefined;
+    updatedAction.fields.recurringIncomeType = undefined;
+  }
+  if (updatedAction.entity === 'transaction' && editableField.field === 'transactionType') {
+    if (updatedAction.fields.transactionType === 'internalTransfer') {
+      updatedAction.fields.categoryId = undefined;
+      updatedAction.fields.categoryRef = undefined;
+      updatedAction.fields.subcategoryId = undefined;
+      updatedAction.fields.subcategoryRef = undefined;
+      updatedAction.fields.installmentCount = undefined;
+      updatedAction.fields.interestFreeInstallmentCount = undefined;
+    } else {
+      updatedAction.fields.targetAccountId = undefined;
+      updatedAction.fields.targetAccountRef = undefined;
+      updatedAction.fields.transferTaxCharged = undefined;
+    }
+  }
+  return updated;
 }
 
 export function describeAiAction(action: AiCommandAction): string {
   const verbs: Record<AiActionOperation, string> = { create: 'Crear', update: 'Actualizar', delete: 'Eliminar' };
   const entities: Record<AiActionEntity, string> = {
     transaction: 'movimiento', debitAccount: 'cuenta débito', creditCard: 'tarjeta de crédito', category: 'categoría', subcategory: 'subcategoría',
+    subscription: 'suscripción (cobro esperado)',
   };
   const fields = action.fields as Record<string, unknown>;
   const detail = typeof fields.description === 'string' ? fields.description

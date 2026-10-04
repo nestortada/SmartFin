@@ -1,3 +1,14 @@
+import { upsertSQLiteRow } from '../../../database/upsertSQLiteRow';
+import { runSQLiteTransaction } from '../../../database/atomicSQLite';
+import {
+  loadSubscriptionState,
+  persistSubscriptionState,
+} from '../../subscriptions/repositories/sqliteSubscriptionRepository';
+import {
+  reconcileTransactionChanges,
+  synchronizeSubscriptionState,
+} from '../../subscriptions/useCases/subscriptionLifecycle';
+import { civilDate } from '../../subscriptions/useCases/recurrence';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import {
   readNullableString,
@@ -26,7 +37,7 @@ export type SqliteTransactionRepository = {
   getMerchantMapping: (rawMerchantText: string) => Promise<string | null>;
 };
 
-function rowToTransaction(row: SQLiteRow): Transaction {
+export function rowToTransaction(row: SQLiteRow): Transaction {
   return {
     id: readString(row, 'id'),
     amount: readNumber(row, 'amount'),
@@ -83,61 +94,85 @@ export function createSqliteTransactionRepository(
       return resultSetToRows(resultSet).map(rowToTransaction);
     },
     saveTransactions: async transactions => {
-      for (const transaction of transactions) {
-        await database.executeSql(
-          `INSERT OR REPLACE INTO transactions (
-            id,
-            amount,
-            currency,
-            description,
-            date,
-            account_id,
-            category_id,
-            subcategory_id,
-            type,
-            direction,
-            status,
-            target_account_id,
-            merchant_name,
-            payment_method,
-            credit_card_hint,
-            dedupe_key,
-            notes,
-            created_at,
-            updated_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-          [
-            transaction.id,
-            transaction.amount,
-            transaction.currency,
-            transaction.description,
-            transaction.date,
-            transaction.accountId,
-            transaction.categoryId ?? null,
-            transaction.subcategoryId ?? null,
-            transaction.type,
-            transaction.direction,
-            transaction.status,
-            transaction.targetAccountId ?? null,
-            transaction.merchantName ?? null,
-            transaction.paymentMethod ?? null,
-            transaction.creditCardHint ?? null,
-            transaction.dedupeKey ?? null,
-            transaction.notes ?? null,
-            transaction.createdAt,
-            transaction.updatedAt,
-          ],
+      const date = new Date();
+      await runSQLiteTransaction(database, function* () {
+        const state = yield* loadSubscriptionState({
+          today: civilDate(date),
+          transactionIds: transactions.map(transaction => transaction.id),
+        });
+        const before = JSON.parse(JSON.stringify(state)) as typeof state;
+        for (const transaction of transactions) {
+          yield* upsertSQLiteRow('transactions', {
+            id: transaction.id, amount: transaction.amount, currency: transaction.currency,
+            description: transaction.description, date: transaction.date, account_id: transaction.accountId,
+            category_id: transaction.categoryId ?? null, subcategory_id: transaction.subcategoryId ?? null,
+            type: transaction.type, direction: transaction.direction, status: transaction.status,
+            target_account_id: transaction.targetAccountId ?? null, merchant_name: transaction.merchantName ?? null,
+            payment_method: transaction.paymentMethod ?? null, credit_card_hint: transaction.creditCardHint ?? null,
+            dedupe_key: transaction.dedupeKey ?? null, notes: transaction.notes ?? null,
+            created_at: transaction.createdAt, updated_at: transaction.updatedAt,
+          });
+        }
+
+        reconcileTransactionChanges(
+          state,
+          transactions,
+          [],
+          civilDate(date),
+          date.toISOString(),
         );
-      }
+        state.transactions = [
+          ...state.transactions.filter(
+            tx => !transactions.some(next => next.id === tx.id),
+          ),
+          ...transactions,
+        ];
+        synchronizeSubscriptionState(
+          state,
+          civilDate(date),
+          date.toISOString(),
+        );
+        yield* persistSubscriptionState(before, state);
+        return undefined;
+      });
     },
     deleteTransaction: async id => {
-      // Delete references from dependent tables to prevent constraint violations
-      await database.executeSql('DELETE FROM envelope_movements WHERE transaction_id = ?;', [id]);
-      await database.executeSql('DELETE FROM amortization_schedule_items WHERE transaction_id = ?;', [id]);
-      await database.executeSql('DELETE FROM installment_purchases WHERE transaction_id = ?;', [id]);
-      await database.executeSql('DELETE FROM receipt_attachments WHERE transaction_id = ?;', [id]);
-      await database.executeSql('DELETE FROM transaction_splits WHERE transaction_id = ?;', [id]);
-      await database.executeSql('DELETE FROM transactions WHERE id = ?;', [id]);
+      const date = new Date();
+      await runSQLiteTransaction(database, function* () {
+        const state = yield* loadSubscriptionState({
+          today: civilDate(date),
+          transactionId: id,
+        });
+        const before = JSON.parse(JSON.stringify(state)) as typeof state;
+        reconcileTransactionChanges(
+          state,
+          [],
+          [id],
+          civilDate(date),
+          date.toISOString(),
+        );
+        state.transactions = state.transactions.filter(tx => tx.id !== id);
+        synchronizeSubscriptionState(
+          state,
+          civilDate(date),
+          date.toISOString(),
+        );
+        yield* persistSubscriptionState(before, state);
+        for (const table of [
+          'envelope_movements',
+          'amortization_schedule_items',
+          'installment_purchases',
+          'receipt_attachments',
+          'transaction_splits',
+        ]) {
+          yield {
+            sql: `DELETE FROM ${table} WHERE transaction_id = ?;`,
+            values: [id],
+          };
+        }
+        yield { sql: 'DELETE FROM transactions WHERE id = ?;', values: [id] };
+        return undefined;
+      });
     },
     deleteInstallmentPurchasesByTransactionId: async transactionId => {
       await database.executeSql('DELETE FROM installment_purchases WHERE transaction_id = ?;', [transactionId]);

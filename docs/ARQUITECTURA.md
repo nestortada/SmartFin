@@ -67,7 +67,7 @@ src/modules/<feature>/
 └── index.ts         # API pública del módulo
 ```
 
-Los módulos `budgets`, `loans`, `goals`, `subscriptions` y `reports` son marcadores de estructura: su `index.ts` está vacío y no representan funcionalidad disponible.
+Los módulos `budgets`, `loans`, `goals` y `reports` son marcadores de estructura: su `index.ts` está vacío y no representan funcionalidad disponible.
 
 ## 4. Secuencia de arranque
 
@@ -121,7 +121,7 @@ La barra inferior comparte accesos a inicio, movimientos y el menú de más opci
 - Archivo lógico: `smartfin.db`.
 - Motor: SQLite embebido.
 - Integridad: `PRAGMA foreign_keys = ON`.
-- Inicialización: DDL idempotente y migraciones ligeras en código.
+- Inicialización: DDL idempotente y migraciones numeradas en `schema_migrations`, con introspección y transacciones.
 - Conversión: `sqliteRows.ts` valida primitivas antes de mapearlas.
 - Identificadores: texto generado por la aplicación.
 - Fechas: cadenas ISO 8601.
@@ -179,7 +179,7 @@ El estado es local a componentes y hooks; `src/store` no contiene un store globa
 | Navegación propia | Pocas dependencias | Historial, deep links y transiciones son limitados |
 | Números JS para dinero | Simplicidad | Riesgo de precisión; los flujos actuales redondean importes sensibles |
 | Metadatos en `description` | Evita migraciones tempranas | Menor consultabilidad y contrato implícito |
-| DDL idempotente en código | Arranque sencillo | Las migraciones complejas requerirán versionado formal |
+| DDL idempotente y migraciones versionadas | Instalaciones anteriores conservadas | Versiones 1 y 2 aplicadas transaccionalmente |
 | Mocks como seed y fallback | Desarrollo rápido | Los datos demo pueden confundirse con datos reales si no se distinguen |
 
 ## 11. Límites para nuevas capacidades
@@ -189,3 +189,11 @@ El estado es local a componentes y hooks; `src/store` no contiene un store globa
 - Una regla financiera nueva debe tener un caso de uso puro o inyectable y pruebas.
 - Una nueva respuesta nativa debe tratarse como `unknown` y validarse.
 - Los cambios de esquema deben mantener compatibilidad con bases ya instaladas.
+
+## Suscripciones y mantenimiento local
+
+Suscripciones separa contratos de repositorio, casos de uso puros/injectables, adaptador SQLite y servicio de plataforma. Las mutaciones leen y escriben mediante un generador avanzado desde callbacks SQLite; no hay callbacks async dentro de una transacción. La intención de recordatorios se confirma junto al dominio y sus efectos Android se recuperan después del commit.
+
+WorkManager invoca Headless JS sobre ReactHost sin montar pantallas. Reutiliza los casos de uso TypeScript; Kotlin solo controla alarmas, notificaciones y ciclo de vida. La composición raíz ejecuta mantenimiento al iniciar/volver al primer plano. Un coordinador serializa mantenimiento y operaciones públicas con respaldo/cierre y borrado. [Contrato completo](SUSCRIPCIONES.md).
+
+La interfaz reside en `src/modules/subscriptions/ui/`, con controladores en `hooks/` y transformación/validación del formulario en `useCases/subscriptionPresentation.ts`. Consume exclusivamente la fachada; no consulta SQLite. Los hooks sincronizan al regresar al primer plano y bloquean envíos duplicados. Los componentes nativos comparten paletas clara/oscura, Manrope local bajo OFL, márgenes de 20 y tarjetas de radio 24. El HTML exportado de Stitch se conserva únicamente como referencia en `docs/design/subscriptions/`.

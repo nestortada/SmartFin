@@ -9,46 +9,45 @@ import {
   SQLITE_SCHEMA_STATEMENTS,
 } from './sqliteSchema';
 
+import { applyVersionedMigrations } from './migrations';
+
 export type SmartFinSQLiteDatabase = SQLiteDatabase;
 
 let databasePromise: Promise<SmartFinSQLiteDatabase> | undefined;
+let promiseRuntimeEnabled = false;
 
 async function applySchema(database: SmartFinSQLiteDatabase): Promise<void> {
   for (const statement of SQLITE_SCHEMA_STATEMENTS) {
     await database.executeSql(statement);
   }
 
-  await applyLightweightMigrations(database);
-}
-
-async function applyLightweightMigrations(database: SmartFinSQLiteDatabase): Promise<void> {
-  const migrations = [
-    'ALTER TABLE transactions ADD COLUMN payment_method TEXT;',
-    'ALTER TABLE transactions ADD COLUMN credit_card_hint TEXT;',
-    'ALTER TABLE transactions ADD COLUMN dedupe_key TEXT;',
-    'CREATE UNIQUE INDEX IF NOT EXISTS idx_transactions_dedupe_key ON transactions(dedupe_key) WHERE dedupe_key IS NOT NULL;',
-  ];
-
-  for (const statement of migrations) {
-    try {
-      await database.executeSql(statement);
-    } catch {
-      // SQLite raises "duplicate column name" on existing local databases.
-    }
-  }
+  await applyVersionedMigrations(database);
 }
 
 export async function openSmartFinDatabase(): Promise<SmartFinSQLiteDatabase> {
-  enablePromise(true);
+  if (!promiseRuntimeEnabled) {
+    enablePromise(true);
+    promiseRuntimeEnabled = true;
+  }
 
   if (!databasePromise) {
     databasePromise = openDatabase({
       location: 'default',
       name: SMARTFIN_DATABASE_NAME,
-    }).then(async database => {
-      await applySchema(database);
-      return database;
-    });
+    })
+      .then(async database => {
+        try {
+          await applySchema(database);
+        } catch (error) {
+          await database.close();
+          throw error;
+        }
+        return database;
+      })
+      .catch(error => {
+        databasePromise = undefined;
+        throw error;
+      });
   }
 
   return databasePromise;

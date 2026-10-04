@@ -64,6 +64,7 @@ type DashboardScreenProps = {
   onOpenDebitCards: () => void;
   onOpenAiAssistant: () => void;
   onOpenSettings: () => void;
+  onOpenSubscriptions?: () => void;
   onNavigateToTransactions: () => void;
 };
 
@@ -75,6 +76,7 @@ export function DashboardScreen({
   onOpenDebitCards,
   onOpenAiAssistant,
   onOpenSettings,
+  onOpenSubscriptions,
   onNavigateToTransactions,
 }: DashboardScreenProps) {
   const insets = useSafeAreaInsets();
@@ -157,6 +159,7 @@ export function DashboardScreen({
         bottomInset={insets.bottom}
         colorScheme={activeTheme}
         onMoreActionPress={action => {
+          if (action === 'subscriptions') { onOpenSubscriptions?.(); return; }
           if (action === 'creditCards') {
             onOpenCreditCards();
           } else if (action === 'debitCards') {

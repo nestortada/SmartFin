@@ -3,7 +3,7 @@ import Config from 'react-native-config';
 import type { Account } from '../modules/accounts';
 import type { Category, Subcategory } from '../modules/categories';
 import { parseAiCommandPlan } from '../modules/transactions/useCases/aiCommandPlanner';
-import type { AiCommandPlan } from '../modules/transactions/types';
+import type { AiClarificationExchange, AiCommandPlan } from '../modules/transactions/types';
 
 const GEMINI_MODEL = 'gemini-3.5-flash-lite';
 const MAX_INPUT_CHARACTERS = 4000;
@@ -19,6 +19,12 @@ export type GeminiInterpretationInput = {
   now: Date;
   text: string;
   timeZone: string;
+};
+
+export type GeminiRevisionInput = GeminiInterpretationInput & {
+  clarificationHistory: AiClarificationExchange[];
+  correction: string;
+  currentPlan: AiCommandPlan;
 };
 
 type GeminiServiceOptions = {
@@ -42,7 +48,7 @@ const responseSchema = {
           id: { type: 'string' },
           clientRef: { type: 'string' },
           operation: { type: 'string', enum: ['create', 'update', 'delete'] },
-          entity: { type: 'string', enum: ['transaction', 'debitAccount', 'creditCard', 'category', 'subcategory'] },
+          entity: { type: 'string', enum: ['transaction', 'debitAccount', 'creditCard', 'category', 'subcategory', 'subscription'] },
           targetId: { type: 'string' },
           targetName: { type: 'string' },
           fieldsJson: {
@@ -56,6 +62,8 @@ const responseSchema = {
 } as const;
 
 export function buildGeminiPrompt(input: GeminiInterpretationInput): string {
+  const civilParts = new Intl.DateTimeFormat('en-CA', { timeZone: input.timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(input.now);
+  const civilToday = ['year', 'month', 'day'].map(type => civilParts.find(part => part.type === type)?.value).join('-');
   const accounts = input.catalog.accounts
     .filter(account => account.status === 'active')
     .map(account => [account.id, account.name, account.type, account.institutionName ?? '']);
@@ -66,17 +74,48 @@ export function buildGeminiPrompt(input: GeminiInterpretationInput): string {
 
   return [
     'Interpreta la solicitud como un plan financiero para SmartFin.',
+    'Crear una suscripción usa entity subscription, operation create. Es un compromiso esperado: no agregues una transaction ni cambies saldos o deuda por crearla. El asistente solo admite crear suscripciones, no actualizarlas ni eliminarlas.',
+    'Campos de subscription: name, merchantName opcional, amount en COP, accountId/accountName/accountRef opcionales, categoryId/categoryName/categoryRef de gasto, subcategoryId/subcategoryName/subcategoryRef, anchorDate civil YYYY-MM-DD, billingDay opcional 1–31, periodicity weekly/biweekly/monthly/bimonthly/quarterly/semiannual/yearly/custom, customInterval entero positivo y customUnit days/weeks/months si custom, remindersEnabled boolean, reminderOffsets como string de días separados por comas, reminderHour 0–23 y reminderMinute 0–59 en la zona del dispositivo. Biweekly son 14 días. Para cada N días usa custom. Días 29–31 conservan el anclaje en meses cortos. Moneda COP y estado activo al crear.',
+    'No inventes parámetros de suscripción faltantes: la app preguntará antes de confirmar. Los recordatorios habituales son 3,1,0 a las 09:00, pero solo asigna esos valores si el usuario pide la configuración habitual. Solo crea cuentas/categorías adicionales si el usuario lo solicita explícitamente; enlázalas mediante Ref si se crean antes en el mismo lote.',
     'No inventes datos. Usa null cuando falte un dato y conserva varias operaciones en el orden solicitado.',
+    'Un ingreso recibido una sola vez NO es recurrente. Solo activa recurrencia si el usuario expresa que se repetirá, por ejemplo cada mes o cada quincena.',
+    'Una transferencia entre cuentas es una unica accion transaction de tipo internalTransfer con cuenta origen y destino; nunca la dupliques como otro ingreso.',
+    'Cuando se creen cuentas y movimientos en el mismo plan, enlazalos con clientRef, accountRef y targetAccountRef.',
     'Las referencias clientRef permiten que una operacion use una entidad creada antes en el mismo plan.',
+    'Para una referencia usa exactamente el mismo texto en clientRef y en el campo terminado en Ref, por ejemplo clientRef "account-1" y accountRef "account-1". Nunca agregues prefijos como __ref__ ni pongas referencias en campos terminados en Id.',
     'En cada accion, fieldsJson debe ser un string que contenga un objeto JSON valido.',
     'Campos permitidos dentro de fieldsJson: transactionType, amount, date, description, notes, accountId, accountName, accountRef, targetAccountId, targetAccountName, targetAccountRef, categoryId, categoryName, categoryRef, subcategoryId, subcategoryName, subcategoryRef, installmentCount, interestFreeInstallmentCount, transferTaxCharged, name, institutionName, initialBalance, recurringIncomeEnabled, recurringIncomeAmount, recurringIncomeDay, recurringIncomeFrequency, recurringIncomeType, bankName, creditLimit, lastFourDigits, closingDay, paymentDay, annualEffectiveInterestRate, managementFee, type y color.',
     'Omite de fieldsJson los valores desconocidos; no inventes identificadores.',
     'Solo asigna categoria o subcategoria cuando el usuario la mencione o el contexto sea inequívoco. Si falta contexto o hay varias posibilidades, omítela para que la aplicación pregunte.',
     `Fecha actual: ${input.now.toISOString()}. Zona horaria: ${input.timeZone}. Moneda unica: COP.`,
+    `Fecha civil actual en esa zona: ${civilToday}. Para anchorDate usa fechas civiles; nunca UTC ni una hora.`,
     `Cuentas activas [id,nombre,tipo,institucion]: ${JSON.stringify(accounts)}`,
     `Categorias [id,nombre,tipo]: ${JSON.stringify(categories)}`,
     `Subcategorias [id,nombre,categoriaId]: ${JSON.stringify(subcategories)}`,
     `Solicitud: ${input.text.trim()}`,
+  ].join('\n');
+}
+
+export function buildGeminiRevisionPrompt(input: GeminiRevisionInput): string {
+  const base = buildGeminiPrompt({
+    catalog: input.catalog,
+    now: input.now,
+    text: input.correction,
+    timeZone: input.timeZone,
+  });
+  const history = input.clarificationHistory.map(exchange => ({
+    answer: exchange.answerValue,
+    context: exchange.contextLabel,
+    field: exchange.field,
+    question: exchange.prompt,
+  }));
+  return [
+    base,
+    'Esta es una correccion de un borrador existente. Devuelve el plan completo revisado, no solo el cambio.',
+    'Conserva los id y clientRef de las acciones que no cambien. Respeta las respuestas de aclaracion salvo que la correccion las contradiga.',
+    `Plan actual: ${JSON.stringify(input.currentPlan)}`,
+    `Preguntas y respuestas del borrador: ${JSON.stringify(history)}`,
+    `Correccion solicitada: ${input.correction.trim()}`,
   ].join('\n');
 }
 
@@ -127,8 +166,7 @@ export function createGeminiCommandService(options: GeminiServiceOptions = {}) {
   const fetcher = options.fetcher ?? fetch;
   const timeoutMs = options.timeoutMs ?? 20000;
 
-  return {
-    interpret: async (input: GeminiInterpretationInput): Promise<AiCommandPlan> => {
+  const generate = async (input: GeminiInterpretationInput, prompt: string): Promise<AiCommandPlan> => {
       if (!apiKey?.trim()) {
         throw new Error('Falta GEMINI_API_KEY en el secreto de compilacion.');
       }
@@ -138,7 +176,7 @@ export function createGeminiCommandService(options: GeminiServiceOptions = {}) {
       }
 
       const body = {
-        contents: [{ role: 'user', parts: [{ text: buildGeminiPrompt(input) }] }],
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
           candidateCount: 1,
           maxOutputTokens: 4096,
@@ -201,6 +239,19 @@ export function createGeminiCommandService(options: GeminiServiceOptions = {}) {
         }
       }
       throw new Error('No se pudo conectar con Gemini.');
+  };
+
+  return {
+    interpret: async (input: GeminiInterpretationInput): Promise<AiCommandPlan> =>
+      generate(input, buildGeminiPrompt(input)),
+    revise: async (input: GeminiRevisionInput): Promise<AiCommandPlan> => {
+      const interpretationInput: GeminiInterpretationInput = {
+        catalog: input.catalog,
+        now: input.now,
+        text: input.correction,
+        timeZone: input.timeZone,
+      };
+      return generate(interpretationInput, buildGeminiRevisionPrompt(input));
     },
   };
 }

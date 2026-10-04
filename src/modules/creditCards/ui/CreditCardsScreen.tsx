@@ -69,6 +69,7 @@ type CreditCardsScreenProps = {
   onNavigateToTransactions: () => void;
   onOpenDebitCards: () => void;
   onOpenSettings: () => void;
+  onOpenSubscriptions?: () => void;
   refreshKey?: number;
 };
 
@@ -79,6 +80,7 @@ export function CreditCardsScreen({
   onNavigateToTransactions,
   onOpenDebitCards,
   onOpenSettings,
+  onOpenSubscriptions,
   refreshKey = 0,
 }: CreditCardsScreenProps) {
   const insets = useSafeAreaInsets();
@@ -408,6 +410,7 @@ export function CreditCardsScreen({
         bottomInset={insets.bottom}
         colorScheme={activeTheme}
         onMoreActionPress={action => {
+          if (action === 'subscriptions') { onOpenSubscriptions?.(); return; }
           if (action === 'debitCards') {
             onOpenDebitCards();
           } else if (action === 'settings') {

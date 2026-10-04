@@ -1,3 +1,4 @@
+import { withExclusiveDatabase } from '../database/databaseCoordination';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, AppState } from 'react-native';
 
@@ -38,6 +39,8 @@ import {
 } from '../modules/settings';
 import { SettingsScreen } from '../modules/settings/ui/SettingsScreen';
 import { CategoriesScreen } from '../modules/categories';
+import { SubscriptionsScreen } from '../modules/subscriptions/ui/SubscriptionsScreen';
+import type { SubscriptionCharge } from '../modules/subscriptions';
 import { CreditCardsScreen } from '../modules/creditCards/ui/CreditCardsScreen';
 
 type AppRoute =
@@ -47,7 +50,8 @@ type AppRoute =
   | 'settings'
   | 'creditCards'
   | 'debitCards'
-  | 'categories';
+  | 'categories'
+  | 'subscriptions';
 
 export function AppNavigator() {
   const [route, setRoute] = useState<AppRoute>('dashboard');
@@ -60,6 +64,7 @@ export function AppNavigator() {
   const [accessLocked, setAccessLocked] = useState(false);
   const [backupStatus, setBackupStatus] = useState<DriveBackupStatus>();
   const [transactionsInitialDraft, setTransactionsInitialDraft] = useState<TransactionsInitialDraft>();
+  const [subscriptionPaymentReturn, setSubscriptionPaymentReturn] = useState<SubscriptionCharge>();
   /**
    * Incrementing this key forces useDashboardSummary to re-fetch from SQLite.
    * We bump it after any operation that mutates financial data:
@@ -105,7 +110,7 @@ export function AppNavigator() {
 
     return () => {
       isMounted = false;
-      void closeSmartFinDatabase();
+      void withExclusiveDatabase(closeSmartFinDatabase);
     };
   }, []);
 
@@ -289,7 +294,7 @@ export function AppNavigator() {
     [],
   );
 
-  const performDriveBackup = useCallback(async () => {
+  const performDriveBackup = useCallback(async () => withExclusiveDatabase(async () => {
     if (!database) {
       throw new Error('La base de datos local aún no está lista.');
     }
@@ -319,7 +324,7 @@ export function AppNavigator() {
       setDatabase(reopenedDatabase);
       setSettingsRepository(createSqliteSettingsRepository(reopenedDatabase));
     }
-  }, [database]);
+  }), [database]);
 
   const handleExportDriveBackup = useCallback(async () => {
     await runSettingsTask('Actualizando respaldo en Google Drive...', performDriveBackup);
@@ -401,6 +406,43 @@ export function AppNavigator() {
     );
   }
 
+  if (route === 'subscriptions') {
+    return (
+      <>
+        <SubscriptionsScreen
+          initialPaymentCharge={subscriptionPaymentReturn}
+          onInitialPaymentConsumed={() => setSubscriptionPaymentReturn(undefined)}
+          onCreateTransaction={(charge, subscription) => {
+            setSubscriptionPaymentReturn(charge);
+            setTransactionsInitialDraft({
+              action: 'subscriptionExpense',
+              accountId: charge.accountId ?? '',
+              amount: String(charge.expectedAmount).replace('.', ','),
+              merchantName: subscription?.merchantName ?? charge.subscriptionName,
+              categoryId: subscription?.categoryId,
+              subcategoryId: subscription?.subcategoryId,
+            });
+            setRoute('transactions');
+          }}
+          activeTheme={settings.theme}
+          onChanged={() => setDashboardRefreshKey(key => key + 1)}
+          onNavigateToHome={() => setRoute('dashboard')}
+          onNavigateToTransactions={() => setRoute('transactions')}
+          onOpenSettings={() => setRoute('settings')}
+          onOpenCreditCards={() => setRoute('creditCards')}
+          onOpenDebitCards={() => setRoute('debitCards')}
+        />
+        <AppAccessGate
+          colorScheme={settings.theme}
+          isVisible={accessLocked}
+          onUnlocked={() => setAccessLocked(false)}
+          securityService={securityService}
+          settings={settings}
+        />
+      </>
+    );
+  }
+
   if (route === 'settings') {
     return (
       <>
@@ -412,6 +454,7 @@ export function AppNavigator() {
           onNavigateToHome={() => setRoute('dashboard')}
           onNavigateToTransactions={() => setRoute('transactions')}
           onOpenCategories={() => setRoute('categories')}
+          onOpenSubscriptions={() => setRoute('subscriptions')}
           onOpenCreditCards={() => setRoute('creditCards')}
           onOpenDebitCards={() => setRoute('debitCards')}
           onDeleteFinancialData={handleDeleteFinancialData}
@@ -446,6 +489,7 @@ export function AppNavigator() {
           onOpenCreditCards={() => setRoute('creditCards')}
           onOpenDebitCards={() => setRoute('debitCards')}
           onOpenSettings={() => setRoute('settings')}
+          onOpenSubscriptions={() => setRoute('subscriptions')}
         />
         <AppAccessGate
           colorScheme={settings.theme}
@@ -468,10 +512,12 @@ export function AppNavigator() {
           refreshKey={dashboardRefreshKey}
           onNavigateToHome={() => setRoute('dashboard')}
           onOpenSettings={() => setRoute('settings')}
+          onOpenSubscriptions={() => setRoute('subscriptions')}
           onOpenCreditCards={() => setRoute('creditCards')}
           onOpenDebitCards={() => setRoute('debitCards')}
           onForceRefresh={() => setDashboardRefreshKey(k => k + 1)}
           onInitialDraftConsumed={() => setTransactionsInitialDraft(undefined)}
+          onSubscriptionExpenseSaved={() => setRoute('subscriptions')}
         />
         <AppAccessGate
           colorScheme={settings.theme}
@@ -495,6 +541,7 @@ export function AppNavigator() {
           onNavigateToTransactions={() => setRoute('transactions')}
           onOpenDebitCards={() => setRoute('debitCards')}
           onOpenSettings={() => setRoute('settings')}
+          onOpenSubscriptions={() => setRoute('subscriptions')}
         />
         <AppAccessGate
           colorScheme={settings.theme}
@@ -518,6 +565,7 @@ export function AppNavigator() {
           onNavigateToTransactions={() => setRoute('transactions')}
           onOpenCreditCards={() => setRoute('creditCards')}
           onOpenSettings={() => setRoute('settings')}
+          onOpenSubscriptions={() => setRoute('subscriptions')}
           onOpenTransactionsDraft={draft => {
             setTransactionsInitialDraft(draft);
             setRoute('transactions');
@@ -544,6 +592,7 @@ export function AppNavigator() {
         onOpenCreditCards={() => setRoute('creditCards')}
         onOpenDebitCards={() => setRoute('debitCards')}
         onOpenSettings={() => setRoute('settings')}
+        onOpenSubscriptions={() => setRoute('subscriptions')}
         onNavigateToTransactions={() => setRoute('transactions')}
       />
       <AppAccessGate

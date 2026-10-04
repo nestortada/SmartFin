@@ -9,10 +9,13 @@ export {
 } from './saveManualTransaction';
 export {
   applyClarificationAnswer,
+  buildEditableFields,
   buildClarificationQuestions,
   describeAiAction,
   normalizeAiCommandPlan,
   parseAiCommandPlan,
+  resolveNamedColor,
+  updateAiActionField,
 } from './aiCommandPlanner';
 export {
   executeAiCommandPlan,

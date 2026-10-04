@@ -207,4 +207,12 @@ El estado remoto se obtiene leyendo `smartfin-manifest.json`. Si la revisión lo
 
 ## 10. Módulos preparados
 
-El esquema ya reserva entidades para presupuestos, sobres, suscripciones, préstamos, amortizaciones, metas, inversiones, recibos, impuestos, flujo de caja y score financiero. Estas tablas son infraestructura futura, no una API funcional. Cada módulo debe añadir tipos, repositorio, casos de uso, pruebas y UI antes de declararse implementado.
+El esquema ya reserva entidades para presupuestos, sobres, suscripciones, préstamos, amortizaciones, metas, inversiones, recibos, impuestos, flujo de caja y score financiero. Presupuestos, préstamos y otros módulos pendientes siguen siendo infraestructura futura. Suscripciones dispone de interfaz nativa funcional, API de dominio, persistencia y recordatorios Android.
+
+## Suscripciones: compromiso → cobro esperado → gasto real → conciliación
+
+Hablar con IA también permite crear el compromiso por voz o texto, con importe COP, cuenta, categoría/subcategoría, fecha y día contractuales, recurrencia y recordatorios. Pregunta por datos faltantes, permite revisar/editar el borrador y guarda al pulsar Confirmar todo. Reutiliza el dominio, conserva la atomicidad del lote y programa recordatorios después del commit; crear la suscripción no crea un gasto ni cambia saldos/deuda. Los detalles están en `SUSCRIPCIONES.md`.
+
+La creación genera ocurrencias, proyecciones y recordatorios locales sin cambiar saldos. La fecha vencida marca una obligación como overdue, no un gasto. Movimientos registra el gasto real y la confirmación explícita vincula su ID con la ocurrencia; importe esperado y real se conservan separados. Ediciones/eliminaciones del movimiento actualizan o desvinculan la conciliación atómicamente. Pausa/cancelación conserva historial y salta futuros pendientes con motivo. Reanudar no recupera periodos suspendidos. [API, recurrencias y estados](SUSCRIPCIONES.md).
+
+La interfaz se abre desde Más → Suscripciones. El listado filtra Todas/Activas/Pausadas/Canceladas y presenta los equivalentes mensual/anual. Próximos cobros ofrece hoy…hoy+6, hoy…hoy+29 y fechas inclusivas personalizadas, separando vencidos. El detalle pagina 50 registros y permite consultar el movimiento vinculado. El panel de vinculación explica puntuación y señales, sin selección automática. Pausa, reanudación, salto y cancelación requieren confirmación; cancelar en SmartFin no cancela el servicio con el proveedor. Los errores de programación de recordatorios conservan el guardado financiero y ofrecen reintento.

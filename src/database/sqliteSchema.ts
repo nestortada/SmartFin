@@ -415,6 +415,8 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
     id TEXT PRIMARY KEY NOT NULL,
     raw_input TEXT NOT NULL,
     plan_json TEXT NOT NULL,
+    messages_json TEXT NOT NULL DEFAULT '[]',
+    clarification_history_json TEXT NOT NULL DEFAULT '[]',
     phase TEXT NOT NULL,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL

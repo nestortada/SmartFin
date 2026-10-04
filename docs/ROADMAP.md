@@ -28,7 +28,7 @@ flowchart LR
 
 Objetivo: preparar la aplicación para datos reales antes de ampliar funciones.
 
-- Versionar migraciones de base de datos.
+- Migraciones 1 y 2 versionadas y transaccionales implementadas; mantener este patrón para próximos cambios.
 - Definir estrategia de dinero sin errores de punto flotante.
 - Separar claramente seed demo y onboarding de producción.
 - Añadir transacciones SQLite atómicas en escrituras multitabla.
@@ -58,7 +58,7 @@ Objetivo: convertir el registro en control preventivo.
 - Presupuesto global, por categoría y por cuenta.
 - Umbrales y alertas locales.
 - Sobres y movimientos entre sobres.
-- Suscripciones y recurrencias con tareas locales.
+- Suscripciones: dominio, recurrencias, historial, conciliación, proyecciones y recordatorios Android implementados junto con la interfaz nativa; recordatorios iOS pendientes.
 - Préstamos y tabla de amortización.
 - Integración de obligaciones con dashboard y calendario.
 
@@ -135,3 +135,7 @@ Una capacidad pasa a “implementada” solo cuando incluye:
 4. pruebas automatizadas relevantes;
 5. recorrido visible o API pública utilizable;
 6. documentación y notas de privacidad actualizadas.
+
+## Avance: Suscripciones (3 de octubre de 2026)
+
+Completada la lógica local y offline de suscripciones, con API pública, cobros esperados persistidos, conciliación explícita y mantenimiento Android. La interfaz nativa basada en Stitch incluye listado, próximos cobros, formulario, detalle e historial y vinculación explícita de movimientos. No crea gastos automáticos. La evolución pendiente incluye recordatorios nativos iOS. [Detalle de lo implementado](SUSCRIPCIONES.md).

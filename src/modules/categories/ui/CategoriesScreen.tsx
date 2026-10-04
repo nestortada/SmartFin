@@ -35,6 +35,7 @@ type CategoriesScreenProps = {
   onOpenCreditCards: () => void;
   onOpenDebitCards: () => void;
   onOpenSettings: () => void;
+  onOpenSubscriptions?: () => void;
 };
 
 type CategoryFormState = {
@@ -140,6 +141,7 @@ export function CategoriesScreen({
   onOpenCreditCards,
   onOpenDebitCards,
   onOpenSettings,
+  onOpenSubscriptions,
 }: CategoriesScreenProps) {
   const insets = useSafeAreaInsets();
   const palette = palettes[activeTheme];
@@ -397,6 +399,7 @@ export function CategoriesScreen({
         bottomInset={insets.bottom}
         colorScheme={activeTheme}
         onMoreActionPress={action => {
+          if (action === 'subscriptions') { onOpenSubscriptions?.(); return; }
           if (action === 'creditCards') {
             onOpenCreditCards();
           } else if (action === 'debitCards') {

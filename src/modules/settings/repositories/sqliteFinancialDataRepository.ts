@@ -1,3 +1,4 @@
+import { runSQLiteTransaction } from '../../../database/atomicSQLite';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 
 export type FinancialDataRepository = {
@@ -5,6 +6,8 @@ export type FinancialDataRepository = {
 };
 
 const FINANCIAL_TABLES_IN_DELETE_ORDER = [
+  'subscription_reminders',
+  'subscription_occurrences',
   'ai_command_drafts',
   'transaction_tax_tags',
   'tax_tags',
@@ -38,15 +41,11 @@ export function createSqliteFinancialDataRepository(
 ): FinancialDataRepository {
   return {
     deleteFinancialData: async () => {
-      await database.executeSql('PRAGMA foreign_keys = OFF;');
-
-      try {
-        for (const tableName of FINANCIAL_TABLES_IN_DELETE_ORDER) {
-          await database.executeSql(`DELETE FROM ${tableName};`);
-        }
-      } finally {
-        await database.executeSql('PRAGMA foreign_keys = ON;');
-      }
+      await runSQLiteTransaction(database, function* () {
+        for (const tableName of FINANCIAL_TABLES_IN_DELETE_ORDER)
+          yield { sql: `DELETE FROM ${tableName};` };
+        return undefined;
+      });
     },
   };
 }

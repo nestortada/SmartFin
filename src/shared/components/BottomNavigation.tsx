@@ -16,7 +16,7 @@ export type BottomNavigationTab =
   | 'net-worth'
   | 'more';
 
-export type BottomNavigationMoreAction = 'creditCards' | 'debitCards' | 'settings';
+export type BottomNavigationMoreAction = 'creditCards' | 'debitCards' | 'settings' | 'subscriptions';
 
 type BottomNavigationItem = {
   id: BottomNavigationTab;
@@ -151,6 +151,11 @@ export function BottomNavigation({
             </Text>
           </Pressable>
           <View style={[styles.moreMenuDivider, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)' }]} />
+          <Pressable accessibilityRole="button" accessibilityLabel="Suscripciones" onPress={() => handleMoreActionPress('subscriptions')} style={styles.moreMenuItem}>
+            <Text style={[styles.moreMenuIcon, { color: isDark ? '#bbc3ff' : '#2848ee' }]}>SU</Text>
+            <Text style={[styles.moreMenuText, { color: isDark ? '#f1f0ff' : '#19191d' }]}>Suscripciones</Text>
+          </Pressable>
+          <View style={[styles.moreMenuDivider, { backgroundColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)' }]} />
           <Pressable
             accessibilityRole="button"
             onPress={() => handleMoreActionPress('settings')}
@@ -197,6 +202,7 @@ function BottomNavigationButton({
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityLabel={item.label}
       accessibilityState={{ selected: isActive }}
       onPress={onPress}
       onPressIn={pressScale.pressIn}

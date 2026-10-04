@@ -49,6 +49,7 @@ type DebitCardsScreenProps = {
   onNavigateToTransactions: () => void;
   onOpenCreditCards: () => void;
   onOpenSettings: () => void;
+  onOpenSubscriptions?: () => void;
   onOpenTransactionsDraft: (draft: TransactionsInitialDraft) => void;
   refreshKey?: number;
 };
@@ -70,6 +71,7 @@ export function DebitCardsScreen({
   onNavigateToTransactions,
   onOpenCreditCards,
   onOpenSettings,
+  onOpenSubscriptions,
   onOpenTransactionsDraft,
   refreshKey = 0,
 }: DebitCardsScreenProps) {
@@ -262,6 +264,7 @@ export function DebitCardsScreen({
         bottomInset={insets.bottom}
         colorScheme={activeTheme}
         onMoreActionPress={action => {
+          if (action === 'subscriptions') { onOpenSubscriptions?.(); return; }
           if (action === 'creditCards') {
             onOpenCreditCards();
           } else if (action === 'settings') {
