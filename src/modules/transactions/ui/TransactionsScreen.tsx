@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  FlatList,
+  SectionList,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -60,6 +60,7 @@ import {
   formatCOP,
   formatTransactionDateHeader,
   groupTransactionsByDate,
+  type TransactionDateGroup,
 } from './transactionsScreenFormatters';
 import {
   getCreditCardPaletteForTransactions,
@@ -91,6 +92,10 @@ export type TransactionsInitialDraft = {
   categoryId?: string;
   subcategoryId?: string;
 };
+
+function TransactionSeparator() {
+  return <View style={styles.transactionSeparator} />;
+}
 
 export function TransactionsScreen({
   activeTheme,
@@ -166,6 +171,11 @@ export function TransactionsScreen({
     sortOrder,
     setSortOrder,
   } = useTransactionsList(database, refreshKey);
+
+  const transactionSections = groupTransactionsByDate(filteredTransactions).map(group => ({
+    ...group,
+    key: group.date,
+  }));
 
   const themeColors = getTransactionsThemeColors(activeTheme);
   const creditCardPalette = getCreditCardPaletteForTransactions(activeTheme, themeColors);
@@ -928,9 +938,10 @@ export function TransactionsScreen({
         <Text style={[styles.statusText, { color: themeColors.danger }]}>{error}</Text>
       ) : null}
       {/* Main Transactions List grouped by dates */}
-      <FlatList
-        data={groupTransactionsByDate(filteredTransactions)}
-        keyExtractor={item => item.date}
+      <SectionList<Transaction, TransactionDateGroup>
+        sections={transactionSections}
+        keyExtractor={item => item.id}
+        stickySectionHeadersEnabled={false}
         contentContainerStyle={[
           styles.listContent,
           { paddingBottom: insets.bottom + 120 },
@@ -944,26 +955,28 @@ export function TransactionsScreen({
             </Text>
           </View>
         }
-        renderItem={({ item }) => (
-          <View style={styles.dateGroup}>
-            <Text style={[styles.dateHeader, { color: themeColors.muted }]}>
-              {formatTransactionDateHeader(item.date)}
-            </Text>
-
-            {item.data.map(tx => (
-              <TransactionCard
-                key={tx.id}
-                tx={tx}
-                isDark={isDark}
-                themeColors={themeColors}
-                categories={categories}
-                accounts={accounts}
-                onEditInstallments={openInstallmentEditor}
-                onShowOpTypeDropdown={showOpTypeDropdown}
-                onPress={handleCardPress}
-              />
-            ))}
-          </View>
+        renderSectionHeader={({ section }) => (
+          <Text style={[styles.dateHeader, { color: themeColors.muted }]}>
+            {formatTransactionDateHeader(section.date)}
+          </Text>
+        )}
+        ItemSeparatorComponent={TransactionSeparator}
+        renderSectionFooter={({ section }) => (
+          <View style={section === transactionSections[transactionSections.length - 1]
+            ? styles.lastDateGroupFooter
+            : styles.dateGroupFooter} />
+        )}
+        renderItem={({ item: tx }) => (
+          <TransactionCard
+            tx={tx}
+            isDark={isDark}
+            themeColors={themeColors}
+            categories={categories}
+            accounts={accounts}
+            onEditInstallments={openInstallmentEditor}
+            onShowOpTypeDropdown={showOpTypeDropdown}
+            onPress={handleCardPress}
+          />
         )}
       />
 
@@ -1364,14 +1377,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     padding: 6,
   },
-  dateGroup: {
-    gap: 12,
-    marginBottom: 20,
+  dateGroupFooter: {
+    // Preserve the previous 20px group margin plus the 18px list gap.
+    height: 38,
   },
   dateHeader: {
     fontSize: 11,
     fontWeight: '800',
     letterSpacing: 0.8,
+    marginBottom: 12,
     paddingHorizontal: 6,
   },
   emptyContainer: {
@@ -1543,10 +1557,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
   },
+  lastDateGroupFooter: {
+    height: 20,
+  },
   listContent: {
-    gap: 18,
     paddingHorizontal: 20,
     paddingTop: 12,
+  },
+  transactionSeparator: {
+    height: 12,
   },
   purpleGlow: {
     backgroundColor: 'rgba(205, 189, 255, 0.12)',
