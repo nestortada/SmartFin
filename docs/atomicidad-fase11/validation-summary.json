@@ -1,0 +1,450 @@
+{
+  "24": {
+    "config": {
+      "release": true,
+      "model": "Android SDK built for x86_64",
+      "android": "7.0",
+      "api": 24,
+      "packageId": "com.smartfin.atomicityphase1.tests"
+    },
+    "driver": {
+      "sqliteVersion": "3.9.2",
+      "journal": [
+        {
+          "journal_mode": "persist"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "foreign_keys": 1
+        }
+      ]
+    },
+    "mandatoryPassed": 14,
+    "recoveryFailurePassed": 3,
+    "cases": [
+      {
+        "name": "actual driver callbacks and local generator rollback",
+        "passed": true,
+        "durationMs": 685
+      },
+      {
+        "name": "shared write before failure",
+        "passed": true,
+        "durationMs": 665
+      },
+      {
+        "name": "shared write after failure",
+        "passed": true,
+        "durationMs": 717
+      },
+      {
+        "name": "foreign key SQL failure and full rollback",
+        "passed": true,
+        "durationMs": 734
+      },
+      {
+        "name": "parent child debt and financial revision rollback",
+        "passed": true,
+        "durationMs": 719
+      },
+      {
+        "name": "BEGIN before failure excludes body and foreign rollback",
+        "passed": true,
+        "durationMs": 724,
+        "outcome": "unknown",
+        "bodyCalls": 0,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "name": "concurrent owners external read backup and revoked scopes",
+        "passed": true,
+        "durationMs": 545
+      },
+      {
+        "name": "nested runner rejected and borrowed owner has no deadlock",
+        "passed": true,
+        "durationMs": 664
+      },
+      {
+        "name": "COMMIT after lost response quarantines",
+        "passed": true,
+        "durationMs": 775,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 900000,
+        "revisionBefore": 1,
+        "revisionAfter": 2
+      },
+      {
+        "name": "ROLLBACK after lost response quarantines",
+        "passed": true,
+        "durationMs": 836,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "name": "failed recovery close before preserves quarantine and revoked scopes",
+        "passed": true,
+        "durationMs": 658,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "state": {
+          "generation": 15,
+          "status": "quarantined",
+          "owned": false
+        },
+        "recoveryError": "Error: Injected before close"
+      },
+      {
+        "name": "failed recovery close after preserves quarantine and revoked scopes",
+        "passed": true,
+        "durationMs": 727,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "state": {
+          "generation": 16,
+          "status": "quarantined",
+          "owned": false
+        },
+        "recoveryError": "Error: Injected lost close receipt"
+      },
+      {
+        "name": "failed recovery close no-receipt preserves quarantine and revoked scopes",
+        "passed": true,
+        "durationMs": 10919,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "state": {
+          "generation": 17,
+          "status": "quarantined",
+          "owned": false
+        },
+        "recoveryError": "Error: SQLite closing receipt timed out"
+      },
+      {
+        "name": "close request waits for transaction",
+        "passed": true,
+        "durationMs": 562
+      },
+      {
+        "name": "BEGIN after failure excludes body and foreign rollback",
+        "passed": true,
+        "durationMs": 984,
+        "outcome": "unknown",
+        "bodyCalls": 0,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "name": "COMMIT before lost response quarantines",
+        "passed": true,
+        "durationMs": 891,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "name": "ROLLBACK before lost response quarantines",
+        "passed": true,
+        "durationMs": 840,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      }
+    ],
+    "rawDriver": true,
+    "nativeProbe": {
+      "config": {
+        "release": true,
+        "model": "Android SDK built for x86_64",
+        "android": "7.0",
+        "api": 24,
+        "packageId": "com.smartfin.atomicityphase1.tests"
+      },
+      "campaign": "native-probe",
+      "passed": true,
+      "clean": {
+        "markedSuccessful": false,
+        "cleanup": true,
+        "queryResponded": true,
+        "completedWithinFiveSeconds": true,
+        "persistedAmount": 1000000,
+        "transactionBeforeClose": true,
+        "oldIsOpenAfterClose": false,
+        "transactionAfterCleanup": false,
+        "openResponded": true,
+        "name": "atomicity_native_probe_2007763382800.db"
+      },
+      "abandoned": {
+        "markedSuccessful": false,
+        "completedWithinFiveSeconds": true,
+        "cleanup": false,
+        "readerError": "android.database.sqlite.SQLiteDatabaseLockedException: database is locked (code 5): , while compiling: PRAGMA journal_mode",
+        "transactionBeforeClose": true,
+        "oldIsOpenAfterClose": false,
+        "transactionAfterCleanup": true,
+        "name": "atomicity_native_probe_2007787919900.db"
+      },
+      "marked": {
+        "markedSuccessful": true,
+        "cleanup": true,
+        "queryResponded": true,
+        "completedWithinFiveSeconds": true,
+        "persistedAmount": 900000,
+        "transactionBeforeClose": true,
+        "oldIsOpenAfterClose": false,
+        "transactionAfterCleanup": false,
+        "openResponded": true,
+        "name": "atomicity_native_probe_2010359828500.db"
+      },
+      "nativeStacks": []
+    }
+  },
+  "35": {
+    "config": {
+      "release": true,
+      "model": "CRT-NX3",
+      "android": "15",
+      "api": 35,
+      "packageId": "com.smartfin.atomicityphase1.tests"
+    },
+    "driver": {
+      "sqliteVersion": "3.44.5",
+      "journal": [
+        {
+          "journal_mode": "truncate"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "foreign_keys": 1
+        }
+      ]
+    },
+    "mandatoryPassed": 14,
+    "recoveryFailurePassed": 3,
+    "cases": [
+      {
+        "name": "actual driver callbacks and local generator rollback",
+        "passed": true,
+        "durationMs": 597
+      },
+      {
+        "name": "shared write before failure",
+        "passed": true,
+        "durationMs": 621
+      },
+      {
+        "name": "shared write after failure",
+        "passed": true,
+        "durationMs": 614
+      },
+      {
+        "name": "foreign key SQL failure and full rollback",
+        "passed": true,
+        "durationMs": 861
+      },
+      {
+        "name": "parent child debt and financial revision rollback",
+        "passed": true,
+        "durationMs": 1077
+      },
+      {
+        "name": "BEGIN before failure excludes body and foreign rollback",
+        "passed": true,
+        "durationMs": 1050,
+        "outcome": "unknown",
+        "bodyCalls": 0,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "name": "concurrent owners external read backup and revoked scopes",
+        "passed": true,
+        "durationMs": 620
+      },
+      {
+        "name": "nested runner rejected and borrowed owner has no deadlock",
+        "passed": true,
+        "durationMs": 713
+      },
+      {
+        "name": "COMMIT after lost response quarantines",
+        "passed": true,
+        "durationMs": 1212,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 900000,
+        "revisionBefore": 1,
+        "revisionAfter": 2
+      },
+      {
+        "name": "ROLLBACK after lost response quarantines",
+        "passed": true,
+        "durationMs": 951,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "name": "failed recovery close before preserves quarantine and revoked scopes",
+        "passed": true,
+        "durationMs": 671,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "state": {
+          "generation": 15,
+          "status": "quarantined",
+          "owned": false
+        },
+        "recoveryError": "Error: Injected before close"
+      },
+      {
+        "name": "failed recovery close after preserves quarantine and revoked scopes",
+        "passed": true,
+        "durationMs": 534,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "state": {
+          "generation": 16,
+          "status": "quarantined",
+          "owned": false
+        },
+        "recoveryError": "Error: Injected lost close receipt"
+      },
+      {
+        "name": "failed recovery close no-receipt preserves quarantine and revoked scopes",
+        "passed": true,
+        "durationMs": 10439,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "state": {
+          "generation": 17,
+          "status": "quarantined",
+          "owned": false
+        },
+        "recoveryError": "Error: SQLite closing receipt timed out"
+      },
+      {
+        "name": "close request waits for transaction",
+        "passed": true,
+        "durationMs": 501
+      },
+      {
+        "name": "BEGIN after failure excludes body and foreign rollback",
+        "passed": true,
+        "durationMs": 742,
+        "outcome": "unknown",
+        "bodyCalls": 0,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "name": "COMMIT before lost response quarantines",
+        "passed": true,
+        "durationMs": 610,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      },
+      {
+        "name": "ROLLBACK before lost response quarantines",
+        "passed": true,
+        "durationMs": 593,
+        "outcome": "unknown",
+        "bodyCalls": 1,
+        "reopen": "reopen: completed",
+        "beforeAmount": 1000000,
+        "afterAmount": 1000000,
+        "revisionBefore": 1,
+        "revisionAfter": 1
+      }
+    ],
+    "rawDriver": true,
+    "nativeProbe": {
+      "config": {
+        "release": true,
+        "model": "CRT-NX3",
+        "android": "15",
+        "api": 35,
+        "packageId": "com.smartfin.atomicityphase1.tests"
+      },
+      "campaign": "native-probe",
+      "passed": true,
+      "clean": {
+        "markedSuccessful": false,
+        "cleanup": true,
+        "queryResponded": true,
+        "completedWithinFiveSeconds": true,
+        "persistedAmount": 1000000,
+        "transactionBeforeClose": true,
+        "oldIsOpenAfterClose": false,
+        "transactionAfterCleanup": false,
+        "openResponded": true,
+        "name": "atomicity_native_probe_483062224376176.db"
+      },
+      "abandoned": {
+        "markedSuccessful": false,
+        "completedWithinFiveSeconds": true,
+        "cleanup": false,
+        "readerError": "android.database.sqlite.SQLiteDatabaseLockedException: database is locked (Sqlite code 5 SQLITE_BUSY): , while compiling: PRAGMA journal_mode, (OS error - 0:Success)",
+        "transactionBeforeClose": true,
+        "oldIsOpenAfterClose": false,
+        "transactionAfterCleanup": true,
+        "name": "atomicity_native_probe_483062263703869.db"
+      },
+      "marked": {
+        "markedSuccessful": true,
+        "cleanup": true,
+        "queryResponded": true,
+        "completedWithinFiveSeconds": true,
+        "persistedAmount": 900000,
+        "transactionBeforeClose": true,
+        "oldIsOpenAfterClose": false,
+        "transactionAfterCleanup": false,
+        "openResponded": true,
+        "name": "atomicity_native_probe_483064811076792.db"
+      },
+      "nativeStacks": []
+    }
+  }
+}

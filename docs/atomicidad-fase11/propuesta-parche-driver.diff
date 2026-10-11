@@ -1,0 +1,13 @@
+--- SQLitePlugin.java (driver instalado, antes)
++++ SQLitePlugin.java (propuesta; no aplicada)
+@@ rama de cierre dentro de DBRunner.run
+             if (dbq != null && dbq.close) {
+                 try {
++                    // End only this runner thread's sessions before releasing the pool.
++                    // Preserve prior native commit flags; command outcome stays unknown.
++                    while (this.mydb.inTransaction()) {
++                        this.mydb.endTransaction();
++                    }
+                     closeDatabaseNow(dbname);
+
+                     dbrmap.remove(dbname); // (should) remove ourself

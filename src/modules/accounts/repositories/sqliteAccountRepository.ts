@@ -1,4 +1,5 @@
 import { saveSqliteAccounts } from './saveSqliteAccounts';
+import { registerSQLiteRepository } from '../../../database/sqliteRepositoryScope';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import {
   readNullableNumber,
@@ -57,7 +58,7 @@ function rowToAccount(row: SQLiteRow): Account {
 export function createSqliteAccountRepository(
   database: SmartFinSQLiteDatabase,
 ): SqliteAccountRepository {
-  return {
+  return registerSQLiteRepository<SqliteAccountRepository>(database, {
     getAccounts: async () => {
       const [resultSet] = await database.executeSql(
         `SELECT
@@ -80,5 +81,5 @@ export function createSqliteAccountRepository(
       return resultSetToRows(resultSet).map(rowToAccount);
     },
     saveAccounts: accounts => saveSqliteAccounts(database, accounts),
-  };
+  });
 }

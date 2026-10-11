@@ -1,0 +1,32 @@
+{
+  "config": {
+    "release": true,
+    "model": "CRT-NX3",
+    "android": "15",
+    "api": 35,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "campaign": "native-probe",
+  "passed": false,
+  "clean": {
+    "cleanup": true,
+    "queryResponded": true,
+    "completedWithinFiveSeconds": true,
+    "persistedAmount": 1000000,
+    "transactionBeforeClose": true,
+    "oldIsOpenAfterClose": false,
+    "transactionAfterCleanup": false,
+    "openResponded": true,
+    "name": "atomicity_native_probe_481381215940614.db"
+  },
+  "abandoned": {
+    "completedWithinFiveSeconds": true,
+    "cleanup": false,
+    "readerError": "android.database.sqlite.SQLiteDatabaseLockedException: database is locked (Sqlite code 5 SQLITE_BUSY): , while compiling: PRAGMA journal_mode, (OS error - 0:Success)",
+    "transactionBeforeClose": true,
+    "oldIsOpenAfterClose": false,
+    "transactionAfterCleanup": true,
+    "name": "atomicity_native_probe_481381266603999.db"
+  },
+  "nativeStacks": []
+}

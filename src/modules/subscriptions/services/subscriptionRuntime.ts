@@ -5,7 +5,8 @@ import {
   createSubscriptionReminderService,
   getNativeSubscriptionReminders,
 } from './androidSubscriptionReminderService';
-import { withDatabaseMaintenance } from '../../../database/databaseCoordination';
+import { withDatabaseMaintenance, type DatabasePermit } from '../../../database/databaseCoordination';
+import { borrowSQLiteDatabase } from '../../../database/managedSQLite';
 import {
   createSqliteCategoryRepository,
   createSqliteSubcategoryRepository,
@@ -18,8 +19,8 @@ export async function getSubscriptionApi() {
     Object.entries(api).map(([key, operation]) => [
       key,
       (...args: unknown[]) =>
-        withDatabaseMaintenance(async () => {
-          const current = await createRuntimeApi();
+        withDatabaseMaintenance(async permit => {
+          const current = await createRuntimeApi(permit);
           return Reflect.apply(
             Reflect.get(current, key) ?? operation,
             current,
@@ -29,8 +30,8 @@ export async function getSubscriptionApi() {
     ]),
   ) as typeof api;
 }
-async function createRuntimeApi() {
-  const database = await openSmartFinDatabase();
+async function createRuntimeApi(permit: DatabasePermit) {
+  const database = borrowSQLiteDatabase(await openSmartFinDatabase(permit), permit);
   return createSubscriptionApi({
     repository: createSqliteSubscriptionRepository(database),
     categoryRepository: createSqliteCategoryRepository(database),
@@ -39,8 +40,8 @@ async function createRuntimeApi() {
   });
 }
 export async function runSubscriptionMaintenance(): Promise<boolean> {
-  return withDatabaseMaintenance(async () => {
-    const api = await createRuntimeApi();
+  return withDatabaseMaintenance(async permit => {
+    const api = await createRuntimeApi(permit);
     let result = await api.syncSubscriptions();
     // Yield to SQLite between bounded batches rather than holding a long transaction.
     for (let batch = 1; result.hasMore && batch < 20; batch += 1)

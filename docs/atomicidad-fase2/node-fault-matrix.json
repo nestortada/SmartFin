@@ -1,0 +1,81 @@
+{
+  "database": "node:sqlite :memory:",
+  "matrix": [
+    {
+      "name": "taxed transfer",
+      "writes": 11,
+      "rollbackPoints": 22
+    },
+    {
+      "name": "manual existing payment edit",
+      "writes": 8,
+      "rollbackPoints": 16
+    },
+    {
+      "name": "expense deletion",
+      "writes": 21,
+      "rollbackPoints": 42
+    },
+    {
+      "name": "existing payment deletion",
+      "writes": 24,
+      "rollbackPoints": 48
+    },
+    {
+      "name": "credit purchase with installments",
+      "writes": 6,
+      "rollbackPoints": 12
+    },
+    {
+      "name": "unclassified credit preparation",
+      "writes": 8,
+      "rollbackPoints": 16
+    },
+    {
+      "name": "quick debit to credit",
+      "writes": 8,
+      "rollbackPoints": 16
+    },
+    {
+      "name": "quick credit to debit",
+      "writes": 8,
+      "rollbackPoints": 16
+    },
+    {
+      "name": "quick installment update",
+      "writes": 6,
+      "rollbackPoints": 12
+    },
+    {
+      "name": "historical subscription expense edit",
+      "writes": 6,
+      "rollbackPoints": 12
+    },
+    {
+      "name": "historical subscription expense deletion",
+      "writes": 24,
+      "rollbackPoints": 48
+    },
+    {
+      "name": "transfer converted to expense",
+      "writes": 19,
+      "rollbackPoints": 38
+    },
+    {
+      "name": "transfer destination change and tax removal",
+      "writes": 17,
+      "rollbackPoints": 34
+    },
+    {
+      "name": "income creation",
+      "writes": 5,
+      "rollbackPoints": 10
+    },
+    {
+      "name": "historical account and date change",
+      "writes": 7,
+      "rollbackPoints": 14
+    }
+  ],
+  "rollbackPoints": 356
+}

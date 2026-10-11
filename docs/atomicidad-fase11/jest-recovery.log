@@ -1,0 +1,22 @@
+PASS __tests__/sqliteRecoveryLifecycle.test.ts
+  √ foreign keys disabled refuses application readiness even with successful SQL callbacks (66 ms)
+  √ dangling reference refuses application readiness even with successful SQL callbacks (52 ms)
+  √ damaged integrity refuses application readiness even with successful SQL callbacks (81 ms)
+  √ invalid revision refuses application readiness even with successful SQL callbacks (57 ms)
+  √ provisional driver Promise cannot deliver a usable connection before native receipt (75 ms)
+  √ native open error wins over the provisional object (18 ms)
+  √ missing open callback times out as failure and late success cannot resurrect it (33 ms)
+  √ failed close before native action keeps unknown, revoked scope and sticky quarantine (48 ms)
+  √ failed close after native action keeps unknown, revoked scope and sticky quarantine (65 ms)
+  √ missing close callback and eventual native close never release quarantine (31 ms)
+  √ failed opening validation permanently blocks automatic application reopen (33 ms)
+  √ failed foreign_keys validation permanently blocks automatic application reopen (67 ms)
+  √ failed foreign_key_check validation permanently blocks automatic application reopen (38 ms)
+  √ failed integrity_check validation permanently blocks automatic application reopen (56 ms)
+  √ failed revision validation permanently blocks automatic application reopen (36 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       15 passed, 15 total
+Snapshots:   0 total
+Time:        3.708 s
+Ran all test suites matching /__tests__\\sqliteRecoveryLifecycle.test.ts|__tests__\\sqliteAndroidRecoveryPatch.test.js/i.

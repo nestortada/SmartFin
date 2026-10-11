@@ -163,6 +163,7 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
       <View style={styles.txRight}>
         <View style={styles.paymentChipRow}>
           <Pressable
+            disabled={tx.type === 'creditCardPayment'}
             onPress={() => onShowOpTypeDropdown(tx)}
             style={[
               styles.cardOpDropdown,

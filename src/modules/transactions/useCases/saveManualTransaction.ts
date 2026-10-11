@@ -1,13 +1,17 @@
 import type { Account } from '../../accounts';
 import type { SqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import type { CreditCardRepository } from '../../creditCards/repositories';
+import type { InstallmentPurchase } from '../../creditCards/types';
 import {
   reconcileCreditCardTransactions,
   resolveCreditCardTransactionTarget,
   type ResolveCreditCardTransactionTargetResult,
 } from '../../creditCards/useCases';
-import type { SqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
+import { readCurrentManualTransaction, type SqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import type { Transaction, TransactionType } from '../types';
+import { requireCurrentTransaction, withManualTransactionScope } from './manualTransactionScope';
+import { isSQLiteParticipant } from '../../../database/managedSQLite';
+import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
 
 export type ManualTransactionOperationType = 'Débito' | 'Crédito';
 
@@ -252,8 +256,90 @@ export function getNextMonthDueDate(fromDate: string): string {
   return dueDate.toISOString();
 }
 
-export async function saveManualTransaction(
+export async function saveTransactionInstallments({
+  creditCardRepository,
+  transactionRepository,
+  transaction,
+  installmentCount,
+  previousTransaction,
+}: {
+  creditCardRepository: CreditCardRepository;
+  transactionRepository: ManualTransactionRepository;
+  transaction: Transaction;
+  installmentCount: number;
+  previousTransaction?: Transaction | null;
+}): Promise<void> {
+  if (transaction.paymentMethod !== 'credit' || installmentCount <= 1) {
+    await transactionRepository.deleteInstallmentPurchasesByTransactionId(transaction.id);
+    return;
+  }
+  const existing = previousTransaction
+    ? (await creditCardRepository.getInstallmentPurchases([previousTransaction.accountId]))
+      .find(purchase => purchase.transactionId === transaction.id)
+    : undefined;
+  const unchangedTerms = existing && existing.installmentCount === installmentCount &&
+    existing.totalAmount === transaction.amount && existing.currency === transaction.currency;
+  const purchase: InstallmentPurchase = {
+    id: existing?.id ?? `installment-${transaction.id}`,
+    accountId: transaction.accountId,
+    createdAt: existing?.createdAt ?? transaction.createdAt,
+    currency: transaction.currency,
+    firstDueDate: unchangedTerms && previousTransaction?.date === transaction.date
+      ? existing.firstDueDate : getNextMonthDueDate(transaction.date),
+    installmentCount,
+    merchantName: transaction.merchantName,
+    monthlyAmount: unchangedTerms ? existing.monthlyAmount : Math.round(transaction.amount / installmentCount),
+    paidInstallments: unchangedTerms ? existing.paidInstallments : 0,
+    status: unchangedTerms ? existing.status : 'active',
+    totalAmount: transaction.amount,
+    transactionId: transaction.id,
+    updatedAt: transaction.updatedAt,
+  };
+  await creditCardRepository.saveInstallmentPurchases([purchase]);
+}
+
+const requests = new WeakMap<SaveManualTransactionParams, Promise<SaveManualTransactionResult>>();
+let manualIdSequence = 0;
+
+export async function saveManualTransaction(params: SaveManualTransactionParams): Promise<SaveManualTransactionResult> {
+  const database = repositorySQLiteDatabase(params.transactionRepository);
+  // An existing participant's result is provisional until its outer owner commits.
+  const participant = database && isSQLiteParticipant(database);
+  const existing = participant ? undefined : requests.get(params);
+  if (existing) return existing;
+  const result = withManualTransactionScope(params, async (dependencies, persisted) => {
+    if (!persisted) return saveManualTransactionInScope(params);
+    const accounts = await dependencies.accountRepository.getAccounts();
+    const editingTransaction = params.editingTransaction
+      ? requireCurrentTransaction(params.editingTransaction,
+        await readCurrentManualTransaction(dependencies.transactionRepository, params.editingTransaction.id)) : undefined;
+    requirePrincipalTransaction(editingTransaction);
+    requireImpactAccounts(accounts, editingTransaction);
+    return saveManualTransactionInScope({ ...params, ...dependencies, accounts, editingTransaction }, true);
+  });
+  // Same request object cannot be executed twice, including after an unknown result.
+  // This is runtime protection, not a durable receipt for newly constructed commands.
+  if (!participant) requests.set(params, result);
+  return result;
+}
+
+function requirePrincipalTransaction(transaction?: Transaction) {
+  if (transaction?.type === 'internalTransfer' && transaction.direction === 'inflow') {
+    throw new Error('Edita o elimina la transferencia desde su movimiento de origen.');
+  }
+}
+
+function requireImpactAccounts(accounts: Account[], transaction?: Transaction) {
+  if (!transaction) return;
+  if (!accounts.some(account => account.id === transaction.accountId) ||
+      (transaction.targetAccountId && !accounts.some(account => account.id === transaction.targetAccountId))) {
+    throw new Error('Las cuentas del movimiento ya no existen.');
+  }
+}
+
+async function saveManualTransactionInScope(
   params: SaveManualTransactionParams,
+  persisted = false,
 ): Promise<SaveManualTransactionResult> {
   const {
     accountId,
@@ -283,9 +369,10 @@ export async function saveManualTransaction(
   const isCreditCardExpense =
     transactionType !== 'income' &&
     transactionType !== 'internalTransfer' &&
+    transactionType !== 'creditCardPayment' &&
     isCreditOperation(operationType);
 
-  if (!amount || amount <= 0) {
+  if (!Number.isFinite(amount) || amount <= 0) {
     throw new Error('Monto invÃ¡lido.');
   }
 
@@ -300,6 +387,9 @@ export async function saveManualTransaction(
     installmentCount,
     value: interestFreeInstallmentCountInput,
   });
+  if (!Number.isFinite(installmentCount) || !Number.isFinite(interestFreeInstallmentCount)) {
+    throw new Error('Cuotas inválidas.');
+  }
   const selectedAccount = accounts.find(account => account.id === accountId);
   const creditCardTarget = await resolveCreditCardTransactionTarget({
     accountRepository,
@@ -327,8 +417,23 @@ export async function saveManualTransaction(
     }
   }
 
+  if (persisted) {
+    const currentAccounts = await accountRepository.getAccounts();
+    const source = currentAccounts.find(account => account.id ===
+      (transactionType === 'internalTransfer' ? accountId : targetAccountId));
+    const target = currentAccounts.find(account => account.id === requestedTargetAccountId);
+    if (!source || source.status !== 'active' || source.currency !== (editingTransaction?.currency ?? 'COP')) {
+      throw new Error('Selecciona una cuenta activa con moneda compatible.');
+    }
+    if (transactionType === 'internalTransfer' && (!target || target.status !== 'active' ||
+        target.currency !== source.currency || !['cash', 'bankAccount', 'savingsAccount'].includes(source.type) ||
+        !['cash', 'bankAccount', 'savingsAccount'].includes(target.type))) {
+      throw new Error('Selecciona cuentas compatibles para la transferencia.');
+    }
+  }
+
   const transaction: Transaction = {
-    id: editingTransaction?.id ?? `tx_manual_${Date.now()}`,
+    id: editingTransaction?.id ?? `tx_manual_${Date.now()}${persisted ? `_${manualIdSequence++}` : ''}`,
     accountId: transactionType === 'internalTransfer' ? accountId as string : targetAccountId,
     amount,
     categoryId: categoryId || undefined,
@@ -337,9 +442,11 @@ export async function saveManualTransaction(
     creditCardHint: isCreditCardExpense ? creditCardTarget.creditCardHint : undefined,
     currency: editingTransaction?.currency ?? 'COP',
     date: effectiveTransactionDate,
-    description: merchantName,
+    description: editingTransaction && merchantName === (editingTransaction.merchantName ?? editingTransaction.description)
+      ? editingTransaction.description : merchantName,
     dedupeKey: dedupeKey ?? editingTransaction?.dedupeKey,
-    direction: getTransactionDirection(transactionType),
+    direction: editingTransaction?.type === transactionType
+      ? editingTransaction.direction : getTransactionDirection(transactionType),
     merchantName,
     notes: buildTransactionNotes({
       installmentCount,
@@ -351,10 +458,20 @@ export async function saveManualTransaction(
     }),
     paymentMethod: isCreditCardExpense ? 'credit' : 'debit',
     status: editingTransaction?.status ?? 'posted',
-    targetAccountId: transactionType === 'internalTransfer' ? requestedTargetAccountId : undefined,
+    targetAccountId: transactionType === 'internalTransfer' ? requestedTargetAccountId
+      : transactionType === 'creditCardPayment'
+        ? requestedTargetAccountId ?? editingTransaction?.targetAccountId : undefined,
     type: transactionType,
     updatedAt: now,
   };
+
+  if (persisted && !editingTransaction) {
+    for (const id of [transaction.id, `${transaction.id}-in`, `${transaction.id}-4x1000`]) {
+      if (await readCurrentManualTransaction(transactionRepository, id)) {
+        throw new Error('La identidad del movimiento ya existe. Actualiza el historial antes de registrarlo.');
+      }
+    }
+  }
 
   const accountUpdates = new Map<string, Account>();
   let existingTransferTax: Transaction | undefined;
@@ -407,6 +524,11 @@ export async function saveManualTransaction(
   }
 
   if (accountUpdates.size > 0) {
+    if (persisted && [...accountUpdates.values()].some(account =>
+      !Number.isFinite(account.balance.amount) ||
+      (account.debtBalance && !Number.isFinite(account.debtBalance.amount)))) {
+      throw new Error('Saldo inválido.');
+    }
     await accountRepository.saveAccounts(Array.from(accountUpdates.values()));
   }
 
@@ -426,29 +548,14 @@ export async function saveManualTransaction(
     await transactionRepository.deleteTransaction(existingTransferTax.id);
   }
 
-  if (isCreditCardExpense && installmentCount > 1) {
-    await creditCardRepository.saveInstallmentPurchases([
-      {
-        id: `installment-${transaction.id}`,
-        accountId: transaction.accountId,
-        createdAt: editingTransaction?.createdAt ?? now,
-        currency: transaction.currency,
-        firstDueDate: getNextMonthDueDate(transaction.date),
-        installmentCount,
-        merchantName: transaction.merchantName,
-        monthlyAmount: Math.round(transaction.amount / installmentCount),
-        paidInstallments: 0,
-        status: 'active',
-        totalAmount: transaction.amount,
-        transactionId: transaction.id,
-        updatedAt: now,
-      },
-    ]);
-  } else {
-    await transactionRepository.deleteInstallmentPurchasesByTransactionId(transaction.id);
-  }
+  await saveTransactionInstallments({
+    creditCardRepository, transactionRepository, transaction,
+    installmentCount: isCreditCardExpense ? installmentCount : 1,
+    previousTransaction: editingTransaction,
+  });
 
-  if (isCreditCardExpense || editingTransaction?.paymentMethod === 'credit') {
+  if (isCreditCardExpense || editingTransaction?.paymentMethod === 'credit' ||
+      transaction.type === 'creditCardPayment' || editingTransaction?.type === 'creditCardPayment') {
     await reconcileCreditCardTransactions({
       accountRepository,
       creditCardRepository,
@@ -472,7 +579,20 @@ export type DeleteManualTransactionParams = {
   transactionRepository: ManualTransactionRepository;
 };
 
-export async function deleteManualTransactionSafely({
+export async function deleteManualTransactionSafely(params: DeleteManualTransactionParams): Promise<void> {
+  return withManualTransactionScope(params, async (dependencies, persisted) => {
+    if (!persisted) return deleteManualTransactionInScope(params);
+    const current = await readCurrentManualTransaction(dependencies.transactionRepository, params.transaction.id);
+    if (!current) return;
+    const transaction = requireCurrentTransaction(params.transaction, current);
+    requirePrincipalTransaction(transaction);
+    const accounts = await dependencies.accountRepository.getAccounts();
+    requireImpactAccounts(accounts, transaction);
+    return deleteManualTransactionInScope({ ...params, ...dependencies, transaction, accounts });
+  });
+}
+
+async function deleteManualTransactionInScope({
   accountRepository,
   accounts,
   creditCardRepository,
@@ -509,7 +629,7 @@ export async function deleteManualTransactionSafely({
   await transactionRepository.deleteInstallmentPurchasesByTransactionId(transaction.id);
   await transactionRepository.deleteTransaction(transaction.id);
 
-  if (transaction.paymentMethod === 'credit') {
+  if (transaction.paymentMethod === 'credit' || transaction.type === 'creditCardPayment') {
     await reconcileCreditCardTransactions({
       accountRepository,
       creditCardRepository,

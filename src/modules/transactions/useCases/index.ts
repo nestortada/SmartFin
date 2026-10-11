@@ -7,6 +7,7 @@ export {
   type SaveManualTransactionParams,
   type SaveManualTransactionResult,
 } from './saveManualTransaction';
+export { updateTransactionQuickly } from './updateTransactionQuickly';
 export {
   applyClarificationAnswer,
   buildEditableFields,

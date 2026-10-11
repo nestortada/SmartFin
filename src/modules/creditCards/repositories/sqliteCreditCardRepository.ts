@@ -1,4 +1,5 @@
 import { saveSqliteAccounts } from '../../accounts/repositories/saveSqliteAccounts';
+import { registerSQLiteRepository } from '../../../database/sqliteRepositoryScope';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import {
   readNullableNumber,
@@ -119,7 +120,7 @@ function placeholders(values: string[]): string {
 export function createSqliteCreditCardRepository(
   database: SmartFinSQLiteDatabase,
 ): CreditCardRepository {
-  return {
+  return registerSQLiteRepository<CreditCardRepository>(database, {
     closeCreditCardAccount: async accountId => {
       await database.executeSql(
         `UPDATE accounts
@@ -322,5 +323,5 @@ export function createSqliteCreditCardRepository(
         [accountId, new Date().toISOString(), ...transactionIds],
       );
     },
-  };
+  });
 }

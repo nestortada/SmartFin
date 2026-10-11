@@ -1,4 +1,5 @@
 import { withExclusiveDatabase } from '../database/databaseCoordination';
+import { borrowSQLiteDatabase } from '../database/managedSQLite';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, AppState } from 'react-native';
 
@@ -277,7 +278,9 @@ export function AppNavigator() {
         throw new Error('La base de datos local aún no está lista.');
       }
 
-      await deleteFinancialData(createSqliteFinancialDataRepository(database));
+      await withExclusiveDatabase(async permit => {
+        await deleteFinancialData(createSqliteFinancialDataRepository(borrowSQLiteDatabase(database, permit)));
+      });
 
       // Refresh dashboard so it reflects the now-empty DB immediately
       setDashboardRefreshKey(k => k + 1);
@@ -294,18 +297,19 @@ export function AppNavigator() {
     [],
   );
 
-  const performDriveBackup = useCallback(async () => withExclusiveDatabase(async () => {
+  const performDriveBackup = useCallback(async () => withExclusiveDatabase(async permit => {
     if (!database) {
       throw new Error('La base de datos local aún no está lista.');
     }
 
-    await database.executeSql('PRAGMA wal_checkpoint(FULL);');
-    const revision = await getFinancialDataRevision(database);
+    const ownedDatabase = borrowSQLiteDatabase(database, permit);
+    await ownedDatabase.executeSql('PRAGMA wal_checkpoint(FULL);');
+    const revision = await getFinancialDataRevision(ownedDatabase);
     setDatabase(undefined);
     setSettingsRepository(undefined);
 
     try {
-      await closeSmartFinDatabase();
+      await closeSmartFinDatabase(permit);
       const result = await exportDriveBackup(revision);
       setBackupStatus({
         accessNeedsRenewal: false,
@@ -320,7 +324,7 @@ export function AppNavigator() {
       });
       lastPromptedBackupRevision.current = revision;
     } finally {
-      const reopenedDatabase = await openSmartFinDatabase();
+      const reopenedDatabase = await openSmartFinDatabase(permit);
       setDatabase(reopenedDatabase);
       setSettingsRepository(createSqliteSettingsRepository(reopenedDatabase));
     }

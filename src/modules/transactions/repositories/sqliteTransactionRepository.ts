@@ -1,4 +1,5 @@
 import { upsertSQLiteRow } from '../../../database/upsertSQLiteRow';
+import { registerSQLiteRepository, repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
 import { getSQLiteTransactionHistoryPage, getSQLiteTransactionMonths } from './sqliteTransactionHistory';
 import type { TransactionHistoryCursor, TransactionHistoryPage, TransactionHistoryQuery } from '../types/TransactionHistoryQuery';
 import { runSQLiteTransaction } from '../../../database/atomicSQLite';
@@ -78,10 +79,22 @@ export function rowToTransaction(row: SQLiteRow): Transaction {
   };
 }
 
+/** Internal adapter lookup under the caller's connection scope; never a visible page. */
+export async function readCurrentManualTransaction(
+  repository: Pick<SqliteTransactionRepository, 'getTransactions'>,
+  id: string,
+): Promise<Transaction | undefined> {
+  const database = repositorySQLiteDatabase(repository);
+  if (!database) return (await repository.getTransactions()).find(transaction => transaction.id === id);
+  const [result] = await database.executeSql('SELECT * FROM transactions WHERE id = ?;', [id]);
+  const row = resultSetToRows(result)[0];
+  return row ? rowToTransaction(row) : undefined;
+}
+
 export function createSqliteTransactionRepository(
   database: SmartFinSQLiteDatabase,
 ): SqliteTransactionRepository {
-  return {
+  return registerSQLiteRepository<SqliteTransactionRepository>(database, {
     getTransactionPage: (query, cursor, isCancelled) =>
       getSQLiteTransactionHistoryPage(database, rowToTransaction, query, cursor, isCancelled),
     getTransactionMonths: () => getSQLiteTransactionMonths(database),
@@ -272,5 +285,5 @@ export function createSqliteTransactionRepository(
       }
       return null;
     },
-  };
+  });
 }

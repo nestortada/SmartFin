@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-11",
+  "scope": "financial atomicity phase 1 only",
+  "node": "v24.16.0",
+  "jest": {"passedTests": 257, "skippedTests": 3, "passedSuites": 31, "skippedSuites": 3, "passedSnapshots": 8},
+  "newCoordinationTests": 22,
+  "typescriptExitCode": 0,
+  "eslintExitCode": 0,
+  "eslintWarnings": 0,
+  "diffCheckExitCode": 0,
+  "android": {"package": "com.smartfin.atomicityphase1.tests", "api": 35, "release": true, "hermes": true, "passedCases": 11, "api24": "pending: no device or installed system image", "productionPackageMetadataUnchanged": true, "harnessStopped": true, "testedDatabaseSourceHashesMatchWorkspace": true, "installedDriverSourceHashesUnchanged": true},
+  "unchanged": ["schema", "migrations", "dependencies", "production Kotlin", "dashboard queries", "transaction history queries/caches", "manual financial rules", "phase 0 characterization snapshots"],
+  "knownManualPartialStatesPreserved": 4,
+  "phase2Implemented": false,
+  "realFinancialDatabaseAccessed": false,
+  "phase2Recommendation": "postpone until API 24 validation and explicit authorization"
+}

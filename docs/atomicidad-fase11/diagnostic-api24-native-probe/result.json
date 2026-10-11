@@ -1,0 +1,32 @@
+{
+  "config": {
+    "release": true,
+    "model": "Android SDK built for x86_64",
+    "android": "7.0",
+    "api": 24,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "campaign": "native-probe",
+  "passed": true,
+  "clean": {
+    "cleanup": true,
+    "queryResponded": true,
+    "completedWithinFiveSeconds": true,
+    "persistedAmount": 1000000,
+    "transactionBeforeClose": true,
+    "oldIsOpenAfterClose": false,
+    "transactionAfterCleanup": false,
+    "openResponded": true,
+    "name": "atomicity_native_probe_515136651300.db"
+  },
+  "abandoned": {
+    "completedWithinFiveSeconds": true,
+    "cleanup": false,
+    "readerError": "android.database.sqlite.SQLiteDatabaseLockedException: database is locked (code 5): , while compiling: PRAGMA journal_mode",
+    "transactionBeforeClose": true,
+    "oldIsOpenAfterClose": false,
+    "transactionAfterCleanup": true,
+    "name": "atomicity_native_probe_515159957800.db"
+  },
+  "nativeStacks": []
+}

@@ -1,0 +1,40 @@
+ M __tests__/helpers/realSQLite.ts
+ M __tests__/transactionsScreen.test.tsx
+ M scripts/patchReactNativeSqliteStorage.js
+ M src/database/atomicSQLite.ts
+ M src/database/databaseCoordination.ts
+ M src/database/sqliteDatabase.ts
+ M src/modules/settings/useCases/deleteFinancialData.ts
+ M src/modules/subscriptions/services/subscriptionRuntime.ts
+ M src/modules/transactions/ui/TransactionsScreen.tsx
+ M src/modules/transactions/ui/components/AddTransactionModal.tsx
+ M src/modules/transactions/ui/components/TransactionCard.tsx
+ M src/modules/transactions/useCases/executeAiCommandPlan.ts
+ M src/modules/transactions/useCases/index.ts
+ M src/modules/transactions/useCases/saveManualTransaction.ts
+ M src/navigation/AppNavigator.tsx
+?? .agents/skills/smartfin-financial-domain/
+?? __tests__/__snapshots__/
+?? __tests__/financialAtomicityInfrastructure.test.ts
+?? __tests__/financialAtomicityPhase0.test.ts
+?? __tests__/financialIntegrity.test.ts
+?? __tests__/helpers/financialAtomicityScenarios.ts
+?? __tests__/helpers/financialIntegrityFixture.ts
+?? __tests__/helpers/financialState.ts
+?? __tests__/sharedSQLiteCoordination.test.ts
+?? __tests__/sqliteAndroidRecoveryPatch.test.ts
+?? __tests__/sqliteRecoveryLifecycle.test.ts
+?? docs/atomicidad-fase1/
+?? docs/atomicidad-fase11/
+?? docs/atomicidad-fase2/
+?? docs/atomicidad-financiera-fase0.md
+?? docs/atomicidad-financiera-fase1.md
+?? docs/atomicidad-financiera-fase11.md
+?? docs/auditoria-integridad-financiera.md
+?? docs/diseno-atomicidad-financiera.md
+?? docs/validacion-atomicidad-fase1-api24.md
+?? scripts/androidAtomicityPhase1/
+?? scripts/sqliteAndroidRecoveryPatch.js
+?? src/database/managedSQLite.ts
+?? src/database/sqliteLifecycle.ts
+?? src/modules/transactions/useCases/updateTransactionQuickly.ts

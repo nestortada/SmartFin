@@ -1,0 +1,57 @@
+{
+  "config": {
+    "release": true,
+    "model": "CRT-NX3",
+    "android": "15",
+    "api": 35,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "hermes": true,
+  "cases": [
+    {
+      "name": "actual driver callbacks and local generator rollback",
+      "passed": true
+    },
+    {
+      "name": "shared write before failure",
+      "passed": true
+    },
+    {
+      "name": "shared write after failure",
+      "passed": true
+    },
+    {
+      "name": "foreign key SQL failure and full rollback",
+      "passed": true
+    },
+    {
+      "name": "concurrent owners external read backup and revoked scopes",
+      "passed": true
+    },
+    {
+      "name": "nested runner rejected and borrowed owner has no deadlock",
+      "passed": true
+    },
+    {
+      "name": "COMMIT before lost response quarantines",
+      "passed": true
+    },
+    {
+      "name": "COMMIT after lost response quarantines",
+      "passed": true
+    },
+    {
+      "name": "ROLLBACK before lost response quarantines",
+      "passed": true
+    },
+    {
+      "name": "ROLLBACK after lost response quarantines",
+      "passed": true
+    },
+    {
+      "name": "close request waits for transaction",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

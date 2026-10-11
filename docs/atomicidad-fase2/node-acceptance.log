@@ -1,0 +1,37 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/financialAtomicityPhase2.test.ts
+
+PASS __tests__/financialAtomicityPhase2.test.ts (10.33 s)
+  √ taxed transfer: every SQL write before/after restores all tables and revision (330 ms)
+  √ manual existing payment edit: every SQL write before/after restores all tables and revision (265 ms)
+  √ expense deletion: every SQL write before/after restores all tables and revision (602 ms)
+  √ existing payment deletion: every SQL write before/after restores all tables and revision (873 ms)
+  √ credit purchase with installments: every SQL write before/after restores all tables and revision (181 ms)
+  √ unclassified credit preparation: every SQL write before/after restores all tables and revision (226 ms)
+  √ quick debit to credit: every SQL write before/after restores all tables and revision (255 ms)
+  √ quick credit to debit: every SQL write before/after restores all tables and revision (263 ms)
+  √ quick installment update: every SQL write before/after restores all tables and revision (269 ms)
+  √ historical subscription expense edit: every SQL write before/after restores all tables and revision (456 ms)
+  √ historical subscription expense deletion: every SQL write before/after restores all tables and revision (1979 ms)
+  √ transfer converted to expense: every SQL write before/after restores all tables and revision (1404 ms)
+  √ income creation: every SQL write before/after restores all tables and revision (486 ms)
+  √ historical account and date change: every SQL write before/after restores all tables and revision (585 ms)
+  √ the independent card payment registration remains phase 3 with its historic partial result (35 ms)
+  √ successful phase 2 scenario 0 matches every historical row and metric (58 ms)
+  √ successful phase 2 scenario 2 matches every historical row and metric (52 ms)
+  √ successful phase 2 scenario 3 matches every historical row and metric (70 ms)
+  √ concurrent edit and delete serialize, reject stale edit/delete and never reverse twice (31 ms)
+  √ new commands reread stale account balances; equal timestamps cannot overwrite another edit (31 ms)
+  √ repeated quick changes and deletion preserve impacts and installment progress (42 ms)
+  √ SQLite category constraint rolls back earlier balance writes (38 ms)
+  √ SQLite dedupe constraint rolls back earlier balance writes (32 ms)
+  √ same request object executes once and reuses the confirmed result (18 ms)
+  √ lost COMMIT receipt is unknown, quarantines the handle and never repeats the command (44 ms)
+  √ a transfer companion is rejected without treating its inflow as another principal (29 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       26 passed, 26 total
+Snapshots:   0 total
+Time:        10.491 s
+Ran all test suites matching /__tests__\\financialAtomicityPhase2.test.ts/i.

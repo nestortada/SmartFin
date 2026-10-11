@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-11",
+  "node": "v24.16.0",
+  "beforeProductionEdits": true,
+  "commands": ["npm test -- --runInBand", "npx tsc --noEmit", "npm run lint"],
+  "jest": {"passedTests": 235, "skippedTests": 3, "passedSuites": 30, "skippedSuites": 3, "passedSnapshots": 8},
+  "typescriptExitCode": 0,
+  "eslintExitCode": 0,
+  "financialPhase0": "Four partial states and all 100 failure points remain current-behavior characterizations."
+}

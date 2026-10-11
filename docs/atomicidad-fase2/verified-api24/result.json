@@ -1,0 +1,3622 @@
+{
+  "config": {
+    "release": true,
+    "model": "Android SDK built for x86_64",
+    "android": "7.0",
+    "api": 24,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "campaign": "phase2",
+  "driver": "3.9.2",
+  "matrix": [
+    {
+      "name": "taxed transfer",
+      "writes": 11,
+      "points": 22,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T16:55:49.036Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":899600,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":0,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-10-11T16:55:49.036Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":100000,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:55:49.051Z\",\"revision\":8,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:55:49.005Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:55:49.019Z\",\"version\":2}],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Transferencia • Registro manual\",\"dedupe_key\":null,\"credit_card_hint\":null,\"payment_method\":\"debit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":\"target\",\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"bank\",\"description\":\"Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737749034_0\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"internalTransfer\",\"amount\":100000},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"DÃ©bito â€¢ Cobro 4x1000 por transferencia\",\"dedupe_key\":null,\"credit_card_hint\":null,\"payment_method\":\"debit\",\"merchant_name\":\"Impuesto 4x1000\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":null,\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"bank\",\"description\":\"Impuesto 4x1000\",\"status\":\"posted\",\"id\":\"tx_manual_1791737749034_0-4x1000\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"expense\",\"amount\":400},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Entrada transferencia • Registro manual\",\"dedupe_key\":null,\"credit_card_hint\":null,\"payment_method\":\"debit\",\"merchant_name\":\"Entrada: Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":\"bank\",\"category_id\":null,\"direction\":\"inflow\",\"account_id\":\"target\",\"description\":\"Entrada: Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737749034_0-in\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"internalTransfer\",\"amount\":100000}]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 100000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-11T16:55:49.036Z"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 899600,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T16:55:49.036Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 999600,
+          "totalDebt": 0,
+          "netWorth": 999600,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 400,
+          "monthlySavings": -400,
+          "recentTransactionCount": 3,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "existing payment edit",
+      "writes": 8,
+      "points": 16,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T16:56:06.248Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":950000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-10-11T16:56:06.264Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":200000,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[{\"created_at\":\"2026-10-11T16:56:06.264Z\",\"currency\":\"COP\",\"total_amount\":200000,\"minimum_payment_amount\":20000,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-11T16:56:06.264Z\",\"status\":\"pending\",\"id\":\"statement-auto-card-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card\"}],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:56:06.266Z\",\"revision\":16,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:56:06.141Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:56:06.154Z\",\"version\":2}],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Débito • Registro manual\",\"dedupe_key\":null,\"credit_card_hint\":null,\"payment_method\":\"debit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":\"card\",\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"bank\",\"description\":\"Pago de tarjeta de credito - Visa\",\"status\":\"posted\",\"id\":\"tx-credit-card-payment-card-1791737766208\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"creditCardPayment\",\"amount\":50000},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Crédito • Registro manual\",\"dedupe_key\":null,\"credit_card_hint\":\"Visa\",\"payment_method\":\"credit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":null,\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"card\",\"description\":\"Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737766171_23\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"expense\",\"amount\":250000}]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 950000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T16:56:06.248Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 200000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-11T16:56:06.264Z"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 950000,
+          "totalDebt": 200000,
+          "netWorth": 750000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 250000,
+          "monthlySavings": -250000,
+          "recentTransactionCount": 2,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "debit deletion",
+      "writes": 21,
+      "points": 42,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T16:56:18.962Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":1000000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":0,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:56:18.998Z\",\"revision\":7,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:56:18.909Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:56:18.923Z\",\"version\":2}],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 1000000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T16:56:18.962Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 1000000,
+          "totalDebt": 0,
+          "netWorth": 1000000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 0,
+          "monthlySavings": 0,
+          "recentTransactionCount": 0,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "existing payment deletion",
+      "writes": 24,
+      "points": 48,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T16:57:00.222Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":1000000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-10-11T16:57:00.268Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":250000,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[{\"created_at\":\"2026-10-11T16:57:00.268Z\",\"currency\":\"COP\",\"total_amount\":250000,\"minimum_payment_amount\":25000,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-11T16:57:00.268Z\",\"status\":\"pending\",\"id\":\"statement-auto-card-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card\"}],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:57:00.271Z\",\"revision\":16,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:57:00.130Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:57:00.150Z\",\"version\":2}],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Crédito • Registro manual\",\"dedupe_key\":null,\"credit_card_hint\":\"Visa\",\"payment_method\":\"credit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":null,\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"card\",\"description\":\"Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737820163_83\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"expense\",\"amount\":250000}]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 1000000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T16:57:00.222Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 250000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-11T16:57:00.268Z"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 1000000,
+          "totalDebt": 250000,
+          "netWorth": 750000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 250000,
+          "monthlySavings": -250000,
+          "recentTransactionCount": 1,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "credit installments",
+      "writes": 6,
+      "points": 12,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":1000000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-10-11T16:57:42.062Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":250000,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[{\"created_at\":\"2026-10-11T16:57:42.062Z\",\"currency\":\"COP\",\"total_amount\":83333,\"minimum_payment_amount\":8333,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-11T16:57:42.062Z\",\"status\":\"pending\",\"id\":\"statement-auto-card-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card\"}],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:57:42.065Z\",\"revision\":7,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"merchant_name\":\"Visa\",\"first_due_date\":\"2026-11-11T12:00:00.000Z\",\"id\":\"installment-tx_manual_1791737862043_132\",\"monthly_amount\":83333,\"total_amount\":250000,\"paid_installments\":0,\"installment_count\":3,\"currency\":\"COP\",\"account_id\":\"card\",\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":\"tx_manual_1791737862043_132\",\"status\":\"active\"}],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:57:42.006Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:57:42.022Z\",\"version\":2}],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Crédito • Registro manual | Cuotas: 3\",\"dedupe_key\":null,\"credit_card_hint\":\"Visa\",\"payment_method\":\"credit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":null,\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"card\",\"description\":\"Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737862043_132\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"expense\",\"amount\":250000}]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 1000000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 250000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-11T16:57:42.062Z"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 1000000,
+          "totalDebt": 250000,
+          "netWorth": 750000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 250000,
+          "monthlySavings": -250000,
+          "recentTransactionCount": 1,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "quick debit credit",
+      "writes": 8,
+      "points": 16,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T16:57:53.148Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":1000000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-10-11T16:57:53.180Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":250000,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[{\"created_at\":\"2026-10-11T16:57:53.180Z\",\"currency\":\"COP\",\"total_amount\":250000,\"minimum_payment_amount\":25000,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-11T16:57:53.180Z\",\"status\":\"pending\",\"id\":\"statement-auto-card-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card\"}],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:57:53.184Z\",\"revision\":9,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:57:53.020Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:57:53.046Z\",\"version\":2}],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T16:57:53.140Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Crédito • Registro manual\",\"dedupe_key\":null,\"credit_card_hint\":\"Visa\",\"payment_method\":\"credit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":null,\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"card\",\"description\":\"Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737873085_145\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"expense\",\"amount\":250000}]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 1000000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T16:57:53.148Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 250000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-11T16:57:53.180Z"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 1000000,
+          "totalDebt": 250000,
+          "netWorth": 750000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 250000,
+          "monthlySavings": -250000,
+          "recentTransactionCount": 1,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "quick credit debit",
+      "writes": 8,
+      "points": 16,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":1000000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-10-11T16:58:07.323Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":0,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-10-11T16:58:07.303Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":-250000,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[{\"created_at\":\"2026-10-11T16:58:07.323Z\",\"currency\":\"COP\",\"total_amount\":0,\"minimum_payment_amount\":0,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-11T16:58:07.323Z\",\"status\":\"open\",\"id\":\"statement-auto-card-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card\"}],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:58:07.326Z\",\"revision\":12,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:58:07.226Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:58:07.245Z\",\"version\":2}],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T16:58:07.302Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Débito • Registro manual\",\"dedupe_key\":null,\"credit_card_hint\":null,\"payment_method\":\"debit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":null,\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"target\",\"description\":\"Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737887266_162\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"expense\",\"amount\":250000}]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": -250000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-11T16:58:07.303Z"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 1000000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-11T16:58:07.323Z"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 750000,
+          "totalDebt": 0,
+          "netWorth": 750000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 250000,
+          "monthlySavings": -250000,
+          "recentTransactionCount": 1,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "quick unchanged installments",
+      "writes": 6,
+      "points": 12,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":1000000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-10-11T16:58:24.319Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":250000,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[{\"created_at\":\"2026-10-11T16:58:24.319Z\",\"currency\":\"COP\",\"total_amount\":83333,\"minimum_payment_amount\":8333,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-11T16:58:24.319Z\",\"status\":\"pending\",\"id\":\"statement-auto-card-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card\"}],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:58:24.322Z\",\"revision\":12,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"merchant_name\":\"Visa\",\"first_due_date\":\"2026-11-11T12:00:00.000Z\",\"id\":\"installment-tx_manual_1791737904272_179\",\"monthly_amount\":83333,\"total_amount\":250000,\"paid_installments\":1,\"installment_count\":3,\"currency\":\"COP\",\"account_id\":\"card\",\"updated_at\":\"2026-10-11T16:58:24.302Z\",\"transaction_id\":\"tx_manual_1791737904272_179\",\"status\":\"active\"}],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:58:24.244Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:58:24.256Z\",\"version\":2}],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T16:58:24.302Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Crédito • Registro manual | Cuotas: 3 | Sin intereses: 1\",\"dedupe_key\":null,\"credit_card_hint\":\"Visa\",\"payment_method\":\"credit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":null,\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"card\",\"description\":\"Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737904272_179\",\"date\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"expense\",\"amount\":250000}]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 1000000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 250000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-11T16:58:24.319Z"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 1000000,
+          "totalDebt": 250000,
+          "netWorth": 750000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 250000,
+          "monthlySavings": -250000,
+          "recentTransactionCount": 1,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "historical subscription edit",
+      "writes": 6,
+      "points": 12,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T16:58:35.698Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":760000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":0,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-01-10\",\"expected_date\":\"2026-01-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"cancelled\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-01-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-02-10\",\"expected_date\":\"2026-02-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-02-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-03-10\",\"expected_date\":\"2026-03-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-03-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-04-10\",\"expected_date\":\"2026-04-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-04-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-05-10\",\"expected_date\":\"2026-05-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-05-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-06-10\",\"expected_date\":\"2026-06-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-06-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-07-10\",\"expected_date\":\"2026-07-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-07-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-08-10\",\"expected_date\":\"2026-08-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-08-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-09-10\",\"expected_date\":\"2026-09-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-09-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-10-10\",\"expected_date\":\"2026-10-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-10-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-11-10\",\"expected_date\":\"2026-11-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-11-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-12-10\",\"expected_date\":\"2026-12-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-12-10\"}],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:58:35.713Z\",\"revision\":58,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[{\"generation_cursor\":\"2027-01-10\",\"custom_interval\":null,\"anchor_date\":\"2026-01-10\",\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"reminders_json\":\"{\\\"enabled\\\":true,\\\"offsets\\\":[3,1,0],\\\"hour\\\":9,\\\"minute\\\":0}\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"billing_day\":10,\"periodicity\":\"monthly\",\"account_id\":\"bank\",\"subcategory_id\":null,\"category_id\":null,\"next_charge_date\":\"2026-11-10\",\"status\":\"active\",\"name\":\"Synthetic\",\"schedule_revision\":1,\"custom_unit\":null,\"currency\":\"COP\",\"merchant_name\":null,\"amount\":250000,\"id\":\"synthetic-1\"}],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:58:35.568Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:58:35.582Z\",\"version\":2}],\"smart_alerts\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-01-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-01-10\",\"resolved_at\":\"2026-10-11T12:00:00.000Z\",\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-01-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"resolved\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-02-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-02-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-02-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-03-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-03-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-03-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-04-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-04-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-04-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-05-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-05-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-05-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-06-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-06-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-06-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-07-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-07-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-07-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-08-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-08-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-08-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-09-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-09-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-09-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-10-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-10-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-10-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"}],\"subcategories\":[],\"subscription_occurrences\":[{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":\"2026-01-10T12:00:00.000Z\",\"updated_at\":\"2026-10-11T16:58:35.700Z\",\"transaction_id\":\"tx_manual_1791737915597_192\",\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":240000,\"expected_amount\":250000,\"expected_date\":\"2026-01-10\",\"status\":\"paid\",\"id\":\"subscription-occurrence:synthetic-1:2026-01-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-02-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-02-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-03-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-03-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-04-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-04-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-05-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-05-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-06-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-06-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-07-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-07-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-08-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-08-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-09-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-09-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-10-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-10-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-11-10\",\"status\":\"pending\",\"id\":\"subscription-occurrence:synthetic-1:2026-11-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-12-10\",\"status\":\"pending\",\"id\":\"subscription-occurrence:synthetic-1:2026-12-10\"}],\"subscription_reminders\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra hoy\",\"fire_at\":\"2026-11-10T09:00:00.000Z\",\"revision\":1,\"offset_days\":0,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-11-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-11-10:0\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra en 1 días\",\"fire_at\":\"2026-11-09T09:00:00.000Z\",\"revision\":1,\"offset_days\":1,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-11-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-11-10:1\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra en 3 días\",\"fire_at\":\"2026-11-07T09:00:00.000Z\",\"revision\":1,\"offset_days\":3,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-11-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-11-10:3\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra hoy\",\"fire_at\":\"2026-12-10T09:00:00.000Z\",\"revision\":1,\"offset_days\":0,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-12-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-12-10:0\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra en 1 días\",\"fire_at\":\"2026-12-09T09:00:00.000Z\",\"revision\":1,\"offset_days\":1,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-12-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-12-10:1\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra en 3 días\",\"fire_at\":\"2026-12-07T09:00:00.000Z\",\"revision\":1,\"offset_days\":3,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-12-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-12-10:3\"}],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":\"Débito • Registro manual\",\"dedupe_key\":null,\"credit_card_hint\":null,\"payment_method\":\"debit\",\"merchant_name\":\"Visa\",\"source_message_id\":null,\"subcategory_id\":null,\"target_account_id\":null,\"category_id\":null,\"direction\":\"outflow\",\"account_id\":\"bank\",\"description\":\"Visa\",\"status\":\"posted\",\"id\":\"tx_manual_1791737915597_192\",\"date\":\"2026-01-10T12:00:00.000Z\",\"currency\":\"COP\",\"type\":\"expense\",\"amount\":240000}]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 760000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T16:58:35.698Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 760000,
+          "totalDebt": 0,
+          "netWorth": 760000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 0,
+          "monthlySavings": 0,
+          "recentTransactionCount": 0,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "historical subscription deletion",
+      "writes": 24,
+      "points": 48,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T16:58:49.180Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":1000000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":0,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-01-01\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Destination\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"target\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"en_US\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[{\"updated_at\":\"2026-10-11T16:58:49.218Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-01-10\",\"expected_date\":\"2026-01-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-01-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-02-10\",\"expected_date\":\"2026-02-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-02-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-03-10\",\"expected_date\":\"2026-03-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-03-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-04-10\",\"expected_date\":\"2026-04-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-04-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-05-10\",\"expected_date\":\"2026-05-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-05-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-06-10\",\"expected_date\":\"2026-06-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-06-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-07-10\",\"expected_date\":\"2026-07-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-07-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-08-10\",\"expected_date\":\"2026-08-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-08-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-09-10\",\"expected_date\":\"2026-09-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-09-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-10-10\",\"expected_date\":\"2026-10-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-10-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-11-10\",\"expected_date\":\"2026-11-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-11-10\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"source_entity_type\":\"subscription_occurrence\",\"account_id\":\"bank\",\"source_entity_id\":\"subscription-occurrence:synthetic-1:2026-12-10\",\"expected_date\":\"2026-12-10\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"currency\":\"COP\",\"event_type\":\"expense\",\"status\":\"projected\",\"name\":\"Synthetic\",\"amount\":250000,\"id\":\"subscription-projection:subscription-occurrence:synthetic-1:2026-12-10\"}],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-11T16:58:49.241Z\",\"revision\":60,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[{\"generation_cursor\":\"2027-01-10\",\"custom_interval\":null,\"anchor_date\":\"2026-01-10\",\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"reminders_json\":\"{\\\"enabled\\\":true,\\\"offsets\\\":[3,1,0],\\\"hour\\\":9,\\\"minute\\\":0}\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"billing_day\":10,\"periodicity\":\"monthly\",\"account_id\":\"bank\",\"subcategory_id\":null,\"category_id\":null,\"next_charge_date\":\"2026-11-10\",\"status\":\"active\",\"name\":\"Synthetic\",\"schedule_revision\":1,\"custom_unit\":null,\"currency\":\"COP\",\"merchant_name\":null,\"amount\":250000,\"id\":\"synthetic-1\"}],\"schema_migrations\":[{\"applied_at\":\"2026-10-11T16:58:49.052Z\",\"version\":1},{\"applied_at\":\"2026-10-11T16:58:49.060Z\",\"version\":2}],\"smart_alerts\":[{\"updated_at\":\"2026-10-11T16:58:49.218Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-01-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-01-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-01-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-02-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-02-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-02-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-03-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-03-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-03-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-04-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-04-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-04-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-05-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-05-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-05-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-06-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-06-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-06-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-07-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-07-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-07-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-08-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-08-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-08-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-09-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-09-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-09-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"created_at\":\"2026-10-11T12:00:00.000Z\",\"id\":\"subscription_overdue:subscription-occurrence:synthetic-1:2026-10-10\",\"related_entity_id\":\"subscription-occurrence:synthetic-1:2026-10-10\",\"resolved_at\":null,\"triggered_at\":\"2026-10-11T12:00:00.000Z\",\"severity\":\"warning\",\"message\":\"Synthetic: 250000 COP (2026-10-10)\",\"alert_type\":\"subscription_overdue\",\"title\":\"Cobro esperado vencido\",\"status\":\"open\",\"related_entity_type\":\"subscription_occurrence\"}],\"subcategories\":[],\"subscription_occurrences\":[{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T16:58:49.218Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-01-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-01-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-02-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-02-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-03-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-03-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-04-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-04-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-05-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-05-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-06-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-06-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-07-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-07-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-08-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-08-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-09-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-09-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-10-10\",\"status\":\"overdue\",\"id\":\"subscription-occurrence:synthetic-1:2026-10-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-11-10\",\"status\":\"pending\",\"id\":\"subscription-occurrence:synthetic-1:2026-11-10\"},{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"notes\":null,\"skip_reason\":null,\"skipped_at\":null,\"paid_at\":null,\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":null,\"account_id\":\"bank\",\"currency\":\"COP\",\"subscription_id\":\"synthetic-1\",\"actual_amount\":null,\"expected_amount\":250000,\"expected_date\":\"2026-12-10\",\"status\":\"pending\",\"id\":\"subscription-occurrence:synthetic-1:2026-12-10\"}],\"subscription_reminders\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra hoy\",\"fire_at\":\"2026-11-10T09:00:00.000Z\",\"revision\":1,\"offset_days\":0,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-11-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-11-10:0\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra en 1 días\",\"fire_at\":\"2026-11-09T09:00:00.000Z\",\"revision\":1,\"offset_days\":1,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-11-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-11-10:1\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra en 3 días\",\"fire_at\":\"2026-11-07T09:00:00.000Z\",\"revision\":1,\"offset_days\":3,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-11-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-11-10:3\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra hoy\",\"fire_at\":\"2026-12-10T09:00:00.000Z\",\"revision\":1,\"offset_days\":0,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-12-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-12-10:0\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra en 1 días\",\"fire_at\":\"2026-12-09T09:00:00.000Z\",\"revision\":1,\"offset_days\":1,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-12-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-12-10:1\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"delivery_status\":\"blocked\",\"message\":\"250000 COP\",\"error\":\"unsupported\",\"applied_revision\":1,\"desired\":\"scheduled\",\"title\":\"Synthetic se cobra en 3 días\",\"fire_at\":\"2026-12-07T09:00:00.000Z\",\"revision\":1,\"offset_days\":3,\"occurrence_id\":\"subscription-occurrence:synthetic-1:2026-12-10\",\"id\":\"subscription-reminder:subscription-occurrence:synthetic-1:2026-12-10:3\"}],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[]}",
+        "accounts": [
+          {
+            "id": "target",
+            "name": "Destination",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 1000000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T16:58:49.180Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-01-01"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 1000000,
+          "totalDebt": 0,
+          "netWorth": 1000000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 0,
+          "monthlySavings": 0,
+          "recentTransactionCount": 0,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "taxed transfer: write 1 before",
+      "passed": true,
+      "durationMs": 1001,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 1 after",
+      "passed": true,
+      "durationMs": 793,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 2 before",
+      "passed": true,
+      "durationMs": 700,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 2 after",
+      "passed": true,
+      "durationMs": 723,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 3 before",
+      "passed": true,
+      "durationMs": 1020,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 3 after",
+      "passed": true,
+      "durationMs": 696,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 4 before",
+      "passed": true,
+      "durationMs": 702,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 4 after",
+      "passed": true,
+      "durationMs": 684,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 5 before",
+      "passed": true,
+      "durationMs": 699,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 5 after",
+      "passed": true,
+      "durationMs": 674,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 6 before",
+      "passed": true,
+      "durationMs": 679,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 6 after",
+      "passed": true,
+      "durationMs": 664,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 7 before",
+      "passed": true,
+      "durationMs": 671,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 7 after",
+      "passed": true,
+      "durationMs": 706,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 8 before",
+      "passed": true,
+      "durationMs": 757,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 8 after",
+      "passed": true,
+      "durationMs": 850,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 9 before",
+      "passed": true,
+      "durationMs": 772,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 9 after",
+      "passed": true,
+      "durationMs": 824,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 10 before",
+      "passed": true,
+      "durationMs": 824,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 10 after",
+      "passed": true,
+      "durationMs": 651,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 11 before",
+      "passed": true,
+      "durationMs": 671,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "taxed transfer: write 11 after",
+      "passed": true,
+      "durationMs": 745,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 1 before",
+      "passed": true,
+      "durationMs": 704,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 1 after",
+      "passed": true,
+      "durationMs": 751,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 2 before",
+      "passed": true,
+      "durationMs": 723,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 2 after",
+      "passed": true,
+      "durationMs": 731,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 3 before",
+      "passed": true,
+      "durationMs": 760,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 3 after",
+      "passed": true,
+      "durationMs": 677,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 4 before",
+      "passed": true,
+      "durationMs": 739,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 4 after",
+      "passed": true,
+      "durationMs": 744,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 5 before",
+      "passed": true,
+      "durationMs": 742,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 5 after",
+      "passed": true,
+      "durationMs": 751,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 6 before",
+      "passed": true,
+      "durationMs": 715,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 6 after",
+      "passed": true,
+      "durationMs": 747,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 7 before",
+      "passed": true,
+      "durationMs": 747,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 7 after",
+      "passed": true,
+      "durationMs": 837,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 8 before",
+      "passed": true,
+      "durationMs": 802,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment edit: write 8 after",
+      "passed": true,
+      "durationMs": 810,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 1 before",
+      "passed": true,
+      "durationMs": 861,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 1 after",
+      "passed": true,
+      "durationMs": 934,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 2 before",
+      "passed": true,
+      "durationMs": 1015,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 2 after",
+      "passed": true,
+      "durationMs": 1110,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 3 before",
+      "passed": true,
+      "durationMs": 1073,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 3 after",
+      "passed": true,
+      "durationMs": 1190,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 4 before",
+      "passed": true,
+      "durationMs": 878,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 4 after",
+      "passed": true,
+      "durationMs": 805,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 5 before",
+      "passed": true,
+      "durationMs": 869,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 5 after",
+      "passed": true,
+      "durationMs": 861,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 6 before",
+      "passed": true,
+      "durationMs": 820,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 6 after",
+      "passed": true,
+      "durationMs": 803,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 7 before",
+      "passed": true,
+      "durationMs": 818,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 7 after",
+      "passed": true,
+      "durationMs": 1085,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 8 before",
+      "passed": true,
+      "durationMs": 923,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 8 after",
+      "passed": true,
+      "durationMs": 1069,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 9 before",
+      "passed": true,
+      "durationMs": 997,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 9 after",
+      "passed": true,
+      "durationMs": 997,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 10 before",
+      "passed": true,
+      "durationMs": 917,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 10 after",
+      "passed": true,
+      "durationMs": 1005,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 11 before",
+      "passed": true,
+      "durationMs": 1042,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 11 after",
+      "passed": true,
+      "durationMs": 1231,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 12 before",
+      "passed": true,
+      "durationMs": 1280,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 12 after",
+      "passed": true,
+      "durationMs": 874,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 13 before",
+      "passed": true,
+      "durationMs": 1003,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 13 after",
+      "passed": true,
+      "durationMs": 1061,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 14 before",
+      "passed": true,
+      "durationMs": 870,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 14 after",
+      "passed": true,
+      "durationMs": 1087,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 15 before",
+      "passed": true,
+      "durationMs": 885,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 15 after",
+      "passed": true,
+      "durationMs": 1258,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 16 before",
+      "passed": true,
+      "durationMs": 1108,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 16 after",
+      "passed": true,
+      "durationMs": 1232,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 17 before",
+      "passed": true,
+      "durationMs": 1058,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 17 after",
+      "passed": true,
+      "durationMs": 905,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 18 before",
+      "passed": true,
+      "durationMs": 993,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 18 after",
+      "passed": true,
+      "durationMs": 774,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 19 before",
+      "passed": true,
+      "durationMs": 962,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 19 after",
+      "passed": true,
+      "durationMs": 848,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 20 before",
+      "passed": true,
+      "durationMs": 738,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 20 after",
+      "passed": true,
+      "durationMs": 738,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 21 before",
+      "passed": true,
+      "durationMs": 757,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "debit deletion: write 21 after",
+      "passed": true,
+      "durationMs": 750,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 1 before",
+      "passed": true,
+      "durationMs": 684,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 1 after",
+      "passed": true,
+      "durationMs": 778,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 2 before",
+      "passed": true,
+      "durationMs": 984,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 2 after",
+      "passed": true,
+      "durationMs": 786,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 3 before",
+      "passed": true,
+      "durationMs": 1010,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 3 after",
+      "passed": true,
+      "durationMs": 1032,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 4 before",
+      "passed": true,
+      "durationMs": 797,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 4 after",
+      "passed": true,
+      "durationMs": 768,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 5 before",
+      "passed": true,
+      "durationMs": 871,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 5 after",
+      "passed": true,
+      "durationMs": 706,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 6 before",
+      "passed": true,
+      "durationMs": 817,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 6 after",
+      "passed": true,
+      "durationMs": 750,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 7 before",
+      "passed": true,
+      "durationMs": 769,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 7 after",
+      "passed": true,
+      "durationMs": 758,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 8 before",
+      "passed": true,
+      "durationMs": 899,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 8 after",
+      "passed": true,
+      "durationMs": 784,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 9 before",
+      "passed": true,
+      "durationMs": 784,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 9 after",
+      "passed": true,
+      "durationMs": 839,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 10 before",
+      "passed": true,
+      "durationMs": 904,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 10 after",
+      "passed": true,
+      "durationMs": 868,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 11 before",
+      "passed": true,
+      "durationMs": 806,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 11 after",
+      "passed": true,
+      "durationMs": 731,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 12 before",
+      "passed": true,
+      "durationMs": 782,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 12 after",
+      "passed": true,
+      "durationMs": 806,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 13 before",
+      "passed": true,
+      "durationMs": 802,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 13 after",
+      "passed": true,
+      "durationMs": 799,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 14 before",
+      "passed": true,
+      "durationMs": 725,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 14 after",
+      "passed": true,
+      "durationMs": 809,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 15 before",
+      "passed": true,
+      "durationMs": 797,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 15 after",
+      "passed": true,
+      "durationMs": 830,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 16 before",
+      "passed": true,
+      "durationMs": 1134,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 16 after",
+      "passed": true,
+      "durationMs": 807,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 17 before",
+      "passed": true,
+      "durationMs": 945,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 17 after",
+      "passed": true,
+      "durationMs": 821,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 18 before",
+      "passed": true,
+      "durationMs": 810,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 18 after",
+      "passed": true,
+      "durationMs": 773,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 19 before",
+      "passed": true,
+      "durationMs": 737,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 19 after",
+      "passed": true,
+      "durationMs": 832,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 20 before",
+      "passed": true,
+      "durationMs": 849,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 20 after",
+      "passed": true,
+      "durationMs": 1031,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 21 before",
+      "passed": true,
+      "durationMs": 887,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 21 after",
+      "passed": true,
+      "durationMs": 997,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 22 before",
+      "passed": true,
+      "durationMs": 889,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 22 after",
+      "passed": true,
+      "durationMs": 1110,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 23 before",
+      "passed": true,
+      "durationMs": 1172,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 23 after",
+      "passed": true,
+      "durationMs": 832,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 24 before",
+      "passed": true,
+      "durationMs": 971,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "existing payment deletion: write 24 after",
+      "passed": true,
+      "durationMs": 872,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 1 before",
+      "passed": true,
+      "durationMs": 759,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 1 after",
+      "passed": true,
+      "durationMs": 896,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 2 before",
+      "passed": true,
+      "durationMs": 929,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 2 after",
+      "passed": true,
+      "durationMs": 1021,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 3 before",
+      "passed": true,
+      "durationMs": 934,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO installment_purchases (\n            id,\n            transaction_id,\n            account_id,\n            merchant_name,\n            total_amount,\n            currency,\n            installment_count,\n            paid_installments,\n            monthly_amount,\n            first_due_date,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 3 after",
+      "passed": true,
+      "durationMs": 800,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO installment_purchases (\n            id,\n            transaction_id,\n            account_id,\n            merchant_name,\n            total_amount,\n            currency,\n            installment_count,\n            paid_installments,\n            monthly_amount,\n            first_due_date,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 4 before",
+      "passed": true,
+      "durationMs": 710,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 4 after",
+      "passed": true,
+      "durationMs": 711,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 5 before",
+      "passed": true,
+      "durationMs": 871,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 5 after",
+      "passed": true,
+      "durationMs": 877,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 6 before",
+      "passed": true,
+      "durationMs": 860,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "credit installments: write 6 after",
+      "passed": true,
+      "durationMs": 845,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 1 before",
+      "passed": true,
+      "durationMs": 717,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 1 after",
+      "passed": true,
+      "durationMs": 657,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 2 before",
+      "passed": true,
+      "durationMs": 719,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 2 after",
+      "passed": true,
+      "durationMs": 697,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 3 before",
+      "passed": true,
+      "durationMs": 651,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 3 after",
+      "passed": true,
+      "durationMs": 684,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 4 before",
+      "passed": true,
+      "durationMs": 712,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 4 after",
+      "passed": true,
+      "durationMs": 761,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 5 before",
+      "passed": true,
+      "durationMs": 668,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 5 after",
+      "passed": true,
+      "durationMs": 686,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 6 before",
+      "passed": true,
+      "durationMs": 921,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 6 after",
+      "passed": true,
+      "durationMs": 959,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 7 before",
+      "passed": true,
+      "durationMs": 1044,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 7 after",
+      "passed": true,
+      "durationMs": 1153,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 8 before",
+      "passed": true,
+      "durationMs": 1163,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick debit credit: write 8 after",
+      "passed": true,
+      "durationMs": 1044,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 1 before",
+      "passed": true,
+      "durationMs": 1238,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 1 after",
+      "passed": true,
+      "durationMs": 919,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 2 before",
+      "passed": true,
+      "durationMs": 861,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 2 after",
+      "passed": true,
+      "durationMs": 1102,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 3 before",
+      "passed": true,
+      "durationMs": 1376,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 3 after",
+      "passed": true,
+      "durationMs": 995,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 4 before",
+      "passed": true,
+      "durationMs": 1026,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 4 after",
+      "passed": true,
+      "durationMs": 1118,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 5 before",
+      "passed": true,
+      "durationMs": 997,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 5 after",
+      "passed": true,
+      "durationMs": 988,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 6 before",
+      "passed": true,
+      "durationMs": 989,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 6 after",
+      "passed": true,
+      "durationMs": 821,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 7 before",
+      "passed": true,
+      "durationMs": 1013,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 7 after",
+      "passed": true,
+      "durationMs": 894,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 8 before",
+      "passed": true,
+      "durationMs": 835,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick credit debit: write 8 after",
+      "passed": true,
+      "durationMs": 1046,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 1 before",
+      "passed": true,
+      "durationMs": 900,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 1 after",
+      "passed": true,
+      "durationMs": 846,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 2 before",
+      "passed": true,
+      "durationMs": 958,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 2 after",
+      "passed": true,
+      "durationMs": 1091,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 3 before",
+      "passed": true,
+      "durationMs": 828,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO installment_purchases (\n            id,\n            transaction_id,\n            account_id,\n            merchant_name,\n            total_amount,\n            currency,\n            installment_count,\n            paid_installments,\n            monthly_amount,\n            first_due_date,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 3 after",
+      "passed": true,
+      "durationMs": 822,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO installment_purchases (\n            id,\n            transaction_id,\n            account_id,\n            merchant_name,\n            total_amount,\n            currency,\n            installment_count,\n            paid_installments,\n            monthly_amount,\n            first_due_date,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 4 before",
+      "passed": true,
+      "durationMs": 891,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 4 after",
+      "passed": true,
+      "durationMs": 842,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 5 before",
+      "passed": true,
+      "durationMs": 785,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 5 after",
+      "passed": true,
+      "durationMs": 829,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 6 before",
+      "passed": true,
+      "durationMs": 833,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "quick unchanged installments: write 6 after",
+      "passed": true,
+      "durationMs": 903,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 1 before",
+      "passed": true,
+      "durationMs": 904,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 1 after",
+      "passed": true,
+      "durationMs": 795,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 2 before",
+      "passed": true,
+      "durationMs": 834,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 2 after",
+      "passed": true,
+      "durationMs": 1236,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 3 before",
+      "passed": true,
+      "durationMs": 1142,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 3 after",
+      "passed": true,
+      "durationMs": 1044,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 4 before",
+      "passed": true,
+      "durationMs": 1134,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 4 after",
+      "passed": true,
+      "durationMs": 1264,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 5 before",
+      "passed": true,
+      "durationMs": 1079,
+      "evidence": {
+        "sql": "UPDATE subscription_occurrences SET created_at = ?,notes = ?,skip_reason = ?,skipped_at = ?,paid_at = ?,updated_at = ?,transaction_id = ?,account_id = ?,currency = ?,subscription_id = ?,actual_amount = ?,expected_amount = ?,expected_date = ?,status = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 5 after",
+      "passed": true,
+      "durationMs": 1071,
+      "evidence": {
+        "sql": "UPDATE subscription_occurrences SET created_at = ?,notes = ?,skip_reason = ?,skipped_at = ?,paid_at = ?,updated_at = ?,transaction_id = ?,account_id = ?,currency = ?,subscription_id = ?,actual_amount = ?,expected_amount = ?,expected_date = ?,status = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 6 before",
+      "passed": true,
+      "durationMs": 1059,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription edit: write 6 after",
+      "passed": true,
+      "durationMs": 1056,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 1 before",
+      "passed": true,
+      "durationMs": 912,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 1 after",
+      "passed": true,
+      "durationMs": 931,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 2 before",
+      "passed": true,
+      "durationMs": 1055,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 2 after",
+      "passed": true,
+      "durationMs": 1133,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 3 before",
+      "passed": true,
+      "durationMs": 884,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 3 after",
+      "passed": true,
+      "durationMs": 955,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 4 before",
+      "passed": true,
+      "durationMs": 841,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 4 after",
+      "passed": true,
+      "durationMs": 1002,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 5 before",
+      "passed": true,
+      "durationMs": 876,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 5 after",
+      "passed": true,
+      "durationMs": 921,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 6 before",
+      "passed": true,
+      "durationMs": 990,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 6 after",
+      "passed": true,
+      "durationMs": 986,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 7 before",
+      "passed": true,
+      "durationMs": 834,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 7 after",
+      "passed": true,
+      "durationMs": 785,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 8 before",
+      "passed": true,
+      "durationMs": 862,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 8 after",
+      "passed": true,
+      "durationMs": 907,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 9 before",
+      "passed": true,
+      "durationMs": 954,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 9 after",
+      "passed": true,
+      "durationMs": 818,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 10 before",
+      "passed": true,
+      "durationMs": 779,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 10 after",
+      "passed": true,
+      "durationMs": 782,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 11 before",
+      "passed": true,
+      "durationMs": 757,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 11 after",
+      "passed": true,
+      "durationMs": 846,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 12 before",
+      "passed": true,
+      "durationMs": 927,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 12 after",
+      "passed": true,
+      "durationMs": 946,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 13 before",
+      "passed": true,
+      "durationMs": 739,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 13 after",
+      "passed": true,
+      "durationMs": 844,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 14 before",
+      "passed": true,
+      "durationMs": 946,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 14 after",
+      "passed": true,
+      "durationMs": 843,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 15 before",
+      "passed": true,
+      "durationMs": 904,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 15 after",
+      "passed": true,
+      "durationMs": 798,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 16 before",
+      "passed": true,
+      "durationMs": 1150,
+      "evidence": {
+        "sql": "UPDATE subscription_occurrences SET created_at = ?,notes = ?,skip_reason = ?,skipped_at = ?,paid_at = ?,updated_at = ?,transaction_id = ?,account_id = ?,currency = ?,subscription_id = ?,actual_amount = ?,expected_amount = ?,expected_date = ?,status = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 16 after",
+      "passed": true,
+      "durationMs": 1008,
+      "evidence": {
+        "sql": "UPDATE subscription_occurrences SET created_at = ?,notes = ?,skip_reason = ?,skipped_at = ?,paid_at = ?,updated_at = ?,transaction_id = ?,account_id = ?,currency = ?,subscription_id = ?,actual_amount = ?,expected_amount = ?,expected_date = ?,status = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 17 before",
+      "passed": true,
+      "durationMs": 1146,
+      "evidence": {
+        "sql": "UPDATE cash_flow_events SET updated_at = ?,source_entity_type = ?,account_id = ?,source_entity_id = ?,expected_date = ?,created_at = ?,currency = ?,event_type = ?,status = ?,name = ?,amount = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 17 after",
+      "passed": true,
+      "durationMs": 1008,
+      "evidence": {
+        "sql": "UPDATE cash_flow_events SET updated_at = ?,source_entity_type = ?,account_id = ?,source_entity_id = ?,expected_date = ?,created_at = ?,currency = ?,event_type = ?,status = ?,name = ?,amount = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 18 before",
+      "passed": true,
+      "durationMs": 1118,
+      "evidence": {
+        "sql": "UPDATE smart_alerts SET updated_at = ?,created_at = ?,related_entity_id = ?,resolved_at = ?,triggered_at = ?,severity = ?,message = ?,alert_type = ?,title = ?,status = ?,related_entity_type = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 18 after",
+      "passed": true,
+      "durationMs": 1009,
+      "evidence": {
+        "sql": "UPDATE smart_alerts SET updated_at = ?,created_at = ?,related_entity_id = ?,resolved_at = ?,triggered_at = ?,severity = ?,message = ?,alert_type = ?,title = ?,status = ?,related_entity_type = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 19 before",
+      "passed": true,
+      "durationMs": 1106,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 19 after",
+      "passed": true,
+      "durationMs": 1028,
+      "evidence": {
+        "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 20 before",
+      "passed": true,
+      "durationMs": 1035,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 20 after",
+      "passed": true,
+      "durationMs": 877,
+      "evidence": {
+        "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 21 before",
+      "passed": true,
+      "durationMs": 841,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 21 after",
+      "passed": true,
+      "durationMs": 841,
+      "evidence": {
+        "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 22 before",
+      "passed": true,
+      "durationMs": 898,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 22 after",
+      "passed": true,
+      "durationMs": 854,
+      "evidence": {
+        "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 23 before",
+      "passed": true,
+      "durationMs": 807,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 23 after",
+      "passed": true,
+      "durationMs": 930,
+      "evidence": {
+        "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 24 before",
+      "passed": true,
+      "durationMs": 1086,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "historical subscription deletion: write 24 after",
+      "passed": true,
+      "durationMs": 928,
+      "evidence": {
+        "sql": "DELETE FROM transactions WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "concurrent edit delete reader and duplicate quick changes",
+      "passed": true,
+      "durationMs": 757,
+      "evidence": {
+        "readerWaited": true,
+        "staleDeleteRejected": true,
+        "balances": [
+          [
+            "target",
+            -250000,
+            null
+          ],
+          [
+            "bank",
+            1000000,
+            null
+          ],
+          [
+            "card",
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "name": "real SQLite FK and dedupe constraints roll back balances",
+      "passed": true,
+      "durationMs": 784
+    },
+    {
+      "name": "manual unknown COMMIT before and recovery",
+      "passed": true,
+      "durationMs": 580,
+      "evidence": {
+        "status": "unknown",
+        "phase": "before",
+        "bank": 1000000
+      }
+    },
+    {
+      "name": "manual unknown COMMIT after and recovery",
+      "passed": true,
+      "durationMs": 618,
+      "evidence": {
+        "status": "unknown",
+        "phase": "after",
+        "bank": 900000
+      }
+    },
+    {
+      "name": "manual rollback lost receipt recovers without retry",
+      "passed": true,
+      "durationMs": 580,
+      "evidence": {
+        "status": "unknown",
+        "bank": 1000000
+      }
+    },
+    {
+      "name": "large synthetic database initialization verification and queued reader timing",
+      "passed": true,
+      "durationMs": 10406,
+      "evidence": {
+        "rows": 100000,
+        "verificationMs": 322,
+        "operationMs": 8729,
+        "readerMs": 8730,
+        "timeoutMs": 10000
+      }
+    }
+  ],
+  "passed": true
+}

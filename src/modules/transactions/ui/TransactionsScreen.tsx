@@ -18,7 +18,9 @@ import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import type { AppTheme } from '../../settings';
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
 import { useTransactionsList, formatYearMonth } from '../hooks/useTransactionsList';
-import { deleteManualTransactionSafely, getNextMonthDueDate, saveManualTransaction } from '../useCases';
+import { deleteManualTransactionSafely, saveManualTransaction, updateTransactionQuickly } from '../useCases';
+import { SQLiteCommandFailure } from '../../../database/atomicSQLite';
+import { ManualTransactionConflict } from '../useCases/manualTransactionScope';
 import type { Transaction, TransactionType } from '../types';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
@@ -29,10 +31,7 @@ import {
   type MissingCreditCardAlert,
 } from '../../creditCards/repositories';
 import {
-  UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID,
   associatePendingTransactionsForCreditCard,
-  reconcileCreditCardTransactions,
-  resolveCreditCardTransactionTarget,
   saveCreditCardFromForm,
 } from '../../creditCards/useCases';
 import { CreditCardFormModal } from '../../creditCards/ui/components/CreditCardFormModal';
@@ -182,70 +181,18 @@ export function TransactionsScreen({
   const creditCardPalette = getCreditCardPaletteForTransactions(activeTheme, themeColors);
 
 
-  const getCreditCardHintFromTransaction = (tx: Transaction) => {
-    return tx.creditCardHint || tx.merchantName || tx.description;
-  };
-
-  const isDebitAccount = (account: Account | undefined) => {
-    return Boolean(account && ['cash', 'bankAccount', 'savingsAccount'].includes(account.type));
-  };
-
-  const getDebitAccountForTransaction = (tx: Transaction) => {
-    const currentAccount = accounts.find(account => account.id === tx.accountId);
-    if (isDebitAccount(currentAccount) && currentAccount?.id !== UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID) {
-      return currentAccount;
-    }
-
-    return accounts.find(
-      account =>
-        account.status === 'active' &&
-        account.id !== UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID &&
-        ['cash', 'bankAccount', 'savingsAccount'].includes(account.type),
-    );
-  };
-
   const handleUpdateTransactionOpType = async (tx: Transaction, opType: 'Débito' | 'Crédito') => {
     if (!database) return;
+    let confirmed = false;
     try {
       const txRepo = createSqliteTransactionRepository(database);
       const accountRepository = createSqliteAccountRepository(database);
       const creditCardRepository = createSqliteCreditCardRepository(database);
-      const isCredit = opType.toLowerCase().includes('cr');
-      const debitAccount = isCredit ? undefined : getDebitAccountForTransaction(tx);
-      if (!isCredit && !debitAccount) {
-        Alert.alert('SmartFin', 'Crea una cuenta debito para mover esta transaccion.');
-        return;
-      }
-      const creditCardTarget = await resolveCreditCardTransactionTarget({
-        accountRepository,
-        accounts,
-        creditCardHint: getCreditCardHintFromTransaction(tx),
-        isCreditTransaction: isCredit,
-        rawText: `${tx.description} ${tx.merchantName ?? ''} ${tx.notes ?? ''}`,
-        selectedAccountId: isCredit ? tx.accountId : debitAccount?.id,
-      });
-      // Clean notes to avoid compounding prefixes
-      let cleanNotes = tx.notes || '';
-      // Remove any existing "Débito • " or "Crédito • " prefix
-      cleanNotes = cleanNotes.replace(/^(Débito|Crédito)\s*•\s*/, '');
-      
-      const updatedTx: Transaction = {
-        ...tx,
-        accountId: isCredit ? creditCardTarget.accountId ?? tx.accountId : debitAccount?.id ?? tx.accountId,
-        creditCardHint: isCredit ? creditCardTarget.creditCardHint : undefined,
-        notes: `${opType} • ${cleanNotes}`,
-        paymentMethod: isCredit ? 'credit' : 'debit',
-        updatedAt: new Date().toISOString(),
-      };
-      await txRepo.saveTransactions([updatedTx]);
-      if (!isCredit) {
-        await txRepo.deleteInstallmentPurchasesByTransactionId(updatedTx.id);
-      }
-      await reconcileCreditCardTransactions({
-        accountRepository,
-        creditCardRepository,
-        transactionRepository: txRepo,
-      });
+      const { transaction: updatedTx, creditCardTarget } = await updateTransactionQuickly({
+        accountRepository, creditCardRepository, transactionRepository: txRepo,
+      }, tx.id, { kind: 'paymentMethod', operationType: opType });
+      confirmed = true;
+      onForceRefresh();
       if (creditCardTarget.missingCreditCard) {
         await createSqliteCreditCardAlertRepository(database).saveMissingCreditCardAlert({
           creditCardHint: creditCardTarget.creditCardHint,
@@ -258,9 +205,12 @@ export function TransactionsScreen({
           text2: 'Crea la tarjeta de credito correspondiente desde notificaciones.',
         });
       }
-      onForceRefresh(); // reload database to reflect updates
     } catch (err) {
       console.error('Error updating transaction operation type:', err);
+      Alert.alert(confirmed ? 'Movimiento guardado' : 'Error', confirmed
+        ? 'El movimiento se guardó; no se pudo actualizar el aviso de tarjeta.'
+        : err instanceof SQLiteCommandFailure || err instanceof ManualTransactionConflict
+          ? err.message : 'No se pudo actualizar el movimiento.');
     }
   };
 
@@ -277,53 +227,21 @@ export function TransactionsScreen({
     const interestFreeCount = hasInterestFreeInstallments
       ? Math.min(Math.max(1, Number(interestFreeInstallmentCount) || installmentCount), installmentCount)
       : 0;
-    const now = new Date().toISOString();
-    const updatedTx: Transaction = {
-      ...selectedTxForInstallments,
-      notes: replaceInstallmentDetailsInNotes(selectedTxForInstallments.notes, installmentCount, interestFreeCount),
-      updatedAt: now,
-    };
-
     try {
       const txRepo = createSqliteTransactionRepository(database);
       const accountRepository = createSqliteAccountRepository(database);
       const creditCardRepository = createSqliteCreditCardRepository(database);
-      await txRepo.saveTransactions([updatedTx]);
-
-      if (installmentCount > 1) {
-        await creditCardRepository.saveInstallmentPurchases([
-          {
-            id: `installment-${updatedTx.id}`,
-            transactionId: updatedTx.id,
-            accountId: updatedTx.accountId,
-            merchantName: updatedTx.merchantName,
-            totalAmount: updatedTx.amount,
-            currency: updatedTx.currency,
-            installmentCount,
-            paidInstallments: 0,
-            monthlyAmount: Math.round(updatedTx.amount / installmentCount),
-            firstDueDate: getNextMonthDueDate(updatedTx.date),
-            status: 'active',
-            createdAt: updatedTx.createdAt,
-            updatedAt: now,
-          },
-        ]);
-      } else {
-        await txRepo.deleteInstallmentPurchasesByTransactionId(updatedTx.id);
-      }
-
-      await reconcileCreditCardTransactions({
-        accountRepository,
-        creditCardRepository,
-        transactionRepository: txRepo,
-      });
+      await updateTransactionQuickly({
+        accountRepository, creditCardRepository, transactionRepository: txRepo,
+      }, selectedTxForInstallments.id, { kind: 'installments', installmentCount, interestFreeCount });
 
       setSelectedTxForInstallments(null);
       resetInstallmentForm();
       onForceRefresh();
     } catch (err) {
       console.error('Error updating installments:', err);
-      Alert.alert('Error', 'No se pudieron guardar las cuotas.');
+      Alert.alert('Error', err instanceof SQLiteCommandFailure || err instanceof ManualTransactionConflict
+        ? err.message : 'No se pudieron guardar las cuotas.');
     }
   };
 
@@ -350,22 +268,6 @@ export function TransactionsScreen({
       installmentCount: installmentMatch?.[1] ?? '1',
       interestFreeInstallmentCount: interestFreeMatch?.[1] ?? '',
     };
-  };
-
-  const replaceInstallmentDetailsInNotes = (
-    notes: string | undefined,
-    installmentCount: number,
-    interestFreeCount: number,
-  ) => {
-    const baseNotes = (notes || 'Crédito • Registro manual')
-      .replace(/\s*\|\s*Cuotas:\s*\d+(\s*\|\s*Sin intereses:\s*\d+)?/i, '')
-      .trim();
-
-    if (installmentCount <= 1 && interestFreeCount <= 0) {
-      return baseNotes;
-    }
-
-    return `${baseNotes} | Cuotas: ${installmentCount}${interestFreeCount > 0 ? ` | Sin intereses: ${interestFreeCount}` : ''}`;
   };
 
   const resetInstallmentForm = () => {
@@ -473,7 +375,7 @@ export function TransactionsScreen({
     setEditingTransaction(tx);
     setNewAmount(formatAmountInputForForm(tx.amount));
     setNewMerchant(tx.merchantName || tx.description);
-    setNewType(tx.type === 'internalTransfer' ? 'internalTransfer' : tx.type === 'income' || tx.direction === 'inflow' ? 'income' : 'expense');
+    setNewType(tx.type === 'creditCardPayment' ? 'creditCardPayment' : tx.type === 'internalTransfer' ? 'internalTransfer' : tx.type === 'income' || tx.direction === 'inflow' ? 'income' : 'expense');
     setNewCategory(tx.categoryId ?? '');
     setNewAccount(tx.accountId);
     setNewTargetAccount(tx.targetAccountId ?? '');
@@ -529,6 +431,8 @@ export function TransactionsScreen({
       onForceRefresh(); // Trigger parent refresh
     } catch (err) {
       console.error('Error deleting transaction:', err);
+      Alert.alert('Error', err instanceof SQLiteCommandFailure || err instanceof ManualTransactionConflict
+        ? err.message : 'No se pudo eliminar el movimiento.');
     }
   };
 
@@ -729,7 +633,7 @@ export function TransactionsScreen({
   // Save manual transaction to SQLite
   const handleSaveTransaction = async () => {
     if (savingTransaction.current) return;
-    const isCreditCardExpense = newType !== 'income' && newType !== 'internalTransfer' && newOperationType.toLowerCase().includes('cr');
+    const isCreditCardExpense = newType !== 'income' && newType !== 'internalTransfer' && newType !== 'creditCardPayment' && newOperationType.toLowerCase().includes('cr');
     if (
       !database ||
       !newAmount ||
@@ -742,6 +646,7 @@ export function TransactionsScreen({
     }
 
     savingTransaction.current = true;
+    let confirmed = false;
     try {
       const cleanAmount = parseAmountInput(newAmount);
       if (!cleanAmount) {
@@ -776,25 +681,10 @@ export function TransactionsScreen({
         transactionType: newType,
         transferTaxCharged,
       });
-
-      if (isCreditCardExpense) {
-        if (creditCardTarget.missingCreditCard) {
-          await createSqliteCreditCardAlertRepository(database).saveMissingCreditCardAlert({
-            creditCardHint: creditCardTarget.creditCardHint,
-            transactionId: transaction.id,
-          });
-          await loadMissingCardAlerts();
-          Toast.show({
-            type: 'info',
-            text1: 'Tarjeta pendiente',
-            text2: 'Crea la tarjeta de credito correspondiente para asociar este movimiento.',
-          });
-        }
-      }
-
+      confirmed = true;
       setAddTxModalVisible(false);
       setEditingTransaction(null);
-      onForceRefresh(); // Trigger parent database reload!
+      onForceRefresh();
 
       // Reset form fields
       setNewAmount('');
@@ -810,9 +700,27 @@ export function TransactionsScreen({
         subscriptionDraft.current = undefined;
         onSubscriptionExpenseSaved?.();
       }
+      if (isCreditCardExpense) {
+        if (creditCardTarget.missingCreditCard) {
+          await createSqliteCreditCardAlertRepository(database).saveMissingCreditCardAlert({
+            creditCardHint: creditCardTarget.creditCardHint,
+            transactionId: transaction.id,
+          });
+          await loadMissingCardAlerts();
+          Toast.show({
+            type: 'info',
+            text1: 'Tarjeta pendiente',
+            text2: 'Crea la tarjeta de credito correspondiente para asociar este movimiento.',
+          });
+        }
+      }
+
     } catch (err) {
       console.error(err);
-      Alert.alert('Error', 'Error guardando la transacción.');
+      Alert.alert(confirmed ? 'Movimiento guardado' : 'Error', confirmed
+        ? 'El movimiento se guardó; no se pudo actualizar el aviso de tarjeta.'
+        : err instanceof SQLiteCommandFailure || err instanceof ManualTransactionConflict
+          ? err.message : 'Error guardando la transacción.');
     } finally {
       savingTransaction.current = false;
     }

@@ -1,0 +1,136 @@
+{
+  "phase": 2,
+  "scope": "Manual transaction create/edit/delete, transfers and quick actions",
+  "validatedAt": "2026-10-11T21:08:21.9253075Z",
+  "node": {
+    "passed": true,
+    "tests": 310,
+    "suites": 34,
+    "snapshots": 8,
+    "preexistingSkippedBenchmarks": 3,
+    "faultPaths": 15,
+    "rollbackPoints": 356,
+    "report": "docs/atomicidad-fase2/node-fault-matrix.json",
+    "jestLog": "docs/atomicidad-fase2/jest-final.log"
+  },
+  "checks": {
+    "strictTypeScript": "passed",
+    "eslint": "passed",
+    "diffCheck": "passed",
+    "cleanDependencyInstallation": "passed",
+    "installedDriverPatchHashMatch": "passed",
+    "patchIdempotence": "passed"
+  },
+  "android": [
+    {
+      "api": 24,
+      "passed": true,
+      "cases": 250,
+      "rollbackPoints": 244.0,
+      "report": "docs/atomicidad-fase2/verified-api24/result.json",
+      "largeDatabase": {
+        "rows": 100000,
+        "verificationMs": 322,
+        "operationMs": 8729,
+        "readerMs": 8730,
+        "timeoutMs": 10000
+      },
+      "recoveryCases": 17.0,
+      "recovery": [
+        {
+          "campaign": "core",
+          "passed": true,
+          "cases": 14,
+          "report": "docs/atomicidad-fase2/recovery-api24-core/result.json"
+        },
+        {
+          "campaign": "begin-after",
+          "passed": true,
+          "cases": 1,
+          "report": "docs/atomicidad-fase2/recovery-api24-begin-after/result.json"
+        },
+        {
+          "campaign": "commit-before",
+          "passed": true,
+          "cases": 1,
+          "report": "docs/atomicidad-fase2/recovery-api24-commit-before/result.json"
+        },
+        {
+          "campaign": "rollback-before",
+          "passed": true,
+          "cases": 1,
+          "report": "docs/atomicidad-fase2/recovery-api24-rollback-before/result.json"
+        }
+      ]
+    },
+    {
+      "api": 35,
+      "passed": true,
+      "cases": 250,
+      "rollbackPoints": 244.0,
+      "report": "docs/atomicidad-fase2/verified-api35/result.json",
+      "largeDatabase": {
+        "rows": 100000,
+        "verificationMs": 1073,
+        "operationMs": 18291,
+        "readerMs": 18361,
+        "timeoutMs": 10000
+      },
+      "recoveryCases": 17.0,
+      "recovery": [
+        {
+          "campaign": "core",
+          "passed": true,
+          "cases": 14,
+          "report": "docs/atomicidad-fase2/recovery-api35-core/result.json"
+        },
+        {
+          "campaign": "begin-after",
+          "passed": true,
+          "cases": 1,
+          "report": "docs/atomicidad-fase2/recovery-api35-begin-after/result.json"
+        },
+        {
+          "campaign": "commit-before",
+          "passed": true,
+          "cases": 1,
+          "report": "docs/atomicidad-fase2/recovery-api35-commit-before/result.json"
+        },
+        {
+          "campaign": "rollback-before",
+          "passed": true,
+          "cases": 1,
+          "report": "docs/atomicidad-fase2/recovery-api35-rollback-before/result.json"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No universal durable exactly-once receipt",
+    "Unknown results require verification before repeating",
+    "Large history reconciliation blocks queued readers for measured operation duration",
+    "Independent credit card payment registration remains phase 3",
+    "Physical storage/process death/native multi-process behavior not certified"
+  ],
+  "intermediateRuns": {
+    "approved": false,
+    "reports": [
+      "docs/atomicidad-fase2/api24",
+      "docs/atomicidad-fase2/api35"
+    ],
+    "observations": [
+      "Fallback account assertion corrected to match existing name ordering",
+      "Initial API 35 large-operation watchdog exceeded; retained as diagnostic evidence"
+    ]
+  },
+  "preserved": [
+    "Financial rules",
+    "Phase 0 historical snapshots",
+    "Schema and migrations",
+    "Dependency and driver versions",
+    "Production backup/reminder Kotlin modules",
+    "SectionList and history pages of 50"
+  ],
+  "recommendation": "Authorize a separately scoped phase 3 for independent card payment registration; phase 3 has not been started",
+  "report": "docs/atomicidad-financiera-fase2.md"
+}

@@ -119,8 +119,9 @@ export function AddTransactionModal({
 
   const isIncome = newType === 'income';
   const isTransfer = newType === 'internalTransfer';
+  const isCardPayment = newType === 'creditCardPayment';
   const title = mode === 'edit'
-    ? `Modificar ${isTransfer ? 'Transferencia' : isIncome ? 'Ingreso' : 'Gasto'}`
+    ? `Modificar ${isCardPayment ? 'Pago de tarjeta' : isTransfer ? 'Transferencia' : isIncome ? 'Ingreso' : 'Gasto'}`
     : isTransfer
       ? 'Transferir'
       : isIncome
@@ -161,7 +162,7 @@ export function AddTransactionModal({
   );
   const selectedAccount = visibleAccounts.find(account => account.id === newAccount);
   const selectedTargetAccount = targetAccounts.find(account => account.id === newTargetAccount);
-  const isCreditPayment = !isIncome && !isTransfer && isCreditOperation(newOperationType);
+  const isCreditPayment = !isCardPayment && !isIncome && !isTransfer && isCreditOperation(newOperationType);
 
   const normalizedAmount = formatAmountInput(newAmount);
   const amountNumber = parseAmountInput(normalizedAmount);
@@ -284,7 +285,7 @@ export function AddTransactionModal({
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
             contentContainerStyle={[styles.content, { paddingHorizontal: screenPadding }]}>
-            <View style={[styles.typeSwitch, { backgroundColor: isDark ? '#2a2a2b' : '#e8e7ef' }]}>
+            {!isCardPayment ? <View style={[styles.typeSwitch, { backgroundColor: isDark ? '#2a2a2b' : '#e8e7ef' }]}>
               <Pressable
                 onPress={() => selectType('expense')}
                 style={[
@@ -310,6 +311,8 @@ export function AddTransactionModal({
                 <Text style={[styles.typeText, { color: isTransfer ? '#f1f0ff' : themeColors.muted }]}>Transferir</Text>
               </Pressable>
             </View>
+
+            : null}
 
             <View style={styles.amountBlock}>
               <Text
@@ -384,7 +387,7 @@ export function AddTransactionModal({
               </PickerPanel>
             ) : null}
 
-            {!isIncome && !isTransfer ? (
+            {!isIncome && !isTransfer && !isCardPayment ? (
               <GlassCard palette={themeColors}>
                 <View style={styles.rowHeader}>
                   <IconBubble label="$" palette={themeColors} />
@@ -698,7 +701,7 @@ export function AddTransactionModal({
               value={newNotes}
             />
 
-            {!isIncome && !isTransfer ? (
+            {!isIncome && !isTransfer && !isCardPayment ? (
               <Pressable style={[styles.receiptButton, { borderColor: themeColors.border }]}>
                 <Text style={[styles.receiptText, { color: themeColors.muted }]}>Adjuntar Recibo</Text>
               </Pressable>
@@ -726,7 +729,7 @@ export function AddTransactionModal({
                 { backgroundColor: isIncome ? '#bbc3ff' : themeColors.primary },
               ]}>
               <Text style={[styles.saveText, { color: isIncome ? '#001d93' : '#f1f0ff' }]}>
-                {mode === 'edit' ? 'Guardar Cambios' : `Guardar ${isTransfer ? 'Transferencia' : isIncome ? 'Ingreso' : 'Gasto'}`}
+                {mode === 'edit' ? 'Guardar Cambios' : `Guardar ${isCardPayment ? 'Pago de tarjeta' : isTransfer ? 'Transferencia' : isIncome ? 'Ingreso' : 'Gasto'}`}
               </Text>
             </Pressable>
           </View>

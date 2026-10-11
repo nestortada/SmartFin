@@ -1,0 +1,80 @@
+import { UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID, reconcileCreditCardTransactions } from '../../creditCards/useCases/creditCardTransactionRelations';
+import {
+  saveManualTransaction, saveTransactionInstallments,
+  type SaveManualTransactionParams, type ManualTransactionOperationType,
+} from './saveManualTransaction';
+import { withManualTransactionScope } from './manualTransactionScope';
+import { readCurrentManualTransaction } from '../repositories/sqliteTransactionRepository';
+
+type Dependencies = Pick<SaveManualTransactionParams, 'accountRepository' | 'transactionRepository' | 'creditCardRepository'>;
+type QuickChange = { kind: 'paymentMethod'; operationType: ManualTransactionOperationType }
+  | { kind: 'installments'; installmentCount: number; interestFreeCount: number };
+
+export async function updateTransactionQuickly(
+  dependencies: Dependencies,
+  transactionId: string,
+  change: QuickChange,
+) {
+  return withManualTransactionScope(dependencies, current =>
+    updateTransactionQuicklyInScope(current, transactionId, change));
+}
+
+async function updateTransactionQuicklyInScope(
+  dependencies: Dependencies,
+  transactionId: string,
+  change: QuickChange,
+) {
+  const { accountRepository, transactionRepository, creditCardRepository } = dependencies;
+  // Actions can hold a row from an old page: use current persisted financial state.
+  const transaction = await readCurrentManualTransaction(transactionRepository, transactionId);
+  if (!transaction || transaction.type !== 'expense') {
+    throw new Error('Esta acción rápida requiere un gasto existente.');
+  }
+  if (!Number.isFinite(transaction.amount) || transaction.amount <= 0) {
+    throw new Error('Monto inválido.');
+  }
+  if (change.kind === 'installments') {
+    const { installmentCount, interestFreeCount } = change;
+    if (transaction.paymentMethod !== 'credit' || !Number.isFinite(installmentCount) ||
+        installmentCount < 1 || !Number.isFinite(interestFreeCount) || interestFreeCount < 0) {
+      throw new Error('Cuotas inválidas.');
+    }
+    const notes = (transaction.notes || 'Crédito • Registro manual')
+      .replace(/\s*\|\s*Cuotas:\s*\d+(\s*\|\s*Sin intereses:\s*\d+)?/i, '').trim();
+    const updated = {
+      ...transaction,
+      notes: installmentCount <= 1 && interestFreeCount <= 0 ? notes
+        : `${notes} | Cuotas: ${installmentCount}${interestFreeCount > 0 ? ` | Sin intereses: ${interestFreeCount}` : ''}`,
+      updatedAt: new Date().toISOString(),
+    };
+    await transactionRepository.saveTransactions([updated]);
+    await saveTransactionInstallments({ ...dependencies, transaction: updated, installmentCount, previousTransaction: transaction });
+    await reconcileCreditCardTransactions(dependencies);
+    return { transaction: updated, creditCardTarget: { missingCreditCard: false, creditCardHint: undefined } };
+  }
+  const accounts = await accountRepository.getAccounts();
+  const isCredit = change.operationType === 'Crédito';
+  const currentAccount = accounts.find(account => account.id === transaction.accountId);
+  const isDebit = (account: typeof currentAccount) => account &&
+    account.id !== UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID &&
+    ['cash', 'bankAccount', 'savingsAccount'].includes(account.type);
+  const debitAccount = isDebit(currentAccount) ? currentAccount
+    : accounts.find(account => account.status === 'active' && isDebit(account));
+  if (!isCredit && !debitAccount) throw new Error('Crea una cuenta débito para mover esta transacción.');
+  const purchase = (await creditCardRepository.getInstallmentPurchases([transaction.accountId]))
+    .find(value => value.transactionId === transaction.id);
+  const installmentCount = purchase?.installmentCount ?? Number(transaction.notes?.match(/Cuotas:\s*(\d+)/i)?.[1] ?? 1);
+  const interestFreeCount = Number(transaction.notes?.match(/Sin intereses:\s*(\d+)/i)?.[1] ?? 0);
+  return saveManualTransaction({
+    ...dependencies, accounts, accountId: isCredit ? transaction.accountId : debitAccount?.id,
+    editingTransaction: transaction, amount: transaction.amount,
+    categoryId: transaction.categoryId, subcategoryId: transaction.subcategoryId,
+    merchantName: transaction.merchantName ?? transaction.description,
+    notes: transaction.notes?.replace(/^(Débito|Crédito)\s*•\s*/, '')
+      .replace(/\s*\|\s*Cuotas:\s*\d+(\s*\|\s*Sin intereses:\s*\d+)?/i, ''),
+    creditCardHint: transaction.creditCardHint || transaction.merchantName || transaction.description,
+    operationType: change.operationType, transactionType: transaction.type,
+    hasInterestFreeInstallments: interestFreeCount > 0,
+    installmentCountInput: String(installmentCount), interestFreeInstallmentCountInput: String(interestFreeCount),
+  });
+}

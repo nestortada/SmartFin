@@ -1,5 +1,6 @@
 import type { SmartFinSQLiteDatabase } from '../../../database';
-import { sqliteWithinExistingTransaction } from '../../../database/atomicSQLite';
+import { runSharedSQLiteTransaction, SQLiteCommandFailure } from '../../../database/atomicSQLite';
+import { borrowSQLiteDatabase } from '../../../database/managedSQLite';
 import { withDatabaseMaintenance } from '../../../database/databaseCoordination';
 import { createSubscriptionInCommand } from '../../subscriptions/useCases/createSubscriptionInCommand';
 import { subscriptionFromAiFields } from '../../subscriptions/useCases/subscriptionFromAiFields';
@@ -263,29 +264,21 @@ export async function executeAiCommandPlan(
   plan: AiCommandPlan,
   reminderService?: SubscriptionReminderService,
 ): Promise<ExecuteAiCommandPlanResult> {
-  return withDatabaseMaintenance(async () => {
+  return withDatabaseMaintenance(async permit => {
     const completed: string[] = [];
     const references = new Map<string, string>();
-    const scopedDatabase = sqliteWithinExistingTransaction(database);
-    await database.executeSql('BEGIN IMMEDIATE;');
-    try {
+    const result = await runSharedSQLiteTransaction(database, async scopedDatabase => {
       for (const action of plan.actions) {
         completed.push(await executeAction(scopedDatabase, action, draftId, references));
       }
-      await database.executeSql('COMMIT;');
-    } catch (error) {
-      try {
-        await database.executeSql('ROLLBACK;');
-      } catch {
-        // Preserve the original domain or persistence error.
-      }
-      throw error;
-    }
+    }, permit);
+    if (result.status === 'rolledBack') throw result.error;
+    if (result.status === 'unknown') throw new SQLiteCommandFailure(result);
     if (plan.actions.some(action => action.entity === 'subscription')) {
       // A platform failure must never turn a committed financial command into a retry/duplicate.
       try {
         const sync = await createSubscriptionApi({
-          repository: createSqliteSubscriptionRepository(database),
+          repository: createSqliteSubscriptionRepository(borrowSQLiteDatabase(database, permit)),
           reminderService: reminderService ?? createSubscriptionReminderService(),
         }).syncSubscriptions();
         if (sync.reminderErrors.length) completed.push('Suscripción guardada. Hay recordatorios pendientes; reintenta su programación desde Suscripciones.');

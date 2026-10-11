@@ -1,0 +1,132 @@
+import {
+  enablePromise,
+  openDatabase,
+  type SQLiteDatabase,
+} from 'react-native-sqlite-storage';
+
+import {
+  SMARTFIN_DATABASE_NAME,
+  SQLITE_SCHEMA_STATEMENTS,
+} from './sqliteSchema';
+
+import { applyVersionedMigrations } from './migrations';
+import {
+  withDatabaseMaintenance,
+  type DatabasePermit,
+} from './databaseCoordination';
+import {
+  borrowSQLiteDatabase,
+  discardSQLiteConnection,
+  manageSQLiteDatabase,
+  sqliteConnectionState,
+} from './managedSQLite';
+
+export type SmartFinSQLiteDatabase = SQLiteDatabase;
+
+let databasePromise: Promise<SmartFinSQLiteDatabase> | undefined;
+let failedInitialization: SmartFinSQLiteDatabase | undefined;
+let promiseRuntimeEnabled = false;
+
+async function applySchema(database: SmartFinSQLiteDatabase): Promise<void> {
+  for (const statement of SQLITE_SCHEMA_STATEMENTS) {
+    await database.executeSql(statement);
+  }
+
+  await applyVersionedMigrations(database);
+}
+
+export async function openSmartFinDatabase(
+  permit?: DatabasePermit,
+): Promise<SmartFinSQLiteDatabase> {
+  return withDatabaseMaintenance(async owner => {
+    if (failedInitialization) {
+      await discardSQLiteConnection(failedInitialization, owner);
+      failedInitialization = undefined;
+    }
+    if (!promiseRuntimeEnabled) {
+      enablePromise(true);
+      promiseRuntimeEnabled = true;
+    }
+
+    if (databasePromise) {
+      const previous = await databasePromise;
+      if (sqliteConnectionState(previous)?.status !== 'open') {
+        if (sqliteConnectionState(previous)?.status !== 'closed')
+          await discardSQLiteConnection(previous, owner);
+        databasePromise = undefined;
+      }
+    }
+    if (!databasePromise) {
+      databasePromise = openDatabase({
+        location: 'default',
+        name: SMARTFIN_DATABASE_NAME,
+      })
+        .then(async database => {
+          const managedDatabase = manageSQLiteDatabase(database);
+          try {
+            // Initialization uses a borrowed handle, so migration transactions never requeue.
+            const owned = borrowSQLiteDatabase(managedDatabase, owner);
+            await applySchema(owned);
+            const [fk] = await owned.executeSql('PRAGMA foreign_key_check;');
+            const [integrity] = await owned.executeSql(
+              'PRAGMA integrity_check;',
+            );
+            if (
+              fk.rows.length ||
+              integrity.rows.item(0).integrity_check !== 'ok'
+            )
+              throw new Error('SQLite recovery integrity check failed');
+            return managedDatabase;
+          } catch (error) {
+            try {
+              await discardSQLiteConnection(managedDatabase, owner);
+            } catch {
+              failedInitialization = managedDatabase;
+            }
+            throw error;
+          }
+        })
+        .catch(error => {
+          databasePromise = undefined;
+          throw error;
+        });
+    }
+
+    return databasePromise;
+  }, permit);
+}
+
+export async function closeSmartFinDatabase(
+  permit?: DatabasePermit,
+): Promise<void> {
+  return withDatabaseMaintenance(async owner => {
+    if (failedInitialization) {
+      await discardSQLiteConnection(failedInitialization, owner);
+      failedInitialization = undefined;
+    }
+    const database = await databasePromise;
+
+    if (!database) {
+      return;
+    }
+
+    if (sqliteConnectionState(database)?.status !== 'closed')
+      await discardSQLiteConnection(database, owner);
+    databasePromise = undefined;
+  }, permit);
+}
+
+export async function getFinancialDataRevision(
+  database: SmartFinSQLiteDatabase,
+): Promise<number> {
+  const [result] = await database.executeSql(
+    'SELECT revision FROM financial_data_revision WHERE id = 1;',
+  );
+
+  if (result.rows.length === 0) {
+    return 0;
+  }
+
+  const value: unknown = result.rows.item(0).revision;
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0;
+}
