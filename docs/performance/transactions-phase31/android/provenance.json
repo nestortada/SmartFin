@@ -1,0 +1,45 @@
+{
+  "comparison": "Phase 3 paginated frozen vs phase 3.1 paginated; same APK/process/database; alternated pairs; fresh wrapper per measured mount; two warmups per version",
+  "accepted": {
+    "1000": "honor-20261011-003221-1000-paired",
+    "10000": "honor-20261011-004248-10000-paired",
+    "100000": "honor-20261011-003221-100000-paired"
+  },
+  "excluded": {
+    "block": "honor-20261011-003221-10000-paired",
+    "reason": "after iteration 2 reported windowFocused=false; entire size block excluded and repeated; raw logs retained"
+  },
+  "apkSha256": "cd495d4caa3eeaf497785ed8f9ab32918031b1c8fbd807f47642a15f2005ef99",
+  "harnessHashes": {
+    "BenchmarkApp.jsx": "b03c4ec207cdff05a3752d29bb1bcb56134d94f576d25d90025fa2bc06796424",
+    "index.js": "89c3600621af652c41158dd218bbec2525d04d2feed3dfd6371287e151176c77",
+    "src/modules/transactions/repositories/sqliteTransactionHistory.ts": "865136b9400b291b58decb554d782632ef4aa189ad1f12d9336a752be56d7112",
+    "src/modules/transactions/repositories/sqliteTransactionHistoryBefore.ts": "8a54da120aa289aa013a1cd5b2ee227ad73a1fa309d23f938fb63f5d76933ff7",
+    "src/modules/transactions/hooks/useTransactionsList.ts": "2202b5c3b08d26ad48d9bbd7c3ac47bea76867a08a56bb75e94260a45ea225e9",
+    "src/modules/transactions/hooks/useTransactionsListBefore.ts": "98467b9fd3fb05bee274111ee251023d191fbd20a985809e8375905acf1fb06d",
+    "src/modules/transactions/hooks/benchmarkHook.ts": "f01bcd9d204a19c1d4284a3f041f7db3d5339ace68c7b3e766af880adbb9a607",
+    "src/modules/transactions/ui/TransactionsScreen.tsx": "f968ad8c63f6245db85124eec8e58deef770731e5809ed357c4d0fc7f609296f",
+    "android/app/src/main/java/com/smartfin/BenchmarkPackage.kt": "1b23e4bb8f3c42073aa6924dfe2d598f09a6c093bd6936590716ac23f6f11c57",
+    "vendor/sqlite/platforms/android/src/main/java/org/pgsqlite/SQLitePlugin.java": "b9911aa5cbfdc26b71e0f7b92616391d654e79aec2fa6e1182e7129bdd7cd37b",
+    "vendor/sqlite/lib/sqlite.core.js": "52e8e9824e3e8225ff17c981ed2003be7cf1b6e78432db25d8c0afa4832bf877"
+  },
+  "scriptHashes": {
+    "BenchmarkApp.jsx": "b03c4ec207cdff05a3752d29bb1bcb56134d94f576d25d90025fa2bc06796424",
+    "prepare.js": "5b8fdcca26320629f987dbfea1cd3773052751c0a6d6480247ffb77a585b0f07",
+    "run.ps1": "90c875177ae3179b6b1951debeebb8fdb295e0003c335703fbd4b870290e5ab4",
+    "runScroll.ps1": "e448c4f0fb14b8084c2f0d75bb96f2f6c5aee3d2f95795e2cb5259106782f550",
+    "summarize.js": "275696c0232605afea88f0f2c32c40278c5c95a4a5916bbfb7f3e6db07571530",
+    "summarizeNode.js": "41ab536593f0042efed8bd505a18c2e8d51d47dd7e63b67819776628a06dc78c",
+    "summarizeScroll.js": "16334e3eef41422bf59e8550808d7febddfcd6fae341eadb41308c056b808fbd",
+    "verify.js": "47465235d784cc443a6d43fb7da121e03fab1dbb0479c0a731d5d860595623f1",
+    "writeReportMetrics.js": "b0ccef9d682256268df838a0330c54a616036d5b7230601d67d9596b7a52ffa2"
+  },
+  "limits": [
+    "USB charging, temperature and OS scheduling not fixed",
+    "PSS sampled whole protocol, not JS heap",
+    "No release inspector or commit profiler installed",
+    "Scroll one 45s sample per size/version, includes idle frames"
+  ],
+  "nativeSQLiteVersion": "3.44.5",
+  "productionPackageUnchanged": true
+}

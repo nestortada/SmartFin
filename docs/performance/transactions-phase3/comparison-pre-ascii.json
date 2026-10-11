@@ -1,0 +1,2632 @@
+{
+  "runtime": "v24.16.0",
+  "gcAvailable": true,
+  "platform": "win32",
+  "results": [
+    {
+      "size": 1000,
+      "mode": "before",
+      "search": "",
+      "samples": [
+        {
+          "milliseconds": 6.439800000000105,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3468600,
+          "retainedTransactions": 1000,
+          "retainedJsonBytes": 510756
+        },
+        {
+          "milliseconds": 6.752899999999954,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3422736,
+          "retainedTransactions": 1000,
+          "retainedJsonBytes": 510756
+        },
+        {
+          "milliseconds": 8.466799999999694,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3414512,
+          "retainedTransactions": 1000,
+          "retainedJsonBytes": 510756
+        },
+        {
+          "milliseconds": 7.821800000000167,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3413864,
+          "retainedTransactions": 1000,
+          "retainedJsonBytes": 510756
+        },
+        {
+          "milliseconds": 10.122200000000248,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3415096,
+          "retainedTransactions": 1000,
+          "retainedJsonBytes": 510756
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "search": "merchant 49",
+      "samples": [
+        {
+          "milliseconds": 7.068400000000111,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3607784,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        },
+        {
+          "milliseconds": 7.396400000000085,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3587400,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        },
+        {
+          "milliseconds": 6.2302999999997155,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3598624,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        },
+        {
+          "milliseconds": 7.646400000000085,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3588120,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        },
+        {
+          "milliseconds": 6.332100000000082,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3536608,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "search": "never found",
+      "samples": [
+        {
+          "milliseconds": 6.6358000000000175,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3586736,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 7.2509000000000015,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3597864,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 6.988400000000183,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3601184,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 6.008400000000165,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3589304,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 6.328400000000329,
+          "returnedRows": 1000,
+          "queries": 1,
+          "heapDeltaBytes": 3586584,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "mode": "after",
+      "search": "",
+      "samples": [
+        {
+          "milliseconds": 28.365600000000086,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 265736,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25539
+        },
+        {
+          "milliseconds": 3.577400000000125,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 344888,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25539
+        },
+        {
+          "milliseconds": 3.683899999999994,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 234760,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25539
+        },
+        {
+          "milliseconds": 2.13130000000001,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 235088,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25539
+        },
+        {
+          "milliseconds": 3.6622000000002117,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 233408,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25539
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "mode": "after",
+      "search": "merchant 49",
+      "samples": [
+        {
+          "milliseconds": 10.303699999999935,
+          "returnedRows": 1060,
+          "queries": 12,
+          "heapDeltaBytes": 2273688,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        },
+        {
+          "milliseconds": 13.52639999999974,
+          "returnedRows": 1060,
+          "queries": 12,
+          "heapDeltaBytes": 2250704,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        },
+        {
+          "milliseconds": 9.284000000000106,
+          "returnedRows": 1060,
+          "queries": 12,
+          "heapDeltaBytes": 2250352,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        },
+        {
+          "milliseconds": 8.756799999999657,
+          "returnedRows": 1060,
+          "queries": 12,
+          "heapDeltaBytes": 2265712,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        },
+        {
+          "milliseconds": 9.095499999999902,
+          "returnedRows": 1060,
+          "queries": 12,
+          "heapDeltaBytes": 2250400,
+          "retainedTransactions": 20,
+          "retainedJsonBytes": 10282
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 34,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND date <= ? AND (date < ?\n    OR (date = ? AND created_at < ?)\n    OR (date = ? AND created_at = ? AND rowid < ?))\n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            "2026-03-01T00:00:00.000Z",
+            "2026-03-01T00:00:00.000Z",
+            "2026-03-01T00:00:00.000Z",
+            "2026-10-10T00:10:16.000Z",
+            "2026-03-01T00:00:00.000Z",
+            "2026-10-10T00:10:16.000Z",
+            617,
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 203,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_date (date<?)"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "values": [
+            "synthetic-799",
+            "synthetic-649",
+            "synthetic-499",
+            "synthetic-349",
+            "synthetic-999",
+            "synthetic-199",
+            "synthetic-849",
+            "synthetic-49",
+            "synthetic-699",
+            "synthetic-549",
+            "synthetic-399",
+            "synthetic-249",
+            "synthetic-899",
+            "synthetic-99",
+            "synthetic-749",
+            "synthetic-599",
+            "synthetic-449",
+            "synthetic-299",
+            "synthetic-949",
+            "synthetic-149"
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 89,
+              "detail": "SEARCH transactions USING INDEX sqlite_autoindex_transactions_1 (id=?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "mode": "after",
+      "search": "never found",
+      "samples": [
+        {
+          "milliseconds": 8.525499999999738,
+          "returnedRows": 1040,
+          "queries": 11,
+          "heapDeltaBytes": 2182544,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 8.090200000000095,
+          "returnedRows": 1040,
+          "queries": 11,
+          "heapDeltaBytes": 2182368,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 8.348500000000058,
+          "returnedRows": 1040,
+          "queries": 11,
+          "heapDeltaBytes": 2182520,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 7.8257000000003245,
+          "returnedRows": 1040,
+          "queries": 11,
+          "heapDeltaBytes": 2183456,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 8.363400000000183,
+          "returnedRows": 1040,
+          "queries": 11,
+          "heapDeltaBytes": 2182760,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 34,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND date <= ? AND (date < ?\n    OR (date = ? AND created_at < ?)\n    OR (date = ? AND created_at = ? AND rowid < ?))\n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            "2026-03-01T00:00:00.000Z",
+            "2026-03-01T00:00:00.000Z",
+            "2026-03-01T00:00:00.000Z",
+            "2026-10-10T00:10:16.000Z",
+            "2026-03-01T00:00:00.000Z",
+            "2026-10-10T00:10:16.000Z",
+            617,
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 203,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_date (date<?)"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "values": [
+            "synthetic-799",
+            "synthetic-649",
+            "synthetic-499",
+            "synthetic-349",
+            "synthetic-999",
+            "synthetic-199",
+            "synthetic-849",
+            "synthetic-49",
+            "synthetic-699",
+            "synthetic-549",
+            "synthetic-399",
+            "synthetic-249",
+            "synthetic-899",
+            "synthetic-99",
+            "synthetic-749",
+            "synthetic-599",
+            "synthetic-449",
+            "synthetic-299",
+            "synthetic-949",
+            "synthetic-149"
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 89,
+              "detail": "SEARCH transactions USING INDEX sqlite_autoindex_transactions_1 (id=?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "search": "",
+      "samples": [
+        {
+          "milliseconds": 93.59490000000005,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 33986456,
+          "retainedTransactions": 10000,
+          "retainedJsonBytes": 5127531
+        },
+        {
+          "milliseconds": 79.1275999999998,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 34032216,
+          "retainedTransactions": 10000,
+          "retainedJsonBytes": 5127531
+        },
+        {
+          "milliseconds": 87.5617000000002,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 33608816,
+          "retainedTransactions": 10000,
+          "retainedJsonBytes": 5127531
+        },
+        {
+          "milliseconds": 82.54330000000027,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 33601520,
+          "retainedTransactions": 10000,
+          "retainedJsonBytes": 5127531
+        },
+        {
+          "milliseconds": 79.40049999999974,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 33590480,
+          "retainedTransactions": 10000,
+          "retainedJsonBytes": 5127531
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "search": "merchant 49",
+      "samples": [
+        {
+          "milliseconds": 76.20989999999983,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35681256,
+          "retainedTransactions": 200,
+          "retainedJsonBytes": 103207
+        },
+        {
+          "milliseconds": 82.15180000000055,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35799688,
+          "retainedTransactions": 200,
+          "retainedJsonBytes": 103207
+        },
+        {
+          "milliseconds": 77.43249999999989,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35190640,
+          "retainedTransactions": 200,
+          "retainedJsonBytes": 103207
+        },
+        {
+          "milliseconds": 78.85519999999997,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35207744,
+          "retainedTransactions": 200,
+          "retainedJsonBytes": 103207
+        },
+        {
+          "milliseconds": 75.60210000000006,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35116096,
+          "retainedTransactions": 200,
+          "retainedJsonBytes": 103207
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "search": "never found",
+      "samples": [
+        {
+          "milliseconds": 81.5592000000006,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35036800,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 83.64879999999994,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35145552,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 87.26979999999912,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35038400,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 88.51699999999983,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 34953920,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 83.76099999999951,
+          "returnedRows": 10000,
+          "queries": 1,
+          "heapDeltaBytes": 35132480,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "mode": "after",
+      "search": "",
+      "samples": [
+        {
+          "milliseconds": 4.922500000000582,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 237440,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25726
+        },
+        {
+          "milliseconds": 4.703300000000127,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 231136,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25726
+        },
+        {
+          "milliseconds": 5.335599999999431,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 231136,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25726
+        },
+        {
+          "milliseconds": 5.2577000000001135,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 231136,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25726
+        },
+        {
+          "milliseconds": 5.374400000000605,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 231136,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25726
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "mode": "after",
+      "search": "merchant 49",
+      "samples": [
+        {
+          "milliseconds": 20.810999999999694,
+          "returnedRows": 2690,
+          "queries": 19,
+          "heapDeltaBytes": 5696744,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25804
+        },
+        {
+          "milliseconds": 18.900000000000546,
+          "returnedRows": 2690,
+          "queries": 19,
+          "heapDeltaBytes": 5687248,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25804
+        },
+        {
+          "milliseconds": 18.363000000000284,
+          "returnedRows": 2690,
+          "queries": 19,
+          "heapDeltaBytes": 5687248,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25804
+        },
+        {
+          "milliseconds": 19.881899999999405,
+          "returnedRows": 2690,
+          "queries": 19,
+          "heapDeltaBytes": 5687248,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25804
+        },
+        {
+          "milliseconds": 21.115099999999984,
+          "returnedRows": 2690,
+          "queries": 19,
+          "heapDeltaBytes": 5687248,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25804
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 34,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND date <= ? AND (date < ?\n    OR (date = ? AND created_at < ?)\n    OR (date = ? AND created_at = ? AND rowid < ?))\n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            "2026-09-19T00:00:00.000Z",
+            "2026-09-19T00:00:00.000Z",
+            "2026-09-19T00:00:00.000Z",
+            "2026-10-10T00:04:26.000Z",
+            "2026-09-19T00:00:00.000Z",
+            "2026-10-10T00:04:26.000Z",
+            267,
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 203,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_date (date<?)"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "values": [
+            "synthetic-3199",
+            "synthetic-9449",
+            "synthetic-2399",
+            "synthetic-8649",
+            "synthetic-1599",
+            "synthetic-7849",
+            "synthetic-799",
+            "synthetic-7049",
+            "synthetic-6249",
+            "synthetic-5449",
+            "synthetic-4649",
+            "synthetic-3849",
+            "synthetic-3049",
+            "synthetic-9299",
+            "synthetic-2249",
+            "synthetic-8499",
+            "synthetic-1449",
+            "synthetic-7699",
+            "synthetic-649",
+            "synthetic-6899",
+            "synthetic-6099",
+            "synthetic-5299",
+            "synthetic-4499",
+            "synthetic-3699",
+            "synthetic-9949",
+            "synthetic-2899",
+            "synthetic-9149",
+            "synthetic-2099",
+            "synthetic-8349",
+            "synthetic-1299",
+            "synthetic-7549",
+            "synthetic-499",
+            "synthetic-6749",
+            "synthetic-5949",
+            "synthetic-5149",
+            "synthetic-4349",
+            "synthetic-3549",
+            "synthetic-9799",
+            "synthetic-2749",
+            "synthetic-8999",
+            "synthetic-1949",
+            "synthetic-8199",
+            "synthetic-1149",
+            "synthetic-7399",
+            "synthetic-349",
+            "synthetic-6599",
+            "synthetic-5799",
+            "synthetic-4999",
+            "synthetic-4199",
+            "synthetic-3399"
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 102,
+              "detail": "SEARCH transactions USING INDEX sqlite_autoindex_transactions_1 (id=?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "mode": "after",
+      "search": "never found",
+      "samples": [
+        {
+          "milliseconds": 61.64419999999973,
+          "returnedRows": 10040,
+          "queries": 56,
+          "heapDeltaBytes": 21285272,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 56.13120000000072,
+          "returnedRows": 10040,
+          "queries": 56,
+          "heapDeltaBytes": 21288776,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 79.46039999999994,
+          "returnedRows": 10040,
+          "queries": 56,
+          "heapDeltaBytes": 21279784,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 73.15830000000005,
+          "returnedRows": 10040,
+          "queries": 56,
+          "heapDeltaBytes": 21290976,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 66.38540000000012,
+          "returnedRows": 10040,
+          "queries": 56,
+          "heapDeltaBytes": 21279784,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 34,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND date <= ? AND (date < ?\n    OR (date = ? AND created_at < ?)\n    OR (date = ? AND created_at = ? AND rowid < ?))\n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            "2026-09-19T00:00:00.000Z",
+            "2026-09-19T00:00:00.000Z",
+            "2026-09-19T00:00:00.000Z",
+            "2026-10-10T00:04:26.000Z",
+            "2026-09-19T00:00:00.000Z",
+            "2026-10-10T00:04:26.000Z",
+            267,
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 203,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_date (date<?)"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "values": [
+            "synthetic-3199",
+            "synthetic-9449",
+            "synthetic-2399",
+            "synthetic-8649",
+            "synthetic-1599",
+            "synthetic-7849",
+            "synthetic-799",
+            "synthetic-7049",
+            "synthetic-6249",
+            "synthetic-5449",
+            "synthetic-4649",
+            "synthetic-3849",
+            "synthetic-3049",
+            "synthetic-9299",
+            "synthetic-2249",
+            "synthetic-8499",
+            "synthetic-1449",
+            "synthetic-7699",
+            "synthetic-649",
+            "synthetic-6899",
+            "synthetic-6099",
+            "synthetic-5299",
+            "synthetic-4499",
+            "synthetic-3699",
+            "synthetic-9949",
+            "synthetic-2899",
+            "synthetic-9149",
+            "synthetic-2099",
+            "synthetic-8349",
+            "synthetic-1299",
+            "synthetic-7549",
+            "synthetic-499",
+            "synthetic-6749",
+            "synthetic-5949",
+            "synthetic-5149",
+            "synthetic-4349",
+            "synthetic-3549",
+            "synthetic-9799",
+            "synthetic-2749",
+            "synthetic-8999",
+            "synthetic-1949",
+            "synthetic-8199",
+            "synthetic-1149",
+            "synthetic-7399",
+            "synthetic-349",
+            "synthetic-6599",
+            "synthetic-5799",
+            "synthetic-4999",
+            "synthetic-4199",
+            "synthetic-3399"
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 102,
+              "detail": "SEARCH transactions USING INDEX sqlite_autoindex_transactions_1 (id=?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "search": "",
+      "samples": [
+        {
+          "milliseconds": 1122.7241000000013,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 218557944,
+          "retainedTransactions": 100000,
+          "retainedJsonBytes": 51375291
+        },
+        {
+          "milliseconds": 1124.0161000000007,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 200322776,
+          "retainedTransactions": 100000,
+          "retainedJsonBytes": 51375291
+        },
+        {
+          "milliseconds": 1124.7091,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 200329880,
+          "retainedTransactions": 100000,
+          "retainedJsonBytes": 51375291
+        },
+        {
+          "milliseconds": 1157.056800000002,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 200349944,
+          "retainedTransactions": 100000,
+          "retainedJsonBytes": 51375291
+        },
+        {
+          "milliseconds": 1129.9896000000008,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 198539168,
+          "retainedTransactions": 100000,
+          "retainedJsonBytes": 51375291
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "search": "merchant 49",
+      "samples": [
+        {
+          "milliseconds": 1135.9865999999965,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 211367576,
+          "retainedTransactions": 2000,
+          "retainedJsonBytes": 1034059
+        },
+        {
+          "milliseconds": 1065.229299999999,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230747544,
+          "retainedTransactions": 2000,
+          "retainedJsonBytes": 1034059
+        },
+        {
+          "milliseconds": 1070.0188000000053,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230877704,
+          "retainedTransactions": 2000,
+          "retainedJsonBytes": 1034059
+        },
+        {
+          "milliseconds": 1037.913499999995,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230827416,
+          "retainedTransactions": 2000,
+          "retainedJsonBytes": 1034059
+        },
+        {
+          "milliseconds": 943.5760999999984,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230830872,
+          "retainedTransactions": 2000,
+          "retainedJsonBytes": 1034059
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "search": "never found",
+      "samples": [
+        {
+          "milliseconds": 1036.3568999999989,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230723928,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 1008.3796999999977,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230669208,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 1076.9465999999957,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230850008,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 1012.959299999995,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230742488,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 996.7455000000045,
+          "returnedRows": 100000,
+          "queries": 1,
+          "heapDeltaBytes": 230750168,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "mode": "after",
+      "search": "",
+      "samples": [
+        {
+          "milliseconds": 23.563499999996566,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 237608,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 26016
+        },
+        {
+          "milliseconds": 21.57730000000447,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 231304,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 26016
+        },
+        {
+          "milliseconds": 20.543499999999767,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 231304,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 26016
+        },
+        {
+          "milliseconds": 16.213900000002468,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 231304,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 26016
+        },
+        {
+          "milliseconds": 20.979200000001583,
+          "returnedRows": 91,
+          "queries": 6,
+          "heapDeltaBytes": 231304,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 26016
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "mode": "after",
+      "search": "merchant 49",
+      "samples": [
+        {
+          "milliseconds": 36.15699999999924,
+          "returnedRows": 2490,
+          "queries": 18,
+          "heapDeltaBytes": 5303128,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25888
+        },
+        {
+          "milliseconds": 33.273300000000745,
+          "returnedRows": 2490,
+          "queries": 18,
+          "heapDeltaBytes": 5299376,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25888
+        },
+        {
+          "milliseconds": 35.053500000001804,
+          "returnedRows": 2490,
+          "queries": 18,
+          "heapDeltaBytes": 5298800,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25888
+        },
+        {
+          "milliseconds": 35.52479999999923,
+          "returnedRows": 2490,
+          "queries": 18,
+          "heapDeltaBytes": 5298800,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25888
+        },
+        {
+          "milliseconds": 35.672099999996135,
+          "returnedRows": 2490,
+          "queries": 18,
+          "heapDeltaBytes": 5298800,
+          "retainedTransactions": 50,
+          "retainedJsonBytes": 25888
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 34,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND date <= ? AND (date < ?\n    OR (date = ? AND created_at < ?)\n    OR (date = ? AND created_at = ? AND rowid < ?))\n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            "2026-10-08T00:00:00.000Z",
+            "2026-10-08T00:00:00.000Z",
+            "2026-10-08T00:00:00.000Z",
+            "2026-10-10T22:19:53.000Z",
+            "2026-10-08T00:00:00.000Z",
+            "2026-10-10T22:19:53.000Z",
+            80394,
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 203,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_date (date<?)"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "values": [
+            "synthetic-99499",
+            "synthetic-72099",
+            "synthetic-44699",
+            "synthetic-17299",
+            "synthetic-92449",
+            "synthetic-65049",
+            "synthetic-37649",
+            "synthetic-10249",
+            "synthetic-85399",
+            "synthetic-57999",
+            "synthetic-30599",
+            "synthetic-3199",
+            "synthetic-78349",
+            "synthetic-50949",
+            "synthetic-23549",
+            "synthetic-98699",
+            "synthetic-71299",
+            "synthetic-43899",
+            "synthetic-16499",
+            "synthetic-91649",
+            "synthetic-64249",
+            "synthetic-36849",
+            "synthetic-9449",
+            "synthetic-84599",
+            "synthetic-57199",
+            "synthetic-29799",
+            "synthetic-2399",
+            "synthetic-77549",
+            "synthetic-50149",
+            "synthetic-22749",
+            "synthetic-97899",
+            "synthetic-70499",
+            "synthetic-43099",
+            "synthetic-15699",
+            "synthetic-90849",
+            "synthetic-63449",
+            "synthetic-36049",
+            "synthetic-8649",
+            "synthetic-83799",
+            "synthetic-56399",
+            "synthetic-28999",
+            "synthetic-1599",
+            "synthetic-76749",
+            "synthetic-49349",
+            "synthetic-21949",
+            "synthetic-97099",
+            "synthetic-69699",
+            "synthetic-42299",
+            "synthetic-14899",
+            "synthetic-90049"
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 102,
+              "detail": "SEARCH transactions USING INDEX sqlite_autoindex_transactions_1 (id=?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "mode": "after",
+      "search": "never found",
+      "samples": [
+        {
+          "milliseconds": 664.7962999999945,
+          "returnedRows": 100040,
+          "queries": 506,
+          "heapDeltaBytes": 10782864,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 623.902399999999,
+          "returnedRows": 100040,
+          "queries": 506,
+          "heapDeltaBytes": 10703488,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 701.6036999999997,
+          "returnedRows": 100040,
+          "queries": 506,
+          "heapDeltaBytes": 10657592,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 652.988599999997,
+          "returnedRows": 100040,
+          "queries": 506,
+          "heapDeltaBytes": 10655216,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        },
+        {
+          "milliseconds": 799.3099000000002,
+          "returnedRows": 100040,
+          "queries": 506,
+          "heapDeltaBytes": 10476560,
+          "retainedTransactions": 0,
+          "retainedJsonBytes": 2
+        }
+      ],
+      "exact": true,
+      "plans": [
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 33,
+              "detail": "SEARCH financial_data_revision USING INTEGER PRIMARY KEY (rowid=?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "values": [],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 15,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR DISTINCT"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "values": [],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "values": [
+            24,
+            "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9][0-9][0-9]Z"
+          ],
+          "plan": [
+            {
+              "id": 2,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CO-ROUTINE (subquery-1)"
+            },
+            {
+              "id": 7,
+              "parent": 2,
+              "notused": 209,
+              "detail": "SCAN transactions USING COVERING INDEX idx_transactions_date"
+            },
+            {
+              "id": 17,
+              "parent": 0,
+              "notused": 186,
+              "detail": "SCAN (subquery-1)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            51
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 222,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 34,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND date <= ? AND (date < ?\n    OR (date = ? AND created_at < ?)\n    OR (date = ? AND created_at = ? AND rowid < ?))\n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "values": [
+            "2026-10-08T00:00:00.000Z",
+            "2026-10-08T00:00:00.000Z",
+            "2026-10-08T00:00:00.000Z",
+            "2026-10-10T22:19:53.000Z",
+            "2026-10-08T00:00:00.000Z",
+            "2026-10-10T22:19:53.000Z",
+            80394,
+            200
+          ],
+          "plan": [
+            {
+              "id": 8,
+              "parent": 0,
+              "notused": 203,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_date (date<?)"
+            },
+            {
+              "id": 49,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "values": [
+            "synthetic-99499",
+            "synthetic-72099",
+            "synthetic-44699",
+            "synthetic-17299",
+            "synthetic-92449",
+            "synthetic-65049",
+            "synthetic-37649",
+            "synthetic-10249",
+            "synthetic-85399",
+            "synthetic-57999",
+            "synthetic-30599",
+            "synthetic-3199",
+            "synthetic-78349",
+            "synthetic-50949",
+            "synthetic-23549",
+            "synthetic-98699",
+            "synthetic-71299",
+            "synthetic-43899",
+            "synthetic-16499",
+            "synthetic-91649",
+            "synthetic-64249",
+            "synthetic-36849",
+            "synthetic-9449",
+            "synthetic-84599",
+            "synthetic-57199",
+            "synthetic-29799",
+            "synthetic-2399",
+            "synthetic-77549",
+            "synthetic-50149",
+            "synthetic-22749",
+            "synthetic-97899",
+            "synthetic-70499",
+            "synthetic-43099",
+            "synthetic-15699",
+            "synthetic-90849",
+            "synthetic-63449",
+            "synthetic-36049",
+            "synthetic-8649",
+            "synthetic-83799",
+            "synthetic-56399",
+            "synthetic-28999",
+            "synthetic-1599",
+            "synthetic-76749",
+            "synthetic-49349",
+            "synthetic-21949",
+            "synthetic-97099",
+            "synthetic-69699",
+            "synthetic-42299",
+            "synthetic-14899",
+            "synthetic-90049"
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 102,
+              "detail": "SEARCH transactions USING INDEX sqlite_autoindex_transactions_1 (id=?)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,951 @@
+{
+  "jest": {
+    "suitesPassed": 27,
+    "testsPassed": 194,
+    "optionalBenchmarksSkipped": 3,
+    "refinementBenchmark": "passed separately"
+  },
+  "typescript": "passed",
+  "eslint": "passed",
+  "diffCheck": "passed",
+  "unchangedSincePhase3": {
+    "src/modules/transactions/hooks/useTransactionsList.ts": true,
+    "src/modules/transactions/repositories/sqliteTransactionRepository.ts": true,
+    "src/modules/transactions/ui/TransactionsScreen.tsx": true,
+    "package.json": true,
+    "package-lock.json": true
+  },
+  "schemaUnchangedIgnoringLineEndings": true,
+  "android": {
+    "samples": 30,
+    "sourceHashesVerified": true,
+    "productionPackageUnchanged": true,
+    "warmups": 12,
+    "functionalComparisons": 72,
+    "summary": [
+      {
+        "size": 1000,
+        "version": "before",
+        "initialDataMs": {
+          "median": 262.80953800678253,
+          "p95": 265.60953801870346
+        },
+        "initialPaintMs": {
+          "median": 304.8578459620476,
+          "p95": 339.036307990551
+        },
+        "initialReturnedRows": {
+          "median": 103,
+          "p95": 103
+        },
+        "retainedTransactions": {
+          "median": 50,
+          "p95": 50
+        },
+        "pssPeakSampledKb": {
+          "median": 152556,
+          "p95": 157216
+        },
+        "pssEndKb": {
+          "median": 137532,
+          "p95": 139352
+        },
+        "maxJsRafGapMsWholeProtocol": {
+          "median": 188.8286150097847,
+          "p95": 213.87761598825455
+        },
+        "nativeFrameDurationMsWholeProtocol": {
+          "median": 38.397811,
+          "p95": 121.972077
+        },
+        "interactions": {
+          "combinedFilters": {
+            "medianMs": 121.12430799007416,
+            "medianReturnedRows": 10,
+            "medianSqlMs": 4.603536999999999,
+            "medianNativeEncodingMs": 1.3239999999999998,
+            "medianAwaitMs": 24.346152007579803,
+            "medianJsStageMs": {
+              "map": 0.04607802629470825,
+              "searchPredicate": 0.00599902868270874,
+              "append": 0.013845980167388916,
+              "grouping": 0.06254011392593384
+            },
+            "rafGapP95Ms": 51.20715397596359
+          },
+          "oldSearch": {
+            "medianMs": 169.997230052948,
+            "medianReturnedRows": 43,
+            "medianSqlMs": 62.142996,
+            "medianNativeEncodingMs": 2.5784579999999964,
+            "medianAwaitMs": 82.7699990272522,
+            "medianJsStageMs": {
+              "map": 0.12176984548568726,
+              "searchPredicate": 0.05146306753158569,
+              "append": 0.01876896619796753,
+              "grouping": 0.10515505075454712
+            },
+            "rafGapP95Ms": 47.71261501312256
+          },
+          "absentSearch": {
+            "medianMs": 106.05300003290176,
+            "medianReturnedRows": 3,
+            "medianSqlMs": 47.898615,
+            "medianNativeEncodingMs": 0.3867690000000034,
+            "medianAwaitMs": 66.20100003480911,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.011999964714050293,
+              "grouping": 0.028998911380767822
+            },
+            "rafGapP95Ms": 27.563306987285614
+          },
+          "absentExtension": {
+            "medianMs": 100.18215399980545,
+            "medianReturnedRows": 3,
+            "medianSqlMs": 33.617768,
+            "medianNativeEncodingMs": 0.2803859999999956,
+            "medianAwaitMs": 56.051538944244385,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.012308001518249512,
+              "grouping": 0.03061598539352417
+            },
+            "rafGapP95Ms": 45.11100000143051
+          },
+          "reset": {
+            "medianMs": 231.54361599683762,
+            "medianReturnedRows": 54,
+            "medianSqlMs": 8.879233,
+            "medianNativeEncodingMs": 5.649691000000001,
+            "medianAwaitMs": 42.50515305995941,
+            "medianJsStageMs": {
+              "map": 0.39823538064956665,
+              "searchPredicate": 0.026764094829559326,
+              "append": 0.037537992000579834,
+              "grouping": 0.14384591579437256
+            },
+            "rafGapP95Ms": 101.46684700250626
+          }
+        },
+        "ninePagesMs": {
+          "median": 2483.048538029194,
+          "p95": 2682.1782299876213
+        },
+        "afterNinePages": {
+          "median": 500,
+          "p95": 500
+        },
+        "pageRafGapMs": {
+          "median": 114.72699999809265,
+          "p95": 188.60923099517822,
+          "max": 204.03715401887894
+        }
+      },
+      {
+        "size": 1000,
+        "version": "after",
+        "initialDataMs": {
+          "median": 240.0449229478836,
+          "p95": 256.3034620285034
+        },
+        "initialPaintMs": {
+          "median": 287.8169230222702,
+          "p95": 312.28769195079803
+        },
+        "initialReturnedRows": {
+          "median": 103,
+          "p95": 103
+        },
+        "retainedTransactions": {
+          "median": 50,
+          "p95": 50
+        },
+        "pssPeakSampledKb": {
+          "median": 145728,
+          "p95": 154762
+        },
+        "pssEndKb": {
+          "median": 136491,
+          "p95": 139325
+        },
+        "maxJsRafGapMsWholeProtocol": {
+          "median": 190.80992299318314,
+          "p95": 206.07292300462723
+        },
+        "nativeFrameDurationMsWholeProtocol": {
+          "median": 29.538432,
+          "p95": 118.161299
+        },
+        "interactions": {
+          "combinedFilters": {
+            "medianMs": 117.69846200942993,
+            "medianReturnedRows": 9,
+            "medianSqlMs": 1.538384,
+            "medianNativeEncodingMs": 1.176078,
+            "medianAwaitMs": 13.721538066864014,
+            "medianJsStageMs": {
+              "map": 0.07107704877853394,
+              "searchPredicate": 0.007075965404510498,
+              "append": 0.020307958126068115,
+              "grouping": 0.10938394069671631
+            },
+            "rafGapP95Ms": 55.90030699968338
+          },
+          "oldSearch": {
+            "medianMs": 149.43261498212814,
+            "medianReturnedRows": 42,
+            "medianSqlMs": 28.575536999999997,
+            "medianNativeEncodingMs": 3.486847000000001,
+            "medianAwaitMs": 47.650230050086975,
+            "medianJsStageMs": {
+              "map": 0.12061405181884766,
+              "searchPredicate": 0.040001094341278076,
+              "append": 0.022460997104644775,
+              "grouping": 0.11223095655441284
+            },
+            "rafGapP95Ms": 47.08030700683594
+          },
+          "absentSearch": {
+            "medianMs": 89.4784619808197,
+            "medianReturnedRows": 2,
+            "medianSqlMs": 29.906001,
+            "medianNativeEncodingMs": 0.28061600000000214,
+            "medianAwaitMs": 48.462384045124054,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.012691974639892578,
+              "grouping": 0.026769042015075684
+            },
+            "rafGapP95Ms": 31.982461988925934
+          },
+          "absentExtension": {
+            "medianMs": 66.70030796527863,
+            "medianReturnedRows": 2,
+            "medianSqlMs": 0.49877,
+            "medianNativeEncodingMs": 0.11099900000000001,
+            "medianAwaitMs": 14.825538992881775,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.009846031665802002,
+              "grouping": 0.03161495923995972
+            },
+            "rafGapP95Ms": 42.224307000637054
+          },
+          "reset": {
+            "medianMs": 231.01323002576828,
+            "medianReturnedRows": 53,
+            "medianSqlMs": 3.329468,
+            "medianNativeEncodingMs": 13.354845999999998,
+            "medianAwaitMs": 44.702768087387085,
+            "medianJsStageMs": {
+              "map": 0.5834633111953735,
+              "searchPredicate": 0.02969270944595337,
+              "append": 0.05507701635360718,
+              "grouping": 0.186923086643219
+            },
+            "rafGapP95Ms": 109.07353800535202
+          }
+        },
+        "ninePagesMs": {
+          "median": 2474.850461959839,
+          "p95": 2756.4467689990997
+        },
+        "afterNinePages": {
+          "median": 500,
+          "p95": 500
+        },
+        "pageRafGapMs": {
+          "median": 115.73422998189926,
+          "p95": 187.47846204042435,
+          "max": 206.07292300462723
+        }
+      },
+      {
+        "size": 10000,
+        "version": "before",
+        "initialDataMs": {
+          "median": 253.0308459997177,
+          "p95": 270.573539018631
+        },
+        "initialPaintMs": {
+          "median": 320.82592302560806,
+          "p95": 371.3596919775009
+        },
+        "initialReturnedRows": {
+          "median": 103,
+          "p95": 103
+        },
+        "retainedTransactions": {
+          "median": 50,
+          "p95": 50
+        },
+        "pssPeakSampledKb": {
+          "median": 167274,
+          "p95": 169097
+        },
+        "pssEndKb": {
+          "median": 144913,
+          "p95": 147378
+        },
+        "maxJsRafGapMsWholeProtocol": {
+          "median": 315.759614944458,
+          "p95": 630.7683080434799
+        },
+        "nativeFrameDurationMsWholeProtocol": {
+          "median": 29.74046,
+          "p95": 125.143649
+        },
+        "interactions": {
+          "combinedFilters": {
+            "medianMs": 176.57230705022812,
+            "medianReturnedRows": 54,
+            "medianSqlMs": 20.122461,
+            "medianNativeEncodingMs": 6.722771,
+            "medianAwaitMs": 48.5373860001564,
+            "medianJsStageMs": {
+              "map": 0.3064589500427246,
+              "searchPredicate": 0.02446502447128296,
+              "append": 0.03746199607849121,
+              "grouping": 0.19269299507141113
+            },
+            "rafGapP95Ms": 63.85784602165222
+          },
+          "oldSearch": {
+            "medianMs": 337.59907698631287,
+            "medianReturnedRows": 253,
+            "medianSqlMs": 193.389626,
+            "medianNativeEncodingMs": 8.180850000000017,
+            "medianAwaitMs": 231.88815397024155,
+            "medianJsStageMs": {
+              "map": 0.4099231958389282,
+              "searchPredicate": 0.12253785133361816,
+              "append": 0.046769022941589355,
+              "grouping": 0.5262309312820435
+            },
+            "rafGapP95Ms": 51.3184620141983
+          },
+          "absentSearch": {
+            "medianMs": 188.1815379858017,
+            "medianReturnedRows": 3,
+            "medianSqlMs": 132.340691,
+            "medianNativeEncodingMs": 0.2044640000000006,
+            "medianAwaitMs": 152.76653796434402,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.00923001766204834,
+              "grouping": 0.026691973209381104
+            },
+            "rafGapP95Ms": 24.658152997493744
+          },
+          "absentExtension": {
+            "medianMs": 233.78684598207474,
+            "medianReturnedRows": 3,
+            "medianSqlMs": 168.831076,
+            "medianNativeEncodingMs": 0.2028480000000162,
+            "medianAwaitMs": 186.86784690618515,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.030230998992919922,
+              "grouping": 0.035923004150390625
+            },
+            "rafGapP95Ms": 41.76584595441818
+          },
+          "reset": {
+            "medianMs": 198.78799998760223,
+            "medianReturnedRows": 54,
+            "medianSqlMs": 15.46969,
+            "medianNativeEncodingMs": 3.855153999999999,
+            "medianAwaitMs": 41.05092406272888,
+            "medianJsStageMs": {
+              "map": 0.4231518507003784,
+              "searchPredicate": 0.028542041778564453,
+              "append": 0.04092395305633545,
+              "grouping": 0.13269299268722534
+            },
+            "rafGapP95Ms": 101.40338498353958
+          }
+        },
+        "ninePagesMs": {
+          "median": 3310.1322309970856,
+          "p95": 4982.339693009853
+        },
+        "afterNinePages": {
+          "median": 500,
+          "p95": 500
+        },
+        "pageRafGapMs": {
+          "median": 138.31230700016022,
+          "p95": 318.06392300128937,
+          "max": 630.7683080434799
+        }
+      },
+      {
+        "size": 10000,
+        "version": "after",
+        "initialDataMs": {
+          "median": 254.38884699344635,
+          "p95": 266.73653799295425
+        },
+        "initialPaintMs": {
+          "median": 287.1814619898796,
+          "p95": 365.8535379767418
+        },
+        "initialReturnedRows": {
+          "median": 103,
+          "p95": 103
+        },
+        "retainedTransactions": {
+          "median": 50,
+          "p95": 50
+        },
+        "pssPeakSampledKb": {
+          "median": 161133,
+          "p95": 164303
+        },
+        "pssEndKb": {
+          "median": 147584,
+          "p95": 157081
+        },
+        "maxJsRafGapMsWholeProtocol": {
+          "median": 242.08307701349258,
+          "p95": 303.6925389766693
+        },
+        "nativeFrameDurationMsWholeProtocol": {
+          "median": 35.565077,
+          "p95": 132.835049
+        },
+        "interactions": {
+          "combinedFilters": {
+            "medianMs": 139.94153797626495,
+            "medianReturnedRows": 53,
+            "medianSqlMs": 13.659232,
+            "medianNativeEncodingMs": 11.038385,
+            "medianAwaitMs": 39.373384952545166,
+            "medianJsStageMs": {
+              "map": 0.4264620542526245,
+              "searchPredicate": 0.028694987297058105,
+              "append": 0.04000002145767212,
+              "grouping": 0.17492306232452393
+            },
+            "rafGapP95Ms": 65.71946096420288
+          },
+          "oldSearch": {
+            "medianMs": 252.033538043499,
+            "medianReturnedRows": 252,
+            "medianSqlMs": 106.55531,
+            "medianNativeEncodingMs": 8.594227999999992,
+            "medianAwaitMs": 142.19538509845734,
+            "medianJsStageMs": {
+              "map": 0.4111570119857788,
+              "searchPredicate": 0.10000014305114746,
+              "append": 0.0420759916305542,
+              "grouping": 0.2507699728012085
+            },
+            "rafGapP95Ms": 47.665461003780365
+          },
+          "absentSearch": {
+            "medianMs": 154.68453800678253,
+            "medianReturnedRows": 2,
+            "medianSqlMs": 89.310847,
+            "medianNativeEncodingMs": 0.11276800000000148,
+            "medianAwaitMs": 111.77792298793793,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.011693000793457031,
+              "grouping": 0.027769029140472412
+            },
+            "rafGapP95Ms": 28.22869199514389
+          },
+          "absentExtension": {
+            "medianMs": 63.7258460521698,
+            "medianReturnedRows": 2,
+            "medianSqlMs": 0.23476999999999998,
+            "medianNativeEncodingMs": 0.060921,
+            "medianAwaitMs": 12.116230964660645,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.008845984935760498,
+              "grouping": 0.027308940887451172
+            },
+            "rafGapP95Ms": 48.05638498067856
+          },
+          "reset": {
+            "medianMs": 232.83300000429153,
+            "medianReturnedRows": 53,
+            "medianSqlMs": 1.772924,
+            "medianNativeEncodingMs": 5.9916979999999995,
+            "medianAwaitMs": 27.14461398124695,
+            "medianJsStageMs": {
+              "map": 0.48377281427383423,
+              "searchPredicate": 0.03676497936248779,
+              "append": 0.0559999942779541,
+              "grouping": 0.15961605310440063
+            },
+            "rafGapP95Ms": 102.64546197652817
+          }
+        },
+        "ninePagesMs": {
+          "median": 3218.186385035515,
+          "p95": 4239.201461017132
+        },
+        "afterNinePages": {
+          "median": 500,
+          "p95": 500
+        },
+        "pageRafGapMs": {
+          "median": 158.97576999664307,
+          "p95": 281.5341539978981,
+          "max": 303.6925389766693
+        }
+      },
+      {
+        "size": 100000,
+        "version": "before",
+        "initialDataMs": {
+          "median": 260.1882309913635,
+          "p95": 326.2907689809799
+        },
+        "initialPaintMs": {
+          "median": 382.74369299411774,
+          "p95": 543.1209229826927
+        },
+        "initialReturnedRows": {
+          "median": 103,
+          "p95": 103
+        },
+        "retainedTransactions": {
+          "median": 50,
+          "p95": 50
+        },
+        "pssPeakSampledKb": {
+          "median": 161297,
+          "p95": 177885
+        },
+        "pssEndKb": {
+          "median": 146475,
+          "p95": 151564
+        },
+        "maxJsRafGapMsWholeProtocol": {
+          "median": 231.6246159672737,
+          "p95": 247.24669301509857
+        },
+        "nativeFrameDurationMsWholeProtocol": {
+          "median": 28.961188,
+          "p95": 138.378123
+        },
+        "interactions": {
+          "combinedFilters": {
+            "medianMs": 183.84492295980453,
+            "medianReturnedRows": 54,
+            "medianSqlMs": 51.143229000000005,
+            "medianNativeEncodingMs": 2.8706899999999944,
+            "medianAwaitMs": 76.36030799150467,
+            "medianJsStageMs": {
+              "map": 0.3031541109085083,
+              "searchPredicate": 0.02146625518798828,
+              "append": 0.03230702877044678,
+              "grouping": 0.0865369439125061
+            },
+            "rafGapP95Ms": 68.70830804109573
+          },
+          "oldSearch": {
+            "medianMs": 365.3920010328293,
+            "medianReturnedRows": 253,
+            "medianSqlMs": 152.87045100000003,
+            "medianNativeEncodingMs": 6.684550000000002,
+            "medianAwaitMs": 178.09800106287003,
+            "medianJsStageMs": {
+              "map": 0.30099809169769287,
+              "searchPredicate": 0.09045904874801636,
+              "append": 0.03746098279953003,
+              "grouping": 0.14430803060531616
+            },
+            "rafGapP95Ms": 70.04646199941635
+          },
+          "absentSearch": {
+            "medianMs": 1376.3510000109673,
+            "medianReturnedRows": 3,
+            "medianSqlMs": 1300.7781519999999,
+            "medianNativeEncodingMs": 0.21123399999984735,
+            "medianAwaitMs": 1318.765691936016,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.03238499164581299,
+              "grouping": 0.043306946754455566
+            },
+            "rafGapP95Ms": 29.21476900577545
+          },
+          "absentExtension": {
+            "medianMs": 1338.086383998394,
+            "medianReturnedRows": 3,
+            "medianSqlMs": 1179.606615,
+            "medianNativeEncodingMs": 0.1979980000001447,
+            "medianAwaitMs": 1214.5311519503593,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.031768977642059326,
+              "grouping": 0.08361607789993286
+            },
+            "rafGapP95Ms": 17.99823099374771
+          },
+          "reset": {
+            "medianMs": 339.09146201610565,
+            "medianReturnedRows": 54,
+            "medianSqlMs": 34.160617,
+            "medianNativeEncodingMs": 6.061694000000002,
+            "medianAwaitMs": 72.64915496110916,
+            "medianJsStageMs": {
+              "map": 0.9191538095474243,
+              "searchPredicate": 0.06838822364807129,
+              "append": 0.08623099327087402,
+              "grouping": 0.2499990463256836
+            },
+            "rafGapP95Ms": 108.54115396738052
+          }
+        },
+        "ninePagesMs": {
+          "median": 3378.9015389680862,
+          "p95": 3672.424924015999
+        },
+        "afterNinePages": {
+          "median": 500,
+          "p95": 500
+        },
+        "pageRafGapMs": {
+          "median": 146.50492304563522,
+          "p95": 221.40807700157166,
+          "max": 247.24669301509857
+        }
+      },
+      {
+        "size": 100000,
+        "version": "after",
+        "initialDataMs": {
+          "median": 265.68369299173355,
+          "p95": 294.4574620127678
+        },
+        "initialPaintMs": {
+          "median": 344.38553899526596,
+          "p95": 387.65422999858856
+        },
+        "initialReturnedRows": {
+          "median": 103,
+          "p95": 103
+        },
+        "retainedTransactions": {
+          "median": 50,
+          "p95": 50
+        },
+        "pssPeakSampledKb": {
+          "median": 173160,
+          "p95": 179051
+        },
+        "pssEndKb": {
+          "median": 147853,
+          "p95": 150019
+        },
+        "maxJsRafGapMsWholeProtocol": {
+          "median": 233.55469298362732,
+          "p95": 246.54492300748825
+        },
+        "nativeFrameDurationMsWholeProtocol": {
+          "median": 31.315205,
+          "p95": 125.994849
+        },
+        "interactions": {
+          "combinedFilters": {
+            "medianMs": 159.44499999284744,
+            "medianReturnedRows": 53,
+            "medianSqlMs": 18.969774,
+            "medianNativeEncodingMs": 2.5777720000000004,
+            "medianAwaitMs": 38.936769008636475,
+            "medianJsStageMs": {
+              "map": 0.30584192276000977,
+              "searchPredicate": 0.022543013095855713,
+              "append": 0.02992302179336548,
+              "grouping": 0.08130800724029541
+            },
+            "rafGapP95Ms": 68.0569229722023
+          },
+          "oldSearch": {
+            "medianMs": 217.55699998140335,
+            "medianReturnedRows": 252,
+            "medianSqlMs": 79.53061000000001,
+            "medianNativeEncodingMs": 7.350465000000014,
+            "medianAwaitMs": 106.15146309137344,
+            "medianJsStageMs": {
+              "map": 0.3442268967628479,
+              "searchPredicate": 0.0916128158569336,
+              "append": 0.03477001190185547,
+              "grouping": 0.1566920280456543
+            },
+            "rafGapP95Ms": 62.077153980731964
+          },
+          "absentSearch": {
+            "medianMs": 690.7750769853592,
+            "medianReturnedRows": 2,
+            "medianSqlMs": 602.4070750000001,
+            "medianNativeEncodingMs": 0.10799900000002613,
+            "medianAwaitMs": 619.3443849682808,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.03053903579711914,
+              "grouping": 0.04407799243927002
+            },
+            "rafGapP95Ms": 23.255077004432678
+          },
+          "absentExtension": {
+            "medianMs": 100.19753897190094,
+            "medianReturnedRows": 2,
+            "medianSqlMs": 0.255769,
+            "medianNativeEncodingMs": 0.04553799999999998,
+            "medianAwaitMs": 22.13446193933487,
+            "medianJsStageMs": {
+              "map": 0,
+              "searchPredicate": 0,
+              "append": 0.00830698013305664,
+              "grouping": 0.0495380163192749
+            },
+            "rafGapP95Ms": 70.36830800771713
+          },
+          "reset": {
+            "medianMs": 213.32746195793152,
+            "medianReturnedRows": 53,
+            "medianSqlMs": 2.033693,
+            "medianNativeEncodingMs": 4.520315999999999,
+            "medianAwaitMs": 27.45200002193451,
+            "medianJsStageMs": {
+              "map": 0.3506149649620056,
+              "searchPredicate": 0.026231110095977783,
+              "append": 0.04915398359298706,
+              "grouping": 0.12684595584869385
+            },
+            "rafGapP95Ms": 95.17007601261139
+          }
+        },
+        "ninePagesMs": {
+          "median": 3129.4883080124855,
+          "p95": 3426.6384620070457
+        },
+        "afterNinePages": {
+          "median": 500,
+          "p95": 500
+        },
+        "pageRafGapMs": {
+          "median": 146.95600003004074,
+          "p95": 229.44284600019455,
+          "max": 246.54492300748825
+        }
+      }
+    ]
+  },
+  "scroll": {
+    "protocol": "45 seconds; 20 ADB swipes of 500ms; existing bottom overlay excluded from start point; phase 3 and 3.1; one sample per size/version; idle frames included",
+    "samples": [
+      {
+        "size": 1000,
+        "version": "scroll",
+        "retained": 100,
+        "unique": 100,
+        "jsStages": {
+          "grouping": {
+            "calls": 2,
+            "ms": 0.38438504934310913
+          },
+          "searchPredicate": {
+            "calls": 50,
+            "ms": 0.04230564832687378
+          },
+          "map": {
+            "calls": 50,
+            "ms": 1.2152318358421326
+          },
+          "append": {
+            "calls": 1,
+            "ms": 0.11822998523712158
+          }
+        },
+        "viewabilityEvents": 285,
+        "queries": 3,
+        "rafP95Ms": 18.231384992599487,
+        "rafMaxMs": 341.8153849840164,
+        "nativeFrameP95Ms": 21.090355,
+        "nativeFrames": 1684,
+        "pssPeakKb": 170335
+      },
+      {
+        "size": 1000,
+        "version": "scrollBefore",
+        "retained": 100,
+        "unique": 100,
+        "jsStages": {
+          "grouping": {
+            "calls": 2,
+            "ms": 0.28930699825286865
+          },
+          "searchPredicate": {
+            "calls": 50,
+            "ms": 0.028767824172973633
+          },
+          "map": {
+            "calls": 50,
+            "ms": 0.3728446364402771
+          },
+          "append": {
+            "calls": 1,
+            "ms": 0.05592399835586548
+          }
+        },
+        "viewabilityEvents": 287,
+        "queries": 3,
+        "rafP95Ms": 18.17230796813965,
+        "rafMaxMs": 296.90792298316956,
+        "nativeFrameP95Ms": 20.756391,
+        "nativeFrames": 1672,
+        "pssPeakKb": 168866
+      },
+      {
+        "size": 10000,
+        "version": "scroll",
+        "retained": 150,
+        "unique": 150,
+        "jsStages": {
+          "grouping": {
+            "calls": 4,
+            "ms": 0.5489228963851929
+          },
+          "searchPredicate": {
+            "calls": 100,
+            "ms": 0.06330227851867676
+          },
+          "map": {
+            "calls": 100,
+            "ms": 1.606692910194397
+          },
+          "append": {
+            "calls": 2,
+            "ms": 0.129768967628479
+          }
+        },
+        "viewabilityEvents": 219,
+        "queries": 6,
+        "rafP95Ms": 17.871999979019165,
+        "rafMaxMs": 417.8136150240898,
+        "nativeFrameP95Ms": 30.347531,
+        "nativeFrames": 1600,
+        "pssPeakKb": 190160
+      },
+      {
+        "size": 10000,
+        "version": "scrollBefore",
+        "retained": 150,
+        "unique": 150,
+        "jsStages": {
+          "grouping": {
+            "calls": 4,
+            "ms": 0.8119999766349792
+          },
+          "searchPredicate": {
+            "calls": 100,
+            "ms": 0.040763914585113525
+          },
+          "map": {
+            "calls": 100,
+            "ms": 0.5914708971977234
+          },
+          "append": {
+            "calls": 2,
+            "ms": 0.2320759892463684
+          }
+        },
+        "viewabilityEvents": 222,
+        "queries": 6,
+        "rafP95Ms": 17.654769003391266,
+        "rafMaxMs": 494.7750769853592,
+        "nativeFrameP95Ms": 30.912586,
+        "nativeFrames": 1611,
+        "pssPeakKb": 184696
+      },
+      {
+        "size": 100000,
+        "version": "scroll",
+        "retained": 150,
+        "unique": 150,
+        "jsStages": {
+          "grouping": {
+            "calls": 4,
+            "ms": 0.6539239883422852
+          },
+          "searchPredicate": {
+            "calls": 100,
+            "ms": 0.054849088191986084
+          },
+          "map": {
+            "calls": 100,
+            "ms": 0.7609960436820984
+          },
+          "append": {
+            "calls": 2,
+            "ms": 0.17900002002716064
+          }
+        },
+        "viewabilityEvents": 201,
+        "queries": 6,
+        "rafP95Ms": 17.958692967891693,
+        "rafMaxMs": 429.9353849887848,
+        "nativeFrameP95Ms": 30.399503,
+        "nativeFrames": 1655,
+        "pssPeakKb": 187464
+      },
+      {
+        "size": 100000,
+        "version": "scrollBefore",
+        "retained": 150,
+        "unique": 150,
+        "jsStages": {
+          "grouping": {
+            "calls": 4,
+            "ms": 0.4313089847564697
+          },
+          "searchPredicate": {
+            "calls": 100,
+            "ms": 0.07492387294769287
+          },
+          "map": {
+            "calls": 100,
+            "ms": 1.5860682725906372
+          },
+          "append": {
+            "calls": 2,
+            "ms": 0.18300002813339233
+          }
+        },
+        "viewabilityEvents": 200,
+        "queries": 6,
+        "rafP95Ms": 17.92130696773529,
+        "rafMaxMs": 435.40492302179337,
+        "nativeFrameP95Ms": 30.361292,
+        "nativeFrames": 1686,
+        "pssPeakKb": 188132
+      }
+    ]
+  },
+  "apkSha256": "cd495d4caa3eeaf497785ed8f9ab32918031b1c8fbd807f47642a15f2005ef99",
+  "productionChangedFilesSincePhase3": [
+    "src/modules/transactions/repositories/sqliteTransactionHistory.ts"
+  ],
+  "devicePackage": "com.smartfin.transactionsphase31.bench",
+  "packageLeftInstalledAndStopped": true
+}

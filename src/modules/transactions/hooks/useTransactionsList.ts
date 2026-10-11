@@ -1,7 +1,9 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import type { Transaction } from '../../transactions';
+import type { TransactionHistoryCursor } from '../types/TransactionHistoryQuery';
+import { HISTORY_PAGE_SIZE, TransactionHistoryChangedError, TransactionHistoryCancelledError } from '../repositories/sqliteTransactionHistory';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import type { Account } from '../../accounts';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
@@ -15,6 +17,9 @@ type UseTransactionsListResult = {
   categories: Category[];
   months: string[]; // List of available months e.g. ["2026-05", "2026-04"]
   loading: boolean;
+  loadingMore: boolean;
+  hasMore: boolean;
+  loadMore: () => void;
   error: string | undefined;
 
   // Filter & Search states
@@ -77,142 +82,104 @@ export function useTransactionsList(
   database: SmartFinSQLiteDatabase | undefined,
   refreshKey: number,
 ): UseTransactionsListResult {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [selectedMonth, setSelectedMonth] = useState('all');
+  const [selectedAccount, setSelectedAccount] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [months, setMonths] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
   const [error, setError] = useState<string | undefined>();
+  const [restart, setRestart] = useState(0);
+  const query = useMemo(() => ({ month: selectedMonth, accountId: selectedAccount,
+    categoryId: selectedCategory, search: searchQuery, sort: sortOrder }),
+    [selectedMonth, selectedAccount, selectedCategory, searchQuery, sortOrder]);
+  const request = useMemo(() => ({ database, query, refreshKey, restart }),
+    [database, query, refreshKey, restart]);
+  const latest = useRef(request);
+  latest.current = request;
+  const loaded = useRef({ database, query, count: 0 });
+  const [data, setData] = useState<{ database: typeof database; query: typeof query; transactions: Transaction[] }>(
+    { database, query, transactions: [] });
+  const more = useRef<() => void>(() => {});
 
-  // Filtering states
-  const [selectedMonth, setSelectedMonth] = useState<string>('all');
-  const [selectedAccount, setSelectedAccount] = useState<string>('all');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
-
-  // Load only persisted user data. An unavailable database stays empty.
   useEffect(() => {
     let cancelled = false;
+    if (!database) {
+      setAccounts([]); setCategories([]); setMonths([]);
+      return;
+    }
+    const repo = createSqliteTransactionRepository(database);
+    Promise.all([createSqliteAccountRepository(database).getAccounts(),
+      createSqliteCategoryRepository(database).getCategories(), repo.getTransactionMonths()])
+      .then(([acs, cats, availableMonths]) => {
+        if (!cancelled) { setAccounts(acs); setCategories(cats); setMonths(availableMonths); }
+      }).catch(() => { if (!cancelled) setError('No se pudieron cargar los movimientos.'); });
+    return () => { cancelled = true; };
+  }, [database, refreshKey, restart]);
 
-    async function loadData() {
-      setLoading(true);
-      setError(undefined);
-
+  useEffect(() => {
+    let cancelled = false;
+    let busy = false;
+    let cursor: TransactionHistoryCursor | undefined;
+    let exhausted = false;
+    let transactions: Transaction[] = [];
+    const isCancelled = () => cancelled || latest.current !== request;
+    const target = loaded.current.database === database && loaded.current.query === query
+      ? Math.max(HISTORY_PAGE_SIZE, loaded.current.count) : HISTORY_PAGE_SIZE;
+    setError(undefined);
+    setLoading(!!database);
+    setLoadingMore(false);
+    setHasMore(false);
+    if (!database) {
+      setData({ database, query, transactions });
+      more.current = () => {};
+      return;
+    }
+    const repo = createSqliteTransactionRepository(database);
+    async function load(initial: boolean) {
+      if (busy || exhausted || isCancelled()) return;
+      busy = true;
+      if (!initial) setLoadingMore(true);
       try {
-        if (database) {
-          const txRepo = createSqliteTransactionRepository(database);
-          const acRepo = createSqliteAccountRepository(database);
-          const catRepo = createSqliteCategoryRepository(database);
-
-          const [txs, acs, cats] = await Promise.all([
-            txRepo.getTransactions(),
-            acRepo.getAccounts(),
-            catRepo.getCategories(),
-          ]);
-
-          if (!cancelled) {
-            setTransactions(txs);
-            setAccounts(acs);
-            setCategories(cats);
-          }
-        } else {
-          if (!cancelled) {
-            setTransactions([]);
-            setAccounts([]);
-            setCategories([]);
-          }
-        }
+        setError(undefined);
+        do {
+          const page = await repo.getTransactionPage(query, cursor, isCancelled);
+          if (isCancelled()) return;
+          const seen = new Set(transactions.map(tx => tx.id));
+          transactions = [...transactions, ...page.transactions.filter(tx => !seen.has(tx.id))];
+          cursor = page.nextCursor;
+          exhausted = !cursor;
+        } while (initial && cursor && transactions.length < target);
+        if (isCancelled()) return;
+        loaded.current = { database, query, count: transactions.length };
+        setData({ database, query, transactions });
+        setHasMore(!exhausted);
       } catch (err) {
-        console.error('Error loading transaction screen data:', err);
-        if (!cancelled) {
+        if (isCancelled() || err instanceof TransactionHistoryCancelledError) return;
+        if (err instanceof TransactionHistoryChangedError) {
+          // Discard the entire generation rather than mixing database revisions.
+          setRestart(value => value + 1);
+        } else {
           setError('No se pudieron cargar los movimientos.');
         }
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        busy = false;
+        if (!isCancelled()) { setLoading(false); setLoadingMore(false); }
       }
     }
+    more.current = () => { void load(false); };
+    void load(true);
+    return () => { cancelled = true; };
+  }, [database, query, request]);
 
-    loadData();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [database, refreshKey]);
-
-  // Compute list of unique months present in the transactions
-  const months = useMemo(() => {
-    const uniqueMonths = new Set<string>();
-    transactions.forEach(t => {
-      if (t.date && t.date.length >= 7) {
-        uniqueMonths.add(t.date.slice(0, 7)); // Format YYYY-MM
-      }
-    });
-    return Array.from(uniqueMonths).sort((a, b) => b.localeCompare(a));
-  }, [transactions]);
-
-  // Apply filters and sorting
-  const filteredTransactions = useMemo(() => {
-    let result = [...transactions];
-
-    // Filter by month
-    if (selectedMonth !== 'all') {
-      result = result.filter(t => t.date && t.date.startsWith(selectedMonth));
-    }
-
-    // Filter by account
-    if (selectedAccount !== 'all') {
-      result = result.filter(t => transactionMatchesAccountFilter(t, selectedAccount));
-    }
-
-    // Filter by category
-    if (selectedCategory !== 'all') {
-      result = result.filter(t => t.categoryId === selectedCategory);
-    }
-
-    // Search query filter (merchant Name, description or notes)
-    if (searchQuery.trim().length > 0) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(
-        t =>
-          (t.merchantName && t.merchantName.toLowerCase().includes(query)) ||
-          (t.description && t.description.toLowerCase().includes(query)) ||
-          (t.notes && t.notes.toLowerCase().includes(query)),
-      );
-    }
-
-    // Sort order
-    result.sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      if (sortOrder === 'newest') {
-        return dateB - dateA;
-      } else {
-        return dateA - dateB;
-      }
-    });
-
-    return result;
-  }, [transactions, selectedMonth, selectedAccount, selectedCategory, searchQuery, sortOrder]);
-
-  return {
-    transactions,
-    filteredTransactions,
-    accounts,
-    categories,
-    months,
-    loading,
-    error,
-    selectedMonth,
-    setSelectedMonth,
-    selectedAccount,
-    setSelectedAccount,
-    selectedCategory,
-    setSelectedCategory,
-    searchQuery,
-    setSearchQuery,
-    sortOrder,
-    setSortOrder,
-  };
+  const transactions = data.database === database && data.query === query ? data.transactions : [];
+  return { transactions, filteredTransactions: transactions, accounts, categories, months,
+    loading, loadingMore, hasMore, error, loadMore: () => more.current(),
+    selectedMonth, setSelectedMonth, selectedAccount, setSelectedAccount,
+    selectedCategory, setSelectedCategory, searchQuery, setSearchQuery, sortOrder, setSortOrder };
 }

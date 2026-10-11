@@ -1,0 +1,61 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 462049612 Realtime: 874491978
+
+** MEMINFO in pid 14881 [com.smartfin.transactionsphase3.bench] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap    16649    16616       12       52    17720    30976    23307     3060
+  Dalvik Heap     5242     5216       12      328     5976    10159     4015     6144
+ Dalvik Other     1901     1900        0       56     2196                           
+        Stack      868      868        0        0      876                           
+       Ashmem       45       28        0        0      552                           
+    Other dev       39        4       20        0      608                           
+     .so mmap     2741      372     1328       13    22332                           
+    .jar mmap      333        0       64        0    16108                           
+    .apk mmap     7012      328     6604        0     7592                           
+    .ttf mmap      233        0      216        0      392                           
+    .dex mmap     7779        0     7768        0     8544                           
+    .oat mmap      218        0       64        0     7348                           
+    .art mmap      821      520       68      119    13244                           
+   Other mmap       52       36        0        0      712                           
+   EGL mtrack    20719    20719        0        0    20719                           
+    GL mtrack     7100     7100        0        0     7100                           
+      Unknown     2543     2508       20        4     3120                           
+        TOTAL    74867    56215    16176      572   135139    41135    27322     9204
+ 
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:     5804                          19220
+         Native Heap:    16616                          17720
+                Code:    16760                          62332
+               Stack:      868                            876
+            Graphics:    27819                          27819
+       Private Other:     4524
+              System:     2476
+             Unknown:                                    7172
+ 
+           TOTAL PSS:    74867            TOTAL RSS:   135139       TOTAL SWAP PSS:      572
+ 
+ Objects
+               Views:       11         ViewRootImpl:        1
+         AppContexts:        7           Activities:        1
+              Assets:       33        AssetManagers:        0
+       Local Binders:       22        Proxy Binders:       87
+       Parcel memory:       12         Parcel count:       48
+    Death Recipients:        1             WebViews:        0
+ 
+ SQL
+         MEMORY_USED:      297
+  PAGECACHE_OVERFLOW:       79          MALLOC_SIZE:       46
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b) cache hits cache misses cache size  Dbname
+PER CONNECTION STATS
+         4      104            123    11    53    12  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb
+         4        8                    0     0     0    (attached) temp
+         4      104             58     7    23     6  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb (1)
+POOL STATS
+     cache hits  cache misses    cache size  Dbname
+             18            80            98  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb

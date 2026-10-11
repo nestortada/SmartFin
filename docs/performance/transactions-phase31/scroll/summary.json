@@ -1,0 +1,191 @@
+{
+  "protocol": "45 seconds; 20 ADB swipes of 500ms; existing bottom overlay excluded from start point; phase 3 and 3.1; one sample per size/version; idle frames included",
+  "samples": [
+    {
+      "size": 1000,
+      "version": "scroll",
+      "retained": 100,
+      "unique": 100,
+      "jsStages": {
+        "grouping": {
+          "calls": 2,
+          "ms": 0.38438504934310913
+        },
+        "searchPredicate": {
+          "calls": 50,
+          "ms": 0.04230564832687378
+        },
+        "map": {
+          "calls": 50,
+          "ms": 1.2152318358421326
+        },
+        "append": {
+          "calls": 1,
+          "ms": 0.11822998523712158
+        }
+      },
+      "viewabilityEvents": 285,
+      "queries": 3,
+      "rafP95Ms": 18.231384992599487,
+      "rafMaxMs": 341.8153849840164,
+      "nativeFrameP95Ms": 21.090355,
+      "nativeFrames": 1684,
+      "pssPeakKb": 170335
+    },
+    {
+      "size": 1000,
+      "version": "scrollBefore",
+      "retained": 100,
+      "unique": 100,
+      "jsStages": {
+        "grouping": {
+          "calls": 2,
+          "ms": 0.28930699825286865
+        },
+        "searchPredicate": {
+          "calls": 50,
+          "ms": 0.028767824172973633
+        },
+        "map": {
+          "calls": 50,
+          "ms": 0.3728446364402771
+        },
+        "append": {
+          "calls": 1,
+          "ms": 0.05592399835586548
+        }
+      },
+      "viewabilityEvents": 287,
+      "queries": 3,
+      "rafP95Ms": 18.17230796813965,
+      "rafMaxMs": 296.90792298316956,
+      "nativeFrameP95Ms": 20.756391,
+      "nativeFrames": 1672,
+      "pssPeakKb": 168866
+    },
+    {
+      "size": 10000,
+      "version": "scroll",
+      "retained": 150,
+      "unique": 150,
+      "jsStages": {
+        "grouping": {
+          "calls": 4,
+          "ms": 0.5489228963851929
+        },
+        "searchPredicate": {
+          "calls": 100,
+          "ms": 0.06330227851867676
+        },
+        "map": {
+          "calls": 100,
+          "ms": 1.606692910194397
+        },
+        "append": {
+          "calls": 2,
+          "ms": 0.129768967628479
+        }
+      },
+      "viewabilityEvents": 219,
+      "queries": 6,
+      "rafP95Ms": 17.871999979019165,
+      "rafMaxMs": 417.8136150240898,
+      "nativeFrameP95Ms": 30.347531,
+      "nativeFrames": 1600,
+      "pssPeakKb": 190160
+    },
+    {
+      "size": 10000,
+      "version": "scrollBefore",
+      "retained": 150,
+      "unique": 150,
+      "jsStages": {
+        "grouping": {
+          "calls": 4,
+          "ms": 0.8119999766349792
+        },
+        "searchPredicate": {
+          "calls": 100,
+          "ms": 0.040763914585113525
+        },
+        "map": {
+          "calls": 100,
+          "ms": 0.5914708971977234
+        },
+        "append": {
+          "calls": 2,
+          "ms": 0.2320759892463684
+        }
+      },
+      "viewabilityEvents": 222,
+      "queries": 6,
+      "rafP95Ms": 17.654769003391266,
+      "rafMaxMs": 494.7750769853592,
+      "nativeFrameP95Ms": 30.912586,
+      "nativeFrames": 1611,
+      "pssPeakKb": 184696
+    },
+    {
+      "size": 100000,
+      "version": "scroll",
+      "retained": 150,
+      "unique": 150,
+      "jsStages": {
+        "grouping": {
+          "calls": 4,
+          "ms": 0.6539239883422852
+        },
+        "searchPredicate": {
+          "calls": 100,
+          "ms": 0.054849088191986084
+        },
+        "map": {
+          "calls": 100,
+          "ms": 0.7609960436820984
+        },
+        "append": {
+          "calls": 2,
+          "ms": 0.17900002002716064
+        }
+      },
+      "viewabilityEvents": 201,
+      "queries": 6,
+      "rafP95Ms": 17.958692967891693,
+      "rafMaxMs": 429.9353849887848,
+      "nativeFrameP95Ms": 30.399503,
+      "nativeFrames": 1655,
+      "pssPeakKb": 187464
+    },
+    {
+      "size": 100000,
+      "version": "scrollBefore",
+      "retained": 150,
+      "unique": 150,
+      "jsStages": {
+        "grouping": {
+          "calls": 4,
+          "ms": 0.4313089847564697
+        },
+        "searchPredicate": {
+          "calls": 100,
+          "ms": 0.07492387294769287
+        },
+        "map": {
+          "calls": 100,
+          "ms": 1.5860682725906372
+        },
+        "append": {
+          "calls": 2,
+          "ms": 0.18300002813339233
+        }
+      },
+      "viewabilityEvents": 200,
+      "queries": 6,
+      "rafP95Ms": 17.92130696773529,
+      "rafMaxMs": 435.40492302179337,
+      "nativeFrameP95Ms": 30.361292,
+      "nativeFrames": 1686,
+      "pssPeakKb": 188132
+    }
+  ]
+}

@@ -1,0 +1,356 @@
+{
+  "samples": 30,
+  "sourceHashesVerified": true,
+  "productionPackageUnchanged": true,
+  "functionalComparisons": 12,
+  "summary": [
+    {
+      "size": 1000,
+      "version": "before",
+      "initialDataMs": {
+        "median": 222.27807700634003,
+        "p95": 228.46976900100708
+      },
+      "initialPaintMs": {
+        "median": 262.3332310318947,
+        "p95": 303.08553898334503
+      },
+      "initialReturnedRows": {
+        "median": 1012,
+        "p95": 1012
+      },
+      "retainedTransactions": {
+        "median": 1000,
+        "p95": 1000
+      },
+      "pssPeakSampledKb": {
+        "median": 177549,
+        "p95": 185779
+      },
+      "pssEndKb": {
+        "median": 159448,
+        "p95": 181097
+      },
+      "maxJsRafGapMsWholeProtocol": {
+        "median": 80.04746103286743,
+        "p95": 157.82184600830078
+      },
+      "nativeFrameDurationMsWholeProtocol": {
+        "median": 35.176251,
+        "p95": 78.989634
+      },
+      "interactions": {
+        "combinedFilters": {
+          "medianMs": 100.48484599590302,
+          "medianReturnedRows": 0
+        },
+        "oldSearch": {
+          "medianMs": 133.14338397979736,
+          "medianReturnedRows": 0
+        },
+        "absentSearch": {
+          "medianMs": 39.37261599302292,
+          "medianReturnedRows": 0
+        },
+        "reset": {
+          "medianMs": 206.8501539826393,
+          "medianReturnedRows": 0
+        }
+      }
+    },
+    {
+      "size": 1000,
+      "version": "after",
+      "initialDataMs": {
+        "median": 219.69530695676804,
+        "p95": 245.84799998998642
+      },
+      "initialPaintMs": {
+        "median": 264.1304620504379,
+        "p95": 385.3732309937477
+      },
+      "initialReturnedRows": {
+        "median": 103,
+        "p95": 103
+      },
+      "retainedTransactions": {
+        "median": 50,
+        "p95": 50
+      },
+      "pssPeakSampledKb": {
+        "median": 165557,
+        "p95": 180707
+      },
+      "pssEndKb": {
+        "median": 146742,
+        "p95": 163257
+      },
+      "maxJsRafGapMsWholeProtocol": {
+        "median": 198.18192398548126,
+        "p95": 199.32215297222137
+      },
+      "nativeFrameDurationMsWholeProtocol": {
+        "median": 41.58323,
+        "p95": 121.66657
+      },
+      "interactions": {
+        "combinedFilters": {
+          "medianMs": 122.1046159863472,
+          "medianReturnedRows": 10
+        },
+        "oldSearch": {
+          "medianMs": 288.5926150083542,
+          "medianReturnedRows": 1023
+        },
+        "absentSearch": {
+          "medianMs": 152.9316920042038,
+          "medianReturnedRows": 1003
+        },
+        "reset": {
+          "medianMs": 201.94823104143143,
+          "medianReturnedRows": 54
+        }
+      },
+      "ninePagesMs": {
+        "median": 2445.418076992035,
+        "p95": 2652.2412309646606
+      },
+      "afterNinePages": {
+        "median": 500,
+        "p95": 500
+      }
+    },
+    {
+      "size": 10000,
+      "version": "before",
+      "initialDataMs": {
+        "median": 1224.2297689914703,
+        "p95": 1276.8982310295105
+      },
+      "initialPaintMs": {
+        "median": 1355.411307990551,
+        "p95": 1384.621231019497
+      },
+      "initialReturnedRows": {
+        "median": 10012,
+        "p95": 10012
+      },
+      "retainedTransactions": {
+        "median": 10000,
+        "p95": 10000
+      },
+      "pssPeakSampledKb": {
+        "median": 195432,
+        "p95": 201009
+      },
+      "pssEndKb": {
+        "median": 158466,
+        "p95": 166737
+      },
+      "maxJsRafGapMsWholeProtocol": {
+        "median": 364.8925379514694,
+        "p95": 396.66346204280853
+      },
+      "nativeFrameDurationMsWholeProtocol": {
+        "median": 27.399148,
+        "p95": 125.354087
+      },
+      "interactions": {
+        "combinedFilters": {
+          "medianMs": 93.32369202375412,
+          "medianReturnedRows": 0
+        },
+        "oldSearch": {
+          "medianMs": 169.53138500452042,
+          "medianReturnedRows": 0
+        },
+        "absentSearch": {
+          "medianMs": 82.54930800199509,
+          "medianReturnedRows": 0
+        },
+        "reset": {
+          "medianMs": 333.0707689523697,
+          "medianReturnedRows": 0
+        }
+      }
+    },
+    {
+      "size": 10000,
+      "version": "after",
+      "initialDataMs": {
+        "median": 202.00715398788452,
+        "p95": 235.53176999092102
+      },
+      "initialPaintMs": {
+        "median": 235.66838496923447,
+        "p95": 311.70492297410965
+      },
+      "initialReturnedRows": {
+        "median": 103,
+        "p95": 103
+      },
+      "retainedTransactions": {
+        "median": 50,
+        "p95": 50
+      },
+      "pssPeakSampledKb": {
+        "median": 156256,
+        "p95": 176047
+      },
+      "pssEndKb": {
+        "median": 147793,
+        "p95": 163939
+      },
+      "maxJsRafGapMsWholeProtocol": {
+        "median": 220.41899996995926,
+        "p95": 232.09515404701233
+      },
+      "nativeFrameDurationMsWholeProtocol": {
+        "median": 33.885237,
+        "p95": 131.253913
+      },
+      "interactions": {
+        "combinedFilters": {
+          "medianMs": 145.48684704303741,
+          "medianReturnedRows": 54
+        },
+        "oldSearch": {
+          "medianMs": 423.37592297792435,
+          "medianReturnedRows": 2653
+        },
+        "absentSearch": {
+          "medianMs": 733.8220770359039,
+          "medianReturnedRows": 10003
+        },
+        "reset": {
+          "medianMs": 209.5805389881134,
+          "medianReturnedRows": 54
+        }
+      },
+      "ninePagesMs": {
+        "median": 2785.3823850154877,
+        "p95": 2858.3390780091286
+      },
+      "afterNinePages": {
+        "median": 500,
+        "p95": 500
+      }
+    },
+    {
+      "size": 100000,
+      "version": "before",
+      "initialDataMs": {
+        "median": 16445.506463050842,
+        "p95": 17376.50923204422
+      },
+      "initialPaintMs": {
+        "median": 16579.173847019672,
+        "p95": 17529.6753090024
+      },
+      "initialReturnedRows": {
+        "median": 100012,
+        "p95": 100012
+      },
+      "retainedTransactions": {
+        "median": 100000,
+        "p95": 100000
+      },
+      "pssPeakSampledKb": {
+        "median": 680553,
+        "p95": 704753
+      },
+      "pssEndKb": {
+        "median": 360688,
+        "p95": 399098
+      },
+      "maxJsRafGapMsWholeProtocol": {
+        "median": 2839.5812309980392,
+        "p95": 2928.3655390143394
+      },
+      "nativeFrameDurationMsWholeProtocol": {
+        "median": 43.984638,
+        "p95": 185.561551
+      },
+      "interactions": {
+        "combinedFilters": {
+          "medianMs": 180.05469197034836,
+          "medianReturnedRows": 0
+        },
+        "oldSearch": {
+          "medianMs": 690.7505389451981,
+          "medianReturnedRows": 0
+        },
+        "absentSearch": {
+          "medianMs": 510.8793850541115,
+          "medianReturnedRows": 0
+        },
+        "reset": {
+          "medianMs": 2080.275000989437,
+          "medianReturnedRows": 0
+        }
+      }
+    },
+    {
+      "size": 100000,
+      "version": "after",
+      "initialDataMs": {
+        "median": 288.2692309617996,
+        "p95": 297.9375390410423
+      },
+      "initialPaintMs": {
+        "median": 379.25838500261307,
+        "p95": 451.5842310190201
+      },
+      "initialReturnedRows": {
+        "median": 103,
+        "p95": 103
+      },
+      "retainedTransactions": {
+        "median": 50,
+        "p95": 50
+      },
+      "pssPeakSampledKb": {
+        "median": 161646,
+        "p95": 175830
+      },
+      "pssEndKb": {
+        "median": 149463,
+        "p95": 155332
+      },
+      "maxJsRafGapMsWholeProtocol": {
+        "median": 236.98769199848175,
+        "p95": 251.8606150150299
+      },
+      "nativeFrameDurationMsWholeProtocol": {
+        "median": 30.888664,
+        "p95": 135.599299
+      },
+      "interactions": {
+        "combinedFilters": {
+          "medianMs": 181.77684700489044,
+          "medianReturnedRows": 54
+        },
+        "oldSearch": {
+          "medianMs": 373.99946200847626,
+          "medianReturnedRows": 2653
+        },
+        "absentSearch": {
+          "medianMs": 6926.319616019726,
+          "medianReturnedRows": 100003
+        },
+        "reset": {
+          "medianMs": 214.3514620065689,
+          "medianReturnedRows": 54
+        }
+      },
+      "ninePagesMs": {
+        "median": 2787.089845955372,
+        "p95": 3342.286460995674
+      },
+      "afterNinePages": {
+        "median": 500,
+        "p95": 500
+      }
+    }
+  ]
+}

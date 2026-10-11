@@ -1,0 +1,63 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 462265108 Realtime: 874707474
+
+** MEMINFO in pid 16535 [com.smartfin.transactionsphase3.bench] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap    50749    50716       12    11770    51852    78336    64841     8375
+  Dalvik Heap     9882     9508      340      123    10660    18711     9356     9355
+ Dalvik Other     2592     2340        0       24     3248                           
+        Stack      724      724        0      280      732                           
+       Ashmem       27        0        0        0      576                           
+    Other dev       50       12       20        0      716                           
+     .so mmap     8319     1168     4004      117    59540                           
+    .jar mmap     1604        0      456        0    38456                           
+    .apk mmap    10563      328    10092        0    12072                           
+    .ttf mmap      235        0       48        0     1300                           
+    .dex mmap     9071        0     9060        0     9840                           
+    .oat mmap      722        0      200        0    14184                           
+    .art mmap     1044      604      132      111    14236                           
+   Other mmap      139        4       12        0      976                           
+   EGL mtrack    13813    13813        0        0    13813                           
+    GL mtrack    12300    12300        0        0    12300                           
+      Unknown    14937    14748      128      270    15544                           
+        TOTAL   149466   106265    24504    12695   260045    97047    74197    17730
+ 
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:    10244                          24896
+         Native Heap:    50716                          51852
+                Code:    25368                         135908
+               Stack:      724                            732
+            Graphics:    26113                          26113
+       Private Other:    17604
+              System:    18697
+             Unknown:                                   20544
+ 
+           TOTAL PSS:   149466            TOTAL RSS:   260045       TOTAL SWAP PSS:    12695
+ 
+ Objects
+               Views:      868         ViewRootImpl:        1
+         AppContexts:        5           Activities:        1
+              Assets:       33        AssetManagers:        0
+       Local Binders:       18        Proxy Binders:       81
+       Parcel memory:       14         Parcel count:       57
+    Death Recipients:        1             WebViews:        0
+ 
+ SQL
+         MEMORY_USED:      640
+  PAGECACHE_OVERFLOW:      267          MALLOC_SIZE:       46
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b) cache hits cache misses cache size  Dbname
+PER CONNECTION STATS
+         4      904            123    38    28    11  /data/user/0/com.smartfin.transactionsphase3.bench/databases/transactions_phase3_v3_1000.db
+         4      104            115     5    41     6  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb
+         4        8                    0     0     0    (attached) temp
+         4      104             58     7    23     6  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb (1)
+POOL STATS
+     cache hits  cache misses    cache size  Dbname
+             38            29            67  /data/user/0/com.smartfin.transactionsphase3.bench/databases/transactions_phase3_v3_1000.db
+             12            68            80  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb

@@ -1,0 +1,63 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 464334405 Realtime: 876776771
+
+** MEMINFO in pid 27015 [com.smartfin.transactionsphase31.bench] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap    61851    61820        4       34    62936    77056    65199     7117
+  Dalvik Heap     9730     9356      340       71    10508    17105     8553     8552
+ Dalvik Other     1556     1308        0        0     2208                           
+        Stack     1000     1000        0        0     1008                           
+       Ashmem       27        0        0        0      576                           
+    Other dev       76       44       20        0      716                           
+     .so mmap    13506     1276     8844       10    65040                           
+    .jar mmap     1923        0      824        0    38432                           
+    .apk mmap     9213      328     8740        0    10708                           
+    .ttf mmap      457        0      248        0     1504                           
+    .dex mmap     7755        0     7744        0     8524                           
+    .oat mmap      925        0      368        0    14444                           
+    .art mmap     3033     2580      136      107    16164                           
+   Other mmap      324        4      144        0     1128                           
+   EGL mtrack    13813    13813        0        0    13813                           
+    GL mtrack    12296    12296        0        0    12296                           
+      Unknown    14963    14688      256        2    15520                           
+        TOTAL   152672   118513    27668      224   275525    94161    73752    15669
+ 
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:    12072                          26672
+         Native Heap:    61820                          62936
+                Code:    28384                         139160
+               Stack:     1000                           1008
+            Graphics:    26109                          26109
+       Private Other:    16796
+              System:     6491
+             Unknown:                                   19640
+ 
+           TOTAL PSS:   152672            TOTAL RSS:   275525       TOTAL SWAP PSS:      224
+ 
+ Objects
+               Views:      868         ViewRootImpl:        1
+         AppContexts:        5           Activities:        1
+              Assets:       33        AssetManagers:        0
+       Local Binders:       20        Proxy Binders:       84
+       Parcel memory:       15         Parcel count:       59
+    Death Recipients:        1             WebViews:        0
+ 
+ SQL
+         MEMORY_USED:      676
+  PAGECACHE_OVERFLOW:      254          MALLOC_SIZE:       46
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b) cache hits cache misses cache size  Dbname
+PER CONNECTION STATS
+         4      104            123    11    53    12  /data/user/0/com.smartfin.transactionsphase31.bench/no_backup/androidx.work.workdb
+         4        8                    0     0     0    (attached) temp
+         4      104             58     7    23     6  /data/user/0/com.smartfin.transactionsphase31.bench/no_backup/androidx.work.workdb (1)
+         4      904            123    38    28    11  /data/user/0/com.smartfin.transactionsphase31.bench/databases/transactions_phase31_v3_1000.db
+POOL STATS
+     cache hits  cache misses    cache size  Dbname
+             18            80            98  /data/user/0/com.smartfin.transactionsphase31.bench/no_backup/androidx.work.workdb
+             38            29            67  /data/user/0/com.smartfin.transactionsphase31.bench/databases/transactions_phase31_v3_1000.db

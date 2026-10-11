@@ -1,0 +1,41 @@
+{
+  "protocol": "45 seconds; 20 ADB swipes of 500ms; existing bottom overlay excluded from start point; after only; one sample per size",
+  "samples": [
+    {
+      "size": 1000,
+      "retained": 100,
+      "unique": 100,
+      "viewabilityEvents": 286,
+      "queries": 3,
+      "rafP95Ms": 18.312615990638733,
+      "rafMaxMs": 347.87653797864914,
+      "nativeFrameP95Ms": 30.196618,
+      "nativeFrames": 1689,
+      "pssPeakKb": 178274
+    },
+    {
+      "size": 10000,
+      "retained": 150,
+      "unique": 150,
+      "viewabilityEvents": 220,
+      "queries": 6,
+      "rafP95Ms": 18.083923041820526,
+      "rafMaxMs": 442.08223098516464,
+      "nativeFrameP95Ms": 22.165463,
+      "nativeFrames": 1590,
+      "pssPeakKb": 179381
+    },
+    {
+      "size": 100000,
+      "retained": 150,
+      "unique": 150,
+      "viewabilityEvents": 199,
+      "queries": 6,
+      "rafP95Ms": 18.087384045124054,
+      "rafMaxMs": 445.61669301986694,
+      "nativeFrameP95Ms": 29.952565,
+      "nativeFrames": 1669,
+      "pssPeakKb": 196993
+    }
+  ]
+}

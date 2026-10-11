@@ -1,4 +1,6 @@
 import { upsertSQLiteRow } from '../../../database/upsertSQLiteRow';
+import { getSQLiteTransactionHistoryPage, getSQLiteTransactionMonths } from './sqliteTransactionHistory';
+import type { TransactionHistoryCursor, TransactionHistoryPage, TransactionHistoryQuery } from '../types/TransactionHistoryQuery';
 import { runSQLiteTransaction } from '../../../database/atomicSQLite';
 import {
   loadSubscriptionState,
@@ -33,6 +35,9 @@ import type {
 } from '../types/TransactionQuery';
 
 export type SqliteTransactionRepository = {
+  getTransactionPage: (query: TransactionHistoryQuery, cursor?: TransactionHistoryCursor,
+    isCancelled?: () => boolean) => Promise<TransactionHistoryPage>;
+  getTransactionMonths: () => Promise<string[]>;
   getTransactions: () => Promise<Transaction[]>;
   getTransactionAmounts: (
     query: TransactionAmountQuery,
@@ -77,6 +82,9 @@ export function createSqliteTransactionRepository(
   database: SmartFinSQLiteDatabase,
 ): SqliteTransactionRepository {
   return {
+    getTransactionPage: (query, cursor, isCancelled) =>
+      getSQLiteTransactionHistoryPage(database, rowToTransaction, query, cursor, isCancelled),
+    getTransactionMonths: () => getSQLiteTransactionMonths(database),
     getTransactions: async () => {
       const [resultSet] = await database.executeSql(
         `SELECT

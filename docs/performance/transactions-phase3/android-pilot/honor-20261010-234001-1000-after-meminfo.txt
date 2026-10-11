@@ -1,0 +1,63 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 460874205 Realtime: 873316571
+
+** MEMINFO in pid 6042 [com.smartfin.transactionsphase3.bench] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap    55586    55560        4       34    56684    83200    47589    31015
+  Dalvik Heap     9263     8900      316       71    10052    14703     7352     7351
+ Dalvik Other     1523     1208        0        0     2248                           
+        Stack      952      952        0        0      960                           
+       Ashmem       25        0        0        0      576                           
+    Other dev       47       20       20        0      704                           
+     .so mmap     5864      376     2988       10    53564                           
+    .jar mmap     1788        0      864        0    37720                           
+    .apk mmap     9462      328     9012        0    10924                           
+    .ttf mmap      634        0      412        0     1704                           
+    .dex mmap     7417        0     7404        0     8212                           
+    .oat mmap      740        0      272        0    14568                           
+    .art mmap     3036     2572      128      107    16236                           
+   Other mmap      314        4       76        0     1168                           
+   EGL mtrack    13813    13813        0        0    13813                           
+    GL mtrack    11932    11932        0        0    11932                           
+      Unknown    17588    17332      236        2    18160                           
+        TOTAL   140208   112997    21732      224   259225    97903    54941    38366
+ 
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:    11600                          26288
+         Native Heap:    55560                          56684
+                Code:    21672                         127336
+               Stack:      952                            960
+            Graphics:    25745                          25745
+       Private Other:    19200
+              System:     5479
+             Unknown:                                   22212
+ 
+           TOTAL PSS:   140208            TOTAL RSS:   259225       TOTAL SWAP PSS:      224
+ 
+ Objects
+               Views:      700         ViewRootImpl:        1
+         AppContexts:        5           Activities:        1
+              Assets:       33        AssetManagers:        0
+       Local Binders:       34        Proxy Binders:       84
+       Parcel memory:       17         Parcel count:       53
+    Death Recipients:        1             WebViews:        0
+ 
+ SQL
+         MEMORY_USED:     1089
+  PAGECACHE_OVERFLOW:      634          MALLOC_SIZE:       46
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b) cache hits cache misses cache size  Dbname
+PER CONNECTION STATS
+         4      104            123    11    53    12  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb
+         4        8                    0     0     0    (attached) temp
+         4      104             58     7    23     6  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb (1)
+         4      904            123  2257    33    16  /data/user/0/com.smartfin.transactionsphase3.bench/databases/transactions_phase3_v3_1000.db
+POOL STATS
+     cache hits  cache misses    cache size  Dbname
+             18            80            98  /data/user/0/com.smartfin.transactionsphase3.bench/no_backup/androidx.work.workdb
+           2257            34          2291  /data/user/0/com.smartfin.transactionsphase3.bench/databases/transactions_phase3_v3_1000.db

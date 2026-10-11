@@ -1,4 +1,6 @@
 import React from 'react';
+import { realSQLite } from './helpers/realSQLite';
+import { SQLITE_SCHEMA_STATEMENTS } from '../src/database/sqliteSchema';
 import { SectionList, StyleSheet, Text, TextInput } from 'react-native';
 import { act, create, type ReactTestRenderer } from 'react-test-renderer';
 import type { SmartFinSQLiteDatabase } from '../src/database/sqliteDatabase';
@@ -61,44 +63,21 @@ const fixtures = [
 ];
 
 async function setup(rows: Row[] = fixtures) {
-  const executeSql = jest.fn(async (sql: string) => {
-    if (!/^\s*SELECT/i.test(sql)) throw new Error('Read-only fixture');
-    const data: Row[] = /FROM transactions/.test(sql)
-      ? rows
-      : /FROM accounts/.test(sql)
-      ? ['a', 'b'].map(suffix => ({
-          id: `bank-${suffix}`,
-          name: `Banco ${suffix}`,
-          type: 'bankAccount',
-          status: 'active',
-          currency: 'COP',
-          balance_amount: 50000,
-          created_at: '2026-01-01',
-          updated_at: '2026-01-01',
-        }))
-      : /FROM categories/.test(sql)
-      ? [
-          {
-            id: 'food',
-            name: 'Alimentación',
-            type: 'expense',
-            macro_category: 'food',
-            color: '#cdbdff',
-          },
-          {
-            id: 'other',
-            name: 'Otros',
-            type: 'expense',
-            macro_category: 'other',
-            color: '#c5c5d9',
-          },
-        ]
-      : [];
-    return [
-      { rows: { length: data.length, item: (index: number) => data[index] } },
-    ];
-  });
-  const database = { executeSql } as unknown as SmartFinSQLiteDatabase;
+  const sqlite = realSQLite();
+  for (const statement of SQLITE_SCHEMA_STATEMENTS) sqlite.native.exec(statement);
+  for (const suffix of ['a', 'b']) sqlite.native.prepare(
+    'INSERT INTO accounts (id,name,type,status,currency,balance_amount,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?)')
+    .run('bank-' + suffix, 'Banco ' + suffix, 'bankAccount', 'active', 'COP', 50000, '2026-01-01', '2026-01-01');
+  for (const [id, name] of [['food', 'Alimentación'], ['other', 'Otros']])
+    sqlite.native.prepare('INSERT INTO categories (id,name,type,macro_category,color) VALUES (?,?,?,?,?)')
+      .run(id ?? '', name ?? '', 'expense', id ?? '', '#cdbdff');
+  for (const row of rows) {
+    const keys = Object.keys(row);
+    sqlite.native.prepare('INSERT INTO transactions (' + keys.join(',') + ') VALUES (' + keys.map(() => '?').join(',') + ')')
+      .run(...keys.map(key => row[key] ?? null));
+  }
+  const executeSql = jest.fn((sql: string, values: SQLitePrimitive[] = []) => sqlite.database.executeSql(sql, values));
+  const database = { ...sqlite.database, executeSql } as unknown as SmartFinSQLiteDatabase;
   const props = {
     activeTheme: 'dark' as const,
     database,
@@ -121,7 +100,7 @@ async function setup(rows: Row[] = fixtures) {
     props,
     executeSql,
     ids,
-    close: () => act(() => view.unmount()),
+    close: () => { act(() => view.unmount()); sqlite.native.close(); },
   };
 }
 
@@ -325,7 +304,9 @@ test('a thousand movements in one day are individual virtualized items', async (
   try {
     const list = f.view.root.findByType(SectionList);
     expect(list.props.sections).toHaveLength(1);
-    expect(list.props.sections[0].data).toHaveLength(1000);
+    expect(list.props.sections[0].data).toHaveLength(50);
+    await act(async () => list.props.onEndReached());
+    expect(f.view.root.findByType(SectionList).props.sections[0].data).toHaveLength(100);
     expect(f.ids().length).toBeGreaterThan(0);
     expect(f.ids().length).toBeLessThan(1000);
     expect(f.ids()[0]).toBe('large-999');

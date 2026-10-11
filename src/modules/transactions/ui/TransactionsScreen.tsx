@@ -159,6 +159,7 @@ export function TransactionsScreen({
     categories,
     months,
     loading,
+    loadMore,
     error,
     selectedMonth,
     setSelectedMonth,
@@ -939,6 +940,8 @@ export function TransactionsScreen({
       ) : null}
       {/* Main Transactions List grouped by dates */}
       <SectionList<Transaction, TransactionDateGroup>
+        onEndReached={loadMore}
+        onEndReachedThreshold={0.5}
         sections={transactionSections}
         keyExtractor={item => item.id}
         stickySectionHeadersEnabled={false}

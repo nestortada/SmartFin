@@ -352,3 +352,15 @@ El dashboard ya no carga todos los movimientos mediante `getTransactions`. El re
 El caso de uso conserva las sumas JavaScript y su orden para evitar cambios de precisión en importes `REAL`, las reglas de ingresos/gastos y el intervalo reciente de 30 × 24 horas con fechas locales. Saldos, deuda y patrimonio siguen leyendo cuentas persistidas. `getTransactions` y sus demás consumidores permanecen intactos.
 
 [Análisis, comparación funcional, mediciones reproducibles y limitaciones](performance/dashboard-phase2.md).
+
+## Historial de movimientos: fase 3
+
+`getTransactionPage(query, cursor?, isCancelled?)` añade lectura paginada al repositorio existente; `getTransactions()` permanece intacto. No hay migraciones, nuevos índices ni dependencias. `getTransactionMonths()` devuelve todos los prefijos de mes disponibles, sin depender de las páginas visibles.
+
+Mes (prefijo literal), cuenta (transferencias internas solo por cuenta propia; otros tipos también por contracuenta) y categoría se filtran en SQL. La búsqueda conserva `toLowerCase().includes()` de JavaScript, incluidos Unicode, espacios y `%`/`_` literales, leyendo proyecciones en lotes de 200 hasta completar 50 coincidencias o agotar el historial. No se impone un límite total a la búsqueda.
+
+Fechas UTC canónicas homogéneas usan cursor de fecha, `created_at DESC` y `rowid DESC`, con rango sobre `idx_transactions_date`; se lee una fila de anticipación. El desempate conserva el recorrido descendente del índice de la consulta anterior. La revisión de `financial_data_revision` se comprueba antes y después de cada página; cualquier escritura obliga a reiniciar toda la generación.
+
+Para offsets, precisión mixta, fechas locales o inválidas, el orden textual no equivale a `Date` de JavaScript. La ruta de compatibilidad filtra una proyección por lotes, conserva solo ID/fecha, aplica el comparador estable anterior y después materializa páginas por ID. Esto mantiene resultados incluso con `NaN` y fechas normalizadas, pero requiere trabajo y memoria proporcionales al número de candidatos en esa ruta. Se documenta expresamente; no se omiten registros. [Evidencia y reproducción](performance/transactions-phase3.md).
+
+En fase 3.1 el prefiltro ASCII utiliza `INSTR(LOWER(campo), ?) OR LENGTH(CAST(campo AS BLOB)) <> LENGTH(campo)`. La desigualdad deja pasar Unicode y NUL para que JavaScript conserve la decisión final; elimina el escaneo `GLOB` por carácter del prefiltro anterior. No hay cambios de esquema, índices o reglas financieras. Una comprobación positiva de fechas canónicas en todo el historial puede reutilizarse en cualquier subconjunto de la misma revisión; una negativa exige comprobar cada filtro. Cada página, incluso un vacío reutilizado, sigue verificando la revisión antes y después. Las comprobaciones se publican únicamente tras completar una consulta sin cancelación ni escrituras concurrentes. [Validación y evidencia de fase 3.1](performance/transactions-phase31.md).

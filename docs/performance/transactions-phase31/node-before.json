@@ -1,0 +1,3626 @@
+{
+  "runtime": "v24.16.0",
+  "warmups": 2,
+  "samples": 5,
+  "gcAvailable": true,
+  "results": [
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 0,
+      "name": "initial",
+      "milliseconds": 2.5072999999999865,
+      "heapDeltaBytes": 231968,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05719999999996617
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021600000000034925
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0736000000001695
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.45019999999999527
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06120000000009895
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.21910000000002583
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 0,
+      "name": "combinedFilters",
+      "milliseconds": 0.75,
+      "heapDeltaBytes": 48448,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.10869999999999891
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.17170000000010077
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.28300000000012915
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.01939999999990505
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 0,
+      "name": "oldSearch",
+      "milliseconds": 3.960099999999784,
+      "heapDeltaBytes": 138432,
+      "retained": 20,
+      "returnedRows": 43,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05609999999978754
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021200000000135333
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0655000000001564
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 20,
+          "milliseconds": 2.412500000000364
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 20,
+          "milliseconds": 0.11360000000013315
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.012899999999717693
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 0,
+      "name": "absentSearch",
+      "milliseconds": 4.254099999999653,
+      "heapDeltaBytes": 31680,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.055600000000140426
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.022100000000136788
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0993000000003121
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.903200000000197
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.024899999999888678
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 0,
+      "name": "absentExtension",
+      "milliseconds": 4.040899999999965,
+      "heapDeltaBytes": 27616,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05920000000014625
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021000000000185537
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0601999999998952
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.728399999999965
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.016200000000026193
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 0,
+      "name": "reset",
+      "milliseconds": 1.696100000000115,
+      "heapDeltaBytes": 198944,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05709999999999127
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02109999999993306
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0769000000000233
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.23190000000022337
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.013400000000274304
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 1,
+      "name": "initial",
+      "milliseconds": 1.9519000000000233,
+      "heapDeltaBytes": 231936,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06120000000009895
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.026699999999891588
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.10149999999976
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.2537000000002081
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.017800000000079308
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.11629999999968277
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 1,
+      "name": "combinedFilters",
+      "milliseconds": 0.4289000000003398,
+      "heapDeltaBytes": 21736,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.057299999999941065
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.11000000000012733
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.13799999999991996
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.009600000000318687
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 1,
+      "name": "oldSearch",
+      "milliseconds": 3.9640000000003965,
+      "heapDeltaBytes": 138112,
+      "retained": 20,
+      "returnedRows": 43,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05719999999973879
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.022400000000288856
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0585999999998421
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 20,
+          "milliseconds": 2.396299999999883
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 20,
+          "milliseconds": 0.10950000000002547
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.01290000000017244
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 1,
+      "name": "absentSearch",
+      "milliseconds": 4.518100000000231,
+      "heapDeltaBytes": 27960,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05859999999984211
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02289999999993597
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.3436999999998989
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.8704999999999927
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.02140000000008513
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 1,
+      "name": "absentExtension",
+      "milliseconds": 5.0185999999998785,
+      "heapDeltaBytes": 27616,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05669999999963693
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02250000000003638
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.7631000000001222
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.9277000000001863
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.02500000000009095
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 1,
+      "name": "reset",
+      "milliseconds": 1.7563000000000102,
+      "heapDeltaBytes": 198144,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.055600000000140426
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02179999999998472
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.07549999999992
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.22450000000026193
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.014500000000225555
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 2,
+      "name": "initial",
+      "milliseconds": 1.9222999999997228,
+      "heapDeltaBytes": 231728,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05580000000009022
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.023999999999887223
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.069300000000112
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.23480000000017753
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.014100000000325963
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.11029999999982465
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 2,
+      "name": "combinedFilters",
+      "milliseconds": 0.6370999999999185,
+      "heapDeltaBytes": 21736,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05989999999974316
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.201799999999821
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.20730000000003201
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.01540000000022701
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 2,
+      "name": "oldSearch",
+      "milliseconds": 3.9787999999998647,
+      "heapDeltaBytes": 138112,
+      "retained": 20,
+      "returnedRows": 43,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.057999999999992724
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02419999999983702
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0678000000002612
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 20,
+          "milliseconds": 2.3916999999996733
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 20,
+          "milliseconds": 0.11059999999997672
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.012300000000323053
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 2,
+      "name": "absentSearch",
+      "milliseconds": 4.323699999999917,
+      "heapDeltaBytes": 27960,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06419999999980064
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02349999999978536
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.1315000000004147
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.89870000000019
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.022699999999986176
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 2,
+      "name": "absentExtension",
+      "milliseconds": 3.9699999999998,
+      "heapDeltaBytes": 27616,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.053699999999935244
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02070000000003347
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0656999999996515
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.683300000000145
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.013500000000021828
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 2,
+      "name": "reset",
+      "milliseconds": 1.7561000000000604,
+      "heapDeltaBytes": 198144,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.056499999999687134
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.020799999999780994
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0604999999995925
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.2300000000000182
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.01499999999987267
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 3,
+      "name": "initial",
+      "milliseconds": 1.911200000000008,
+      "heapDeltaBytes": 231088,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05970000000024811
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02389999999968495
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0720000000001164
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.2319999999999709
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.012799999999970169
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.10739999999987049
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 3,
+      "name": "combinedFilters",
+      "milliseconds": 0.415599999999813,
+      "heapDeltaBytes": 21736,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.057699999999840657
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.11009999999987485
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.1291999999998552
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.008200000000215368
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 3,
+      "name": "oldSearch",
+      "milliseconds": 4.04989999999998,
+      "heapDeltaBytes": 139184,
+      "retained": 20,
+      "returnedRows": 43,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06040000000029977
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02140000000008513
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.076100000000224
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 20,
+          "milliseconds": 2.4659999999998945
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 20,
+          "milliseconds": 0.1113999999997759
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.012999999999919964
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 3,
+      "name": "absentSearch",
+      "milliseconds": 4.137699999999768,
+      "heapDeltaBytes": 29472,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.07569999999986976
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.024499999999989086
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0626999999999498
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.8190999999997075
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.016000000000076398
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 3,
+      "name": "absentExtension",
+      "milliseconds": 4.031800000000203,
+      "heapDeltaBytes": 27616,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05719999999973879
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.023299999999835563
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0785000000000764
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.7094999999999345
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.014799999999922875
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 3,
+      "name": "reset",
+      "milliseconds": 1.7519000000002052,
+      "heapDeltaBytes": 198144,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.060600000000249565
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.022699999999986176
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.080500000000029
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.2195000000001528
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.012499999999818101
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 4,
+      "name": "initial",
+      "milliseconds": 2.6329000000000633,
+      "heapDeltaBytes": 231088,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06129999999984648
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.028000000000247383
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.627100000000155
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.3190999999997075
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.03269999999974971
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.11259999999992942
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 4,
+      "name": "combinedFilters",
+      "milliseconds": 0.4143000000003667,
+      "heapDeltaBytes": 21736,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.059900000000197906
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.10750000000007276
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.13190000000031432
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.008100000000013097
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 4,
+      "name": "oldSearch",
+      "milliseconds": 3.95679999999993,
+      "heapDeltaBytes": 139448,
+      "retained": 20,
+      "returnedRows": 43,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.056199999999989814
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02529999999978827
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0713000000000648
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 20,
+          "milliseconds": 2.3726999999998952
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 20,
+          "milliseconds": 0.10450000000037107
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.012199999999666034
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 4,
+      "name": "absentSearch",
+      "milliseconds": 4.72440000000006,
+      "heapDeltaBytes": 27960,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06300000000010186
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.033100000000104046
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.5398000000000138
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.8523999999997613
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.01830000000018117
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 4,
+      "name": "absentExtension",
+      "milliseconds": 4.085500000000138,
+      "heapDeltaBytes": 31264,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05739999999968859
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.023999999999887223
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0691000000001623
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 2.737500000000182
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.019099999999980355
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "mode": "before",
+      "sample": 4,
+      "name": "reset",
+      "milliseconds": 1.828899999999976,
+      "heapDeltaBytes": 198144,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.057299999999941065
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021300000000337604
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.0580999999997402
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.2221999999997024
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.022399999999834108
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 1000,
+      "plans": [
+        {
+          "access": "INDEXED BY idx_transactions_date",
+          "samples": [
+            2.737500000000182,
+            2.686699999999746,
+            2.7364000000002306,
+            2.706199999999626,
+            2.7327000000000226
+          ],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "access": "NOT INDEXED",
+          "samples": [
+            2.770100000000184,
+            2.811000000000149,
+            2.658599999999751,
+            2.712300000000141,
+            2.561999999999898
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN transactions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 0,
+      "name": "initial",
+      "milliseconds": 2.9814000000001215,
+      "heapDeltaBytes": 231200,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05519999999978609
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021999999999934516
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4720000000002074
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.24219999999968422
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.011299999999664578
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.8451999999997497
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 0,
+      "name": "combinedFilters",
+      "milliseconds": 1.648200000000088,
+      "heapDeltaBytes": 21752,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.058699999999589636
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.7545999999997548
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.6873000000000502
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.015499999999974534
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 0,
+      "name": "oldSearch",
+      "milliseconds": 26.16080000000011,
+      "heapDeltaBytes": 520984,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05179999999973006
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.01919999999972788
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.6394000000000233
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 23.623699999999644
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.24630000000024665
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.016599999999925785
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 0,
+      "name": "absentSearch",
+      "milliseconds": 30.304000000000087,
+      "heapDeltaBytes": 27976,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05379999999968277
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021600000000034925
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.9851000000003296
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 27.921699999999873
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05009999999992942
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 0,
+      "name": "absentExtension",
+      "milliseconds": 28.20589999999993,
+      "heapDeltaBytes": 27632,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05110000000013315
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.019800000000032014
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.9753000000000611
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 25.88859999999977
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04539999999997235
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 0,
+      "name": "reset",
+      "milliseconds": 3.0500999999999294,
+      "heapDeltaBytes": 198240,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05379999999968277
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.01929999999993015
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 2.369199999999637
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.2802999999998974
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.014200000000073487
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 1,
+      "name": "initial",
+      "milliseconds": 2.8746000000001004,
+      "heapDeltaBytes": 231104,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05319999999983338
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.01960000000008222
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4552999999996246
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.23759999999992942
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.01139999999986685
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.7860000000000582
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 1,
+      "name": "combinedFilters",
+      "milliseconds": 1.6070999999997184,
+      "heapDeltaBytes": 21752,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.056199999999989814
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.7132999999998901
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.7011000000002241
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.0158000000001266
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 1,
+      "name": "oldSearch",
+      "milliseconds": 26.636599999999817,
+      "heapDeltaBytes": 520984,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.061700000000200816
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.023099999999885767
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4861000000000786
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 24.17589999999973
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.28589999999985594
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.02070000000003347
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 1,
+      "name": "absentSearch",
+      "milliseconds": 30.157100000000355,
+      "heapDeltaBytes": 27976,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.060799999999744614
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02109999999993306
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 2.5533000000000357
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 27.261199999999917
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04820000000017899
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 1,
+      "name": "absentExtension",
+      "milliseconds": 27.81140000000005,
+      "heapDeltaBytes": 27632,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05330000000003565
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02330000000029031
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4501000000000204
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 26.05919999999969
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.044799999999668216
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 1,
+      "name": "reset",
+      "milliseconds": 2.12519999999995,
+      "heapDeltaBytes": 198240,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05449999999973443
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.024800000000141154
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4807000000000698
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.24380000000019209
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.015499999999974534
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 2,
+      "name": "initial",
+      "milliseconds": 3.228099999999813,
+      "heapDeltaBytes": 232656,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.059099999999943975
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.023999999999887223
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.6476999999999862
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.29490000000032524
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.014599999999973079
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.7980999999999767
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 2,
+      "name": "combinedFilters",
+      "milliseconds": 2.419499999999971,
+      "heapDeltaBytes": 21752,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.053800000000137516
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.9040999999997439
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 1.2432000000003427
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.03690000000005966
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 2,
+      "name": "oldSearch",
+      "milliseconds": 26.735400000000027,
+      "heapDeltaBytes": 520984,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.058399999999892316
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02179999999998472
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.5792999999998756
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 24.238400000000183
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.24850000000014916
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.017899999999826832
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 2,
+      "name": "absentSearch",
+      "milliseconds": 29.562399999999798,
+      "heapDeltaBytes": 27976,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05510000000003856
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.030399999999644933
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4476999999997133
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 27.804200000000037
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04599999999982174
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 2,
+      "name": "absentExtension",
+      "milliseconds": 28.617499999999836,
+      "heapDeltaBytes": 32216,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.061700000000200816
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.04570000000012442
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.455199999999877
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 26.83199999999988
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04489999999987049
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 2,
+      "name": "reset",
+      "milliseconds": 2.261199999999917,
+      "heapDeltaBytes": 198000,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05680000000029395
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02209999999968204
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4823999999998705
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.3110999999998967
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.0342000000000553
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 3,
+      "name": "initial",
+      "milliseconds": 3.321899999999914,
+      "heapDeltaBytes": 230816,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.054099999999834836
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.019499999999879947
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4648000000001957
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.38120000000026266
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.037699999999858846
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.8033000000000357
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 3,
+      "name": "combinedFilters",
+      "milliseconds": 1.6444000000001324,
+      "heapDeltaBytes": 21560,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05410000000028958
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.7164000000002488
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.7044999999998254
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.017400000000179716
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 3,
+      "name": "oldSearch",
+      "milliseconds": 26.046100000000024,
+      "heapDeltaBytes": 521392,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06100000000014916
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.0215000000002874
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4466999999999643
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 23.602200000000266
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.2790999999997439
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.018500000000130967
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 3,
+      "name": "absentSearch",
+      "milliseconds": 28.40039999999999,
+      "heapDeltaBytes": 27736,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05359999999973297
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.020500000000083674
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.485400000000027
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 26.627700000000004
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.03850000000011278
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 3,
+      "name": "absentExtension",
+      "milliseconds": 28.115800000000036,
+      "heapDeltaBytes": 27392,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04919999999992797
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.019400000000132422
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.467200000000048
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 26.37019999999984
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04289999999991778
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 3,
+      "name": "reset",
+      "milliseconds": 3.0785000000000764,
+      "heapDeltaBytes": 198000,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.051300000000082946
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.06069999999999709
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 2.031800000000203
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.34999999999990905
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.028699999999844295
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 4,
+      "name": "initial",
+      "milliseconds": 2.910400000000209,
+      "heapDeltaBytes": 230816,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.051199999999880674
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.01999999999998181
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4473000000002685
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.26080000000001746
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.012999999999919964
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 0.7560000000003129
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 4,
+      "name": "combinedFilters",
+      "milliseconds": 1.5921000000003005,
+      "heapDeltaBytes": 21560,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05139999999983047
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 0.7074000000002343
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 0.671100000000024
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.016700000000128057
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 4,
+      "name": "oldSearch",
+      "milliseconds": 26.390400000000227,
+      "heapDeltaBytes": 522832,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.051300000000082946
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.03390000000035798
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.4630999999999403
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 24.00350000000026
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.2616000000002714
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.018500000000130967
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 4,
+      "name": "absentSearch",
+      "milliseconds": 28.384999999999764,
+      "heapDeltaBytes": 27736,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05009999999992942
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.01929999999993015
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.5252000000000407
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 26.56880000000001
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.041999999999916326
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 4,
+      "name": "absentExtension",
+      "milliseconds": 27.779799999999796,
+      "heapDeltaBytes": 28848,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.053100000000085856
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.020500000000083674
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.6315999999997075
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 25.793899999999667
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04219999999986612
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "sample": 4,
+      "name": "reset",
+      "milliseconds": 2.3344999999999345,
+      "heapDeltaBytes": 198000,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.048699999999826105
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.0181999999999789
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 1.6619000000000597
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.28749999999990905
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.012600000000020373
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 10000,
+      "plans": [
+        {
+          "access": "INDEXED BY idx_transactions_date",
+          "samples": [
+            27.222800000000007,
+            26.59439999999995,
+            26.16319999999996,
+            27.937200000000303,
+            28.372400000000198
+          ],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "access": "NOT INDEXED",
+          "samples": [
+            24.511399999999867,
+            25.616500000000087,
+            25.51319999999987,
+            24.971900000000005,
+            24.80249999999978
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN transactions"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 0,
+      "name": "initial",
+      "milliseconds": 12.663900000000467,
+      "heapDeltaBytes": 231272,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.050600000000486034
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.01919999999972788
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.380799999999908
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.7075000000004366
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.045900000000074215
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 7.045799999999872
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 0,
+      "name": "combinedFilters",
+      "milliseconds": 14.761700000000019,
+      "heapDeltaBytes": 21560,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04959999999937281
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 8.258300000000418
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 6.248599999999897
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.028299999999944703
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 0,
+      "name": "oldSearch",
+      "milliseconds": 32.82940000000053,
+      "heapDeltaBytes": 522656,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.0478000000002794
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.018799999999828287
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.252900000000409
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 27.60699999999997
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.281699999999546
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.020300000000133878
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 0,
+      "name": "absentSearch",
+      "milliseconds": 318.6138999999994,
+      "heapDeltaBytes": 27736,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05199999999967986
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02269999999953143
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.338299999999435
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 313.9219000000003
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.043900000000576256
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 0,
+      "name": "absentExtension",
+      "milliseconds": 304.52430000000095,
+      "heapDeltaBytes": 27392,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04680000000007567
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.019700000000739237
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.2158999999992375
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 299.9912999999997
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04470000000037544
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 0,
+      "name": "reset",
+      "milliseconds": 5.204599999999118,
+      "heapDeltaBytes": 198456,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.049999999999272404
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.0216999999993277
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.375299999999697
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.39800000000104774
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.020099999999729334
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 1,
+      "name": "initial",
+      "milliseconds": 12.153800000000047,
+      "heapDeltaBytes": 238064,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.059000000001105946
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.0239000000001397
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.193100000000413
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.4782999999988533
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.01900000000023283
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 6.938000000000102
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 1,
+      "name": "combinedFilters",
+      "milliseconds": 14.099500000000262,
+      "heapDeltaBytes": 21560,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.050900000000183354
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 7.576999999999316
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 6.273300000000745
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.028299999999944703
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 1,
+      "name": "oldSearch",
+      "milliseconds": 32.79610000000139,
+      "heapDeltaBytes": 520872,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.050900000000183354
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.020700000000942964
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.271600000000035
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 27.58140000000094
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.2875000000003638
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.017599999999220017
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 1,
+      "name": "absentSearch",
+      "milliseconds": 316.5749999999989,
+      "heapDeltaBytes": 27736,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.050599999998667045
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.0202000000008411
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.071899999999005
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 312.1869999999999
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.044200000000273576
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 1,
+      "name": "absentExtension",
+      "milliseconds": 304.58619999999974,
+      "heapDeltaBytes": 27392,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.051799999999275315
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.020300000000133878
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.293400000000474
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 299.96900000000096
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04200000000128057
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 1,
+      "name": "reset",
+      "milliseconds": 5.253699999999299,
+      "heapDeltaBytes": 198456,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05249999999978172
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021199999999225838
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.224100000001272
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.468300000000454
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.0455999999994674
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 2,
+      "name": "initial",
+      "milliseconds": 13.612100000000282,
+      "heapDeltaBytes": 231272,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05010000000038417
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.023100000000340515
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 5.32300000000032
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.5744999999988067
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.0389999999988504
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 7.068300000000818
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 2,
+      "name": "combinedFilters",
+      "milliseconds": 13.64049999999952,
+      "heapDeltaBytes": 21560,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.050600000000486034
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 7.1745000000009895
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 6.219999999999345
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.027699999998731073
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 2,
+      "name": "oldSearch",
+      "milliseconds": 34.75640000000021,
+      "heapDeltaBytes": 520872,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04989999999997963
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.020999999998821295
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 5.464100000001054
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 28.328999999999724
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.281699999999546
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.016799999999420834
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 2,
+      "name": "absentSearch",
+      "milliseconds": 325.8784000000014,
+      "heapDeltaBytes": 27736,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05049999999937427
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.020300000000133878
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.136699999999109
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 321.434299999999
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04550000000017462
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 2,
+      "name": "absentExtension",
+      "milliseconds": 303.23499999999876,
+      "heapDeltaBytes": 27392,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05049999999937427
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.0202000000008411
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.110800000000381
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 298.7961000000014
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.0452000000004773
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 2,
+      "name": "reset",
+      "milliseconds": 7.515300000000934,
+      "heapDeltaBytes": 198456,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06830000000081782
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.033699999999953434
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 6.622699999999895
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.39470000000073924
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.01779999999962456
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 3,
+      "name": "initial",
+      "milliseconds": 12.413699999999153,
+      "heapDeltaBytes": 231272,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05019999999967695
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021000000000640284
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.416000000001077
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.4599999999991269
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.023300000000745058
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 7.033800000001065
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 3,
+      "name": "combinedFilters",
+      "milliseconds": 14.318900000000212,
+      "heapDeltaBytes": 21560,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.049700000001394073
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 7.595400000000154
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 6.470699999999852
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.035499999999956344
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 3,
+      "name": "oldSearch",
+      "milliseconds": 34.391600000000835,
+      "heapDeltaBytes": 520872,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.049399999999877764
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02050000000053842
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.47019999999975
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 28.97359999999935
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.27889999999933934
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.02659999999923457
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 3,
+      "name": "absentSearch",
+      "milliseconds": 321.2642999999989,
+      "heapDeltaBytes": 27736,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.052399999998669955
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.022299999998722342
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.353599999998551
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 316.57650000000103
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04289999999855354
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 3,
+      "name": "absentExtension",
+      "milliseconds": 306.3109999999997,
+      "heapDeltaBytes": 27392,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.049399999999877764
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.021199999999225838
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 5.511500000000524
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 300.46640000000116
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.042999999999665306
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 3,
+      "name": "reset",
+      "milliseconds": 4.9011999999984255,
+      "heapDeltaBytes": 198456,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05310000000099535
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.023700000001554145
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.0953000000008615
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.3937999999998283
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.015800000001036096
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 4,
+      "name": "initial",
+      "milliseconds": 12.34729999999945,
+      "heapDeltaBytes": 231272,
+      "retained": 50,
+      "returnedRows": 91,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.050899999998364365
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.020999999998821295
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.3967999999986205
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.40120000000024447
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.017400000000634464
+        },
+        {
+          "sql": "SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;",
+          "rows": 37,
+          "milliseconds": 7.08509999999842
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 4,
+      "name": "combinedFilters",
+      "milliseconds": 14.710500000001048,
+      "heapDeltaBytes": 21560,
+      "retained": 0,
+      "returnedRows": 2,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.06300000000010186
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 8.193600000000515
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 6.206699999998818
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.03840000000127475
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 4,
+      "name": "oldSearch",
+      "milliseconds": 33.123499999999694,
+      "heapDeltaBytes": 520872,
+      "retained": 50,
+      "returnedRows": 253,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.05670000000100117
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.023499999999330612
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.025900000000547
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 200,
+          "milliseconds": 28.154899999999543
+        },
+        {
+          "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "rows": 50,
+          "milliseconds": 0.2746000000006461
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.017599999999220017
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 4,
+      "name": "absentSearch",
+      "milliseconds": 312.3922999999995,
+      "heapDeltaBytes": 27736,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04950000000098953
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.019399999999222928
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.10779999999977
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 307.96819999999934
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.04459999999926367
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 4,
+      "name": "absentExtension",
+      "milliseconds": 302.3078999999998,
+      "heapDeltaBytes": 27392,
+      "retained": 0,
+      "returnedRows": 3,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.050299999998969724
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.02139999999963038
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 3.9580000000005384
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 0,
+          "milliseconds": 298.04060000000027
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.043299999999362626
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "sample": 4,
+      "name": "reset",
+      "milliseconds": 4.909299999999348,
+      "heapDeltaBytes": 198456,
+      "retained": 50,
+      "returnedRows": 54,
+      "queries": [
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.049399999999877764
+        },
+        {
+          "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+          "rows": 1,
+          "milliseconds": 0.0216999999993277
+        },
+        {
+          "sql": "SELECT date FROM (\n      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1\n    ) WHERE (\n      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?\n      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'\n      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'\n      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'\n      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'\n      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'\n      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL\n      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')\n    ) LIMIT 1;",
+          "rows": 0,
+          "milliseconds": 4.118800000000192
+        },
+        {
+          "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date\n         WHERE 1 = 1 \n         ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+          "rows": 51,
+          "milliseconds": 0.39360000000124273
+        },
+        {
+          "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "rows": 1,
+          "milliseconds": 0.017099999999118154
+        }
+      ],
+      "exact": true
+    },
+    {
+      "size": 100000,
+      "plans": [
+        {
+          "access": "INDEXED BY idx_transactions_date",
+          "samples": [
+            319.45850000000064,
+            309.9363000000012,
+            308.4969000000001,
+            311.97559999999976,
+            319.96539999999914
+          ],
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            }
+          ]
+        },
+        {
+          "access": "NOT INDEXED",
+          "samples": [
+            250.45420000000013,
+            253.47890000000007,
+            257.91259999999966,
+            258.46370000000024,
+            273.0664000000015
+          ],
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN transactions"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

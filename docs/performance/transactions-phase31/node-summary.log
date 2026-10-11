@@ -1,0 +1,260 @@
+{
+  "runtime": "v24.16.0",
+  "warmups": 2,
+  "samplesPerCase": 5,
+  "gcAvailable": true,
+  "summary": [
+    {
+      "size": 1000,
+      "mode": "before",
+      "interactions": {
+        "initial": {
+          "medianMs": 2.291500000000269,
+          "medianReturnedRows": 91,
+          "medianHeapDeltaBytes": 231136,
+          "retained": 50
+        },
+        "combinedFilters": {
+          "medianMs": 0.4187000000001717,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 21752,
+          "retained": 0
+        },
+        "oldSearch": {
+          "medianMs": 4.000700000000052,
+          "medianReturnedRows": 43,
+          "medianHeapDeltaBytes": 138128,
+          "retained": 20
+        },
+        "absentSearch": {
+          "medianMs": 4.108899999999721,
+          "medianReturnedRows": 3,
+          "medianHeapDeltaBytes": 27976,
+          "retained": 0
+        },
+        "absentExtension": {
+          "medianMs": 4.256800000000112,
+          "medianReturnedRows": 3,
+          "medianHeapDeltaBytes": 27632,
+          "retained": 0
+        },
+        "reset": {
+          "medianMs": 1.89449999999988,
+          "medianReturnedRows": 54,
+          "medianHeapDeltaBytes": 198160,
+          "retained": 50
+        }
+      }
+    },
+    {
+      "size": 1000,
+      "mode": "after",
+      "interactions": {
+        "initial": {
+          "medianMs": 1.9450000000001637,
+          "medianReturnedRows": 91,
+          "medianHeapDeltaBytes": 231704,
+          "retained": 50
+        },
+        "combinedFilters": {
+          "medianMs": 0.3811999999998079,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 17496,
+          "retained": 0
+        },
+        "oldSearch": {
+          "medianMs": 1.5481999999997242,
+          "medianReturnedRows": 42,
+          "medianHeapDeltaBytes": 129168,
+          "retained": 20
+        },
+        "absentSearch": {
+          "medianMs": 1.2002999999999702,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 18832,
+          "retained": 0
+        },
+        "absentExtension": {
+          "medianMs": 0.14650000000006003,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 11872,
+          "retained": 0
+        },
+        "reset": {
+          "medianMs": 0.6838999999999942,
+          "medianReturnedRows": 53,
+          "medianHeapDeltaBytes": 189128,
+          "retained": 50
+        }
+      }
+    },
+    {
+      "size": 10000,
+      "mode": "before",
+      "interactions": {
+        "initial": {
+          "medianMs": 3.029700000000048,
+          "medianReturnedRows": 91,
+          "medianHeapDeltaBytes": 230896,
+          "retained": 50
+        },
+        "combinedFilters": {
+          "medianMs": 1.6819000000000415,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 21592,
+          "retained": 0
+        },
+        "oldSearch": {
+          "medianMs": 27.23790000000008,
+          "medianReturnedRows": 253,
+          "medianHeapDeltaBytes": 520848,
+          "retained": 50
+        },
+        "absentSearch": {
+          "medianMs": 30.07260000000042,
+          "medianReturnedRows": 3,
+          "medianHeapDeltaBytes": 27768,
+          "retained": 0
+        },
+        "absentExtension": {
+          "medianMs": 28.390699999999924,
+          "medianReturnedRows": 3,
+          "medianHeapDeltaBytes": 27424,
+          "retained": 0
+        },
+        "reset": {
+          "medianMs": 2.100199999999859,
+          "medianReturnedRows": 54,
+          "medianHeapDeltaBytes": 198032,
+          "retained": 50
+        }
+      }
+    },
+    {
+      "size": 10000,
+      "mode": "after",
+      "interactions": {
+        "initial": {
+          "medianMs": 2.9778000000005704,
+          "medianReturnedRows": 91,
+          "medianHeapDeltaBytes": 231432,
+          "retained": 50
+        },
+        "combinedFilters": {
+          "medianMs": 0.9974000000001979,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 17384,
+          "retained": 0
+        },
+        "oldSearch": {
+          "medianMs": 10.453399999999874,
+          "medianReturnedRows": 252,
+          "medianHeapDeltaBytes": 512640,
+          "retained": 50
+        },
+        "absentSearch": {
+          "medianMs": 9.583999999999833,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 18720,
+          "retained": 0
+        },
+        "absentExtension": {
+          "medianMs": 0.1461000000003878,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 11776,
+          "retained": 0
+        },
+        "reset": {
+          "medianMs": 0.5886000000000422,
+          "medianReturnedRows": 53,
+          "medianHeapDeltaBytes": 189096,
+          "retained": 50
+        }
+      }
+    },
+    {
+      "size": 100000,
+      "mode": "before",
+      "interactions": {
+        "initial": {
+          "medianMs": 13.196499999998196,
+          "medianReturnedRows": 91,
+          "medianHeapDeltaBytes": 231352,
+          "retained": 50
+        },
+        "combinedFilters": {
+          "medianMs": 14.653299999999945,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 21592,
+          "retained": 0
+        },
+        "oldSearch": {
+          "medianMs": 33.391899999998714,
+          "medianReturnedRows": 253,
+          "medianHeapDeltaBytes": 520904,
+          "retained": 50
+        },
+        "absentSearch": {
+          "medianMs": 315.35729999999967,
+          "medianReturnedRows": 3,
+          "medianHeapDeltaBytes": 27768,
+          "retained": 0
+        },
+        "absentExtension": {
+          "medianMs": 305.6165000000001,
+          "medianReturnedRows": 3,
+          "medianHeapDeltaBytes": 27424,
+          "retained": 0
+        },
+        "reset": {
+          "medianMs": 6.639400000000023,
+          "medianReturnedRows": 54,
+          "medianHeapDeltaBytes": 198488,
+          "retained": 50
+        }
+      }
+    },
+    {
+      "size": 100000,
+      "mode": "after",
+      "interactions": {
+        "initial": {
+          "medianMs": 13.719500000001062,
+          "medianReturnedRows": 91,
+          "medianHeapDeltaBytes": 231856,
+          "retained": 50
+        },
+        "combinedFilters": {
+          "medianMs": 7.9284999999999854,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 17384,
+          "retained": 0
+        },
+        "oldSearch": {
+          "medianMs": 16.205700000000434,
+          "medianReturnedRows": 252,
+          "medianHeapDeltaBytes": 512120,
+          "retained": 50
+        },
+        "absentSearch": {
+          "medianMs": 132.57310000000143,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 18720,
+          "retained": 0
+        },
+        "absentExtension": {
+          "medianMs": 0.12889999999970314,
+          "medianReturnedRows": 2,
+          "medianHeapDeltaBytes": 11776,
+          "retained": 0
+        },
+        "reset": {
+          "medianMs": 0.6968999999990046,
+          "medianReturnedRows": 53,
+          "medianHeapDeltaBytes": 189552,
+          "retained": 50
+        }
+      }
+    }
+  ]
+}

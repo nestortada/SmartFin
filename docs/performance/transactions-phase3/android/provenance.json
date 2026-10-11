@@ -1,0 +1,13 @@
+{
+  "before": {
+    "campaign": "honor-20261010-234354",
+    "source": "../android-pre-ascii",
+    "reason": "Baseline hook, getTransactions SQL and UI unchanged. Reuse the five original samples per size on the exact same persistent synthetic SQLite files."
+  },
+  "after": {
+    "sourceHashes": "source-fingerprints.json",
+    "protocol": "same screen mount/filter/search/reset, plus nine progressive pages",
+    "notes": "Explicit async native configuration to avoid Activity initialization defaults."
+  },
+  "instruments": "Native module, copied SQLite plugin, layout effect, viewability observer only in disposable harness. No production instrumentation."
+}

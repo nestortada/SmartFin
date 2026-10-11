@@ -170,6 +170,12 @@ Los servicios TypeScript comprueban plataforma, presencia de métodos y forma de
 
 El estado es local a componentes y hooks; `src/store` no contiene un store global operativo. `dashboardRefreshKey` funciona como señal de invalidación después de una mutación. Esto es suficiente para la escala actual, aunque un crecimiento de rutas y datos puede justificar un coordinador de navegación y caché más formal.
 
+El historial de movimientos carga páginas de 50 mediante `useTransactionsList` → `getTransactionPage`. Los filtros se consultan sobre toda la base y el selector de meses usa una consulta independiente. `SectionList.onEndReached` solicita la página siguiente. Cada generación corresponde a base, filtros, búsqueda, orden y refresh; respuestas obsoletas se cancelan entre consultas y nunca se anexan a otra generación. Las mutaciones invalidan los cursores mediante la revisión financiera existente. Un refresco conserva la profundidad ya cargada; un filtro nuevo comienza en la primera página. `transactions` y `filteredTransactions` del hook representan las filas cargadas de la consulta activa, no un snapshot completo; ningún otro consumidor usa ese hook.
+
+`getTransactions()` conserva su contrato, SQL y consumidores completos: tarjetas, reconciliación, edición/eliminación contable e IA. No se sustituyen con páginas ni se alteran reglas financieras. [Contrato, equivalencia, rendimiento y límites de fase 3](performance/transactions-phase3.md).
+
+La fase 3.1 mantiene pantalla, hook y cursores. El adaptador del historial conserva, por conexión y revisión financiera, como máximo ocho comprobaciones de orden y ocho búsquedas completas sin coincidencias. No guarda movimientos en esa caché. Solo reutiliza un vacío si los filtros son idénticos y la nueva búsqueda en minúsculas contiene literalmente la anterior. Una escritura invalida las comprobaciones; una cancelación o cambio concurrente nunca publica un resultado reutilizable. [Mediciones y límites](performance/transactions-phase31.md).
+
 ## 10. Decisiones y compromisos actuales
 
 | Decisión | Beneficio | Compromiso |

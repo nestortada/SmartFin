@@ -1,0 +1,892 @@
+[
+  {
+    "iteration": 0,
+    "queries": [
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.212385,
+        "nativeMs": 0.269153,
+        "roundtripMs": 7.5704609751701355
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 5.755615,
+        "nativeMs": 5.983692,
+        "roundtripMs": 8.09176903963089
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 44.805845,
+        "nativeMs": 44.932923,
+        "roundtripMs": 53.96738499403
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 18.284535,
+        "nativeMs": 21.217307,
+        "roundtripMs": 23.041538953781128
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.108923,
+        "nativeMs": 0.131616,
+        "roundtripMs": 1.4329230189323425
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.182615,
+        "nativeMs": 0.227076,
+        "roundtripMs": 9.278154015541077
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.105999,
+        "nativeMs": 0.132846,
+        "roundtripMs": 1.2365379929542542
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 32.587385,
+        "nativeMs": 32.748693,
+        "roundtripMs": 34.3308470249176
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 200,
+        "sqlMs": 117.304229,
+        "nativeMs": 122.027923,
+        "roundtripMs": 124.77130800485611
+      },
+      {
+        "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+        "rows": 50,
+        "sqlMs": 1.013614,
+        "nativeMs": 3.689308,
+        "roundtripMs": 5.852614998817444
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.106693,
+        "nativeMs": 0.129,
+        "roundtripMs": 1.8556159734725952
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.113462,
+        "nativeMs": 0.141,
+        "roundtripMs": 13.98953902721405
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.125153,
+        "nativeMs": 0.155615,
+        "roundtripMs": 2.186154007911682
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 26.135692,
+        "nativeMs": 26.206385,
+        "roundtripMs": 27.542153000831604
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 0,
+        "sqlMs": 1154.097692,
+        "nativeMs": 1154.168,
+        "roundtripMs": 1155.7230769991875
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.101,
+        "nativeMs": 0.122769,
+        "roundtripMs": 1.6153839826583862
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.150154,
+        "nativeMs": 0.180307,
+        "roundtripMs": 12.275999963283539
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.127923,
+        "nativeMs": 0.161154,
+        "roundtripMs": 1.3433849811553955
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 19.529461,
+        "nativeMs": 19.588616,
+        "roundtripMs": 20.70738399028778
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 1.752305,
+        "nativeMs": 4.658384,
+        "roundtripMs": 6.426154017448425
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.165924,
+        "nativeMs": 0.206461,
+        "roundtripMs": 1.5559229850769043
+      }
+    ],
+    "interactions": [
+      {
+        "name": "combinedFilters",
+        "ms": 205.35969299077988,
+        "retained": 50,
+        "returnedRows": 54
+      },
+      {
+        "name": "oldSearch",
+        "ms": 317.84892296791077,
+        "retained": 50,
+        "returnedRows": 253
+      },
+      {
+        "name": "absentSearch",
+        "ms": 1243.9012309908867,
+        "retained": 0,
+        "returnedRows": 3
+      },
+      {
+        "name": "reset",
+        "ms": 162.3565390110016,
+        "retained": 50,
+        "returnedRows": 54
+      }
+    ]
+  },
+  {
+    "iteration": 1,
+    "queries": [
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.193155,
+        "nativeMs": 0.253231,
+        "roundtripMs": 7.118539035320282
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 2.272614,
+        "nativeMs": 2.379,
+        "roundtripMs": 3.3700770139694214
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 25.232692,
+        "nativeMs": 25.330769,
+        "roundtripMs": 26.79538404941559
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 19.086696,
+        "nativeMs": 22.48277,
+        "roundtripMs": 24.34953898191452
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.101615,
+        "nativeMs": 0.122231,
+        "roundtripMs": 1.5997689962387085
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.117847,
+        "nativeMs": 0.148307,
+        "roundtripMs": 9.007922947406769
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.112616,
+        "nativeMs": 0.148307,
+        "roundtripMs": 1.5580769777297974
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 26.853153,
+        "nativeMs": 26.908,
+        "roundtripMs": 27.962845981121063
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 200,
+        "sqlMs": 122.798234,
+        "nativeMs": 127.282231,
+        "roundtripMs": 129.7701539993286
+      },
+      {
+        "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+        "rows": 50,
+        "sqlMs": 1.725848,
+        "nativeMs": 4.388847,
+        "roundtripMs": 6.365230977535248
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.109538,
+        "nativeMs": 0.136307,
+        "roundtripMs": 1.9240760207176208
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.19154,
+        "nativeMs": 0.247077,
+        "roundtripMs": 23.47138500213623
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.219923,
+        "nativeMs": 0.285154,
+        "roundtripMs": 1.8101530075073242
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 21.764847,
+        "nativeMs": 21.841231,
+        "roundtripMs": 23.429845988750458
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 0,
+        "sqlMs": 1249.237539,
+        "nativeMs": 1249.291924,
+        "roundtripMs": 1250.8777689933777
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.117999,
+        "nativeMs": 0.145231,
+        "roundtripMs": 2.7889230251312256
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.151155,
+        "nativeMs": 0.181307,
+        "roundtripMs": 18.703922986984253
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.110848,
+        "nativeMs": 0.137539,
+        "roundtripMs": 1.8493079543113708
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 30.182231,
+        "nativeMs": 30.273769,
+        "roundtripMs": 32.83638399839401
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 2.747157,
+        "nativeMs": 8.853538,
+        "roundtripMs": 13.782230973243713
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.172154,
+        "nativeMs": 0.211692,
+        "roundtripMs": 3.3938459753990173
+      }
+    ],
+    "interactions": [
+      {
+        "name": "combinedFilters",
+        "ms": 170.81415402889252,
+        "retained": 50,
+        "returnedRows": 54
+      },
+      {
+        "name": "oldSearch",
+        "ms": 370.86646097898483,
+        "retained": 50,
+        "returnedRows": 253
+      },
+      {
+        "name": "absentSearch",
+        "ms": 1423.003692984581,
+        "retained": 0,
+        "returnedRows": 3
+      },
+      {
+        "name": "reset",
+        "ms": 271.3836929798126,
+        "retained": 50,
+        "returnedRows": 54
+      }
+    ]
+  },
+  {
+    "iteration": 2,
+    "queries": [
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.203462,
+        "nativeMs": 0.282385,
+        "roundtripMs": 14.447923004627228
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 2.273691,
+        "nativeMs": 2.417,
+        "roundtripMs": 3.4985379576683044
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 29.134384,
+        "nativeMs": 29.181538,
+        "roundtripMs": 30.541230976581573
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 18.03838,
+        "nativeMs": 22.887615,
+        "roundtripMs": 25.665770053863525
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.107615,
+        "nativeMs": 0.132615,
+        "roundtripMs": 1.3054609894752502
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.145,
+        "nativeMs": 0.258153,
+        "roundtripMs": 9.077845990657806
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 2.182154,
+        "nativeMs": 2.240077,
+        "roundtripMs": 5.359076976776123
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 20.692769,
+        "nativeMs": 20.800923,
+        "roundtripMs": 23.34061497449875
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 200,
+        "sqlMs": 125.780998,
+        "nativeMs": 130.376,
+        "roundtripMs": 135.6346920132637
+      },
+      {
+        "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+        "rows": 50,
+        "sqlMs": 1.32039,
+        "nativeMs": 3.958154,
+        "roundtripMs": 8.607999980449677
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.13054,
+        "nativeMs": 0.157539,
+        "roundtripMs": 2.144384980201721
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.096385,
+        "nativeMs": 0.116307,
+        "roundtripMs": 12.75746202468872
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.097077,
+        "nativeMs": 0.120692,
+        "roundtripMs": 1.456076979637146
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 20.731,
+        "nativeMs": 20.773,
+        "roundtripMs": 22.3179230093956
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 0,
+        "sqlMs": 1155.429769,
+        "nativeMs": 1155.488846,
+        "roundtripMs": 1157.9418460130692
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.158539,
+        "nativeMs": 0.193923,
+        "roundtripMs": 2.802693009376526
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.107538,
+        "nativeMs": 0.133923,
+        "roundtripMs": 11.297845959663391
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.10123,
+        "nativeMs": 0.147308,
+        "roundtripMs": 1.2037689685821533
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 17.947692,
+        "nativeMs": 18.009,
+        "roundtripMs": 21.334384977817535
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 1.183693,
+        "nativeMs": 3.931154,
+        "roundtripMs": 6.019692003726959
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.110231,
+        "nativeMs": 0.13077,
+        "roundtripMs": 1.76215398311615
+      }
+    ],
+    "interactions": [
+      {
+        "name": "combinedFilters",
+        "ms": 176.45999997854233,
+        "retained": 50,
+        "returnedRows": 54
+      },
+      {
+        "name": "oldSearch",
+        "ms": 318.7009229660034,
+        "retained": 50,
+        "returnedRows": 253
+      },
+      {
+        "name": "absentSearch",
+        "ms": 1295.63415402174,
+        "retained": 0,
+        "returnedRows": 3
+      },
+      {
+        "name": "reset",
+        "ms": 236.25684601068497,
+        "retained": 50,
+        "returnedRows": 54
+      }
+    ]
+  },
+  {
+    "iteration": 3,
+    "queries": [
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.103461,
+        "nativeMs": 0.152308,
+        "roundtripMs": 7.425615012645721
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 8.034692,
+        "nativeMs": 8.184384,
+        "roundtripMs": 10.888077020645142
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 28.598077,
+        "nativeMs": 28.655692,
+        "roundtripMs": 39.0572310090065
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 17.984077,
+        "nativeMs": 20.810846,
+        "roundtripMs": 23.237538993358612
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.104308,
+        "nativeMs": 0.125616,
+        "roundtripMs": 1.6095380187034607
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.174769,
+        "nativeMs": 0.207615,
+        "roundtripMs": 13.752385020256042
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.103308,
+        "nativeMs": 0.128,
+        "roundtripMs": 1.5276920199394226
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 32.488923,
+        "nativeMs": 32.540538,
+        "roundtripMs": 34.13023000955582
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 200,
+        "sqlMs": 119.461844,
+        "nativeMs": 124.005615,
+        "roundtripMs": 126.11992299556732
+      },
+      {
+        "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+        "rows": 50,
+        "sqlMs": 5.044383,
+        "nativeMs": 7.650846,
+        "roundtripMs": 10.432999968528748
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.148538,
+        "nativeMs": 0.174538,
+        "roundtripMs": 1.508923053741455
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.101,
+        "nativeMs": 0.121615,
+        "roundtripMs": 11.25323098897934
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.106307,
+        "nativeMs": 0.129769,
+        "roundtripMs": 1.5149999856948853
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 19.824615,
+        "nativeMs": 19.873846,
+        "roundtripMs": 21.165770053863525
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 0,
+        "sqlMs": 1195.530308,
+        "nativeMs": 1195.576923,
+        "roundtripMs": 1197.6055389642715
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.109308,
+        "nativeMs": 0.128308,
+        "roundtripMs": 2.889307975769043
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.159308,
+        "nativeMs": 0.189,
+        "roundtripMs": 24.89138501882553
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.174077,
+        "nativeMs": 0.230461,
+        "roundtripMs": 2.2421540021896362
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 19.410769,
+        "nativeMs": 19.462384,
+        "roundtripMs": 22.202153980731964
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 1.721544,
+        "nativeMs": 5.372923,
+        "roundtripMs": 7.854076981544495
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.175,
+        "nativeMs": 0.211385,
+        "roundtripMs": 2.2380770444869995
+      }
+    ],
+    "interactions": [
+      {
+        "name": "combinedFilters",
+        "ms": 201.1489229798317,
+        "retained": 50,
+        "returnedRows": 54
+      },
+      {
+        "name": "oldSearch",
+        "ms": 357.5842300057411,
+        "retained": 50,
+        "returnedRows": 253
+      },
+      {
+        "name": "absentSearch",
+        "ms": 1307.4323850274086,
+        "retained": 0,
+        "returnedRows": 3
+      },
+      {
+        "name": "reset",
+        "ms": 249.85076999664307,
+        "retained": 50,
+        "returnedRows": 54
+      }
+    ]
+  },
+  {
+    "iteration": 4,
+    "queries": [
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.104615,
+        "nativeMs": 0.138154,
+        "roundtripMs": 8.71084600687027
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 3.242076,
+        "nativeMs": 3.359461,
+        "roundtripMs": 4.74822998046875
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 23.594154,
+        "nativeMs": 23.646154,
+        "roundtripMs": 25.281461000442505
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND substr(date, 1, ?) = ? AND (account_id = ? OR (type <> 'internalTransfer' AND target_account_id = ?)) AND category_id = ? ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 19.287617,
+        "nativeMs": 22.462769,
+        "roundtripMs": 29.387383997440338
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.107077,
+        "nativeMs": 0.129539,
+        "roundtripMs": 1.0788459777832031
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.094769,
+        "nativeMs": 0.111692,
+        "roundtripMs": 9.32861602306366
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.118769,
+        "nativeMs": 0.139692,
+        "roundtripMs": 1.3957690000534058
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 25.026154,
+        "nativeMs": 25.069538,
+        "roundtripMs": 26.81199997663498
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 200,
+        "sqlMs": 121.686777,
+        "nativeMs": 126.887077,
+        "roundtripMs": 138.8136150240898
+      },
+      {
+        "sql": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+        "rows": 50,
+        "sqlMs": 1.345616,
+        "nativeMs": 4.20277,
+        "roundtripMs": 23.038154006004333
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.131693,
+        "nativeMs": 0.150154,
+        "roundtripMs": 1.1306920051574707
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.190384,
+        "nativeMs": 0.241231,
+        "roundtripMs": 15.8160759806633
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.155154,
+        "nativeMs": 0.201769,
+        "roundtripMs": 1.7547699809074402
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 27.077076,
+        "nativeMs": 27.124,
+        "roundtripMs": 29.409153997898102
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 AND ((instr(lower(merchant_name), ?) > 0 OR merchant_name GLOB '*[^ -~]*' OR instr(merchant_name, char(0)) > 0) OR (instr(lower(description), ?) > 0 OR description GLOB '*[^ -~]*' OR instr(description, char(0)) > 0) OR (instr(lower(notes), ?) > 0 OR notes GLOB '*[^ -~]*' OR instr(notes, char(0)) > 0)) ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 0,
+        "sqlMs": 1160.891077,
+        "nativeMs": 1160.940077,
+        "roundtripMs": 1163.7172300219536
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.112923,
+        "nativeMs": 0.133462,
+        "roundtripMs": 2.876614987850189
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.160925,
+        "nativeMs": 0.191308,
+        "roundtripMs": 28.722154021263123
+      },
+      {
+        "sql": "SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT 1;",
+        "rows": 1,
+        "sqlMs": 0.116001,
+        "nativeMs": 0.142847,
+        "roundtripMs": 1.9661539793014526
+      },
+      {
+        "sql": "SELECT date FROM ( SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 LIMIT -1 ) WHERE ( length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ? OR substr(date, 6, 2) NOT BETWEEN '01' AND '12' OR substr(date, 9, 2) NOT BETWEEN '01' AND '31' OR substr(date, 12, 2) NOT BETWEEN '00' AND '23' OR substr(date, 15, 2) NOT BETWEEN '00' AND '59' OR substr(date, 18, 2) NOT BETWEEN '00' AND '59' OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') ) LIMIT 1;",
+        "rows": 0,
+        "sqlMs": 33.522769,
+        "nativeMs": 33.56577,
+        "roundtripMs": 35.5594619512558
+      },
+      {
+        "sql": "SELECT rowid AS history_rowid, * FROM transactions INDEXED BY idx_transactions_date WHERE 1 = 1 ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;",
+        "rows": 51,
+        "sqlMs": 2.062001,
+        "nativeMs": 7.936077,
+        "roundtripMs": 11.691384971141815
+      },
+      {
+        "sql": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+        "rows": 1,
+        "sqlMs": 0.203999,
+        "nativeMs": 0.252,
+        "roundtripMs": 6.58899998664856
+      }
+    ],
+    "interactions": [
+      {
+        "name": "combinedFilters",
+        "ms": 181.78838503360748,
+        "retained": 50,
+        "returnedRows": 54
+      },
+      {
+        "name": "oldSearch",
+        "ms": 356.68061596155167,
+        "retained": 50,
+        "returnedRows": 253
+      },
+      {
+        "name": "absentSearch",
+        "ms": 1306.3093079924583,
+        "retained": 0,
+        "returnedRows": 3
+      },
+      {
+        "name": "reset",
+        "ms": 373.9459229707718,
+        "retained": 50,
+        "returnedRows": 54
+      }
+    ]
+  }
+]
