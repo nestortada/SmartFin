@@ -1,0 +1,347 @@
+{
+  "node": "v24.16.0",
+  "platform": "win32",
+  "architecture": "x64",
+  "sqlite": "node:sqlite / DatabaseSync",
+  "sqliteVersion": {
+    "version": "3.53.0"
+  },
+  "timezone": "America/Bogota",
+  "currentDate": "2026-10-10 local noon",
+  "gcAvailable": true,
+  "warmups": 3,
+  "iterations": 7,
+  "memoryIterations": 3,
+  "entries": [
+    {
+      "size": 1000,
+      "version": "before",
+      "queries": 2,
+      "returnedRows": 1008,
+      "returnedTransactionRows": 1000,
+      "returnedJsonBytes": 646810,
+      "medianMilliseconds": 7,
+      "medianSqlMilliseconds": 3,
+      "sampledHeapDeltaBytes": 3510264,
+      "latencies": [
+        7,
+        6,
+        8,
+        7,
+        8,
+        8,
+        7
+      ],
+      "sqlLatencies": [
+        3,
+        2,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "memory": [
+        3510264,
+        3522520,
+        3509480
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 296.2,
+        "monthlyExpenses": 385.2,
+        "monthlySavings": -89,
+        "recentTransactionCount": 16,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "rows": 1000,
+          "bytes": 644756,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "version": "before",
+      "queries": 2,
+      "returnedRows": 10008,
+      "returnedTransactionRows": 10000,
+      "returnedJsonBytes": 6469585,
+      "medianMilliseconds": 53,
+      "medianSqlMilliseconds": 24,
+      "sampledHeapDeltaBytes": 34692304,
+      "latencies": [
+        56,
+        53,
+        53,
+        53,
+        51,
+        51,
+        53
+      ],
+      "sqlLatencies": [
+        24,
+        24,
+        23,
+        24,
+        22,
+        23,
+        25
+      ],
+      "memory": [
+        34692192,
+        34692304,
+        34692304
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 31665.200000000004,
+        "monthlyExpenses": 27519.000000000004,
+        "monthlySavings": 4146.200000000001,
+        "recentTransactionCount": 195,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "rows": 10000,
+          "bytes": 6467531,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "version": "before",
+      "queries": 2,
+      "returnedRows": 100008,
+      "returnedTransactionRows": 100000,
+      "returnedJsonBytes": 64777345,
+      "medianMilliseconds": 651,
+      "medianSqlMilliseconds": 347,
+      "sampledHeapDeltaBytes": 177109792,
+      "latencies": [
+        657,
+        651,
+        649,
+        653,
+        651,
+        644,
+        647
+      ],
+      "sqlLatencies": [
+        349,
+        349,
+        347,
+        346,
+        350,
+        343,
+        340
+      ],
+      "memory": [
+        177109792,
+        177047776,
+        177113576
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 274056.20000000024,
+        "monthlySavings": 77787.99999999994,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "rows": 100000,
+          "bytes": 64775291,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transactions USING INDEX idx_transactions_date"
+            },
+            {
+              "id": 37,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "timer": "React Native Jest preset performance.now / Date.now (1 ms resolution)",
+  "hardware": {
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12450H",
+    "logicalProcessors": 12,
+    "totalMemoryBytes": 16802910208
+  }
+}

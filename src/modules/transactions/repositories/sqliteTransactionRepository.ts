@@ -25,9 +25,21 @@ import type {
   TransactionStatus,
   TransactionType,
 } from '../types';
+import type {
+  TransactionAmount,
+  TransactionAmountQuery,
+  TransactionDateRangeQuery,
+  TransactionDayCount,
+} from '../types/TransactionQuery';
 
 export type SqliteTransactionRepository = {
   getTransactions: () => Promise<Transaction[]>;
+  getTransactionAmounts: (
+    query: TransactionAmountQuery,
+  ) => Promise<TransactionAmount[]>;
+  getTransactionCountsByDay: (
+    query: TransactionDateRangeQuery,
+  ) => Promise<TransactionDayCount[]>;
   saveTransactions: (transactions: Transaction[]) => Promise<void>;
   deleteTransaction: (id: string) => Promise<void>;
   deleteInstallmentPurchasesByTransactionId: (transactionId: string) => Promise<void>;
@@ -92,6 +104,47 @@ export function createSqliteTransactionRepository(
       );
 
       return resultSetToRows(resultSet).map(rowToTransaction);
+    },
+    getTransactionAmounts: async query => {
+      if (query.operations.length === 0) return [];
+      const operations = query.operations
+        .map(() => '(type = ? AND direction = ?)')
+        .join(' OR ');
+      const [resultSet] = await database.executeSql(
+        `SELECT amount, type, direction FROM transactions
+         WHERE date >= ? AND date < ? AND status = ?
+           AND substr(date, 1, ?) = ? AND (${operations})
+         ORDER BY date DESC, created_at DESC;`,
+        [
+          query.startDate,
+          query.endDateExclusive,
+          query.status,
+          query.datePrefix.length,
+          query.datePrefix,
+          ...query.operations.flatMap(operation => [
+            operation.type,
+            operation.direction,
+          ]),
+        ],
+      );
+      // Keep the same order as getTransactions: REAL amounts are summed in JS.
+      return resultSetToRows(resultSet).map(row => ({
+        amount: readNumber(row, 'amount'),
+        type: readString(row, 'type') as Transaction['type'],
+        direction: readString(row, 'direction') as Transaction['direction'],
+      }));
+    },
+    getTransactionCountsByDay: async query => {
+      const [resultSet] = await database.executeSql(
+        `SELECT substr(date, 1, 10) AS date, COUNT(*) AS count FROM transactions
+         WHERE date >= ? AND date < ? AND status = ?
+         GROUP BY substr(date, 1, 10);`,
+        [query.startDate, query.endDateExclusive, query.status],
+      );
+      return resultSetToRows(resultSet).map(row => ({
+        date: readString(row, 'date'),
+        count: readNumber(row, 'count'),
+      }));
     },
     saveTransactions: async transactions => {
       const date = new Date();

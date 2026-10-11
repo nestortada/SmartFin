@@ -222,7 +222,7 @@ La interfaz de usuario recibe la conexion y crea repositorios por modulo. Los re
 |---|---|
 | `sqliteAccountRepository` | Listar cuentas; guardar una coleccion de cuentas |
 | `sqliteCategoryRepository` | Listar/guardar categorias; borrar una categoria reasignando referencias |
-| `sqliteTransactionRepository` | Listar/guardar/borrar; actualizar categorias; guardar/consultar reglas de comercio; borrar compras a cuotas relacionadas |
+| `sqliteTransactionRepository` | Listar/guardar/borrar; consultar proyecciones de importes por periodo y conteos diarios; actualizar categorias; guardar/consultar reglas de comercio; borrar compras a cuotas relacionadas |
 | `sqliteCreditCardRepository` | Listar y cerrar tarjetas; guardar tarjetas, extractos, perfiles y compras a cuotas; reasignar compras |
 | `sqliteCreditCardAlertRepository` | Consultar, crear y resolver alertas de tarjeta faltante |
 | `sqliteSettingsRepository` | Cargar y guardar preferencias |
@@ -344,3 +344,11 @@ Al modificar la persistencia:
 El esquema actual incorpora borradores de IA y las tres tablas anteriores. [Modelo, API y límites monetarios](SUSCRIPCIONES.md).
 
 La interfaz no requiere migraciones adicionales. Las consultas tipadas incorporan opciones de cuentas/categorías/subcategorías, vencidos paginados y candidatos compatibles de pago. Los candidatos excluyen gastos ya vinculados; las sugerencias usan ±7 días y la búsqueda manual permite otras fechas. Las mismas reglas de confirmación se vuelven a validar dentro de la transacción.
+
+## Consultas del dashboard: optimización de fase 2
+
+El dashboard ya no carga todos los movimientos mediante `getTransactions`. El repositorio de transacciones incorpora `getTransactionAmounts` (proyección mensual de importe/tipo/dirección, con filtros de fecha, estado y operaciones) y `getTransactionCountsByDay` (`COUNT(*)` agrupado por prefijo de día dentro de un rango). Ambos aprovechan `idx_transactions_date`; no se añadió esquema ni migración.
+
+El caso de uso conserva las sumas JavaScript y su orden para evitar cambios de precisión en importes `REAL`, las reglas de ingresos/gastos y el intervalo reciente de 30 × 24 horas con fechas locales. Saldos, deuda y patrimonio siguen leyendo cuentas persistidas. `getTransactions` y sus demás consumidores permanecen intactos.
+
+[Análisis, comparación funcional, mediciones reproducibles y limitaciones](performance/dashboard-phase2.md).

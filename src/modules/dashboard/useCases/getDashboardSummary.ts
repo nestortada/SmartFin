@@ -14,6 +14,7 @@ import {
 import { createSqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import type { DashboardSummary } from '../types/DashboardSummary';
+import type { TransactionAmount } from '../../transactions/types/TransactionQuery';
 
 type DashboardSummaryDependencies = {
   accountRepository?: AccountRepository;
@@ -61,6 +62,10 @@ function toYearMonth(date: Date): string {
   return `${year}-${month}`;
 }
 
+function toLocalDatePrefix(date: Date): string {
+  return `${toYearMonth(date)}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
 function isCurrentMonthTransaction(
   transaction: Transaction,
   currentDate: Date,
@@ -72,11 +77,11 @@ function isPosted(transaction: Transaction): boolean {
   return transaction.status === 'posted';
 }
 
-function isRealExpense(transaction: Transaction): boolean {
+function isRealExpense(transaction: TransactionAmount): boolean {
   return transaction.type === 'expense' && transaction.direction === 'outflow';
 }
 
-function isIncome(transaction: Transaction): boolean {
+function isIncome(transaction: TransactionAmount): boolean {
   return transaction.type === 'income' && transaction.direction === 'inflow';
 }
 
@@ -88,12 +93,12 @@ function getLocalDayTime(date: Date): number {
   ).getTime();
 }
 
-function getTransactionLocalDayTime(transaction: Transaction): number {
+function getTransactionLocalDayTime(transaction: Pick<Transaction, 'date'>): number {
   return new Date(`${transaction.date.slice(0, 10)}T00:00:00`).getTime();
 }
 
 function isRecentTransaction(
-  transaction: Transaction,
+  transaction: Pick<Transaction, 'date'>,
   currentDate: Date,
 ): boolean {
   const millisecondsPerDay = 24 * 60 * 60 * 1000;
@@ -116,6 +121,18 @@ function computeSummary(
     .filter(isPosted)
     .filter(transaction => isCurrentMonthTransaction(transaction, currentDate));
 
+  const recentTransactionCount = transactions
+    .filter(isPosted)
+    .filter(transaction => isRecentTransaction(transaction, currentDate)).length;
+
+  return buildSummary(accounts, monthlyTransactions, recentTransactionCount);
+}
+
+function buildSummary(
+  accounts: Account[],
+  monthlyTransactions: TransactionAmount[],
+  recentTransactionCount: number,
+): DashboardSummary {
   const availableBalance = sumBalances(accounts, AVAILABLE_BALANCE_ACCOUNT_TYPES);
   const totalDebt = sumDebts(accounts);
   const netWorth =
@@ -127,9 +144,6 @@ function computeSummary(
     .filter(isRealExpense)
     .reduce((total, transaction) => total + transaction.amount, 0);
   const monthlySavings = monthlyIncome - monthlyExpenses;
-  const recentTransactionCount = transactions
-    .filter(isPosted)
-    .filter(transaction => isRecentTransaction(transaction, currentDate)).length;
 
   return {
     currency: PRIMARY_CURRENCY,
@@ -195,10 +209,49 @@ export async function getDashboardSummaryFromDb(
   const accountRepository = createSqliteAccountRepository(database);
   const transactionRepository = createSqliteTransactionRepository(database);
 
-  const [accounts, transactions] = await Promise.all([
+  const yearMonth = toYearMonth(currentDate);
+  const nextMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    1,
+  );
+  const currentDayTime = getLocalDayTime(currentDate);
+  const oldestRecentDay = new Date(currentDayTime - 30 * 24 * 60 * 60 * 1000);
+  // JS normalizes dates such as February 30 into March. Read three extra days
+  // before the window, then apply the original local-day predicate to each group.
+  const firstCandidateDay = new Date(
+    oldestRecentDay.getFullYear(),
+    oldestRecentDay.getMonth(),
+    oldestRecentDay.getDate() - 3,
+  );
+  const dayAfterToday = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate() + 1,
+  );
+
+  const [accounts, monthlyAmounts, recentDayCounts] = await Promise.all([
     accountRepository.getAccounts(),
-    Promise.resolve(transactionRepository.getTransactions()),
+    transactionRepository.getTransactionAmounts({
+      startDate: yearMonth,
+      endDateExclusive: toYearMonth(nextMonth),
+      datePrefix: yearMonth,
+      status: 'posted',
+      operations: [
+        { type: 'income', direction: 'inflow' },
+        { type: 'expense', direction: 'outflow' },
+      ],
+    }),
+    transactionRepository.getTransactionCountsByDay({
+      startDate: toLocalDatePrefix(firstCandidateDay),
+      endDateExclusive: toLocalDatePrefix(dayAfterToday),
+      status: 'posted',
+    }),
   ]);
 
-  return computeSummary(accounts, transactions, currentDate);
+  const recentTransactionCount = recentDayCounts
+    .filter(day => isRecentTransaction(day, currentDate))
+    .reduce((total, day) => total + day.count, 0);
+
+  return buildSummary(accounts, monthlyAmounts, recentTransactionCount);
 }

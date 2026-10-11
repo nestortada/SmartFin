@@ -1,0 +1,63 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 458862166 Realtime: 871304532
+
+** MEMINFO in pid 22867 [com.smartfin.dashboardphase2.bench] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap    27019    26996        0       35    28120    40960    30136     6704
+  Dalvik Heap     5678     5336      320       71     6432     9964     3820     6144
+ Dalvik Other      960      884        0        0     1456                           
+        Stack      940      940        0        0      948                           
+       Ashmem       26        0        0        0      552                           
+    Other dev       45       16       20        0      708                           
+     .so mmap     5031      376     1640        9    53408                           
+    .jar mmap     1100        0      216        0    35540                           
+    .apk mmap     8119      328     7664        0     9568                           
+    .ttf mmap      295        0      244        0      692                           
+    .dex mmap     7342        0     7332        0     8120                           
+    .oat mmap      677        0      180        0    13984                           
+    .art mmap     2997     2632      108      111    15832                           
+   Other mmap      205        4      136        0      884                           
+   EGL mtrack    13813    13813        0        0    13813                           
+    GL mtrack     7416     7416        0        0     7416                           
+      Unknown     7013     6780      204        2     7596                           
+        TOTAL    88904    65521    18064      228   205069    50924    33956    12848
+ 
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:     8076                          22264
+         Native Heap:    26996                          28120
+                Code:    17984                         121468
+               Stack:      940                            948
+            Graphics:    21229                          21229
+       Private Other:     8360
+              System:     5319
+             Unknown:                                   11040
+ 
+           TOTAL PSS:    88904            TOTAL RSS:   205069       TOTAL SWAP PSS:      228
+ 
+ Objects
+               Views:       85         ViewRootImpl:        1
+         AppContexts:        5           Activities:        1
+              Assets:       33        AssetManagers:        0
+       Local Binders:       26        Proxy Binders:       82
+       Parcel memory:       12         Parcel count:       49
+    Death Recipients:        1             WebViews:        0
+ 
+ SQL
+         MEMORY_USED:     2370
+  PAGECACHE_OVERFLOW:     1977          MALLOC_SIZE:       46
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b) cache hits cache misses cache size  Dbname
+PER CONNECTION STATS
+         4      104            123    11    53    12  /data/user/0/com.smartfin.dashboardphase2.bench/no_backup/androidx.work.workdb
+         4        8                    0     0     0    (attached) temp
+         4      104             58     7    23     6  /data/user/0/com.smartfin.dashboardphase2.bench/no_backup/androidx.work.workdb (1)
+         4    49476             77    92    18     5  /data/user/0/com.smartfin.dashboardphase2.bench/databases/dashboard_phase2_v1_100000.db
+POOL STATS
+     cache hits  cache misses    cache size  Dbname
+             18            80            98  /data/user/0/com.smartfin.dashboardphase2.bench/no_backup/androidx.work.workdb
+             92            19           111  /data/user/0/com.smartfin.dashboardphase2.bench/databases/dashboard_phase2_v1_100000.db
