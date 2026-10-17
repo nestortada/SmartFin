@@ -1,0 +1,2339 @@
+{
+  "database": "node:sqlite :memory:",
+  "matrix": [
+    {
+      "cards": 1,
+      "writes": 10,
+      "points": 20
+    },
+    {
+      "cards": 2,
+      "writes": 16,
+      "points": 32
+    }
+  ],
+  "rollbackPoints": [
+    {
+      "cards": 1,
+      "write": 1,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 1,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 2,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 2,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 3,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 3,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 4,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 4,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 5,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 5,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 6,
+      "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 6,
+      "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 7,
+      "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 7,
+      "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 8,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 8,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 9,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 9,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 10,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 1,
+      "write": 10,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 1,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 1,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 2,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 2,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 3,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 3,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 4,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 4,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 5,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 5,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 6,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 6,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 7,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 7,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 8,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 8,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 9,
+      "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 9,
+      "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 10,
+      "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 10,
+      "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 11,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 11,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 12,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 12,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 13,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 13,
+      "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 14,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 14,
+      "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 15,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 15,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 16,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "before",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    },
+    {
+      "cards": 2,
+      "write": 16,
+      "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "phase": "after",
+      "status": "rolledBack",
+      "completeSnapshotEqual": true
+    }
+  ],
+  "evidence": {
+    "mandatoryScenario": {
+      "before": {
+        "metrics": {
+          "balances": {
+            "bank": 1000000,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 250000,
+          "available": 1000000,
+          "wealth": 750000,
+          "income": 0,
+          "expense": 250000,
+          "savings": -250000
+        },
+        "tables": {
+          "account_balance_history": [],
+          "accounts": [
+            {
+              "id": "bank",
+              "name": "Banco",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 1000000,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            },
+            {
+              "id": "card",
+              "name": "Visa",
+              "type": "creditCard",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": 250000,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "target",
+              "name": "Destino",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            }
+          ],
+          "ai_command_drafts": [],
+          "amortization_schedule_items": [],
+          "app_settings": [],
+          "backup_records": [],
+          "budgets": [],
+          "cash_flow_events": [],
+          "categories": [],
+          "credit_card_profiles": [],
+          "credit_card_statements": [
+            {
+              "id": "statement-auto-card-2026-10",
+              "account_id": "card",
+              "statement_start_date": "2026-10-01",
+              "statement_end_date": "2026-10-31",
+              "payment_due_date": "2026-11-25",
+              "total_amount": 250000,
+              "minimum_payment_amount": 25000,
+              "currency": "COP",
+              "status": "pending",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "envelope_movements": [],
+          "envelopes": [],
+          "financial_data_revision": [
+            {
+              "id": 1,
+              "revision": 6,
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "financial_goals": [],
+          "financial_health_scores": [],
+          "installment_purchases": [],
+          "investment_assets": [],
+          "loans": [],
+          "merchant_mappings": [],
+          "raw_financial_messages": [],
+          "receipt_attachments": [],
+          "recurring_subscriptions": [],
+          "schema_migrations": [
+            {
+              "version": 1,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 2,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 3,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 4,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "shared_allocations": [],
+          "shared_commands": [],
+          "shared_contacts": [],
+          "shared_expenses": [],
+          "shared_loss_events": [],
+          "shared_receipts": [],
+          "shared_returns": [],
+          "smart_alerts": [],
+          "subcategories": [],
+          "subscription_occurrences": [],
+          "subscription_reminders": [],
+          "tax_tags": [],
+          "transaction_splits": [],
+          "transaction_tax_tags": [],
+          "transactions": [
+            {
+              "id": "tx_manual_1791720000000_87",
+              "amount": 250000,
+              "currency": "COP",
+              "description": "Visa",
+              "date": "2026-10-11T12:00:00.000Z",
+              "civil_date": null,
+              "local_time": null,
+              "time_zone": null,
+              "date_precision": null,
+              "account_id": "card",
+              "category_id": null,
+              "subcategory_id": null,
+              "type": "expense",
+              "direction": "outflow",
+              "status": "posted",
+              "target_account_id": null,
+              "source_message_id": null,
+              "merchant_name": "Visa",
+              "payment_method": "credit",
+              "credit_card_hint": "Visa",
+              "dedupe_key": null,
+              "notes": "Crédito • Registro manual",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ]
+        },
+        "integrity": {
+          "foreignKeys": [
+            {
+              "foreign_keys": 1
+            }
+          ],
+          "foreignKeyViolations": [],
+          "integrityCheck": [
+            {
+              "integrity_check": "ok"
+            }
+          ]
+        }
+      },
+      "after": {
+        "metrics": {
+          "balances": {
+            "bank": 900000,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 150000,
+          "available": 900000,
+          "wealth": 750000,
+          "income": 0,
+          "expense": 250000,
+          "savings": -250000
+        },
+        "tables": {
+          "account_balance_history": [],
+          "accounts": [
+            {
+              "id": "bank",
+              "name": "Banco",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 900000,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "card",
+              "name": "Visa",
+              "type": "creditCard",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": 150000,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "target",
+              "name": "Destino",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            }
+          ],
+          "ai_command_drafts": [],
+          "amortization_schedule_items": [],
+          "app_settings": [],
+          "backup_records": [],
+          "budgets": [],
+          "cash_flow_events": [],
+          "categories": [],
+          "credit_card_profiles": [],
+          "credit_card_statements": [
+            {
+              "id": "statement-auto-card-2026-10",
+              "account_id": "card",
+              "statement_start_date": "2026-10-01",
+              "statement_end_date": "2026-10-31",
+              "payment_due_date": "2026-11-25",
+              "total_amount": 150000,
+              "minimum_payment_amount": 15000,
+              "currency": "COP",
+              "status": "pending",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "envelope_movements": [],
+          "envelopes": [],
+          "financial_data_revision": [
+            {
+              "id": 1,
+              "revision": 12,
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "financial_goals": [],
+          "financial_health_scores": [],
+          "installment_purchases": [],
+          "investment_assets": [],
+          "loans": [],
+          "merchant_mappings": [],
+          "raw_financial_messages": [],
+          "receipt_attachments": [],
+          "recurring_subscriptions": [],
+          "schema_migrations": [
+            {
+              "version": 1,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 2,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 3,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 4,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "shared_allocations": [],
+          "shared_commands": [],
+          "shared_contacts": [],
+          "shared_expenses": [],
+          "shared_loss_events": [],
+          "shared_receipts": [],
+          "shared_returns": [],
+          "smart_alerts": [],
+          "subcategories": [],
+          "subscription_occurrences": [],
+          "subscription_reminders": [],
+          "tax_tags": [],
+          "transaction_splits": [],
+          "transaction_tax_tags": [],
+          "transactions": [
+            {
+              "id": "tx-credit-card-payment-card-1791720000000-55",
+              "amount": 100000,
+              "currency": "COP",
+              "description": "Pago de tarjeta de credito - Visa",
+              "date": "2026-10-11T12:00:00.000Z",
+              "civil_date": null,
+              "local_time": null,
+              "time_zone": null,
+              "date_precision": null,
+              "account_id": "bank",
+              "category_id": null,
+              "subcategory_id": null,
+              "type": "creditCardPayment",
+              "direction": "outflow",
+              "status": "posted",
+              "target_account_id": "card",
+              "source_message_id": null,
+              "merchant_name": "Visa",
+              "payment_method": "debit",
+              "credit_card_hint": null,
+              "dedupe_key": null,
+              "notes": "Pago de tarjeta de credito. No cuenta como gasto del mes.",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "tx_manual_1791720000000_87",
+              "amount": 250000,
+              "currency": "COP",
+              "description": "Visa",
+              "date": "2026-10-11T12:00:00.000Z",
+              "civil_date": null,
+              "local_time": null,
+              "time_zone": null,
+              "date_precision": null,
+              "account_id": "card",
+              "category_id": null,
+              "subcategory_id": null,
+              "type": "expense",
+              "direction": "outflow",
+              "status": "posted",
+              "target_account_id": null,
+              "source_message_id": null,
+              "merchant_name": "Visa",
+              "payment_method": "credit",
+              "credit_card_hint": "Visa",
+              "dedupe_key": null,
+              "notes": "Crédito • Registro manual",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ]
+        },
+        "integrity": {
+          "foreignKeys": [
+            {
+              "foreign_keys": 1
+            }
+          ],
+          "foreignKeyViolations": [],
+          "integrityCheck": [
+            {
+              "integrity_check": "ok"
+            }
+          ]
+        }
+      },
+      "value": {
+        "paidAmount": 100000,
+        "previousDebt": 250000,
+        "remainingDebt": 150000,
+        "transaction": {
+          "id": "tx-credit-card-payment-card-1791720000000-55",
+          "accountId": "bank",
+          "amount": 100000,
+          "createdAt": "2026-10-11T12:00:00.000Z",
+          "currency": "COP",
+          "date": "2026-10-11T12:00:00.000Z",
+          "description": "Pago de tarjeta de credito - Visa",
+          "direction": "outflow",
+          "merchantName": "Visa",
+          "notes": "Pago de tarjeta de credito. No cuenta como gasto del mes.",
+          "paymentMethod": "debit",
+          "status": "posted",
+          "targetAccountId": "card",
+          "type": "creditCardPayment",
+          "updatedAt": "2026-10-11T12:00:00.000Z"
+        }
+      },
+      "historicalEquivalence": true
+    },
+    "originalFailure": {
+      "before": {
+        "metrics": {
+          "balances": {
+            "bank": 1000000,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 250000,
+          "available": 1000000,
+          "wealth": 750000,
+          "income": 0,
+          "expense": 250000,
+          "savings": -250000
+        },
+        "tables": {
+          "account_balance_history": [],
+          "accounts": [
+            {
+              "id": "bank",
+              "name": "Banco",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 1000000,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            },
+            {
+              "id": "card",
+              "name": "Visa",
+              "type": "creditCard",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": 250000,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "target",
+              "name": "Destino",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            }
+          ],
+          "ai_command_drafts": [],
+          "amortization_schedule_items": [],
+          "app_settings": [],
+          "backup_records": [],
+          "budgets": [],
+          "cash_flow_events": [],
+          "categories": [],
+          "credit_card_profiles": [],
+          "credit_card_statements": [
+            {
+              "id": "statement-auto-card-2026-10",
+              "account_id": "card",
+              "statement_start_date": "2026-10-01",
+              "statement_end_date": "2026-10-31",
+              "payment_due_date": "2026-11-25",
+              "total_amount": 250000,
+              "minimum_payment_amount": 25000,
+              "currency": "COP",
+              "status": "pending",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "envelope_movements": [],
+          "envelopes": [],
+          "financial_data_revision": [
+            {
+              "id": 1,
+              "revision": 6,
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "financial_goals": [],
+          "financial_health_scores": [],
+          "installment_purchases": [],
+          "investment_assets": [],
+          "loans": [],
+          "merchant_mappings": [],
+          "raw_financial_messages": [],
+          "receipt_attachments": [],
+          "recurring_subscriptions": [],
+          "schema_migrations": [
+            {
+              "version": 1,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 2,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 3,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 4,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "shared_allocations": [],
+          "shared_commands": [],
+          "shared_contacts": [],
+          "shared_expenses": [],
+          "shared_loss_events": [],
+          "shared_receipts": [],
+          "shared_returns": [],
+          "smart_alerts": [],
+          "subcategories": [],
+          "subscription_occurrences": [],
+          "subscription_reminders": [],
+          "tax_tags": [],
+          "transaction_splits": [],
+          "transaction_tax_tags": [],
+          "transactions": [
+            {
+              "id": "tx_manual_1791720000000_89",
+              "amount": 250000,
+              "currency": "COP",
+              "description": "Visa",
+              "date": "2026-10-11T12:00:00.000Z",
+              "civil_date": null,
+              "local_time": null,
+              "time_zone": null,
+              "date_precision": null,
+              "account_id": "card",
+              "category_id": null,
+              "subcategory_id": null,
+              "type": "expense",
+              "direction": "outflow",
+              "status": "posted",
+              "target_account_id": null,
+              "source_message_id": null,
+              "merchant_name": "Visa",
+              "payment_method": "credit",
+              "credit_card_hint": "Visa",
+              "dedupe_key": null,
+              "notes": "Crédito • Registro manual",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ]
+        },
+        "integrity": {
+          "foreignKeys": [
+            {
+              "foreign_keys": 1
+            }
+          ],
+          "foreignKeyViolations": [],
+          "integrityCheck": [
+            {
+              "integrity_check": "ok"
+            }
+          ]
+        }
+      },
+      "after": {
+        "metrics": {
+          "balances": {
+            "bank": 900000,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 250000,
+          "available": 900000,
+          "wealth": 650000,
+          "income": 0,
+          "expense": 250000,
+          "savings": -250000
+        },
+        "tables": {
+          "account_balance_history": [],
+          "accounts": [
+            {
+              "id": "bank",
+              "name": "Banco",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 900000,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "card",
+              "name": "Visa",
+              "type": "creditCard",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": 250000,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "target",
+              "name": "Destino",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            }
+          ],
+          "ai_command_drafts": [],
+          "amortization_schedule_items": [],
+          "app_settings": [],
+          "backup_records": [],
+          "budgets": [],
+          "cash_flow_events": [],
+          "categories": [],
+          "credit_card_profiles": [],
+          "credit_card_statements": [
+            {
+              "id": "statement-auto-card-2026-10",
+              "account_id": "card",
+              "statement_start_date": "2026-10-01",
+              "statement_end_date": "2026-10-31",
+              "payment_due_date": "2026-11-25",
+              "total_amount": 250000,
+              "minimum_payment_amount": 25000,
+              "currency": "COP",
+              "status": "pending",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "envelope_movements": [],
+          "envelopes": [],
+          "financial_data_revision": [
+            {
+              "id": 1,
+              "revision": 9,
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "financial_goals": [],
+          "financial_health_scores": [],
+          "installment_purchases": [],
+          "investment_assets": [],
+          "loans": [],
+          "merchant_mappings": [],
+          "raw_financial_messages": [],
+          "receipt_attachments": [],
+          "recurring_subscriptions": [],
+          "schema_migrations": [
+            {
+              "version": 1,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 2,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 3,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 4,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "shared_allocations": [],
+          "shared_commands": [],
+          "shared_contacts": [],
+          "shared_expenses": [],
+          "shared_loss_events": [],
+          "shared_receipts": [],
+          "shared_returns": [],
+          "smart_alerts": [],
+          "subcategories": [],
+          "subscription_occurrences": [],
+          "subscription_reminders": [],
+          "tax_tags": [],
+          "transaction_splits": [],
+          "transaction_tax_tags": [],
+          "transactions": [
+            {
+              "id": "tx_manual_1791720000000_89",
+              "amount": 250000,
+              "currency": "COP",
+              "description": "Visa",
+              "date": "2026-10-11T12:00:00.000Z",
+              "civil_date": null,
+              "local_time": null,
+              "time_zone": null,
+              "date_precision": null,
+              "account_id": "card",
+              "category_id": null,
+              "subcategory_id": null,
+              "type": "expense",
+              "direction": "outflow",
+              "status": "posted",
+              "target_account_id": null,
+              "source_message_id": null,
+              "merchant_name": "Visa",
+              "payment_method": "credit",
+              "credit_card_hint": "Visa",
+              "dedupe_key": null,
+              "notes": "Crédito • Registro manual",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ]
+        },
+        "integrity": {
+          "foreignKeys": [
+            {
+              "foreign_keys": 1
+            }
+          ],
+          "foreignKeyViolations": [],
+          "integrityCheck": [
+            {
+              "integrity_check": "ok"
+            }
+          ]
+        }
+      },
+      "trace": [
+        {
+          "order": 1,
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 2,
+          "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 3,
+          "sql": "SELECT\n          id,\n          transaction_id,\n          account_id,\n          merchant_name,\n          total_amount,\n          currency,\n          installment_count,\n          paid_installments,\n          monthly_amount,\n          first_due_date,\n          status,\n          created_at,\n          updated_at\n        FROM installment_purchases\n        WHERE account_id IN (?)\n        ORDER BY created_at DESC;",
+          "values": [
+            "card"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 4,
+          "sql": "BEGIN;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 5,
+          "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+          "values": [
+            "Visa",
+            "creditCard",
+            "active",
+            "COP",
+            0,
+            250000,
+            null,
+            null,
+            null,
+            "2026-10-11T12:00:00.000Z",
+            "card"
+          ],
+          "write": 1,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 6,
+          "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+          "values": [
+            "card",
+            "Visa",
+            "creditCard",
+            "active",
+            "COP",
+            0,
+            250000,
+            null,
+            null,
+            null,
+            "2026-01-01",
+            "2026-10-11T12:00:00.000Z",
+            "card"
+          ],
+          "write": 2,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 7,
+          "sql": "COMMIT;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 8,
+          "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+          "values": [
+            "statement-auto-card-2026-10",
+            "card",
+            "2026-10-01",
+            "2026-10-31",
+            "2026-11-25",
+            250000,
+            25000,
+            "COP",
+            "pending",
+            "2026-10-11T12:00:00.000Z",
+            "2026-10-11T12:00:00.000Z"
+          ],
+          "write": 3,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 9,
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 10,
+          "sql": "BEGIN;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 11,
+          "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+          "values": [
+            "Banco",
+            "bankAccount",
+            "active",
+            "COP",
+            900000,
+            null,
+            null,
+            null,
+            null,
+            "2026-10-11T12:00:00.000Z",
+            "bank"
+          ],
+          "write": 4,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 12,
+          "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+          "values": [
+            "bank",
+            "Banco",
+            "bankAccount",
+            "active",
+            "COP",
+            900000,
+            null,
+            null,
+            null,
+            null,
+            "2026-01-01",
+            "2026-10-11T12:00:00.000Z",
+            "bank"
+          ],
+          "write": 5,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 13,
+          "sql": "COMMIT;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 14,
+          "sql": "BEGIN;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 15,
+          "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?)\n        UNION ALL SELECT transaction_id FROM shared_receipts WHERE transaction_id IN (?)\n        UNION ALL SELECT transaction_id FROM shared_returns WHERE transaction_id IN (?) LIMIT 1;",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000",
+            "tx-credit-card-payment-card-1791720000000",
+            "tx-credit-card-payment-card-1791720000000"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 16,
+          "sql": "SELECT * FROM recurring_subscriptions;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 17,
+          "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR expected_date >= ? OR id = ? OR transaction_id = ?;",
+          "values": [
+            "2026-10-11",
+            null,
+            null
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 18,
+          "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 19,
+          "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occurrence_id IN (SELECT id FROM subscription_occurrences WHERE expected_date >= ?);",
+          "values": [
+            "2026-10-11"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 20,
+          "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscription_occurrence');",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 21,
+          "sql": "SELECT id,type,status,currency FROM accounts;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 22,
+          "sql": "SELECT id,type FROM categories;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 23,
+          "sql": "SELECT id,category_id,is_active FROM subcategories;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 24,
+          "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM subscription_occurrences WHERE transaction_id IS NOT NULL);",
+          "values": [
+            null
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 25,
+          "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+          "values": [
+            100000,
+            "COP",
+            "Pago de tarjeta de credito - Visa",
+            "2026-10-11T12:00:00.000Z",
+            "bank",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "creditCardPayment",
+            "outflow",
+            "posted",
+            "card",
+            "Visa",
+            "debit",
+            null,
+            null,
+            "Pago de tarjeta de credito. No cuenta como gasto del mes.",
+            "2026-10-11T12:00:00.000Z",
+            "tx-credit-card-payment-card-1791720000000"
+          ],
+          "write": 6,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 26,
+          "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000",
+            100000,
+            "COP",
+            "Pago de tarjeta de credito - Visa",
+            "2026-10-11T12:00:00.000Z",
+            "bank",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "creditCardPayment",
+            "outflow",
+            "posted",
+            "card",
+            "Visa",
+            "debit",
+            null,
+            null,
+            "Pago de tarjeta de credito. No cuenta como gasto del mes.",
+            "2026-10-11T12:00:00.000Z",
+            "2026-10-11T12:00:00.000Z",
+            "tx-credit-card-payment-card-1791720000000"
+          ],
+          "write": 7,
+          "executed": false,
+          "outcome": "injected-before"
+        },
+        {
+          "order": 27,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 28,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 29,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 30,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 31,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 32,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 33,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 34,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 35,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 36,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 37,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 38,
+          "sql": "SELECT * FROM smartfin_transaction_abort_missing_table;",
+          "values": [],
+          "executed": false,
+          "outcome": "sql-error"
+        },
+        {
+          "order": 39,
+          "sql": "ROLLBACK;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        }
+      ],
+      "error": {
+        "entry": {
+          "order": 26,
+          "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000",
+            100000,
+            "COP",
+            "Pago de tarjeta de credito - Visa",
+            "2026-10-11T12:00:00.000Z",
+            "bank",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "creditCardPayment",
+            "outflow",
+            "posted",
+            "card",
+            "Visa",
+            "debit",
+            null,
+            null,
+            "Pago de tarjeta de credito. No cuenta como gasto del mes.",
+            "2026-10-11T12:00:00.000Z",
+            "2026-10-11T12:00:00.000Z",
+            "tx-credit-card-payment-card-1791720000000"
+          ],
+          "write": 7,
+          "executed": false,
+          "outcome": "injected-before"
+        },
+        "phase": "before"
+      }
+    },
+    "correctedFailure": {
+      "before": {
+        "metrics": {
+          "balances": {
+            "bank": 1000000,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 250000,
+          "available": 1000000,
+          "wealth": 750000,
+          "income": 0,
+          "expense": 250000,
+          "savings": -250000
+        },
+        "tables": {
+          "account_balance_history": [],
+          "accounts": [
+            {
+              "id": "bank",
+              "name": "Banco",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 1000000,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            },
+            {
+              "id": "card",
+              "name": "Visa",
+              "type": "creditCard",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": 250000,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "target",
+              "name": "Destino",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            }
+          ],
+          "ai_command_drafts": [],
+          "amortization_schedule_items": [],
+          "app_settings": [],
+          "backup_records": [],
+          "budgets": [],
+          "cash_flow_events": [],
+          "categories": [],
+          "credit_card_profiles": [],
+          "credit_card_statements": [
+            {
+              "id": "statement-auto-card-2026-10",
+              "account_id": "card",
+              "statement_start_date": "2026-10-01",
+              "statement_end_date": "2026-10-31",
+              "payment_due_date": "2026-11-25",
+              "total_amount": 250000,
+              "minimum_payment_amount": 25000,
+              "currency": "COP",
+              "status": "pending",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "envelope_movements": [],
+          "envelopes": [],
+          "financial_data_revision": [
+            {
+              "id": 1,
+              "revision": 6,
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "financial_goals": [],
+          "financial_health_scores": [],
+          "installment_purchases": [],
+          "investment_assets": [],
+          "loans": [],
+          "merchant_mappings": [],
+          "raw_financial_messages": [],
+          "receipt_attachments": [],
+          "recurring_subscriptions": [],
+          "schema_migrations": [
+            {
+              "version": 1,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 2,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 3,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 4,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "shared_allocations": [],
+          "shared_commands": [],
+          "shared_contacts": [],
+          "shared_expenses": [],
+          "shared_loss_events": [],
+          "shared_receipts": [],
+          "shared_returns": [],
+          "smart_alerts": [],
+          "subcategories": [],
+          "subscription_occurrences": [],
+          "subscription_reminders": [],
+          "tax_tags": [],
+          "transaction_splits": [],
+          "transaction_tax_tags": [],
+          "transactions": [
+            {
+              "id": "tx_manual_1791720000000_90",
+              "amount": 250000,
+              "currency": "COP",
+              "description": "Visa",
+              "date": "2026-10-11T12:00:00.000Z",
+              "civil_date": null,
+              "local_time": null,
+              "time_zone": null,
+              "date_precision": null,
+              "account_id": "card",
+              "category_id": null,
+              "subcategory_id": null,
+              "type": "expense",
+              "direction": "outflow",
+              "status": "posted",
+              "target_account_id": null,
+              "source_message_id": null,
+              "merchant_name": "Visa",
+              "payment_method": "credit",
+              "credit_card_hint": "Visa",
+              "dedupe_key": null,
+              "notes": "Crédito • Registro manual",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ]
+        },
+        "integrity": {
+          "foreignKeys": [
+            {
+              "foreign_keys": 1
+            }
+          ],
+          "foreignKeyViolations": [],
+          "integrityCheck": [
+            {
+              "integrity_check": "ok"
+            }
+          ]
+        }
+      },
+      "after": {
+        "metrics": {
+          "balances": {
+            "bank": 1000000,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 250000,
+          "available": 1000000,
+          "wealth": 750000,
+          "income": 0,
+          "expense": 250000,
+          "savings": -250000
+        },
+        "tables": {
+          "account_balance_history": [],
+          "accounts": [
+            {
+              "id": "bank",
+              "name": "Banco",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 1000000,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            },
+            {
+              "id": "card",
+              "name": "Visa",
+              "type": "creditCard",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": 250000,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "id": "target",
+              "name": "Destino",
+              "type": "bankAccount",
+              "status": "active",
+              "currency": "COP",
+              "balance_amount": 0,
+              "debt_balance_amount": null,
+              "credit_limit_amount": null,
+              "institution_name": null,
+              "description": null,
+              "created_at": "2026-01-01",
+              "updated_at": "2026-01-01"
+            }
+          ],
+          "ai_command_drafts": [],
+          "amortization_schedule_items": [],
+          "app_settings": [],
+          "backup_records": [],
+          "budgets": [],
+          "cash_flow_events": [],
+          "categories": [],
+          "credit_card_profiles": [],
+          "credit_card_statements": [
+            {
+              "id": "statement-auto-card-2026-10",
+              "account_id": "card",
+              "statement_start_date": "2026-10-01",
+              "statement_end_date": "2026-10-31",
+              "payment_due_date": "2026-11-25",
+              "total_amount": 250000,
+              "minimum_payment_amount": 25000,
+              "currency": "COP",
+              "status": "pending",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "envelope_movements": [],
+          "envelopes": [],
+          "financial_data_revision": [
+            {
+              "id": 1,
+              "revision": 6,
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "financial_goals": [],
+          "financial_health_scores": [],
+          "installment_purchases": [],
+          "investment_assets": [],
+          "loans": [],
+          "merchant_mappings": [],
+          "raw_financial_messages": [],
+          "receipt_attachments": [],
+          "recurring_subscriptions": [],
+          "schema_migrations": [
+            {
+              "version": 1,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 2,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 3,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            },
+            {
+              "version": 4,
+              "applied_at": "2026-10-11T12:00:00.000Z"
+            }
+          ],
+          "shared_allocations": [],
+          "shared_commands": [],
+          "shared_contacts": [],
+          "shared_expenses": [],
+          "shared_loss_events": [],
+          "shared_receipts": [],
+          "shared_returns": [],
+          "smart_alerts": [],
+          "subcategories": [],
+          "subscription_occurrences": [],
+          "subscription_reminders": [],
+          "tax_tags": [],
+          "transaction_splits": [],
+          "transaction_tax_tags": [],
+          "transactions": [
+            {
+              "id": "tx_manual_1791720000000_90",
+              "amount": 250000,
+              "currency": "COP",
+              "description": "Visa",
+              "date": "2026-10-11T12:00:00.000Z",
+              "civil_date": null,
+              "local_time": null,
+              "time_zone": null,
+              "date_precision": null,
+              "account_id": "card",
+              "category_id": null,
+              "subcategory_id": null,
+              "type": "expense",
+              "direction": "outflow",
+              "status": "posted",
+              "target_account_id": null,
+              "source_message_id": null,
+              "merchant_name": "Visa",
+              "payment_method": "credit",
+              "credit_card_hint": "Visa",
+              "dedupe_key": null,
+              "notes": "Crédito • Registro manual",
+              "created_at": "2026-10-11T12:00:00.000Z",
+              "updated_at": "2026-10-11T12:00:00.000Z"
+            }
+          ]
+        },
+        "integrity": {
+          "foreignKeys": [
+            {
+              "foreign_keys": 1
+            }
+          ],
+          "foreignKeyViolations": [],
+          "integrityCheck": [
+            {
+              "integrity_check": "ok"
+            }
+          ]
+        }
+      },
+      "trace": [
+        {
+          "order": 1,
+          "sql": "BEGIN IMMEDIATE;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 2,
+          "sql": "SELECT * FROM transactions WHERE id = ?;",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000-56"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 3,
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 4,
+          "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?) OR target_account_id IN (?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "card",
+            "card",
+            "card"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 5,
+          "sql": "SELECT\n          id,\n          transaction_id,\n          account_id,\n          merchant_name,\n          total_amount,\n          currency,\n          installment_count,\n          paid_installments,\n          monthly_amount,\n          first_due_date,\n          status,\n          created_at,\n          updated_at\n        FROM installment_purchases\n        WHERE account_id IN (?)\n        ORDER BY created_at DESC;",
+          "values": [
+            "card"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 6,
+          "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+          "values": [
+            "Visa",
+            "creditCard",
+            "active",
+            "COP",
+            0,
+            250000,
+            null,
+            null,
+            null,
+            "2026-10-11T12:00:00.000Z",
+            "card"
+          ],
+          "write": 1,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 7,
+          "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+          "values": [
+            "card",
+            "Visa",
+            "creditCard",
+            "active",
+            "COP",
+            0,
+            250000,
+            null,
+            null,
+            null,
+            "2026-01-01",
+            "2026-10-11T12:00:00.000Z",
+            "card"
+          ],
+          "write": 2,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 8,
+          "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+          "values": [
+            "statement-auto-card-2026-10",
+            "card",
+            "2026-10-01",
+            "2026-10-31",
+            "2026-11-25",
+            250000,
+            25000,
+            "COP",
+            "pending",
+            "2026-10-11T12:00:00.000Z",
+            "2026-10-11T12:00:00.000Z"
+          ],
+          "write": 3,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 9,
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 10,
+          "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+          "values": [
+            "Banco",
+            "bankAccount",
+            "active",
+            "COP",
+            900000,
+            null,
+            null,
+            null,
+            null,
+            "2026-10-11T12:00:00.000Z",
+            "bank"
+          ],
+          "write": 4,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 11,
+          "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+          "values": [
+            "bank",
+            "Banco",
+            "bankAccount",
+            "active",
+            "COP",
+            900000,
+            null,
+            null,
+            null,
+            null,
+            "2026-01-01",
+            "2026-10-11T12:00:00.000Z",
+            "bank"
+          ],
+          "write": 5,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 12,
+          "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?)\n        UNION ALL SELECT transaction_id FROM shared_receipts WHERE transaction_id IN (?)\n        UNION ALL SELECT transaction_id FROM shared_returns WHERE transaction_id IN (?) LIMIT 1;",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000-56",
+            "tx-credit-card-payment-card-1791720000000-56",
+            "tx-credit-card-payment-card-1791720000000-56"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 13,
+          "sql": "SELECT * FROM recurring_subscriptions;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 14,
+          "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR expected_date >= ? OR id = ? OR transaction_id = ?;",
+          "values": [
+            "2026-10-11",
+            null,
+            null
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 15,
+          "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000-56"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 16,
+          "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occurrence_id IN (SELECT id FROM subscription_occurrences WHERE expected_date >= ?);",
+          "values": [
+            "2026-10-11"
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 17,
+          "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscription_occurrence');",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 18,
+          "sql": "SELECT id,type,status,currency FROM accounts;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 19,
+          "sql": "SELECT id,type FROM categories;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 20,
+          "sql": "SELECT id,category_id,is_active FROM subcategories;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 21,
+          "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM subscription_occurrences WHERE transaction_id IS NOT NULL);",
+          "values": [
+            null
+          ],
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 22,
+          "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+          "values": [
+            100000,
+            "COP",
+            "Pago de tarjeta de credito - Visa",
+            "2026-10-11T12:00:00.000Z",
+            "bank",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "creditCardPayment",
+            "outflow",
+            "posted",
+            "card",
+            "Visa",
+            "debit",
+            null,
+            null,
+            "Pago de tarjeta de credito. No cuenta como gasto del mes.",
+            "2026-10-11T12:00:00.000Z",
+            "tx-credit-card-payment-card-1791720000000-56"
+          ],
+          "write": 6,
+          "executed": true,
+          "outcome": "ok"
+        },
+        {
+          "order": 23,
+          "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000-56",
+            100000,
+            "COP",
+            "Pago de tarjeta de credito - Visa",
+            "2026-10-11T12:00:00.000Z",
+            "bank",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "creditCardPayment",
+            "outflow",
+            "posted",
+            "card",
+            "Visa",
+            "debit",
+            null,
+            null,
+            "Pago de tarjeta de credito. No cuenta como gasto del mes.",
+            "2026-10-11T12:00:00.000Z",
+            "2026-10-11T12:00:00.000Z",
+            "tx-credit-card-payment-card-1791720000000-56"
+          ],
+          "write": 7,
+          "executed": false,
+          "outcome": "injected-before"
+        },
+        {
+          "order": 24,
+          "sql": "ROLLBACK;",
+          "values": [],
+          "executed": true,
+          "outcome": "ok"
+        }
+      ],
+      "error": {
+        "entry": {
+          "order": 23,
+          "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+          "values": [
+            "tx-credit-card-payment-card-1791720000000-56",
+            100000,
+            "COP",
+            "Pago de tarjeta de credito - Visa",
+            "2026-10-11T12:00:00.000Z",
+            "bank",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "creditCardPayment",
+            "outflow",
+            "posted",
+            "card",
+            "Visa",
+            "debit",
+            null,
+            null,
+            "Pago de tarjeta de credito. No cuenta como gasto del mes.",
+            "2026-10-11T12:00:00.000Z",
+            "2026-10-11T12:00:00.000Z",
+            "tx-credit-card-payment-card-1791720000000-56"
+          ],
+          "write": 7,
+          "executed": false,
+          "outcome": "injected-before"
+        },
+        "phase": "before"
+      }
+    }
+  }
+}

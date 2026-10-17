@@ -18,6 +18,41 @@ jest.mock('react-native-sqlite-storage', () => ({
   openDatabase: jest.fn(),
 }));
 
+beforeEach(() => {
+  jest.useFakeTimers({ doNotFake: ['nextTick', 'queueMicrotask', 'setImmediate', 'setTimeout'] });
+  jest.setSystemTime(new Date('2026-10-03T12:00:00Z'));
+});
+afterEach(() => jest.useRealTimers());
+
+test.each([
+  ['2026-10-15', [2026, 9, 14, 23, 59, 59, 999], 'pending'],
+  ['2026-10-15', [2026, 9, 15, 0, 0, 0, 0], 'pending'],
+  ['2026-10-15', [2026, 9, 15, 23, 59, 59, 999], 'pending'],
+  ['2026-10-15', [2026, 9, 16, 0, 0, 0, 0], 'overdue'],
+  ['2026-10-31', [2026, 9, 30, 23, 59, 59, 999], 'pending'],
+  ['2026-10-31', [2026, 9, 31, 23, 59, 59, 999], 'pending'],
+  ['2026-10-31', [2026, 10, 1, 0, 0, 0, 0], 'overdue'],
+  ['2026-12-31', [2027, 0, 1, 0, 0, 0, 0], 'overdue'],
+  ['2027-02-28', [2027, 2, 1, 0, 0, 0, 0], 'overdue'],
+] as const)('transaction reconciliation uses the shared civil clock: due %s at %s → %s', async (due, parts, status) => {
+  for (const operation of ['delete', 'incompatible edit'] as const) {
+    const f = await fixture();
+    try {
+      const created = await f.api.createSubscription({ ...f.input, anchorDate: due });
+      const occurrence = (await f.api.getSubscriptionHistory(created.value.id)).find(item => item.expectedDate === due)!;
+      const transaction = { ...f.transaction, date: `${due}T12:00:00.000Z` };
+      await f.transactions.saveTransactions([transaction]);
+      await f.api.confirmSubscriptionPayment({ occurrenceId: occurrence.id, transactionId: transaction.id });
+      f.setNow(new Date(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6]).toISOString());
+      if (operation === 'delete') await f.transactions.deleteTransaction(transaction.id);
+      else await f.transactions.saveTransactions([{ ...transaction, status: 'pending' }]);
+      expect((await f.api.getSubscriptionHistory(created.value.id)).find(item => item.id === occurrence.id))
+        .toMatchObject({ status, transactionId: undefined, actualAmount: undefined, paidAt: undefined });
+      expect(f.query('PRAGMA foreign_key_check').rows.raw()).toEqual([]);
+    } finally { f.native.close(); }
+  }
+});
+
 async function fixture() {
   const sql = realSQLite();
   for (const statement of SQLITE_SCHEMA_STATEMENTS)
@@ -26,7 +61,6 @@ async function fixture() {
   sql.native
     .exec(`INSERT INTO accounts (id,name,type,status,currency,balance_amount,created_at,updated_at) VALUES ('bank','Banco','bankAccount','active','COP',1000000,'2026-01-01','2026-01-01');
     INSERT INTO categories VALUES ('entertainment','Entretenimiento','expense','entertainment','#000');`);
-  let now = new Date('2026-10-03T12:00:00Z');
   let count = 0;
   const service: SubscriptionReminderService = {
     getStatus: jest.fn(async () => ({
@@ -46,7 +80,7 @@ async function fixture() {
   const api = createSubscriptionApi({
     repository,
     reminderService: service,
-    clock: { now: () => now },
+    clock: { now: () => new Date() },
     createId: () => `test-${++count}`,
     categoryRepository: createSqliteCategoryRepository(sql.database),
     subcategoryRepository: createSqliteSubcategoryRepository(sql.database),
@@ -82,7 +116,7 @@ async function fixture() {
     repository,
     transaction,
     setNow: (date: string) => {
-      now = new Date(date);
+      jest.setSystemTime(new Date(date));
     },
     transactions: createSqliteTransactionRepository(sql.database),
   };

@@ -1,0 +1,68 @@
+[
+  {
+    "rows": 1000,
+    "readMs": 4.153200000000197,
+    "transferredRows": 1001,
+    "mapMs": 9.945099999999911,
+    "paymentMs": 35.54430000000002,
+    "readerMs": 35.25,
+    "plan": [
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 223,
+        "detail": "SCAN transactions USING INDEX idx_transactions_date"
+      },
+      {
+        "id": 42,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+      }
+    ]
+  },
+  {
+    "rows": 10000,
+    "readMs": 40.63799999999992,
+    "transferredRows": 10001,
+    "mapMs": 128.17059999999992,
+    "paymentMs": 351.58779999999933,
+    "readerMs": 351.4843000000001,
+    "plan": [
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 223,
+        "detail": "SCAN transactions USING INDEX idx_transactions_date"
+      },
+      {
+        "id": 42,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+      }
+    ]
+  },
+  {
+    "rows": 100000,
+    "readMs": 699.4342000000006,
+    "transferredRows": 100001,
+    "mapMs": 596.9764000000005,
+    "paymentMs": 2326.196100000001,
+    "readerMs": 2326.1521000000002,
+    "plan": [
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 223,
+        "detail": "SCAN transactions USING INDEX idx_transactions_date"
+      },
+      {
+        "id": 42,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+      }
+    ]
+  }
+]

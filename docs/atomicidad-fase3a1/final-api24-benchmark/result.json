@@ -1,0 +1,2354 @@
+{
+  "config": {
+    "release": true,
+    "model": "Android SDK built for x86_64",
+    "android": "7.0",
+    "api": 24,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "campaign": "phase3a1",
+  "cases": [
+    {
+      "name": "1000 noise",
+      "passed": true,
+      "rows": 1000,
+      "shape": "noise",
+      "warmups": 1,
+      "measuredSamples": 3,
+      "samples": {
+        "reference": [
+          {
+            "operationMs": 255.92139999987558,
+            "readerMs": 258.22469999990426,
+            "scopeMs": 255.60269999993034,
+            "sqliteBridgeReadMs": 144.24380000005476,
+            "transferredRows": 2005,
+            "mappingMs": 19.551899999845773,
+            "calculationMs": 2.6403000000864267,
+            "writeMs": 32.249399999855086,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 81.32279999996535,
+              "startMs": 1743807.5055,
+              "endMs": 1743888.8436,
+              "rows": 1003
+            }
+          },
+          {
+            "operationMs": 222.0226000000257,
+            "readerMs": 224.07039999985136,
+            "scopeMs": 221.79750000010245,
+            "sqliteBridgeReadMs": 141.63269999995828,
+            "transferredRows": 2007,
+            "mappingMs": 11.448599999770522,
+            "calculationMs": 1.7195999999530613,
+            "writeMs": 24.657800000393763,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 45.34750000014901,
+              "startMs": 1744077.5065,
+              "endMs": 1744122.8841,
+              "rows": 1004
+            }
+          },
+          {
+            "operationMs": 213.57890000008047,
+            "readerMs": 215.80449999985285,
+            "scopeMs": 213.12709999992512,
+            "sqliteBridgeReadMs": 97.67149999993853,
+            "transferredRows": 2009,
+            "mappingMs": 20.567999999970198,
+            "calculationMs": 2.3640000002924353,
+            "writeMs": 37.93510000011884,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 36.772899999981746,
+              "startMs": 1744445.8051,
+              "endMs": 1744482.5935,
+              "rows": 1005
+            }
+          }
+        ],
+        "optimized": [
+          {
+            "operationMs": 77.95339999999851,
+            "readerMs": 79.34939999994822,
+            "scopeMs": 77.44439999992028,
+            "sqliteBridgeReadMs": 3.9217000000644475,
+            "transferredRows": 5,
+            "mappingMs": 0.07539999997243285,
+            "calculationMs": 1.17989999987185,
+            "writeMs": 27.82399999978952,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 1.5744000000413507,
+              "startMs": 1743643.2137,
+              "endMs": 1743644.7959,
+              "rows": 3
+            }
+          },
+          {
+            "operationMs": 80.69100000010803,
+            "readerMs": 82.82810000004247,
+            "scopeMs": 80.2785000000149,
+            "sqliteBridgeReadMs": 4.330700000049546,
+            "transferredRows": 7,
+            "mappingMs": 0.1023999999742955,
+            "calculationMs": 0.9062000000849366,
+            "writeMs": 30.373000000137836,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 2.3146000001579523,
+              "startMs": 1744203.3712,
+              "endMs": 1744205.7099,
+              "rows": 4
+            }
+          },
+          {
+            "operationMs": 72.90200000000186,
+            "readerMs": 74.82839999999851,
+            "scopeMs": 72.50860000005923,
+            "sqliteBridgeReadMs": 5.708600000245497,
+            "transferredRows": 9,
+            "mappingMs": 0.10510000004433095,
+            "calculationMs": 1.2818999998271465,
+            "writeMs": 25.645299999509007,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 1.7735000001266599,
+              "startMs": 1744284.9578,
+              "endMs": 1744286.7539,
+              "rows": 5
+            }
+          }
+        ]
+      },
+      "distributions": {
+        "reference": {
+          "operationMs": {
+            "median": 222.0226000000257,
+            "min": 213.57890000008047,
+            "max": 255.92139999987558,
+            "stddev": 18.29788092573547
+          },
+          "readerMs": {
+            "median": 224.07039999985136,
+            "min": 215.80449999985285,
+            "max": 258.22469999990426,
+            "stddev": 18.361537938939254
+          },
+          "scopeMs": {
+            "median": 221.79750000010245,
+            "min": 213.12709999992512,
+            "max": 255.60269999993034,
+            "stddev": 18.32467667913007
+          },
+          "sqliteBridgeReadMs": {
+            "median": 141.63269999995828,
+            "min": 97.67149999993853,
+            "max": 144.24380000005476,
+            "stddev": 21.36555919114547
+          },
+          "transferredRows": {
+            "median": 2007,
+            "min": 2005,
+            "max": 2009,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 19.551899999845773,
+            "min": 11.448599999770522,
+            "max": 20.567999999970198,
+            "stddev": 4.080568948145375
+          },
+          "calculationMs": {
+            "median": 2.3640000002924353,
+            "min": 1.7195999999530613,
+            "max": 2.6403000000864267,
+            "stddev": 0.38575777382087323
+          },
+          "writeMs": {
+            "median": 32.249399999855086,
+            "min": 24.657800000393763,
+            "max": 37.93510000011884,
+            "stddev": 5.439018194976
+          }
+        },
+        "optimized": {
+          "operationMs": {
+            "median": 77.95339999999851,
+            "min": 72.90200000000186,
+            "max": 80.69100000010803,
+            "stddev": 3.2262743687524247
+          },
+          "readerMs": {
+            "median": 79.34939999994822,
+            "min": 74.82839999999851,
+            "max": 82.82810000004247,
+            "stddev": 3.275091089164193
+          },
+          "scopeMs": {
+            "median": 77.44439999992028,
+            "min": 72.50860000005923,
+            "max": 80.2785000000149,
+            "stddev": 3.2104965081307175
+          },
+          "sqliteBridgeReadMs": {
+            "median": 4.330700000049546,
+            "min": 3.9217000000644475,
+            "max": 5.708600000245497,
+            "stddev": 0.764409795650274
+          },
+          "transferredRows": {
+            "median": 7,
+            "min": 5,
+            "max": 9,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 0.1023999999742955,
+            "min": 0.07539999997243285,
+            "max": 0.10510000004433095,
+            "stddev": 0.013409698002853182
+          },
+          "calculationMs": {
+            "median": 1.17989999987185,
+            "min": 0.9062000000849366,
+            "max": 1.2818999998271465,
+            "stddev": 0.15862820951329118
+          },
+          "writeMs": {
+            "median": 27.82399999978952,
+            "min": 25.645299999509007,
+            "max": 30.373000000137836,
+            "stddev": 1.9320479056903974
+          }
+        }
+      },
+      "diagnostic": {
+        "reference": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              9.5857,
+              11.9588,
+              11.5247
+            ],
+            "columns": 23,
+            "rows": 1005,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        },
+        "optimized": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              0.4189,
+              0.6727,
+              0.5823
+            ],
+            "columns": 9,
+            "rows": 5,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        }
+      },
+      "comparison": {
+        "tableRows": {
+          "transaction_tax_tags": 0,
+          "tax_tags": 0,
+          "subscription_occurrences": 0,
+          "subcategories": 0,
+          "smart_alerts": 0,
+          "shared_returns": 0,
+          "subscription_reminders": 0,
+          "shared_receipts": 0,
+          "shared_loss_events": 0,
+          "shared_expenses": 0,
+          "shared_commands": 0,
+          "shared_allocations": 0,
+          "transactions": 1005,
+          "schema_migrations": 4,
+          "recurring_subscriptions": 0,
+          "merchant_mappings": 0,
+          "cash_flow_events": 0,
+          "loans": 0,
+          "investment_assets": 0,
+          "amortization_schedule_items": 0,
+          "credit_card_profiles": 1,
+          "installment_purchases": 1,
+          "envelopes": 0,
+          "raw_financial_messages": 0,
+          "financial_data_revision": 1,
+          "ai_command_drafts": 0,
+          "financial_goals": 0,
+          "receipt_attachments": 0,
+          "envelope_movements": 0,
+          "backup_records": 0,
+          "app_settings": 0,
+          "financial_health_scores": 0,
+          "transaction_splits": 1,
+          "account_balance_history": 0,
+          "android_metadata": 1,
+          "shared_contacts": 0,
+          "categories": 0,
+          "budgets": 0,
+          "accounts": 4,
+          "credit_card_statements": 2
+        },
+        "equal": true
+      },
+      "cycles": [
+        {
+          "date": "2026-09-30T23:59:59.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-10-16T05:00:00.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-11-01T05:00:00.000Z",
+          "equal": true
+        }
+      ]
+    },
+    {
+      "name": "1000 mixed",
+      "passed": true,
+      "rows": 1000,
+      "shape": "mixed",
+      "warmups": 1,
+      "measuredSamples": 3,
+      "samples": {
+        "reference": [
+          {
+            "operationMs": 200.689500000095,
+            "readerMs": 203.03689999994822,
+            "scopeMs": 200.3242999999784,
+            "sqliteBridgeReadMs": 104.65849999990314,
+            "transferredRows": 2005,
+            "mappingMs": 18.723800000036135,
+            "calculationMs": 2.321799999801442,
+            "writeMs": 29.08890000008978,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 48.68279999983497,
+              "startMs": 1750586.0804,
+              "endMs": 1750634.7953,
+              "rows": 1003
+            }
+          },
+          {
+            "operationMs": 230.64110000012442,
+            "readerMs": 232.7608000000473,
+            "scopeMs": 230.20249999989755,
+            "sqliteBridgeReadMs": 132.1710000000894,
+            "transferredRows": 2007,
+            "mappingMs": 15.126699999906123,
+            "calculationMs": 2.973299999954179,
+            "writeMs": 33.35000000009313,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 61.95280000008643,
+              "startMs": 1750809.105,
+              "endMs": 1750871.0877,
+              "rows": 1004
+            }
+          },
+          {
+            "operationMs": 270.04220000002533,
+            "readerMs": 272.6768999998458,
+            "scopeMs": 269.73790000006557,
+            "sqliteBridgeReadMs": 187.6144000000786,
+            "transferredRows": 2009,
+            "mappingMs": 15.841299999970943,
+            "calculationMs": 1.8568000001832843,
+            "writeMs": 24.25969999935478,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 90.63330000010319,
+              "startMs": 1751183.1738,
+              "endMs": 1751273.8347,
+              "rows": 1005
+            }
+          }
+        ],
+        "optimized": [
+          {
+            "operationMs": 103.75869999988936,
+            "readerMs": 106.15460000000894,
+            "scopeMs": 103.39660000009462,
+            "sqliteBridgeReadMs": 8.699699999997392,
+            "transferredRows": 115,
+            "mappingMs": 0.4649999998509884,
+            "calculationMs": 1.6247000000439584,
+            "writeMs": 27.85700000054203,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 4.872599999886006,
+              "startMs": 1750436.7916,
+              "endMs": 1750441.6906,
+              "rows": 58
+            }
+          },
+          {
+            "operationMs": 57.653699999907985,
+            "readerMs": 58.96359999990091,
+            "scopeMs": 57.333300000056624,
+            "sqliteBridgeReadMs": 5.94289999990724,
+            "transferredRows": 117,
+            "mappingMs": 0.256800000090152,
+            "calculationMs": 0.8500000000931323,
+            "writeMs": 19.383200000273064,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 3.7693999998737127,
+              "startMs": 1750942.593,
+              "endMs": 1750946.3697,
+              "rows": 59
+            }
+          },
+          {
+            "operationMs": 66.71450000000186,
+            "readerMs": 69.35960000008345,
+            "scopeMs": 66.45690000010654,
+            "sqliteBridgeReadMs": 6.673600000096485,
+            "transferredRows": 119,
+            "mappingMs": 0.2772999999579042,
+            "calculationMs": 1.0823000001255423,
+            "writeMs": 21.30530000082217,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 4.255600000033155,
+              "startMs": 1750999.5901,
+              "endMs": 1751003.8561,
+              "rows": 60
+            }
+          }
+        ]
+      },
+      "distributions": {
+        "reference": {
+          "operationMs": {
+            "median": 230.64110000012442,
+            "min": 200.689500000095,
+            "max": 270.04220000002533,
+            "stddev": 28.400590801844427
+          },
+          "readerMs": {
+            "median": 232.7608000000473,
+            "min": 203.03689999994822,
+            "max": 272.6768999998458,
+            "stddev": 28.53172672734597
+          },
+          "scopeMs": {
+            "median": 230.20249999989755,
+            "min": 200.3242999999784,
+            "max": 269.73790000006557,
+            "stddev": 28.42925440336367
+          },
+          "sqliteBridgeReadMs": {
+            "median": 132.1710000000894,
+            "min": 104.65849999990314,
+            "max": 187.6144000000786,
+            "stddev": 34.500546863070255
+          },
+          "transferredRows": {
+            "median": 2007,
+            "min": 2005,
+            "max": 2009,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 15.841299999970943,
+            "min": 15.126699999906123,
+            "max": 18.723800000036135,
+            "stddev": 1.554870048925269
+          },
+          "calculationMs": {
+            "median": 2.321799999801442,
+            "min": 1.8568000001832843,
+            "max": 2.973299999954179,
+            "stddev": 0.45792399895037295
+          },
+          "writeMs": {
+            "median": 29.08890000008978,
+            "min": 24.25969999935478,
+            "max": 33.35000000009313,
+            "stddev": 3.7135143576544425
+          }
+        },
+        "optimized": {
+          "operationMs": {
+            "median": 66.71450000000186,
+            "min": 57.653699999907985,
+            "max": 103.75869999988936,
+            "stddev": 19.94448371319094
+          },
+          "readerMs": {
+            "median": 69.35960000008345,
+            "min": 58.96359999990091,
+            "max": 106.15460000000894,
+            "stddev": 20.245546347032334
+          },
+          "scopeMs": {
+            "median": 66.45690000010654,
+            "min": 57.333300000056624,
+            "max": 103.39660000009462,
+            "stddev": 19.915401968056813
+          },
+          "sqliteBridgeReadMs": {
+            "median": 6.673600000096485,
+            "min": 5.94289999990724,
+            "max": 8.699699999997392,
+            "stddev": 1.1661403546348994
+          },
+          "transferredRows": {
+            "median": 117,
+            "min": 115,
+            "max": 119,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 0.2772999999579042,
+            "min": 0.256800000090152,
+            "max": 0.4649999998509884,
+            "stddev": 0.09368907196730512
+          },
+          "calculationMs": {
+            "median": 1.0823000001255423,
+            "min": 0.8500000000931323,
+            "max": 1.6247000000439584,
+            "stddev": 0.3246059388534497
+          },
+          "writeMs": {
+            "median": 21.30530000082217,
+            "min": 19.383200000273064,
+            "max": 27.85700000054203,
+            "stddev": 3.627434473609848
+          }
+        }
+      },
+      "diagnostic": {
+        "reference": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              10.5722,
+              10.5987,
+              8.6723
+            ],
+            "columns": 23,
+            "rows": 1005,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        },
+        "optimized": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              1.0166,
+              1.7818,
+              1.3967
+            ],
+            "columns": 9,
+            "rows": 60,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        }
+      },
+      "comparison": {
+        "tableRows": {
+          "transaction_tax_tags": 0,
+          "tax_tags": 0,
+          "subscription_occurrences": 0,
+          "subcategories": 0,
+          "smart_alerts": 0,
+          "shared_returns": 0,
+          "subscription_reminders": 0,
+          "shared_receipts": 0,
+          "shared_loss_events": 0,
+          "shared_expenses": 0,
+          "shared_commands": 0,
+          "shared_allocations": 0,
+          "transactions": 1005,
+          "schema_migrations": 4,
+          "recurring_subscriptions": 0,
+          "merchant_mappings": 0,
+          "cash_flow_events": 0,
+          "loans": 0,
+          "investment_assets": 0,
+          "amortization_schedule_items": 0,
+          "credit_card_profiles": 1,
+          "installment_purchases": 1,
+          "envelopes": 0,
+          "raw_financial_messages": 0,
+          "financial_data_revision": 1,
+          "ai_command_drafts": 0,
+          "financial_goals": 0,
+          "receipt_attachments": 0,
+          "envelope_movements": 0,
+          "backup_records": 0,
+          "app_settings": 0,
+          "financial_health_scores": 0,
+          "transaction_splits": 1,
+          "account_balance_history": 0,
+          "android_metadata": 1,
+          "shared_contacts": 0,
+          "categories": 0,
+          "budgets": 0,
+          "accounts": 4,
+          "credit_card_statements": 2
+        },
+        "equal": true
+      },
+      "cycles": [
+        {
+          "date": "2026-09-30T23:59:59.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-10-16T05:00:00.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-11-01T05:00:00.000Z",
+          "equal": true
+        }
+      ]
+    },
+    {
+      "name": "10000 noise",
+      "passed": true,
+      "rows": 10000,
+      "shape": "noise",
+      "warmups": 1,
+      "measuredSamples": 3,
+      "samples": {
+        "reference": [
+          {
+            "operationMs": 1770.6200999999419,
+            "readerMs": 1773.405299999984,
+            "scopeMs": 1770.2181000001729,
+            "sqliteBridgeReadMs": 1501.689700000221,
+            "transferredRows": 20005,
+            "mappingMs": 173.4916999998968,
+            "calculationMs": 10.61019999999553,
+            "writeMs": 34.52379999984987,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 712.4455000001471,
+              "startMs": 1759953.6856,
+              "endMs": 1760666.1639,
+              "rows": 10003
+            }
+          },
+          {
+            "operationMs": 1447.785000000149,
+            "readerMs": 1449.46809999994,
+            "scopeMs": 1447.346300000092,
+            "sqliteBridgeReadMs": 1207.1385999999475,
+            "transferredRows": 20007,
+            "mappingMs": 142.7829999998212,
+            "calculationMs": 11.658300000010058,
+            "writeMs": 33.09849999961443,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 621.5171999998856,
+              "startMs": 1761504.9179,
+              "endMs": 1762126.4486,
+              "rows": 10004
+            }
+          },
+          {
+            "operationMs": 1473.036800000118,
+            "readerMs": 1475.1113999998197,
+            "scopeMs": 1472.5909000001848,
+            "sqliteBridgeReadMs": 1246.9580999999307,
+            "transferredRows": 20009,
+            "mappingMs": 150.28189999982715,
+            "calculationMs": 8.99240000010468,
+            "writeMs": 28.264899999834597,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 617.8747999998741,
+              "startMs": 1763180.5988,
+              "endMs": 1763798.5138,
+              "rows": 10005
+            }
+          }
+        ],
+        "optimized": [
+          {
+            "operationMs": 114.50520000001416,
+            "readerMs": 116.90560000017285,
+            "scopeMs": 114.03080000006594,
+            "sqliteBridgeReadMs": 15.578500000061467,
+            "transferredRows": 5,
+            "mappingMs": 0.1126999999396503,
+            "calculationMs": 1.2911000000312924,
+            "writeMs": 38.65460000024177,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 7.164199999999255,
+              "startMs": 1758975.7734,
+              "endMs": 1758982.9644,
+              "rows": 3
+            }
+          },
+          {
+            "operationMs": 103.23240000009537,
+            "readerMs": 104.96649999986403,
+            "scopeMs": 102.8179999999702,
+            "sqliteBridgeReadMs": 16.668100000359118,
+            "transferredRows": 7,
+            "mappingMs": 0.09509999980218709,
+            "calculationMs": 1.0460999999195337,
+            "writeMs": 30.508399999700487,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 8.003200000151992,
+              "startMs": 1762303.2795,
+              "endMs": 1762311.3051,
+              "rows": 4
+            }
+          },
+          {
+            "operationMs": 71.01670000003651,
+            "readerMs": 72.83599999989383,
+            "scopeMs": 70.67540000006557,
+            "sqliteBridgeReadMs": 15.16980000003241,
+            "transferredRows": 9,
+            "mappingMs": 0.11640000017359853,
+            "calculationMs": 0.9014000000897795,
+            "writeMs": 20.98449999978766,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 6.8135999999940395,
+              "startMs": 1762386.4541,
+              "endMs": 1762393.2907,
+              "rows": 5
+            }
+          }
+        ]
+      },
+      "distributions": {
+        "reference": {
+          "operationMs": {
+            "median": 1473.036800000118,
+            "min": 1447.785000000149,
+            "max": 1770.6200999999419,
+            "stddev": 146.59694389489232
+          },
+          "readerMs": {
+            "median": 1475.1113999998197,
+            "min": 1449.46809999994,
+            "max": 1773.405299999984,
+            "stddev": 147.03444009107386
+          },
+          "scopeMs": {
+            "median": 1472.5909000001848,
+            "min": 1447.346300000092,
+            "max": 1770.2181000001729,
+            "stddev": 146.61568782375303
+          },
+          "sqliteBridgeReadMs": {
+            "median": 1246.9580999999307,
+            "min": 1207.1385999999475,
+            "max": 1501.689700000221,
+            "stddev": 130.4837712899056
+          },
+          "transferredRows": {
+            "median": 20007,
+            "min": 20005,
+            "max": 20009,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 150.28189999982715,
+            "min": 142.7829999998212,
+            "max": 173.4916999998968,
+            "stddev": 13.072246142742296
+          },
+          "calculationMs": {
+            "median": 10.61019999999553,
+            "min": 8.99240000010468,
+            "max": 11.658300000010058,
+            "stddev": 1.0966014802902433
+          },
+          "writeMs": {
+            "median": 33.09849999961443,
+            "min": 28.264899999834597,
+            "max": 34.52379999984987,
+            "stddev": 2.6784945659566546
+          }
+        },
+        "optimized": {
+          "operationMs": {
+            "median": 103.23240000009537,
+            "min": 71.01670000003651,
+            "max": 114.50520000001416,
+            "stddev": 18.42756684541462
+          },
+          "readerMs": {
+            "median": 104.96649999986403,
+            "min": 72.83599999989383,
+            "max": 116.90560000017285,
+            "stddev": 18.610154883975614
+          },
+          "scopeMs": {
+            "median": 102.8179999999702,
+            "min": 70.67540000006557,
+            "max": 114.03080000006594,
+            "stddev": 18.37439138147332
+          },
+          "sqliteBridgeReadMs": {
+            "median": 15.578500000061467,
+            "min": 15.16980000003241,
+            "max": 16.668100000359118,
+            "stddev": 0.6323823335127611
+          },
+          "transferredRows": {
+            "median": 7,
+            "min": 5,
+            "max": 9,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 0.1126999999396503,
+            "min": 0.09509999980218709,
+            "max": 0.11640000017359853,
+            "stddev": 0.009292410418018267
+          },
+          "calculationMs": {
+            "median": 1.0460999999195337,
+            "min": 0.9014000000897795,
+            "max": 1.2911000000312924,
+            "stddev": 0.1608412536771403
+          },
+          "writeMs": {
+            "median": 30.508399999700487,
+            "min": 20.98449999978766,
+            "max": 38.65460000024177,
+            "stddev": 7.221093174268521
+          }
+        }
+      },
+      "diagnostic": {
+        "reference": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              149.7774,
+              163.3711,
+              284.2375
+            ],
+            "columns": 23,
+            "rows": 10005,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        },
+        "optimized": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              8.8456,
+              6.6571,
+              6.5623
+            ],
+            "columns": 9,
+            "rows": 5,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        }
+      },
+      "comparison": {
+        "tableRows": {
+          "transaction_tax_tags": 0,
+          "tax_tags": 0,
+          "subscription_occurrences": 0,
+          "subcategories": 0,
+          "smart_alerts": 0,
+          "shared_returns": 0,
+          "subscription_reminders": 0,
+          "shared_receipts": 0,
+          "shared_loss_events": 0,
+          "shared_expenses": 0,
+          "shared_commands": 0,
+          "shared_allocations": 0,
+          "transactions": 10005,
+          "schema_migrations": 4,
+          "recurring_subscriptions": 0,
+          "merchant_mappings": 0,
+          "cash_flow_events": 0,
+          "loans": 0,
+          "investment_assets": 0,
+          "amortization_schedule_items": 0,
+          "credit_card_profiles": 1,
+          "installment_purchases": 1,
+          "envelopes": 0,
+          "raw_financial_messages": 0,
+          "financial_data_revision": 1,
+          "ai_command_drafts": 0,
+          "financial_goals": 0,
+          "receipt_attachments": 0,
+          "envelope_movements": 0,
+          "backup_records": 0,
+          "app_settings": 0,
+          "financial_health_scores": 0,
+          "transaction_splits": 1,
+          "account_balance_history": 0,
+          "android_metadata": 1,
+          "shared_contacts": 0,
+          "categories": 0,
+          "budgets": 0,
+          "accounts": 4,
+          "credit_card_statements": 2
+        },
+        "equal": true
+      },
+      "cycles": [
+        {
+          "date": "2026-09-30T23:59:59.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-10-16T05:00:00.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-11-01T05:00:00.000Z",
+          "equal": true
+        }
+      ]
+    },
+    {
+      "name": "10000 mixed",
+      "passed": true,
+      "rows": 10000,
+      "shape": "mixed",
+      "warmups": 1,
+      "measuredSamples": 3,
+      "samples": {
+        "reference": [
+          {
+            "operationMs": 1457.090799999889,
+            "readerMs": 1457.9490999998525,
+            "scopeMs": 1456.7539999999572,
+            "sqliteBridgeReadMs": 1190.5174999998417,
+            "transferredRows": 20005,
+            "mappingMs": 169.15150000015274,
+            "calculationMs": 11.947700000135228,
+            "writeMs": 30.75690000038594,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 596.6492999999318,
+              "startMs": 1778506.4317,
+              "endMs": 1779103.1012,
+              "rows": 10003
+            }
+          },
+          {
+            "operationMs": 1348.34300000011,
+            "readerMs": 1350.3371999999508,
+            "scopeMs": 1347.9750000000931,
+            "sqliteBridgeReadMs": 1100.0186999998987,
+            "transferredRows": 20007,
+            "mappingMs": 163.77639999985695,
+            "calculationMs": 12.434700000099838,
+            "writeMs": 31.5679000003729,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 528.7907000000123,
+              "startMs": 1779916.5695,
+              "endMs": 1780445.3787,
+              "rows": 10004
+            }
+          },
+          {
+            "operationMs": 2145.2638000000734,
+            "readerMs": 2147.4805000000633,
+            "scopeMs": 2144.960199999856,
+            "sqliteBridgeReadMs": 1888.9851000001654,
+            "transferredRows": 20009,
+            "mappingMs": 168.30870000016876,
+            "calculationMs": 11.205300000030547,
+            "writeMs": 31.41220000013709,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 698.657300000079,
+              "startMs": 1782201.7495,
+              "endMs": 1782900.4346,
+              "rows": 10005
+            }
+          }
+        ],
+        "optimized": [
+          {
+            "operationMs": 143.40730000007898,
+            "readerMs": 145.21849999995902,
+            "scopeMs": 143.025899999775,
+            "sqliteBridgeReadMs": 37.09640000015497,
+            "transferredRows": 1049,
+            "mappingMs": 4.2832000001799315,
+            "calculationMs": 2.5643000002019107,
+            "writeMs": 34.08720000041649,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 19.07440000004135,
+              "startMs": 1777698.2931,
+              "endMs": 1777717.3868,
+              "rows": 525
+            }
+          },
+          {
+            "operationMs": 130.46739999996498,
+            "readerMs": 133.35550000006333,
+            "scopeMs": 130.06520000007004,
+            "sqliteBridgeReadMs": 44.925400000298396,
+            "transferredRows": 1051,
+            "mappingMs": 4.200699999928474,
+            "calculationMs": 3.2058000003453344,
+            "writeMs": 33.493299999972805,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 23.74200000008568,
+              "startMs": 1780659.6982,
+              "endMs": 1780683.4731,
+              "rows": 526
+            }
+          },
+          {
+            "operationMs": 160.00009999983013,
+            "readerMs": 161.75179999996908,
+            "scopeMs": 159.63610000000335,
+            "sqliteBridgeReadMs": 45.30560000007972,
+            "transferredRows": 1053,
+            "mappingMs": 3.1721999999135733,
+            "calculationMs": 2.8371000001206994,
+            "writeMs": 28.024700000416487,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 26.35869999998249,
+              "startMs": 1780814.9338,
+              "endMs": 1780841.3238,
+              "rows": 527
+            }
+          }
+        ]
+      },
+      "distributions": {
+        "reference": {
+          "operationMs": {
+            "median": 1457.090799999889,
+            "min": 1348.34300000011,
+            "max": 2145.2638000000734,
+            "stddev": 352.8441461745189
+          },
+          "readerMs": {
+            "median": 1457.9490999998525,
+            "min": 1350.3371999999508,
+            "max": 2147.4805000000633,
+            "stddev": 353.1558222879509
+          },
+          "scopeMs": {
+            "median": 1456.7539999999572,
+            "min": 1347.9750000000931,
+            "max": 2144.960199999856,
+            "stddev": 352.8685706822384
+          },
+          "sqliteBridgeReadMs": {
+            "median": 1190.5174999998417,
+            "min": 1100.0186999998987,
+            "max": 1888.9851000001654,
+            "stddev": 352.53289860365004
+          },
+          "transferredRows": {
+            "median": 20007,
+            "min": 20005,
+            "max": 20009,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 168.30870000016876,
+            "min": 163.77639999985695,
+            "max": 169.15150000015274,
+            "stddev": 2.360408513277573
+          },
+          "calculationMs": {
+            "median": 11.947700000135228,
+            "min": 11.205300000030547,
+            "max": 12.434700000099838,
+            "stddev": 0.5054976777934715
+          },
+          "writeMs": {
+            "median": 31.41220000013709,
+            "min": 30.75690000038594,
+            "max": 31.5679000003729,
+            "stddev": 0.351406946703951
+          }
+        },
+        "optimized": {
+          "operationMs": {
+            "median": 143.40730000007898,
+            "min": 130.46739999996498,
+            "max": 160.00009999983013,
+            "stddev": 12.087378141988198
+          },
+          "readerMs": {
+            "median": 145.21849999995902,
+            "min": 133.35550000006333,
+            "max": 161.75179999996908,
+            "stddev": 11.644887440763698
+          },
+          "scopeMs": {
+            "median": 143.025899999775,
+            "min": 130.06520000007004,
+            "max": 159.63610000000335,
+            "stddev": 12.102876679790702
+          },
+          "sqliteBridgeReadMs": {
+            "median": 44.925400000298396,
+            "min": 37.09640000015497,
+            "max": 45.30560000007972,
+            "stddev": 3.783425221804002
+          },
+          "transferredRows": {
+            "median": 1051,
+            "min": 1049,
+            "max": 1053,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 4.200699999928474,
+            "min": 3.1721999999135733,
+            "max": 4.2832000001799315,
+            "stddev": 0.5054084707402507
+          },
+          "calculationMs": {
+            "median": 2.8371000001206994,
+            "min": 2.5643000002019107,
+            "max": 3.2058000003453344,
+            "stddev": 0.2628649379234197
+          },
+          "writeMs": {
+            "median": 33.493299999972805,
+            "min": 28.024700000416487,
+            "max": 34.08720000041649,
+            "stddev": 2.7286995155542577
+          }
+        }
+      },
+      "diagnostic": {
+        "reference": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              195.8167,
+              192.6507,
+              180.5052
+            ],
+            "columns": 23,
+            "rows": 10005,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        },
+        "optimized": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              9.6426,
+              10.7363,
+              9.9237
+            ],
+            "columns": 9,
+            "rows": 527,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        }
+      },
+      "comparison": {
+        "tableRows": {
+          "transaction_tax_tags": 0,
+          "tax_tags": 0,
+          "subscription_occurrences": 0,
+          "subcategories": 0,
+          "smart_alerts": 0,
+          "shared_returns": 0,
+          "subscription_reminders": 0,
+          "shared_receipts": 0,
+          "shared_loss_events": 0,
+          "shared_expenses": 0,
+          "shared_commands": 0,
+          "shared_allocations": 0,
+          "transactions": 10005,
+          "schema_migrations": 4,
+          "recurring_subscriptions": 0,
+          "merchant_mappings": 0,
+          "cash_flow_events": 0,
+          "loans": 0,
+          "investment_assets": 0,
+          "amortization_schedule_items": 0,
+          "credit_card_profiles": 1,
+          "installment_purchases": 1,
+          "envelopes": 0,
+          "raw_financial_messages": 0,
+          "financial_data_revision": 1,
+          "ai_command_drafts": 0,
+          "financial_goals": 0,
+          "receipt_attachments": 0,
+          "envelope_movements": 0,
+          "backup_records": 0,
+          "app_settings": 0,
+          "financial_health_scores": 0,
+          "transaction_splits": 1,
+          "account_balance_history": 0,
+          "android_metadata": 1,
+          "shared_contacts": 0,
+          "categories": 0,
+          "budgets": 0,
+          "accounts": 4,
+          "credit_card_statements": 2
+        },
+        "equal": true
+      },
+      "cycles": [
+        {
+          "date": "2026-09-30T23:59:59.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-10-16T05:00:00.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-11-01T05:00:00.000Z",
+          "equal": true
+        }
+      ]
+    },
+    {
+      "name": "100000 noise",
+      "passed": true,
+      "rows": 100000,
+      "shape": "noise",
+      "warmups": 1,
+      "measuredSamples": 3,
+      "samples": {
+        "reference": [
+          {
+            "operationMs": 15021.028200000059,
+            "readerMs": 15023.56110000005,
+            "scopeMs": 15020.703300000168,
+            "sqliteBridgeReadMs": 13623.557600000175,
+            "transferredRows": 200005,
+            "mappingMs": 1266.4137999999803,
+            "calculationMs": 79.3196000000462,
+            "writeMs": 19.0871000001207,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 7225.895500000101,
+              "startMs": 1837145.3153,
+              "endMs": 1844371.2267,
+              "rows": 100003
+            }
+          },
+          {
+            "operationMs": 24726.46070000017,
+            "readerMs": 24728.746999999974,
+            "scopeMs": 24726.014800000004,
+            "sqliteBridgeReadMs": 22951.762900000205,
+            "transferredRows": 200007,
+            "mappingMs": 1608.5592000002507,
+            "calculationMs": 86.73820000025444,
+            "writeMs": 32.908500000368804,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 11613.926200000104,
+              "startMs": 1857509.1175,
+              "endMs": 1869123.0636,
+              "rows": 100004
+            }
+          },
+          {
+            "operationMs": 25294.79700000002,
+            "readerMs": 25297.662799999816,
+            "scopeMs": 25294.370099999942,
+            "sqliteBridgeReadMs": 23262.67379999999,
+            "transferredRows": 200009,
+            "mappingMs": 1851.4217000000644,
+            "calculationMs": 85.4073000003118,
+            "writeMs": 34.81559999962337,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 11051.202300000004,
+              "startMs": 1883681.2205,
+              "endMs": 1894732.4436,
+              "rows": 100005
+            }
+          }
+        ],
+        "optimized": [
+          {
+            "operationMs": 140.6648999999743,
+            "readerMs": 141.95650000008754,
+            "scopeMs": 140.43479999992996,
+            "sqliteBridgeReadMs": 97.96809999994002,
+            "transferredRows": 5,
+            "mappingMs": 0.05020000017248094,
+            "calculationMs": 0.47669999999925494,
+            "writeMs": 13.4757999998983,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 50.06319999997504,
+              "startMs": 1830182.6382,
+              "endMs": 1830232.7089,
+              "rows": 3
+            }
+          },
+          {
+            "operationMs": 257.19329999992624,
+            "readerMs": 258.82480000006035,
+            "scopeMs": 256.8167000000831,
+            "sqliteBridgeReadMs": 162.65989999985322,
+            "transferredRows": 7,
+            "mappingMs": 0.1134000001475215,
+            "calculationMs": 0.9836999999824911,
+            "writeMs": 38.53519999911077,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 80.7245999998413,
+              "startMs": 1870143.7065,
+              "endMs": 1870224.446,
+              "rows": 4
+            }
+          },
+          {
+            "operationMs": 233.89100000006147,
+            "readerMs": 236.28860000008717,
+            "scopeMs": 233.11049999995157,
+            "sqliteBridgeReadMs": 155.09269999992102,
+            "transferredRows": 9,
+            "mappingMs": 0.11159999994561076,
+            "calculationMs": 0.7600000000093132,
+            "writeMs": 27.71820000046864,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 77.19659999990836,
+              "startMs": 1870389.168,
+              "endMs": 1870466.3892,
+              "rows": 5
+            }
+          }
+        ]
+      },
+      "distributions": {
+        "reference": {
+          "operationMs": {
+            "median": 24726.46070000017,
+            "min": 15021.028200000059,
+            "max": 25294.79700000002,
+            "stddev": 4714.8553826980215
+          },
+          "readerMs": {
+            "median": 24728.746999999974,
+            "min": 15023.56110000005,
+            "max": 25297.662799999816,
+            "stddev": 4714.887347340276
+          },
+          "scopeMs": {
+            "median": 24726.014800000004,
+            "min": 15020.703300000168,
+            "max": 25294.370099999942,
+            "stddev": 4714.803266503453
+          },
+          "sqliteBridgeReadMs": {
+            "median": 22951.762900000205,
+            "min": 13623.557600000175,
+            "max": 23262.67379999999,
+            "stddev": 4472.442047618904
+          },
+          "transferredRows": {
+            "median": 200007,
+            "min": 200005,
+            "max": 200009,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 1608.5592000002507,
+            "min": 1266.4137999999803,
+            "max": 1851.4217000000644,
+            "stddev": 239.97220017466216
+          },
+          "calculationMs": {
+            "median": 85.4073000003118,
+            "min": 79.3196000000462,
+            "max": 86.73820000025444,
+            "stddev": 3.2294996527871516
+          },
+          "writeMs": {
+            "median": 32.908500000368804,
+            "min": 19.0871000001207,
+            "max": 34.81559999962337,
+            "stddev": 7.008358823642671
+          }
+        },
+        "optimized": {
+          "operationMs": {
+            "median": 233.89100000006147,
+            "min": 140.6648999999743,
+            "max": 257.19329999992624,
+            "stddev": 50.346544527856295
+          },
+          "readerMs": {
+            "median": 236.28860000008717,
+            "min": 141.95650000008754,
+            "max": 258.82480000006035,
+            "stddev": 50.62347385434324
+          },
+          "scopeMs": {
+            "median": 233.11049999995157,
+            "min": 140.43479999992996,
+            "max": 256.8167000000831,
+            "stddev": 50.21677003705023
+          },
+          "sqliteBridgeReadMs": {
+            "median": 155.09269999992102,
+            "min": 97.96809999994002,
+            "max": 162.65989999985322,
+            "stddev": 28.878118260151332
+          },
+          "transferredRows": {
+            "median": 7,
+            "min": 5,
+            "max": 9,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 0.11159999994561076,
+            "min": 0.05020000017248094,
+            "max": 0.1134000001475215,
+            "stddev": 0.029377693672642074
+          },
+          "calculationMs": {
+            "median": 0.7600000000093132,
+            "min": 0.47669999999925494,
+            "max": 0.9836999999824911,
+            "stddev": 0.2074580493006559
+          },
+          "writeMs": {
+            "median": 27.71820000046864,
+            "min": 13.4757999998983,
+            "max": 38.53519999911077,
+            "stddev": 10.26226623805981
+          }
+        }
+      },
+      "diagnostic": {
+        "reference": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              7256.9928,
+              6028.0345,
+              6546.9755
+            ],
+            "columns": 23,
+            "rows": 100005,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        },
+        "optimized": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              94.4151,
+              96.5903,
+              104.5517
+            ],
+            "columns": 9,
+            "rows": 5,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        }
+      },
+      "comparison": {
+        "tableRows": {
+          "transaction_tax_tags": 0,
+          "tax_tags": 0,
+          "subscription_occurrences": 0,
+          "subcategories": 0,
+          "smart_alerts": 0,
+          "shared_returns": 0,
+          "subscription_reminders": 0,
+          "shared_receipts": 0,
+          "shared_loss_events": 0,
+          "shared_expenses": 0,
+          "shared_commands": 0,
+          "shared_allocations": 0,
+          "transactions": 100005,
+          "schema_migrations": 4,
+          "recurring_subscriptions": 0,
+          "merchant_mappings": 0,
+          "cash_flow_events": 0,
+          "loans": 0,
+          "investment_assets": 0,
+          "amortization_schedule_items": 0,
+          "credit_card_profiles": 1,
+          "installment_purchases": 1,
+          "envelopes": 0,
+          "raw_financial_messages": 0,
+          "financial_data_revision": 1,
+          "ai_command_drafts": 0,
+          "financial_goals": 0,
+          "receipt_attachments": 0,
+          "envelope_movements": 0,
+          "backup_records": 0,
+          "app_settings": 0,
+          "financial_health_scores": 0,
+          "transaction_splits": 1,
+          "account_balance_history": 0,
+          "android_metadata": 1,
+          "shared_contacts": 0,
+          "categories": 0,
+          "budgets": 0,
+          "accounts": 4,
+          "credit_card_statements": 2
+        },
+        "equal": true
+      },
+      "cycles": [
+        {
+          "date": "2026-09-30T23:59:59.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-10-16T05:00:00.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-11-01T05:00:00.000Z",
+          "equal": true
+        }
+      ]
+    },
+    {
+      "name": "100000 mixed",
+      "passed": true,
+      "rows": 100000,
+      "shape": "mixed",
+      "warmups": 1,
+      "measuredSamples": 3,
+      "samples": {
+        "reference": [
+          {
+            "operationMs": 25487.465900000185,
+            "readerMs": 25490.145899999887,
+            "scopeMs": 25487.0392,
+            "sqliteBridgeReadMs": 23539.822399999946,
+            "transferredRows": 200005,
+            "mappingMs": 1733.24729999993,
+            "calculationMs": 127.66319999983534,
+            "writeMs": 32.718999998643994,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 12334.794400000013,
+              "startMs": 2121814.5321,
+              "endMs": 2134149.34,
+              "rows": 100003
+            }
+          },
+          {
+            "operationMs": 25550.160399999935,
+            "readerMs": 25552.207100000232,
+            "scopeMs": 25549.691300000064,
+            "sqliteBridgeReadMs": 23609.684699999634,
+            "transferredRows": 200007,
+            "mappingMs": 1748.51340000052,
+            "calculationMs": 105.47729999944568,
+            "writeMs": 35.99269999889657,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 11327.972999999765,
+              "startMs": 2148382.1556,
+              "endMs": 2159710.1501,
+              "rows": 100004
+            }
+          },
+          {
+            "operationMs": 22056.98670000024,
+            "readerMs": 22059.282400000375,
+            "scopeMs": 22056.57620000001,
+            "sqliteBridgeReadMs": 20223.47959999973,
+            "transferredRows": 200009,
+            "mappingMs": 1652.952500000596,
+            "calculationMs": 113.35920000029728,
+            "writeMs": 23.824599999468774,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT\n          id,\n          amount,\n          currency,\n          description,\n          date,\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\n          category_id,\n          subcategory_id,\n          type,\n          direction,\n          status,\n          target_account_id,\n          merchant_name,\n          payment_method,\n          credit_card_hint,\n          dedupe_key,\n          notes,\n          created_at,\n          updated_at\n        FROM transactions\n        ORDER BY date DESC, created_at DESC;",
+              "values": [],
+              "ms": 9906.420200000051,
+              "startMs": 2173058.4673,
+              "endMs": 2182964.9177,
+              "rows": 100005
+            }
+          }
+        ],
+        "optimized": [
+          {
+            "operationMs": 609.5296000000089,
+            "readerMs": 611.5781999998726,
+            "scopeMs": 609.1388000003062,
+            "sqliteBridgeReadMs": 460.08510000025854,
+            "transferredRows": 10413,
+            "mappingMs": 42.829700000584126,
+            "calculationMs": 14.614899999462068,
+            "writeMs": 35.49240000033751,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 206.34129999997094,
+              "startMs": 2109302.3072,
+              "endMs": 2109508.6868,
+              "rows": 5207
+            }
+          },
+          {
+            "operationMs": 606.7658999999985,
+            "readerMs": 609.4242000002414,
+            "scopeMs": 606.2174999997951,
+            "sqliteBridgeReadMs": 464.69270000001416,
+            "transferredRows": 10415,
+            "mappingMs": 44.53800000017509,
+            "calculationMs": 14.574299999978393,
+            "writeMs": 29.608900000806898,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 207.32340000011027,
+              "startMs": 2160965.7108,
+              "endMs": 2161173.0425,
+              "rows": 5208
+            }
+          },
+          {
+            "operationMs": 603.6253999997862,
+            "readerMs": 605.2896999996156,
+            "scopeMs": 603.2121999999508,
+            "sqliteBridgeReadMs": 463.34290000004694,
+            "transferredRows": 10417,
+            "mappingMs": 33.4336000001058,
+            "calculationMs": 19.498999999836087,
+            "writeMs": 32.50219999952242,
+            "writes": 16,
+            "lastRead": {
+              "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+              "values": [
+                "card2",
+                "card",
+                "card2",
+                "card",
+                "card2",
+                "card"
+              ],
+              "ms": 227.07949999999255,
+              "startMs": 2161552.8866,
+              "endMs": 2161779.9804,
+              "rows": 5209
+            }
+          }
+        ]
+      },
+      "distributions": {
+        "reference": {
+          "operationMs": {
+            "median": 25487.465900000185,
+            "min": 22056.98670000024,
+            "max": 25550.160399999935,
+            "stddev": 1632.1213408163017
+          },
+          "readerMs": {
+            "median": 25490.145899999887,
+            "min": 22059.282400000375,
+            "max": 25552.207100000232,
+            "stddev": 1632.1491934815913
+          },
+          "scopeMs": {
+            "median": 25487.0392,
+            "min": 22056.57620000001,
+            "max": 25549.691300000064,
+            "stddev": 1632.1034410931097
+          },
+          "sqliteBridgeReadMs": {
+            "median": 23539.822399999946,
+            "min": 20223.47959999973,
+            "max": 23609.684699999634,
+            "stddev": 1580.0631241729234
+          },
+          "transferredRows": {
+            "median": 200007,
+            "min": 200005,
+            "max": 200009,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 1733.24729999993,
+            "min": 1652.952500000596,
+            "max": 1748.51340000052,
+            "stddev": 41.915515988124554
+          },
+          "calculationMs": {
+            "median": 113.35920000029728,
+            "min": 105.47729999944568,
+            "max": 127.66319999983534,
+            "stddev": 9.182972905434514
+          },
+          "writeMs": {
+            "median": 32.718999998643994,
+            "min": 23.824599999468774,
+            "max": 35.99269999889657,
+            "stddev": 5.141228999557905
+          }
+        },
+        "optimized": {
+          "operationMs": {
+            "median": 606.7658999999985,
+            "min": 603.6253999997862,
+            "max": 609.5296000000089,
+            "stddev": 2.4120151921398736
+          },
+          "readerMs": {
+            "median": 609.4242000002414,
+            "min": 605.2896999996156,
+            "max": 611.5781999998726,
+            "stddev": 2.60936430118779
+          },
+          "scopeMs": {
+            "median": 606.2174999997951,
+            "min": 603.2121999999508,
+            "max": 609.1388000003062,
+            "stddev": 2.4196053247094933
+          },
+          "sqliteBridgeReadMs": {
+            "median": 463.34290000004694,
+            "min": 460.08510000025854,
+            "max": 464.69270000001416,
+            "stddev": 1.9340572965280591
+          },
+          "transferredRows": {
+            "median": 10415,
+            "min": 10413,
+            "max": 10417,
+            "stddev": 1.632993161855452
+          },
+          "mappingMs": {
+            "median": 42.829700000584126,
+            "min": 33.4336000001058,
+            "max": 44.53800000017509,
+            "stddev": 4.882083838657539
+          },
+          "calculationMs": {
+            "median": 14.614899999462068,
+            "min": 14.574299999978393,
+            "max": 19.498999999836087,
+            "stddev": 2.3120157453858776
+          },
+          "writeMs": {
+            "median": 32.50219999952242,
+            "min": 29.608900000806898,
+            "max": 35.49240000033751,
+            "stddev": 2.4020374030744662
+          }
+        }
+      },
+      "diagnostic": {
+        "reference": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              6546.0457,
+              7038.7368,
+              6387.3588
+            ],
+            "columns": 23,
+            "rows": 100005,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        },
+        "optimized": {
+          "plan": [
+            {
+              "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            },
+            {
+              "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+              "from": "0",
+              "order": "0",
+              "selectid": "0"
+            }
+          ],
+          "nativeSQLite": {
+            "samplesMs": [
+              141.5848,
+              115.4174,
+              112.6285
+            ],
+            "columns": 9,
+            "rows": 5209,
+            "plan": [
+              {
+                "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              },
+              {
+                "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                "from": "0",
+                "order": "0",
+                "selectid": "0"
+              }
+            ]
+          }
+        }
+      },
+      "comparison": {
+        "tableRows": {
+          "transaction_tax_tags": 0,
+          "tax_tags": 0,
+          "subscription_occurrences": 0,
+          "subcategories": 0,
+          "smart_alerts": 0,
+          "shared_returns": 0,
+          "subscription_reminders": 0,
+          "shared_receipts": 0,
+          "shared_loss_events": 0,
+          "shared_expenses": 0,
+          "shared_commands": 0,
+          "shared_allocations": 0,
+          "transactions": 100005,
+          "schema_migrations": 4,
+          "recurring_subscriptions": 0,
+          "merchant_mappings": 0,
+          "cash_flow_events": 0,
+          "loans": 0,
+          "investment_assets": 0,
+          "amortization_schedule_items": 0,
+          "credit_card_profiles": 1,
+          "installment_purchases": 1,
+          "envelopes": 0,
+          "raw_financial_messages": 0,
+          "financial_data_revision": 1,
+          "ai_command_drafts": 0,
+          "financial_goals": 0,
+          "receipt_attachments": 0,
+          "envelope_movements": 0,
+          "backup_records": 0,
+          "app_settings": 0,
+          "financial_health_scores": 0,
+          "transaction_splits": 1,
+          "account_balance_history": 0,
+          "android_metadata": 1,
+          "shared_contacts": 0,
+          "categories": 0,
+          "budgets": 0,
+          "accounts": 4,
+          "credit_card_statements": 2
+        },
+        "equal": true
+      },
+      "cycles": [
+        {
+          "date": "2026-09-30T23:59:59.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-10-16T05:00:00.000Z",
+          "equal": true
+        },
+        {
+          "date": "2026-11-01T05:00:00.000Z",
+          "equal": true
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "method": "paired alternating versions; 1 warm-up + 3 measured samples; fixed JS/SQL audit clocks; exact native streaming comparison"
+}

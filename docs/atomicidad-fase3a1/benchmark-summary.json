@@ -1,0 +1,3057 @@
+{
+  "quality": {
+    "jestPassed": 488,
+    "jestSkipped": 3,
+    "jestFailed": 0,
+    "suitesPassed": 45,
+    "snapshotsPassed": 8
+  },
+  "scope": {
+    "protectedSources": {
+      "src/database/atomicSQLite.ts": true,
+      "src/database/managedSQLite.ts": true,
+      "src/database/databaseCoordination.ts": true,
+      "src/database/sqliteLifecycle.ts": true,
+      "src/database/sqliteSchema.ts": true,
+      "src/database/migrations.ts": true,
+      "src/modules/dashboard/useCases/getDashboardSummary.ts": true,
+      "src/modules/transactions/repositories/sqliteTransactionHistory.ts": true,
+      "src/modules/transactions/ui/TransactionsScreen.tsx": true,
+      "src/modules/transactions/useCases/saveManualTransaction.ts": true,
+      "src/modules/transactions/useCases/updateTransactionQuickly.ts": true,
+      "src/modules/creditCards/useCases/creditCardPaymentScope.ts": true,
+      "src/modules/creditCards/ui/CreditCardsScreen.tsx": true,
+      "package.json": true,
+      "package-lock.json": true,
+      "src/modules/transactions/repositories/sqliteTransactionRepository.ts": true
+    },
+    "reconciliationCalculationAndWritesUnchanged": true,
+    "paymentScopeAndCoreUnchanged": true
+  },
+  "nodeEquivalence": [
+    {
+      "rows": 1000,
+      "shape": "noise",
+      "candidates": 1,
+      "fullRows": 1001,
+      "oldMs": 38.11819999999989,
+      "optimizedMs": 8.003499999999804,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 1002
+      },
+      "cycles": 4
+    },
+    {
+      "rows": 1000,
+      "shape": "mixed",
+      "candidates": 56,
+      "fullRows": 1001,
+      "oldMs": 32.481299999999464,
+      "optimizedMs": 4.83600000000024,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 1002
+      },
+      "cycles": 4
+    },
+    {
+      "rows": 1000,
+      "shape": "dense",
+      "candidates": 424,
+      "fullRows": 1001,
+      "oldMs": 36.15509999999995,
+      "optimizedMs": 12.055199999999786,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 1002
+      },
+      "cycles": 4
+    },
+    {
+      "rows": 10000,
+      "shape": "noise",
+      "candidates": 1,
+      "fullRows": 10001,
+      "oldMs": 200.96750000000065,
+      "optimizedMs": 11.057399999999689,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 10002
+      },
+      "cycles": 4
+    },
+    {
+      "rows": 10000,
+      "shape": "mixed",
+      "candidates": 523,
+      "fullRows": 10001,
+      "oldMs": 224.507599999999,
+      "optimizedMs": 19.004300000000512,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 10002
+      },
+      "cycles": 4
+    },
+    {
+      "rows": 10000,
+      "shape": "dense",
+      "candidates": 4214,
+      "fullRows": 10001,
+      "oldMs": 225.0121999999992,
+      "optimizedMs": 66.503999999999,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 10002
+      },
+      "cycles": 4
+    },
+    {
+      "rows": 100000,
+      "shape": "noise",
+      "candidates": 1,
+      "fullRows": 100001,
+      "oldMs": 3277.634399999999,
+      "optimizedMs": 94.7689999999966,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 100002
+      },
+      "cycles": 4
+    },
+    {
+      "rows": 100000,
+      "shape": "mixed",
+      "candidates": 5205,
+      "fullRows": 100001,
+      "oldMs": 2673.5381999999954,
+      "optimizedMs": 151.29060000000027,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 100002
+      },
+      "cycles": 4
+    },
+    {
+      "rows": 100000,
+      "shape": "dense",
+      "candidates": 42127,
+      "fullRows": 100001,
+      "oldMs": 2612.3369999999995,
+      "optimizedMs": 560.8236000000034,
+      "exactTables": true,
+      "comparedRows": {
+        "account_balance_history": 0,
+        "accounts": 5,
+        "ai_command_drafts": 0,
+        "amortization_schedule_items": 0,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 0,
+        "categories": 0,
+        "credit_card_profiles": 1,
+        "credit_card_statements": 2,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 0,
+        "schema_migrations": 4,
+        "shared_allocations": 0,
+        "shared_commands": 0,
+        "shared_contacts": 0,
+        "shared_expenses": 0,
+        "shared_loss_events": 0,
+        "shared_receipts": 0,
+        "shared_returns": 0,
+        "smart_alerts": 0,
+        "subcategories": 0,
+        "subscription_occurrences": 0,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 1,
+        "transaction_tax_tags": 0,
+        "transactions": 100002
+      },
+      "cycles": 4
+    }
+  ],
+  "nodeRollbackPoints": 52,
+  "android": [
+    {
+      "api": 24,
+      "environment": {
+        "model": "Android SDK built for x86_64",
+        "productionMetadata": "",
+        "android": "7.0",
+        "api": "24",
+        "serial": "emulator-5554",
+        "package": "com.smartfin.atomicityphase1.tests"
+      },
+      "campaigns": [
+        {
+          "campaign": "phase3a1",
+          "cases": 6,
+          "passed": true,
+          "result": "final-api24-benchmark/result.json"
+        }
+      ],
+      "measurements": [
+        {
+          "rows": 1000,
+          "shape": "noise",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 222.0226000000257,
+              "min": 213.57890000008047,
+              "max": 255.92139999987558,
+              "stddev": 18.29788092573547
+            },
+            "readerMs": {
+              "median": 224.07039999985136,
+              "min": 215.80449999985285,
+              "max": 258.22469999990426,
+              "stddev": 18.361537938939254
+            },
+            "scopeMs": {
+              "median": 221.79750000010245,
+              "min": 213.12709999992512,
+              "max": 255.60269999993034,
+              "stddev": 18.32467667913007
+            },
+            "sqliteBridgeReadMs": {
+              "median": 141.63269999995828,
+              "min": 97.67149999993853,
+              "max": 144.24380000005476,
+              "stddev": 21.36555919114547
+            },
+            "transferredRows": {
+              "median": 2007,
+              "min": 2005,
+              "max": 2009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 19.551899999845773,
+              "min": 11.448599999770522,
+              "max": 20.567999999970198,
+              "stddev": 4.080568948145375
+            },
+            "calculationMs": {
+              "median": 2.3640000002924353,
+              "min": 1.7195999999530613,
+              "max": 2.6403000000864267,
+              "stddev": 0.38575777382087323
+            },
+            "writeMs": {
+              "median": 32.249399999855086,
+              "min": 24.657800000393763,
+              "max": 37.93510000011884,
+              "stddev": 5.439018194976
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 77.95339999999851,
+              "min": 72.90200000000186,
+              "max": 80.69100000010803,
+              "stddev": 3.2262743687524247
+            },
+            "readerMs": {
+              "median": 79.34939999994822,
+              "min": 74.82839999999851,
+              "max": 82.82810000004247,
+              "stddev": 3.275091089164193
+            },
+            "scopeMs": {
+              "median": 77.44439999992028,
+              "min": 72.50860000005923,
+              "max": 80.2785000000149,
+              "stddev": 3.2104965081307175
+            },
+            "sqliteBridgeReadMs": {
+              "median": 4.330700000049546,
+              "min": 3.9217000000644475,
+              "max": 5.708600000245497,
+              "stddev": 0.764409795650274
+            },
+            "transferredRows": {
+              "median": 7,
+              "min": 5,
+              "max": 9,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 0.1023999999742955,
+              "min": 0.07539999997243285,
+              "max": 0.10510000004433095,
+              "stddev": 0.013409698002853182
+            },
+            "calculationMs": {
+              "median": 1.17989999987185,
+              "min": 0.9062000000849366,
+              "max": 1.2818999998271465,
+              "stddev": 0.15862820951329118
+            },
+            "writeMs": {
+              "median": 27.82399999978952,
+              "min": 25.645299999509007,
+              "max": 30.373000000137836,
+              "stddev": 1.9320479056903974
+            }
+          },
+          "paymentReductionPercent": 64.88943017513105,
+          "readerReductionPercent": 64.58729042300952,
+          "native": {
+            "reference": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  9.5857,
+                  11.9588,
+                  11.5247
+                ],
+                "columns": 23,
+                "rows": 1005,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            },
+            "optimized": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  0.4189,
+                  0.6727,
+                  0.5823
+                ],
+                "columns": 9,
+                "rows": 5,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 1005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 11.5247,
+            "optimized": 0.5823
+          }
+        },
+        {
+          "rows": 1000,
+          "shape": "mixed",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 230.64110000012442,
+              "min": 200.689500000095,
+              "max": 270.04220000002533,
+              "stddev": 28.400590801844427
+            },
+            "readerMs": {
+              "median": 232.7608000000473,
+              "min": 203.03689999994822,
+              "max": 272.6768999998458,
+              "stddev": 28.53172672734597
+            },
+            "scopeMs": {
+              "median": 230.20249999989755,
+              "min": 200.3242999999784,
+              "max": 269.73790000006557,
+              "stddev": 28.42925440336367
+            },
+            "sqliteBridgeReadMs": {
+              "median": 132.1710000000894,
+              "min": 104.65849999990314,
+              "max": 187.6144000000786,
+              "stddev": 34.500546863070255
+            },
+            "transferredRows": {
+              "median": 2007,
+              "min": 2005,
+              "max": 2009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 15.841299999970943,
+              "min": 15.126699999906123,
+              "max": 18.723800000036135,
+              "stddev": 1.554870048925269
+            },
+            "calculationMs": {
+              "median": 2.321799999801442,
+              "min": 1.8568000001832843,
+              "max": 2.973299999954179,
+              "stddev": 0.45792399895037295
+            },
+            "writeMs": {
+              "median": 29.08890000008978,
+              "min": 24.25969999935478,
+              "max": 33.35000000009313,
+              "stddev": 3.7135143576544425
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 66.71450000000186,
+              "min": 57.653699999907985,
+              "max": 103.75869999988936,
+              "stddev": 19.94448371319094
+            },
+            "readerMs": {
+              "median": 69.35960000008345,
+              "min": 58.96359999990091,
+              "max": 106.15460000000894,
+              "stddev": 20.245546347032334
+            },
+            "scopeMs": {
+              "median": 66.45690000010654,
+              "min": 57.333300000056624,
+              "max": 103.39660000009462,
+              "stddev": 19.915401968056813
+            },
+            "sqliteBridgeReadMs": {
+              "median": 6.673600000096485,
+              "min": 5.94289999990724,
+              "max": 8.699699999997392,
+              "stddev": 1.1661403546348994
+            },
+            "transferredRows": {
+              "median": 117,
+              "min": 115,
+              "max": 119,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 0.2772999999579042,
+              "min": 0.256800000090152,
+              "max": 0.4649999998509884,
+              "stddev": 0.09368907196730512
+            },
+            "calculationMs": {
+              "median": 1.0823000001255423,
+              "min": 0.8500000000931323,
+              "max": 1.6247000000439584,
+              "stddev": 0.3246059388534497
+            },
+            "writeMs": {
+              "median": 21.30530000082217,
+              "min": 19.383200000273064,
+              "max": 27.85700000054203,
+              "stddev": 3.627434473609848
+            }
+          },
+          "paymentReductionPercent": 71.07432283319588,
+          "readerReductionPercent": 70.20133974446327,
+          "native": {
+            "reference": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  10.5722,
+                  10.5987,
+                  8.6723
+                ],
+                "columns": 23,
+                "rows": 1005,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            },
+            "optimized": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  1.0166,
+                  1.7818,
+                  1.3967
+                ],
+                "columns": 9,
+                "rows": 60,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 1005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 10.5722,
+            "optimized": 1.3967
+          }
+        },
+        {
+          "rows": 10000,
+          "shape": "noise",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 1473.036800000118,
+              "min": 1447.785000000149,
+              "max": 1770.6200999999419,
+              "stddev": 146.59694389489232
+            },
+            "readerMs": {
+              "median": 1475.1113999998197,
+              "min": 1449.46809999994,
+              "max": 1773.405299999984,
+              "stddev": 147.03444009107386
+            },
+            "scopeMs": {
+              "median": 1472.5909000001848,
+              "min": 1447.346300000092,
+              "max": 1770.2181000001729,
+              "stddev": 146.61568782375303
+            },
+            "sqliteBridgeReadMs": {
+              "median": 1246.9580999999307,
+              "min": 1207.1385999999475,
+              "max": 1501.689700000221,
+              "stddev": 130.4837712899056
+            },
+            "transferredRows": {
+              "median": 20007,
+              "min": 20005,
+              "max": 20009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 150.28189999982715,
+              "min": 142.7829999998212,
+              "max": 173.4916999998968,
+              "stddev": 13.072246142742296
+            },
+            "calculationMs": {
+              "median": 10.61019999999553,
+              "min": 8.99240000010468,
+              "max": 11.658300000010058,
+              "stddev": 1.0966014802902433
+            },
+            "writeMs": {
+              "median": 33.09849999961443,
+              "min": 28.264899999834597,
+              "max": 34.52379999984987,
+              "stddev": 2.6784945659566546
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 103.23240000009537,
+              "min": 71.01670000003651,
+              "max": 114.50520000001416,
+              "stddev": 18.42756684541462
+            },
+            "readerMs": {
+              "median": 104.96649999986403,
+              "min": 72.83599999989383,
+              "max": 116.90560000017285,
+              "stddev": 18.610154883975614
+            },
+            "scopeMs": {
+              "median": 102.8179999999702,
+              "min": 70.67540000006557,
+              "max": 114.03080000006594,
+              "stddev": 18.37439138147332
+            },
+            "sqliteBridgeReadMs": {
+              "median": 15.578500000061467,
+              "min": 15.16980000003241,
+              "max": 16.668100000359118,
+              "stddev": 0.6323823335127611
+            },
+            "transferredRows": {
+              "median": 7,
+              "min": 5,
+              "max": 9,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 0.1126999999396503,
+              "min": 0.09509999980218709,
+              "max": 0.11640000017359853,
+              "stddev": 0.009292410418018267
+            },
+            "calculationMs": {
+              "median": 1.0460999999195337,
+              "min": 0.9014000000897795,
+              "max": 1.2911000000312924,
+              "stddev": 0.1608412536771403
+            },
+            "writeMs": {
+              "median": 30.508399999700487,
+              "min": 20.98449999978766,
+              "max": 38.65460000024177,
+              "stddev": 7.221093174268521
+            }
+          },
+          "paymentReductionPercent": 92.99186551211164,
+          "readerReductionPercent": 92.88416454514032,
+          "native": {
+            "reference": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  149.7774,
+                  163.3711,
+                  284.2375
+                ],
+                "columns": 23,
+                "rows": 10005,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            },
+            "optimized": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  8.8456,
+                  6.6571,
+                  6.5623
+                ],
+                "columns": 9,
+                "rows": 5,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 10005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 163.3711,
+            "optimized": 6.6571
+          }
+        },
+        {
+          "rows": 10000,
+          "shape": "mixed",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 1457.090799999889,
+              "min": 1348.34300000011,
+              "max": 2145.2638000000734,
+              "stddev": 352.8441461745189
+            },
+            "readerMs": {
+              "median": 1457.9490999998525,
+              "min": 1350.3371999999508,
+              "max": 2147.4805000000633,
+              "stddev": 353.1558222879509
+            },
+            "scopeMs": {
+              "median": 1456.7539999999572,
+              "min": 1347.9750000000931,
+              "max": 2144.960199999856,
+              "stddev": 352.8685706822384
+            },
+            "sqliteBridgeReadMs": {
+              "median": 1190.5174999998417,
+              "min": 1100.0186999998987,
+              "max": 1888.9851000001654,
+              "stddev": 352.53289860365004
+            },
+            "transferredRows": {
+              "median": 20007,
+              "min": 20005,
+              "max": 20009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 168.30870000016876,
+              "min": 163.77639999985695,
+              "max": 169.15150000015274,
+              "stddev": 2.360408513277573
+            },
+            "calculationMs": {
+              "median": 11.947700000135228,
+              "min": 11.205300000030547,
+              "max": 12.434700000099838,
+              "stddev": 0.5054976777934715
+            },
+            "writeMs": {
+              "median": 31.41220000013709,
+              "min": 30.75690000038594,
+              "max": 31.5679000003729,
+              "stddev": 0.351406946703951
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 143.40730000007898,
+              "min": 130.46739999996498,
+              "max": 160.00009999983013,
+              "stddev": 12.087378141988198
+            },
+            "readerMs": {
+              "median": 145.21849999995902,
+              "min": 133.35550000006333,
+              "max": 161.75179999996908,
+              "stddev": 11.644887440763698
+            },
+            "scopeMs": {
+              "median": 143.025899999775,
+              "min": 130.06520000007004,
+              "max": 159.63610000000335,
+              "stddev": 12.102876679790702
+            },
+            "sqliteBridgeReadMs": {
+              "median": 44.925400000298396,
+              "min": 37.09640000015497,
+              "max": 45.30560000007972,
+              "stddev": 3.783425221804002
+            },
+            "transferredRows": {
+              "median": 1051,
+              "min": 1049,
+              "max": 1053,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 4.200699999928474,
+              "min": 3.1721999999135733,
+              "max": 4.2832000001799315,
+              "stddev": 0.5054084707402507
+            },
+            "calculationMs": {
+              "median": 2.8371000001206994,
+              "min": 2.5643000002019107,
+              "max": 3.2058000003453344,
+              "stddev": 0.2628649379234197
+            },
+            "writeMs": {
+              "median": 33.493299999972805,
+              "min": 28.024700000416487,
+              "max": 34.08720000041649,
+              "stddev": 2.7286995155542577
+            }
+          },
+          "paymentReductionPercent": 90.15797093770065,
+          "readerReductionPercent": 90.03953567377808,
+          "native": {
+            "reference": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  195.8167,
+                  192.6507,
+                  180.5052
+                ],
+                "columns": 23,
+                "rows": 10005,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            },
+            "optimized": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  9.6426,
+                  10.7363,
+                  9.9237
+                ],
+                "columns": 9,
+                "rows": 527,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 10005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 192.6507,
+            "optimized": 9.9237
+          }
+        },
+        {
+          "rows": 100000,
+          "shape": "noise",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 24726.46070000017,
+              "min": 15021.028200000059,
+              "max": 25294.79700000002,
+              "stddev": 4714.8553826980215
+            },
+            "readerMs": {
+              "median": 24728.746999999974,
+              "min": 15023.56110000005,
+              "max": 25297.662799999816,
+              "stddev": 4714.887347340276
+            },
+            "scopeMs": {
+              "median": 24726.014800000004,
+              "min": 15020.703300000168,
+              "max": 25294.370099999942,
+              "stddev": 4714.803266503453
+            },
+            "sqliteBridgeReadMs": {
+              "median": 22951.762900000205,
+              "min": 13623.557600000175,
+              "max": 23262.67379999999,
+              "stddev": 4472.442047618904
+            },
+            "transferredRows": {
+              "median": 200007,
+              "min": 200005,
+              "max": 200009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 1608.5592000002507,
+              "min": 1266.4137999999803,
+              "max": 1851.4217000000644,
+              "stddev": 239.97220017466216
+            },
+            "calculationMs": {
+              "median": 85.4073000003118,
+              "min": 79.3196000000462,
+              "max": 86.73820000025444,
+              "stddev": 3.2294996527871516
+            },
+            "writeMs": {
+              "median": 32.908500000368804,
+              "min": 19.0871000001207,
+              "max": 34.81559999962337,
+              "stddev": 7.008358823642671
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 233.89100000006147,
+              "min": 140.6648999999743,
+              "max": 257.19329999992624,
+              "stddev": 50.346544527856295
+            },
+            "readerMs": {
+              "median": 236.28860000008717,
+              "min": 141.95650000008754,
+              "max": 258.82480000006035,
+              "stddev": 50.62347385434324
+            },
+            "scopeMs": {
+              "median": 233.11049999995157,
+              "min": 140.43479999992996,
+              "max": 256.8167000000831,
+              "stddev": 50.21677003705023
+            },
+            "sqliteBridgeReadMs": {
+              "median": 155.09269999992102,
+              "min": 97.96809999994002,
+              "max": 162.65989999985322,
+              "stddev": 28.878118260151332
+            },
+            "transferredRows": {
+              "median": 7,
+              "min": 5,
+              "max": 9,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 0.11159999994561076,
+              "min": 0.05020000017248094,
+              "max": 0.1134000001475215,
+              "stddev": 0.029377693672642074
+            },
+            "calculationMs": {
+              "median": 0.7600000000093132,
+              "min": 0.47669999999925494,
+              "max": 0.9836999999824911,
+              "stddev": 0.2074580493006559
+            },
+            "writeMs": {
+              "median": 27.71820000046864,
+              "min": 13.4757999998983,
+              "max": 38.53519999911077,
+              "stddev": 10.26226623805981
+            }
+          },
+          "paymentReductionPercent": 99.05408621622882,
+          "readerReductionPercent": 99.0444780724228,
+          "native": {
+            "reference": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  7256.9928,
+                  6028.0345,
+                  6546.9755
+                ],
+                "columns": 23,
+                "rows": 100005,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            },
+            "optimized": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  94.4151,
+                  96.5903,
+                  104.5517
+                ],
+                "columns": 9,
+                "rows": 5,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 100005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 6546.9755,
+            "optimized": 96.5903
+          }
+        },
+        {
+          "rows": 100000,
+          "shape": "mixed",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 25487.465900000185,
+              "min": 22056.98670000024,
+              "max": 25550.160399999935,
+              "stddev": 1632.1213408163017
+            },
+            "readerMs": {
+              "median": 25490.145899999887,
+              "min": 22059.282400000375,
+              "max": 25552.207100000232,
+              "stddev": 1632.1491934815913
+            },
+            "scopeMs": {
+              "median": 25487.0392,
+              "min": 22056.57620000001,
+              "max": 25549.691300000064,
+              "stddev": 1632.1034410931097
+            },
+            "sqliteBridgeReadMs": {
+              "median": 23539.822399999946,
+              "min": 20223.47959999973,
+              "max": 23609.684699999634,
+              "stddev": 1580.0631241729234
+            },
+            "transferredRows": {
+              "median": 200007,
+              "min": 200005,
+              "max": 200009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 1733.24729999993,
+              "min": 1652.952500000596,
+              "max": 1748.51340000052,
+              "stddev": 41.915515988124554
+            },
+            "calculationMs": {
+              "median": 113.35920000029728,
+              "min": 105.47729999944568,
+              "max": 127.66319999983534,
+              "stddev": 9.182972905434514
+            },
+            "writeMs": {
+              "median": 32.718999998643994,
+              "min": 23.824599999468774,
+              "max": 35.99269999889657,
+              "stddev": 5.141228999557905
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 606.7658999999985,
+              "min": 603.6253999997862,
+              "max": 609.5296000000089,
+              "stddev": 2.4120151921398736
+            },
+            "readerMs": {
+              "median": 609.4242000002414,
+              "min": 605.2896999996156,
+              "max": 611.5781999998726,
+              "stddev": 2.60936430118779
+            },
+            "scopeMs": {
+              "median": 606.2174999997951,
+              "min": 603.2121999999508,
+              "max": 609.1388000003062,
+              "stddev": 2.4196053247094933
+            },
+            "sqliteBridgeReadMs": {
+              "median": 463.34290000004694,
+              "min": 460.08510000025854,
+              "max": 464.69270000001416,
+              "stddev": 1.9340572965280591
+            },
+            "transferredRows": {
+              "median": 10415,
+              "min": 10413,
+              "max": 10417,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 42.829700000584126,
+              "min": 33.4336000001058,
+              "max": 44.53800000017509,
+              "stddev": 4.882083838657539
+            },
+            "calculationMs": {
+              "median": 14.614899999462068,
+              "min": 14.574299999978393,
+              "max": 19.498999999836087,
+              "stddev": 2.3120157453858776
+            },
+            "writeMs": {
+              "median": 32.50219999952242,
+              "min": 29.608900000806898,
+              "max": 35.49240000033751,
+              "stddev": 2.4020374030744662
+            }
+          },
+          "paymentReductionPercent": 97.61935571633273,
+          "readerReductionPercent": 97.60917727818794,
+          "native": {
+            "reference": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  6546.0457,
+                  7038.7368,
+                  6387.3588
+                ],
+                "columns": 23,
+                "rows": 100005,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            },
+            "optimized": {
+              "plan": [
+                {
+                  "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                },
+                {
+                  "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                  "from": "0",
+                  "order": "0",
+                  "selectid": "0"
+                }
+              ],
+              "nativeSQLite": {
+                "samplesMs": [
+                  141.5848,
+                  115.4174,
+                  112.6285
+                ],
+                "columns": 9,
+                "rows": 5209,
+                "plan": [
+                  {
+                    "detail": "SCAN TABLE transactions USING INDEX idx_transactions_date",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  },
+                  {
+                    "detail": "USE TEMP B-TREE FOR RIGHT PART OF ORDER BY",
+                    "from": "0",
+                    "order": "0",
+                    "selectid": "0"
+                  }
+                ]
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 100005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 6546.0457,
+            "optimized": 115.4174
+          }
+        }
+      ]
+    },
+    {
+      "api": 35,
+      "environment": {
+        "android": "15",
+        "api": "35",
+        "serial": "AXCC6R3919012932",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "model": "CRT-NX3",
+        "package": "com.smartfin.atomicityphase1.tests"
+      },
+      "campaigns": [
+        {
+          "campaign": "phase3a1",
+          "cases": 6,
+          "passed": true,
+          "result": "final-api35-benchmark/result.json"
+        }
+      ],
+      "measurements": [
+        {
+          "rows": 1000,
+          "shape": "noise",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 227.19876897335052,
+              "min": 226.77107691764832,
+              "max": 258.1399999856949,
+              "stddev": 14.687682032925093
+            },
+            "readerMs": {
+              "median": 228.27253901958466,
+              "min": 227.94884705543518,
+              "max": 260.86607694625854,
+              "stddev": 15.44160151002803
+            },
+            "scopeMs": {
+              "median": 226.80361604690552,
+              "min": 226.38030803203583,
+              "max": 257.51661598682404,
+              "stddev": 14.579045952783268
+            },
+            "sqliteBridgeReadMs": {
+              "median": 150.2817690372467,
+              "min": 149.97484695911407,
+              "max": 150.32215297222137,
+              "stddev": 0.15508187478797492
+            },
+            "transferredRows": {
+              "median": 2007,
+              "min": 2005,
+              "max": 2009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 34.336385011672974,
+              "min": 31.450461864471436,
+              "max": 43.2411550283432,
+              "stddev": 5.018232609925918
+            },
+            "calculationMs": {
+              "median": 3.8766160011291504,
+              "min": 3.711846113204956,
+              "max": 5.8692309856414795,
+              "stddev": 0.9804745495188415
+            },
+            "writeMs": {
+              "median": 18.073306918144226,
+              "min": 17.682844161987305,
+              "max": 28.06530511379242,
+              "stddev": 4.804950971209458
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 40.998538970947266,
+              "min": 39.418691992759705,
+              "max": 45.72992300987244,
+              "stddev": 2.681491051835196
+            },
+            "readerMs": {
+              "median": 42.11669206619263,
+              "min": 40.53607702255249,
+              "max": 46.90584707260132,
+              "stddev": 2.7081834847179187
+            },
+            "scopeMs": {
+              "median": 40.61661493778229,
+              "min": 39.0470769405365,
+              "max": 45.30953800678253,
+              "stddev": 2.660521984344016
+            },
+            "sqliteBridgeReadMs": {
+              "median": 3.526692032814026,
+              "min": 3.442384958267212,
+              "max": 3.5675370693206787,
+              "stddev": 0.05210998062539474
+            },
+            "transferredRows": {
+              "median": 7,
+              "min": 5,
+              "max": 9,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 0.08361506462097168,
+              "min": 0.07607698440551758,
+              "max": 0.09615397453308105,
+              "stddev": 0.00828071687517248
+            },
+            "calculationMs": {
+              "median": 1.3094608783721924,
+              "min": 1.245231032371521,
+              "max": 1.506538987159729,
+              "stddev": 0.11117908542134386
+            },
+            "writeMs": {
+              "median": 14.052539825439453,
+              "min": 13.864999413490295,
+              "max": 15.433308959007263,
+              "stddev": 0.6993083596499948
+            }
+          },
+          "paymentReductionPercent": 81.95477063709082,
+          "readerReductionPercent": 81.54982099595466,
+          "native": {
+            "reference": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  31.19077,
+                  16.446692,
+                  13.296846
+                ],
+                "columns": 23,
+                "plan": [],
+                "rows": 1005,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            },
+            "optimized": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  2.047923,
+                  2.102538,
+                  3.162154
+                ],
+                "columns": 9,
+                "plan": [],
+                "rows": 5,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 1005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 16.446692,
+            "optimized": 2.102538
+          }
+        },
+        {
+          "rows": 1000,
+          "shape": "mixed",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 491.0808460712433,
+              "min": 452.4431540966034,
+              "max": 719.760614991188,
+              "stddev": 117.96700708886281
+            },
+            "readerMs": {
+              "median": 494.71784698963165,
+              "min": 455.38746201992035,
+              "max": 724.2634620666504,
+              "stddev": 118.57129687523768
+            },
+            "scopeMs": {
+              "median": 490.1784619092941,
+              "min": 450.8485389947891,
+              "max": 718.0643080472946,
+              "stddev": 117.79599546901004
+            },
+            "sqliteBridgeReadMs": {
+              "median": 316.53723108768463,
+              "min": 309.5383849143982,
+              "max": 484.87992310523987,
+              "stddev": 81.05752471657614
+            },
+            "transferredRows": {
+              "median": 2007,
+              "min": 2005,
+              "max": 2009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 61.27407717704773,
+              "min": 56.90730690956116,
+              "max": 75.79284608364105,
+              "stddev": 8.072772641056908
+            },
+            "calculationMs": {
+              "median": 5.970769047737122,
+              "min": 5.2066919803619385,
+              "max": 7.692538142204285,
+              "stddev": 1.0396438343061563
+            },
+            "writeMs": {
+              "median": 46.906076192855835,
+              "min": 30.288999915122986,
+              "max": 63.089611768722534,
+              "stddev": 13.391183607656984
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 277.3424620628357,
+              "min": 251.11022996902466,
+              "max": 283.2495379447937,
+              "stddev": 13.968053484290943
+            },
+            "readerMs": {
+              "median": 284.1581540107727,
+              "min": 258.499076962471,
+              "max": 289.2379230260849,
+              "stddev": 13.4539087486052
+            },
+            "scopeMs": {
+              "median": 275.7707690000534,
+              "min": 249.92915391921997,
+              "max": 280.99561500549316,
+              "stddev": 13.581904179178364
+            },
+            "sqliteBridgeReadMs": {
+              "median": 58.32007706165314,
+              "min": 51.97969305515289,
+              "max": 58.69223117828369,
+              "stddev": 3.0803523624361455
+            },
+            "transferredRows": {
+              "median": 117,
+              "min": 115,
+              "max": 119,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 6.777845978736877,
+              "min": 2.2944611310958862,
+              "max": 8.113537907600403,
+              "stddev": 2.488785226922792
+            },
+            "calculationMs": {
+              "median": 10.212999939918518,
+              "min": 4.295383930206299,
+              "max": 12.408923029899597,
+              "stddev": 3.42652681585185
+            },
+            "writeMs": {
+              "median": 80.31145906448364,
+              "min": 76.27153933048248,
+              "max": 93.78176891803741,
+              "stddev": 7.486123007989916
+            }
+          },
+          "paymentReductionPercent": 43.52407260807717,
+          "readerReductionPercent": 42.561572067819874,
+          "native": {
+            "reference": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  29.413616,
+                  20.453539,
+                  14.765
+                ],
+                "columns": 23,
+                "plan": [],
+                "rows": 1005,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            },
+            "optimized": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  4.435308,
+                  3.584077,
+                  2.952308
+                ],
+                "columns": 9,
+                "plan": [],
+                "rows": 60,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 1005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 20.453539,
+            "optimized": 3.584077
+          }
+        },
+        {
+          "rows": 10000,
+          "shape": "noise",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 2082.575308084488,
+              "min": 1978.4883069992065,
+              "max": 2119.6548459529877,
+              "stddev": 59.75597380054081
+            },
+            "readerMs": {
+              "median": 2090.1360000371933,
+              "min": 1982.4048459529877,
+              "max": 2122.885537981987,
+              "stddev": 60.01236782610258
+            },
+            "scopeMs": {
+              "median": 2082.139077067375,
+              "min": 1977.7929999828339,
+              "max": 2119.178384065628,
+              "stddev": 59.86080232792212
+            },
+            "sqliteBridgeReadMs": {
+              "median": 1694.043308019638,
+              "min": 1604.7287690639496,
+              "max": 1728.3614609241486,
+              "stddev": 52.1108487150692
+            },
+            "transferredRows": {
+              "median": 20007,
+              "min": 20005,
+              "max": 20009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 280.8341541290283,
+              "min": 278.1043848991394,
+              "max": 282.6824610233307,
+              "stddev": 1.8805040524894823
+            },
+            "calculationMs": {
+              "median": 15.443768978118896,
+              "min": 15.110614895820618,
+              "max": 15.605923056602478,
+              "stddev": 0.20618647489266634
+            },
+            "writeMs": {
+              "median": 34.47800052165985,
+              "min": 27.116536140441895,
+              "max": 38.452383041381836,
+              "stddev": 4.696195850668945
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 174.6621539592743,
+              "min": 143.8206149339676,
+              "max": 191.46707701683044,
+              "stddev": 19.730943879640165
+            },
+            "readerMs": {
+              "median": 177.94892299175262,
+              "min": 145.55630791187286,
+              "max": 195.0334620475769,
+              "stddev": 20.518695452985888
+            },
+            "scopeMs": {
+              "median": 173.75384604930878,
+              "min": 142.94961595535278,
+              "max": 190.9064610004425,
+              "stddev": 19.84095589661274
+            },
+            "sqliteBridgeReadMs": {
+              "median": 49.65084493160248,
+              "min": 47.70300102233887,
+              "max": 77.18961596488953,
+              "stddev": 13.464514954703537
+            },
+            "transferredRows": {
+              "median": 7,
+              "min": 5,
+              "max": 9,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 0.23261606693267822,
+              "min": 0.18177008628845215,
+              "max": 0.2416919469833374,
+              "stddev": 0.02636983701020754
+            },
+            "calculationMs": {
+              "median": 3.2662309408187866,
+              "min": 3.0959999561309814,
+              "max": 3.3436920642852783,
+              "stddev": 0.10345701965249504
+            },
+            "writeMs": {
+              "median": 47.07900011539459,
+              "min": 40.83692705631256,
+              "max": 51.54607880115509,
+              "stddev": 4.391964874805875
+            }
+          },
+          "paymentReductionPercent": 91.61316504228003,
+          "readerReductionPercent": 91.48625146935004,
+          "native": {
+            "reference": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  165.323385,
+                  159.221231,
+                  164.598846
+                ],
+                "columns": 23,
+                "plan": [],
+                "rows": 10005,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            },
+            "optimized": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  12.229231,
+                  10.066231,
+                  8.043384
+                ],
+                "columns": 9,
+                "plan": [],
+                "rows": 5,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 10005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 164.598846,
+            "optimized": 10.066231
+          }
+        },
+        {
+          "rows": 10000,
+          "shape": "mixed",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 2133.7652299404144,
+              "min": 2132.4246150255203,
+              "max": 2246.292922973633,
+              "stddev": 53.364855791360625
+            },
+            "readerMs": {
+              "median": 2138.0746920108795,
+              "min": 2135.151615023613,
+              "max": 2249.584077000618,
+              "stddev": 53.268372598863216
+            },
+            "scopeMs": {
+              "median": 2133.3703849315643,
+              "min": 2131.6938469409943,
+              "max": 2245.474076986313,
+              "stddev": 53.24575027497535
+            },
+            "sqliteBridgeReadMs": {
+              "median": 1746.0064610242844,
+              "min": 1728.298770070076,
+              "max": 1821.7091538906097,
+              "stddev": 40.51057452024427
+            },
+            "transferredRows": {
+              "median": 20007,
+              "min": 20005,
+              "max": 20009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 294.2466160058975,
+              "min": 275.0516929626465,
+              "max": 294.8939229249954,
+              "stddev": 9.204939294643088
+            },
+            "calculationMs": {
+              "median": 17.479154109954834,
+              "min": 17.241461038589478,
+              "max": 17.66653800010681,
+              "stddev": 0.17394160631800606
+            },
+            "writeMs": {
+              "median": 40.361384868621826,
+              "min": 38.54238486289978,
+              "max": 43.26569306850433,
+              "stddev": 1.94517658569581
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 293.7910770177841,
+              "min": 289.8506920337677,
+              "max": 329.3031539916992,
+              "stddev": 17.742388037207416
+            },
+            "readerMs": {
+              "median": 296.38807702064514,
+              "min": 292.15776896476746,
+              "max": 332.6866919994354,
+              "stddev": 18.190591456929113
+            },
+            "scopeMs": {
+              "median": 292.8689229488373,
+              "min": 288.9316920042038,
+              "max": 328.5999230146408,
+              "stddev": 17.844310343484302
+            },
+            "sqliteBridgeReadMs": {
+              "median": 137.70053899288177,
+              "min": 136.9298460483551,
+              "max": 181.52061581611633,
+              "stddev": 20.84101151546689
+            },
+            "transferredRows": {
+              "median": 1051,
+              "min": 1049,
+              "max": 1053,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 19.710845947265625,
+              "min": 17.062923073768616,
+              "max": 19.7484610080719,
+              "stddev": 1.2572025574164458
+            },
+            "calculationMs": {
+              "median": 10.291307091712952,
+              "min": 10.220921993255615,
+              "max": 10.504307866096497,
+              "stddev": 0.12047634387372805
+            },
+            "writeMs": {
+              "median": 52.79153871536255,
+              "min": 52.27761495113373,
+              "max": 53.016231060028076,
+              "stddev": 0.3091490186353213
+            }
+          },
+          "paymentReductionPercent": 86.23133075300939,
+          "readerReductionPercent": 86.13761819789892,
+          "native": {
+            "reference": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  160.303308,
+                  164.069847,
+                  158.925154
+                ],
+                "columns": 23,
+                "plan": [],
+                "rows": 10005,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            },
+            "optimized": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  26.803692,
+                  19.128,
+                  14.294385
+                ],
+                "columns": 9,
+                "plan": [],
+                "rows": 527,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 10005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 160.303308,
+            "optimized": 19.128
+          }
+        },
+        {
+          "rows": 100000,
+          "shape": "noise",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 33192.71477103233,
+              "min": 33107.79477202892,
+              "max": 33399.923462986946,
+              "stddev": 122.69475237041131
+            },
+            "readerMs": {
+              "median": 33236.86069393158,
+              "min": 33149.33077096939,
+              "max": 33445.75354003906,
+              "stddev": 124.34904574158408
+            },
+            "scopeMs": {
+              "median": 33191.96184802055,
+              "min": 33107.41354095936,
+              "max": 33398.46861696243,
+              "stddev": 122.25043472446426
+            },
+            "sqliteBridgeReadMs": {
+              "median": 30110.277848005295,
+              "min": 30077.871001958847,
+              "max": 30307.714616894722,
+              "stddev": 101.57622682660326
+            },
+            "transferredRows": {
+              "median": 200007,
+              "min": 200005,
+              "max": 200009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 2761.1239998340607,
+              "min": 2742.8828461170197,
+              "max": 2764.814998984337,
+              "stddev": 9.588085737874136
+            },
+            "calculationMs": {
+              "median": 128.08899998664856,
+              "min": 128.0129989385605,
+              "max": 147.05992197990417,
+              "stddev": 8.960945726232554
+            },
+            "writeMs": {
+              "median": 42.21845984458923,
+              "min": 40.38223099708557,
+              "max": 55.05223083496094,
+              "stddev": 6.525899763055021
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 584.59692299366,
+              "min": 535.7617700099945,
+              "max": 874.696308016777,
+              "stddev": 149.59914824906065
+            },
+            "readerMs": {
+              "median": 588.03169298172,
+              "min": 539.8769229650497,
+              "max": 878.9259229898453,
+              "stddev": 149.77485300914256
+            },
+            "scopeMs": {
+              "median": 533.6181540489197,
+              "min": 532.8646149635315,
+              "max": 873.7157700061798,
+              "stddev": 160.50145935469203
+            },
+            "sqliteBridgeReadMs": {
+              "median": 367.12038397789,
+              "min": 365.27607703208923,
+              "max": 642.8843840360641,
+              "stddev": 130.43327681820404
+            },
+            "transferredRows": {
+              "median": 7,
+              "min": 5,
+              "max": 9,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 0.46792304515838623,
+              "min": 0.09461498260498047,
+              "max": 0.8979229927062988,
+              "stddev": 0.32822123696466365
+            },
+            "calculationMs": {
+              "median": 8.363923072814941,
+              "min": 1.5853079557418823,
+              "max": 8.455924034118652,
+              "stddev": 3.2173738838918093
+            },
+            "writeMs": {
+              "median": 57.460080742836,
+              "min": 42.489845991134644,
+              "max": 59.75384533405304,
+              "stddev": 7.655172237217969
+            }
+          },
+          "paymentReductionPercent": 98.23877942185119,
+          "readerReductionPercent": 98.23078449436989,
+          "native": {
+            "reference": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  8585.030155,
+                  8593.398155,
+                  8587.694154
+                ],
+                "columns": 23,
+                "plan": [],
+                "rows": 100005,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            },
+            "optimized": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  131.680923,
+                  132.179385,
+                  132.176
+                ],
+                "columns": 9,
+                "plan": [],
+                "rows": 5,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 100005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 8587.694154,
+            "optimized": 132.176
+          }
+        },
+        {
+          "rows": 100000,
+          "shape": "mixed",
+          "warmups": 1,
+          "samples": 3,
+          "before": {
+            "operationMs": {
+              "median": 33519.14684796333,
+              "min": 33467.545848965645,
+              "max": 33519.436693906784,
+              "stddev": 24.393548548143528
+            },
+            "readerMs": {
+              "median": 33562.72023308277,
+              "min": 33506.017308950424,
+              "max": 33566.606155991554,
+              "stddev": 27.69141541221188
+            },
+            "scopeMs": {
+              "median": 33518.75007891655,
+              "min": 33467.01077103615,
+              "max": 33518.86646294594,
+              "stddev": 24.417621843952393
+            },
+            "sqliteBridgeReadMs": {
+              "median": 30457.606539964676,
+              "min": 30428.68584895134,
+              "max": 30475.617231965065,
+              "stddev": 19.331454237999232
+            },
+            "transferredRows": {
+              "median": 200007,
+              "min": 200005,
+              "max": 200009,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 2759.05976998806,
+              "min": 2754.2289229631424,
+              "max": 2771.2196930646896,
+              "stddev": 7.148325995576687
+            },
+            "calculationMs": {
+              "median": 152.84161603450775,
+              "min": 152.48184609413147,
+              "max": 156.23276901245117,
+              "stddev": 1.6897986622010748
+            },
+            "writeMs": {
+              "median": 39.875614047050476,
+              "min": 39.22384560108185,
+              "max": 40.82115113735199,
+              "stddev": 0.6557631239416543
+            }
+          },
+          "after": {
+            "operationMs": {
+              "median": 994.6150000095367,
+              "min": 977.4864609241486,
+              "max": 1038.0054609775543,
+              "stddev": 25.47039309926735
+            },
+            "readerMs": {
+              "median": 996.4305379390717,
+              "min": 984.1947690248489,
+              "max": 1041.6722300052643,
+              "stddev": 24.72107347248862
+            },
+            "scopeMs": {
+              "median": 993.9233850240707,
+              "min": 976.8243080377579,
+              "max": 1037.5099229812622,
+              "stddev": 25.54931742064708
+            },
+            "sqliteBridgeReadMs": {
+              "median": 794.0134611129761,
+              "min": 765.8704619407654,
+              "max": 827.0565379858017,
+              "stddev": 25.005797624238802
+            },
+            "transferredRows": {
+              "median": 10415,
+              "min": 10413,
+              "max": 10417,
+              "stddev": 1.632993161855452
+            },
+            "mappingMs": {
+              "median": 84.31222999095917,
+              "min": 80.56653797626495,
+              "max": 87.07107591629028,
+              "stddev": 2.6656342443505525
+            },
+            "calculationMs": {
+              "median": 24.92269194126129,
+              "min": 24.82076907157898,
+              "max": 25.89084494113922,
+              "stddev": 0.48221374573154446
+            },
+            "writeMs": {
+              "median": 38.27984833717346,
+              "min": 37.678847312927246,
+              "max": 39.70553684234619,
+              "stddev": 0.849918976111059
+            }
+          },
+          "paymentReductionPercent": 97.0326959557744,
+          "readerReductionPercent": 97.0311389213414,
+          "native": {
+            "reference": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  8633.696308,
+                  8602.53477,
+                  8596.953231
+                ],
+                "columns": 23,
+                "plan": [],
+                "rows": 100005,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            },
+            "optimized": {
+              "plan": [],
+              "nativeSQLite": {
+                "samplesMs": [
+                  159.872077,
+                  162.039615,
+                  161.875077
+                ],
+                "columns": 9,
+                "plan": [],
+                "rows": 5209,
+                "explainError": "android.database.sqlite.SQLiteException: another row available (Sqlite code 100 SQLITE_ROW), (OS error - 2:No such file or directory)"
+              }
+            }
+          },
+          "exactTableRows": {
+            "transaction_tax_tags": 0,
+            "tax_tags": 0,
+            "subscription_occurrences": 0,
+            "subcategories": 0,
+            "smart_alerts": 0,
+            "shared_returns": 0,
+            "subscription_reminders": 0,
+            "shared_receipts": 0,
+            "shared_loss_events": 0,
+            "shared_expenses": 0,
+            "shared_commands": 0,
+            "shared_allocations": 0,
+            "transactions": 100005,
+            "schema_migrations": 4,
+            "recurring_subscriptions": 0,
+            "merchant_mappings": 0,
+            "cash_flow_events": 0,
+            "loans": 0,
+            "investment_assets": 0,
+            "amortization_schedule_items": 0,
+            "credit_card_profiles": 1,
+            "installment_purchases": 1,
+            "envelopes": 0,
+            "raw_financial_messages": 0,
+            "financial_data_revision": 1,
+            "ai_command_drafts": 0,
+            "financial_goals": 0,
+            "receipt_attachments": 0,
+            "envelope_movements": 0,
+            "backup_records": 0,
+            "app_settings": 0,
+            "financial_health_scores": 0,
+            "transaction_splits": 1,
+            "account_balance_history": 0,
+            "android_metadata": 1,
+            "shared_contacts": 0,
+            "categories": 0,
+            "budgets": 0,
+            "accounts": 4,
+            "credit_card_statements": 2
+          },
+          "exactCycles": 4,
+          "nativeSQLiteMedianMs": {
+            "reference": 8602.53477,
+            "optimized": 161.875077
+          }
+        }
+      ]
+    }
+  ]
+}

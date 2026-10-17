@@ -1,0 +1,16 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/creditCardReconciliationEquivalence.test.ts
+
+PASS __tests__/creditCardReconciliationEquivalence.test.ts (73.542 s)
+  √ 1000 rows: exact complete payment/reconciliation equivalence and ordered candidates (833 ms)
+  √ 10000 rows: exact complete payment/reconciliation equivalence and ordered candidates (5655 ms)
+  √ 100000 rows: exact complete payment/reconciliation equivalence and ordered candidates (65002 ms)
+  √ more than 300 active cards respects API 24 parameter limits and every candidate (47 ms)
+  √ legacy empty civil dates, zero/negative amounts and floating-point cancellation preserve exact sums (57 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        73.727 s, estimated 179 s
+Ran all test suites matching /__tests__\\creditCardReconciliationEquivalence.test.ts/i.

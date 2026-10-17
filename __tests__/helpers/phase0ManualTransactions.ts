@@ -7,7 +7,7 @@ import {
   reconcileCreditCardTransactions,
   resolveCreditCardTransactionTarget,
   type ResolveCreditCardTransactionTargetResult,
-} from '../../src/modules/creditCards/useCases';
+} from './phase3ACreditCardRelations';
 import type { SqliteTransactionRepository } from '../../src/modules/transactions/repositories/sqliteTransactionRepository';
 import type { Transaction, TransactionType } from '../../src/modules/transactions/types';
 

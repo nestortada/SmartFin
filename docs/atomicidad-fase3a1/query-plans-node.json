@@ -1,0 +1,37 @@
+{
+  "database": "isolated node:sqlite :memory:; production transactions schema and existing indexes",
+  "reference": {
+    "sql": "SELECT\r\n          id,\r\n          amount,\r\n          currency,\r\n          description,\r\n          date,\r\n          civil_date,\n          local_time,\n          time_zone,\n          date_precision,\n          account_id,\r\n          category_id,\r\n          subcategory_id,\r\n          type,\r\n          direction,\r\n          status,\r\n          target_account_id,\r\n          merchant_name,\r\n          payment_method,\r\n          credit_card_hint,\r\n          dedupe_key,\r\n          notes,\r\n          created_at,\r\n          updated_at\r\n        FROM transactions\r\n        ORDER BY date DESC, created_at DESC;",
+    "plan": [
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 223,
+        "detail": "SCAN transactions USING INDEX idx_transactions_date"
+      },
+      {
+        "id": 41,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+      }
+    ]
+  },
+  "optimized": {
+    "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direction, status\n     FROM transactions INDEXED BY idx_transactions_date\n     WHERE status != 'cancelled' AND (\n       (type = 'expense' AND direction = 'outflow' AND account_id IN (?,?))\n       OR (type = 'creditCardPayment' AND (account_id IN (?,?) OR target_account_id IN (?,?)))\n     )\n     ORDER BY date DESC, created_at DESC;",
+    "plan": [
+      {
+        "id": 4,
+        "parent": 0,
+        "notused": 223,
+        "detail": "SCAN transactions USING INDEX idx_transactions_date"
+      },
+      {
+        "id": 47,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+      }
+    ]
+  }
+}

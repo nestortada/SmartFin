@@ -1,0 +1,251 @@
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+> Task :gradle-plugin:settings-plugin:pluginDescriptors
+> Task :gradle-plugin:settings-plugin:processResources
+> Task :gradle-plugin:shared:compileKotlin
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+> Task :gradle-plugin:shared:jar
+> Task :gradle-plugin:settings-plugin:compileKotlin
+> Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:settings-plugin:classes
+> Task :gradle-plugin:settings-plugin:jar
+> Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors
+> Task :gradle-plugin:react-native-gradle-plugin:processResources
+> Task :gradle-plugin:react-native-gradle-plugin:compileKotlin
+> Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:react-native-gradle-plugin:classes
+> Task :gradle-plugin:react-native-gradle-plugin:jar
+
+> Configure project :app
+Reading env from: .env
+
+> Task :app:generateAutolinkingNewArchitectureFiles
+> Task :app:generateAutolinkingPackageList
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :app:generateReactNativeEntryPoint
+> Task :react-native-config:generateCodegenSchemaFromJavaScript
+> Task :react-native-config:generateCodegenArtifactsFromSchema
+> Task :react-native-config:preBuild
+> Task :react-native-safe-area-context:generateCodegenSchemaFromJavaScript
+> Task :react-native-safe-area-context:generateCodegenArtifactsFromSchema
+> Task :react-native-safe-area-context:preBuild
+> Task :react-native-sqlite-storage:preBuild UP-TO-DATE
+> Task :react-native-vector-icons:generateCodegenSchemaFromJavaScript
+> Task :react-native-vector-icons:generateCodegenArtifactsFromSchema
+> Task :react-native-vector-icons:preBuild
+> Task :rn-speech-recognition:preBuild UP-TO-DATE
+> Task :app:preBuild
+> Task :app:preReleaseBuild
+> Task :app:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:configureCMakeRelWithDebInfo[x86_64]
+> Task :app:buildCMakeRelWithDebInfo[x86_64]
+> Task :app:mergeReleaseJniLibFolders
+> Task :react-native-config:preReleaseBuild
+> Task :react-native-config:mergeReleaseJniLibFolders
+> Task :react-native-config:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-safe-area-context:preReleaseBuild
+> Task :react-native-config:copyReleaseJniLibsProjectOnly
+> Task :react-native-safe-area-context:mergeReleaseJniLibFolders
+> Task :react-native-safe-area-context:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-sqlite-storage:preReleaseBuild UP-TO-DATE
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectOnly
+> Task :react-native-sqlite-storage:mergeReleaseJniLibFolders
+> Task :react-native-sqlite-storage:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-vector-icons:preReleaseBuild
+> Task :react-native-sqlite-storage:copyReleaseJniLibsProjectOnly
+> Task :react-native-vector-icons:mergeReleaseJniLibFolders
+> Task :react-native-vector-icons:mergeReleaseNativeLibs NO-SOURCE
+> Task :rn-speech-recognition:preReleaseBuild UP-TO-DATE
+> Task :react-native-vector-icons:copyReleaseJniLibsProjectOnly
+> Task :rn-speech-recognition:mergeReleaseJniLibFolders
+> Task :rn-speech-recognition:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-safe-area-context:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :rn-speech-recognition:copyReleaseJniLibsProjectOnly
+> Task :react-native-safe-area-context:generateReleaseBuildConfig
+> Task :react-native-safe-area-context:generateReleaseResValues
+> Task :react-native-safe-area-context:generateReleaseResources
+> Task :react-native-safe-area-context:packageReleaseResources
+> Task :rn-speech-recognition:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-safe-area-context:javaPreCompileRelease
+> Task :react-native-safe-area-context:parseReleaseLocalResources
+> Task :rn-speech-recognition:generateReleaseBuildConfig
+> Task :rn-speech-recognition:generateReleaseResValues
+> Task :rn-speech-recognition:generateReleaseResources
+> Task :react-native-safe-area-context:generateReleaseRFile
+> Task :rn-speech-recognition:packageReleaseResources
+> Task :rn-speech-recognition:javaPreCompileRelease
+> Task :rn-speech-recognition:parseReleaseLocalResources
+> Task :react-native-config:generateReleaseBuildConfig
+> Task :react-native-config:generateReleaseResValues
+> Task :rn-speech-recognition:generateReleaseRFile
+> Task :react-native-config:generateReleaseResources
+> Task :react-native-config:packageReleaseResources
+> Task :react-native-config:javaPreCompileRelease
+> Task :react-native-config:parseReleaseLocalResources
+> Task :react-native-sqlite-storage:generateReleaseBuildConfig
+> Task :react-native-sqlite-storage:generateReleaseResValues
+> Task :react-native-config:generateReleaseRFile
+> Task :react-native-sqlite-storage:generateReleaseResources
+> Task :app:mergeReleaseNativeLibs
+
+> Task :react-native-safe-area-context:compileReleaseKotlin
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaProviderManager.kt:39:19 'fun getEventDispatcherForReactTag(context: ReactContext, reactTag: Int): EventDispatcher?' is deprecated. reactTag is no longer needed.
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:9:8 'class UIManagerModule : ReactContextBaseJavaModule, LifecycleEventListener, UIManager' is deprecated. Deprecated in Java.
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:50:54 'class UIManagerModule : ReactContextBaseJavaModule, LifecycleEventListener, UIManager' is deprecated. Deprecated in Java.
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:59:23 'val uiImplementation: UIImplementation!' is deprecated. Deprecated in Java.
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaViewShadowNode.kt:9:32 'class LayoutShadowNode : ReactShadowNodeImpl' is deprecated. This class is part of Legacy Architecture and will be removed in a future release.
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaViewShadowNode.kt:110:61 'class NativeViewHierarchyOptimizer : Any' is deprecated. This class is part of Legacy Architecture and will be removed in a future release.
+
+> Task :react-native-config:compileReleaseJavaWithJavac
+Note: C:\sfatomicity-phase3a1-20261017-b\node_modules\react-native-config\android\src\main\java\com\lugg\RNCConfig\RNCConfigPackage.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :rn-speech-recognition:compileReleaseKotlin
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/rn-speech-recognition/android/src/main/java/com/duysolo/speechrecognition/RNSpeechRecognitionModule.kt:51:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/rn-speech-recognition/android/src/main/java/com/duysolo/speechrecognition/RNSpeechRecognitionModule.kt:53:15 'fun onCatalystInstanceDestroy(): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/sfatomicity-phase3a1-20261017-b/node_modules/rn-speech-recognition/android/src/main/java/com/duysolo/speechrecognition/RNSpeechRecognitionPackage.kt:9:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+
+> Task :react-native-safe-area-context:compileReleaseJavaWithJavac
+> Task :react-native-sqlite-storage:packageReleaseResources
+> Task :react-native-config:bundleLibRuntimeToDirRelease
+> Task :react-native-sqlite-storage:parseReleaseLocalResources
+> Task :react-native-safe-area-context:bundleLibRuntimeToDirRelease
+> Task :rn-speech-recognition:compileReleaseJavaWithJavac
+> Task :app:stripReleaseDebugSymbols
+> Task :react-native-sqlite-storage:javaPreCompileRelease
+> Task :react-native-sqlite-storage:generateReleaseRFile
+> Task :rn-speech-recognition:bundleLibRuntimeToDirRelease
+> Task :app:extractReleaseNativeSymbolTables
+
+> Task :react-native-sqlite-storage:compileReleaseJavaWithJavac
+Note: C:\sfatomicity-phase3a1-20261017-b\vendor\sqlite\platforms\android\src\main\java\org\pgsqlite\SQLitePluginPackage.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :react-native-vector-icons:generateReleaseBuildConfig
+> Task :react-native-vector-icons:generateReleaseResValues
+> Task :react-native-vector-icons:generateReleaseResources
+> Task :react-native-vector-icons:packageReleaseResources
+> Task :react-native-sqlite-storage:bundleLibRuntimeToDirRelease
+> Task :react-native-vector-icons:javaPreCompileRelease
+> Task :react-native-vector-icons:parseReleaseLocalResources
+> Task :app:buildKotlinToolingMetadata
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-vector-icons:generateReleaseRFile
+> Task :app:generateReleaseBuildConfig
+> Task :app:checkReleaseDuplicateClasses
+
+> Task :react-native-vector-icons:compileReleaseJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :react-native-config:writeReleaseAarMetadata
+> Task :react-native-safe-area-context:writeReleaseAarMetadata
+> Task :react-native-sqlite-storage:writeReleaseAarMetadata
+> Task :react-native-vector-icons:bundleLibRuntimeToDirRelease
+> Task :react-native-vector-icons:writeReleaseAarMetadata
+> Task :rn-speech-recognition:writeReleaseAarMetadata
+> Task :app:checkReleaseAarMetadata
+> Task :app:mergeReleaseNativeDebugMetadata
+
+> Task :app:createBundleReleaseJsAndAssets
+warn Package react-native-sqlite-storage contains invalid configuration: "dependency.platforms.ios.project" is not allowed. Please verify it's properly linked using "npx react-native config" command and contact the package maintainers about this.
+
+                        ▒▒▓▓▓▓▒▒
+                     ▒▓▓▓▒▒░░▒▒▓▓▓▒
+                  ▒▓▓▓▓░░░▒▒▒▒░░░▓▓▓▓▒
+                 ▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▓
+                 ▓▓░░░░░▒▓▓▓▓▓▓▒░░░░░▓▓
+                 ▓▓░░▓▓▒░░░▒▒░░░▒▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▒▒▒▒▓▓▓▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░▓▓
+                 ▓▓▒░░▒▒▓▓▓▓▓▓▓▓▒░░░▒▓▓
+                  ▒▓▓▓▒░░░▒▓▓▒░░░▒▓▓▓▒
+                     ▒▓▓▓▒░░░░▒▓▓▓▒
+                        ▒▒▓▓▓▓▒▒
+
+
+ WARN  the transform cache was reset.
+                Welcome to Metro v0.84.4
+              Fast - Scalable - Integrated
+
+
+transform[stderr]: (node:8896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:29816) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:23480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:28436) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:37456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:33704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:19952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:17292) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+error Unable to resolve module ./__tests__/helpers/phase3ACreditCardRelations from C:\sfatomicity-phase3a1-20261017-b\ReconciliationCampaign.js: 
+
+Error: Unable to resolve module ./__tests__/helpers/phase3ACreditCardRelations from C:\sfatomicity-phase3a1-20261017-b\ReconciliationCampaign.js: 
+None of these files exist:
+  * __tests__\helpers\phase3ACreditCardRelations(.android.js|.native.js|.js|.android.jsx|.native.jsx|.jsx|.android.json|.native.json|.json|.android.ts|.native.ts|.ts|.android.tsx|.native.tsx|.tsx)
+  * __tests__\helpers\phase3ACreditCardRelations
+  3 | import { createSqliteTransactionRepository } from './src/modules/transactions/repositories/sqliteTransactionRepository';
+  4 | import { createSqliteCreditCardRepository } from './src/modules/creditCards/repositories/sqliteCreditCardRepository';
+> 5 | import * as reference from './__tests__/helpers/phase3ACreditCardRelations';
+
+    |                             ^
+None of these files exist:
+  6 | import * as optimized from './src/modules/creditCards/useCases/creditCardTransactionRelations';
+  * __tests__\helpers\phase3ACreditCardRelations(.android.js|.native.js|.js|.android.jsx|.native.jsx|.jsx|.android.json|.native.json|.json|.android.ts|.native.ts|.ts|.android.tsx|.native.tsx|.tsx)
+  7 | import { fixedClock, restoreClock, startProfile, stopProfile } from './SqlProfile';
+  * __tests__\helpers\phase3ACreditCardRelations
+  8 | import { seedReconciliation } from './ReconciliationFixture';.
+[0m [90m 3 |[39m [36mimport[39m { createSqliteTransactionRepository } [36mfrom[39m [32m'./src/modules/transactions/repositories/sqliteTransactionRepository'[39m[33m;[39m
+ [90m 4 |[39m [36mimport[39m { createSqliteCreditCardRepository } [36mfrom[39m [32m'./src/modules/creditCards/repositories/sqliteCreditCardRepository'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 5 |[39m [36mimport[39m [33m*[39m [36mas[39m reference [36mfrom[39m [32m'./__tests__/helpers/phase3ACreditCardRelations'[39m[33m;[39m
+ [90m   |[39m                             [31m[1m^[22m[39m
+ [90m 6 |[39m [36mimport[39m [33m*[39m [36mas[39m optimized [36mfrom[39m [32m'./src/modules/creditCards/useCases/creditCardTransactionRelations'[39m[33m;[39m
+ [90m 7 |[39m [36mimport[39m { fixedClock[33m,[39m restoreClock[33m,[39m startProfile[33m,[39m stopProfile } [36mfrom[39m [32m'./SqlProfile'[39m[33m;[39m
+ [90m 8 |[39m [36mimport[39m { seedReconciliation } [36mfrom[39m [32m'./ReconciliationFixture'[39m[33m;[39m[0m
+    at ModuleResolver.resolveDependency (C:\Users\nesto\Proyectos\SmartFin\node_modules\metro\src\node-haste\DependencyGraph\ModuleResolution.js:143:15)
+    at DependencyGraph.resolveDependency (C:\Users\nesto\Proyectos\SmartFin\node_modules\metro\src\node-haste\DependencyGraph.js:263:43)
+    at C:\Users\nesto\Proyectos\SmartFin\node_modules\metro\src\lib\transformHelpers.js:165:21
+    at resolveDependencies (C:\Users\nesto\Proyectos\SmartFin\node_modules\metro\src\DeltaBundler\buildSubgraph.js:43:25)
+    at visit (C:\Users\nesto\Proyectos\SmartFin\node_modules\metro\src\DeltaBundler\buildSubgraph.js:81:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async Promise.all (index 14)
+    at async visit (C:\Users\nesto\Proyectos\SmartFin\node_modules\metro\src\DeltaBundler\buildSubgraph.js:90:5)
+    at async Promise.all (index 2)
+    at async visit (C:\Users\nesto\Proyectos\SmartFin\node_modules\metro\src\DeltaBundler\buildSubgraph.js:90:5)
+
+> Task :app:createBundleReleaseJsAndAssets FAILED
+
+[Incubating] Problems report is available at: file:///C:/sfatomicity-phase3a1-20261017-b/android/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:createBundleReleaseJsAndAssets'.
+> Process 'command 'cmd'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 2m 28s
+95 actionable tasks: 95 executed

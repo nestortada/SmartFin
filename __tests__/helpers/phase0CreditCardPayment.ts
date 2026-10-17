@@ -1,5 +1,5 @@
 // Frozen pre-phase-3A payment boundary, exclusively for historic characterization.
-import { reconcileCreditCardTransactions, type RegisterCreditCardPaymentParams, type RegisterCreditCardPaymentResult } from '../../src/modules/creditCards/useCases/creditCardTransactionRelations';
+import { reconcileCreditCardTransactions, type RegisterCreditCardPaymentParams, type RegisterCreditCardPaymentResult } from './phase3ACreditCardRelations';
 import type { Transaction } from '../../src/modules/transactions/types';
 import type { Account } from '../../src/modules/accounts/types';
 function isRealCreditCardAccount(account: Account) { return account.type === 'creditCard' && account.status === 'active'; }

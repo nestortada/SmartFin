@@ -8,6 +8,7 @@ import { readCurrentManualTransaction } from '../../transactions/repositories/sq
 import { isSQLiteParticipant } from '../../../database/managedSQLite';
 import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
 import { withCreditCardPaymentScope } from './creditCardPaymentScope';
+import { readCreditCardReconciliationTransactions, type CreditCardReconciliationTransaction } from '../repositories/readCreditCardReconciliationTransactions';
 import type { CreditCardRepository } from '../repositories';
 import type { CreditCardStatement } from '../types';
 import {
@@ -145,7 +146,7 @@ function getCurrentStatementRange(
   };
 }
 
-function isPostedExpense(transaction: Transaction): boolean {
+function isPostedExpense(transaction: CreditCardReconciliationTransaction): boolean {
   return (
     transaction.status !== 'cancelled' &&
     transaction.direction === 'outflow' &&
@@ -153,7 +154,7 @@ function isPostedExpense(transaction: Transaction): boolean {
   );
 }
 
-function isPostedCreditCardPayment(transaction: Transaction, accountId: string): boolean {
+function isPostedCreditCardPayment(transaction: CreditCardReconciliationTransaction, accountId: string): boolean {
   return (
     transaction.status !== 'cancelled' &&
     transaction.type === 'creditCardPayment' &&
@@ -188,7 +189,7 @@ function isPaymentSourceAccount(account: Account): boolean {
   );
 }
 
-function sumAmounts(transactions: Transaction[]): number {
+function sumAmounts(transactions: CreditCardReconciliationTransaction[]): number {
   return transactions.reduce((total, transaction) => total + transaction.amount, 0);
 }
 
@@ -316,11 +317,11 @@ export async function reconcileCreditCardTransactions({
   currentDate = new Date(),
   transactionRepository,
 }: ReconcileCreditCardTransactionsParams): Promise<void> {
-  const [accounts, transactions] = await Promise.all([
-    accountRepository.getAccounts(),
-    transactionRepository.getTransactions(),
-  ]);
+  const accounts = await accountRepository.getAccounts();
   const creditCards = accounts.filter(isRealCreditCardAccount);
+  const transactions = await readCreditCardReconciliationTransactions(
+    transactionRepository, creditCards.map(account => account.id),
+  );
   const installments = await creditCardRepository.getInstallmentPurchases(
     creditCards.map(account => account.id),
   );

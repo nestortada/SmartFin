@@ -1,0 +1,80 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/subscriptions.test.ts
+
+PASS __tests__/subscriptions.test.ts (8.267 s)
+  √ transaction reconciliation uses the shared civil clock: due 2026-10-15 at [
+  2026,  9, 14,
+    23, 59, 59,
+   999
+] → pending (109 ms)
+  √ transaction reconciliation uses the shared civil clock: due 2026-10-15 at [
+  2026, 9, 15,
+     0, 0,  0,
+     0
+] → pending (77 ms)
+  √ transaction reconciliation uses the shared civil clock: due 2026-10-15 at [
+  2026,  9, 15,
+    23, 59, 59,
+   999
+] → pending (82 ms)
+  √ transaction reconciliation uses the shared civil clock: due 2026-10-15 at [
+  2026, 9, 16,
+     0, 0,  0,
+     0
+] → overdue (79 ms)
+  √ transaction reconciliation uses the shared civil clock: due 2026-10-31 at [
+  2026,  9, 30,
+    23, 59, 59,
+   999
+] → pending (75 ms)
+  √ transaction reconciliation uses the shared civil clock: due 2026-10-31 at [
+  2026,  9, 31,
+    23, 59, 59,
+   999
+] → pending (74 ms)
+  √ transaction reconciliation uses the shared civil clock: due 2026-10-31 at [
+  2026, 10, 1,
+     0,  0, 0,
+     0
+] → overdue (73 ms)
+  √ transaction reconciliation uses the shared civil clock: due 2026-12-31 at [
+  2027, 0, 1, 0,
+     0, 0, 0
+] → overdue (72 ms)
+  √ transaction reconciliation uses the shared civil clock: due 2027-02-28 at [
+  2027, 2, 1, 0,
+     0, 0, 0
+] → overdue (78 ms)
+  √ UI queries return reference names, paginate overdue charges and preserve balances (74 ms)
+  √ payment candidates reuse scoring, search manual candidates and exclude linked/incompatible transactions (57 ms)
+  √ suggested payment dates include exactly seven days and exclude eight days (35 ms)
+  √ subscription suggestions use the civil payment date across UTC midnight (35 ms)
+  √ Netflix lifecycle is projected, paid manually, and retains history without balance changes (113 ms)
+  √ synchronization and concurrent creation are idempotent, including backup revision (41 ms)
+  √ validates domain input and rolls back failed multi-entity mutations (62 ms)
+  √ payment edits update actual values and deletion restores an unresolved obligation atomically (44 ms)
+  √ rejects missing, cancelled, skipped and duplicate reconciliation (54 ms)
+  √ platform failures preserve SQLite intentions, permission denial and recovery are safe (31 ms)
+  √ legacy migration preserves data, is repeatable and rolls back failures (38 ms)
+  √ closed accounts produce configuration alerts and financial wipe leaves settings and schema intact (34 ms)
+  √ schedule edits preserve paid and past obligations, and only replace future periods (62 ms)
+  √ long pauses never backfill suspended periods or revive manual skips (42 ms)
+  √ annual charges always materialize the next obligation beyond the 90-day horizon (38 ms)
+  √ account UPSERT and category fallback preserve occurrences and transaction links (43 ms)
+  √ incompatible edits reopen paid occurrences and roll back when dependent writes fail (51 ms)
+  √ invalid legacy rules are quarantined with stable alerts without deleting their data (29 ms)
+  √ ranges are inclusive, history paginates, and summary computes annualized totals (37 ms)
+  √ bounded backlog processing still guarantees a future occurrence and converges (640 ms)
+  √ post-commit acknowledgement failure returns the saved subscription with a recoverable error (33 ms)
+  √ device timezone changes reschedule local reminders while preserving civil due dates (1035 ms)
+  √ synchronization at a later clock time avoids needless writes (30 ms)
+  √ editing a transaction linked to an old paid period updates history outside the future scope (38 ms)
+  √ one-date amount edits preserve the contract, other months, actual payment and balances (65 ms)
+  √ subscription category creation reuses category rules and validates expense parents (42 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       35 passed, 35 total
+Snapshots:   0 total
+Time:        8.632 s
+Ran all test suites matching /__tests__\\subscriptions.test.ts/i.
