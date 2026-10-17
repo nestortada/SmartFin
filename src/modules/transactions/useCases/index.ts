@@ -8,6 +8,7 @@ export {
   type SaveManualTransactionResult,
 } from './saveManualTransaction';
 export { updateTransactionQuickly } from './updateTransactionQuickly';
+export { getManualTransactionFormOptions } from './getManualTransactionFormOptions';
 export {
   applyClarificationAnswer,
   buildEditableFields,

@@ -64,12 +64,12 @@ export function subscriptionDate(value: string, long = false): string {
     timeZone: 'UTC',
   }).format(parseCivilDate(value));
 }
-/** Transaction instants follow the device zone; civil contractual dates stay unchanged. */
+/** Receives the movement's civil day, or the preserved legacy ISO prefix. */
 export function subscriptionTransactionDate(
   value: string,
   long = false,
 ): string {
-  return subscriptionDate(civilDate(new Date(value)), long);
+  return subscriptionDate(value.slice(0, 10), long);
 }
 export function recurrenceLabel(rule: SubscriptionRecurrence): string {
   if (rule.periodicity !== 'custom') return RECURRENCE_LABELS[rule.periodicity];

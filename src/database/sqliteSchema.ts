@@ -1,3 +1,5 @@
+import { SHARED_EXPENSE_SCHEMA, SHARED_EXPENSE_INDEXES, SHARED_EXPENSE_TRIGGERS } from '../modules/transactions/database/sharedExpenseSchema';
+import { SHARED_LOSS_SCHEMA } from '../modules/transactions/database/sharedLossSchema';
 export const SMARTFIN_DATABASE_NAME = 'smartfin.db';
 
 const BACKUP_TRACKED_TABLES = [
@@ -100,6 +102,10 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
     currency TEXT NOT NULL,
     description TEXT NOT NULL,
     date TEXT NOT NULL,
+    civil_date TEXT,
+    local_time TEXT,
+    time_zone TEXT,
+    date_precision TEXT,
     account_id TEXT NOT NULL,
     category_id TEXT,
     subcategory_id TEXT,
@@ -125,6 +131,10 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
     id TEXT PRIMARY KEY NOT NULL,
     transaction_id TEXT NOT NULL,
     split_type TEXT NOT NULL,
+    shared_expense_id TEXT REFERENCES shared_expenses(id),
+    contact_id TEXT REFERENCES shared_contacts(id),
+    amount_minor INTEGER CHECK(amount_minor IS NULL OR (typeof(amount_minor) = 'integer' AND amount_minor >= 0 AND amount_minor <= 9007199254740991)),
+    shared_active INTEGER NOT NULL DEFAULT 1 CHECK(shared_active IN (0,1)),
     amount REAL NOT NULL,
     currency TEXT NOT NULL,
     category_id TEXT,
@@ -451,5 +461,9 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
   'CREATE INDEX IF NOT EXISTS idx_cash_flow_events_expected_date ON cash_flow_events(expected_date);',
   'CREATE INDEX IF NOT EXISTS idx_smart_alerts_status ON smart_alerts(status);',
   'CREATE INDEX IF NOT EXISTS idx_financial_health_scores_calculated_at ON financial_health_scores(calculated_at);',
+  ...SHARED_EXPENSE_SCHEMA,
+  ...SHARED_EXPENSE_INDEXES,
+  ...SHARED_EXPENSE_TRIGGERS,
+  ...SHARED_LOSS_SCHEMA,
   ...BACKUP_REVISION_TRIGGER_STATEMENTS,
 ];

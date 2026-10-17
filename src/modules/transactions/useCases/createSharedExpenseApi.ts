@@ -1,0 +1,890 @@
+import type { TransactionDate } from '../../../shared/utils/transactionDate';
+import {
+  bogotaToday,
+  encodeTransactionDate,
+  transactionDateKey,
+} from '../../../shared/utils/transactionDate';
+import type { Transaction } from '../types';
+import { readCurrentManualTransaction } from '../repositories/sqliteTransactionRepository';
+import { forgive, recover, reverseLoss } from './sharedLossCommands';
+import {
+  forgivenMinor,
+  getSharedLossEntries,
+  type ForgivenessInput,
+  type RecoveryInput,
+  type LossReversalInput,
+} from './sharedLossDomain';
+import type {
+  SharedDistribution,
+  SharedExpenseState,
+} from '../types/SharedExpense';
+import type {
+  SharedExpenseContext,
+  SharedExpenseRepository,
+} from '../repositories/SharedExpenseRepository';
+import {
+  allocatedToParticipation,
+  availableReceipt,
+  distributeSharedExpense,
+  getPersonalFinancialEntries,
+  getSharedExpenseOverview,
+  getSharedFinancialPosition,
+  sumMinor,
+  toMinor,
+} from './sharedExpenseDomain';
+import {
+  saveManualTransaction,
+  deleteManualTransactionSafely,
+  type SaveManualTransactionParams,
+} from './saveManualTransaction';
+import {
+  sharedFinancialEffects,
+  sharedFinancialSnapshot,
+} from './sharedCommandEffects';
+
+type NewPurchase = Pick<
+  SaveManualTransactionParams,
+  | 'accountId'
+  | 'amount'
+  | 'categoryId'
+  | 'subcategoryId'
+  | 'merchantName'
+  | 'operationType'
+> & {
+  occurrence?: TransactionDate;
+  installmentCount?: number;
+  notes?: string;
+};
+type ReceiptInput = {
+  contactId: string;
+  transactionId?: string;
+  accountId?: string;
+  amount?: number;
+  occurrence?: TransactionDate;
+  description?: string;
+  applications?: { participationId: string; amount: number }[];
+  excessPolicy?: 'reject' | 'keepAsAdvance';
+};
+
+async function movement(
+  context: SharedExpenseContext,
+  id: string,
+): Promise<Transaction> {
+  const transaction = await readCurrentManualTransaction(
+    context.transactionRepository,
+    id,
+  );
+  if (!transaction) throw new Error('El movimiento no existe.');
+  return transaction;
+}
+function contact(state: SharedExpenseState, id: string) {
+  if (!state.contacts.some(c => c.id === id))
+    throw new Error('La persona no existe.');
+}
+async function requirePurchase(
+  context: SharedExpenseContext,
+  transaction: Transaction,
+) {
+  const account = (await context.accountRepository.getAccounts()).find(
+    a => a.id === transaction.accountId,
+  );
+  if (
+    transaction.type !== 'expense' ||
+    transaction.direction !== 'outflow' ||
+    transaction.status !== 'posted' ||
+    transaction.currency !== 'COP' ||
+    !account ||
+    (transaction.paymentMethod === 'credit' && account.type !== 'creditCard')
+  )
+    throw new Error(
+      'Usa una compra publicada; clasifica primero la tarjeta de crédito.',
+    );
+  toMinor(transaction.amount);
+}
+function setDistribution(
+  context: SharedExpenseContext,
+  expenseId: string,
+  transaction: Transaction,
+  distribution: SharedDistribution,
+) {
+  const parts = distributeSharedExpense(transaction.amount, distribution);
+  for (const part of parts)
+    if (part.contactId) contact(context.state, part.contactId);
+  const current = context.state.participations.filter(
+    p => p.expenseId === expenseId && p.active,
+  );
+  for (const previous of current) {
+    const next = parts.find(p => p.contactId === previous.contactId);
+    if (
+      (next?.amountMinor ?? 0) <
+      allocatedToParticipation(context.state, previous.id) +
+        forgivenMinor(context.state, previous.id)
+    )
+      throw new Error(
+        'Desvincula los abonos antes de reducir o eliminar esta participación.',
+      );
+    if (!next) {
+      previous.active = false;
+      previous.updatedAt = context.now;
+    }
+  }
+  parts.forEach((part, index) => {
+    const previous = current.find(p => p.contactId === part.contactId);
+    if (previous) {
+      previous.amountMinor = part.amountMinor;
+      previous.updatedAt = context.now;
+    } else
+      context.state.participations.push({
+        id: context.id(`split:${index}`),
+        expenseId,
+        transactionId: transaction.id,
+        ...part,
+        active: true,
+        createdAt: context.now,
+        updatedAt: context.now,
+      });
+  });
+  const expense = context.state.expenses.find(e => e.id === expenseId)!;
+  expense.distributionSnapshot = context.state.participations
+    .filter(p => p.expenseId === expenseId && p.active)
+    .map(({ id, contactId, amountMinor }) => ({
+      id,
+      ...(contactId ? { contactId } : {}),
+      amountMinor,
+    }));
+}
+function apply(
+  context: SharedExpenseContext,
+  receiptId: string,
+  participationId: string,
+  amount: number,
+  suffix: string,
+) {
+  const receipt = context.state.receipts.find(
+    r => r.id === receiptId && r.status === 'active',
+  );
+  const split = context.state.participations.find(
+    p => p.id === participationId && p.active && p.contactId,
+  );
+  if (
+    !receipt ||
+    !split ||
+    receipt.contactId !== split.contactId ||
+    !context.state.expenses.some(
+      e => e.id === split.expenseId && e.status === 'active',
+    )
+  )
+    throw new Error(
+      'El cobro y la participación deben pertenecer a la misma persona y estar activos.',
+    );
+  const amountMinor = toMinor(amount);
+  if (
+    context.state.lossEvents.some(
+      e => e.participationId === split.id && e.date > receipt.date,
+    )
+  )
+    throw new Error(
+      'El abono no puede preceder al historial de condonación; usa un cobro con fecha compatible.',
+    );
+  if (
+    amountMinor > availableReceipt(context.state, receiptId) ||
+    amountMinor >
+      split.amountMinor -
+        allocatedToParticipation(context.state, split.id) -
+        forgivenMinor(context.state, split.id)
+  )
+    throw new Error(
+      'El abono supera el dinero disponible o el importe pendiente.',
+    );
+  const id = context.id(suffix);
+  context.state.allocations.push({
+    id,
+    receiptId,
+    participationId,
+    amountMinor,
+    active: true,
+    createdAt: context.now,
+    updatedAt: context.now,
+  });
+  return id;
+}
+async function cashMovement(
+  context: SharedExpenseContext,
+  input: {
+    accountId: string;
+    amount: number;
+    occurrence?: TransactionDate;
+    description?: string;
+  },
+  direction: 'inflow' | 'outflow',
+): Promise<Transaction> {
+  toMinor(input.amount);
+  const accounts = await context.accountRepository.getAccounts();
+  const account = accounts.find(
+    a =>
+      a.id === input.accountId &&
+      a.status === 'active' &&
+      a.currency === 'COP' &&
+      ['cash', 'bankAccount', 'savingsAccount'].includes(a.type),
+  );
+  if (!account)
+    throw new Error(
+      'Selecciona una cuenta activa de efectivo, banco o ahorro.',
+    );
+  const amount =
+    account.balance.amount +
+    (direction === 'inflow' ? input.amount : -input.amount);
+  if (!Number.isFinite(amount)) throw new Error('Saldo inválido.');
+  const transaction: Transaction = {
+    id: context.id('movement'),
+    amount: input.amount,
+    currency: 'COP',
+    description:
+      input.description?.trim() ||
+      (direction === 'inflow'
+        ? 'Reembolso de gasto compartido'
+        : 'Devolución de anticipo'),
+    ...encodeTransactionDate(
+      input.occurrence ?? {
+        kind: 'date',
+        date: bogotaToday(new Date(context.now)),
+      },
+    ),
+    accountId: account.id,
+    type: 'refund',
+    direction,
+    status: 'posted',
+    paymentMethod: 'debit',
+    createdAt: context.now,
+    updatedAt: context.now,
+  };
+  if (
+    await readCurrentManualTransaction(
+      context.transactionRepository,
+      transaction.id,
+    )
+  )
+    throw new Error(
+      'La identidad del movimiento ya existe. Usa otro identificador de comando.',
+    );
+  await context.accountRepository.saveAccounts([
+    {
+      ...account,
+      balance: { ...account.balance, amount },
+      updatedAt: context.now,
+    },
+  ]);
+  await context.transactionRepository.saveTransactions([transaction]);
+  return transaction;
+}
+
+/** UI-independent local API. Each mutation requires a stable caller-owned command ID. */
+export function createSharedExpenseApi(repository: SharedExpenseRepository) {
+  const execute: SharedExpenseRepository['execute'] = (
+    commandId,
+    payload,
+    operation,
+  ) =>
+    repository.execute(commandId, payload, async context => {
+      // These commands cannot alter ledger rows or their personal projection.
+      // Equal totals subtract to zero; no historical REAL aggregation is needed.
+      const operationName = (payload as { operation?: string }).operation;
+      const stateOnly = [
+        'saveContact',
+        'applyReceipt',
+        'unlinkAllocation',
+        'forgiveParticipation',
+        'recoverForgiveness',
+        'reverseLossEvent',
+      ].includes(operationName ?? '');
+      if (context.readEffectTransactions && context.readTransactionChanges) {
+        const before = sharedFinancialSnapshot(
+          await context.accountRepository.getAccounts(),
+          stateOnly ? [] : await context.readEffectTransactions(),
+          context.state,
+        );
+        const result = await operation(context);
+        const after = sharedFinancialSnapshot(
+          await context.accountRepository.getAccounts(),
+          stateOnly ? [] : await context.readEffectTransactions(),
+          context.state,
+        );
+        return {
+          ...result,
+          ...(await context.readTransactionChanges()),
+          effects: sharedFinancialEffects(before, after),
+        };
+      }
+      const previousTransactions =
+        await context.transactionRepository.getTransactions();
+      const before = sharedFinancialSnapshot(
+        await context.accountRepository.getAccounts(),
+        previousTransactions,
+        context.state,
+      );
+      const result = await operation(context);
+      const transactions =
+        await context.transactionRepository.getTransactions();
+      const after = sharedFinancialSnapshot(
+        await context.accountRepository.getAccounts(),
+        transactions,
+        context.state,
+      );
+      const previousById = new Map(previousTransactions.map(t => [t.id, t]));
+      const currentIds = new Set(transactions.map(t => t.id));
+      return {
+        ...result,
+        transactions: transactions.filter(
+          t => JSON.stringify(t) !== JSON.stringify(previousById.get(t.id)),
+        ),
+        deletedTransactionIds: previousTransactions
+          .filter(t => !currentIds.has(t.id))
+          .map(t => t.id),
+        effects: sharedFinancialEffects(before, after),
+      };
+    });
+  return {
+    forgiveParticipation: (commandId: string, input: ForgivenessInput) =>
+      execute(
+        commandId,
+        { operation: 'forgiveParticipation', ...input },
+        async context => forgive(context, input),
+      ),
+    recoverForgiveness: (commandId: string, input: RecoveryInput) =>
+      execute(
+        commandId,
+        { operation: 'recoverForgiveness', ...input },
+        async context => recover(context, input),
+      ),
+    reverseLossEvent: (commandId: string, input: LossReversalInput) =>
+      execute(
+        commandId,
+        { operation: 'reverseLossEvent', ...input },
+        async context => reverseLoss(context, input),
+      ),
+    getLossEntries: async (startDate?: string, endDateExclusive?: string) =>
+      getSharedLossEntries(
+        await repository.getState(),
+        startDate,
+        endDateExclusive,
+      ),
+    getLossPeriodTotals: (startDate: string, endDateExclusive: string) =>
+      repository.getLossPeriodTotals(startDate, endDateExclusive),
+    previewForgiveness: async (input: ForgivenessInput) => {
+      const state = await repository.getState();
+      // The pure command validates the same rules against a disposable read snapshot.
+      forgive({ state, now: '', id: () => 'preview' }, input);
+      return {
+        bankBalanceDelta: 0,
+        debtDelta: 0,
+        incomeDelta: 0,
+        personalExpenseDelta: 0,
+        receivableDelta: -input.amount,
+        netWorthDelta: -input.amount,
+        recognizedLossDelta: input.amount,
+        bankInflowDelta: 0,
+        bankOutflowDelta: 0,
+      };
+    },
+    previewRecovery: async (input: RecoveryInput) => {
+      const state = await repository.getState();
+      recover({ state, now: '', id: () => 'preview' }, input);
+      return {
+        bankBalanceDelta: 0,
+        debtDelta: 0,
+        incomeDelta: 0,
+        personalExpenseDelta: 0,
+        receivableDelta: 0,
+        thirdPartyAdvanceDelta: -input.amount,
+        netWorthDelta: input.amount,
+        recognizedLossDelta: -input.amount,
+        bankInflowDelta: 0,
+        bankOutflowDelta: 0,
+      };
+    },
+    previewLossReversal: async (input: LossReversalInput) => {
+      const state = await repository.getState();
+      const event = state.lossEvents.find(e => e.id === input.eventId);
+      reverseLoss({ state, now: '', id: () => 'preview' }, input);
+      const amount = event!.amountMinor / 100;
+      const forgiveness = event!.kind === 'forgiveness';
+      return {
+        bankBalanceDelta: 0,
+        debtDelta: 0,
+        incomeDelta: 0,
+        personalExpenseDelta: 0,
+        receivableDelta: forgiveness ? amount : 0,
+        thirdPartyAdvanceDelta: forgiveness ? 0 : amount,
+        netWorthDelta: forgiveness ? amount : -amount,
+        recognizedLossDelta: forgiveness ? -amount : amount,
+        bankInflowDelta: 0,
+        bankOutflowDelta: 0,
+      };
+    },
+    listContacts: async () => (await repository.getState()).contacts,
+    saveContact: (commandId: string, name: string, contactId?: string) =>
+      execute(
+        commandId,
+        { operation: 'saveContact', name, contactId },
+        async context => {
+          if (!name.trim()) throw new Error('Indica el nombre de la persona.');
+          const existing = context.state.contacts.find(c => c.id === contactId);
+          if (contactId && !existing) throw new Error('La persona no existe.');
+          if (existing) {
+            existing.name = name.trim();
+            existing.updatedAt = context.now;
+            return { entityId: existing.id };
+          }
+          const id = context.id('contact');
+          context.state.contacts.push({
+            id,
+            name: name.trim(),
+            createdAt: context.now,
+            updatedAt: context.now,
+          });
+          return { entityId: id };
+        },
+      ),
+    sharePurchase: (
+      commandId: string,
+      input: { transactionId: string; distribution: SharedDistribution },
+    ) =>
+      execute(
+        commandId,
+        { operation: 'sharePurchase', ...input },
+        async context => {
+          const transaction = await movement(context, input.transactionId);
+          await requirePurchase(context, transaction);
+          if (
+            context.state.expenses.some(e => e.transactionId === transaction.id)
+          )
+            throw new Error(
+              'La compra ya tiene un historial de reparto. Modifica o reactiva su división.',
+            );
+          const id = context.id('expense');
+          context.state.expenses.push({
+            id,
+            transactionId: transaction.id,
+            totalMinor: toMinor(transaction.amount),
+            distributionSnapshot: [],
+            date: transactionDateKey(transaction),
+            description: transaction.description,
+            status: 'active',
+            createdAt: context.now,
+            updatedAt: context.now,
+          });
+          setDistribution(context, id, transaction, input.distribution);
+          return { entityId: id, transaction };
+        },
+      ),
+    createPurchase: (
+      commandId: string,
+      input: { purchase: NewPurchase; distribution: SharedDistribution },
+    ) =>
+      execute(
+        commandId,
+        { operation: 'createPurchase', ...input },
+        async context => {
+          const purchase = input.purchase;
+          const accounts = await context.accountRepository.getAccounts();
+          const saved = await saveManualTransaction({
+            ...context,
+            now: new Date(context.now),
+            accounts,
+            ...purchase,
+            occurrence: purchase.occurrence ?? {
+              kind: 'date',
+              date: bogotaToday(new Date(context.now)),
+            },
+            transactionType: 'expense',
+            dedupeKey: context.id('purchase'),
+            hasInterestFreeInstallments: false,
+            installmentCountInput: String(purchase.installmentCount ?? 1),
+            interestFreeInstallmentCountInput: '',
+          });
+          await requirePurchase(context, saved.transaction);
+          const id = context.id('expense');
+          context.state.expenses.push({
+            id,
+            transactionId: saved.transaction.id,
+            totalMinor: toMinor(saved.transaction.amount),
+            distributionSnapshot: [],
+            date: transactionDateKey(saved.transaction),
+            description: saved.transaction.description,
+            status: 'active',
+            createdAt: context.now,
+            updatedAt: context.now,
+          });
+          setDistribution(context, id, saved.transaction, input.distribution);
+          return { entityId: id, transaction: saved.transaction };
+        },
+      ),
+    updateDistribution: (
+      commandId: string,
+      expenseId: string,
+      distribution: SharedDistribution,
+    ) =>
+      execute(
+        commandId,
+        { operation: 'updateDistribution', expenseId, distribution },
+        async context => {
+          const expense = context.state.expenses.find(
+            e =>
+              e.id === expenseId && e.transactionId && e.status !== 'deleted',
+          );
+          if (!expense?.transactionId)
+            throw new Error('El gasto ya no existe.');
+          const transaction = await movement(context, expense.transactionId);
+          await requirePurchase(context, transaction);
+          setDistribution(context, expenseId, transaction, distribution);
+          expense.status = 'active';
+          expense.updatedAt = context.now;
+          return { entityId: expense.id, transaction };
+        },
+      ),
+    updatePurchase: (
+      commandId: string,
+      expenseId: string,
+      purchase: NewPurchase,
+      distribution: SharedDistribution,
+    ) =>
+      execute(
+        commandId,
+        { operation: 'updatePurchase', expenseId, purchase, distribution },
+        async context => {
+          const expense = context.state.expenses.find(
+            e => e.id === expenseId && e.status === 'active',
+          );
+          if (!expense?.transactionId)
+            throw new Error('La división ya no está activa.');
+          const existing = await movement(context, expense.transactionId);
+          const existingInstallments = (
+            await context.creditCardRepository.getInstallmentPurchases([
+              existing.accountId,
+            ])
+          ).find(p => p.transactionId === existing.id);
+          const existingInterestFree = Number(
+            /Sin intereses: (\d+)/.exec(existing.notes ?? '')?.[1] ?? 0,
+          );
+          setDistribution(
+            context,
+            expenseId,
+            { ...existing, amount: purchase.amount },
+            distribution,
+          );
+          expense.totalMinor = toMinor(purchase.amount);
+          expense.updatedAt = context.now;
+          await context.flushState();
+          const saved = await saveManualTransaction({
+            ...context,
+            now: new Date(context.now),
+            ...purchase,
+            accounts: await context.accountRepository.getAccounts(),
+            editingTransaction: existing,
+            transactionType: 'expense',
+            hasInterestFreeInstallments: existingInterestFree > 0,
+            installmentCountInput: String(
+              purchase.installmentCount ??
+                existingInstallments?.installmentCount ??
+                1,
+            ),
+            interestFreeInstallmentCountInput: String(existingInterestFree),
+          });
+          expense.date = transactionDateKey(saved.transaction);
+          expense.description = saved.transaction.description;
+          return { entityId: expenseId, transaction: saved.transaction };
+        },
+      ),
+    recordReceipt: (commandId: string, input: ReceiptInput) =>
+      execute(
+        commandId,
+        { operation: 'recordReceipt', ...input },
+        async context => {
+          contact(context.state, input.contactId);
+          if (
+            input.transactionId &&
+            (input.amount !== undefined || input.accountId || input.occurrence)
+          )
+            throw new Error(
+              'Al vincular usa el importe, la cuenta y la fecha del movimiento existente.',
+            );
+          const transaction = input.transactionId
+            ? await movement(context, input.transactionId)
+            : await cashMovement(
+                context,
+                {
+                  accountId: input.accountId ?? '',
+                  amount: input.amount ?? NaN,
+                  occurrence: input.occurrence,
+                  description: input.description,
+                },
+                'inflow',
+              );
+          const account = (await context.accountRepository.getAccounts()).find(
+            a => a.id === transaction.accountId,
+          );
+          if (
+            transaction.status !== 'posted' ||
+            transaction.direction !== 'inflow' ||
+            transaction.currency !== 'COP' ||
+            !['income', 'refund', 'manualAdjustment'].includes(
+              transaction.type,
+            ) ||
+            transaction.targetAccountId ||
+            transaction.paymentMethod === 'credit' ||
+            !account ||
+            !['cash', 'bankAccount', 'savingsAccount'].includes(account.type)
+          )
+            throw new Error(
+              'Vincula una entrada publicada de terceros; no una transferencia propia ni un pago de tarjeta.',
+            );
+          if (
+            context.state.receipts.some(
+              r => r.transactionId === transaction.id,
+            ) ||
+            context.state.returns.some(r => r.transactionId === transaction.id)
+          )
+            throw new Error('El movimiento ya está vinculado.');
+          const id = context.id('receipt');
+          context.state.receipts.push({
+            id,
+            transactionId: transaction.id,
+            contactId: input.contactId,
+            amountMinor: toMinor(transaction.amount),
+            date: transactionDateKey(transaction),
+            status: 'active',
+            createdAt: context.now,
+            updatedAt: context.now,
+          });
+          (input.applications ?? []).forEach((application, index) =>
+            apply(
+              context,
+              id,
+              application.participationId,
+              application.amount,
+              `application:${index}`,
+            ),
+          );
+          if (
+            input.applications?.length &&
+            availableReceipt(context.state, id) > 0 &&
+            input.excessPolicy !== 'keepAsAdvance'
+          )
+            throw new Error(
+              'El cobro tiene un excedente. Indica explícitamente si conservarlo como anticipo.',
+            );
+          return { entityId: id, transaction };
+        },
+      ),
+    applyReceipt: (
+      commandId: string,
+      receiptId: string,
+      participationId: string,
+      amount: number,
+    ) =>
+      execute(
+        commandId,
+        { operation: 'applyReceipt', receiptId, participationId, amount },
+        async context => ({
+          entityId: apply(
+            context,
+            receiptId,
+            participationId,
+            amount,
+            'application',
+          ),
+        }),
+      ),
+    unlinkAllocation: (commandId: string, allocationId: string) =>
+      execute(
+        commandId,
+        { operation: 'unlinkAllocation', allocationId },
+        async context => {
+          const allocation = context.state.allocations.find(
+            a => a.id === allocationId && a.active,
+          );
+          if (!allocation) throw new Error('El abono ya no está aplicado.');
+          allocation.active = false;
+          allocation.updatedAt = context.now;
+          return { entityId: allocation.id };
+        },
+      ),
+    returnAdvance: (
+      commandId: string,
+      input: {
+        receiptId: string;
+        accountId: string;
+        amount: number;
+        occurrence?: TransactionDate;
+      },
+    ) =>
+      execute(
+        commandId,
+        { operation: 'returnAdvance', ...input },
+        async context => {
+          const amountMinor = toMinor(input.amount);
+          if (amountMinor > availableReceipt(context.state, input.receiptId))
+            throw new Error(
+              'Desvincula primero los abonos; la devolución supera el anticipo disponible.',
+            );
+          const transaction = await cashMovement(context, input, 'outflow');
+          const receipt = context.state.receipts.find(
+            r => r.id === input.receiptId,
+          )!;
+          if (transactionDateKey(transaction) < receipt.date)
+            throw new Error('La devolución no puede ser anterior al cobro.');
+          const id = context.id('return');
+          context.state.returns.push({
+            id,
+            receiptId: input.receiptId,
+            transactionId: transaction.id,
+            amountMinor,
+            date: transactionDateKey(transaction),
+            status: 'active',
+            createdAt: context.now,
+            updatedAt: context.now,
+          });
+          return { entityId: id, transaction };
+        },
+      ),
+    cancelDivision: (commandId: string, expenseId: string) =>
+      execute(
+        commandId,
+        { operation: 'cancelDivision', expenseId },
+        async context => {
+          const expense = context.state.expenses.find(
+            e => e.id === expenseId && e.status === 'active',
+          );
+          if (!expense) throw new Error('La división ya no está activa.');
+          if (
+            context.state.participations.some(
+              p =>
+                p.expenseId === expense.id &&
+                (allocatedToParticipation(context.state, p.id) > 0 ||
+                  forgivenMinor(context.state, p.id) > 0),
+            )
+          )
+            throw new Error(
+              'Desvincula o devuelve los abonos antes de cancelar la división.',
+            );
+          expense.status = 'cancelled';
+          expense.updatedAt = context.now;
+          return { entityId: expense.id };
+        },
+      ),
+    deleteMovement: (commandId: string, transactionId: string) =>
+      execute(
+        commandId,
+        { operation: 'deleteMovement', transactionId },
+        async context => {
+          const transaction = await movement(context, transactionId);
+          await deleteManualTransactionSafely({
+            ...context,
+            transaction,
+            accounts: await context.accountRepository.getAccounts(),
+          });
+          Object.assign(context.state, await context.reloadState());
+          return { entityId: transactionId, transaction };
+        },
+      ),
+    getHistory: async () => {
+      const state = await repository.getState();
+      return {
+        expenses: state.expenses.map(e =>
+          getSharedExpenseOverview(state, e.id),
+        ),
+        receipts: state.receipts,
+        allocations: state.allocations,
+        returns: state.returns,
+        lossEvents: state.lossEvents,
+      };
+    },
+    getExpense: async (id: string) =>
+      getSharedExpenseOverview(await repository.getState(), id),
+    getPosition: async (asOf?: string) =>
+      getSharedFinancialPosition(await repository.getState(), asOf),
+    getPersonalEntries: async (transactions: Transaction[]) =>
+      getPersonalFinancialEntries(transactions, await repository.getState()),
+    previewCancellation: async (id: string) => {
+      const state = await repository.getState();
+      const overview = getSharedExpenseOverview(state, id);
+      const active = overview.expense.status === 'active';
+      return {
+        blocked:
+          !active || overview.receivedAmount > 0 || overview.forgivenAmount > 0,
+        bankBalanceDelta: 0,
+        personalExpenseDelta: active
+          ? overview.expense.totalMinor / 100 - overview.personalAmount
+          : 0,
+        receivableDelta: -overview.pendingAmount,
+        incomeDelta: 0,
+      };
+    },
+    previewDistribution: async (
+      expenseId: string,
+      distribution: SharedDistribution,
+    ) => {
+      const state = await repository.getState();
+      const previous = getSharedExpenseOverview(state, expenseId);
+      if (previous.expense.status === 'deleted')
+        throw new Error('La compra ya no existe.');
+      const parts = distributeSharedExpense(
+        previous.expense.totalMinor / 100,
+        distribution,
+      );
+      for (const part of parts)
+        if (part.contactId) contact(state, part.contactId);
+      const existing = state.participations.filter(
+        p => p.expenseId === expenseId && p.active,
+      );
+      const blocked = existing.some(
+        p =>
+          (parts.find(part => part.contactId === p.contactId)?.amountMinor ??
+            0) <
+          allocatedToParticipation(state, p.id) + forgivenMinor(state, p.id),
+      );
+      const pending =
+        sumMinor(parts.filter(p => p.contactId).map(p => p.amountMinor)) / 100 -
+        previous.receivedAmount -
+        previous.forgivenAmount;
+      return {
+        blocked,
+        bankBalanceDelta: 0,
+        incomeDelta: 0,
+        personalExpenseDelta:
+          parts[0]!.amountMinor / 100 -
+          (previous.expense.status === 'active'
+            ? previous.personalAmount
+            : previous.expense.totalMinor / 100),
+        receivableDelta: pending - previous.pendingAmount,
+        netWorthDelta: pending - previous.pendingAmount,
+      };
+    },
+    previewReceiptLink: async (transaction: Transaction) => {
+      const state = await repository.getState();
+      if (
+        transaction.status !== 'posted' ||
+        transaction.direction !== 'inflow' ||
+        transaction.currency !== 'COP' ||
+        !['income', 'refund', 'manualAdjustment'].includes(transaction.type) ||
+        transaction.targetAccountId ||
+        transaction.paymentMethod === 'credit' ||
+        state.receipts.some(r => r.transactionId === transaction.id) ||
+        state.returns.some(r => r.transactionId === transaction.id)
+      )
+        throw new Error('El movimiento no es un cobro de terceros disponible.');
+      toMinor(transaction.amount);
+      return {
+        bankBalanceDelta: 0,
+        incomeDelta:
+          transaction.type === 'income' &&
+          transaction.direction === 'inflow' &&
+          transaction.status === 'posted'
+            ? -transaction.amount
+            : 0,
+        thirdPartyAdvanceDelta: transaction.amount,
+        netWorthDelta: -transaction.amount,
+      };
+    },
+  };
+}

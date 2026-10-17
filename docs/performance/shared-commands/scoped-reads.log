@@ -1,0 +1,12 @@
+PASS __tests__/sharedCommandReads.test.ts
+  √ loss, recovery and allocation commands never transport ledger rows (34 ms)
+  √ narrow posted projection retains exact REAL reductions with ties, old statuses, closed accounts and credit (17 ms)
+  √ changed rows span Android-safe parameter batches and retain global ledger order (193 ms)
+  √ failure while reading changed rows rolls back bank, movement, sharing and idempotency receipt (23 ms)
+  √ deleting a transfer through the shared facade preserves companion ordering and exact tax reversal (18 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        2.118 s
+Ran all test suites matching /__tests__\\sharedCommandReads.test.ts/i.

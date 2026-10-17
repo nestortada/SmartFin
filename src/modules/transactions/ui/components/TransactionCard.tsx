@@ -157,7 +157,9 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
             {getAccountInfo(tx.accountId)}
           </Text>
         </View>
-
+        {tx.datePrecision === 'dateTime' && tx.localTime ? (
+          <Text style={[styles.accText, { color: themeColors.muted }]}>{tx.localTime} · Colombia</Text>
+        ) : null}
       </View>
 
       <View style={styles.txRight}>

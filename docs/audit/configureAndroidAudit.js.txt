@@ -1,0 +1,28 @@
+const fs = require('node:fs');
+const child = require('node:child_process');
+const ts = require('typescript');
+const root = 'C:/sf-audit-20261012';
+const repo = 'C:/Users/nesto/Proyectos/SmartFin';
+for (const file of ['android/app/build.gradle', 'android/app/src/main/java/com/smartfin/BenchmarkPackage.kt']) {
+  const location = `${root}/${file}`;
+  fs.writeFileSync(location, fs.readFileSync(location, 'utf8').replaceAll('com.smartfin.dashboardphase2.bench', 'com.smartfin.sharedaudit.bench'));
+}
+const legacy = child.execFileSync('git', ['show', 'HEAD:src/database/sqliteSchema.ts'], { cwd: repo, encoding: 'utf8' });
+const moduleValue = { exports: {} };
+new Function('module', 'exports', ts.transpileModule(legacy, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText)(moduleValue, moduleValue.exports);
+fs.writeFileSync(`${root}/legacySchema.json`, JSON.stringify(moduleValue.exports.SQLITE_SCHEMA_STATEMENTS));
+// Undo benchmark timing wrappers: exercise the exact current production sources.
+for (const file of ['src/modules/dashboard/useCases/getDashboardSummary.ts', 'src/modules/accounts/repositories/sqliteAccountRepository.ts', 'src/modules/transactions/repositories/sqliteTransactionRepository.ts']) fs.copyFileSync(`${repo}/${file}`, `${root}/${file}`);
+const native = `${root}/android/app/src/main/java/com/smartfin/BenchmarkPackage.kt`;
+let source = fs.readFileSync(native, 'utf8');
+source = source.replace('@ReactMethod fun writeFunctional', `@ReactMethod fun copySynthetic(promise: Promise) {
+  guard()
+  try {
+    val original=context.getDatabasePath("dashboard_phase2_v3_0.db")
+    val target=context.getDatabasePath("audit-copy.db")
+    original.copyTo(target,overwrite=true)
+    promise.resolve("audit-copy.db")
+  } catch(error: Throwable) { promise.reject("COPY",error) }
+}
+@ReactMethod fun writeFunctional`);
+fs.writeFileSync(native, source);

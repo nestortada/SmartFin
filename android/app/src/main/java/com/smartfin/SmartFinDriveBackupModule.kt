@@ -385,7 +385,7 @@ class SmartFinDriveBackupModule(
   private fun queryYears(database: SQLiteDatabase): List<String> {
     val years = mutableListOf<String>()
     database.rawQuery(
-        "SELECT DISTINCT substr(date, 1, 4) AS year FROM transactions " +
+        "SELECT DISTINCT substr(COALESCE(civil_date, date), 1, 4) AS year FROM transactions " +
             "WHERE date GLOB '[0-9][0-9][0-9][0-9]-*' ORDER BY year;",
         null,
     ).use { cursor ->
@@ -433,10 +433,18 @@ class SmartFinDriveBackupModule(
                     "WHERE a.type = 'credit_card' ORDER BY a.name;",
             ),
             CsvExport("compras-cuotas.csv", "SELECT * FROM installment_purchases ORDER BY created_at;"),
+            CsvExport("personas.csv", "SELECT * FROM shared_contacts ORDER BY name;"),
+            CsvExport("gastos-compartidos.csv", "SELECT * FROM shared_expenses ORDER BY date;"),
+            CsvExport("participaciones.csv", "SELECT * FROM transaction_splits WHERE shared_expense_id IS NOT NULL ORDER BY created_at;"),
+            CsvExport("reembolsos.csv", "SELECT * FROM shared_receipts ORDER BY date;"),
+            CsvExport("abonos-compartidos.csv", "SELECT * FROM shared_allocations ORDER BY created_at;"),
+            CsvExport("devoluciones-anticipos.csv", "SELECT * FROM shared_returns ORDER BY date;"),
         )
 
     private const val YEARLY_TRANSACTIONS_QUERY =
-        "SELECT t.id, t.date AS fecha, t.description AS descripcion, " +
+        "SELECT t.id, COALESCE(t.civil_date, substr(t.date,1,10)) AS fecha, " +
+            "t.local_time AS hora, t.time_zone AS zona_horaria, t.date_precision AS precision_fecha, " +
+            "t.date AS fecha_original, t.description AS descripcion, " +
             "t.amount AS monto, t.currency AS moneda, t.type AS tipo, " +
             "t.direction AS direccion, t.status AS estado, " +
             "a.name AS cuenta, ta.name AS cuenta_destino, " +
@@ -449,6 +457,7 @@ class SmartFinDriveBackupModule(
             "LEFT JOIN accounts ta ON ta.id = t.target_account_id " +
             "LEFT JOIN categories c ON c.id = t.category_id " +
             "LEFT JOIN subcategories s ON s.id = t.subcategory_id " +
-            "WHERE substr(t.date, 1, 4) = ? ORDER BY t.date, t.created_at;"
+            "WHERE substr(COALESCE(t.civil_date, t.date), 1, 4) = ? " +
+            "ORDER BY COALESCE(t.civil_date, substr(t.date,1,10)), t.local_time, t.created_at;"
   }
 }

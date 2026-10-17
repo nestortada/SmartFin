@@ -1,0 +1,362 @@
+import {
+  transactionDateKey,
+  validateCivilDate,
+} from '../../../shared/utils/transactionDate';
+import type { Transaction } from '../types';
+import {
+  forgivenMinor,
+  recoveredReceiptMinor,
+  lossMinor,
+  obligationStatus,
+} from './sharedLossDomain';
+import type {
+  SharedDistribution,
+  SharedExpenseOverview,
+  SharedExpenseState,
+  SharedFinancialPosition,
+} from '../types/SharedExpense';
+
+export function toMinor(amount: number, allowZero = false): number {
+  if (!Number.isFinite(amount) || amount < 0 || (!allowZero && amount === 0))
+    throw new Error('El importe debe ser positivo y finito.');
+  // Decimal string conversion avoids multiplying binary fractions by 100.
+  const match = /^(\d+)(?:\.(\d{1,2}))?$/.exec(String(amount));
+  if (!match) throw new Error('Usa como máximo dos decimales.');
+  const cents =
+    BigInt(match[1]!) * 100n + BigInt((match[2] ?? '').padEnd(2, '0'));
+  if (cents > BigInt(Number.MAX_SAFE_INTEGER))
+    throw new Error('Importe fuera del rango seguro.');
+  return Number(cents);
+}
+
+export function sumMinor(values: number[]): number {
+  const total = values.reduce((sum, value) => {
+    if (!Number.isSafeInteger(value) || value < 0)
+      throw new Error('Importe en centavos inválido.');
+    return sum + BigInt(value);
+  }, 0n);
+  if (total > BigInt(Number.MAX_SAFE_INTEGER))
+    throw new Error('Saldo de terceros fuera del rango seguro.');
+  return Number(total);
+}
+
+export function distributeSharedExpense(
+  total: number,
+  distribution: SharedDistribution,
+): { contactId?: string; amountMinor: number }[] {
+  const totalMinor = toMinor(total);
+  const ids = distribution.participants.map(p => p.contactId);
+  if (
+    !ids.length ||
+    ids.some(id => !id.trim()) ||
+    new Set(ids).size !== ids.length
+  )
+    throw new Error(
+      'Indica personas diferentes con una participación positiva.',
+    );
+  if (distribution.mode === 'amounts') {
+    const result = [
+      { amountMinor: toMinor(distribution.personalAmount, true) },
+      ...distribution.participants.map(p => ({
+        contactId: p.contactId,
+        amountMinor: toMinor(p.amount),
+      })),
+    ];
+    if (
+      result.reduce((sum, p) => sum + BigInt(p.amountMinor), 0n) !==
+      BigInt(totalMinor)
+    )
+      throw new Error('Las participaciones deben sumar el valor de la compra.');
+    return result;
+  }
+  const weights = [
+    {
+      contactId: undefined,
+      weight: toMinor(distribution.personalPercentage, true),
+    },
+    ...distribution.participants.map(p => ({
+      contactId: p.contactId,
+      weight: toMinor(p.percentage),
+    })),
+  ];
+  if (sumMinor(weights.map(p => p.weight)) !== 10000)
+    throw new Error('Los porcentajes deben sumar 100 %.');
+  const rows = weights.map((p, index) => {
+    const product = BigInt(totalMinor) * BigInt(p.weight);
+    return {
+      contactId: p.contactId,
+      amountMinor: Number(product / 10000n),
+      remainder: Number(product % 10000n),
+      index,
+    };
+  });
+  let remaining = totalMinor - rows.reduce((sum, p) => sum + p.amountMinor, 0);
+  const ordered = [...rows].sort(
+    (a, b) => b.remainder - a.remainder || a.index - b.index,
+  );
+  for (const row of ordered) {
+    if (!remaining) break;
+    row.amountMinor++;
+    remaining--;
+  }
+  if (rows.some(p => p.contactId && p.amountMinor === 0))
+    throw new Error(
+      'La participación redondeada de cada persona debe ser positiva.',
+    );
+  return rows.map(({ contactId, amountMinor }) => ({ contactId, amountMinor }));
+}
+
+export function allocatedToParticipation(
+  state: SharedExpenseState,
+  id: string,
+): number {
+  return sumMinor(
+    state.allocations
+      .filter(a => a.active && a.participationId === id)
+      .map(a => a.amountMinor),
+  );
+}
+export function availableReceipt(
+  state: SharedExpenseState,
+  id: string,
+): number {
+  const receipt = state.receipts.find(
+    r => r.id === id && r.status === 'active',
+  );
+  if (!receipt) throw new Error('El cobro ya no está disponible.');
+  return (
+    receipt.amountMinor -
+    sumMinor([
+      ...state.allocations
+        .filter(a => a.active && a.receiptId === id)
+        .map(a => a.amountMinor),
+      ...state.returns
+        .filter(r => r.status === 'active' && r.receiptId === id)
+        .map(r => r.amountMinor),
+      recoveredReceiptMinor(state, id),
+    ])
+  );
+}
+
+export function getSharedExpenseOverview(
+  state: SharedExpenseState,
+  expenseId: string,
+): SharedExpenseOverview {
+  const expense = state.expenses.find(e => e.id === expenseId);
+  if (!expense) throw new Error('El gasto compartido no existe.');
+  const splits =
+    expense.status === 'deleted'
+      ? expense.distributionSnapshot
+      : state.participations.filter(
+          p => p.expenseId === expense.id && p.active,
+        );
+  const participants = splits
+    .filter(p => p.contactId)
+    .map(p => {
+      const receivedMinor = allocatedToParticipation(state, p.id);
+      const forgiven = forgivenMinor(state, p.id);
+      const recovered = -lossMinor(
+        state.lossEvents.filter(
+          e =>
+            e.participationId === p.id &&
+            (e.kind === 'recovery' || e.kind === 'recoveryReversal'),
+        ),
+      );
+      const pending =
+        expense.status === 'active'
+          ? p.amountMinor - receivedMinor - forgiven
+          : 0;
+      return {
+        participationId: p.id,
+        contactId: p.contactId!,
+        name: state.contacts.find(c => c.id === p.contactId)?.name ?? '',
+        amount: p.amountMinor / 100,
+        receivedAmount: receivedMinor / 100,
+        pendingAmount: pending / 100,
+        forgivenAmount: forgiven / 100,
+        recoveredAmount: recovered / 100,
+        status: obligationStatus(pending, receivedMinor, forgiven),
+      };
+    });
+  const thirdPartySplits = splits.filter(p => p.contactId);
+  const receivedAmount =
+    sumMinor(thirdPartySplits.map(p => allocatedToParticipation(state, p.id))) /
+    100;
+  const pendingAmount =
+    expense.status === 'active'
+      ? sumMinor(
+          thirdPartySplits.map(
+            p =>
+              p.amountMinor -
+              allocatedToParticipation(state, p.id) -
+              forgivenMinor(state, p.id),
+          ),
+        ) / 100
+      : 0;
+  return {
+    expense,
+    participants,
+    personalAmount: (splits.find(p => !p.contactId)?.amountMinor ?? 0) / 100,
+    receivedAmount,
+    pendingAmount,
+    forgivenAmount:
+      sumMinor(thirdPartySplits.map(p => forgivenMinor(state, p.id))) / 100,
+    recoveredAmount:
+      sumMinor(
+        thirdPartySplits.map(
+          p =>
+            -lossMinor(
+              state.lossEvents.filter(
+                e =>
+                  e.participationId === p.id &&
+                  (e.kind === 'recovery' || e.kind === 'recoveryReversal'),
+              ),
+            ),
+        ),
+      ) / 100,
+    status: obligationStatus(
+      pendingAmount,
+      receivedAmount,
+      sumMinor(thirdPartySplits.map(p => forgivenMinor(state, p.id))),
+    ),
+  };
+}
+
+export function getSharedFinancialPosition(
+  state: SharedExpenseState,
+  asOf?: string,
+): SharedFinancialPosition {
+  if (asOf) validateCivilDate(asOf);
+  const included = (date: string) => !asOf || date <= asOf;
+  const activeExpenseIds = new Set(
+    state.expenses
+      .filter(e => e.status === 'active' && included(e.date))
+      .map(e => e.id),
+  );
+  const contacts = state.contacts.map(contact => {
+    const splits = state.participations.filter(
+      p =>
+        p.active &&
+        p.contactId === contact.id &&
+        activeExpenseIds.has(p.expenseId),
+    );
+    let receivableMinor = 0;
+    let appliedMinor = 0;
+    for (const p of splits) {
+      const applied = sumMinor(
+        state.allocations
+          .filter(
+            a =>
+              a.active &&
+              a.participationId === p.id &&
+              state.receipts.some(
+                r =>
+                  r.id === a.receiptId &&
+                  r.status === 'active' &&
+                  included(r.date),
+              ),
+          )
+          .map(a => a.amountMinor),
+      );
+      receivableMinor = sumMinor([
+        receivableMinor,
+        p.amountMinor - applied - forgivenMinor(state, p.id, asOf),
+      ]);
+      appliedMinor = sumMinor([appliedMinor, applied]);
+    }
+    const received = sumMinor(
+      state.receipts
+        .filter(
+          r =>
+            r.contactId === contact.id &&
+            r.status === 'active' &&
+            included(r.date),
+        )
+        .map(r => r.amountMinor),
+    );
+    const returned = sumMinor(
+      state.returns
+        .filter(
+          r =>
+            r.status === 'active' &&
+            included(r.date) &&
+            state.receipts.some(
+              receipt =>
+                receipt.id === r.receiptId &&
+                receipt.contactId === contact.id &&
+                receipt.status === 'active' &&
+                included(receipt.date),
+            ),
+        )
+        .map(r => r.amountMinor),
+    );
+    const recovered = sumMinor(
+      state.receipts
+        .filter(
+          r =>
+            r.contactId === contact.id &&
+            r.status === 'active' &&
+            included(r.date),
+        )
+        .map(r => recoveredReceiptMinor(state, r.id, asOf)),
+    );
+    if (
+      ![receivableMinor, appliedMinor, received, returned].every(
+        Number.isSafeInteger,
+      )
+    )
+      throw new Error('Saldo de terceros fuera del rango seguro.');
+    return {
+      contactId: contact.id,
+      name: contact.name,
+      receivable: receivableMinor / 100,
+      advance: (received - appliedMinor - returned - recovered) / 100,
+      receivableMinor,
+      advanceMinor: received - appliedMinor - returned - recovered,
+    };
+  });
+  return {
+    contacts: contacts.map(c => ({
+      contactId: c.contactId,
+      name: c.name,
+      receivable: c.receivable,
+      advance: c.advance,
+    })),
+    receivables: sumMinor(contacts.map(c => c.receivableMinor)) / 100,
+    thirdPartyAdvances: sumMinor(contacts.map(c => c.advanceMinor)) / 100,
+  };
+}
+
+/** Budget/report projection; the original bank movement always remains intact. */
+export function getPersonalFinancialEntries<
+  T extends Pick<Transaction, 'id' | 'amount'>,
+>(transactions: T[], state: SharedExpenseState): T[] {
+  // Ephemeral lookup indexes preserve row order and the first-match semantics.
+  const excluded = new Set([
+    ...state.receipts
+      .filter(r => r.status === 'active')
+      .map(r => r.transactionId),
+    ...state.returns
+      .filter(r => r.status === 'active')
+      .map(r => r.transactionId),
+  ]);
+  const expenses = new Map<string | undefined, string>();
+  for (const e of state.expenses)
+    if (e.status === 'active' && !expenses.has(e.transactionId))
+      expenses.set(e.transactionId, e.id);
+  const personalAmounts = new Map<string, number>();
+  for (const p of state.participations)
+    if (p.active && !p.contactId && !personalAmounts.has(p.expenseId))
+      personalAmounts.set(p.expenseId, p.amountMinor / 100);
+  return transactions.map(transaction => {
+    if (excluded.has(transaction.id)) return { ...transaction, amount: 0 };
+    const expenseId = expenses.get(transaction.id);
+    const amount =
+      expenseId === undefined ? undefined : personalAmounts.get(expenseId);
+    return amount !== undefined ? { ...transaction, amount } : transaction;
+  });
+}
+
+export function sharedMovementDate(transaction: Transaction): string {
+  return transactionDateKey(transaction);
+}

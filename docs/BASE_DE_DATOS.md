@@ -1,6 +1,7 @@
 # Base de datos de SmartFin
 
-> Estado revisado: 27 de septiembre de 2026.
+> Fechas y gastos compartidos actualizados: 11 de octubre de 2026 (migración 3).
+> Condonaciones: migración 4; diario, recuperaciones y reversos en [Condonaciones compartidas](CONDONACIONES_COMPARTIDAS.md).
 > Fuentes de verdad: `src/database/sqliteSchema.ts`, `src/database/sqliteDatabase.ts` y los repositorios `sqlite*Repository.ts` de cada modulo.
 
 Documentos relacionados: [Arquitectura](ARQUITECTURA.md), [Módulos y flujos](MODULOS_Y_FLUJOS.md) y [Seguridad y privacidad](SEGURIDAD_Y_PRIVACIDAD.md).
@@ -9,7 +10,7 @@ Documentos relacionados: [Arquitectura](ARQUITECTURA.md), [Módulos y flujos](MO
 
 SmartFin usa una base de datos **SQLite local** llamada `smartfin.db`, mediante `react-native-sqlite-storage`. No existe un servidor, sincronizacion remota, telemetria ni una API de persistencia. En Android el usuario puede exportar manualmente una copia visible a una carpeta de Google Drive mediante el selector de documentos del sistema, sin API de Drive ni OAuth.
 
-El esquema contiene **32 tablas**, incluida una tabla interna de revision para detectar respaldos desactualizados. La aplicacion actual lee o escribe de forma funcional principalmente 9 tablas de dominio:
+El esquema instalado contiene **39 tablas**, incluida la revisión financiera y el registro de migraciones. Las tablas compartidas administran contactos, gastos compartidos, cobros, aplicaciones, devoluciones, comandos y el diario de pérdidas (migración 4). Entre las tablas funcionales existentes están:
 
 - `app_settings`
 - `accounts`
@@ -33,9 +34,9 @@ Las demas tablas dejan preparado el modelo para subcategorias, presupuestos, sob
 | Ubicacion | `location: 'default'`, resuelta por la libreria para cada plataforma |
 | Apertura | Una promesa compartida mantiene una sola conexion durante la vida de la app |
 | Integridad referencial | `PRAGMA foreign_keys = ON` al aplicar el esquema |
-| Fechas | Texto ISO 8601 |
+| Fechas | Fecha civil `YYYY-MM-DD`; hora y zona opcionales, con instante ISO UTC cuando existe hora explícita; auditoría ISO |
 | Moneda de dominio actual | `COP` |
-| Importes | Columnas SQLite `REAL` y numeros de JavaScript |
+| Importes | Libro existente: `REAL`; nuevo dominio compartido: centavos `INTEGER` seguros, sin migración monetaria global |
 | Identificadores | `TEXT`, generados por la aplicacion |
 
 Archivos principales:
@@ -133,7 +134,7 @@ erDiagram
 | `categories` | Categorias de ingreso/gasto/deuda/inversion/transferencia/ajuste. Guarda nombre, macro-categoria y color. | Padre de clasificaciones | Lectura, escritura y eliminacion con reasignacion |
 | `subcategories` | Detalle por categoria, color, estado y auditoria. | `category_id -> categories.id` | Esquema preparado; mantenimiento al borrar categorias |
 | `transactions` | Libro de movimientos: importe, moneda, descripcion, fecha, cuenta, categoria, tipo, direccion, estado, comercio, medio de pago, pista de tarjeta, clave de deduplicacion y notas. | Cuentas, categorias, subcategorias y mensaje de origen | Lectura, escritura, recategorizacion y eliminacion |
-| `transaction_splits` | Division de un movimiento entre importes/categorias. | `transaction_id -> transactions.id` con `ON DELETE CASCADE` | Esquema preparado; solo mantenimiento |
+| `transaction_splits` | Participación personal y de terceros; importe en centavos, contacto, gasto compartido y estado activo. | Movimiento con `ON DELETE CASCADE`; gasto compartido y contacto | API de gastos compartidos; también conserva campos heredados |
 | `merchant_mappings` | Regla aprendida comercio -> categoria/subcategoria/cuenta. Incluye patron, contador y ultima coincidencia. | Categorias, subcategorias y cuentas | Lectura y escritura parcial |
 | `raw_financial_messages` | Tabla historica que conservaba mensajes automaticos y resultados del parser. Permanece en el esquema por compatibilidad con bases instaladas. | Puede ser padre de `transactions` | Sin escrituras ni lecturas desde la aplicacion |
 | `account_balance_history` | Fotografias historicas de saldo y deuda por cuenta. | `account_id -> accounts.id` con `ON DELETE CASCADE` | Esquema preparado |
@@ -346,6 +347,22 @@ El esquema actual incorpora borradores de IA y las tres tablas anteriores. [Mode
 La interfaz no requiere migraciones adicionales. Las consultas tipadas incorporan opciones de cuentas/categorías/subcategorías, vencidos paginados y candidatos compatibles de pago. Los candidatos excluyen gastos ya vinculados; las sugerencias usan ±7 días y la búsqueda manual permite otras fechas. Las mismas reglas de confirmación se vuelven a validar dentro de la transacción.
 
 ## Consultas del dashboard: optimización de fase 2
+
+Estas secciones describen las fases originales. La migración 3 incorpora
+`idx_transactions_civil_day` y `idx_transactions_civil_sort`: las consultas
+actuales usan fecha civil y proyectan el consumo personal. El patrimonio lee
+también cuentas por cobrar y anticipos. El detalle vigente está en
+[Gastos compartidos y fechas](GASTOS_COMPARTIDOS_Y_FECHAS.md).
+
+La posición financiera del dashboard usa una única consulta agregada en
+`sharedFinancialTotalsSql.ts`. Agrupa aplicaciones por `participation_key` y
+participaciones, cobros y devoluciones por contacto antes de combinar sus
+totales. Filtra estados activos sin limitar registros. Los resultados enteros
+se devuelven como texto decimal para validar el rango seguro en TypeScript.
+Se aprovechan las claves e índices existentes de la migración 3; no se añade
+otra migración, índice, tabla ni proyección persistente. `getState()` permanece
+para comandos y consultas de detalle. El dashboard hace cuatro lecturas en
+lugar de nueve, conservando las consultas mensuales/civiles de movimientos.
 
 El dashboard ya no carga todos los movimientos mediante `getTransactions`. El repositorio de transacciones incorpora `getTransactionAmounts` (proyección mensual de importe/tipo/dirección, con filtros de fecha, estado y operaciones) y `getTransactionCountsByDay` (`COUNT(*)` agrupado por prefijo de día dentro de un rango). Ambos aprovechan `idx_transactions_date`; no se añadió esquema ni migración.
 

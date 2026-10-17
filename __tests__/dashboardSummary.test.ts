@@ -315,7 +315,7 @@ test('dashboard reads narrow indexed projections and daily counts without changi
       expect(
         plan.some(row =>
           String(row.detail).includes(
-            'SEARCH transactions USING INDEX idx_transactions_date',
+            'SEARCH transactions USING INDEX idx_transactions_civil_day',
           ),
         ),
       ).toBe(true);

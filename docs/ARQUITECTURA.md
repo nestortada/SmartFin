@@ -185,7 +185,7 @@ La fase 3.1 mantiene pantalla, hook y cursores. El adaptador del historial conse
 | Navegación propia | Pocas dependencias | Historial, deep links y transiciones son limitados |
 | Números JS para dinero | Simplicidad | Riesgo de precisión; los flujos actuales redondean importes sensibles |
 | Metadatos en `description` | Evita migraciones tempranas | Menor consultabilidad y contrato implícito |
-| DDL idempotente y migraciones versionadas | Instalaciones anteriores conservadas | Versiones 1 y 2 aplicadas transaccionalmente |
+| DDL idempotente y migraciones versionadas | Instalaciones anteriores conservadas | Versiones 1, 2, 3 y 4 aplicadas transaccionalmente |
 | Mocks como seed y fallback | Desarrollo rápido | Los datos demo pueden confundirse con datos reales si no se distinguen |
 
 ## 11. Límites para nuevas capacidades
@@ -195,6 +195,37 @@ La fase 3.1 mantiene pantalla, hook y cursores. El adaptador del historial conse
 - Una regla financiera nueva debe tener un caso de uso puro o inyectable y pruebas.
 - Una nueva respuesta nativa debe tratarse como `unknown` y validarse.
 - Los cambios de esquema deben mantener compatibilidad con bases ya instaladas.
+
+## Fechas y gastos compartidos
+
+Los movimientos distinguen fecha civil sin hora de fecha y hora explícitas en
+`America/Bogota`. La UI de Movimientos y la IA usan este contrato; los datos
+históricos mantienen su cadena y día visible hasta una edición explícita.
+
+`transactions/useCases/createSharedExpenseApi.ts` coordina contactos locales,
+compras, participaciones, cobros, aplicaciones, devoluciones y cancelaciones
+dentro del ámbito SQLite compartido. El importe bancario y la deuda de tarjeta
+conservan el total de la compra; la proyección de estadísticas usa la parte propia.
+El patrimonio agrega cuentas por cobrar y descuenta anticipos de terceros.
+El dashboard obtiene únicamente esos totales mediante
+`SharedExpenseRepository.getFinancialTotals()`: una lectura SQLite agregada,
+sin cargar contactos, repartos ni historial a JavaScript. El dominio completo
+sigue disponible para comandos e historial. La consulta no escribe proyecciones,
+no cambia el esquema y valida centavos enteros antes de convertir a pesos.
+Cada comando persistente devuelve movimientos y efectos financieros; repetirlo
+con los mismos datos devuelve su resultado confirmado.
+
+La migración 3 añade metadatos de fecha, amplía `transaction_splits` y crea seis
+tablas. Gastos compartidos dispone de API y pruebas; su interfaz queda pendiente.
+[Contrato, esquema, escenarios y validación](GASTOS_COMPARTIDOS_Y_FECHAS.md).
+
+## Condonaciones y recuperación de pérdidas
+
+La migración 4 añade `shared_loss_events`. Comandos puros de Movimientos validan
+condonación, recuperación y reversión; la fachada los ejecuta en el ámbito
+transaccional e idempotente existente. Su proyección contable se separa del libro
+bancario. Dashboard usa agregados, sin cargar el diario completo. No hay UI nueva.
+[Contrato, efectos, trazabilidad y límites](CONDONACIONES_COMPARTIDAS.md).
 
 ## Suscripciones y mantenimiento local
 

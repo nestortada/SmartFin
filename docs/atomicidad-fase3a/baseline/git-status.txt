@@ -1,0 +1,89 @@
+ M __tests__/__snapshots__/financialAtomicityPhase0.test.ts.snap
+ M __tests__/dashboardSummary.test.ts
+ M __tests__/helpers/dashboardSummaryBaseline.ts
+ M __tests__/helpers/realSQLite.ts
+ M __tests__/subscriptions.test.ts
+ M __tests__/transactionHistoryRefinement.test.ts
+ M __tests__/transactionsScreen.test.tsx
+ M android/app/src/main/java/com/smartfin/SmartFinDriveBackupModule.kt
+ M docs/ARQUITECTURA.md
+ M docs/BASE_DE_DATOS.md
+ M docs/MODULOS_Y_FLUJOS.md
+ M src/database/migrations.ts
+ M src/database/sqliteDatabase.ts
+ M src/database/sqliteSchema.ts
+ M src/modules/accounts/ui/components/DebitCardInsights.tsx
+ M src/modules/accounts/useCases/getDebitCardsOverview.ts
+ M src/modules/creditCards/ui/components/CreditCardInsightCards.tsx
+ M src/modules/creditCards/useCases/creditCardTransactionRelations.ts
+ M src/modules/creditCards/useCases/getCreditCardsOverview.ts
+ M src/modules/dashboard/types/DashboardSummary.ts
+ M src/modules/dashboard/useCases/getDashboardSummary.ts
+ M src/modules/settings/repositories/sqliteFinancialDataRepository.ts
+ M src/modules/subscriptions/repositories/sqliteSubscriptionRepository.ts
+ M src/modules/subscriptions/ui/SubscriptionPaymentSheet.tsx
+ M src/modules/subscriptions/ui/SubscriptionsScreen.tsx
+ M src/modules/subscriptions/useCases/createSubscriptionApi.ts
+ M src/modules/subscriptions/useCases/subscriptionLifecycle.ts
+ M src/modules/subscriptions/useCases/subscriptionPresentation.ts
+ M src/modules/transactions/hooks/useAiAssistantController.ts
+ M src/modules/transactions/index.ts
+ M src/modules/transactions/repositories/sqliteTransactionHistory.ts
+ M src/modules/transactions/repositories/sqliteTransactionRepository.ts
+ M src/modules/transactions/types/Transaction.ts
+ M src/modules/transactions/ui/TransactionsScreen.tsx
+ M src/modules/transactions/ui/components/AddTransactionModal.tsx
+ M src/modules/transactions/ui/components/TransactionCard.tsx
+ M src/modules/transactions/ui/transactionsScreenFormatters.ts
+ M src/modules/transactions/useCases/aiCommandPlanner.ts
+ M src/modules/transactions/useCases/executeAiCommandPlan.ts
+ M src/modules/transactions/useCases/index.ts
+ M src/modules/transactions/useCases/saveManualTransaction.ts
+ M src/services/geminiCommandService.ts
+?? __tests__/aiTransfers.test.ts
+?? __tests__/helpers/dashboardBeforeForgiveness.ts
+?? __tests__/helpers/dashboardSharedStateBaseline.ts
+?? __tests__/helpers/sharedExpenseFixture.ts
+?? __tests__/helpers/sharedFinancialTotalsBeforeForgiveness.ts
+?? __tests__/helpers/sharedPositionVolume.ts
+?? __tests__/integrationAudit.test.js
+?? __tests__/sharedCommandPerformance.test.js
+?? __tests__/sharedCommandReaderWait.test.ts
+?? __tests__/sharedCommandReads.test.ts
+?? __tests__/sharedExpenses.test.ts
+?? __tests__/sharedFinancialTotals.test.ts
+?? __tests__/sharedForgiveness.test.ts
+?? __tests__/sharedForgivenessPerformance.test.js
+?? __tests__/sharedPositionPerformance.test.js
+?? __tests__/transactionDates.test.ts
+?? docs/AUDITORIA_GASTOS_COMPARTIDOS_ANDROID.md
+?? docs/CONDONACIONES_COMPARTIDAS.md
+?? docs/GASTOS_COMPARTIDOS_Y_FECHAS.md
+?? docs/VALIDACION_OPERACIONES_COMPARTIDAS_ANDROID.md
+?? docs/atomicidad-fase3a/
+?? docs/audit/
+?? docs/performance/shared-commands/
+?? docs/performance/shared-forgiveness/
+?? docs/performance/shared-position.md
+?? docs/performance/shared-position/
+?? scripts/androidSharedPosition/
+?? scripts/sharedCommands/
+?? src/modules/transactions/database/sharedExpenseSchema.ts
+?? src/modules/transactions/database/sharedLossSchema.ts
+?? src/modules/transactions/repositories/SharedExpenseRepository.ts
+?? src/modules/transactions/repositories/sharedCommandResultValidation.ts
+?? src/modules/transactions/repositories/sharedFinancialProjectionSql.ts
+?? src/modules/transactions/repositories/sharedFinancialTotalsSql.ts
+?? src/modules/transactions/repositories/sharedLossPeriodSql.ts
+?? src/modules/transactions/repositories/sharedTransactionIntegrity.ts
+?? src/modules/transactions/repositories/sqliteSharedCommandReads.ts
+?? src/modules/transactions/repositories/sqliteSharedExpenseRepository.ts
+?? src/modules/transactions/types/SharedExpense.ts
+?? src/modules/transactions/useCases/createSharedExpenseApi.ts
+?? src/modules/transactions/useCases/getManualTransactionFormOptions.ts
+?? src/modules/transactions/useCases/readSharedFinancialTotals.ts
+?? src/modules/transactions/useCases/sharedCommandEffects.ts
+?? src/modules/transactions/useCases/sharedExpenseDomain.ts
+?? src/modules/transactions/useCases/sharedLossCommands.ts
+?? src/modules/transactions/useCases/sharedLossDomain.ts
+?? src/shared/utils/transactionDate.ts

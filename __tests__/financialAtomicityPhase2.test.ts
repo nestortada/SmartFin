@@ -140,7 +140,7 @@ test.each(scenarios)('$name: every SQL write before/after restores all tables an
   faultMatrix.push({ name: scenario.name, writes: writes.length, rollbackPoints: writes.length * 2 });
 });
 
-test('the independent card payment registration remains phase 3 with its historic partial result', async () => {
+test('the frozen pre-phase-3A independent payment preserves its historic partial result', async () => {
   const result = await runFinancialScenario(financialAtomicityScenarios[1]!, { phase: 'before', sql: 'INSERT INTO transactions' });
   expect(result.after.metrics).toMatchObject({ balances: { bank: 900000 }, debt: 250000, wealth: 650000 });
 });

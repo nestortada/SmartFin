@@ -27,6 +27,72 @@ jest.mock('react-native-safe-area-context', () => ({
   useSafeAreaInsets: () => ({ top: 24, right: 0, bottom: 20, left: 0 }),
 }));
 
+test('editing the date and optional hour through form inputs preserves the amount and bank balance', async () => {
+  const f = await setup([movement('dated', '2026-10-06T00:00:00.000Z', { amount: 15000.25 })]);
+  try {
+    const card = f.view.root.findAllByType(TransactionCard)[0]!;
+    await act(async () => card.props.onPress(card.props.tx));
+    await act(async () => f.view.root.findByType(CategorizationModal).props.onEditTransaction(card.props.tx));
+    const input = (label: string) => f.view.root.findAllByType(TextInput).find(node => node.props.accessibilityLabel === label)!;
+    expect(input('Fecha').props.value).toBe('2026-10-06');
+    expect(f.view.root.findByType(AddTransactionModal).props.hasTime).toBe(false);
+    await act(async () => input('Fecha').props.onChangeText('2026-10-05'));
+    await act(async () => f.view.root.findByType(AddTransactionModal).props.setHasTime(true));
+    await act(async () => input('Hora en Colombia').props.onChangeText('23:00'));
+    await act(async () => f.view.root.findByType(AddTransactionModal).props.onSave());
+    expect(f.sqlite.query("SELECT amount,date,civil_date,local_time,date_precision FROM transactions WHERE id='dated'").rows.item(0))
+      .toEqual({ amount: 15000.25, date: '2026-10-06T04:00:00.000Z', civil_date: '2026-10-05', local_time: '23:00', date_precision: 'dateTime' });
+    expect(f.sqlite.query("SELECT balance_amount FROM accounts WHERE id='bank-a'").rows.item(0)!.balance_amount).toBe(50000);
+    await act(async () => f.view.update(<TransactionsScreen {...f.props} refreshKey={1} />));
+    const timed = f.view.root.findAllByType(TransactionCard)[0]!;
+    await act(async () => timed.props.onPress(timed.props.tx));
+    await act(async () => f.view.root.findByType(CategorizationModal).props.onEditTransaction(timed.props.tx));
+    await act(async () => f.view.root.findByType(AddTransactionModal).props.setHasTime(false));
+    await act(async () => f.view.root.findByType(AddTransactionModal).props.onSave());
+    expect(f.sqlite.query("SELECT date,local_time,date_precision FROM transactions WHERE id='dated'").rows.item(0))
+      .toEqual({ date: '2026-10-05', local_time: null, date_precision: 'date' });
+  } finally { f.close(); }
+});
+
+test('a nonexistent date cannot save or change the bank balance from the editor', async () => {
+  const f = await setup([movement('invalidDate', '2026-10-06T00:00:00.000Z')]);
+  const alert = jest.spyOn(Alert, 'alert');
+  const errors = jest.spyOn(console, 'error').mockImplementation(() => undefined);
+  try {
+    const card = f.view.root.findAllByType(TransactionCard)[0]!;
+    await act(async () => card.props.onPress(card.props.tx));
+    await act(async () => f.view.root.findByType(CategorizationModal).props.onEditTransaction(card.props.tx));
+    await act(async () => f.view.root.findAllByType(TextInput).find(node => node.props.accessibilityLabel === 'Fecha')!.props.onChangeText('2026-02-30'));
+    await act(async () => f.view.root.findByType(AddTransactionModal).props.onSave());
+    expect(alert).toHaveBeenCalled();
+    expect(f.sqlite.query("SELECT date FROM transactions WHERE id='invalidDate'").rows.item(0)!.date).toBe('2026-10-06T00:00:00.000Z');
+    expect(f.sqlite.query("SELECT balance_amount FROM accounts WHERE id='bank-a'").rows.item(0)!.balance_amount).toBe(50000);
+  } finally { errors.mockRestore(); alert.mockRestore(); f.close(); }
+});
+
+test('editing a transfer date in the form preserves its existing tax and both account balances', async () => {
+  const originalDate = '2026-10-06T00:00:00.000Z';
+  const f = await setup([
+    movement('transfer', originalDate, { type: 'internalTransfer', category_id: null, target_account_id: 'bank-b' }),
+    movement('transfer-in', originalDate, { type: 'internalTransfer', direction: 'inflow', account_id: 'bank-b', category_id: null, target_account_id: 'bank-a' }),
+    movement('transfer-4x1000', originalDate, { amount: 61, description: 'Impuesto 4x1000' }),
+  ]);
+  try {
+    const card = f.view.root.findAllByType(TransactionCard).find(node => node.props.tx.id === 'transfer')!;
+    await act(async () => card.props.onPress(card.props.tx));
+    await act(async () => f.view.root.findByType(CategorizationModal).props.onEditTransaction(card.props.tx));
+    expect(f.view.root.findByType(AddTransactionModal).props.transferTaxCharged).toBe(true);
+    await act(async () => f.view.root.findAllByType(TextInput).find(node => node.props.accessibilityLabel === 'Fecha')!.props.onChangeText('2026-10-05'));
+    await act(async () => f.view.root.findByType(AddTransactionModal).props.onSave());
+    expect(f.sqlite.query('SELECT id,amount,date,civil_date FROM transactions ORDER BY id').rows.raw()).toEqual([
+      { id: 'transfer', amount: 15000, date: '2026-10-05', civil_date: '2026-10-05' },
+      { id: 'transfer-4x1000', amount: 61, date: '2026-10-05', civil_date: '2026-10-05' },
+      { id: 'transfer-in', amount: 15000, date: '2026-10-05', civil_date: '2026-10-05' },
+    ]);
+    expect(f.sqlite.query('SELECT balance_amount FROM accounts ORDER BY id').rows.raw()).toEqual([{ balance_amount: 50000 }, { balance_amount: 50000 }]);
+  } finally { f.close(); }
+});
+
 type Row = Record<string, SQLitePrimitive>;
 
 function movement(id: string, date: string, overrides: Row = {}): Row {

@@ -18,10 +18,11 @@ import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import type { AppTheme } from '../../settings';
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
 import { useTransactionsList, formatYearMonth } from '../hooks/useTransactionsList';
-import { deleteManualTransactionSafely, saveManualTransaction, updateTransactionQuickly } from '../useCases';
+import { deleteManualTransactionSafely, getManualTransactionFormOptions, saveManualTransaction, updateTransactionQuickly } from '../useCases';
 import { SQLiteCommandFailure } from '../../../database/atomicSQLite';
 import { ManualTransactionConflict } from '../useCases/manualTransactionScope';
 import type { Transaction, TransactionType } from '../types';
+import { bogotaToday, transactionDateKey, TRANSACTION_TIME_ZONE } from '../../../shared/utils/transactionDate';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import { createSqliteCategoryRepository } from '../../categories/repositories/sqliteCategoryRepository';
@@ -133,6 +134,10 @@ export function TransactionsScreen({
   const [transferTaxCharged, setTransferTaxCharged] = useState(false);
   const [newCreditCardHint, setNewCreditCardHint] = useState('');
   const [newNotes, setNewNotes] = useState('');
+  const [newDate, setNewDate] = useState(() => bogotaToday());
+  const [newTime, setNewTime] = useState('');
+  const [hasTime, setHasTime] = useState(false);
+  const [dateTouched, setDateTouched] = useState(false);
   const [newOperationType, setNewOperationType] = useState<'Débito' | 'Crédito'>('Débito');
   const [creditInstallmentCount, setCreditInstallmentCount] = useState('1');
   const [hasInterestFreeInstallments, setHasInterestFreeInstallments] = useState(false);
@@ -145,6 +150,11 @@ export function TransactionsScreen({
   const [opTypePickerVisible, setOpTypePickerVisible] = useState(false);
   const [selectedTxForOpType, setSelectedTxForOpType] = useState<Transaction | null>(null);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  useEffect(() => {
+    if (addTxModalVisible && !editingTransaction) {
+      setNewDate(bogotaToday()); setNewTime(''); setHasTime(false); setDateTouched(false);
+    }
+  }, [addTxModalVisible, editingTransaction]);
   const [selectedTxForInstallments, setSelectedTxForInstallments] = useState<Transaction | null>(null);
 
   // Categorization Modal States
@@ -370,16 +380,25 @@ export function TransactionsScreen({
     return 'Débito';
   };
 
-  const openEditTransactionForm = (tx: Transaction) => {
+  const openEditTransactionForm = async (tx: Transaction) => {
+    let formTaxCharged = false;
+    try {
+      if (database) formTaxCharged = (await getManualTransactionFormOptions(createSqliteTransactionRepository(database), tx)).transferTaxCharged;
+    } catch (formError) {
+      Alert.alert('Error', formError instanceof Error ? formError.message : 'No se pudo abrir el movimiento.');
+      return;
+    }
     const installmentDetails = getInstallmentDetailsFromNotes(tx.notes);
     setEditingTransaction(tx);
+    setNewDate(transactionDateKey(tx)); setNewTime(tx.localTime ?? '');
+    setHasTime(tx.datePrecision === 'dateTime'); setDateTouched(false);
     setNewAmount(formatAmountInputForForm(tx.amount));
     setNewMerchant(tx.merchantName || tx.description);
-    setNewType(tx.type === 'creditCardPayment' ? 'creditCardPayment' : tx.type === 'internalTransfer' ? 'internalTransfer' : tx.type === 'income' || tx.direction === 'inflow' ? 'income' : 'expense');
+    setNewType(tx.type === 'refund' ? 'refund' : tx.type === 'creditCardPayment' ? 'creditCardPayment' : tx.type === 'internalTransfer' ? 'internalTransfer' : tx.type === 'income' || tx.direction === 'inflow' ? 'income' : 'expense');
     setNewCategory(tx.categoryId ?? '');
     setNewAccount(tx.accountId);
     setNewTargetAccount(tx.targetAccountId ?? '');
-    setTransferTaxCharged(false);
+    setTransferTaxCharged(formTaxCharged);
     setNewCreditCardHint(tx.creditCardHint ?? '');
     setNewNotes(cleanNotesForForm(tx.notes));
     setNewOperationType(getOperationTypeFromTransaction(tx));
@@ -666,10 +685,13 @@ export function TransactionsScreen({
         categoryId: newCategory || undefined,
         subcategoryId: subscriptionDraft.current?.categoryId === newCategory
           ? subscriptionDraft.current?.subcategoryId
-          : undefined,
+          : editingTransaction?.categoryId === newCategory ? editingTransaction?.subcategoryId : undefined,
         creditCardHint: newCreditCardHint,
         creditCardRepository,
         editingTransaction,
+        occurrence: editingTransaction && !dateTouched ? undefined : hasTime
+          ? { kind: 'dateTime', date: newDate, time: newTime, timeZone: TRANSACTION_TIME_ZONE }
+          : { kind: 'date', date: newDate },
         hasInterestFreeInstallments,
         installmentCountInput: creditInstallmentCount,
         interestFreeInstallmentCountInput: interestFreeInstallmentCount,
@@ -976,6 +998,12 @@ export function TransactionsScreen({
         newCreditCardHint={newCreditCardHint}
         setNewCreditCardHint={setNewCreditCardHint}
         newNotes={newNotes}
+        newDate={newDate}
+        setNewDate={value => { setNewDate(value); setDateTouched(true); }}
+        newTime={newTime}
+        setNewTime={value => { setNewTime(value); setDateTouched(true); }}
+        hasTime={hasTime}
+        setHasTime={value => { setHasTime(value); setDateTouched(true); }}
         setNewNotes={setNewNotes}
         newOperationType={newOperationType}
         setNewOperationType={setNewOperationType}
@@ -991,6 +1019,7 @@ export function TransactionsScreen({
         onCreateAccount={handleCreateAccount}
         onCreateCreditCard={openCreateCreditCardForm}
         mode={editingTransaction ? 'edit' : 'create'}
+        editingDirection={editingTransaction?.direction}
         onSave={handleSaveTransaction}
       />
 

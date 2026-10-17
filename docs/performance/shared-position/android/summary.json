@@ -1,0 +1,615 @@
+{
+  "config": {
+    "timezone": "America/Bogota",
+    "android": "15",
+    "abi": "arm64-v8a",
+    "release": true,
+    "date": "2026-10-10T12:00:00-05:00",
+    "manufacturer": "HONOR",
+    "model": "CRT-NX3",
+    "runId": "manual",
+    "size": "1000",
+    "packageId": "com.smartfin.sharedposition.bench",
+    "version": "after"
+  },
+  "metadata": {
+    "sqlite": "3.44.5",
+    "rows": 100000,
+    "reused": false,
+    "name": "dashboard_phase2_v3_100000.db"
+  },
+  "warmups": 3,
+  "samples": 7,
+  "target": "getDashboardSummaryFromDb; no screen FPS/TTI measurement",
+  "pssSamplingIntervalMs": 100,
+  "entries": [
+    {
+      "sharedExpenses": 0,
+      "version": "before",
+      "medianMs": 84.37115401029587,
+      "milliseconds": [
+        79.11146199703217,
+        67.28407698869705,
+        88.94184601306915,
+        84.37115401029587,
+        104.13423103094101,
+        111.59446197748184,
+        43.29969298839569
+      ],
+      "queries": 9,
+      "returnedRows": 293,
+      "returnedJsonCharacters": 23490,
+      "medianSampledPssGrowthKb": 400,
+      "pssStartKb": [
+        89966,
+        86717,
+        87228,
+        87732,
+        88252,
+        88780,
+        89878
+      ],
+      "pssPeakSampledKb": [
+        89966,
+        87120,
+        87616,
+        88140,
+        88652,
+        89744,
+        89982
+      ],
+      "financialEquality": true,
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 449105.6000000002,
+        "monthlyExpenses": 755960.2999999984,
+        "monthlySavings": -306854.6999999982,
+        "recentTransactionCount": 1728,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "windowFocused": true,
+      "screenInteractive": true,
+      "keyguardUnlocked": true
+    },
+    {
+      "sharedExpenses": 0,
+      "version": "after",
+      "medianMs": 44.80953800678253,
+      "milliseconds": [
+        44.80953800678253,
+        26.729230999946594,
+        78.75538504123688,
+        35.154076993465424,
+        52.59630799293518,
+        33.54030799865723,
+        55.17007702589035
+      ],
+      "queries": 4,
+      "returnedRows": 294,
+      "returnedJsonCharacters": 23536,
+      "medianSampledPssGrowthKb": 179,
+      "pssStartKb": [
+        90804,
+        84225,
+        84574,
+        84993,
+        85309,
+        85654,
+        86014
+      ],
+      "pssPeakSampledKb": [
+        90804,
+        84404,
+        84828,
+        85137,
+        85482,
+        85834,
+        86194
+      ],
+      "financialEquality": true,
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 449105.6000000002,
+        "monthlyExpenses": 755960.2999999984,
+        "monthlySavings": -306854.6999999982,
+        "recentTransactionCount": 1728,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "windowFocused": true,
+      "screenInteractive": true,
+      "keyguardUnlocked": true
+    },
+    {
+      "sharedExpenses": 100,
+      "version": "before",
+      "medianMs": 196.58976900577545,
+      "milliseconds": [
+        189.26561599969864,
+        196.58976900577545,
+        207.06407701969147,
+        113.83292299509048,
+        92.3738459944725,
+        199.74423098564148,
+        210.3852310180664
+      ],
+      "queries": 9,
+      "returnedRows": 843,
+      "returnedJsonCharacters": 165515,
+      "medianSampledPssGrowthKb": 488,
+      "pssStartKb": [
+        89362,
+        86063,
+        86642,
+        87014,
+        86602,
+        87214,
+        87970
+      ],
+      "pssPeakSampledKb": [
+        89962,
+        86526,
+        86898,
+        87014,
+        87098,
+        87858,
+        88458
+      ],
+      "financialEquality": true,
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 757100,
+        "monthlyIncome": 449105.6000000002,
+        "monthlyExpenses": 770959.0999999983,
+        "monthlySavings": -321853.49999999814,
+        "recentTransactionCount": 1728,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "windowFocused": true,
+      "screenInteractive": true,
+      "keyguardUnlocked": true
+    },
+    {
+      "sharedExpenses": 100,
+      "version": "after",
+      "medianMs": 79.46430796384811,
+      "milliseconds": [
+        49.487692058086395,
+        79.2474610209465,
+        101.66430801153183,
+        99.59938395023346,
+        79.46430796384811,
+        74.57946199178696,
+        86.70238399505615
+      ],
+      "queries": 4,
+      "returnedRows": 294,
+      "returnedJsonCharacters": 23547,
+      "medianSampledPssGrowthKb": 96,
+      "pssStartKb": [
+        88802,
+        89038,
+        89314,
+        89663,
+        89931,
+        90175,
+        90431
+      ],
+      "pssPeakSampledKb": [
+        88898,
+        89162,
+        89314,
+        89783,
+        90023,
+        90175,
+        90583
+      ],
+      "financialEquality": true,
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 757100,
+        "monthlyIncome": 449105.6000000002,
+        "monthlyExpenses": 770959.0999999983,
+        "monthlySavings": -321853.49999999814,
+        "recentTransactionCount": 1728,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "windowFocused": true,
+      "screenInteractive": true,
+      "keyguardUnlocked": true
+    },
+    {
+      "sharedExpenses": 1000,
+      "version": "before",
+      "medianMs": 704.0122309923172,
+      "milliseconds": [
+        714.7452299594879,
+        733.4344609975815,
+        643.0452299714088,
+        681.9941539764404,
+        711.4932309985161,
+        698.133306980133,
+        704.0122309923172
+      ],
+      "queries": 9,
+      "returnedRows": 5343,
+      "returnedJsonCharacters": 1411047,
+      "medianSampledPssGrowthKb": 2928,
+      "pssStartKb": [
+        102245,
+        108707,
+        107425,
+        109543,
+        114100,
+        118532,
+        114165
+      ],
+      "pssPeakSampledKb": [
+        106847,
+        111635,
+        109696,
+        113948,
+        118408,
+        118532,
+        115860
+      ],
+      "financialEquality": true,
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7507100,
+        "monthlyIncome": 449105.6000000002,
+        "monthlyExpenses": 940821.8999999978,
+        "monthlySavings": -491716.2999999976,
+        "recentTransactionCount": 1728,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "windowFocused": true,
+      "screenInteractive": true,
+      "keyguardUnlocked": true
+    },
+    {
+      "sharedExpenses": 1000,
+      "version": "after",
+      "medianMs": 75.39815300703049,
+      "milliseconds": [
+        74.39315396547318,
+        70.69876903295517,
+        75.39815300703049,
+        80.16369199752808,
+        80.0572310090065,
+        81.62584602832794,
+        71.77538400888443
+      ],
+      "queries": 4,
+      "returnedRows": 294,
+      "returnedJsonCharacters": 23536,
+      "medianSampledPssGrowthKb": 98,
+      "pssStartKb": [
+        116353,
+        116637,
+        116917,
+        117165,
+        117389,
+        117661,
+        117909
+      ],
+      "pssPeakSampledKb": [
+        116473,
+        116765,
+        117013,
+        117233,
+        117389,
+        117761,
+        118007
+      ],
+      "financialEquality": true,
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7507100,
+        "monthlyIncome": 449105.6000000002,
+        "monthlyExpenses": 940821.8999999978,
+        "monthlySavings": -491716.2999999976,
+        "recentTransactionCount": 1728,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "windowFocused": true,
+      "screenInteractive": true,
+      "keyguardUnlocked": true
+    },
+    {
+      "sharedExpenses": 5000,
+      "version": "before",
+      "medianMs": 9618.966385006905,
+      "milliseconds": [
+        9835.780308008194,
+        9636.07346200943,
+        9479.75876903534,
+        9635.275462031364,
+        9618.966385006905,
+        9607.00615400076,
+        9616.049539029598
+      ],
+      "queries": 9,
+      "returnedRows": 25343,
+      "returnedJsonCharacters": 6994807,
+      "medianSampledPssGrowthKb": 13532,
+      "pssStartKb": [
+        125988,
+        128380,
+        113418,
+        124388,
+        111870,
+        118043,
+        106172
+      ],
+      "pssPeakSampledKb": [
+        130503,
+        136792,
+        131421,
+        132835,
+        130656,
+        131575,
+        132976
+      ],
+      "financialEquality": true,
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 37507100,
+        "monthlyIncome": 449105.6000000002,
+        "monthlyExpenses": 1251617.6999999986,
+        "monthlySavings": -802512.0999999983,
+        "recentTransactionCount": 1728,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "windowFocused": true,
+      "screenInteractive": true,
+      "keyguardUnlocked": true
+    },
+    {
+      "sharedExpenses": 5000,
+      "version": "after",
+      "medianMs": 125.49823105335236,
+      "milliseconds": [
+        145.0033849477768,
+        87.22922998666763,
+        125.49823105335236,
+        145.4009229540825,
+        121.97107702493668,
+        114.92484700679779,
+        132.34607696533203
+      ],
+      "queries": 4,
+      "returnedRows": 294,
+      "returnedJsonCharacters": 23493,
+      "medianSampledPssGrowthKb": 92,
+      "pssStartKb": [
+        114996,
+        115284,
+        115544,
+        115668,
+        115960,
+        104958,
+        105282
+      ],
+      "pssPeakSampledKb": [
+        115128,
+        115284,
+        115636,
+        115792,
+        116048,
+        105122,
+        105374
+      ],
+      "financialEquality": true,
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 37507100,
+        "monthlyIncome": 449105.6000000002,
+        "monthlyExpenses": 1251617.6999999986,
+        "monthlySavings": -802512.0999999983,
+        "recentTransactionCount": 1728,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "windowFocused": true,
+      "screenInteractive": true,
+      "keyguardUnlocked": true
+    }
+  ],
+  "complete": {
+    "type": "complete",
+    "financialEquality": true,
+    "unchangedBalances": true,
+    "bankMovements": 100000,
+    "volumes": [
+      0,
+      100,
+      1000,
+      5000
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 import type { Transaction } from '../types';
+import { bogotaToday, transactionDateKey } from '../../../shared/utils/transactionDate';
 
 export type TransactionDateGroup = {
   data: Transaction[];
@@ -9,7 +10,7 @@ export function groupTransactionsByDate(transactions: Transaction[]): Transactio
   const groups: Record<string, Transaction[]> = {};
 
   transactions.forEach(transaction => {
-    const date = transaction.date.slice(0, 10);
+    const date = transactionDateKey(transaction);
     groups[date] = groups[date] ?? [];
     groups[date]?.push(transaction);
   });
@@ -21,8 +22,8 @@ export function groupTransactionsByDate(transactions: Transaction[]): Transactio
 }
 
 export function formatTransactionDateHeader(date: string): string {
-  const today = new Date().toISOString().slice(0, 10);
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const today = bogotaToday();
+  const yesterday = bogotaToday(new Date(Date.now() - 86400000));
 
   if (date === today) return 'HOY';
   if (date === yesterday) return 'AYER';
@@ -59,5 +60,5 @@ export function formatCOP(value: number): string {
 }
 
 export function formatAmountInputForForm(value: number): string {
-  return Math.trunc(Math.max(value, 0)).toLocaleString('es-CO');
+  return Math.max(value, 0).toLocaleString('es-CO', { maximumFractionDigits: 2 });
 }

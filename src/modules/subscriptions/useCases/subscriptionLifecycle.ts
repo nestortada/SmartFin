@@ -17,7 +17,6 @@ import {
   recurrenceInterval,
   roundSubscriptionMoney,
   daysBetween,
-  civilDate,
 } from './recurrence';
 
 export const DEFAULT_SUBSCRIPTION_REMINDERS = {
@@ -854,7 +853,7 @@ export function subscriptionMatches(
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, ' ')
       .trim();
-  const transactionDate = civilDate(new Date(transaction.date));
+  const transactionDate = transaction.civilDate ?? transaction.date.slice(0, 10);
   return state.occurrences
     .flatMap(occurrence => {
       if (

@@ -6,6 +6,14 @@ export type FinancialDataRepository = {
 };
 
 const FINANCIAL_TABLES_IN_DELETE_ORDER = [
+  'shared_commands',
+  'shared_loss_events',
+  'shared_allocations',
+  'shared_returns',
+  'shared_receipts',
+  'transaction_splits',
+  'shared_expenses',
+  'shared_contacts',
   'subscription_reminders',
   'subscription_occurrences',
   'ai_command_drafts',

@@ -1,0 +1,905 @@
+{
+  "config": {
+    "release": true,
+    "model": "CRT-NX3",
+    "android": "15",
+    "api": 35,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "campaign": "phase3a",
+  "driver": "3.44.5",
+  "matrix": [
+    {
+      "cards": 1,
+      "writes": 10,
+      "points": 20,
+      "operationMs": 65,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":900000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-10-17T13:09:28.091Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":150000,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"es_CO\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[{\"created_at\":\"2026-10-17T13:09:28.091Z\",\"currency\":\"COP\",\"total_amount\":150000,\"minimum_payment_amount\":15000,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-17T13:09:28.091Z\",\"status\":\"pending\",\"id\":\"statement-auto-card-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card\"}],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-17T13:09:28.095Z\",\"revision\":11,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-17T13:09:27.862Z\",\"version\":1},{\"applied_at\":\"2026-10-17T13:09:27.900Z\",\"version\":2},{\"applied_at\":\"2026-10-17T13:09:27.943Z\",\"version\":3},{\"applied_at\":\"2026-10-17T13:09:27.965Z\",\"version\":4}],\"shared_allocations\":[],\"shared_commands\":[],\"shared_contacts\":[],\"shared_expenses\":[],\"shared_loss_events\":[],\"shared_receipts\":[],\"shared_returns\":[],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"date_precision\":null,\"created_at\":\"2026-10-11T12:00:00.000Z\",\"status\":\"posted\",\"dedupe_key\":null,\"category_id\":null,\"credit_card_hint\":null,\"payment_method\":\"debit\",\"merchant_name\":\"Visa\",\"local_time\":null,\"source_message_id\":null,\"amount\":100000,\"subcategory_id\":null,\"account_id\":\"bank\",\"direction\":\"outflow\",\"civil_date\":null,\"target_account_id\":\"card\",\"date\":\"2026-10-11T12:00:00.000Z\",\"time_zone\":null,\"id\":\"tx-credit-card-payment-card-1792242568034-1\",\"currency\":\"COP\",\"description\":\"Pago de tarjeta de credito - Visa\",\"notes\":\"Pago de tarjeta de credito. No cuenta como gasto del mes.\",\"type\":\"creditCardPayment\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"date_precision\":null,\"created_at\":\"2026-10-11T12:00:00.000Z\",\"status\":\"posted\",\"dedupe_key\":null,\"category_id\":null,\"credit_card_hint\":\"Visa\",\"payment_method\":\"credit\",\"merchant_name\":\"Synthetic\",\"local_time\":null,\"source_message_id\":null,\"amount\":250000,\"subcategory_id\":null,\"account_id\":\"card\",\"direction\":\"outflow\",\"civil_date\":null,\"target_account_id\":null,\"date\":\"2026-10-11T12:00:00.000Z\",\"time_zone\":null,\"id\":\"tx_manual_1792242567991_1\",\"currency\":\"COP\",\"description\":\"Synthetic\",\"notes\":\"Crédito • Registro manual\",\"type\":\"expense\"}]}",
+        "accounts": [
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 900000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T12:00:00.000Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 150000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-17T13:09:28.091Z"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 900000,
+          "totalDebt": 150000,
+          "netWorth": 750000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 250000,
+          "monthlySavings": -250000,
+          "monthlyForgivenessLosses": 0,
+          "monthlyLossReversals": 0,
+          "monthlyLossRecoveries": 0,
+          "monthlyRecoveryReversals": 0,
+          "monthlyNetLosses": 0,
+          "recentTransactionCount": 2,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "cards": 2,
+      "writes": 16,
+      "points": 32,
+      "operationMs": 98,
+      "success": {
+        "tables": "{\"account_balance_history\":[],\"accounts\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Synthetic\",\"description\":null,\"debt_balance_amount\":null,\"balance_amount\":900000,\"created_at\":\"2026-10-11\",\"currency\":\"COP\",\"id\":\"bank\",\"credit_limit_amount\":null,\"type\":\"bankAccount\"},{\"updated_at\":\"2026-10-17T13:10:02.465Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Visa\",\"description\":null,\"debt_balance_amount\":150000,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card\",\"credit_limit_amount\":null,\"type\":\"creditCard\"},{\"updated_at\":\"2026-10-17T13:10:02.465Z\",\"institution_name\":null,\"status\":\"active\",\"name\":\"Mastercard\",\"description\":null,\"debt_balance_amount\":120000,\"balance_amount\":0,\"created_at\":\"2026-01-01\",\"currency\":\"COP\",\"id\":\"card2\",\"credit_limit_amount\":null,\"type\":\"creditCard\"}],\"ai_command_drafts\":[],\"amortization_schedule_items\":[],\"android_metadata\":[{\"locale\":\"es_CO\"}],\"app_settings\":[],\"backup_records\":[],\"budgets\":[],\"cash_flow_events\":[],\"categories\":[],\"credit_card_profiles\":[],\"credit_card_statements\":[{\"created_at\":\"2026-10-17T13:10:02.465Z\",\"currency\":\"COP\",\"total_amount\":150000,\"minimum_payment_amount\":15000,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-17T13:10:02.465Z\",\"status\":\"pending\",\"id\":\"statement-auto-card-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card\"},{\"created_at\":\"2026-10-17T13:10:02.465Z\",\"currency\":\"COP\",\"total_amount\":40000,\"minimum_payment_amount\":4000,\"payment_due_date\":\"2026-11-25\",\"statement_end_date\":\"2026-10-31\",\"updated_at\":\"2026-10-17T13:10:02.465Z\",\"status\":\"pending\",\"id\":\"statement-auto-card2-2026-10\",\"statement_start_date\":\"2026-10-01\",\"account_id\":\"card2\"}],\"envelope_movements\":[],\"envelopes\":[],\"financial_data_revision\":[{\"updated_at\":\"2026-10-17T13:10:02.479Z\",\"revision\":22,\"id\":1}],\"financial_goals\":[],\"financial_health_scores\":[],\"installment_purchases\":[{\"created_at\":\"2026-10-11T12:00:00.000Z\",\"merchant_name\":\"Synthetic\",\"first_due_date\":\"2026-11-11T12:00:00.000Z\",\"id\":\"installment-tx_manual_1792242602294_23\",\"monthly_amount\":40000,\"total_amount\":120000,\"paid_installments\":0,\"installment_count\":3,\"currency\":\"COP\",\"account_id\":\"card2\",\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"transaction_id\":\"tx_manual_1792242602294_23\",\"status\":\"active\"}],\"investment_assets\":[],\"loans\":[],\"merchant_mappings\":[],\"raw_financial_messages\":[],\"receipt_attachments\":[],\"recurring_subscriptions\":[],\"schema_migrations\":[{\"applied_at\":\"2026-10-17T13:10:01.989Z\",\"version\":1},{\"applied_at\":\"2026-10-17T13:10:02.084Z\",\"version\":2},{\"applied_at\":\"2026-10-17T13:10:02.165Z\",\"version\":3},{\"applied_at\":\"2026-10-17T13:10:02.185Z\",\"version\":4}],\"shared_allocations\":[],\"shared_commands\":[],\"shared_contacts\":[],\"shared_expenses\":[],\"shared_loss_events\":[],\"shared_receipts\":[],\"shared_returns\":[],\"smart_alerts\":[],\"subcategories\":[],\"subscription_occurrences\":[],\"subscription_reminders\":[],\"tax_tags\":[],\"transaction_splits\":[],\"transaction_tax_tags\":[],\"transactions\":[{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"date_precision\":null,\"created_at\":\"2026-10-11T12:00:00.000Z\",\"status\":\"posted\",\"dedupe_key\":null,\"category_id\":null,\"credit_card_hint\":null,\"payment_method\":\"debit\",\"merchant_name\":\"Visa\",\"local_time\":null,\"source_message_id\":null,\"amount\":100000,\"subcategory_id\":null,\"account_id\":\"bank\",\"direction\":\"outflow\",\"civil_date\":null,\"target_account_id\":\"card\",\"date\":\"2026-10-11T12:00:00.000Z\",\"time_zone\":null,\"id\":\"tx-credit-card-payment-card-1792242602393-22\",\"currency\":\"COP\",\"description\":\"Pago de tarjeta de credito - Visa\",\"notes\":\"Pago de tarjeta de credito. No cuenta como gasto del mes.\",\"type\":\"creditCardPayment\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"date_precision\":null,\"created_at\":\"2026-10-11T12:00:00.000Z\",\"status\":\"posted\",\"dedupe_key\":null,\"category_id\":null,\"credit_card_hint\":\"Visa\",\"payment_method\":\"credit\",\"merchant_name\":\"Synthetic\",\"local_time\":null,\"source_message_id\":null,\"amount\":250000,\"subcategory_id\":null,\"account_id\":\"card\",\"direction\":\"outflow\",\"civil_date\":null,\"target_account_id\":null,\"date\":\"2026-10-11T12:00:00.000Z\",\"time_zone\":null,\"id\":\"tx_manual_1792242602207_22\",\"currency\":\"COP\",\"description\":\"Synthetic\",\"notes\":\"Crédito • Registro manual\",\"type\":\"expense\"},{\"updated_at\":\"2026-10-11T12:00:00.000Z\",\"date_precision\":null,\"created_at\":\"2026-10-11T12:00:00.000Z\",\"status\":\"posted\",\"dedupe_key\":null,\"category_id\":null,\"credit_card_hint\":\"Mastercard\",\"payment_method\":\"credit\",\"merchant_name\":\"Synthetic\",\"local_time\":null,\"source_message_id\":null,\"amount\":120000,\"subcategory_id\":null,\"account_id\":\"card2\",\"direction\":\"outflow\",\"civil_date\":null,\"target_account_id\":null,\"date\":\"2026-10-11T12:00:00.000Z\",\"time_zone\":null,\"id\":\"tx_manual_1792242602294_23\",\"currency\":\"COP\",\"description\":\"Synthetic\",\"notes\":\"Crédito • Registro manual | Cuotas: 3\",\"type\":\"expense\"}]}",
+        "accounts": [
+          {
+            "id": "card2",
+            "name": "Mastercard",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 120000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-17T13:10:02.465Z"
+          },
+          {
+            "id": "bank",
+            "name": "Synthetic",
+            "type": "bankAccount",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 900000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-10-11",
+            "updatedAt": "2026-10-11T12:00:00.000Z"
+          },
+          {
+            "id": "card",
+            "name": "Visa",
+            "type": "creditCard",
+            "status": "active",
+            "currency": "COP",
+            "balance": {
+              "amount": 0,
+              "currency": "COP"
+            },
+            "debtBalance": {
+              "amount": 150000,
+              "currency": "COP"
+            },
+            "createdAt": "2026-01-01",
+            "updatedAt": "2026-10-17T13:10:02.465Z"
+          }
+        ],
+        "summary": {
+          "currency": "COP",
+          "availableBalance": 900000,
+          "totalDebt": 270000,
+          "netWorth": 630000,
+          "monthlyIncome": 0,
+          "monthlyExpenses": 370000,
+          "monthlySavings": -370000,
+          "monthlyForgivenessLosses": 0,
+          "monthlyLossReversals": 0,
+          "monthlyLossRecoveries": 0,
+          "monthlyRecoveryReversals": 0,
+          "monthlyNetLosses": 0,
+          "recentTransactionCount": 3,
+          "modules": [
+            {
+              "id": "accounts",
+              "title": "Cuentas",
+              "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+            },
+            {
+              "id": "categories",
+              "title": "Categorías",
+              "description": "Clasificación local para ingresos, gastos y deudas."
+            },
+            {
+              "id": "transactions",
+              "title": "Transacciones",
+              "description": "Movimientos en COP registrados localmente."
+            },
+            {
+              "id": "debts",
+              "title": "Deuda básica",
+              "description": "Tarjeta y préstamo separados de los gastos comunes."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "name": "1 cards: write 1 before",
+      "passed": true,
+      "durationMs": 974,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 1 after",
+      "passed": true,
+      "durationMs": 794,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 2 before",
+      "passed": true,
+      "durationMs": 913,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 2 after",
+      "passed": true,
+      "durationMs": 1176,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 3 before",
+      "passed": true,
+      "durationMs": 1575,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 3 after",
+      "passed": true,
+      "durationMs": 1687,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 4 before",
+      "passed": true,
+      "durationMs": 1886,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 4 after",
+      "passed": true,
+      "durationMs": 1545,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 5 before",
+      "passed": true,
+      "durationMs": 1734,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 5 after",
+      "passed": true,
+      "durationMs": 1833,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 6 before",
+      "passed": true,
+      "durationMs": 1822,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 6 after",
+      "passed": true,
+      "durationMs": 1840,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 7 before",
+      "passed": true,
+      "durationMs": 1844,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 7 after",
+      "passed": true,
+      "durationMs": 2099,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 8 before",
+      "passed": true,
+      "durationMs": 2169,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 8 after",
+      "passed": true,
+      "durationMs": 2401,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 9 before",
+      "passed": true,
+      "durationMs": 1791,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 9 after",
+      "passed": true,
+      "durationMs": 1555,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 10 before",
+      "passed": true,
+      "durationMs": 1621,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "1 cards: write 10 after",
+      "passed": true,
+      "durationMs": 1705,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 1 before",
+      "passed": true,
+      "durationMs": 1651,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 1 after",
+      "passed": true,
+      "durationMs": 1593,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 2 before",
+      "passed": true,
+      "durationMs": 1980,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 2 after",
+      "passed": true,
+      "durationMs": 2137,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 3 before",
+      "passed": true,
+      "durationMs": 1692,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 3 after",
+      "passed": true,
+      "durationMs": 1888,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 4 before",
+      "passed": true,
+      "durationMs": 2843,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 4 after",
+      "passed": true,
+      "durationMs": 2102,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 5 before",
+      "passed": true,
+      "durationMs": 2138,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 5 after",
+      "passed": true,
+      "durationMs": 2629,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 6 before",
+      "passed": true,
+      "durationMs": 2197,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 6 after",
+      "passed": true,
+      "durationMs": 1992,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 7 before",
+      "passed": true,
+      "durationMs": 2448,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 7 after",
+      "passed": true,
+      "durationMs": 2160,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 8 before",
+      "passed": true,
+      "durationMs": 1615,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 8 after",
+      "passed": true,
+      "durationMs": 1828,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 9 before",
+      "passed": true,
+      "durationMs": 2210,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 9 after",
+      "passed": true,
+      "durationMs": 1947,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 10 before",
+      "passed": true,
+      "durationMs": 1722,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 10 after",
+      "passed": true,
+      "durationMs": 1889,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 11 before",
+      "passed": true,
+      "durationMs": 2898,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 11 after",
+      "passed": true,
+      "durationMs": 2072,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 12 before",
+      "passed": true,
+      "durationMs": 3017,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 12 after",
+      "passed": true,
+      "durationMs": 2400,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 13 before",
+      "passed": true,
+      "durationMs": 2018,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 5,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 13 after",
+      "passed": true,
+      "durationMs": 3017,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 5,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 14 before",
+      "passed": true,
+      "durationMs": 2405,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 5,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 14 after",
+      "passed": true,
+      "durationMs": 2058,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 5,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 15 before",
+      "passed": true,
+      "durationMs": 2724,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 15 after",
+      "passed": true,
+      "durationMs": 2335,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 16 before",
+      "passed": true,
+      "durationMs": 1954,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "2 cards: write 16 after",
+      "passed": true,
+      "durationMs": 1687,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 4,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "invalid amount Infinity",
+      "passed": true,
+      "durationMs": 2302
+    },
+    {
+      "name": "invalid amount -Infinity",
+      "passed": true,
+      "durationMs": 2404
+    },
+    {
+      "name": "invalid amount NaN",
+      "passed": true,
+      "durationMs": 2704
+    },
+    {
+      "name": "invalid amount 0",
+      "passed": true,
+      "durationMs": 3020
+    },
+    {
+      "name": "invalid amount -1",
+      "passed": true,
+      "durationMs": 2440
+    },
+    {
+      "name": "incompatible: closed card",
+      "passed": true,
+      "durationMs": 2751
+    },
+    {
+      "name": "incompatible: closed source",
+      "passed": true,
+      "durationMs": 1966
+    },
+    {
+      "name": "incompatible: source type",
+      "passed": true,
+      "durationMs": 2060
+    },
+    {
+      "name": "incompatible: missing source",
+      "passed": true,
+      "durationMs": 1487
+    },
+    {
+      "name": "incompatible: funds",
+      "passed": true,
+      "durationMs": 1632
+    },
+    {
+      "name": "incompatible: no debt",
+      "passed": true,
+      "durationMs": 1189
+    },
+    {
+      "name": "same intention, partial payment, round/cap and same millisecond identities",
+      "passed": true,
+      "durationMs": 609
+    },
+    {
+      "name": "concurrent payments and reader: debt",
+      "passed": true,
+      "durationMs": 468,
+      "evidence": {
+        "readerWaitMs": 59,
+        "bank": 750000
+      }
+    },
+    {
+      "name": "concurrent payments and reader: funds",
+      "passed": true,
+      "durationMs": 411,
+      "evidence": {
+        "readerWaitMs": 20,
+        "bank": 0
+      }
+    },
+    {
+      "name": "payment unknown COMMIT before, recover without retry",
+      "passed": true,
+      "durationMs": 654,
+      "evidence": {
+        "status": "unknown",
+        "control": "COMMIT",
+        "phase": "before",
+        "bank": 1000000
+      }
+    },
+    {
+      "name": "payment unknown COMMIT after, recover without retry",
+      "passed": true,
+      "durationMs": 680,
+      "evidence": {
+        "status": "unknown",
+        "control": "COMMIT",
+        "phase": "after",
+        "bank": 900000
+      }
+    },
+    {
+      "name": "payment unknown ROLLBACK before, recover without retry",
+      "passed": true,
+      "durationMs": 631,
+      "evidence": {
+        "status": "unknown",
+        "control": "ROLLBACK",
+        "phase": "before",
+        "bank": 1000000
+      }
+    },
+    {
+      "name": "payment unknown ROLLBACK after, recover without retry",
+      "passed": true,
+      "durationMs": 1753,
+      "evidence": {
+        "status": "unknown",
+        "control": "ROLLBACK",
+        "phase": "after",
+        "bank": 1000000
+      }
+    },
+    {
+      "name": "payment/reconciliation operation and queued reader timing: 0 additional rows",
+      "passed": true,
+      "durationMs": 1271,
+      "evidence": {
+        "additionalRows": 0,
+        "operationMs": 74,
+        "readerMs": 76,
+        "completeHistoryReads": 2
+      }
+    },
+    {
+      "name": "payment/reconciliation operation and queued reader timing: 100000 additional rows",
+      "passed": true,
+      "durationMs": 34104,
+      "evidence": {
+        "additionalRows": 100000,
+        "operationMs": 30375,
+        "readerMs": 30419,
+        "completeHistoryReads": 2
+      }
+    }
+  ],
+  "passed": true
+}

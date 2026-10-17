@@ -1,6 +1,7 @@
 import { financialIntegrityFixture, FINANCIAL_TEST_DATE } from './helpers/financialIntegrityFixture';
 import { deleteManualTransactionSafely } from '../src/modules/transactions/useCases/saveManualTransaction';
 import { registerCreditCardPayment } from '../src/modules/creditCards/useCases/creditCardTransactionRelations';
+import { registerCreditCardPayment as phase0Payment } from './helpers/phase0CreditCardPayment';
 import { updateTransactionQuickly } from '../src/modules/transactions/useCases/updateTransactionQuickly';
 import { deleteManualTransactionSafely as phase0Delete } from './helpers/phase0ManualTransactions';
 
@@ -98,12 +99,12 @@ test('manual transfer failure leaves committed balances but rolls back the movem
   } finally { f.native.close(); }
 });
 
-test('card payment failure can commit bank debit before the payment movement', async () => {
+test('historical phase 0 card payment can commit bank debit before the payment movement', async () => {
   const f = await financialIntegrityFixture();
   try {
     await f.save({ accountId: 'card', operationType: 'Crédito' });
     f.failOn('INSERT INTO transactions');
-    await expect(registerCreditCardPayment({ ...f, accountId: 'card', sourceAccountId: 'bank', amount: 100000, currentDate: FINANCIAL_TEST_DATE })).rejects.toThrow();
+    await expect(phase0Payment({ ...f, accountId: 'card', sourceAccountId: 'bank', amount: 100000, currentDate: FINANCIAL_TEST_DATE })).rejects.toThrow();
     f.failOn();
     expect(await f.snapshot()).toMatchObject({ balances: { bank: 900000 }, debt: 250000, wealth: 650000, expense: 250000 });
     expect(await f.transactionRepository.getTransactions()).toHaveLength(1);

@@ -1,0 +1,15 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/sharedCommandReads.test.ts
+
+PASS __tests__/sharedCommandReads.test.ts
+  √ loss, recovery and allocation commands never transport ledger rows (55 ms)
+  √ narrow posted projection retains exact REAL reductions with ties, old statuses, closed accounts and credit (17 ms)
+  √ failure while reading changed rows rolls back bank, movement, sharing and idempotency receipt (25 ms)
+  √ deleting a transfer through the shared facade preserves companion ordering and exact tax reversal (18 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        1.768 s, estimated 2 s
+Ran all test suites matching /__tests__\\sharedCommandReads.test.ts/i.

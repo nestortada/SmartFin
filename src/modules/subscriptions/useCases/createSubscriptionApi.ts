@@ -1,3 +1,4 @@
+import { transactionSortValue } from '../../../shared/utils/transactionDate';
 import type {
   SubscriptionRepository,
   SubscriptionState,
@@ -284,7 +285,7 @@ export function createSubscriptionApi(dependencies: {
         .sort(
           (a, b) =>
             b.score - a.score ||
-            b.transaction.date.localeCompare(a.transaction.date) ||
+            transactionSortValue(b.transaction) - transactionSortValue(a.transaction) ||
             a.transaction.id.localeCompare(b.transaction.id),
         )
         .slice(offset, offset + limit);

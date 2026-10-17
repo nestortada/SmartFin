@@ -34,6 +34,7 @@ import {
 import { createSqliteTransactionRepository } from '../repositories';
 import type { AiCommandAction, AiCommandPlan, Transaction } from '../types';
 import { deleteManualTransactionSafely, saveManualTransaction } from './saveManualTransaction';
+import { bogotaToday, parseTransactionDate } from '../../../shared/utils/transactionDate';
 
 export type ExecuteAiCommandPlanResult = {
   completed: string[];
@@ -228,8 +229,12 @@ async function executeAction(
     throw new Error('Falta un tipo de movimiento compatible.');
   }
   const selectedAccount = accounts.find(account => account.id === accountId);
-  const installmentCount = action.fields.installmentCount ?? 1;
-  const interestFreeCount = action.fields.interestFreeInstallmentCount ?? 0;
+  const existingInstallments = existing?.paymentMethod === 'credit'
+    ? (await creditCardRepository.getInstallmentPurchases([existing.accountId])).find(p => p.transactionId === existing.id) : undefined;
+  const installmentCount = action.fields.installmentCount ?? existingInstallments?.installmentCount ??
+    Number(/Cuotas: (\d+)/.exec(existing?.notes ?? '')?.[1] ?? 1);
+  const interestFreeCount = action.fields.interestFreeInstallmentCount ??
+    Number(/Sin intereses: (\d+)/.exec(existing?.notes ?? '')?.[1] ?? 0);
   const result = await saveManualTransaction({
     accountId,
     accountRepository,
@@ -249,10 +254,11 @@ async function executeAction(
     now: new Date(),
     operationType: selectedAccount?.type === 'creditCard' ? 'Crédito' : 'Débito',
     targetAccountId,
-    transactionDate: action.fields.date ?? existing?.date,
+    occurrence: action.fields.date ? parseTransactionDate(action.fields.date) : existing ? undefined
+      : { kind: 'date', date: bogotaToday() },
     transactionRepository,
     transactionType,
-    transferTaxCharged: action.fields.transferTaxCharged ?? false,
+    transferTaxCharged: action.fields.transferTaxCharged ?? undefined,
   });
   if (action.clientRef) references.set(action.clientRef, result.transaction.id);
   return `${existing ? 'Movimiento actualizado' : 'Movimiento creado'}: ${result.transaction.description}`;

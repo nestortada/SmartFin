@@ -49,8 +49,9 @@ const { DatabaseSync } = require('node:sqlite') as {
   DatabaseSync: new (path: string) => NativeDatabase;
 };
 
-export function realSQLite(options: { fixedSqlDate?: Date } = {}) {
-  const native = new DatabaseSync(':memory:');
+export function realSQLite(options: { fixedSqlDate?: Date; syntheticPath?: string } = {}) {
+  // File-backed mode is only for caller-created temporary synthetic restart fixtures.
+  const native = new DatabaseSync(options.syntheticPath ?? ':memory:');
   if (options.fixedSqlDate) {
     const timestamp = options.fixedSqlDate.toISOString();
     // Only the audit clock used by current DDL/migrations. Unexpected usage fails loudly.
@@ -129,7 +130,8 @@ export function realSQLite(options: { fixedSqlDate?: Date } = {}) {
       const statement = native.prepare(sql);
       let rows: Record<string, SQLitePrimitive>[] = [];
       let changes = 0;
-      if (/^\s*(SELECT|PRAGMA)/i.test(sql)) rows = statement.all(...values);
+      if (/^\s*(SELECT|PRAGMA|WITH|EXPLAIN)\b/i.test(sql))
+        rows = statement.all(...values);
       else changes = Number(statement.run(...values).changes);
       return {
         rows: {

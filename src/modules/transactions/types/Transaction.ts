@@ -1,4 +1,5 @@
 import type { CurrencyCode, ISODateString } from '../../../shared/types';
+import type { TransactionDateFields } from '../../../shared/utils/transactionDate';
 
 export type TransactionType =
   | 'income'
@@ -16,7 +17,7 @@ export type TransactionStatus = 'posted' | 'pending' | 'cancelled';
 
 export type TransactionPaymentMethod = 'debit' | 'credit';
 
-export type Transaction = {
+export type Transaction = TransactionDateFields & {
   id: string;
   amount: number;
   currency: CurrencyCode;

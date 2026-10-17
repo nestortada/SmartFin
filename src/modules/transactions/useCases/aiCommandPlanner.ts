@@ -1,6 +1,7 @@
 import type { Account } from '../../accounts';
 import type { Category, Subcategory } from '../../categories';
 import { parseCivilDate, roundSubscriptionMoney } from '../../subscriptions/useCases/recurrence';
+import { parseTransactionDate, transactionDateKey } from '../../../shared/utils/transactionDate';
 import type {
   AiActionEntity,
   AiActionOperation,
@@ -363,7 +364,7 @@ function resolveTarget(action: AiCommandAction, context: AiPlanningContext): str
     const matches = supported.filter(transaction =>
       normalized(transaction.description) === expected ||
       normalized(transaction.merchantName) === expected ||
-      normalized(`${transaction.description} ${transaction.amount} ${transaction.date.slice(0, 10)}`) === expected,
+      normalized(`${transaction.description} ${transaction.amount} ${transactionDateKey(transaction)}`) === expected,
     );
     return matches.length === 1 ? matches[0]?.id : undefined;
   }
@@ -475,7 +476,7 @@ export function normalizeAiCommandPlan(
         if (!action.fields.categoryId && !action.fields.categoryRef) action.fields.categoryId = subcategory.categoryId;
       }
       else if (action.fields.subcategoryId && !action.fields.subcategoryRef) action.fields.subcategoryId = undefined;
-      if (action.fields.date && Number.isNaN(new Date(action.fields.date).getTime())) action.fields.date = undefined;
+      // Keep invalid supplied dates so clarification cannot silently erase an edit.
       if (action.fields.amount !== undefined && action.fields.amount !== null && action.fields.amount <= 0) action.fields.amount = undefined;
     } else if (action.entity === 'subcategory') {
       const category = findUnique(context.categories, action.fields.categoryId, action.fields.categoryName, item => item.name);
@@ -522,7 +523,7 @@ function subcategoryOptions(subcategories: Subcategory[], categoryId?: string | 
 
 function transactionOptions(transactions: Transaction[]): AiClarificationOption[] {
   return transactions.filter(transaction => TRANSACTION_TYPES.includes(transaction.type)).slice(0, 20).map(transaction =>
-    option(`${transaction.description} · $${transaction.amount.toLocaleString('es-CO')} · ${transaction.date.slice(0, 10)}`, transaction.id),
+    option(`${transaction.description} · $${transaction.amount.toLocaleString('es-CO')} · ${transactionDateKey(transaction)}`, transaction.id),
   );
 }
 
@@ -595,6 +596,10 @@ export function buildClarificationQuestions(
     if (action.operation !== 'create' && !resolveTarget(action, context)) {
       addQuestion(questions, plan, action, 'targetId', '¿Qué registro quieres modificar o eliminar?', 'string', targetOptions(action, context), false, true);
       continue;
+    }
+    if (action.entity === 'transaction' && action.operation !== 'delete' && action.fields.date) {
+      try { parseTransactionDate(action.fields.date); }
+      catch { addQuestion(questions, plan, action, 'date', 'Indica una fecha válida YYYY-MM-DD y una hora opcional HH:mm.', 'date', [], false, true); }
     }
     if (action.operation !== 'create') continue;
 
@@ -876,9 +881,8 @@ export function applyClarificationAnswer(
   } else if (question.valueType === 'boolean') {
     value = value === 'true' || normalized(String(value)) === 'si';
   } else if (question.valueType === 'date') {
-    const parsed = new Date(String(value));
-    if (Number.isNaN(parsed.getTime())) throw new Error('Escribe una fecha valida.');
-    value = parsed.toISOString();
+    const parsed = parseTransactionDate(String(value));
+    value = parsed.kind === 'date' ? parsed.date : `${parsed.date}T${parsed.time}:00-05:00`;
   }
 
   if (question.field === 'targetId') {

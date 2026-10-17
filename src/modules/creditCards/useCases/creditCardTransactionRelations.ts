@@ -2,7 +2,12 @@ import { PRIMARY_CURRENCY, type ISODateString } from '../../../shared/types';
 import type { Account } from '../../accounts';
 import type { SqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import type { Transaction } from '../../transactions';
+import { bogotaCalendarDate, transactionDateKey } from '../../../shared/utils/transactionDate';
 import type { SqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
+import { readCurrentManualTransaction } from '../../transactions/repositories/sqliteTransactionRepository';
+import { isSQLiteParticipant } from '../../../database/managedSQLite';
+import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
+import { withCreditCardPaymentScope } from './creditCardPaymentScope';
 import type { CreditCardRepository } from '../repositories';
 import type { CreditCardStatement } from '../types';
 import {
@@ -327,7 +332,7 @@ export async function reconcileCreditCardTransactions({
   const statements: CreditCardStatement[] = [];
 
   for (const card of creditCards) {
-    const statementRange = getCurrentStatementRange(card, currentDate);
+    const statementRange = getCurrentStatementRange(card, bogotaCalendarDate(currentDate));
     const cardTransactions = transactions.filter(
       transaction => transaction.accountId === card.id && isPostedExpense(transaction),
     );
@@ -338,9 +343,9 @@ export async function reconcileCreditCardTransactions({
     const totalPayments = sumAmounts(paymentTransactions);
     const debtBalance = Math.max(0, totalCreditUsage - totalPayments);
     const statementPayments = paymentTransactions
-      .filter(transaction => isDateInRange(transaction.date, statementRange.start, statementRange.end));
+      .filter(transaction => isDateInRange(transactionDateKey(transaction), statementRange.start, statementRange.end));
     const statementCharges = cardTransactions
-      .filter(transaction => isDateInRange(transaction.date, statementRange.start, statementRange.end))
+      .filter(transaction => isDateInRange(transactionDateKey(transaction), statementRange.start, statementRange.end))
       .reduce((total, transaction) => {
         const installment = installmentByTransactionId.get(transaction.id);
         return total + (installment && installment.installmentCount > 1 && installment.status === 'active'
@@ -434,7 +439,30 @@ export async function associatePendingTransactionsForCreditCard({
   return pendingTransactions.length;
 }
 
-export async function registerCreditCardPayment({
+const paymentRequests = new WeakMap<RegisterCreditCardPaymentParams, Promise<RegisterCreditCardPaymentResult>>();
+let paymentIdSequence = 0;
+
+export async function registerCreditCardPayment(
+  params: RegisterCreditCardPaymentParams,
+): Promise<RegisterCreditCardPaymentResult> {
+  const database = repositorySQLiteDatabase(params.transactionRepository);
+  // Participant results are provisional: their owner still decides COMMIT/ROLLBACK.
+  const participant = database && isSQLiteParticipant(database);
+  const existing = participant ? undefined : paymentRequests.get(params);
+  if (existing) return existing;
+  if (!Number.isFinite(params.amount) || params.amount <= 0) {
+    throw new Error('Ingresa un monto valido para el pago de la tarjeta.');
+  }
+  // Capture the intention before waiting for the connection; never cache a mutable caller object.
+  const intention = { ...params, currentDate: new Date(params.currentDate?.getTime() ?? Date.now()) };
+  const result = withCreditCardPaymentScope(intention, dependencies =>
+    registerCreditCardPaymentInScope({ ...intention, ...dependencies }));
+  // Runtime protection for the same request, including rejection/unknown; no durable receipt.
+  if (!participant) paymentRequests.set(params, result);
+  return result;
+}
+
+async function registerCreditCardPaymentInScope({
   accountId,
   accountRepository,
   amount,
@@ -443,8 +471,9 @@ export async function registerCreditCardPayment({
   sourceAccountId,
   transactionRepository,
 }: RegisterCreditCardPaymentParams): Promise<RegisterCreditCardPaymentResult> {
-  if (!Number.isFinite(amount) || amount <= 0) {
-    throw new Error('Ingresa un monto valido para el pago de la tarjeta.');
+  const transactionId = `tx-credit-card-payment-${accountId}-${Date.now()}-${++paymentIdSequence}`;
+  if (await readCurrentManualTransaction(transactionRepository, transactionId)) {
+    throw new Error('La identidad del pago ya existe. Actualiza el historial antes de registrarlo.');
   }
 
   await reconcileCreditCardTransactions({
@@ -478,7 +507,7 @@ export async function registerCreditCardPayment({
 
   const now = currentDate.toISOString();
   const transaction: Transaction = {
-    id: `tx-credit-card-payment-${card.id}-${Date.now()}`,
+    id: transactionId,
     accountId: sourceAccount.id,
     amount: paidAmount,
     createdAt: now,

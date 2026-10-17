@@ -1,0 +1,2250 @@
+{
+  "runtime": "v24.16.0",
+  "platform": "win32",
+  "gcAvailable": true,
+  "warmups": 3,
+  "samples": 7,
+  "bankMovements": 100000,
+  "entries": [
+    {
+      "size": 0,
+      "version": "before",
+      "medianMs": 2.8296000000000276,
+      "milliseconds": [
+        2.848399999999856,
+        5.098299999999654,
+        2.8296000000000276,
+        2.2580000000007203,
+        2.3171000000002095,
+        2.8918000000003303,
+        2.2118000000000393
+      ],
+      "queries": 9,
+      "returnedRows": 170,
+      "returnedBytes": 13512,
+      "medianSampledHeapGrowthBytes": 311888,
+      "heapSamples": [
+        311888,
+        310128,
+        310864,
+        313184,
+        330408,
+        328520,
+        310552
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 274056.20000000024,
+        "monthlySavings": 77787.99999999994,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_contacts ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 224,
+              "detail": "SCAN shared_contacts USING INDEX sqlite_autoindex_shared_contacts_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_expenses ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_expenses USING INDEX sqlite_autoindex_shared_expenses_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transaction_splits WHERE shared_expense_id IS NOT NULL ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transaction_splits USING INDEX sqlite_autoindex_transaction_splits_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_receipts ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_receipts USING INDEX sqlite_autoindex_shared_receipts_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_allocations ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_allocations USING INDEX sqlite_autoindex_shared_allocations_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_returns ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_returns USING INDEX sqlite_autoindex_shared_returns_1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 0,
+      "version": "after",
+      "medianMs": 3.546900000000278,
+      "milliseconds": [
+        3.317300000000614,
+        3.0778000000000247,
+        3.546900000000278,
+        3.7058999999999287,
+        3.1975000000002183,
+        3.5824000000002343,
+        4.108299999999872
+      ],
+      "queries": 4,
+      "returnedRows": 171,
+      "returnedBytes": 13558,
+      "medianSampledHeapGrowthBytes": 279432,
+      "heapSamples": [
+        279928,
+        327424,
+        279432,
+        285696,
+        274216,
+        278216,
+        277064
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 274056.20000000024,
+        "monthlySavings": 77787.99999999994,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 58,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 97,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 102,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 121,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 127,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 206,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 214,
+              "parent": 206,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 251,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 260,
+              "parent": 251,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 264,
+              "parent": 251,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 271,
+              "parent": 251,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 312,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 328,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 345,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 362,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100,
+      "version": "before",
+      "medianMs": 5.3773999999993976,
+      "milliseconds": [
+        5.3773999999993976,
+        7.510300000000825,
+        5.278000000000247,
+        5.331900000000132,
+        5.19170000000031,
+        5.442200000000412,
+        5.693600000000515
+      ],
+      "queries": 9,
+      "returnedRows": 720,
+      "returnedBytes": 155551,
+      "medianSampledHeapGrowthBytes": 2590128,
+      "heapSamples": [
+        2577272,
+        2609480,
+        2585752,
+        2590128,
+        2594936,
+        2580392,
+        2592576
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 757100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 274056.20000000024,
+        "monthlySavings": 77787.99999999994,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_contacts ORDER BY id;",
+          "values": [],
+          "rows": 50,
+          "bytes": 4981,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 224,
+              "detail": "SCAN shared_contacts USING INDEX sqlite_autoindex_shared_contacts_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_expenses ORDER BY id;",
+          "values": [],
+          "rows": 100,
+          "bytes": 35236,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_expenses USING INDEX sqlite_autoindex_shared_expenses_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transaction_splits WHERE shared_expense_id IS NOT NULL ORDER BY id;",
+          "values": [],
+          "rows": 200,
+          "bytes": 63411,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transaction_splits USING INDEX sqlite_autoindex_transaction_splits_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_receipts ORDER BY id;",
+          "values": [],
+          "rows": 100,
+          "bytes": 19160,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_receipts USING INDEX sqlite_autoindex_shared_receipts_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_allocations ORDER BY id;",
+          "values": [],
+          "rows": 100,
+          "bytes": 19261,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_allocations USING INDEX sqlite_autoindex_shared_allocations_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_returns ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_returns USING INDEX sqlite_autoindex_shared_returns_1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100,
+      "version": "after",
+      "medianMs": 2.7971999999999753,
+      "milliseconds": [
+        2.6118999999998778,
+        3.1851000000006024,
+        2.6518999999998414,
+        2.6624000000001615,
+        3.5732000000007247,
+        2.8251000000000204,
+        2.7971999999999753
+      ],
+      "queries": 4,
+      "returnedRows": 171,
+      "returnedBytes": 13565,
+      "medianSampledHeapGrowthBytes": 272744,
+      "heapSamples": [
+        280848,
+        272744,
+        272744,
+        272744,
+        272744,
+        273688,
+        296944
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 757100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 274056.20000000024,
+        "monthlySavings": 77787.99999999994,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 65,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 97,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 102,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 121,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 127,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 206,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 214,
+              "parent": 206,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 251,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 260,
+              "parent": 251,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 264,
+              "parent": 251,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 271,
+              "parent": 251,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 312,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 328,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 345,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 362,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "version": "before",
+      "medianMs": 45.05839999999989,
+      "milliseconds": [
+        44.01130000000012,
+        44.87640000000101,
+        48.21020000000135,
+        45.255699999999706,
+        45.84430000000066,
+        43.51920000000064,
+        45.05839999999989
+      ],
+      "queries": 9,
+      "returnedRows": 5220,
+      "returnedBytes": 1401105,
+      "medianSampledHeapGrowthBytes": 57540896,
+      "heapSamples": [
+        57522528,
+        57542136,
+        57540384,
+        57540896,
+        57546720,
+        57558208,
+        57494208
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7507100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 354295.90000000014,
+        "monthlySavings": -2451.6999999999534,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10311,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_contacts ORDER BY id;",
+          "values": [],
+          "rows": 50,
+          "bytes": 4981,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 224,
+              "detail": "SCAN shared_contacts USING INDEX sqlite_autoindex_shared_contacts_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_expenses ORDER BY id;",
+          "values": [],
+          "rows": 1000,
+          "bytes": 355359,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_expenses USING INDEX sqlite_autoindex_shared_expenses_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transaction_splits WHERE shared_expense_id IS NOT NULL ORDER BY id;",
+          "values": [],
+          "rows": 2000,
+          "bytes": 638137,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transaction_splits USING INDEX sqlite_autoindex_transaction_splits_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_receipts ORDER BY id;",
+          "values": [],
+          "rows": 1000,
+          "bytes": 192577,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_receipts USING INDEX sqlite_autoindex_shared_receipts_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_allocations ORDER BY id;",
+          "values": [],
+          "rows": 1000,
+          "bytes": 196561,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_allocations USING INDEX sqlite_autoindex_shared_allocations_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_returns ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_returns USING INDEX sqlite_autoindex_shared_returns_1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "version": "after",
+      "medianMs": 5.065599999999904,
+      "milliseconds": [
+        5.324899999999616,
+        4.722200000000157,
+        4.696600000001126,
+        5.065599999999904,
+        5.662999999998647,
+        5.087100000000646,
+        4.671800000000076
+      ],
+      "queries": 4,
+      "returnedRows": 171,
+      "returnedBytes": 13554,
+      "medianSampledHeapGrowthBytes": 272448,
+      "heapSamples": [
+        272752,
+        272448,
+        272448,
+        272448,
+        272448,
+        272448,
+        272448
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7507100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 354295.90000000014,
+        "monthlySavings": -2451.6999999999534,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10311,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 66,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 97,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 102,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 121,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 127,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 206,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 214,
+              "parent": 206,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 251,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 260,
+              "parent": 251,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 264,
+              "parent": 251,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 271,
+              "parent": 251,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 312,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 328,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 345,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 362,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 5000,
+      "version": "before",
+      "medianMs": 765.2000999999982,
+      "milliseconds": [
+        771.0509999999995,
+        633.9372000000003,
+        792.2499000000025,
+        658.8078000000023,
+        765.2000999999982,
+        617.0593000000008,
+        966.1758999999984
+      ],
+      "queries": 9,
+      "returnedRows": 25220,
+      "returnedBytes": 6984872,
+      "medianSampledHeapGrowthBytes": 51774840,
+      "heapSamples": [
+        51773856,
+        51774840,
+        51774840,
+        51777600,
+        51774840,
+        51774840,
+        51774840
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 37507100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 658875.7,
+        "monthlySavings": -307031.49999999977,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10255,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_contacts ORDER BY id;",
+          "values": [],
+          "rows": 50,
+          "bytes": 4981,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 224,
+              "detail": "SCAN shared_contacts USING INDEX sqlite_autoindex_shared_contacts_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_expenses ORDER BY id;",
+          "values": [],
+          "rows": 5000,
+          "bytes": 1790115,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_expenses USING INDEX sqlite_autoindex_shared_expenses_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM transaction_splits WHERE shared_expense_id IS NOT NULL ORDER BY id;",
+          "values": [],
+          "rows": 10000,
+          "bytes": 3208449,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN transaction_splits USING INDEX sqlite_autoindex_transaction_splits_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_receipts ORDER BY id;",
+          "values": [],
+          "rows": 5000,
+          "bytes": 967332,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_receipts USING INDEX sqlite_autoindex_shared_receipts_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_allocations ORDER BY id;",
+          "values": [],
+          "rows": 5000,
+          "bytes": 1000561,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_allocations USING INDEX sqlite_autoindex_shared_allocations_1"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT * FROM shared_returns ORDER BY id;",
+          "values": [],
+          "rows": 0,
+          "bytes": 2,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 223,
+              "detail": "SCAN shared_returns USING INDEX sqlite_autoindex_shared_returns_1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 5000,
+      "version": "after",
+      "medianMs": 15.889999999999418,
+      "milliseconds": [
+        16.46979999999894,
+        15.889999999999418,
+        16.46860000000015,
+        15.883399999998801,
+        15.97609999999986,
+        15.517199999998411,
+        15.87579999999798
+      ],
+      "queries": 4,
+      "returnedRows": 171,
+      "returnedBytes": 13499,
+      "medianSampledHeapGrowthBytes": 270776,
+      "heapSamples": [
+        271080,
+        270776,
+        270776,
+        270776,
+        272560,
+        273680,
+        270776
+      ],
+      "summary": {
+        "currency": "COP",
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 37507100,
+        "monthlyIncome": 351844.2000000002,
+        "monthlyExpenses": 658875.7,
+        "monthlySavings": -307031.49999999977,
+        "recentTransactionCount": 1968,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10255,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 67,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 97,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 102,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 121,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 127,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 206,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 214,
+              "parent": 206,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 251,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 260,
+              "parent": 251,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 264,
+              "parent": 251,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 271,
+              "parent": 251,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 312,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 328,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 345,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 362,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

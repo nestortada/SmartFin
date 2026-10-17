@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -11,6 +11,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
+import { SQLiteCommandFailure } from '../../../database/atomicSQLite';
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
 import { formatCurrency } from '../../../shared/utils/formatCurrency';
 import type { Account } from '../../accounts';
@@ -97,6 +98,7 @@ export function CreditCardsScreen({
   const [paymentModalVisible, setPaymentModalVisible] = useState(false);
   const [paymentSourceAccountId, setPaymentSourceAccountId] = useState<string>();
   const [payingCard, setPayingCard] = useState(false);
+  const paymentSubmission = useRef<'idle' | 'running' | 'confirmed' | 'unknown'>('idle');
   const [savingCard, setSavingCard] = useState(false);
 
   useEffect(() => {
@@ -269,6 +271,7 @@ export function CreditCardsScreen({
           : sourceAccounts[0]?.id,
       );
       setPaymentAmount(formatCreditLimitInput(String(Math.round(selectedCard.usedCredit))));
+      if (paymentSubmission.current === 'confirmed') paymentSubmission.current = 'idle';
       setPaymentModalVisible(true);
     } catch (loadError) {
       Alert.alert(
@@ -285,6 +288,11 @@ export function CreditCardsScreen({
   };
 
   const handleRegisterPayment = async () => {
+    if (paymentSubmission.current === 'running' || paymentSubmission.current === 'confirmed') return;
+    if (paymentSubmission.current === 'unknown') {
+      Alert.alert('SmartFin', 'El resultado del pago es desconocido. Verifica su estado antes de registrar otro pago.');
+      return;
+    }
     if (!database || !selectedCard) {
       return;
     }
@@ -295,7 +303,9 @@ export function CreditCardsScreen({
       return;
     }
 
+    paymentSubmission.current = 'running';
     setPayingCard(true);
+    let confirmed = false;
     try {
       const result = await registerCreditCardPayment({
         accountId: selectedCard.account.id,
@@ -306,17 +316,22 @@ export function CreditCardsScreen({
         transactionRepository: createSqliteTransactionRepository(database),
       });
 
+      confirmed = true;
+      paymentSubmission.current = 'confirmed';
+      setPaymentModalVisible(false);
+      refreshCards();
       Toast.show({
         type: 'success',
         text1: 'Pago registrado',
         text2: `Se restauro ${formatCurrency(result.paidAmount, selectedCard.account.currency)} de cupo disponible.`,
       });
-      setPaymentModalVisible(false);
-      refreshCards();
     } catch (paymentError) {
+      const unknown = paymentError instanceof SQLiteCommandFailure && paymentError.result.status === 'unknown';
+      if (!confirmed) paymentSubmission.current = unknown ? 'unknown' : 'idle';
       Alert.alert(
         'SmartFin',
-        paymentError instanceof Error ? paymentError.message : 'No se pudo registrar el pago.',
+        confirmed ? 'El pago quedó guardado. No se pudo mostrar su confirmación.'
+          : paymentError instanceof Error ? paymentError.message : 'No se pudo registrar el pago.',
       );
     } finally {
       setPayingCard(false);

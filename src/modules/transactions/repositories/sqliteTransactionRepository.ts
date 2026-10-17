@@ -3,6 +3,9 @@ import { registerSQLiteRepository, repositorySQLiteDatabase } from '../../../dat
 import { getSQLiteTransactionHistoryPage, getSQLiteTransactionMonths } from './sqliteTransactionHistory';
 import type { TransactionHistoryCursor, TransactionHistoryPage, TransactionHistoryQuery } from '../types/TransactionHistoryQuery';
 import { runSQLiteTransaction } from '../../../database/atomicSQLite';
+import { reconcileSharedTransactionChanges } from './sharedTransactionIntegrity';
+import { TRANSACTION_DAY_SQL, validateTransactionDateFields } from '../../../shared/utils/transactionDate';
+import { PERSONAL_AMOUNT_SQL } from './sharedFinancialProjectionSql';
 import {
   loadSubscriptionState,
   persistSubscriptionState,
@@ -62,6 +65,10 @@ export function rowToTransaction(row: SQLiteRow): Transaction {
     currency: readString(row, 'currency') as CurrencyCode,
     description: readString(row, 'description'),
     date: readString(row, 'date'),
+    ...(readNullableString(row, 'civil_date') ? {
+      civilDate: readString(row, 'civil_date'), localTime: readNullableString(row, 'local_time'),
+      timeZone: readNullableString(row, 'time_zone'), datePrecision: readString(row, 'date_precision') as 'date' | 'dateTime',
+    } : {}),
     accountId: readString(row, 'account_id'),
     categoryId: readNullableString(row, 'category_id'),
     subcategoryId: readNullableString(row, 'subcategory_id'),
@@ -106,6 +113,10 @@ export function createSqliteTransactionRepository(
           currency,
           description,
           date,
+          civil_date,
+          local_time,
+          time_zone,
+          date_precision,
           account_id,
           category_id,
           subcategory_id,
@@ -132,9 +143,9 @@ export function createSqliteTransactionRepository(
         .map(() => '(type = ? AND direction = ?)')
         .join(' OR ');
       const [resultSet] = await database.executeSql(
-        `SELECT amount, type, direction FROM transactions
-         WHERE date >= ? AND date < ? AND status = ?
-           AND substr(date, 1, ?) = ? AND (${operations})
+        `SELECT amount, type, direction, ${PERSONAL_AMOUNT_SQL} AS personal_amount FROM transactions
+         WHERE ${TRANSACTION_DAY_SQL} >= ? AND ${TRANSACTION_DAY_SQL} < ? AND status = ?
+           AND substr(${TRANSACTION_DAY_SQL}, 1, ?) = ? AND (${operations})
          ORDER BY date DESC, created_at DESC;`,
         [
           query.startDate,
@@ -150,16 +161,16 @@ export function createSqliteTransactionRepository(
       );
       // Keep the same order as getTransactions: REAL amounts are summed in JS.
       return resultSetToRows(resultSet).map(row => ({
-        amount: readNumber(row, 'amount'),
+        amount: readNumber(row, 'personal_amount'),
         type: readString(row, 'type') as Transaction['type'],
         direction: readString(row, 'direction') as Transaction['direction'],
       }));
     },
     getTransactionCountsByDay: async query => {
       const [resultSet] = await database.executeSql(
-        `SELECT substr(date, 1, 10) AS date, COUNT(*) AS count FROM transactions
-         WHERE date >= ? AND date < ? AND status = ?
-         GROUP BY substr(date, 1, 10);`,
+        `SELECT ${TRANSACTION_DAY_SQL} AS date, COUNT(*) AS count FROM transactions
+         WHERE ${TRANSACTION_DAY_SQL} >= ? AND ${TRANSACTION_DAY_SQL} < ? AND status = ?
+         GROUP BY ${TRANSACTION_DAY_SQL};`,
         [query.startDate, query.endDateExclusive, query.status],
       );
       return resultSetToRows(resultSet).map(row => ({
@@ -170,6 +181,10 @@ export function createSqliteTransactionRepository(
     saveTransactions: async transactions => {
       const date = new Date();
       await runSQLiteTransaction(database, function* () {
+        for (const transaction of transactions) {
+          validateTransactionDateFields(transaction);
+        }
+        yield* reconcileSharedTransactionChanges(transactions);
         const state = yield* loadSubscriptionState({
           today: civilDate(date),
           transactionIds: transactions.map(transaction => transaction.id),
@@ -179,6 +194,8 @@ export function createSqliteTransactionRepository(
           yield* upsertSQLiteRow('transactions', {
             id: transaction.id, amount: transaction.amount, currency: transaction.currency,
             description: transaction.description, date: transaction.date, account_id: transaction.accountId,
+            civil_date: transaction.civilDate ?? null, local_time: transaction.localTime ?? null,
+            time_zone: transaction.timeZone ?? null, date_precision: transaction.datePrecision ?? null,
             category_id: transaction.categoryId ?? null, subcategory_id: transaction.subcategoryId ?? null,
             type: transaction.type, direction: transaction.direction, status: transaction.status,
             target_account_id: transaction.targetAccountId ?? null, merchant_name: transaction.merchantName ?? null,
@@ -213,6 +230,7 @@ export function createSqliteTransactionRepository(
     deleteTransaction: async id => {
       const date = new Date();
       await runSQLiteTransaction(database, function* () {
+        yield* reconcileSharedTransactionChanges([], id);
         const state = yield* loadSubscriptionState({
           today: civilDate(date),
           transactionId: id,

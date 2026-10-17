@@ -131,7 +131,7 @@ export function useAiAssistantController(
         catalog: nextContext,
         now: new Date(),
         text: input,
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Bogota',
+        timeZone: 'America/Bogota',
       });
       const plan = normalizeAiCommandPlan(interpreted, nextContext);
       const now = new Date().toISOString();
@@ -225,7 +225,7 @@ export function useAiAssistantController(
         currentPlan: draft.plan,
         now: new Date(),
         text: correction,
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Bogota',
+        timeZone: 'America/Bogota',
       });
       preserveAnsweredValues(draft.plan, revised);
       const plan = normalizeAiCommandPlan(revised, context);

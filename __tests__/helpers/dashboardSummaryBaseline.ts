@@ -146,6 +146,11 @@ function computeSummary(
     monthlyIncome,
     monthlyExpenses,
     monthlySavings,
+    monthlyForgivenessLosses: 0,
+    monthlyLossReversals: 0,
+    monthlyLossRecoveries: 0,
+    monthlyRecoveryReversals: 0,
+    monthlyNetLosses: 0,
     recentTransactionCount,
     modules: [
       {

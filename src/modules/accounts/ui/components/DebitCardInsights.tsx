@@ -203,7 +203,7 @@ function MovementRow({
           {movement.transaction.merchantName || movement.transaction.description}
         </Text>
         <Text style={[styles.movementSubtitle, { color: palette.muted }]}>
-          {movement.kind} - {movement.transaction.date.slice(0, 10)}
+          {movement.kind} - {movement.transaction.civilDate ?? movement.transaction.date.slice(0, 10)}
         </Text>
       </View>
       <Text style={[styles.movementAmount, { color: isPositive ? palette.tertiary : palette.primary }]}>

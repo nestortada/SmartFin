@@ -11,6 +11,7 @@ import type { Transaction } from '../src/modules/transactions/types';
 import { createSqliteAccountRepository } from '../src/modules/accounts/repositories/sqliteAccountRepository';
 import { createSqliteCategoryRepository } from '../src/modules/categories/repositories/sqliteCategoryRepository';
 import { createSqliteSubcategoryRepository } from '../src/modules/categories/repositories/sqliteSubcategoryRepository';
+import { encodeTransactionDate } from '../src/shared/utils/transactionDate';
 
 jest.mock('react-native-sqlite-storage', () => ({
   enablePromise: jest.fn(),
@@ -216,6 +217,18 @@ test('suggested payment dates include exactly seven days and exclude eight days'
   } finally {
     f.native.close();
   }
+});
+
+test('subscription suggestions use the civil payment date across UTC midnight', async () => {
+  const f = await fixture();
+  try {
+    await f.api.createSubscription(f.input);
+    const charge = (await f.api.getNextSubscriptionCharge())!;
+    await f.transactions.saveTransactions([{ ...f.transaction,
+      ...encodeTransactionDate({ kind: 'dateTime', date: '2026-10-22', time: '23:00', timeZone: 'America/Bogota' }) }]);
+    expect((await f.api.getSubscriptionPaymentCandidates({ occurrenceId: charge.id })).map(candidate => candidate.transaction.id))
+      .toEqual(['payment']);
+  } finally { f.native.close(); }
 });
 
 test('Netflix lifecycle is projected, paid manually, and retains history without balance changes', async () => {
@@ -475,7 +488,7 @@ test('legacy migration preserves data, is repeatable and rolls back failures', a
     sql.failOn();
     await applyVersionedMigrations(sql.database);
     await applyVersionedMigrations(sql.database);
-    expect(sql.query('SELECT * FROM schema_migrations').rows.length).toBe(2);
+    expect(sql.query('SELECT * FROM schema_migrations').rows.length).toBe(4);
     expect(
       sql
         .query('SELECT anchor_date,amount FROM recurring_subscriptions')
@@ -508,7 +521,7 @@ test('closed accounts produce configuration alerts and financial wipe leaves set
     );
     expect(f.query('SELECT * FROM subscription_reminders').rows.length).toBe(0);
     expect(f.query('SELECT * FROM app_settings').rows.length).toBe(1);
-    expect(f.query('SELECT * FROM schema_migrations').rows.length).toBe(2);
+    expect(f.query('SELECT * FROM schema_migrations').rows.length).toBe(4);
     expect(f.query('PRAGMA foreign_key_check').rows.length).toBe(0);
   } finally {
     f.native.close();

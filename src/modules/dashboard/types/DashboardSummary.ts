@@ -14,6 +14,11 @@ export type DashboardSummary = {
   monthlyIncome: number;
   monthlyExpenses: number;
   monthlySavings: number;
+  monthlyForgivenessLosses: number;
+  monthlyLossReversals: number;
+  monthlyLossRecoveries: number;
+  monthlyRecoveryReversals: number;
+  monthlyNetLosses: number;
   recentTransactionCount: number;
   modules: DashboardModuleSummary[];
 };

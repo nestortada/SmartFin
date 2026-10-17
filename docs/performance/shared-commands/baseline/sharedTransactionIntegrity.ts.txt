@@ -1,0 +1,232 @@
+import type { SQLiteProgram } from '../../../database/atomicSQLite';
+import { transactionDateKey } from '../../../shared/utils/transactionDate';
+import type { Transaction } from '../types';
+import {
+  forgivenMinor,
+  recoveredReceiptMinor,
+} from '../useCases/sharedLossDomain';
+import {
+  loadSharedExpenseState,
+  persistSharedExpenseState,
+} from './sqliteSharedExpenseRepository';
+import {
+  allocatedToParticipation,
+  toMinor,
+} from '../useCases/sharedExpenseDomain';
+
+/** Repository boundary also covers quick edits, card association, and AI writes. */
+export function* reconcileSharedTransactionChanges(
+  transactions: Transaction[],
+  deletedId?: string,
+): SQLiteProgram<void> {
+  const state = yield* loadSharedExpenseState();
+  const before = {
+    contacts: state.contacts.map(r => ({ ...r })),
+    expenses: state.expenses.map(r => ({ ...r })),
+    participations: state.participations.map(r => ({ ...r })),
+    receipts: state.receipts.map(r => ({ ...r })),
+    allocations: state.allocations.map(r => ({ ...r })),
+    returns: state.returns.map(r => ({ ...r })),
+    lossEvents: state.lossEvents.map(r => ({ ...r })),
+  };
+  for (const transaction of transactions) {
+    const expense = state.expenses.find(
+      e => e.transactionId === transaction.id && e.status === 'active',
+    );
+    const receipt = state.receipts.find(
+      r => r.transactionId === transaction.id && r.status === 'active',
+    );
+    const returned = state.returns.find(
+      r => r.transactionId === transaction.id && r.status === 'active',
+    );
+    if (!expense && !receipt && !returned) continue;
+    if (transaction.status !== 'posted' || transaction.currency !== 'COP')
+      throw new Error(
+        'Resuelve el gasto compartido antes de cambiar su estado o moneda.',
+      );
+    if (expense) {
+      if (
+        transaction.type !== 'expense' ||
+        transaction.direction !== 'outflow' ||
+        toMinor(transaction.amount) !== expense.totalMinor
+      )
+        throw new Error(
+          'Modifica el importe y sus participaciones desde gastos compartidos.',
+        );
+      const accounts = yield {
+        sql: 'SELECT type FROM accounts WHERE id = ?;',
+        values: [transaction.accountId],
+      };
+      if (
+        transaction.paymentMethod === 'credit' &&
+        accounts[0]?.type !== 'creditCard'
+      )
+        throw new Error('Clasifica primero la tarjeta del gasto compartido.');
+      expense.date = transactionDateKey(transaction);
+      if (
+        state.lossEvents.some(
+          e => e.expenseId === expense.id && e.date < expense.date,
+        )
+      )
+        throw new Error(
+          'La compra no puede ser posterior a su historial de pérdidas.',
+        );
+      expense.description = transaction.description;
+      expense.updatedAt = transaction.updatedAt;
+    }
+    if (receipt || returned) {
+      const accounts = yield {
+        sql: 'SELECT type FROM accounts WHERE id = ?;',
+        values: [transaction.accountId],
+      };
+      if (
+        !['cash', 'bankAccount', 'savingsAccount'].includes(
+          String(accounts[0]?.type),
+        ) ||
+        transaction.targetAccountId ||
+        transaction.paymentMethod === 'credit'
+      )
+        throw new Error(
+          'El reembolso requiere una cuenta de efectivo, banco o ahorro.',
+        );
+    }
+    if (receipt) {
+      if (
+        transaction.direction !== 'inflow' ||
+        !['income', 'refund', 'manualAdjustment'].includes(transaction.type)
+      )
+        throw new Error('El cobro debe seguir siendo una entrada de terceros.');
+      const amountMinor = toMinor(transaction.amount);
+      const committed =
+        state.allocations
+          .filter(a => a.active && a.receiptId === receipt.id)
+          .reduce((sum, a) => sum + a.amountMinor, 0) +
+        state.returns
+          .filter(r => r.status === 'active' && r.receiptId === receipt.id)
+          .reduce((sum, r) => sum + r.amountMinor, 0) +
+        recoveredReceiptMinor(state, receipt.id);
+      if (amountMinor < committed)
+        throw new Error(
+          'Desvincula los abonos o devoluciones antes de reducir el cobro.',
+        );
+      receipt.amountMinor = amountMinor;
+      receipt.date = transactionDateKey(transaction);
+      if (
+        state.allocations.some(
+          a =>
+            a.active &&
+            a.receiptId === receipt.id &&
+            state.lossEvents.some(
+              e =>
+                e.participationId === a.participationId &&
+                e.date > receipt.date,
+            ),
+        )
+      )
+        throw new Error(
+          'El abono no puede preceder al historial de condonación.',
+        );
+      if (
+        state.lossEvents.some(
+          e => e.receiptId === receipt.id && e.date < receipt.date,
+        )
+      )
+        throw new Error('El cobro no puede ser posterior a su recuperación.');
+      receipt.updatedAt = transaction.updatedAt;
+      if (
+        state.returns.some(
+          r =>
+            r.status === 'active' &&
+            r.receiptId === receipt.id &&
+            r.date < receipt.date,
+        )
+      )
+        throw new Error('La devolución no puede ser anterior al cobro.');
+    }
+    if (returned) {
+      if (
+        transaction.direction !== 'outflow' ||
+        !['expense', 'refund', 'manualAdjustment'].includes(transaction.type)
+      )
+        throw new Error('La devolución debe ser una salida.');
+      const amountMinor = toMinor(transaction.amount);
+      const receiptSource = state.receipts.find(
+        r => r.id === returned.receiptId,
+      )!;
+      const committed =
+        state.allocations
+          .filter(a => a.active && a.receiptId === returned.receiptId)
+          .reduce((sum, a) => sum + a.amountMinor, 0) +
+        state.returns
+          .filter(
+            r =>
+              r.status === 'active' &&
+              r.receiptId === returned.receiptId &&
+              r.id !== returned.id,
+          )
+          .reduce((sum, r) => sum + r.amountMinor, 0) +
+        recoveredReceiptMinor(state, returned.receiptId);
+      if (
+        committed + amountMinor > receiptSource.amountMinor ||
+        transactionDateKey(transaction) < receiptSource.date
+      )
+        throw new Error(
+          'La devolución supera el anticipo o es anterior al cobro.',
+        );
+      returned.amountMinor = amountMinor;
+      returned.date = transactionDateKey(transaction);
+      returned.updatedAt = transaction.updatedAt;
+    }
+  }
+  if (deletedId) {
+    const expense = state.expenses.find(e => e.transactionId === deletedId);
+    if (expense) {
+      if (
+        state.participations.some(
+          p =>
+            p.expenseId === expense.id &&
+            (allocatedToParticipation(state, p.id) > 0 ||
+              forgivenMinor(state, p.id) > 0),
+        )
+      )
+        throw new Error(
+          'Desvincula o devuelve los abonos antes de eliminar la compra.',
+        );
+      expense.status = 'deleted';
+      expense.transactionId = undefined;
+      expense.updatedAt = new Date().toISOString();
+    }
+    const receipt = state.receipts.find(r => r.transactionId === deletedId);
+    if (receipt) {
+      if (recoveredReceiptMinor(state, receipt.id) > 0)
+        throw new Error(
+          'Revierte las recuperaciones antes de eliminar el cobro.',
+        );
+      if (
+        state.returns.some(
+          r => r.receiptId === receipt.id && r.status === 'active',
+        )
+      )
+        throw new Error(
+          'Resuelve las devoluciones antes de eliminar el cobro.',
+        );
+      receipt.status = 'deleted';
+      receipt.transactionId = undefined;
+      receipt.updatedAt = new Date().toISOString();
+      for (const allocation of state.allocations.filter(
+        a => a.receiptId === receipt.id && a.active,
+      )) {
+        allocation.active = false;
+        allocation.updatedAt = receipt.updatedAt;
+      }
+    }
+    const returned = state.returns.find(r => r.transactionId === deletedId);
+    if (returned) {
+      returned.status = 'deleted';
+      returned.transactionId = undefined;
+      returned.updatedAt = new Date().toISOString();
+    }
+  }
+  yield* persistSharedExpenseState(before, state);
+  return undefined;
+}

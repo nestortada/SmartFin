@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { transactionDateKey } from '../../../shared/utils/transactionDate';
 import { Pressable, TextInput, View } from 'react-native';
 import type { SubscriptionApi } from '../useCases/createSubscriptionApi';
 import type {
@@ -163,7 +164,7 @@ export function SubscriptionPaymentSheet({
                   />
                 </View>
                 <SText>
-                  {subscriptionTransactionDate(candidate.transaction.date)} ·{' '}
+                  {subscriptionTransactionDate(transactionDateKey(candidate.transaction))} ·{' '}
                   {options.accounts.find(
                     item => item.id === candidate.transaction.accountId,
                   )?.name ?? candidate.transaction.accountId}

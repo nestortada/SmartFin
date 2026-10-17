@@ -12,7 +12,7 @@ import {
 
 import type { Account } from '../../../accounts';
 import type { Category } from '../../../categories';
-import type { TransactionType } from '../../types';
+import type { Transaction, TransactionType } from '../../types';
 import { formatCopAmountInput, parseCopAmountDraft } from '../../../../shared/utils/copAmountInput';
 
 type ThemeColors = {
@@ -51,6 +51,12 @@ type AddTransactionModalProps = {
   newCreditCardHint: string;
   setNewCreditCardHint: (val: string) => void;
   newNotes: string;
+  newDate: string;
+  setNewDate: (value: string) => void;
+  newTime: string;
+  setNewTime: (value: string) => void;
+  hasTime: boolean;
+  setHasTime: (value: boolean) => void;
   setNewNotes: (val: string) => void;
   newOperationType: 'Débito' | 'Crédito';
   setNewOperationType: (val: 'Débito' | 'Crédito') => void;
@@ -66,6 +72,7 @@ type AddTransactionModalProps = {
   onCreateAccount: (name: string, type: 'bankAccount' | 'creditCard') => Promise<Account | null>;
   onCreateCreditCard: () => void;
   mode?: 'create' | 'edit';
+  editingDirection?: Transaction['direction'];
   onSave: () => void;
 };
 
@@ -93,6 +100,12 @@ export function AddTransactionModal({
   newCreditCardHint,
   setNewCreditCardHint,
   newNotes,
+  newDate,
+  setNewDate,
+  newTime,
+  setNewTime,
+  hasTime,
+  setHasTime,
   setNewNotes,
   newOperationType,
   setNewOperationType,
@@ -106,6 +119,7 @@ export function AddTransactionModal({
   onCreateAccount,
   onCreateCreditCard,
   mode = 'create',
+  editingDirection,
   onSave,
 }: AddTransactionModalProps) {
   const { width: windowWidth } = useWindowDimensions();
@@ -117,11 +131,11 @@ export function AddTransactionModal({
   const [creatingCategory, setCreatingCategory] = useState(false);
   const [creatingAccount, setCreatingAccount] = useState(false);
 
-  const isIncome = newType === 'income';
+  const isIncome = newType === 'income' || (newType === 'refund' && editingDirection === 'inflow');
   const isTransfer = newType === 'internalTransfer';
   const isCardPayment = newType === 'creditCardPayment';
   const title = mode === 'edit'
-    ? `Modificar ${isCardPayment ? 'Pago de tarjeta' : isTransfer ? 'Transferencia' : isIncome ? 'Ingreso' : 'Gasto'}`
+    ? `Modificar ${newType === 'refund' ? isIncome ? 'Reembolso' : 'Devolución' : isCardPayment ? 'Pago de tarjeta' : isTransfer ? 'Transferencia' : isIncome ? 'Ingreso' : 'Gasto'}`
     : isTransfer
       ? 'Transferir'
       : isIncome
@@ -683,14 +697,21 @@ export function AddTransactionModal({
               </GlassCard>
             ) : null}
 
-            <PickerField
+            <TransactionNameField
               icon="FE"
               label="Fecha"
-              onPress={() => undefined}
+              onChangeText={setNewDate}
               palette={themeColors}
-              rightIcon="ED"
-              title={formatTodayLabel()}
+              placeholder="YYYY-MM-DD"
+              value={newDate}
             />
+            <Pressable accessibilityRole="switch" accessibilityLabel="Agregar hora"
+              accessibilityState={{ checked: hasTime }} onPress={() => setHasTime(!hasTime)}
+              style={[styles.receiptButton, { borderColor: themeColors.border }]}>
+              <Text style={[styles.receiptText, { color: themeColors.text }]}>{hasTime ? 'Quitar hora' : 'Agregar hora (opcional)'}</Text>
+            </Pressable>
+            {hasTime ? <TransactionNameField icon="HR" label="Hora en Colombia" onChangeText={setNewTime}
+              palette={themeColors} placeholder="HH:mm (24 horas)" value={newTime} /> : null}
 
             <TransactionNameField
               icon="NO"
@@ -761,6 +782,7 @@ function TransactionNameField({
         <View style={styles.fieldContent}>
           <Text style={[styles.fieldLabel, { color: palette.muted }]}>{label}</Text>
           <TextInput
+            accessibilityLabel={label}
             onChangeText={onChangeText}
             placeholder={placeholder}
             placeholderTextColor={palette.muted}
@@ -937,13 +959,6 @@ function isDebitAccount(account: Account): boolean {
 
 export function parseAmountInput(value: string): number {
   return parseCopAmountDraft(value);
-}
-
-function formatTodayLabel(): string {
-  const now = new Date();
-  const day = now.getDate();
-  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  return `Hoy, ${day} ${months[now.getMonth()]}`;
 }
 
 const styles = StyleSheet.create({

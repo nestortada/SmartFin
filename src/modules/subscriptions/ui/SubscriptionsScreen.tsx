@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { transactionDateKey } from '../../../shared/utils/transactionDate';
 import {
   BackHandler,
   KeyboardAvoidingView,
@@ -758,7 +759,7 @@ function SubscriptionContent(props: Props) {
             {subscriptionMoney(overlay.item.transaction.amount)}
           </SText>
           <SText>
-            {subscriptionTransactionDate(overlay.item.transaction.date, true)}
+            {subscriptionTransactionDate(transactionDateKey(overlay.item.transaction), true)}
           </SText>
           <SText>
             Cuenta:{' '}

@@ -2,6 +2,10 @@ import type { Account } from '../types';
 import type { SqliteAccountRepository } from '../repositories/sqliteAccountRepository';
 import type { SqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
 import type { Transaction } from '../../transactions';
+import { bogotaCalendarDate, transactionDateKey, transactionSortValue } from '../../../shared/utils/transactionDate';
+import type { SharedExpenseState } from '../../transactions/types/SharedExpense';
+import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
+import { createSqliteSharedExpenseRepository } from '../../transactions/repositories/sqliteSharedExpenseRepository';
 import {
   parseDebitCardMetadata,
   type DebitCardRecurringIncome,
@@ -13,10 +17,12 @@ export type DebitCardMovementKind =
   | 'topUp'
   | 'transferOut'
   | 'other';
+// Third-party funds are bank inflows/outflows, not personal income/consumption.
+type ThirdPartyMovementKind = 'reimbursement' | 'thirdPartyReturn';
 
 export type DebitCardMovement = {
   amount: number;
-  kind: DebitCardMovementKind;
+  kind: DebitCardMovementKind | ThirdPartyMovementKind;
   signedAmount: number;
   transaction: Transaction;
 };
@@ -27,6 +33,8 @@ export type DebitCardMonthlyMetrics = {
   payments: number;
   topUps: number;
   transfersOut: number;
+  reimbursementsReceived?: number;
+  thirdPartyReturns?: number;
 };
 
 export type DebitCardWeeklyTrendPoint = {
@@ -87,7 +95,7 @@ function getCardTransactions(accountId: string, transactions: Transaction[]): Tr
         : transaction.accountId === accountId || transaction.targetAccountId === accountId,
     )
     .sort((left, right) => {
-      const dateComparison = new Date(right.date).getTime() - new Date(left.date).getTime();
+      const dateComparison = transactionSortValue(right) - transactionSortValue(left);
       if (dateComparison !== 0) {
         return dateComparison;
       }
@@ -96,7 +104,11 @@ function getCardTransactions(accountId: string, transactions: Transaction[]): Tr
     });
 }
 
-function classifyMovement(accountId: string, transaction: Transaction): DebitCardMovement {
+function classifyMovement(accountId: string, transaction: Transaction, shared?: SharedExpenseState): DebitCardMovement {
+  if (shared?.receipts.some(r => r.status === 'active' && r.transactionId === transaction.id))
+    return { amount: transaction.amount, kind: 'reimbursement', signedAmount: transaction.amount, transaction };
+  if (shared?.returns.some(r => r.status === 'active' && r.transactionId === transaction.id))
+    return { amount: transaction.amount, kind: 'thirdPartyReturn', signedAmount: -transaction.amount, transaction };
   if (transaction.type === 'internalTransfer' && transaction.direction === 'inflow') {
     return {
       amount: transaction.amount,
@@ -152,7 +164,7 @@ function buildMonthlyMetrics(
   const currentMonth = toYearMonth(currentDate);
   const monthlyMovements = movements
     .filter(movement => isPosted(movement.transaction))
-    .filter(movement => movement.transaction.date.slice(0, 7) === currentMonth);
+    .filter(movement => transactionDateKey(movement.transaction).slice(0, 7) === currentMonth);
 
   return monthlyMovements.reduce<DebitCardMonthlyMetrics>(
     (metrics, movement) => ({
@@ -161,6 +173,10 @@ function buildMonthlyMetrics(
       payments: metrics.payments + (movement.kind === 'payment' ? movement.amount : 0),
       topUps: metrics.topUps + (movement.kind === 'topUp' ? movement.amount : 0),
       transfersOut: metrics.transfersOut + (movement.kind === 'transferOut' ? movement.amount : 0),
+      ...(metrics.reimbursementsReceived !== undefined || movement.kind === 'reimbursement'
+        ? { reimbursementsReceived: (metrics.reimbursementsReceived ?? 0) + (movement.kind === 'reimbursement' ? movement.amount : 0) } : {}),
+      ...(metrics.thirdPartyReturns !== undefined || movement.kind === 'thirdPartyReturn'
+        ? { thirdPartyReturns: (metrics.thirdPartyReturns ?? 0) + (movement.kind === 'thirdPartyReturn' ? movement.amount : 0) } : {}),
     }),
     {
       income: 0,
@@ -187,7 +203,7 @@ function buildWeeklyTrend(
     const date = toLocalDateKey(day);
     const netAmount = movements
       .filter(movement => isPosted(movement.transaction))
-      .filter(movement => movement.transaction.date.slice(0, 10) === date)
+      .filter(movement => transactionDateKey(movement.transaction) === date)
       .reduce((total, movement) => total + movement.signedAmount, 0);
 
     return {
@@ -211,22 +227,24 @@ export function buildDebitCardsOverview(
   accounts: Account[],
   transactions: Transaction[],
   currentDate: Date = new Date(),
+  shared?: SharedExpenseState,
 ): DebitCardsOverview {
   const debitAccounts = accounts.filter(isDebitCardAccount);
+  const referenceDate = bogotaCalendarDate(currentDate);
 
   return {
     cards: debitAccounts.map((account, index) => {
       const movements = getCardTransactions(account.id, transactions)
-        .map(transaction => classifyMovement(account.id, transaction));
+        .map(transaction => classifyMovement(account.id, transaction, shared));
       const metadata = parseDebitCardMetadata(account);
 
       return {
         account,
         maskedNumber: getMaskedNumber(account, index),
-        monthlyMetrics: buildMonthlyMetrics(movements, currentDate),
+        monthlyMetrics: buildMonthlyMetrics(movements, referenceDate),
         movements,
         recurringIncome: metadata.recurringIncome,
-        weeklyTrend: buildWeeklyTrend(movements, currentDate),
+        weeklyTrend: buildWeeklyTrend(movements, referenceDate),
       };
     }),
     generatedAt: currentDate.toISOString(),
@@ -243,5 +261,7 @@ export async function getDebitCardsOverview({
     transactionRepository.getTransactions(),
   ]);
 
-  return buildDebitCardsOverview(accounts, transactions, currentDate);
+  const database = repositorySQLiteDatabase(transactionRepository);
+  const shared = database ? await createSqliteSharedExpenseRepository(database).getState() : undefined;
+  return buildDebitCardsOverview(accounts, transactions, currentDate, shared);
 }

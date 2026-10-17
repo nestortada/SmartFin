@@ -1,0 +1,46 @@
+  @ReactMethod fun seedShared(size: Int, promise: Promise) {
+    guard()
+    require(size in setOf(0,100,1000,5000))
+    executor.execute {
+      try {
+        val file=context.getDatabasePath("dashboard_phase2_shared_${size}.db")
+        val reused=file.exists()
+        if(!reused) context.getDatabasePath("dashboard_phase2_v3_100000.db").copyTo(file)
+        val db=SQLiteDatabase.openDatabase(file.path,null,SQLiteDatabase.OPEN_READWRITE)
+        try {
+          db.execSQL("PRAGMA foreign_keys=ON")
+          if(!reused && size>0) {
+            val purchases=db.rawQuery("SELECT id,date FROM transactions WHERE type='expense' AND status='posted' ORDER BY id LIMIT ?",arrayOf(size.toString())).use { cursor -> val result=mutableListOf<Pair<String,String>>();while(cursor.moveToNext())result.add(cursor.getString(0) to cursor.getString(1));result }
+            val receipts=db.rawQuery("SELECT id,date FROM transactions WHERE type='refund' AND direction='inflow' AND status='posted' ORDER BY id LIMIT ?",arrayOf(size.toString())).use { cursor -> val result=mutableListOf<Pair<String,String>>();while(cursor.moveToNext())result.add(cursor.getString(0) to cursor.getString(1));result }
+            check(purchases.size==size && receipts.size==size)
+            db.beginTransaction()
+            try {
+              for(person in 0 until 50) db.execSQL("INSERT INTO shared_contacts VALUES(?,?,?,?)",arrayOf("person-$person","Synthetic person $person","2026-01-01","2026-01-01"))
+              for(index in 0 until size) {
+                val purchase=purchases[index];val receipt=receipts[index];val expense="expense-$index";val contact="person-${index%50}"
+                val snapshot=JSONArray().put(JSONObject().put("id","own-$index").put("amountMinor",1500000)).put(JSONObject().put("id","part-$index").put("contactId",contact).put("amountMinor",1500000)).toString()
+                db.execSQL("UPDATE transactions SET amount=30000 WHERE id=?",arrayOf(purchase.first))
+                db.execSQL("UPDATE transactions SET amount=7500 WHERE id=?",arrayOf(receipt.first))
+                db.execSQL("INSERT INTO shared_expenses VALUES(?,?,?,?,?,?,?,?,?)",arrayOf(expense,purchase.first,3000000,purchase.second.take(10),"Synthetic shared expense",snapshot,"active","2026-01-01","2026-01-01"))
+                for(own in listOf(true,false)) {
+                  val id=if(own)"own-$index" else "part-$index"
+                  val person=if(own)null else contact
+                  val type=if(own)"shared_personal" else "shared_third_party"
+                  db.execSQL("INSERT INTO transaction_splits(id,transaction_id,split_type,amount,currency,created_at,updated_at,shared_expense_id,contact_id,amount_minor,shared_active) VALUES(?,?,?,15000,'COP','2026-01-01','2026-01-01',?,?,1500000,1)",arrayOf(id,purchase.first,type,expense,person))
+                }
+                db.execSQL("INSERT INTO shared_receipts VALUES(?,?,?,?,?,?,?,?)",arrayOf("receipt-$index",receipt.first,contact,750000,receipt.second.take(10),"active","2026-01-01","2026-01-01"))
+                db.execSQL("INSERT INTO shared_allocations VALUES(?,?,?,?,?,?,?,?)",arrayOf("allocation-$index","receipt-$index","part-$index","part-$index",750000,1,"2026-01-01","2026-01-01"))
+              }
+              db.setTransactionSuccessful()
+            } finally {db.endTransaction()}
+          }
+          val count=db.rawQuery("SELECT COUNT(*) FROM transactions",null).use{it.moveToFirst();it.getInt(0)}
+          val shared=db.rawQuery("SELECT COUNT(*) FROM shared_expenses",null).use{it.moveToFirst();it.getInt(0)}
+          check(count==100000 && shared==size)
+          check(db.rawQuery("PRAGMA foreign_key_check",null).use{it.count}==0)
+          val result=Arguments.createMap();result.putString("name",file.name);result.putInt("rows",count);result.putInt("sharedExpenses",shared);result.putBoolean("reused",reused)
+          promise.resolve(result)
+        } finally {db.close()}
+      } catch(error:Throwable){promise.reject("SHARED_SEED",error)}
+    }
+  }

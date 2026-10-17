@@ -13,6 +13,7 @@ import {
   type SQLitePrimitive,
 } from '../../../database/sqliteRows';
 import { rowToTransaction } from '../../transactions/repositories/sqliteTransactionRepository';
+import { TRANSACTION_SORT_SQL } from '../../../shared/utils/transactionDate';
 import type {
   Subscription,
   SubscriptionOccurrence,
@@ -393,9 +394,9 @@ export function createSqliteSubscriptionRepository(
           sql: `SELECT t.* FROM transactions t WHERE t.type='expense' AND t.status='posted' AND t.direction='outflow' AND t.currency='COP' AND t.amount>0
           AND (? IS NULL OR t.account_id=?)
           AND NOT EXISTS (SELECT 1 FROM subscription_occurrences o WHERE o.transaction_id=t.id)
-          AND (? = 0 OR date(t.date) BETWEEN date(?,'-8 days') AND date(?,'+8 days'))
+          AND (? = 0 OR date(COALESCE(t.civil_date, substr(t.date,1,10))) BETWEEN date(?,'-8 days') AND date(?,'+8 days'))
           AND (? = '' OR instr(lower(COALESCE(t.merchant_name,'') || ' ' || t.description || ' ' || t.id || ' ' || CAST(t.amount AS TEXT)),lower(?))>0)
-          ORDER BY t.date DESC,t.id;`,
+          ORDER BY ${TRANSACTION_SORT_SQL} DESC,t.id;`,
           values: [
             occurrence.accountId ?? null,
             occurrence.accountId ?? null,

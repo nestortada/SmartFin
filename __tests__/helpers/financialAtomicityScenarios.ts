@@ -3,7 +3,7 @@ import {
   FINANCIAL_TEST_DATE,
 } from './financialIntegrityFixture';
 import { deleteManualTransactionSafely } from './phase0ManualTransactions';
-import { registerCreditCardPayment } from '../../src/modules/creditCards/useCases/creditCardTransactionRelations';
+import { registerCreditCardPayment } from './phase0CreditCardPayment';
 import { financialState } from './financialState';
 import type { SQLiteFault } from './realSQLite';
 

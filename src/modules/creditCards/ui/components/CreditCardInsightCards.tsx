@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { formatCurrency } from '../../../../shared/utils/formatCurrency';
+import { transactionDateKey } from '../../../../shared/utils/transactionDate';
 import type {
   CreditCardInstallmentSummary,
   CreditCardSummary,
@@ -205,7 +206,7 @@ export function StatementTransactionsSection({
                   {transaction.merchantName ?? transaction.description}
                 </Text>
                 <Text style={[styles.statementTransactionDate, { color: palette.muted }]}>
-                  {formatShortDate(transaction.date)}
+                  {formatShortDate(transactionDateKey(transaction))}
                 </Text>
               </View>
               <Text style={[styles.statementTransactionAmount, { color: isPayment ? palette.tertiary : palette.primary }]}>

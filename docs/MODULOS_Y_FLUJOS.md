@@ -5,7 +5,7 @@
 | Módulo | Estado | Responsabilidad actual |
 |---|---|---|
 | `dashboard` | Activo | Totales financieros y accesos principales |
-| `transactions` | Activo | Libro de movimientos, alta, edición, filtros y categorización |
+| `transactions` | Activo | Libro, fecha editable, hora opcional y API de gastos compartidos sin interfaz |
 | `accounts` | Activo | Cuentas/tarjetas débito y métricas asociadas |
 | `categories` | Activo | Categorías de ingreso y gasto |
 | `creditCards` | Activo | Tarjetas, extractos, cuotas, deuda y pagos |
@@ -31,13 +31,17 @@ Fórmulas:
 |---|---|
 | Saldo disponible | Suma de saldos de efectivo, cuenta bancaria y ahorro activos |
 | Deuda total | Suma de `debtBalance` de tarjetas y préstamos activos |
-| Patrimonio neto | Efectivo + bancos + ahorros + inversiones - deuda total |
-| Ingreso mensual | Movimientos `income`, `inflow`, `posted` del mes actual |
-| Gasto mensual | Movimientos `expense`, `outflow`, `posted` del mes actual |
+| Patrimonio neto | Activos de cuentas activas + cuentas por cobrar - deuda total - anticipos de terceros |
+| Ingreso mensual | Movimientos `income`, `inflow`, `posted` del mes civil; cobros de terceros vinculados excluidos |
+| Gasto mensual | Movimientos `expense`, `outflow`, `posted` del mes civil; compras compartidas por participación propia |
 | Ahorro mensual | Ingreso mensual - gasto mensual |
 | Movimientos recientes | Publicados entre hoy y los 30 días anteriores |
 
 Los pagos de tarjeta y las transferencias internas quedan fuera de ingreso/gasto por su tipo, aunque sí existen en el libro.
+
+Los importes del libro y la deuda de crédito conservan el total bancario. La
+proyección de gasto compartido sirve al dashboard y a los futuros informes y
+presupuestos. [Esquema, API y cinco escenarios](GASTOS_COMPARTIDOS_Y_FECHAS.md).
 
 ## 3. Movimientos
 

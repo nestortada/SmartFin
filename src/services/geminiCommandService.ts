@@ -89,6 +89,7 @@ export function buildGeminiPrompt(input: GeminiInterpretationInput): string {
     'Solo asigna categoria o subcategoria cuando el usuario la mencione o el contexto sea inequívoco. Si falta contexto o hay varias posibilidades, omítela para que la aplicación pregunte.',
     `Fecha actual: ${input.now.toISOString()}. Zona horaria: ${input.timeZone}. Moneda unica: COP.`,
     `Fecha civil actual en esa zona: ${civilToday}. Para anchorDate usa fechas civiles; nunca UTC ni una hora.`,
+    'Para movimientos, date sin hora indicada debe ser YYYY-MM-DD, nunca medianoche UTC ni una hora inventada. Si el usuario indica hora, usa YYYY-MM-DDTHH:mm:00-05:00 en America/Bogota. Una fecha inexistente o ambigua debe quedar sin resolver para pedir aclaración.',
     `Cuentas activas [id,nombre,tipo,institucion]: ${JSON.stringify(accounts)}`,
     `Categorias [id,nombre,tipo]: ${JSON.stringify(categories)}`,
     `Subcategorias [id,nombre,categoriaId]: ${JSON.stringify(subcategories)}`,

@@ -1,0 +1,91 @@
+import React, {useEffect,useState} from 'react';
+import {NativeModules,Text,View} from 'react-native';
+import SQLite from 'react-native-sqlite-storage';
+import legacySchema from './legacySchema.json';
+import {applyVersionedMigrations} from './src/database/migrations';
+import {applyVersionedMigrations as applyLegacyMigrations} from './src/database/auditLegacyMigrations';
+import {createSqliteSharedExpenseRepository} from './src/modules/transactions/repositories/sqliteSharedExpenseRepository';
+import {createSharedExpenseApi} from './src/modules/transactions/useCases/createSharedExpenseApi';
+import {createSqliteAccountRepository} from './src/modules/accounts/repositories/sqliteAccountRepository';
+import {createSqliteTransactionRepository} from './src/modules/transactions/repositories/sqliteTransactionRepository';
+import {createSqliteCreditCardRepository} from './src/modules/creditCards/repositories/sqliteCreditCardRepository';
+import {saveManualTransaction} from './src/modules/transactions/useCases/saveManualTransaction';
+import {getDashboardSummaryFromDb} from './src/modules/dashboard/useCases/getDashboardSummary';
+const native=NativeModules.DashboardBenchmark;
+const config=native.getConstants();
+if(config.packageId!=='com.smartfin.sharedaudit.bench'||!config.release||__DEV__||!global.HermesInternal) throw Error('Isolated release Hermes package required');
+SQLite.enablePromise(true);
+const now=new Date('2026-10-11T12:00:00Z');
+const canonical=value=>Array.isArray(value)?value.map(canonical):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().map(key=>[key,canonical(value[key])])):value;
+const equal=(actual,expected,label)=>{if(JSON.stringify(canonical(actual))!==JSON.stringify(canonical(expected)))throw Error(label+': '+JSON.stringify(actual)+' != '+JSON.stringify(expected));};
+const checks=[];
+async function run(){
+  const seeded=config.version==='prepare'?await native.seed(0,legacySchema):{name:'dashboard_phase2_v3_0.db'};
+  let db=await SQLite.openDatabase({name:seeded.name,location:'default'});
+  const rows=async(sql,values=[])=>{const[result]=await db.executeSql(sql,values);return result.rows.raw();};
+  const snapshot=async()=>{const tables=await rows("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name");const result={};for(const table of tables)result[table.name]=await rows(`SELECT * FROM ${table.name} ORDER BY rowid`);return result;};
+  if(config.version==='prepare'){
+    await applyLegacyMigrations(db);
+    await db.executeSql("UPDATE accounts SET balance_amount=CASE WHEN id='bank' THEN 1000000 ELSE 0 END,debt_balance_amount=0;");
+    await db.executeSql("INSERT INTO transactions(id,amount,currency,description,date,account_id,type,direction,status,created_at,updated_at) VALUES('historic',5000,'COP','Synthetic historical bus','2026-10-02T00:00:00.000Z','bank','expense','outflow','posted','2026-10-02','2026-10-02');");
+    const old=await rows('SELECT * FROM transactions ORDER BY id');
+    await applyVersionedMigrations(db);await applyVersionedMigrations(db);
+    const columns=Object.keys(old[0]);const migrated=await rows(`SELECT ${columns.join(',')} FROM transactions ORDER BY id`);
+    equal(migrated,old,'historical migration');checks.push('historical row unchanged; repeated migration');
+    const api=createSharedExpenseApi(createSqliteSharedExpenseRepository(db));
+    const contactId=(await api.saveContact('contact','Synthetic person')).entityId;
+    const args={purchase:{accountId:'bank',amount:30000,categoryId:'cat_expense',merchantName:'Synthetic restaurant',operationType:'Débito',occurrence:{kind:'date',date:'2026-10-05'}},distribution:{mode:'amounts',personalAmount:15000,participants:[{contactId,amount:15000}]}};
+    const purchase=await api.createPurchase('purchase',args);
+    equal((await api.createPurchase('purchase',args)).entityId,purchase.entityId,'purchase replay');
+    const part=(await api.getExpense(purchase.entityId)).participants[0].participationId;
+    await api.recordReceipt('partial',{contactId,accountId:'savings',amount:5000,occurrence:{kind:'date',date:'2026-11-03'},applications:[{participationId:part,amount:5000}]});
+    equal((await api.getPosition()).receivables,10000,'partial pending');
+    const summary=await getDashboardSummaryFromDb(db,now);
+    equal([summary.availableBalance,summary.netWorth,summary.monthlyExpenses,summary.monthlyIncome],[975000,985000,20000,0],'dashboard partial cross account');
+    checks.push('purchase replay; partial reimbursement in different month/account; dashboard');
+    const dependencies={accountRepository:createSqliteAccountRepository(db),transactionRepository:createSqliteTransactionRepository(db),creditCardRepository:createSqliteCreditCardRepository(db)};
+    const params={...dependencies,accounts:await dependencies.accountRepository.getAccounts(),accountId:'bank',amount:1,categoryId:'cat_expense',merchantName:'Synthetic date',transactionType:'expense',operationType:'Débito',hasInterestFreeInstallments:false,installmentCountInput:'1',interestFreeInstallmentCountInput:'',currentDate:now,occurrence:{kind:'dateTime',date:'2026-10-05',time:'23:00',timeZone:'America/Bogota'}};
+    const timed=await saveManualTransaction(params);
+    equal([timed.transaction.date,timed.transaction.civilDate,timed.transaction.localTime],['2026-10-06T04:00:00.000Z','2026-10-05','23:00'],'explicit hour');
+    await saveManualTransaction({...params,accounts:await dependencies.accountRepository.getAccounts(),editingTransaction:timed.transaction,occurrence:{kind:'date',date:'2026-10-05'}});
+    await saveManualTransaction({...params,accounts:await dependencies.accountRepository.getAccounts(),amount:2});
+    equal((await rows('PRAGMA foreign_key_check')).length,0,'foreign keys');
+    await db.executeSql("INSERT OR REPLACE INTO app_settings VALUES('synthetic_audit_snapshot',?,'2026-10-11')",[JSON.stringify(await snapshot())]);
+    await db.close();
+    await native.copySynthetic();checks.push('timed date; remove hour; closed synthetic DB copied');
+  }else{
+    await db.close();db=await SQLite.openDatabase({name:'audit-copy.db',location:'default'});
+    const saved=JSON.parse((await rows("SELECT setting_value FROM app_settings WHERE setting_key='synthetic_audit_snapshot'"))[0].setting_value);
+    const actual=await snapshot();delete actual.app_settings;delete saved.app_settings;
+    equal(actual,saved,'restart and physical copy');
+    equal((await rows('PRAGMA foreign_key_check')).length,0,'restored FK');
+    equal((await rows('PRAGMA integrity_check'))[0].integrity_check,'ok','integrity');
+    await applyVersionedMigrations(db);
+    const api=createSharedExpenseApi(createSqliteSharedExpenseRepository(db));
+    equal((await api.getPosition()).receivables,10000,'restored receivable');
+    checks.push('physical process restart; identical copied tables; FK/integrity; repeat migration; receivable restored');
+    if(config.version==='operations'){
+      const repo=createSqliteSharedExpenseRepository(db);
+      const state=await repo.getState();const expense=state.expenses[0];const part=state.participations.find(p=>p.contactId);const contactId=part.contactId;
+      let blocked=false;try{await api.cancelDivision('blocked-cancel',expense.id);}catch(error){blocked=true;}equal(blocked,true,'cancel with applied payment blocked');
+      const receipt=state.receipts[0];await api.deleteMovement('delete-receipt',receipt.transactionId);
+      const before=await getDashboardSummaryFromDb(db,now);await api.deleteMovement('delete-receipt',receipt.transactionId);equal(await getDashboardSummaryFromDb(db,now),before,'delete replay does not debit twice');
+      equal((await api.getPosition()).receivables,15000,'delete reopens pending');
+      const advance=await api.recordReceipt('advance',{contactId,accountId:'bank',amount:5000,occurrence:{kind:'date',date:'2026-09-28'}});
+      equal((await api.getPosition()).thirdPartyAdvances,5000,'advance liability');equal((await getDashboardSummaryFromDb(db,now)).netWorth,before.netWorth,'advance preserves wealth');
+      await api.applyReceipt('apply-advance',advance.entityId,part.id,5000);equal((await api.getPosition()).receivables,10000,'advance applied');equal((await api.getPosition()).thirdPartyAdvances,0,'advance consumed');
+      const args={accountId:'bank',amount:30000,categoryId:'cat_expense',merchantName:'Synthetic restaurant',operationType:'Débito',occurrence:{kind:'date',date:'2026-10-07'}};
+      await api.updatePurchase('edit-purchase-date',expense.id,args,{mode:'amounts',personalAmount:15000,participants:[{contactId,amount:15000}]});
+      equal((await getDashboardSummaryFromDb(db,now)).netWorth,before.netWorth,'date edit preserves wealth');equal((await api.getExpense(expense.id)).expense.date,'2026-10-07','date edit persisted');
+      equal((await rows('PRAGMA foreign_key_check')).length,0,'operations foreign keys');
+      checks.push('cancel blocked with applied payment; receipt deletion reopens debt; repeated deletion; advance before purchase; advance allocation; date modification preserves wealth; FK');
+    }
+    await db.close();
+  }
+  await native.writeFunctional(JSON.stringify({type:'audit-success',phase:config.version,config,seeded,checks}));return 'PASS '+checks.join('\n');
+}
+export default function App(){const[text,setText]=useState('Synthetic audit running');useEffect(()=>{run().then(setText).catch(async error=>{setText('FAIL '+error.message);await native.writeFunctional(JSON.stringify({type:'audit-failure',phase:config.version,error:error.message,stack:error.stack,checks}));});},[]);return <View style={{padding:30}}><Text>{text}</Text></View>;}
+
+
+
+

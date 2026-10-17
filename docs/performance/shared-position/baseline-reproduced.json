@@ -1,0 +1,305 @@
+{
+  "runtime": "v24.16.0",
+  "sqlite": "3.53.0",
+  "benchmarks": [
+    {
+      "size": 1000,
+      "version": "previousOptimized",
+      "medianMs": 0.23490000000015243,
+      "queries": 3,
+      "returnedRows": 27,
+      "milliseconds": [
+        0.27939999999989595,
+        0.2720999999999094,
+        0.21100000000001273,
+        0.23490000000015243,
+        0.21280000000001564,
+        0.29559999999992215,
+        0.21839999999997417
+      ],
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "rows": 8
+        },
+        {
+          "sql": "SELECT amount, type, direction FROM transactions\n         WHERE date >= ? AND date < ? AND status = ?\n           AND substr(date, 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "rows": 2
+        },
+        {
+          "sql": "SELECT substr(date, 1, 10) AS date, COUNT(*) AS count FROM transactions\n         WHERE date >= ? AND date < ? AND status = ?\n         GROUP BY substr(date, 1, 10);",
+          "rows": 17
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "version": "sharedIntegration",
+      "medianMs": 0.44460000000003674,
+      "queries": 9,
+      "returnedRows": 27,
+      "milliseconds": [
+        0.3465000000001055,
+        0.4833000000000993,
+        0.39069999999992433,
+        2.3904999999999745,
+        0.5467999999998483,
+        0.44460000000003674,
+        0.42919999999980973
+      ],
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "rows": 8
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "rows": 2
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "rows": 17
+        },
+        {
+          "sql": "SELECT * FROM shared_contacts ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_expenses ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM transaction_splits WHERE shared_expense_id IS NOT NULL ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_receipts ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_allocations ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_returns ORDER BY id;",
+          "rows": 0
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "version": "previousOptimized",
+      "medianMs": 0.4180999999998676,
+      "queries": 3,
+      "returnedRows": 55,
+      "milliseconds": [
+        0.4180999999998676,
+        0.3973000000000866,
+        0.5184999999999036,
+        0.48289999999997235,
+        0.3898999999998978,
+        0.3826000000001386,
+        0.44529999999986103
+      ],
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "rows": 8
+        },
+        {
+          "sql": "SELECT amount, type, direction FROM transactions\n         WHERE date >= ? AND date < ? AND status = ?\n           AND substr(date, 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "rows": 13
+        },
+        {
+          "sql": "SELECT substr(date, 1, 10) AS date, COUNT(*) AS count FROM transactions\n         WHERE date >= ? AND date < ? AND status = ?\n         GROUP BY substr(date, 1, 10);",
+          "rows": 34
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "version": "sharedIntegration",
+      "medianMs": 0.5352000000000317,
+      "queries": 9,
+      "returnedRows": 55,
+      "milliseconds": [
+        0.46489999999994325,
+        0.7336999999999989,
+        0.5171000000000276,
+        0.48679999999990287,
+        0.8087000000000444,
+        0.5772999999999229,
+        0.5352000000000317
+      ],
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "rows": 8
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "rows": 13
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "rows": 34
+        },
+        {
+          "sql": "SELECT * FROM shared_contacts ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_expenses ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM transaction_splits WHERE shared_expense_id IS NOT NULL ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_receipts ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_allocations ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_returns ORDER BY id;",
+          "rows": 0
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "version": "previousOptimized",
+      "medianMs": 3.228900000000067,
+      "queries": 3,
+      "returnedRows": 170,
+      "milliseconds": [
+        3.4774999999999636,
+        3.228900000000067,
+        3.034900000000107,
+        2.928200000000288,
+        3.279700000000048,
+        3.2960000000002765,
+        3.146299999999883
+      ],
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "rows": 8
+        },
+        {
+          "sql": "SELECT amount, type, direction FROM transactions\n         WHERE date >= ? AND date < ? AND status = ?\n           AND substr(date, 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "rows": 128
+        },
+        {
+          "sql": "SELECT substr(date, 1, 10) AS date, COUNT(*) AS count FROM transactions\n         WHERE date >= ? AND date < ? AND status = ?\n         GROUP BY substr(date, 1, 10);",
+          "rows": 34
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "version": "sharedIntegration",
+      "medianMs": 1.2842000000000553,
+      "queries": 9,
+      "returnedRows": 170,
+      "milliseconds": [
+        1.2955000000001746,
+        1.365099999999984,
+        1.3340000000002874,
+        1.2842000000000553,
+        1.2559999999998581,
+        1.2315999999996166,
+        1.25
+      ],
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "rows": 8
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "rows": 128
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "rows": 34
+        },
+        {
+          "sql": "SELECT * FROM shared_contacts ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_expenses ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM transaction_splits WHERE shared_expense_id IS NOT NULL ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_receipts ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_allocations ORDER BY id;",
+          "rows": 0
+        },
+        {
+          "sql": "SELECT * FROM shared_returns ORDER BY id;",
+          "rows": 0
+        }
+      ]
+    }
+  ],
+  "physicalCopy": {
+    "tables": 38,
+    "reopenings": 2,
+    "integrity": "ok",
+    "foreignKeyViolations": 0,
+    "identicalRows": true,
+    "method": "Node VACUUM INTO, closed file copy, reopen; not Android SAF restore"
+  },
+  "previousCommit": "6c98f98be9812e9b7345f01268984e1e3f961306",
+  "sharedVolume": [
+    {
+      "sharedExpenses": 100,
+      "contacts": 50,
+      "bankMovements": 100000,
+      "medianMs": 8.606300000000374,
+      "milliseconds": [
+        9.428800000000592,
+        8.606300000000374,
+        7.453600000000733
+      ],
+      "sharedQueryTransferredRows": 550
+    },
+    {
+      "sharedExpenses": 1000,
+      "contacts": 50,
+      "bankMovements": 100000,
+      "medianMs": 75.89079999999922,
+      "milliseconds": [
+        79.2432000000008,
+        75.89079999999922,
+        59.535499999999956
+      ],
+      "sharedQueryTransferredRows": 5050
+    },
+    {
+      "sharedExpenses": 5000,
+      "contacts": 50,
+      "bankMovements": 100000,
+      "medianMs": 872.2381000000005,
+      "milliseconds": [
+        872.2381000000005,
+        897.3564999999999,
+        825.2390000000014
+      ],
+      "sharedQueryTransferredRows": 25050
+    }
+  ]
+}

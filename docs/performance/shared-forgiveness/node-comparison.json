@@ -1,0 +1,3648 @@
+{
+  "runtime": "v24.16.0",
+  "movements": 100000,
+  "warmups": 3,
+  "samples": 7,
+  "entries": [
+    {
+      "size": 0,
+      "journalRows": 0,
+      "version": "before",
+      "medianMs": 1.51949999999988,
+      "milliseconds": [
+        1.6947999999997592,
+        1.5864000000001397,
+        1.4424999999996544,
+        1.699500000000171,
+        1.4915000000000873,
+        1.51949999999988,
+        1.402599999999893
+      ],
+      "queries": 4,
+      "returnedRows": 171,
+      "returnedBytes": 13558,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 58,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 97,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 102,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 121,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 127,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 206,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 214,
+              "parent": 206,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 251,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 260,
+              "parent": 251,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 264,
+              "parent": 251,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 271,
+              "parent": 251,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 312,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 328,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 345,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 362,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 0,
+      "journalRows": 0,
+      "version": "afterEmpty",
+      "medianMs": 1.7696000000000822,
+      "milliseconds": [
+        1.5105000000003201,
+        2.337199999999939,
+        2.025300000000243,
+        1.7306000000003223,
+        1.7696000000000822,
+        1.8358000000002903,
+        1.714799999999741
+      ],
+      "queries": 5,
+      "returnedRows": 172,
+      "returnedBytes": 13632,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  forgiven_by_participation AS (\n    SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor\n    FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key\n  ),\n  recovered_by_contact AS (\n    SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor\n    FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'\n    WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id\n  ),\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(l.recovered_minor, 0) AS recovered_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n    LEFT JOIN recovered_by_contact l ON l.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR recovered_minor < 0 OR recovered_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor - recovered_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 58,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 90,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE forgiven_by_participation"
+            },
+            {
+              "id": 98,
+              "parent": 90,
+              "notused": 223,
+              "detail": "SCAN shared_loss_events USING INDEX idx_shared_loss_participation"
+            },
+            {
+              "id": 148,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 153,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 172,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 189,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH f USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 195,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 287,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 295,
+              "parent": 287,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 332,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 341,
+              "parent": 332,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 345,
+              "parent": 332,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 352,
+              "parent": 332,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 393,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE recovered_by_contact"
+            },
+            {
+              "id": 403,
+              "parent": 393,
+              "notused": 224,
+              "detail": "SCAN r USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 408,
+              "parent": 393,
+              "notused": 62,
+              "detail": "SEARCH l USING INDEX idx_shared_loss_receipt (receipt_id=? AND kind=?)"
+            },
+            {
+              "id": 470,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 486,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 503,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 520,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 537,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH l USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals\n  FROM shared_loss_events WHERE date >= ? AND date < ?;",
+          "values": [
+            "2026-10-01",
+            "2026-11-01"
+          ],
+          "rows": 1,
+          "bytes": 74,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 164,
+              "detail": "SEARCH shared_loss_events USING INDEX idx_shared_loss_date (date>? AND date<?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 0,
+      "journalRows": 0,
+      "version": "afterPopulated",
+      "medianMs": 1.6154999999998836,
+      "milliseconds": [
+        1.5673000000001593,
+        1.602900000000318,
+        1.564600000000155,
+        1.9319000000000415,
+        1.7424999999998363,
+        1.7635000000000218,
+        1.6154999999998836
+      ],
+      "queries": 5,
+      "returnedRows": 172,
+      "returnedBytes": 13632,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  forgiven_by_participation AS (\n    SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor\n    FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key\n  ),\n  recovered_by_contact AS (\n    SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor\n    FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'\n    WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id\n  ),\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(l.recovered_minor, 0) AS recovered_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n    LEFT JOIN recovered_by_contact l ON l.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR recovered_minor < 0 OR recovered_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor - recovered_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 58,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 90,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE forgiven_by_participation"
+            },
+            {
+              "id": 98,
+              "parent": 90,
+              "notused": 223,
+              "detail": "SCAN shared_loss_events USING INDEX idx_shared_loss_participation"
+            },
+            {
+              "id": 148,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 153,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 172,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 189,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH f USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 195,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 287,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 295,
+              "parent": 287,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 332,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 341,
+              "parent": 332,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 345,
+              "parent": 332,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 352,
+              "parent": 332,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 393,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE recovered_by_contact"
+            },
+            {
+              "id": 403,
+              "parent": 393,
+              "notused": 224,
+              "detail": "SCAN r USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 408,
+              "parent": 393,
+              "notused": 62,
+              "detail": "SEARCH l USING INDEX idx_shared_loss_receipt (receipt_id=? AND kind=?)"
+            },
+            {
+              "id": 470,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 486,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 503,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 520,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 537,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH l USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals\n  FROM shared_loss_events WHERE date >= ? AND date < ?;",
+          "values": [
+            "2026-10-01",
+            "2026-11-01"
+          ],
+          "rows": 1,
+          "bytes": 74,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 164,
+              "detail": "SEARCH shared_loss_events USING INDEX idx_shared_loss_date (date>? AND date<?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100,
+      "journalRows": 0,
+      "version": "before",
+      "medianMs": 1.729099999999562,
+      "milliseconds": [
+        1.729099999999562,
+        1.717200000000048,
+        1.922500000000582,
+        1.758100000000013,
+        1.720100000000457,
+        1.6714999999994689,
+        2.0685999999996056
+      ],
+      "queries": 4,
+      "returnedRows": 171,
+      "returnedBytes": 13572,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 72,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 97,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 102,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 121,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 127,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 206,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 214,
+              "parent": 206,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 251,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 260,
+              "parent": 251,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 264,
+              "parent": 251,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 271,
+              "parent": 251,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 312,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 328,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 345,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 362,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100,
+      "journalRows": 0,
+      "version": "afterEmpty",
+      "medianMs": 1.9439000000002125,
+      "milliseconds": [
+        1.9117000000005646,
+        2.1009000000003653,
+        2.0927999999994427,
+        1.9300999999995838,
+        1.9367000000002008,
+        1.9440000000004147,
+        1.9439000000002125
+      ],
+      "queries": 5,
+      "returnedRows": 172,
+      "returnedBytes": 13646,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  forgiven_by_participation AS (\n    SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor\n    FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key\n  ),\n  recovered_by_contact AS (\n    SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor\n    FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'\n    WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id\n  ),\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(l.recovered_minor, 0) AS recovered_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n    LEFT JOIN recovered_by_contact l ON l.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR recovered_minor < 0 OR recovered_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor - recovered_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 72,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 90,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE forgiven_by_participation"
+            },
+            {
+              "id": 98,
+              "parent": 90,
+              "notused": 223,
+              "detail": "SCAN shared_loss_events USING INDEX idx_shared_loss_participation"
+            },
+            {
+              "id": 148,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 153,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 172,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 189,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH f USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 195,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 287,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 295,
+              "parent": 287,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 332,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 341,
+              "parent": 332,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 345,
+              "parent": 332,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 352,
+              "parent": 332,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 393,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE recovered_by_contact"
+            },
+            {
+              "id": 403,
+              "parent": 393,
+              "notused": 224,
+              "detail": "SCAN r USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 408,
+              "parent": 393,
+              "notused": 62,
+              "detail": "SEARCH l USING INDEX idx_shared_loss_receipt (receipt_id=? AND kind=?)"
+            },
+            {
+              "id": 470,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 486,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 503,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 520,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 537,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH l USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals\n  FROM shared_loss_events WHERE date >= ? AND date < ?;",
+          "values": [
+            "2026-10-01",
+            "2026-11-01"
+          ],
+          "rows": 1,
+          "bytes": 74,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 164,
+              "detail": "SEARCH shared_loss_events USING INDEX idx_shared_loss_date (date>? AND date<?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 100,
+      "journalRows": 500,
+      "version": "afterPopulated",
+      "medianMs": 2.259900000000016,
+      "milliseconds": [
+        2.7200999999995474,
+        2.5765000000001237,
+        2.3883999999998196,
+        2.259900000000016,
+        2.176300000000083,
+        2.095800000000054,
+        2.1842999999998938
+      ],
+      "queries": 5,
+      "returnedRows": 172,
+      "returnedBytes": 13653,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10323,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  forgiven_by_participation AS (\n    SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor\n    FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key\n  ),\n  recovered_by_contact AS (\n    SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor\n    FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'\n    WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id\n  ),\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(l.recovered_minor, 0) AS recovered_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n    LEFT JOIN recovered_by_contact l ON l.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR recovered_minor < 0 OR recovered_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor - recovered_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 72,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 90,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE forgiven_by_participation"
+            },
+            {
+              "id": 98,
+              "parent": 90,
+              "notused": 223,
+              "detail": "SCAN shared_loss_events USING INDEX idx_shared_loss_participation"
+            },
+            {
+              "id": 148,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 153,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 172,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 189,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH f USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 195,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 287,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 295,
+              "parent": 287,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 332,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 341,
+              "parent": 332,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 345,
+              "parent": 332,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 352,
+              "parent": 332,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 393,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE recovered_by_contact"
+            },
+            {
+              "id": 403,
+              "parent": 393,
+              "notused": 224,
+              "detail": "SCAN r USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 408,
+              "parent": 393,
+              "notused": 62,
+              "detail": "SEARCH l USING INDEX idx_shared_loss_receipt (receipt_id=? AND kind=?)"
+            },
+            {
+              "id": 470,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 486,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 503,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 520,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 537,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH l USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals\n  FROM shared_loss_events WHERE date >= ? AND date < ?;",
+          "values": [
+            "2026-10-01",
+            "2026-11-01"
+          ],
+          "rows": 1,
+          "bytes": 81,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 164,
+              "detail": "SEARCH shared_loss_events USING INDEX idx_shared_loss_date (date>? AND date<?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "journalRows": 0,
+      "version": "before",
+      "medianMs": 4.261199999999917,
+      "milliseconds": [
+        4.339100000000144,
+        4.05619999999999,
+        4.657400000000052,
+        4.261199999999917,
+        4.291000000000167,
+        3.8140999999995984,
+        3.7285000000001673
+      ],
+      "queries": 4,
+      "returnedRows": 171,
+      "returnedBytes": 13562,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10311,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 74,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 97,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 102,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 121,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 127,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 206,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 214,
+              "parent": 206,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 251,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 260,
+              "parent": 251,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 264,
+              "parent": 251,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 271,
+              "parent": 251,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 312,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 328,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 345,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 362,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "journalRows": 0,
+      "version": "afterEmpty",
+      "medianMs": 4.27139999999963,
+      "milliseconds": [
+        4.230399999999463,
+        4.27139999999963,
+        4.236700000000383,
+        4.135199999999713,
+        4.3344999999999345,
+        4.673200000000179,
+        4.5536999999994805
+      ],
+      "queries": 5,
+      "returnedRows": 172,
+      "returnedBytes": 13636,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10311,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  forgiven_by_participation AS (\n    SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor\n    FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key\n  ),\n  recovered_by_contact AS (\n    SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor\n    FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'\n    WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id\n  ),\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(l.recovered_minor, 0) AS recovered_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n    LEFT JOIN recovered_by_contact l ON l.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR recovered_minor < 0 OR recovered_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor - recovered_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 74,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 90,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE forgiven_by_participation"
+            },
+            {
+              "id": 98,
+              "parent": 90,
+              "notused": 223,
+              "detail": "SCAN shared_loss_events USING INDEX idx_shared_loss_participation"
+            },
+            {
+              "id": 148,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 153,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 172,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 189,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH f USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 195,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 287,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 295,
+              "parent": 287,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 332,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 341,
+              "parent": 332,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 345,
+              "parent": 332,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 352,
+              "parent": 332,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 393,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE recovered_by_contact"
+            },
+            {
+              "id": 403,
+              "parent": 393,
+              "notused": 224,
+              "detail": "SCAN r USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 408,
+              "parent": 393,
+              "notused": 62,
+              "detail": "SEARCH l USING INDEX idx_shared_loss_receipt (receipt_id=? AND kind=?)"
+            },
+            {
+              "id": 470,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 486,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 503,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 520,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 537,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH l USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals\n  FROM shared_loss_events WHERE date >= ? AND date < ?;",
+          "values": [
+            "2026-10-01",
+            "2026-11-01"
+          ],
+          "rows": 1,
+          "bytes": 74,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 164,
+              "detail": "SEARCH shared_loss_events USING INDEX idx_shared_loss_date (date>? AND date<?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "journalRows": 5000,
+      "version": "afterPopulated",
+      "medianMs": 8.571100000000115,
+      "milliseconds": [
+        7.229900000000271,
+        8.627300000000105,
+        10.785200000000259,
+        10.900299999999334,
+        8.571100000000115,
+        7.639199999999619,
+        8.261800000000221
+      ],
+      "queries": 5,
+      "returnedRows": 172,
+      "returnedBytes": 13644,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10311,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  forgiven_by_participation AS (\n    SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor\n    FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key\n  ),\n  recovered_by_contact AS (\n    SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor\n    FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'\n    WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id\n  ),\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(l.recovered_minor, 0) AS recovered_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n    LEFT JOIN recovered_by_contact l ON l.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR recovered_minor < 0 OR recovered_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor - recovered_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 74,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 90,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE forgiven_by_participation"
+            },
+            {
+              "id": 98,
+              "parent": 90,
+              "notused": 223,
+              "detail": "SCAN shared_loss_events USING INDEX idx_shared_loss_participation"
+            },
+            {
+              "id": 148,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 153,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 172,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 189,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH f USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 195,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 287,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 295,
+              "parent": 287,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 332,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 341,
+              "parent": 332,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 345,
+              "parent": 332,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 352,
+              "parent": 332,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 393,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE recovered_by_contact"
+            },
+            {
+              "id": 403,
+              "parent": 393,
+              "notused": 224,
+              "detail": "SCAN r USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 408,
+              "parent": 393,
+              "notused": 62,
+              "detail": "SEARCH l USING INDEX idx_shared_loss_receipt (receipt_id=? AND kind=?)"
+            },
+            {
+              "id": 470,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 486,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 503,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 520,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 537,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH l USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals\n  FROM shared_loss_events WHERE date >= ? AND date < ?;",
+          "values": [
+            "2026-10-01",
+            "2026-11-01"
+          ],
+          "rows": 1,
+          "bytes": 82,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 164,
+              "detail": "SEARCH shared_loss_events USING INDEX idx_shared_loss_date (date>? AND date<?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 5000,
+      "journalRows": 0,
+      "version": "before",
+      "medianMs": 14.764499999999316,
+      "milliseconds": [
+        14.115200000000186,
+        14.8770999999997,
+        14.204800000001342,
+        14.02390000000014,
+        14.764499999999316,
+        16.095299999999042,
+        15.205300000001444
+      ],
+      "queries": 4,
+      "returnedRows": 171,
+      "returnedBytes": 13507,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10255,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 75,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 97,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 102,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 121,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 127,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 206,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 214,
+              "parent": 206,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 251,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 260,
+              "parent": 251,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 264,
+              "parent": 251,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 271,
+              "parent": 251,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 312,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 328,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 345,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 362,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 5000,
+      "journalRows": 0,
+      "version": "afterEmpty",
+      "medianMs": 16.144100000001345,
+      "milliseconds": [
+        16.144100000001345,
+        15.922300000000178,
+        16.357200000000375,
+        16.733000000000175,
+        16.299599999998463,
+        15.815199999999095,
+        15.749799999999595
+      ],
+      "queries": 5,
+      "returnedRows": 172,
+      "returnedBytes": 13581,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10255,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  forgiven_by_participation AS (\n    SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor\n    FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key\n  ),\n  recovered_by_contact AS (\n    SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor\n    FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'\n    WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id\n  ),\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(l.recovered_minor, 0) AS recovered_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n    LEFT JOIN recovered_by_contact l ON l.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR recovered_minor < 0 OR recovered_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor - recovered_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 75,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 90,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE forgiven_by_participation"
+            },
+            {
+              "id": 98,
+              "parent": 90,
+              "notused": 223,
+              "detail": "SCAN shared_loss_events USING INDEX idx_shared_loss_participation"
+            },
+            {
+              "id": 148,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 153,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 172,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 189,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH f USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 195,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 287,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 295,
+              "parent": 287,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 332,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 341,
+              "parent": 332,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 345,
+              "parent": 332,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 352,
+              "parent": 332,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 393,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE recovered_by_contact"
+            },
+            {
+              "id": 403,
+              "parent": 393,
+              "notused": 224,
+              "detail": "SCAN r USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 408,
+              "parent": 393,
+              "notused": 62,
+              "detail": "SEARCH l USING INDEX idx_shared_loss_receipt (receipt_id=? AND kind=?)"
+            },
+            {
+              "id": 470,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 486,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 503,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 520,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 537,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH l USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals\n  FROM shared_loss_events WHERE date >= ? AND date < ?;",
+          "values": [
+            "2026-10-01",
+            "2026-11-01"
+          ],
+          "rows": 1,
+          "bytes": 74,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 164,
+              "detail": "SEARCH shared_loss_events USING INDEX idx_shared_loss_date (date>? AND date<?)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "size": 5000,
+      "journalRows": 25000,
+      "version": "afterPopulated",
+      "medianMs": 30.2541999999994,
+      "milliseconds": [
+        30.2541999999994,
+        29.67749999999978,
+        29.92109999999957,
+        30.352600000000166,
+        31.052300000001196,
+        31.320799999999508,
+        30.09569999999985
+      ],
+      "queries": 5,
+      "returnedRows": 172,
+      "returnedBytes": 13590,
+      "statements": [
+        {
+          "sql": "SELECT\n          id,\n          name,\n          type,\n          status,\n          currency,\n          balance_amount,\n          debt_balance_amount,\n          credit_limit_amount,\n          institution_name,\n          description,\n          created_at,\n          updated_at\n        FROM accounts\n        ORDER BY name ASC;",
+          "values": [],
+          "rows": 8,
+          "bytes": 2054,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 216,
+              "detail": "SCAN accounts"
+            },
+            {
+              "id": 23,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT amount, type, direction, CASE\n  WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')\n    OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0\n  ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e\n    JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL\n    WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n           AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))\n         ORDER BY date DESC, created_at DESC;",
+          "values": [
+            "2026-10",
+            "2026-11",
+            "posted",
+            7,
+            "2026-10",
+            "income",
+            "inflow",
+            "expense",
+            "outflow"
+          ],
+          "rows": 128,
+          "bytes": 10255,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 163,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            },
+            {
+              "id": 30,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 1"
+            },
+            {
+              "id": 35,
+              "parent": 30,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)"
+            },
+            {
+              "id": 47,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 2"
+            },
+            {
+              "id": 52,
+              "parent": 47,
+              "notused": 39,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)"
+            },
+            {
+              "id": 66,
+              "parent": 0,
+              "notused": 0,
+              "detail": "CORRELATED SCALAR SUBQUERY 3"
+            },
+            {
+              "id": 73,
+              "parent": 66,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)"
+            },
+            {
+              "id": 80,
+              "parent": 66,
+              "notused": 61,
+              "detail": "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)"
+            },
+            {
+              "id": 102,
+              "parent": 0,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR ORDER BY"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions\n         WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?\n         GROUP BY COALESCE(civil_date, substr(date, 1, 10));",
+          "values": [
+            "2026-09-07",
+            "2026-10-11",
+            "posted"
+          ],
+          "rows": 34,
+          "bytes": 1123,
+          "plan": [
+            {
+              "id": 7,
+              "parent": 0,
+              "notused": 149,
+              "detail": "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            }
+          ]
+        },
+        {
+          "sql": "WITH\n  forgiven_by_participation AS (\n    SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor\n    FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key\n  ),\n  recovered_by_contact AS (\n    SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor\n    FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'\n    WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id\n  ),\n  applied_by_participation AS (\n    SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor\n    FROM shared_allocations a\n    JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'\n    JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1\n      AND p.contact_id IS NOT NULL\n    JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'\n    WHERE a.active = 1\n    GROUP BY a.participation_key\n  ),\n  participations_by_contact AS (\n    SELECT s.contact_id,\n      SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,\n      SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,\n      MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,\n      MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0\n        OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount\n    FROM transaction_splits s\n    JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'\n    LEFT JOIN applied_by_participation a ON a.participation_key = s.id\n    LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id\n    WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL\n    GROUP BY s.contact_id\n  ),\n  receipts_by_contact AS (\n    SELECT contact_id, SUM(amount_minor) AS received_minor\n    FROM shared_receipts WHERE status = 'active'\n    GROUP BY contact_id\n  ),\n  returns_by_contact AS (\n    SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor\n    FROM shared_returns t\n    JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'\n    WHERE t.status = 'active'\n    GROUP BY r.contact_id\n  ),\n  contact_amounts AS (\n    SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,\n      COALESCE(p.applied_minor, 0) AS applied_minor,\n      COALESCE(r.received_minor, 0) AS received_minor,\n      COALESCE(t.returned_minor, 0) AS returned_minor,\n      COALESCE(l.recovered_minor, 0) AS recovered_minor,\n      COALESCE(p.smallest_pending, 0) AS smallest_pending,\n      COALESCE(p.invalid_amount, 0) AS invalid_amount\n    FROM shared_contacts c\n    LEFT JOIN participations_by_contact p ON p.contact_id = c.id\n    LEFT JOIN receipts_by_contact r ON r.contact_id = c.id\n    LEFT JOIN returns_by_contact t ON t.contact_id = c.id\n    LEFT JOIN recovered_by_contact l ON l.contact_id = c.id\n  ),\n  checked_amounts AS (\n    SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,\n      CASE WHEN invalid_amount = 1 OR smallest_pending < 0\n        OR receivable_minor < 0 OR receivable_minor > 9007199254740991\n        OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991\n        OR returned_minor > 9007199254740991\n        OR recovered_minor < 0 OR recovered_minor > 9007199254740991\n        OR received_minor - applied_minor - returned_minor - recovered_minor < 0\n        THEN 1 ELSE 0 END AS invalid\n    FROM contact_amounts\n  )\nSELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,\n  CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,\n  COALESCE(MAX(invalid), 0) AS invalid\nFROM checked_amounts;",
+          "values": [],
+          "rows": 1,
+          "bytes": 75,
+          "plan": [
+            {
+              "id": 3,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE participations_by_contact"
+            },
+            {
+              "id": 6,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE applied_by_participation"
+            },
+            {
+              "id": 21,
+              "parent": 6,
+              "notused": 216,
+              "detail": "SCAN a"
+            },
+            {
+              "id": 25,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 32,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH p USING INDEX sqlite_autoindex_transaction_splits_1 (id=?)"
+            },
+            {
+              "id": 41,
+              "parent": 6,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 49,
+              "parent": 6,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 90,
+              "parent": 3,
+              "notused": 0,
+              "detail": "MATERIALIZE forgiven_by_participation"
+            },
+            {
+              "id": 98,
+              "parent": 90,
+              "notused": 223,
+              "detail": "SCAN shared_loss_events USING INDEX idx_shared_loss_participation"
+            },
+            {
+              "id": 148,
+              "parent": 3,
+              "notused": 213,
+              "detail": "SCAN s USING INDEX idx_shared_splits_person"
+            },
+            {
+              "id": 153,
+              "parent": 3,
+              "notused": 46,
+              "detail": "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_1 (id=?)"
+            },
+            {
+              "id": 172,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH a USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 189,
+              "parent": 3,
+              "notused": 47,
+              "detail": "SEARCH f USING AUTOMATIC COVERING INDEX (participation_key=?) LEFT-JOIN"
+            },
+            {
+              "id": 195,
+              "parent": 3,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 287,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE receipts_by_contact"
+            },
+            {
+              "id": 295,
+              "parent": 287,
+              "notused": 216,
+              "detail": "SCAN shared_receipts USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 332,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE returns_by_contact"
+            },
+            {
+              "id": 341,
+              "parent": 332,
+              "notused": 216,
+              "detail": "SCAN t"
+            },
+            {
+              "id": 345,
+              "parent": 332,
+              "notused": 46,
+              "detail": "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_1 (id=?)"
+            },
+            {
+              "id": 352,
+              "parent": 332,
+              "notused": 0,
+              "detail": "USE TEMP B-TREE FOR GROUP BY"
+            },
+            {
+              "id": 393,
+              "parent": 0,
+              "notused": 0,
+              "detail": "MATERIALIZE recovered_by_contact"
+            },
+            {
+              "id": 403,
+              "parent": 393,
+              "notused": 224,
+              "detail": "SCAN r USING INDEX idx_shared_receipts_contact"
+            },
+            {
+              "id": 408,
+              "parent": 393,
+              "notused": 62,
+              "detail": "SEARCH l USING INDEX idx_shared_loss_receipt (receipt_id=? AND kind=?)"
+            },
+            {
+              "id": 470,
+              "parent": 0,
+              "notused": 211,
+              "detail": "SCAN c USING COVERING INDEX sqlite_autoindex_shared_contacts_1"
+            },
+            {
+              "id": 486,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH p USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 503,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH r USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 520,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH t USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            },
+            {
+              "id": 537,
+              "parent": 0,
+              "notused": 47,
+              "detail": "SEARCH l USING AUTOMATIC COVERING INDEX (contact_id=?) LEFT-JOIN"
+            }
+          ]
+        },
+        {
+          "sql": "SELECT\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,\n  CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals\n  FROM shared_loss_events WHERE date >= ? AND date < ?;",
+          "values": [
+            "2026-10-01",
+            "2026-11-01"
+          ],
+          "rows": 1,
+          "bytes": 83,
+          "plan": [
+            {
+              "id": 4,
+              "parent": 0,
+              "notused": 164,
+              "detail": "SEARCH shared_loss_events USING INDEX idx_shared_loss_date (date>? AND date<?)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

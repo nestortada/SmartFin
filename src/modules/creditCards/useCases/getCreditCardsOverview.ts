@@ -2,6 +2,7 @@ import type { ISODateString } from '../../../shared/types';
 import type { Account } from '../../accounts';
 import type { TransactionRepository } from '../../transactions';
 import type { Transaction } from '../../transactions/types';
+import { bogotaToday, transactionDateKey, transactionSortValue } from '../../../shared/utils/transactionDate';
 import type { CreditCardRepository } from '../repositories';
 import type {
   CreditCardInstallmentSummary,
@@ -26,7 +27,7 @@ type BuildCreditCardsOverviewParams = {
 };
 
 function toDateOnly(date: Date): ISODateString {
-  return date.toISOString().slice(0, 10);
+  return bogotaToday(date);
 }
 
 function isPendingStatement(statement: CreditCardStatement): boolean {
@@ -127,20 +128,20 @@ function getStatementTransactions(
     return transactions
       .filter(isCardMovement)
       .filter(transaction => transaction.status !== 'cancelled')
-      .sort((left, right) => right.date.localeCompare(left.date));
+      .sort((left, right) => transactionSortValue(right) - transactionSortValue(left));
   }
 
   return transactions
     .filter(isCardMovement)
     .filter(transaction => transaction.status !== 'cancelled')
     .filter(transaction => {
-      const date = transaction.date.slice(0, 10);
+      const date = transactionDateKey(transaction);
       return (
         date >= currentStatement.statementStartDate.slice(0, 10) &&
         date <= currentStatement.statementEndDate.slice(0, 10)
       );
     })
-    .sort((left, right) => right.date.localeCompare(left.date));
+    .sort((left, right) => transactionSortValue(right) - transactionSortValue(left));
 }
 
 export function buildCreditCardsOverview({

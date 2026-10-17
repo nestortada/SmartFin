@@ -1,0 +1,241 @@
+{
+  "node": {
+    "version": "v24.16.0",
+    "passed": 472,
+    "failed": 1,
+    "skipped": 3,
+    "snapshotsPassed": 8,
+    "preexistingFailure": "subscriptions.test.ts:384 pending versus overdue; also failed before production edits",
+    "rollbackPoints": 52
+  },
+  "checks": {
+    "typescript": true,
+    "eslint": true,
+    "diffCheck": true
+  },
+  "scope": {
+    "reconcileUnchanged": true,
+    "paymentFinancialCoreUnchangedExceptIdentity": true,
+    "node": "v24.16.0"
+  },
+  "sourceFingerprintsMatch": {
+    "src/database/atomicSQLite.ts": true,
+    "src/database/managedSQLite.ts": true,
+    "src/database/databaseCoordination.ts": true,
+    "src/database/sqliteDatabase.ts": true,
+    "src/database/sqliteLifecycle.ts": true,
+    "vendor/sqlite/sqlite.js": true,
+    "vendor/sqlite/lib/sqlite.core.js": true,
+    "vendor/sqlite/platforms/android/src/main/java/org/pgsqlite/SQLitePlugin.java": true,
+    "src/database/sqliteRepositoryScope.ts": true,
+    "src/modules/transactions/useCases/manualTransactionScope.ts": true,
+    "src/modules/transactions/useCases/saveManualTransaction.ts": true,
+    "src/modules/transactions/useCases/updateTransactionQuickly.ts": true,
+    "src/modules/transactions/repositories/sqliteTransactionRepository.ts": true,
+    "src/modules/accounts/repositories/sqliteAccountRepository.ts": true,
+    "src/modules/creditCards/repositories/sqliteCreditCardRepository.ts": true,
+    "src/modules/creditCards/useCases/creditCardPaymentScope.ts": true,
+    "src/modules/creditCards/useCases/creditCardTransactionRelations.ts": true,
+    "src/modules/creditCards/ui/CreditCardsScreen.tsx": true
+  },
+  "apk": {
+    "Path": "C:\\sfatomicity-phase3a-20261017\\android\\app\\build\\outputs\\apk\\release\\app-release.apk",
+    "Hash": "57EEBB253C01ADF485F075162FD4DA08610FF2D595A6DE3CFC5CFA3AE27264F4"
+  },
+  "android": [
+    {
+      "api": 24,
+      "environment": {
+        "package": "com.smartfin.atomicityphase1.tests",
+        "api": "24",
+        "android": "7.0",
+        "serial": "emulator-5554",
+        "productionMetadata": "",
+        "model": "Android SDK built for x86_64"
+      },
+      "sqliteVersion": "3.9.2",
+      "campaigns": [
+        {
+          "name": "api24",
+          "campaign": "phase3a",
+          "cases": 72,
+          "passed": true,
+          "result": "api24/result.json"
+        },
+        {
+          "name": "recovery-api24-core",
+          "campaign": "core",
+          "cases": 14,
+          "passed": true,
+          "result": "recovery-api24-core/result.json"
+        },
+        {
+          "name": "recovery-api24-begin-after",
+          "campaign": "begin-after",
+          "cases": 1,
+          "passed": true,
+          "result": "recovery-api24-begin-after/result.json"
+        },
+        {
+          "name": "recovery-api24-commit-before",
+          "campaign": "commit-before",
+          "cases": 1,
+          "passed": true,
+          "result": "recovery-api24-commit-before/result.json"
+        },
+        {
+          "name": "recovery-api24-rollback-before",
+          "campaign": "rollback-before",
+          "cases": 1,
+          "passed": true,
+          "result": "recovery-api24-rollback-before/result.json"
+        }
+      ],
+      "paymentCases": 72,
+      "rollbackPoints": 52,
+      "recoveryCases": 17,
+      "performance": [
+        {
+          "additionalRows": 0,
+          "operationMs": 36,
+          "readerMs": 37,
+          "completeHistoryReads": 2
+        },
+        {
+          "additionalRows": 100000,
+          "operationMs": 18377,
+          "readerMs": 18378,
+          "completeHistoryReads": 2
+        }
+      ],
+      "unknown": [
+        {
+          "name": "payment unknown COMMIT before, recover without retry",
+          "status": "unknown",
+          "control": "COMMIT",
+          "phase": "before",
+          "bank": 1000000
+        },
+        {
+          "name": "payment unknown COMMIT after, recover without retry",
+          "status": "unknown",
+          "control": "COMMIT",
+          "phase": "after",
+          "bank": 900000
+        },
+        {
+          "name": "payment unknown ROLLBACK before, recover without retry",
+          "status": "unknown",
+          "control": "ROLLBACK",
+          "phase": "before",
+          "bank": 1000000
+        },
+        {
+          "name": "payment unknown ROLLBACK after, recover without retry",
+          "status": "unknown",
+          "control": "ROLLBACK",
+          "phase": "after",
+          "bank": 1000000
+        }
+      ],
+      "productionPackageMetadataUnchanged": true
+    },
+    {
+      "api": 35,
+      "environment": {
+        "android": "15",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "model": "CRT-NX3",
+        "api": "35",
+        "serial": "AXCC6R3919012932",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23"
+      },
+      "sqliteVersion": "3.44.5",
+      "campaigns": [
+        {
+          "name": "api35",
+          "campaign": "phase3a",
+          "cases": 72,
+          "passed": true,
+          "result": "api35/result.json"
+        },
+        {
+          "name": "recovery-api35-core",
+          "campaign": "core",
+          "cases": 14,
+          "passed": true,
+          "result": "recovery-api35-core/result.json"
+        },
+        {
+          "name": "recovery-api35-begin-after",
+          "campaign": "begin-after",
+          "cases": 1,
+          "passed": true,
+          "result": "recovery-api35-begin-after/result.json"
+        },
+        {
+          "name": "recovery-api35-commit-before",
+          "campaign": "commit-before",
+          "cases": 1,
+          "passed": true,
+          "result": "recovery-api35-commit-before/result.json"
+        },
+        {
+          "name": "recovery-api35-rollback-before",
+          "campaign": "rollback-before",
+          "cases": 1,
+          "passed": true,
+          "result": "recovery-api35-rollback-before/result.json"
+        }
+      ],
+      "paymentCases": 72,
+      "rollbackPoints": 52,
+      "recoveryCases": 17,
+      "performance": [
+        {
+          "additionalRows": 0,
+          "operationMs": 74,
+          "readerMs": 76,
+          "completeHistoryReads": 2
+        },
+        {
+          "additionalRows": 100000,
+          "operationMs": 30375,
+          "readerMs": 30419,
+          "completeHistoryReads": 2
+        }
+      ],
+      "unknown": [
+        {
+          "name": "payment unknown COMMIT before, recover without retry",
+          "status": "unknown",
+          "control": "COMMIT",
+          "phase": "before",
+          "bank": 1000000
+        },
+        {
+          "name": "payment unknown COMMIT after, recover without retry",
+          "status": "unknown",
+          "control": "COMMIT",
+          "phase": "after",
+          "bank": 900000
+        },
+        {
+          "name": "payment unknown ROLLBACK before, recover without retry",
+          "status": "unknown",
+          "control": "ROLLBACK",
+          "phase": "before",
+          "bank": 1000000
+        },
+        {
+          "name": "payment unknown ROLLBACK after, recover without retry",
+          "status": "unknown",
+          "control": "ROLLBACK",
+          "phase": "after",
+          "bank": 1000000
+        }
+      ],
+      "productionPackageMetadataUnchanged": true
+    }
+  ]
+}

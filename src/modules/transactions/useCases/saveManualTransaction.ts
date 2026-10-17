@@ -12,6 +12,7 @@ import type { Transaction, TransactionType } from '../types';
 import { requireCurrentTransaction, withManualTransactionScope } from './manualTransactionScope';
 import { isSQLiteParticipant } from '../../../database/managedSQLite';
 import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
+import { encodeTransactionDate, type TransactionDate } from '../../../shared/utils/transactionDate';
 
 export type ManualTransactionOperationType = 'Débito' | 'Crédito';
 
@@ -33,6 +34,7 @@ export type SaveManualTransactionParams = {
   creditCardRepository: CreditCardRepository;
   currentDate?: Date;
   transactionDate?: Date | string;
+  occurrence?: TransactionDate;
   now?: Date;
   dedupeKey?: string;
   editingTransaction?: Transaction | null;
@@ -213,6 +215,8 @@ function buildTransferCompanionTransaction({
   return {
     ...sourceTransaction,
     id: `${sourceTransaction.id}-in`,
+    // The principal owns the command's unique key; this leg shares its atomic save.
+    dedupeKey: undefined,
     accountId: sourceTransaction.targetAccountId as string,
     description: `Entrada: ${sourceTransaction.description}`,
     direction: 'inflow',
@@ -239,6 +243,10 @@ function buildTransferTaxTransaction({
     createdAt: sourceTransaction.createdAt,
     currency: sourceTransaction.currency,
     date: sourceTransaction.date,
+    civilDate: sourceTransaction.civilDate,
+    localTime: sourceTransaction.localTime,
+    timeZone: sourceTransaction.timeZone,
+    datePrecision: sourceTransaction.datePrecision,
     description: 'Impuesto 4x1000',
     direction: 'outflow',
     merchantName: 'Impuesto 4x1000',
@@ -285,7 +293,7 @@ export async function saveTransactionInstallments({
     createdAt: existing?.createdAt ?? transaction.createdAt,
     currency: transaction.currency,
     firstDueDate: unchangedTerms && previousTransaction?.date === transaction.date
-      ? existing.firstDueDate : getNextMonthDueDate(transaction.date),
+      ? existing.firstDueDate : transaction.civilDate ? nextCivilMonth(transaction.civilDate) : getNextMonthDueDate(transaction.date),
     installmentCount,
     merchantName: transaction.merchantName,
     monthlyAmount: unchangedTerms ? existing.monthlyAmount : Math.round(transaction.amount / installmentCount),
@@ -299,6 +307,15 @@ export async function saveTransactionInstallments({
 }
 
 const requests = new WeakMap<SaveManualTransactionParams, Promise<SaveManualTransactionResult>>();
+function nextCivilMonth(date: string): string {
+  const next = new Date(`${date}T12:00:00Z`);
+  const day = next.getUTCDate();
+  next.setUTCMonth(next.getUTCMonth() + 1, 1);
+  const last = new Date(next.getTime());
+  last.setUTCMonth(last.getUTCMonth() + 1, 0);
+  next.setUTCDate(Math.min(day, last.getUTCDate()));
+  return next.toISOString().slice(0, 10);
+}
 let manualIdSequence = 0;
 
 export async function saveManualTransaction(params: SaveManualTransactionParams): Promise<SaveManualTransactionResult> {
@@ -352,6 +369,7 @@ async function saveManualTransactionInScope(
     creditCardRepository,
     currentDate = new Date(),
     transactionDate,
+    occurrence,
     now: requestedNow,
     dedupeKey,
     editingTransaction,
@@ -364,7 +382,7 @@ async function saveManualTransactionInScope(
     targetAccountId: requestedTargetAccountId,
     transactionRepository,
     transactionType,
-    transferTaxCharged = false,
+    transferTaxCharged,
   } = params;
   const isCreditCardExpense =
     transactionType !== 'income' &&
@@ -381,6 +399,12 @@ async function saveManualTransactionInScope(
   const effectiveTransactionDate = transactionDate instanceof Date
     ? transactionDate.toISOString()
     : transactionDate ?? editingTransaction?.date ?? currentDate.toISOString();
+  const dateFields = occurrence ? encodeTransactionDate(occurrence) : transactionDate !== undefined
+    ? { date: effectiveTransactionDate }
+    : { date: effectiveTransactionDate, ...(editingTransaction?.civilDate ? {
+      civilDate: editingTransaction.civilDate, localTime: editingTransaction.localTime,
+      timeZone: editingTransaction.timeZone, datePrecision: editingTransaction.datePrecision,
+    } : {}) };
   const installmentCount = normalizeInstallmentCount(installmentCountInput);
   const interestFreeInstallmentCount = normalizeInterestFreeInstallmentCount({
     enabled: hasInterestFreeInstallments,
@@ -441,7 +465,7 @@ async function saveManualTransactionInScope(
     createdAt: editingTransaction?.createdAt ?? now,
     creditCardHint: isCreditCardExpense ? creditCardTarget.creditCardHint : undefined,
     currency: editingTransaction?.currency ?? 'COP',
-    date: effectiveTransactionDate,
+    ...dateFields,
     description: editingTransaction && merchantName === (editingTransaction.merchantName ?? editingTransaction.description)
       ? editingTransaction.description : merchantName,
     dedupeKey: dedupeKey ?? editingTransaction?.dedupeKey,
@@ -510,9 +534,11 @@ async function saveManualTransactionInScope(
   const companionTransaction = transaction.type === 'internalTransfer'
     ? buildTransferCompanionTransaction({ now, sourceTransaction: transaction })
     : undefined;
-  const transferTaxTransaction = transaction.type === 'internalTransfer' && transferTaxCharged
+  const transferTaxTransaction = transaction.type === 'internalTransfer' && (transferTaxCharged ?? Boolean(existingTransferTax))
     ? buildTransferTaxTransaction({ now, sourceTransaction: transaction })
     : undefined;
+  if (transferTaxTransaction && existingTransferTax && editingTransaction?.amount === transaction.amount)
+    transferTaxTransaction.amount = existingTransferTax.amount;
 
   if (transferTaxTransaction) {
     applyTransactionImpact({
@@ -599,7 +625,6 @@ async function deleteManualTransactionInScope({
   transaction,
   transactionRepository,
 }: DeleteManualTransactionParams): Promise<void> {
-  const allTransactions = await transactionRepository.getTransactions();
   const accountUpdates = new Map<string, Account>();
   applyTransactionImpact({
     accounts,
@@ -609,7 +634,7 @@ async function deleteManualTransactionInScope({
   });
 
   const transferTax = transaction.type === 'internalTransfer'
-    ? allTransactions.find(candidate => candidate.id === `${transaction.id}-4x1000`)
+    ? await readCurrentManualTransaction(transactionRepository, `${transaction.id}-4x1000`)
     : undefined;
   if (transferTax) {
     applyTransactionImpact({

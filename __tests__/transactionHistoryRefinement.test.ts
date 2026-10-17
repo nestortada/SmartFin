@@ -144,7 +144,7 @@ test('cancelled date validation does not publish a reusable proof or enqueue its
     if (key !== 'executeSql') return Reflect.get(target, key);
     return async (statement: string, values: SQLitePrimitive[] = []) => {
       sql.push(statement); const result = await target.executeSql(statement, values);
-      if (cancelShape && statement.startsWith('SELECT date FROM transactions')) cancelled = true;
+      if (cancelShape && statement.includes('AS date FROM transactions INDEXED BY idx_transactions_civil_sort')) cancelled = true;
       return result;
     };
   } });
@@ -154,6 +154,6 @@ test('cancelled date validation does not publish a reusable proof or enqueue its
     expect(sql).toHaveLength(2);
     sql.length = 0; cancelShape = false; cancelled = false;
     await repo.getTransactionPage(all);
-    expect(sql.some(s => s.includes('SELECT DISTINCT date'))).toBe(true);
+    expect(sql.some(s => s.includes('SELECT DISTINCT COALESCE(civil_date'))).toBe(true);
   } finally { f.native.close(); }
 });

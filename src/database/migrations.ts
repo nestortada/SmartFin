@@ -1,5 +1,8 @@
 import type { SmartFinSQLiteDatabase } from './sqliteDatabase';
 import { runSQLiteTransaction } from './atomicSQLite';
+import { SHARED_LOSS_SCHEMA } from '../modules/transactions/database/sharedLossSchema';
+import { MOVEMENT_DATE_COLUMNS, SHARED_SPLIT_COLUMNS, SHARED_EXPENSE_SCHEMA, SHARED_EXPENSE_INDEXES,
+  SHARED_EXPENSE_TRIGGERS } from '../modules/transactions/database/sharedExpenseSchema';
 import {
   SUBSCRIPTION_COLUMNS,
   SUBSCRIPTION_SCHEMA,
@@ -69,6 +72,21 @@ export async function applyVersionedMigrations(
       yield {
         sql: "INSERT INTO schema_migrations VALUES (2, strftime('%Y-%m-%dT%H:%M:%fZ','now'));",
       };
+    }
+    if (!versions.some(row => row.version === 3)) {
+      for (const sql of SHARED_EXPENSE_SCHEMA) yield { sql };
+      for (const [table, additions] of [['transactions', MOVEMENT_DATE_COLUMNS], ['transaction_splits', SHARED_SPLIT_COLUMNS]] as const) {
+        const columns = yield { sql: `PRAGMA table_info(${table});` };
+        for (const [column, definition] of additions) {
+          if (!columns.some(row => row.name === column)) yield { sql: `ALTER TABLE ${table} ADD COLUMN ${column} ${definition};` };
+        }
+      }
+      for (const sql of [...SHARED_EXPENSE_INDEXES, ...SHARED_EXPENSE_TRIGGERS]) yield { sql };
+      yield { sql: "INSERT INTO schema_migrations VALUES (3, strftime('%Y-%m-%dT%H:%M:%fZ','now'));" };
+    }
+    if (!versions.some(row => row.version === 4)) {
+      for (const sql of SHARED_LOSS_SCHEMA) yield { sql };
+      yield { sql: "INSERT INTO schema_migrations VALUES (4, strftime('%Y-%m-%dT%H:%M:%fZ','now'));" };
     }
     return undefined;
   });

@@ -9,6 +9,8 @@ import {
 } from './sqliteSchema';
 
 import { applyVersionedMigrations } from './migrations';
+import { SHARED_LOSS_SCHEMA } from '../modules/transactions/database/sharedLossSchema';
+import { SHARED_EXPENSE_INDEXES, SHARED_EXPENSE_SCHEMA, SHARED_EXPENSE_TRIGGERS } from '../modules/transactions/database/sharedExpenseSchema';
 import {
   withDatabaseMaintenance,
   type DatabasePermit,
@@ -34,6 +36,9 @@ let openingFailure: { error: unknown } | undefined;
 
 async function applySchema(database: SmartFinSQLiteDatabase): Promise<void> {
   for (const statement of SQLITE_SCHEMA_STATEMENTS) {
+    if (SHARED_LOSS_SCHEMA.includes(statement)) continue;
+    // Installed tables acquire their new columns in the versioned migration.
+    if ([...SHARED_EXPENSE_SCHEMA, ...SHARED_EXPENSE_INDEXES, ...SHARED_EXPENSE_TRIGGERS].includes(statement)) continue;
     await database.executeSql(statement);
   }
 

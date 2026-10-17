@@ -15,6 +15,8 @@ import { createSqliteTransactionRepository } from '../../transactions/repositori
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import type { DashboardSummary } from '../types/DashboardSummary';
 import type { TransactionAmount } from '../../transactions/types/TransactionQuery';
+import { bogotaCalendarDate, transactionDateKey } from '../../../shared/utils/transactionDate';
+import { createSqliteSharedExpenseRepository } from '../../transactions/repositories/sqliteSharedExpenseRepository';
 
 type DashboardSummaryDependencies = {
   accountRepository?: AccountRepository;
@@ -70,7 +72,7 @@ function isCurrentMonthTransaction(
   transaction: Transaction,
   currentDate: Date,
 ): boolean {
-  return transaction.date.slice(0, 7) === toYearMonth(currentDate);
+  return transactionDateKey(transaction).slice(0, 7) === toYearMonth(currentDate);
 }
 
 function isPosted(transaction: Transaction): boolean {
@@ -93,8 +95,8 @@ function getLocalDayTime(date: Date): number {
   ).getTime();
 }
 
-function getTransactionLocalDayTime(transaction: Pick<Transaction, 'date'>): number {
-  return new Date(`${transaction.date.slice(0, 10)}T00:00:00`).getTime();
+function getTransactionLocalDayTime(transaction: Pick<Transaction, 'date' | 'civilDate'>): number {
+  return new Date(`${transactionDateKey(transaction)}T00:00:00`).getTime();
 }
 
 function isRecentTransaction(
@@ -117,6 +119,7 @@ function computeSummary(
   transactions: Transaction[],
   currentDate: Date,
 ): DashboardSummary {
+  currentDate = bogotaCalendarDate(currentDate);
   const monthlyTransactions = transactions
     .filter(isPosted)
     .filter(transaction => isCurrentMonthTransaction(transaction, currentDate));
@@ -153,6 +156,11 @@ function buildSummary(
     monthlyIncome,
     monthlyExpenses,
     monthlySavings,
+    monthlyForgivenessLosses: 0,
+    monthlyLossReversals: 0,
+    monthlyLossRecoveries: 0,
+    monthlyRecoveryReversals: 0,
+    monthlyNetLosses: 0,
     recentTransactionCount,
     modules: [
       {
@@ -206,6 +214,7 @@ export async function getDashboardSummaryFromDb(
   database: SmartFinSQLiteDatabase,
   currentDate: Date = new Date(),
 ): Promise<DashboardSummary> {
+  currentDate = bogotaCalendarDate(currentDate);
   const accountRepository = createSqliteAccountRepository(database);
   const transactionRepository = createSqliteTransactionRepository(database);
 
@@ -230,7 +239,8 @@ export async function getDashboardSummaryFromDb(
     currentDate.getDate() + 1,
   );
 
-  const [accounts, monthlyAmounts, recentDayCounts] = await Promise.all([
+  const sharedRepository = createSqliteSharedExpenseRepository(database);
+  const [accounts, monthlyAmounts, recentDayCounts, position, losses] = await Promise.all([
     accountRepository.getAccounts(),
     transactionRepository.getTransactionAmounts({
       startDate: yearMonth,
@@ -247,11 +257,17 @@ export async function getDashboardSummaryFromDb(
       endDateExclusive: toLocalDatePrefix(dayAfterToday),
       status: 'posted',
     }),
+    sharedRepository.getFinancialTotals(),
+    sharedRepository.getLossPeriodTotals(`${yearMonth}-01`, `${toYearMonth(nextMonth)}-01`),
   ]);
 
   const recentTransactionCount = recentDayCounts
     .filter(day => isRecentTransaction(day, currentDate))
     .reduce((total, day) => total + day.count, 0);
 
-  return buildSummary(accounts, monthlyAmounts, recentTransactionCount);
+  const summary = buildSummary(accounts, monthlyAmounts, recentTransactionCount);
+  return { ...summary, netWorth: summary.netWorth + position.receivables - position.thirdPartyAdvances,
+    monthlyForgivenessLosses: losses.losses, monthlyLossReversals: losses.reversals,
+    monthlyLossRecoveries: losses.recoveries, monthlyRecoveryReversals: losses.recoveryReversals,
+    monthlyNetLosses: losses.netLoss, monthlySavings: summary.monthlySavings - losses.netLoss };
 }

@@ -1,0 +1,4446 @@
+{
+  "nodeRuntime": "v24.16.0",
+  "nodeSQLite": "3.53.0",
+  "nodeExactCheckpoints": 72,
+  "androidConfig": {
+    "timezone": "America/Bogota",
+    "android": "15",
+    "abi": "arm64-v8a",
+    "release": true,
+    "date": "2026-10-10T12:00:00-05:00",
+    "manufacturer": "HONOR",
+    "model": "CRT-NX3",
+    "runId": "shared-commands-release-operations",
+    "size": "1000",
+    "packageId": "com.smartfin.sharedcommands.bench",
+    "version": "optimized"
+  },
+  "androidValidation": [
+    {
+      "type": "binary64-pass",
+      "checks": [
+        "physicalBeforeAfter1000",
+        "physicalBeforeAfter10000",
+        "NodeHermes1000",
+        "NodeHermes10000"
+      ]
+    },
+    {
+      "type": "complete",
+      "config": {
+        "timezone": "America/Bogota",
+        "android": "15",
+        "abi": "arm64-v8a",
+        "release": true,
+        "date": "2026-10-10T12:00:00-05:00",
+        "manufacturer": "HONOR",
+        "model": "CRT-NX3",
+        "runId": "shared-commands-release-operations",
+        "size": "1000",
+        "packageId": "com.smartfin.sharedcommands.bench",
+        "version": "optimized"
+      },
+      "financialEquality": true,
+      "equalityComparedVolumes": [
+        1000,
+        10000
+      ],
+      "nodeOracleComparedVolumes": [
+        1000,
+        10000,
+        100000
+      ],
+      "beforeAndroidVolumes": [
+        1000,
+        10000
+      ],
+      "afterAndroidVolumes": [
+        1000,
+        10000,
+        100000
+      ],
+      "samples": 108,
+      "revision": "three-fields"
+    }
+  ],
+  "androidFunctionalValidation": [
+    {
+      "type": "start",
+      "config": {
+        "timezone": "America/Bogota",
+        "android": "15",
+        "abi": "arm64-v8a",
+        "release": true,
+        "date": "2026-10-10T12:00:00-05:00",
+        "manufacturer": "HONOR",
+        "model": "CRT-NX3",
+        "runId": "shared-commands-release-verify3",
+        "size": "1000",
+        "packageId": "com.smartfin.sharedcommands.bench",
+        "version": "verify3"
+      },
+      "hermes": true
+    },
+    {
+      "type": "reader-wait",
+      "operation": "recoverForgiveness",
+      "milliseconds": 41.331461012363434,
+      "scope": "application maintenance queue; no injected sleep"
+    },
+    {
+      "type": "restart-pass",
+      "checks": [
+        "processRestart",
+        "exactTables",
+        "exactSummary",
+        "idempotency",
+        "rollbackJournal",
+        "rollbackCommand",
+        "receipt",
+        "recovery",
+        "FK",
+        "integrity"
+      ]
+    },
+    {
+      "type": "credit-companions-pass",
+      "checks": [
+        "fullCreditDebt",
+        "installments",
+        "lossBankDebtConsumption",
+        "exactWealthLoss",
+        "creditIdempotency",
+        "paymentWealthDebtConsumption",
+        "companionOrdering",
+        "taxReversal",
+        "FK"
+      ],
+      "purchase": "shared:credit-create:expense"
+    },
+    {
+      "type": "complete",
+      "revision": "three-fields",
+      "scope": "migration-restart-credit-rollback"
+    }
+  ],
+  "androidPreparation": [
+    {
+      "type": "start",
+      "config": {
+        "timezone": "America/Bogota",
+        "android": "15",
+        "abi": "arm64-v8a",
+        "release": true,
+        "date": "2026-10-10T12:00:00-05:00",
+        "manufacturer": "HONOR",
+        "model": "CRT-NX3",
+        "runId": "shared-commands-release-prepare",
+        "size": "1000",
+        "packageId": "com.smartfin.sharedcommands.bench",
+        "version": "prepare3"
+      },
+      "hermes": true
+    },
+    {
+      "type": "prepared",
+      "sqlite": "3.44.5",
+      "checks": [
+        "migration3",
+        "migration4",
+        "historicalRows",
+        "repeatedMigration",
+        "persistedForgiveness",
+        "migrationRollback"
+      ],
+      "name": "dashboard_phase2_cmd_migration6.db"
+    }
+  ],
+  "node": [
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "createPurchase",
+      "samples": 3,
+      "medianMs": 25.70300000000043,
+      "transactionMs": 25.560699999999997,
+      "reads": 35,
+      "rows": 2085,
+      "characters": 974997,
+      "milliseconds": [
+        43.05379999999991,
+        25.70300000000043,
+        23.925500000000284
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "sharePurchase",
+      "samples": 3,
+      "medianMs": 35.253000000000156,
+      "transactionMs": 35.18820000000005,
+      "reads": 14,
+      "rows": 3046,
+      "characters": 1440224,
+      "milliseconds": [
+        37.34619999999995,
+        35.253000000000156,
+        30.315599999999904
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "updateDistribution",
+      "samples": 3,
+      "medianMs": 30.553899999999885,
+      "transactionMs": 30.500299999999697,
+      "reads": 14,
+      "rows": 3049,
+      "characters": 1441353,
+      "milliseconds": [
+        53.183899999999994,
+        30.553899999999885,
+        30.123099999999795
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "updatePurchase",
+      "samples": 3,
+      "medianMs": 35.98030000000017,
+      "transactionMs": 35.91139999999996,
+      "reads": 35,
+      "rows": 3098,
+      "characters": 1455720,
+      "milliseconds": [
+        41.80459999999994,
+        35.98030000000017,
+        31.529799999999796
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "recordReceipt",
+      "samples": 3,
+      "medianMs": 35.052400000000034,
+      "transactionMs": 34.98580000000038,
+      "reads": 31,
+      "rows": 3094,
+      "characters": 1455076,
+      "milliseconds": [
+        41.88339999999994,
+        31.1895999999997,
+        35.052400000000034
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "linkReceipt",
+      "samples": 3,
+      "medianMs": 30.166299999999865,
+      "transactionMs": 30.111499999999978,
+      "reads": 14,
+      "rows": 3054,
+      "characters": 1443685,
+      "milliseconds": [
+        41.51350000000002,
+        30.166299999999865,
+        29.3458999999998
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "recordAdvance",
+      "samples": 3,
+      "medianMs": 37.935599999999795,
+      "transactionMs": 37.79919999999993,
+      "reads": 31,
+      "rows": 3105,
+      "characters": 1458725,
+      "milliseconds": [
+        37.935599999999795,
+        38.496599999999944,
+        29.530499999999847
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "applyReceipt",
+      "samples": 3,
+      "medianMs": 23.82490000000007,
+      "transactionMs": 23.766799999999876,
+      "reads": 12,
+      "rows": 2054,
+      "characters": 968419,
+      "milliseconds": [
+        27.658500000000004,
+        23.82490000000007,
+        21.715400000000045
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "forgivePartial",
+      "samples": 3,
+      "medianMs": 21.909100000000308,
+      "transactionMs": 21.85660000000007,
+      "reads": 12,
+      "rows": 2055,
+      "characters": 968687,
+      "milliseconds": [
+        28.6858000000002,
+        21.909100000000308,
+        21.433599999999842
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "forgiveFull",
+      "samples": 3,
+      "medianMs": 25.730199999999968,
+      "transactionMs": 25.679099999999835,
+      "reads": 12,
+      "rows": 2056,
+      "characters": 968975,
+      "milliseconds": [
+        27.79230000000007,
+        21.382600000000366,
+        25.730199999999968
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "recoveryReceipt",
+      "samples": 3,
+      "medianMs": 35.98389999999972,
+      "transactionMs": 35.91780000000017,
+      "reads": 31,
+      "rows": 3116,
+      "characters": 1462513,
+      "milliseconds": [
+        36.98750000000018,
+        35.98389999999972,
+        31.06179999999995
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "recoverForgiveness",
+      "samples": 3,
+      "medianMs": 28.644599999999627,
+      "transactionMs": 28.47739999999976,
+      "reads": 12,
+      "rows": 2060,
+      "characters": 970612,
+      "milliseconds": [
+        28.644599999999627,
+        30.503899999999703,
+        21.003600000000006
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "reverseRecovery",
+      "samples": 3,
+      "medianMs": 23.246200000000044,
+      "transactionMs": 23.18809999999985,
+      "reads": 12,
+      "rows": 2061,
+      "characters": 970941,
+      "milliseconds": [
+        30.79370000000017,
+        23.246200000000044,
+        21.48109999999997
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "reverseForgiveness",
+      "samples": 3,
+      "medianMs": 21.850999999999658,
+      "transactionMs": 21.80020000000013,
+      "reads": 12,
+      "rows": 2062,
+      "characters": 971286,
+      "milliseconds": [
+        24.74850000000015,
+        21.850999999999658,
+        21.696899999999914
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "returnAdvance",
+      "samples": 3,
+      "medianMs": 31.22530000000006,
+      "transactionMs": 31.16919999999982,
+      "reads": 30,
+      "rows": 3124,
+      "characters": 1465831,
+      "milliseconds": [
+        33.70419999999967,
+        29.34970000000021,
+        31.22530000000006
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "cancelDivision",
+      "samples": 3,
+      "medianMs": 27.327999999999975,
+      "transactionMs": 27.27980000000025,
+      "reads": 12,
+      "rows": 2066,
+      "characters": 972920,
+      "milliseconds": [
+        29.523400000000038,
+        21.03179999999975,
+        27.327999999999975
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "deleteMovement",
+      "samples": 3,
+      "medianMs": 44.988700000000335,
+      "transactionMs": 44.78449999999975,
+      "reads": 69,
+      "rows": 4293,
+      "characters": 1993098,
+      "milliseconds": [
+        44.988700000000335,
+        47.88369999999986,
+        41.91769999999997
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "idempotentReplay",
+      "samples": 3,
+      "medianMs": 0.14550000000008367,
+      "transactionMs": 0.08709999999973661,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        0.30940000000009604,
+        0.12930000000005748,
+        0.14550000000008367
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "createPurchase",
+      "samples": 3,
+      "medianMs": 837.7829999999994,
+      "transactionMs": 837.6854000000021,
+      "reads": 35,
+      "rows": 20625,
+      "characters": 9699987,
+      "milliseconds": [
+        834.9829000000004,
+        837.7829999999994,
+        984.7577999999994
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "sharePurchase",
+      "samples": 3,
+      "medianMs": 921.2108999999982,
+      "transactionMs": 921.1490999999951,
+      "reads": 14,
+      "rows": 30316,
+      "characters": 14354701,
+      "milliseconds": [
+        928.3005000000003,
+        901.8534,
+        921.2108999999982
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "updateDistribution",
+      "samples": 3,
+      "medianMs": 922.1414000000004,
+      "transactionMs": 922.0759000000035,
+      "reads": 14,
+      "rows": 30319,
+      "characters": 14355830,
+      "milliseconds": [
+        943.8225999999995,
+        922.1414000000004,
+        902.8860999999961
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "updatePurchase",
+      "samples": 3,
+      "medianMs": 915.0060000000012,
+      "transactionMs": 914.8698000000004,
+      "reads": 35,
+      "rows": 30638,
+      "characters": 14456701,
+      "milliseconds": [
+        913.3247999999994,
+        915.0060000000012,
+        916.0132000000012
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recordReceipt",
+      "samples": 3,
+      "medianMs": 909.7742000000071,
+      "transactionMs": 909.6963000000032,
+      "reads": 31,
+      "rows": 30634,
+      "characters": 14456057,
+      "milliseconds": [
+        918.9757,
+        870.095400000002,
+        909.7742000000071
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "linkReceipt",
+      "samples": 3,
+      "medianMs": 905.3410999999978,
+      "transactionMs": 905.2746999999945,
+      "reads": 14,
+      "rows": 30324,
+      "characters": 14358162,
+      "milliseconds": [
+        924.8516,
+        904.7212,
+        905.3410999999978
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recordAdvance",
+      "samples": 3,
+      "medianMs": 931.7546000000002,
+      "transactionMs": 931.6808000000001,
+      "reads": 31,
+      "rows": 30645,
+      "characters": 14459706,
+      "milliseconds": [
+        931.7546000000002,
+        920.9681999999993,
+        932.6520999999993
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "applyReceipt",
+      "samples": 3,
+      "medianMs": 820.0609000000004,
+      "transactionMs": 819.9810999999972,
+      "reads": 12,
+      "rows": 20324,
+      "characters": 9606905,
+      "milliseconds": [
+        829.2325999999994,
+        820.0609000000004,
+        813.1774000000005
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "forgivePartial",
+      "samples": 3,
+      "medianMs": 834.4817999999996,
+      "transactionMs": 834.4084000000003,
+      "reads": 12,
+      "rows": 20325,
+      "characters": 9607173,
+      "milliseconds": [
+        834.4817999999996,
+        823.6316999999981,
+        836.6417000000001
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "forgiveFull",
+      "samples": 3,
+      "medianMs": 966.2729999999974,
+      "transactionMs": 966.2193000000007,
+      "reads": 12,
+      "rows": 20326,
+      "characters": 9607461,
+      "milliseconds": [
+        1145.842700000001,
+        966.2729999999974,
+        830.5881000000008
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recoveryReceipt",
+      "samples": 3,
+      "medianMs": 946.0006999999969,
+      "transactionMs": 945.9337000000014,
+      "reads": 31,
+      "rows": 30656,
+      "characters": 14463494,
+      "milliseconds": [
+        944.9539000000004,
+        946.0006999999969,
+        958.7203000000009
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recoverForgiveness",
+      "samples": 3,
+      "medianMs": 850.7968999999994,
+      "transactionMs": 850.7116999999998,
+      "reads": 12,
+      "rows": 20330,
+      "characters": 9609098,
+      "milliseconds": [
+        850.7968999999994,
+        827.1518999999971,
+        967.4072000000015
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "reverseRecovery",
+      "samples": 3,
+      "medianMs": 849.5033999999978,
+      "transactionMs": 849.444099999997,
+      "reads": 12,
+      "rows": 20331,
+      "characters": 9609427,
+      "milliseconds": [
+        872.9189999999999,
+        849.5033999999978,
+        829.5864000000001
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "reverseForgiveness",
+      "samples": 3,
+      "medianMs": 850.1182999999946,
+      "transactionMs": 850.0633999999991,
+      "reads": 12,
+      "rows": 20332,
+      "characters": 9609772,
+      "milliseconds": [
+        820.130000000001,
+        1587.5368999999992,
+        850.1182999999946
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "returnAdvance",
+      "samples": 3,
+      "medianMs": 919.4892999999938,
+      "transactionMs": 919.4262999999992,
+      "reads": 30,
+      "rows": 30664,
+      "characters": 14466812,
+      "milliseconds": [
+        911.6192999999985,
+        968.4804000000004,
+        919.4892999999938
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "cancelDivision",
+      "samples": 3,
+      "medianMs": 839.6704999999929,
+      "transactionMs": 839.6131999999998,
+      "reads": 12,
+      "rows": 20336,
+      "characters": 9611406,
+      "milliseconds": [
+        842.8968999999997,
+        839.6704999999929,
+        829.0973999999987
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "deleteMovement",
+      "samples": 3,
+      "medianMs": 1012.9406000000017,
+      "transactionMs": 1012.8830000000016,
+      "reads": 69,
+      "rows": 41643,
+      "characters": 19529582,
+      "milliseconds": [
+        997.3987000000016,
+        1012.9406000000017,
+        1543.595199999996
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "idempotentReplay",
+      "samples": 3,
+      "medianMs": 0.1694999999999709,
+      "transactionMs": 0.10420000000158325,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        0.1694999999999709,
+        0.3627000000051339,
+        0.1595000000015716
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "createPurchase",
+      "samples": 1,
+      "medianMs": 277548.6616,
+      "transactionMs": 277547.98600000003,
+      "reads": 35,
+      "rows": 200625,
+      "characters": 95216349,
+      "milliseconds": [
+        277548.6616
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "sharePurchase",
+      "samples": 1,
+      "medianMs": 306615.0621,
+      "transactionMs": 306614.8511,
+      "reads": 14,
+      "rows": 300316,
+      "characters": 142629244,
+      "milliseconds": [
+        306615.0621
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "updateDistribution",
+      "samples": 1,
+      "medianMs": 274574.64729999995,
+      "transactionMs": 274574.4297,
+      "reads": 14,
+      "rows": 300319,
+      "characters": 142630373,
+      "milliseconds": [
+        274574.64729999995
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "updatePurchase",
+      "samples": 1,
+      "medianMs": 334193.04149999993,
+      "transactionMs": 334192.60160000005,
+      "reads": 35,
+      "rows": 300638,
+      "characters": 142731244,
+      "milliseconds": [
+        334193.04149999993
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recordReceipt",
+      "samples": 1,
+      "medianMs": 358845.2234,
+      "transactionMs": 358844.90859999997,
+      "reads": 31,
+      "rows": 300634,
+      "characters": 142730600,
+      "milliseconds": [
+        358845.2234
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "linkReceipt",
+      "samples": 1,
+      "medianMs": 277856.4499000001,
+      "transactionMs": 277856.26450000005,
+      "reads": 14,
+      "rows": 300324,
+      "characters": 142632705,
+      "milliseconds": [
+        277856.4499000001
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recordAdvance",
+      "samples": 1,
+      "medianMs": 275384.8317,
+      "transactionMs": 275384.42070000013,
+      "reads": 31,
+      "rows": 300645,
+      "characters": 142734249,
+      "milliseconds": [
+        275384.8317
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "applyReceipt",
+      "samples": 1,
+      "medianMs": 274251.6686,
+      "transactionMs": 274251.2404,
+      "reads": 12,
+      "rows": 200324,
+      "characters": 95123267,
+      "milliseconds": [
+        274251.6686
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "forgivePartial",
+      "samples": 1,
+      "medianMs": 276982.62969999993,
+      "transactionMs": 276980.97860000003,
+      "reads": 12,
+      "rows": 200325,
+      "characters": 95123535,
+      "milliseconds": [
+        276982.62969999993
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "forgiveFull",
+      "samples": 1,
+      "medianMs": 283521.4345999998,
+      "transactionMs": 283521.2420000001,
+      "reads": 12,
+      "rows": 200326,
+      "characters": 95123823,
+      "milliseconds": [
+        283521.4345999998
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recoveryReceipt",
+      "samples": 1,
+      "medianMs": 283468.98490000004,
+      "transactionMs": 283468.03610000014,
+      "reads": 31,
+      "rows": 300656,
+      "characters": 142738037,
+      "milliseconds": [
+        283468.98490000004
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recoverForgiveness",
+      "samples": 1,
+      "medianMs": 300463.61450000014,
+      "transactionMs": 300463.3772999998,
+      "reads": 12,
+      "rows": 200330,
+      "characters": 95125460,
+      "milliseconds": [
+        300463.61450000014
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "reverseRecovery",
+      "samples": 1,
+      "medianMs": 304826.19279999984,
+      "transactionMs": 304825.96559999976,
+      "reads": 12,
+      "rows": 200331,
+      "characters": 95125789,
+      "milliseconds": [
+        304826.19279999984
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "reverseForgiveness",
+      "samples": 1,
+      "medianMs": 285331.7504999996,
+      "transactionMs": 285331.51549999975,
+      "reads": 12,
+      "rows": 200332,
+      "characters": 95126134,
+      "milliseconds": [
+        285331.7504999996
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "returnAdvance",
+      "samples": 1,
+      "medianMs": 284099.44640000025,
+      "transactionMs": 284098.9380000001,
+      "reads": 30,
+      "rows": 300664,
+      "characters": 142741355,
+      "milliseconds": [
+        284099.44640000025
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "cancelDivision",
+      "samples": 1,
+      "medianMs": 274803.1894000005,
+      "transactionMs": 274802.9315999998,
+      "reads": 12,
+      "rows": 200336,
+      "characters": 95127768,
+      "milliseconds": [
+        274803.1894000005
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "deleteMovement",
+      "samples": 1,
+      "medianMs": 278381.7655999996,
+      "transactionMs": 278381.5714999996,
+      "reads": 69,
+      "rows": 401643,
+      "characters": 190562306,
+      "milliseconds": [
+        278381.7655999996
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "before",
+      "operation": "idempotentReplay",
+      "samples": 1,
+      "medianMs": 1.1641999995335937,
+      "transactionMs": 0.409599999897182,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        1.1641999995335937
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "createPurchase",
+      "samples": 1,
+      "medianMs": 281473.01300000027,
+      "transactionMs": 281472.86390000023,
+      "reads": 35,
+      "rows": 206025,
+      "characters": 96962213,
+      "milliseconds": [
+        281473.01300000027
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "sharePurchase",
+      "samples": 1,
+      "medianMs": 274045.6387,
+      "transactionMs": 274045.3212000001,
+      "reads": 14,
+      "rows": 303016,
+      "characters": 143505612,
+      "milliseconds": [
+        274045.6387
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "updateDistribution",
+      "samples": 1,
+      "medianMs": 295063.4157999996,
+      "transactionMs": 295063.19579999987,
+      "reads": 14,
+      "rows": 303019,
+      "characters": 143506741,
+      "milliseconds": [
+        295063.4157999996
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "updatePurchase",
+      "samples": 1,
+      "medianMs": 282199.0928999996,
+      "transactionMs": 282198.8231000006,
+      "reads": 35,
+      "rows": 306038,
+      "characters": 144478826,
+      "milliseconds": [
+        282199.0928999996
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "recordReceipt",
+      "samples": 1,
+      "medianMs": 271832.02880000044,
+      "transactionMs": 271831.7901999997,
+      "reads": 31,
+      "rows": 306034,
+      "characters": 144478182,
+      "milliseconds": [
+        271832.02880000044
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "linkReceipt",
+      "samples": 1,
+      "medianMs": 279897.4324000003,
+      "transactionMs": 279897.2527999999,
+      "reads": 14,
+      "rows": 303024,
+      "characters": 143509073,
+      "milliseconds": [
+        279897.4324000003
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "recordAdvance",
+      "samples": 1,
+      "medianMs": 301255.43570000026,
+      "transactionMs": 301255.1083999993,
+      "reads": 31,
+      "rows": 306045,
+      "characters": 144481831,
+      "milliseconds": [
+        301255.43570000026
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "applyReceipt",
+      "samples": 1,
+      "medianMs": 278994.69460000005,
+      "transactionMs": 278994.20990000013,
+      "reads": 12,
+      "rows": 203024,
+      "characters": 95997917,
+      "milliseconds": [
+        278994.69460000005
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "forgivePartial",
+      "samples": 1,
+      "medianMs": 270884.4343999997,
+      "transactionMs": 270884.2056999998,
+      "reads": 12,
+      "rows": 203025,
+      "characters": 95998185,
+      "milliseconds": [
+        270884.4343999997
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "forgiveFull",
+      "samples": 1,
+      "medianMs": 269031.25210000016,
+      "transactionMs": 269031.09810000006,
+      "reads": 12,
+      "rows": 203026,
+      "characters": 95998473,
+      "milliseconds": [
+        269031.25210000016
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "recoveryReceipt",
+      "samples": 1,
+      "medianMs": 274435.35080000013,
+      "transactionMs": 274435.0862000007,
+      "reads": 31,
+      "rows": 306056,
+      "characters": 144485619,
+      "milliseconds": [
+        274435.35080000013
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "recoverForgiveness",
+      "samples": 1,
+      "medianMs": 274323.3400000008,
+      "transactionMs": 274323.1143000005,
+      "reads": 12,
+      "rows": 203030,
+      "characters": 96000110,
+      "milliseconds": [
+        274323.3400000008
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "reverseRecovery",
+      "samples": 1,
+      "medianMs": 308092.5632000007,
+      "transactionMs": 308092.3212000001,
+      "reads": 12,
+      "rows": 203031,
+      "characters": 96000439,
+      "milliseconds": [
+        308092.5632000007
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "reverseForgiveness",
+      "samples": 1,
+      "medianMs": 281738.9041999988,
+      "transactionMs": 281738.692400001,
+      "reads": 12,
+      "rows": 203032,
+      "characters": 96000784,
+      "milliseconds": [
+        281738.9041999988
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "returnAdvance",
+      "samples": 1,
+      "medianMs": 269924.97539999895,
+      "transactionMs": 269924.61660000123,
+      "reads": 30,
+      "rows": 306064,
+      "characters": 144488937,
+      "milliseconds": [
+        269924.97539999895
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "cancelDivision",
+      "samples": 1,
+      "medianMs": 271797.6679999996,
+      "transactionMs": 271797.38340000063,
+      "reads": 12,
+      "rows": 203036,
+      "characters": 96002418,
+      "milliseconds": [
+        271797.6679999996
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "deleteMovement",
+      "samples": 1,
+      "medianMs": 283022.55530000106,
+      "transactionMs": 283022.3256000001,
+      "reads": 69,
+      "rows": 415143,
+      "characters": 194925248,
+      "milliseconds": [
+        283022.55530000106
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "before",
+      "operation": "idempotentReplay",
+      "samples": 1,
+      "medianMs": 1.0976999998092651,
+      "transactionMs": 0.8296999987214804,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        1.0976999998092651
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "createPurchase",
+      "samples": 3,
+      "medianMs": 9.77029999999968,
+      "transactionMs": 9.614900000000489,
+      "reads": 31,
+      "rows": 1877,
+      "characters": 113678,
+      "milliseconds": [
+        27.38040000000001,
+        9.77029999999968,
+        9.225300000000061
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "sharePurchase",
+      "samples": 3,
+      "medianMs": 9.715900000000147,
+      "transactionMs": 9.632200000000012,
+      "reads": 14,
+      "rows": 1868,
+      "characters": 112245,
+      "milliseconds": [
+        12.994199999999637,
+        8.556099999999788,
+        9.715900000000147
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "updateDistribution",
+      "samples": 3,
+      "medianMs": 8.457800000000134,
+      "transactionMs": 7.996700000000146,
+      "reads": 14,
+      "rows": 1871,
+      "characters": 113374,
+      "milliseconds": [
+        8.457800000000134,
+        10.715400000000045,
+        7.724100000000362
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "updatePurchase",
+      "samples": 3,
+      "medianMs": 11.907100000000355,
+      "transactionMs": 11.681099999999788,
+      "reads": 38,
+      "rows": 1923,
+      "characters": 128823,
+      "milliseconds": [
+        12.179399999999987,
+        11.907100000000355,
+        10.239800000000287
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "recordReceipt",
+      "samples": 3,
+      "medianMs": 8.900699999999233,
+      "transactionMs": 8.753099999999904,
+      "reads": 27,
+      "rows": 1879,
+      "characters": 114601,
+      "milliseconds": [
+        10.644700000000284,
+        8.398299999999836,
+        8.900699999999233
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "linkReceipt",
+      "samples": 3,
+      "medianMs": 9.64930000000004,
+      "transactionMs": 9.565700000000106,
+      "reads": 14,
+      "rows": 1875,
+      "characters": 114055,
+      "milliseconds": [
+        12.143600000000333,
+        8.670099999999366,
+        9.64930000000004
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "recordAdvance",
+      "samples": 3,
+      "medianMs": 9.832499999999527,
+      "transactionMs": 9.706699999999728,
+      "reads": 27,
+      "rows": 1885,
+      "characters": 115760,
+      "milliseconds": [
+        11.516299999999774,
+        8.520300000000134,
+        9.832499999999527
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "applyReceipt",
+      "samples": 3,
+      "medianMs": 1.5522999999993772,
+      "transactionMs": 1.4652999999998428,
+      "reads": 10,
+      "rows": 48,
+      "characters": 14789,
+      "milliseconds": [
+        2.7035000000000764,
+        1.419199999999364,
+        1.5522999999993772
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "forgivePartial",
+      "samples": 3,
+      "medianMs": 1.7971999999999753,
+      "transactionMs": 1.6878000000006068,
+      "reads": 10,
+      "rows": 49,
+      "characters": 15057,
+      "milliseconds": [
+        3.2660000000000764,
+        1.5879000000004453,
+        1.7971999999999753
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "forgiveFull",
+      "samples": 3,
+      "medianMs": 1.5289000000002488,
+      "transactionMs": 1.435699999999997,
+      "reads": 10,
+      "rows": 50,
+      "characters": 15345,
+      "milliseconds": [
+        3.516900000000078,
+        1.3227000000006228,
+        1.5289000000002488
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "recoveryReceipt",
+      "samples": 3,
+      "medianMs": 10.10470000000032,
+      "transactionMs": 9.85069999999996,
+      "reads": 27,
+      "rows": 1891,
+      "characters": 116987,
+      "milliseconds": [
+        10.10470000000032,
+        8.326900000000023,
+        12.602899999999863
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "recoverForgiveness",
+      "samples": 3,
+      "medianMs": 2.2177999999998974,
+      "transactionMs": 1.9020000000000437,
+      "reads": 10,
+      "rows": 52,
+      "characters": 15886,
+      "milliseconds": [
+        2.2177999999998974,
+        1.4708000000000538,
+        2.2965000000003783
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "reverseRecovery",
+      "samples": 3,
+      "medianMs": 2.201000000000022,
+      "transactionMs": 1.986399999999776,
+      "reads": 10,
+      "rows": 53,
+      "characters": 16215,
+      "milliseconds": [
+        2.201000000000022,
+        1.453099999999722,
+        3.0615999999999985
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "reverseForgiveness",
+      "samples": 3,
+      "medianMs": 1.606499999999869,
+      "transactionMs": 1.5207000000000335,
+      "reads": 10,
+      "rows": 54,
+      "characters": 16560,
+      "milliseconds": [
+        1.736199999999826,
+        1.4212999999999738,
+        1.606499999999869
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "returnAdvance",
+      "samples": 3,
+      "medianMs": 8.491399999999885,
+      "transactionMs": 8.386100000000624,
+      "reads": 26,
+      "rows": 1894,
+      "characters": 117554,
+      "milliseconds": [
+        10.732099999999718,
+        8.09019999999964,
+        8.491399999999885
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "cancelDivision",
+      "samples": 3,
+      "medianMs": 7.783300000000054,
+      "transactionMs": 7.706899999999223,
+      "reads": 12,
+      "rows": 1888,
+      "characters": 116228,
+      "milliseconds": [
+        9.336899999999787,
+        7.783300000000054,
+        7.193300000000818
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "deleteMovement",
+      "samples": 3,
+      "medianMs": 14.652399999999943,
+      "transactionMs": 14.48699999999917,
+      "reads": 61,
+      "rows": 2008,
+      "characters": 151328,
+      "milliseconds": [
+        16.019200000000183,
+        11.337099999999737,
+        14.652399999999943
+      ]
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "idempotentReplay",
+      "samples": 3,
+      "medianMs": 0.3043000000006941,
+      "transactionMs": 0.20689999999922293,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        0.716899999999896,
+        0.3043000000006941,
+        0.2618000000002212
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "createPurchase",
+      "samples": 3,
+      "medianMs": 72.80740000000151,
+      "transactionMs": 72.69800000000032,
+      "reads": 31,
+      "rows": 18525,
+      "characters": 1084955,
+      "milliseconds": [
+        66.90279999999984,
+        121.01810000000114,
+        72.80740000000151
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "sharePurchase",
+      "samples": 3,
+      "medianMs": 68.3107,
+      "transactionMs": 68.1866,
+      "reads": 14,
+      "rows": 18516,
+      "characters": 1083521,
+      "milliseconds": [
+        68.3107,
+        114.33680000000095,
+        67.40140000000065
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "updateDistribution",
+      "samples": 3,
+      "medianMs": 65.2533999999996,
+      "transactionMs": 65.1127000000015,
+      "reads": 14,
+      "rows": 18519,
+      "characters": 1084650,
+      "milliseconds": [
+        57.14350000000013,
+        71.83589999999822,
+        65.2533999999996
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "updatePurchase",
+      "samples": 3,
+      "medianMs": 70.13630000000012,
+      "transactionMs": 69.97639999999956,
+      "reads": 38,
+      "rows": 18841,
+      "characters": 1186603,
+      "milliseconds": [
+        70.13630000000012,
+        79.0010000000002,
+        70.08529999999882
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recordReceipt",
+      "samples": 3,
+      "medianMs": 76.35699999999997,
+      "transactionMs": 76.21860000000015,
+      "reads": 27,
+      "rows": 18527,
+      "characters": 1085878,
+      "milliseconds": [
+        63.56029999999919,
+        77.2448000000004,
+        76.35699999999997
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "linkReceipt",
+      "samples": 3,
+      "medianMs": 67.48199999999997,
+      "transactionMs": 67.36999999999898,
+      "reads": 14,
+      "rows": 18523,
+      "characters": 1085331,
+      "milliseconds": [
+        60.44130000000041,
+        74.3099000000002,
+        67.48199999999997
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recordAdvance",
+      "samples": 3,
+      "medianMs": 72.9294000000009,
+      "transactionMs": 72.8075000000008,
+      "reads": 27,
+      "rows": 18533,
+      "characters": 1087037,
+      "milliseconds": [
+        61.30580000000009,
+        72.9294000000009,
+        76.26770000000033
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "applyReceipt",
+      "samples": 3,
+      "medianMs": 4.905200000001059,
+      "transactionMs": 4.677800000001298,
+      "reads": 10,
+      "rows": 318,
+      "characters": 101293,
+      "milliseconds": [
+        5.95049999999992,
+        4.905200000001059,
+        4.340799999999945
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "forgivePartial",
+      "samples": 3,
+      "medianMs": 6.504800000000614,
+      "transactionMs": 6.403600000001461,
+      "reads": 10,
+      "rows": 319,
+      "characters": 101561,
+      "milliseconds": [
+        6.6984999999995125,
+        5.4439000000002125,
+        6.504800000000614
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "forgiveFull",
+      "samples": 3,
+      "medianMs": 5.932099999999991,
+      "transactionMs": 5.798999999999069,
+      "reads": 10,
+      "rows": 320,
+      "characters": 101849,
+      "milliseconds": [
+        4.110899999999674,
+        5.932099999999991,
+        6.860899999999674
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recoveryReceipt",
+      "samples": 3,
+      "medianMs": 72.08809999999994,
+      "transactionMs": 71.89979999999923,
+      "reads": 27,
+      "rows": 18539,
+      "characters": 1088264,
+      "milliseconds": [
+        72.08809999999994,
+        75.21800000000076,
+        67.53019999999924
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recoverForgiveness",
+      "samples": 3,
+      "medianMs": 5.087400000000343,
+      "transactionMs": 4.964100000001054,
+      "reads": 10,
+      "rows": 322,
+      "characters": 102390,
+      "milliseconds": [
+        4.883499999999913,
+        10.452799999999115,
+        5.087400000000343
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "reverseRecovery",
+      "samples": 3,
+      "medianMs": 5.2106000000003405,
+      "transactionMs": 5.106499999999869,
+      "reads": 10,
+      "rows": 323,
+      "characters": 102719,
+      "milliseconds": [
+        4.660300000000461,
+        7.705400000000736,
+        5.2106000000003405
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "reverseForgiveness",
+      "samples": 3,
+      "medianMs": 5.793299999999363,
+      "transactionMs": 5.668400000000474,
+      "reads": 10,
+      "rows": 324,
+      "characters": 103064,
+      "milliseconds": [
+        4.795900000000074,
+        5.793299999999363,
+        8.0562000000009
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "returnAdvance",
+      "samples": 3,
+      "medianMs": 71.33219999999892,
+      "transactionMs": 71.19999999999891,
+      "reads": 26,
+      "rows": 18542,
+      "characters": 1088831,
+      "milliseconds": [
+        70.96759999999995,
+        71.33219999999892,
+        80.0591000000004
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "cancelDivision",
+      "samples": 3,
+      "medianMs": 65.30099999999948,
+      "transactionMs": 65.20550000000003,
+      "reads": 12,
+      "rows": 18536,
+      "characters": 1087504,
+      "milliseconds": [
+        59.04690000000028,
+        65.53230000000076,
+        65.30099999999948
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "deleteMovement",
+      "samples": 3,
+      "medianMs": 80.30169999999998,
+      "transactionMs": 80.19629999999961,
+      "reads": 61,
+      "rows": 19196,
+      "characters": 1295613,
+      "milliseconds": [
+        80.30169999999998,
+        68.73359999999957,
+        82.13919999999962
+      ]
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "idempotentReplay",
+      "samples": 3,
+      "medianMs": 0.256600000000617,
+      "transactionMs": 0.16939999999976862,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        0.256600000000617,
+        0.24439999999958673,
+        0.34250000000065484
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "createPurchase",
+      "samples": 3,
+      "medianMs": 654.985099999998,
+      "transactionMs": 654.7395000000033,
+      "reads": 31,
+      "rows": 182163,
+      "characters": 9921408,
+      "milliseconds": [
+        665.6241000000009,
+        654.985099999998,
+        650.1460000000006
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "sharePurchase",
+      "samples": 3,
+      "medianMs": 610.0883000000031,
+      "transactionMs": 609.8759999999966,
+      "reads": 14,
+      "rows": 182154,
+      "characters": 9919973,
+      "milliseconds": [
+        639.0752999999986,
+        610.0883000000031,
+        597.4121999999988
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "updateDistribution",
+      "samples": 3,
+      "medianMs": 676.0625999999975,
+      "transactionMs": 675.8286999999982,
+      "reads": 14,
+      "rows": 182157,
+      "characters": 9921102,
+      "milliseconds": [
+        674.9591,
+        676.0625999999975,
+        677.3103000000046
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "updatePurchase",
+      "samples": 3,
+      "medianMs": 622.6345000000001,
+      "transactionMs": 622.3507000000027,
+      "reads": 38,
+      "rows": 182479,
+      "characters": 10023055,
+      "milliseconds": [
+        622.6345000000001,
+        609.6295000000027,
+        652.3398000000016
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recordReceipt",
+      "samples": 3,
+      "medianMs": 614.6715999999942,
+      "transactionMs": 614.4777000000031,
+      "reads": 27,
+      "rows": 182165,
+      "characters": 9922331,
+      "milliseconds": [
+        703.1142,
+        614.6715999999942,
+        605.3726999999999
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "linkReceipt",
+      "samples": 3,
+      "medianMs": 629.7966000000088,
+      "transactionMs": 629.7016999999978,
+      "reads": 14,
+      "rows": 182161,
+      "characters": 9921783,
+      "milliseconds": [
+        589.8123999999989,
+        634.8029999999999,
+        629.7966000000088
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recordAdvance",
+      "samples": 3,
+      "medianMs": 681.1012000000046,
+      "transactionMs": 680.988599999997,
+      "reads": 27,
+      "rows": 182171,
+      "characters": 9923490,
+      "milliseconds": [
+        589.9809999999998,
+        699.0508999999947,
+        681.1012000000046
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "applyReceipt",
+      "samples": 3,
+      "medianMs": 4.702799999999115,
+      "transactionMs": 4.599300000001676,
+      "reads": 10,
+      "rows": 318,
+      "characters": 101293,
+      "milliseconds": [
+        7.335100000000239,
+        4.456700000002456,
+        4.702799999999115
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "forgivePartial",
+      "samples": 3,
+      "medianMs": 5.073300000003655,
+      "transactionMs": 4.9069000000017695,
+      "reads": 10,
+      "rows": 319,
+      "characters": 101561,
+      "milliseconds": [
+        4.315899999997782,
+        5.073300000003655,
+        5.7321999999985565
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "forgiveFull",
+      "samples": 3,
+      "medianMs": 5.050600000002305,
+      "transactionMs": 4.831300000005285,
+      "reads": 10,
+      "rows": 320,
+      "characters": 101849,
+      "milliseconds": [
+        6.04229999999734,
+        4.05739999999787,
+        5.050600000002305
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recoveryReceipt",
+      "samples": 3,
+      "medianMs": 632.1767000000109,
+      "transactionMs": 632.0709999999963,
+      "reads": 27,
+      "rows": 182177,
+      "characters": 9924717,
+      "milliseconds": [
+        698.4544999999962,
+        626.4960999999967,
+        632.1767000000109
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recoverForgiveness",
+      "samples": 3,
+      "medianMs": 4.279800000003888,
+      "transactionMs": 4.123800000001211,
+      "reads": 10,
+      "rows": 322,
+      "characters": 102390,
+      "milliseconds": [
+        11.066899999997986,
+        3.9069999999992433,
+        4.279800000003888
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "reverseRecovery",
+      "samples": 3,
+      "medianMs": 4.677100000000792,
+      "transactionMs": 4.582699999999022,
+      "reads": 10,
+      "rows": 323,
+      "characters": 102719,
+      "milliseconds": [
+        5.594199999999546,
+        4.677100000000792,
+        3.9360999999917112
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "reverseForgiveness",
+      "samples": 3,
+      "medianMs": 4.222900000000664,
+      "transactionMs": 4.1384000000034575,
+      "reads": 10,
+      "rows": 324,
+      "characters": 103064,
+      "milliseconds": [
+        7.165199999995821,
+        4.222900000000664,
+        4.059800000002724
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "returnAdvance",
+      "samples": 3,
+      "medianMs": 645.3146000000052,
+      "transactionMs": 644.9612000000052,
+      "reads": 26,
+      "rows": 182180,
+      "characters": 9925284,
+      "milliseconds": [
+        645.3146000000052,
+        665.686099999999,
+        623.1658000000025
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "cancelDivision",
+      "samples": 3,
+      "medianMs": 616.7522999999928,
+      "transactionMs": 616.6216999999888,
+      "reads": 12,
+      "rows": 182174,
+      "characters": 9923956,
+      "milliseconds": [
+        615.1347000000023,
+        660.9660000000003,
+        616.7522999999928
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "deleteMovement",
+      "samples": 3,
+      "medianMs": 666.398000000001,
+      "transactionMs": 666.1828000000023,
+      "reads": 61,
+      "rows": 182834,
+      "characters": 10132066,
+      "milliseconds": [
+        689.8263999999981,
+        666.398000000001,
+        609.0558000000019
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "idempotentReplay",
+      "samples": 3,
+      "medianMs": 0.2989000000015949,
+      "transactionMs": 0.15789999999833526,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        0.33009999999922,
+        0.2989000000015949,
+        0.23269999999320135
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "createPurchase",
+      "samples": 3,
+      "medianMs": 620.8167000000103,
+      "transactionMs": 620.6497999999992,
+      "reads": 31,
+      "rows": 185027,
+      "characters": 10805080,
+      "milliseconds": [
+        620.8167000000103,
+        627.2920000000013,
+        614.1587
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "sharePurchase",
+      "samples": 3,
+      "medianMs": 610.2232999999978,
+      "transactionMs": 609.9545000000071,
+      "reads": 14,
+      "rows": 185018,
+      "characters": 10803648,
+      "milliseconds": [
+        643.8536999999924,
+        610.2232999999978,
+        598.7497000000003
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "updateDistribution",
+      "samples": 3,
+      "medianMs": 613.7685999999958,
+      "transactionMs": 613.6486999999906,
+      "reads": 14,
+      "rows": 185021,
+      "characters": 10804777,
+      "milliseconds": [
+        613.7685999999958,
+        611.306899999996,
+        631.4856
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "updatePurchase",
+      "samples": 3,
+      "medianMs": 654.6502999999939,
+      "transactionMs": 654.3756999999896,
+      "reads": 38,
+      "rows": 188043,
+      "characters": 11777947,
+      "milliseconds": [
+        640.8525000000081,
+        654.6502999999939,
+        671.8540999999968
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "recordReceipt",
+      "samples": 3,
+      "medianMs": 628.4075000000012,
+      "transactionMs": 628.2360000000044,
+      "reads": 27,
+      "rows": 185029,
+      "characters": 10806006,
+      "milliseconds": [
+        677.7875000000058,
+        628.4075000000012,
+        619.7078000000038
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "linkReceipt",
+      "samples": 3,
+      "medianMs": 675.5804999999964,
+      "transactionMs": 675.4146999999939,
+      "reads": 14,
+      "rows": 185025,
+      "characters": 10805458,
+      "milliseconds": [
+        1117.3901000000042,
+        675.5804999999964,
+        635.026199999993
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "recordAdvance",
+      "samples": 3,
+      "medianMs": 626.5118999999977,
+      "transactionMs": 626.3540999999968,
+      "reads": 27,
+      "rows": 185035,
+      "characters": 10807165,
+      "milliseconds": [
+        1024.5038000000059,
+        626.5118999999977,
+        614.0145000000048
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "applyReceipt",
+      "samples": 3,
+      "medianMs": 33.878899999996065,
+      "transactionMs": 33.790600000007544,
+      "reads": 10,
+      "rows": 3018,
+      "characters": 972510,
+      "milliseconds": [
+        35.845200000010664,
+        28.15690000000177,
+        33.878899999996065
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "forgivePartial",
+      "samples": 3,
+      "medianMs": 30.28650000000198,
+      "transactionMs": 30.211699999999837,
+      "reads": 10,
+      "rows": 3019,
+      "characters": 972778,
+      "milliseconds": [
+        57.58159999999043,
+        28.69690000000992,
+        30.28650000000198
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "forgiveFull",
+      "samples": 3,
+      "medianMs": 38.82090000000608,
+      "transactionMs": 38.71169999999984,
+      "reads": 10,
+      "rows": 3020,
+      "characters": 973066,
+      "milliseconds": [
+        36.44650000000547,
+        43.91330000000016,
+        38.82090000000608
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "recoveryReceipt",
+      "samples": 3,
+      "medianMs": 637.9789999999921,
+      "transactionMs": 637.8889000000054,
+      "reads": 27,
+      "rows": 185041,
+      "characters": 10808392,
+      "milliseconds": [
+        691.7600999999995,
+        635.6460999999981,
+        637.9789999999921
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "recoverForgiveness",
+      "samples": 3,
+      "medianMs": 28.15780000000086,
+      "transactionMs": 28.009799999999814,
+      "reads": 10,
+      "rows": 3022,
+      "characters": 973607,
+      "milliseconds": [
+        35.37260000000242,
+        28.067599999994854,
+        28.15780000000086
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "reverseRecovery",
+      "samples": 3,
+      "medianMs": 34.30260000000999,
+      "transactionMs": 34.217299999989336,
+      "reads": 10,
+      "rows": 3023,
+      "characters": 973936,
+      "milliseconds": [
+        32.588100000008126,
+        40.73770000001241,
+        34.30260000000999
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "reverseForgiveness",
+      "samples": 3,
+      "medianMs": 30.41150000000198,
+      "transactionMs": 30.264999999999418,
+      "reads": 10,
+      "rows": 3024,
+      "characters": 974281,
+      "milliseconds": [
+        30.41150000000198,
+        33.893700000000536,
+        26.627000000007683
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "returnAdvance",
+      "samples": 3,
+      "medianMs": 667.2260999999999,
+      "transactionMs": 666.9192000000039,
+      "reads": 26,
+      "rows": 185044,
+      "characters": 10808959,
+      "milliseconds": [
+        667.2260999999999,
+        628.9882999999973,
+        685.2209000000003
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "cancelDivision",
+      "samples": 3,
+      "medianMs": 665.0939000000071,
+      "transactionMs": 664.9127000000008,
+      "reads": 12,
+      "rows": 185038,
+      "characters": 10807631,
+      "milliseconds": [
+        709.5876999999891,
+        642.9331000000093,
+        665.0939000000071
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "deleteMovement",
+      "samples": 3,
+      "medianMs": 653.8585000000021,
+      "transactionMs": 653.767599999992,
+      "reads": 61,
+      "rows": 191098,
+      "characters": 12758176,
+      "milliseconds": [
+        649.058400000009,
+        653.8585000000021,
+        681.3571999999986
+      ]
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "idempotentReplay",
+      "samples": 3,
+      "medianMs": 0.38880000000062864,
+      "transactionMs": 0.17239999999583233,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        0.38880000000062864,
+        0.26260000000183936,
+        0.40450000000419095
+      ]
+    }
+  ],
+  "android": [
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "createPurchase",
+      "samples": 3,
+      "medianMs": 940.5784620046616,
+      "transactionMs": 939.0319229960442,
+      "reads": 35,
+      "rows": 2085,
+      "characters": 974997,
+      "milliseconds": [
+        982.1064620018005,
+        858.7753080129623,
+        940.5784620046616
+      ],
+      "nativeQueryMs": 300.68745800000005,
+      "sqlCursorMs": 85.50367399999999
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "sharePurchase",
+      "samples": 3,
+      "medianMs": 856.8611540198326,
+      "transactionMs": 856.536307990551,
+      "reads": 14,
+      "rows": 3046,
+      "characters": 1440224,
+      "milliseconds": [
+        743.6354619860649,
+        856.8611540198326,
+        901.0573080182076
+      ],
+      "nativeQueryMs": 277.75215299999996,
+      "sqlCursorMs": 33.684560000000005
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "updateDistribution",
+      "samples": 3,
+      "medianMs": 834.0732309818268,
+      "transactionMs": 833.4936159849167,
+      "reads": 14,
+      "rows": 3049,
+      "characters": 1441353,
+      "milliseconds": [
+        757.8720770478249,
+        834.0732309818268,
+        885.1370010375977
+      ],
+      "nativeQueryMs": 276.57238299999995,
+      "sqlCursorMs": 38.244079
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "updatePurchase",
+      "samples": 3,
+      "medianMs": 935.40307700634,
+      "transactionMs": 934.6821539998055,
+      "reads": 35,
+      "rows": 3098,
+      "characters": 1455720,
+      "milliseconds": [
+        854.7943850159645,
+        935.40307700634,
+        1043.5919229984283
+      ],
+      "nativeQueryMs": 286.25646099999994,
+      "sqlCursorMs": 53.884817000000005
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "recordReceipt",
+      "samples": 3,
+      "medianMs": 847.2713069915771,
+      "transactionMs": 846.6486160159111,
+      "reads": 31,
+      "rows": 3094,
+      "characters": 1455076,
+      "milliseconds": [
+        847.2713069915771,
+        930.3664609789848,
+        747.6822310090065
+      ],
+      "nativeQueryMs": 286.39661799999993,
+      "sqlCursorMs": 47.700186
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "linkReceipt",
+      "samples": 3,
+      "medianMs": 893.2414619922638,
+      "transactionMs": 892.8018460273743,
+      "reads": 14,
+      "rows": 3054,
+      "characters": 1443685,
+      "milliseconds": [
+        854.9817700386047,
+        893.2414619922638,
+        897.3662310242653
+      ],
+      "nativeQueryMs": 297.890999,
+      "sqlCursorMs": 46.306368
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "recordAdvance",
+      "samples": 3,
+      "medianMs": 919.9289240241051,
+      "transactionMs": 919.5839230418205,
+      "reads": 31,
+      "rows": 3105,
+      "characters": 1458725,
+      "milliseconds": [
+        891.3412309885025,
+        919.9289240241051,
+        979.517462015152
+      ],
+      "nativeQueryMs": 291.162309,
+      "sqlCursorMs": 50.283452
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "applyReceipt",
+      "samples": 3,
+      "medianMs": 686.0627689957619,
+      "transactionMs": 685.614383995533,
+      "reads": 12,
+      "rows": 2054,
+      "characters": 968419,
+      "milliseconds": [
+        686.0627689957619,
+        688.7425389885902,
+        610.6802309751511
+      ],
+      "nativeQueryMs": 199.20438399999998,
+      "sqlCursorMs": 36.759128000000004
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "forgivePartial",
+      "samples": 3,
+      "medianMs": 746.024308025837,
+      "transactionMs": 745.7240000367165,
+      "reads": 12,
+      "rows": 2055,
+      "characters": 968687,
+      "milliseconds": [
+        663.0351539850235,
+        746.024308025837,
+        751.0302309989929
+      ],
+      "nativeQueryMs": 212.677537,
+      "sqlCursorMs": 30.399496000000003
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "forgiveFull",
+      "samples": 3,
+      "medianMs": 736.3602309823036,
+      "transactionMs": 736.1289229989052,
+      "reads": 12,
+      "rows": 2056,
+      "characters": 968975,
+      "milliseconds": [
+        657.5248460173607,
+        769.5732309818268,
+        736.3602309823036
+      ],
+      "nativeQueryMs": 240.97184700000003,
+      "sqlCursorMs": 42.458567
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "recoveryReceipt",
+      "samples": 3,
+      "medianMs": 973.0744609832764,
+      "transactionMs": 972.7643850445747,
+      "reads": 31,
+      "rows": 3116,
+      "characters": 1462513,
+      "milliseconds": [
+        858.1480770111084,
+        1010.0969240069389,
+        973.0744609832764
+      ],
+      "nativeQueryMs": 330.88461299999994,
+      "sqlCursorMs": 59.85100799999999
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "recoverForgiveness",
+      "samples": 3,
+      "medianMs": 746.7566150426865,
+      "transactionMs": 746.4160000085831,
+      "reads": 12,
+      "rows": 2060,
+      "characters": 970612,
+      "milliseconds": [
+        661.7914620041847,
+        779.3142309784889,
+        746.7566150426865
+      ],
+      "nativeQueryMs": 244.078537,
+      "sqlCursorMs": 46.859289000000004
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "reverseRecovery",
+      "samples": 3,
+      "medianMs": 752.6504620313644,
+      "transactionMs": 752.238538980484,
+      "reads": 12,
+      "rows": 2061,
+      "characters": 970941,
+      "milliseconds": [
+        744.347000002861,
+        783.9846160411835,
+        752.6504620313644
+      ],
+      "nativeQueryMs": 250.04938399999998,
+      "sqlCursorMs": 49.98561499999999
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "reverseForgiveness",
+      "samples": 3,
+      "medianMs": 696.669460952282,
+      "transactionMs": 696.0985379815102,
+      "reads": 12,
+      "rows": 2062,
+      "characters": 971286,
+      "milliseconds": [
+        696.669460952282,
+        636.1631540060043,
+        741.7837690114975
+      ],
+      "nativeQueryMs": 197.207461,
+      "sqlCursorMs": 34.229011
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "returnAdvance",
+      "samples": 3,
+      "medianMs": 884.4525390267372,
+      "transactionMs": 884.1626920104027,
+      "reads": 30,
+      "rows": 3124,
+      "characters": 1465831,
+      "milliseconds": [
+        877.7584620118141,
+        1099.2403079867363,
+        884.4525390267372
+      ],
+      "nativeQueryMs": 325.55653900000004,
+      "sqlCursorMs": 64.253858
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "cancelDivision",
+      "samples": 3,
+      "medianMs": 744.2883079648018,
+      "transactionMs": 743.9710770249367,
+      "reads": 12,
+      "rows": 2066,
+      "characters": 972920,
+      "milliseconds": [
+        672.102845966816,
+        805.262845993042,
+        744.2883079648018
+      ],
+      "nativeQueryMs": 248.480079,
+      "sqlCursorMs": 51.24579199999999
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "deleteMovement",
+      "samples": 3,
+      "medianMs": 1390.5303849577904,
+      "transactionMs": 1390.221845984459,
+      "reads": 69,
+      "rows": 4293,
+      "characters": 1993098,
+      "milliseconds": [
+        1216.074846982956,
+        1455.539462029934,
+        1390.5303849577904
+      ],
+      "nativeQueryMs": 469.5736900000001,
+      "sqlCursorMs": 74.32964200000002
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "before",
+      "operation": "idempotentReplay",
+      "samples": 3,
+      "medianMs": 9.966768980026245,
+      "transactionMs": 9.667769014835358,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        9.966768980026245,
+        6.917537987232208,
+        13.589308023452759
+      ],
+      "nativeQueryMs": 0.445847,
+      "sqlCursorMs": 0.342692
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "createPurchase",
+      "samples": 1,
+      "medianMs": 23557.214077949524,
+      "transactionMs": 23555.647001981735,
+      "reads": 35,
+      "rows": 20625,
+      "characters": 9699987,
+      "milliseconds": [
+        23557.214077949524
+      ],
+      "nativeQueryMs": 1812.8825380000003,
+      "sqlCursorMs": 419.016194
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "sharePurchase",
+      "samples": 1,
+      "medianMs": 26161.65354001522,
+      "transactionMs": 26161.34546303749,
+      "reads": 14,
+      "rows": 30316,
+      "characters": 14354701,
+      "milliseconds": [
+        26161.65354001522
+      ],
+      "nativeQueryMs": 2329.206617,
+      "sqlCursorMs": 393.948569
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "updateDistribution",
+      "samples": 1,
+      "medianMs": 23981.05207800865,
+      "transactionMs": 23980.624848008156,
+      "reads": 14,
+      "rows": 30319,
+      "characters": 14355830,
+      "milliseconds": [
+        23981.05207800865
+      ],
+      "nativeQueryMs": 2337.817925,
+      "sqlCursorMs": 409.893443
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "updatePurchase",
+      "samples": 1,
+      "medianMs": 24091.092310011387,
+      "transactionMs": 24090.721231997013,
+      "reads": 35,
+      "rows": 30638,
+      "characters": 14456701,
+      "milliseconds": [
+        24091.092310011387
+      ],
+      "nativeQueryMs": 2414.3477620000003,
+      "sqlCursorMs": 441.99421500000005
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recordReceipt",
+      "samples": 1,
+      "medianMs": 25075.367462992668,
+      "transactionMs": 25075.075694024563,
+      "reads": 31,
+      "rows": 30634,
+      "characters": 14456057,
+      "milliseconds": [
+        25075.367462992668
+      ],
+      "nativeQueryMs": 2380.15754,
+      "sqlCursorMs": 437.960622
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "linkReceipt",
+      "samples": 1,
+      "medianMs": 24177.685155034065,
+      "transactionMs": 24177.327616989613,
+      "reads": 14,
+      "rows": 30324,
+      "characters": 14358162,
+      "milliseconds": [
+        24177.685155034065
+      ],
+      "nativeQueryMs": 2380.230692,
+      "sqlCursorMs": 407.553854
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recordAdvance",
+      "samples": 1,
+      "medianMs": 24061.18154001236,
+      "transactionMs": 24060.21784800291,
+      "reads": 31,
+      "rows": 30645,
+      "characters": 14459706,
+      "milliseconds": [
+        24061.18154001236
+      ],
+      "nativeQueryMs": 2407.0179220000005,
+      "sqlCursorMs": 436.20169299999986
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "applyReceipt",
+      "samples": 1,
+      "medianMs": 23028.16777098179,
+      "transactionMs": 23027.884693980217,
+      "reads": 12,
+      "rows": 20324,
+      "characters": 9606905,
+      "milliseconds": [
+        23028.16777098179
+      ],
+      "nativeQueryMs": 1641.9710780000003,
+      "sqlCursorMs": 261.57424499999996
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "forgivePartial",
+      "samples": 1,
+      "medianMs": 21527.459615945816,
+      "transactionMs": 21527.206847012043,
+      "reads": 12,
+      "rows": 20325,
+      "characters": 9607173,
+      "milliseconds": [
+        21527.459615945816
+      ],
+      "nativeQueryMs": 1580.4710760000003,
+      "sqlCursorMs": 264.80137400000007
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "forgiveFull",
+      "samples": 1,
+      "medianMs": 24209.480001032352,
+      "transactionMs": 24209.19961696863,
+      "reads": 12,
+      "rows": 20326,
+      "characters": 9607461,
+      "milliseconds": [
+        24209.480001032352
+      ],
+      "nativeQueryMs": 1616.488922,
+      "sqlCursorMs": 292.05788899999993
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recoveryReceipt",
+      "samples": 1,
+      "medianMs": 24417.583769977093,
+      "transactionMs": 24417.28215497732,
+      "reads": 31,
+      "rows": 30656,
+      "characters": 14463494,
+      "milliseconds": [
+        24417.583769977093
+      ],
+      "nativeQueryMs": 2457.0688479999994,
+      "sqlCursorMs": 414.8975530000002
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "recoverForgiveness",
+      "samples": 1,
+      "medianMs": 22694.37884694338,
+      "transactionMs": 22694.002692997456,
+      "reads": 12,
+      "rows": 20330,
+      "characters": 9609098,
+      "milliseconds": [
+        22694.37884694338
+      ],
+      "nativeQueryMs": 1701.6666169999999,
+      "sqlCursorMs": 336.07927100000006
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "reverseRecovery",
+      "samples": 1,
+      "medianMs": 24194.70307904482,
+      "transactionMs": 24194.371386051178,
+      "reads": 12,
+      "rows": 20331,
+      "characters": 9609427,
+      "milliseconds": [
+        24194.70307904482
+      ],
+      "nativeQueryMs": 1647.7009240000002,
+      "sqlCursorMs": 285.4957
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "reverseForgiveness",
+      "samples": 1,
+      "medianMs": 21116.42300105095,
+      "transactionMs": 21116.146848022938,
+      "reads": 12,
+      "rows": 20332,
+      "characters": 9609772,
+      "milliseconds": [
+        21116.42300105095
+      ],
+      "nativeQueryMs": 1256.6512329999998,
+      "sqlCursorMs": 220.33215299999998
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "returnAdvance",
+      "samples": 1,
+      "medianMs": 22053.193848013878,
+      "transactionMs": 22052.89692401886,
+      "reads": 30,
+      "rows": 30664,
+      "characters": 14466812,
+      "milliseconds": [
+        22053.193848013878
+      ],
+      "nativeQueryMs": 2461.61146,
+      "sqlCursorMs": 460.02634700000004
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "cancelDivision",
+      "samples": 1,
+      "medianMs": 20136.54284697771,
+      "transactionMs": 20136.29877102375,
+      "reads": 12,
+      "rows": 20336,
+      "characters": 9611406,
+      "milliseconds": [
+        20136.54284697771
+      ],
+      "nativeQueryMs": 1583.1171520000003,
+      "sqlCursorMs": 262.735239
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "deleteMovement",
+      "samples": 1,
+      "medianMs": 26408.6226939559,
+      "transactionMs": 26408.348308980465,
+      "reads": 69,
+      "rows": 41643,
+      "characters": 19529582,
+      "milliseconds": [
+        26408.6226939559
+      ],
+      "nativeQueryMs": 3233.571999999999,
+      "sqlCursorMs": 562.1167310000001
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "before",
+      "operation": "idempotentReplay",
+      "samples": 1,
+      "medianMs": 7.550538957118988,
+      "transactionMs": 7.228308022022247,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        7.550538957118988
+      ],
+      "nativeQueryMs": 0.546384,
+      "sqlCursorMs": 0.327769
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "createPurchase",
+      "samples": 3,
+      "medianMs": 242.29884600639343,
+      "transactionMs": 241.84499996900558,
+      "reads": 31,
+      "rows": 1877,
+      "characters": 113678,
+      "milliseconds": [
+        200.47169196605682,
+        418.6095389723778,
+        242.29884600639343
+      ],
+      "nativeQueryMs": 85.694695,
+      "sqlCursorMs": 36.762773
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "sharePurchase",
+      "samples": 3,
+      "medianMs": 220.05392295122147,
+      "transactionMs": 219.57538402080536,
+      "reads": 14,
+      "rows": 1868,
+      "characters": 112245,
+      "milliseconds": [
+        102.18284595012665,
+        295.57499998807907,
+        220.05392295122147
+      ],
+      "nativeQueryMs": 97.75477000000001,
+      "sqlCursorMs": 41.23306
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "updateDistribution",
+      "samples": 3,
+      "medianMs": 125.76853901147842,
+      "transactionMs": 125.5348470211029,
+      "reads": 14,
+      "rows": 1871,
+      "characters": 113374,
+      "milliseconds": [
+        97.08515399694443,
+        185.67415297031403,
+        125.76853901147842
+      ],
+      "nativeQueryMs": 40.45784499999999,
+      "sqlCursorMs": 14.064802
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "updatePurchase",
+      "samples": 3,
+      "medianMs": 325.08915400505066,
+      "transactionMs": 324.8227689862251,
+      "reads": 38,
+      "rows": 1923,
+      "characters": 128823,
+      "milliseconds": [
+        325.08915400505066,
+        363.5710000395775,
+        314.94615399837494
+      ],
+      "nativeQueryMs": 98.29215099999999,
+      "sqlCursorMs": 35.849847
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "recordReceipt",
+      "samples": 3,
+      "medianMs": 329.15115398168564,
+      "transactionMs": 328.25784599781036,
+      "reads": 27,
+      "rows": 1879,
+      "characters": 114601,
+      "milliseconds": [
+        329.15115398168564,
+        340.9409999847412,
+        328.2656149864197
+      ],
+      "nativeQueryMs": 128.250845,
+      "sqlCursorMs": 68.972548
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "linkReceipt",
+      "samples": 3,
+      "medianMs": 245.8059229850769,
+      "transactionMs": 244.91253799200058,
+      "reads": 14,
+      "rows": 1875,
+      "characters": 114055,
+      "milliseconds": [
+        198.45007705688477,
+        245.8059229850769,
+        246.80807703733444
+      ],
+      "nativeQueryMs": 109.99554,
+      "sqlCursorMs": 50.223141999999996
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "recordAdvance",
+      "samples": 3,
+      "medianMs": 283.4806150197983,
+      "transactionMs": 282.71630799770355,
+      "reads": 27,
+      "rows": 1885,
+      "characters": 115760,
+      "milliseconds": [
+        354.169615983963,
+        283.4806150197983,
+        195.37176901102066
+      ],
+      "nativeQueryMs": 70.718851,
+      "sqlCursorMs": 25.063854
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "applyReceipt",
+      "samples": 3,
+      "medianMs": 77.91630798578262,
+      "transactionMs": 77.52069199085236,
+      "reads": 10,
+      "rows": 48,
+      "characters": 14789,
+      "milliseconds": [
+        75.71423000097275,
+        84.52992397546768,
+        77.91630798578262
+      ],
+      "nativeQueryMs": 11.033999,
+      "sqlCursorMs": 5.6123080000000005
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "forgivePartial",
+      "samples": 3,
+      "medianMs": 101.679692029953,
+      "transactionMs": 100.59015399217606,
+      "reads": 10,
+      "rows": 49,
+      "characters": 15057,
+      "milliseconds": [
+        90.73846101760864,
+        101.679692029953,
+        108.18053901195526
+      ],
+      "nativeQueryMs": 16.821846999999998,
+      "sqlCursorMs": 5.5303889999999996
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "forgiveFull",
+      "samples": 3,
+      "medianMs": 61.090153992176056,
+      "transactionMs": 60.15284603834152,
+      "reads": 10,
+      "rows": 50,
+      "characters": 15345,
+      "milliseconds": [
+        61.090153992176056,
+        104.17599999904633,
+        48.72900003194809
+      ],
+      "nativeQueryMs": 6.977153,
+      "sqlCursorMs": 3.393458
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "recoveryReceipt",
+      "samples": 3,
+      "medianMs": 205.6021530032158,
+      "transactionMs": 205.20838499069214,
+      "reads": 27,
+      "rows": 1891,
+      "characters": 116987,
+      "milliseconds": [
+        205.6021530032158,
+        216.07607698440552,
+        127.61515402793884
+      ],
+      "nativeQueryMs": 69.60230700000001,
+      "sqlCursorMs": 28.871549
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "recoverForgiveness",
+      "samples": 3,
+      "medianMs": 67.01484596729279,
+      "transactionMs": 66.68523001670837,
+      "reads": 10,
+      "rows": 52,
+      "characters": 15886,
+      "milliseconds": [
+        107.30276900529861,
+        54.39223098754883,
+        67.01484596729279
+      ],
+      "nativeQueryMs": 14.271459,
+      "sqlCursorMs": 9.97277
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "reverseRecovery",
+      "samples": 3,
+      "medianMs": 50.98377001285553,
+      "transactionMs": 50.40461599826813,
+      "reads": 10,
+      "rows": 53,
+      "characters": 16215,
+      "milliseconds": [
+        58.614462018013,
+        50.98377001285553,
+        26.600614964962006
+      ],
+      "nativeQueryMs": 6.174692,
+      "sqlCursorMs": 2.108544
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "reverseForgiveness",
+      "samples": 3,
+      "medianMs": 55.052616000175476,
+      "transactionMs": 54.57292300462723,
+      "reads": 10,
+      "rows": 54,
+      "characters": 16560,
+      "milliseconds": [
+        66.08953905105591,
+        55.052616000175476,
+        31.154691994190216
+      ],
+      "nativeQueryMs": 6.1697690000000005,
+      "sqlCursorMs": 3.460236
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "returnAdvance",
+      "samples": 3,
+      "medianMs": 294.45776998996735,
+      "transactionMs": 294.11569195985794,
+      "reads": 26,
+      "rows": 1894,
+      "characters": 117554,
+      "milliseconds": [
+        294.45776998996735,
+        168.72369199991226,
+        340.79761600494385
+      ],
+      "nativeQueryMs": 111.90238000000001,
+      "sqlCursorMs": 56.167856
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "cancelDivision",
+      "samples": 3,
+      "medianMs": 238.59730702638626,
+      "transactionMs": 237.98100000619888,
+      "reads": 12,
+      "rows": 1888,
+      "characters": 116228,
+      "milliseconds": [
+        254.89138400554657,
+        129.16523104906082,
+        238.59730702638626
+      ],
+      "nativeQueryMs": 102.27177,
+      "sqlCursorMs": 42.208555000000004
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "deleteMovement",
+      "samples": 3,
+      "medianMs": 622.7686150074005,
+      "transactionMs": 622.1017690300941,
+      "reads": 61,
+      "rows": 2008,
+      "characters": 151328,
+      "milliseconds": [
+        622.7686150074005,
+        343.62900000810623,
+        695.6150769591331
+      ],
+      "nativeQueryMs": 180.67223099999998,
+      "sqlCursorMs": 88.71585000000002
+    },
+    {
+      "size": 1000,
+      "shared": 10,
+      "version": "after",
+      "operation": "idempotentReplay",
+      "samples": 3,
+      "medianMs": 8.983768999576569,
+      "transactionMs": 8.130077004432678,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        8.983768999576569,
+        3.9330000281333923,
+        13.857769012451172
+      ],
+      "nativeQueryMs": 0.321692,
+      "sqlCursorMs": 0.258922
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "createPurchase",
+      "samples": 1,
+      "medianMs": 839.33876901865,
+      "transactionMs": 838.136923968792,
+      "reads": 31,
+      "rows": 18525,
+      "characters": 1084955,
+      "milliseconds": [
+        839.33876901865
+      ],
+      "nativeQueryMs": 412.68938599999996,
+      "sqlCursorMs": 205.686102
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "sharePurchase",
+      "samples": 1,
+      "medianMs": 527.6414620280266,
+      "transactionMs": 527.4123079776764,
+      "reads": 14,
+      "rows": 18516,
+      "characters": 1083521,
+      "milliseconds": [
+        527.6414620280266
+      ],
+      "nativeQueryMs": 286.723152,
+      "sqlCursorMs": 94.00229100000001
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "updateDistribution",
+      "samples": 1,
+      "medianMs": 678.1743839979172,
+      "transactionMs": 677.9726930260658,
+      "reads": 14,
+      "rows": 18519,
+      "characters": 1084650,
+      "milliseconds": [
+        678.1743839979172
+      ],
+      "nativeQueryMs": 329.919,
+      "sqlCursorMs": 145.665033
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "updatePurchase",
+      "samples": 1,
+      "medianMs": 1133.297769010067,
+      "transactionMs": 1132.9830000400543,
+      "reads": 38,
+      "rows": 18841,
+      "characters": 1186603,
+      "milliseconds": [
+        1133.297769010067
+      ],
+      "nativeQueryMs": 469.70415399999996,
+      "sqlCursorMs": 230.929641
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recordReceipt",
+      "samples": 1,
+      "medianMs": 896.8414620161057,
+      "transactionMs": 896.5466930270195,
+      "reads": 27,
+      "rows": 18527,
+      "characters": 1085878,
+      "milliseconds": [
+        896.8414620161057
+      ],
+      "nativeQueryMs": 398.52338699999996,
+      "sqlCursorMs": 206.136797
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "linkReceipt",
+      "samples": 1,
+      "medianMs": 523.4769999980927,
+      "transactionMs": 523.261539041996,
+      "reads": 14,
+      "rows": 18523,
+      "characters": 1085331,
+      "milliseconds": [
+        523.4769999980927
+      ],
+      "nativeQueryMs": 285.885538,
+      "sqlCursorMs": 100.82310999999999
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recordAdvance",
+      "samples": 1,
+      "medianMs": 910.0658459663391,
+      "transactionMs": 909.8486160039902,
+      "reads": 27,
+      "rows": 18533,
+      "characters": 1087037,
+      "milliseconds": [
+        910.0658459663391
+      ],
+      "nativeQueryMs": 444.2917670000001,
+      "sqlCursorMs": 235.531477
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "applyReceipt",
+      "samples": 1,
+      "medianMs": 107.43146198987961,
+      "transactionMs": 107.20715403556824,
+      "reads": 10,
+      "rows": 318,
+      "characters": 101293,
+      "milliseconds": [
+        107.43146198987961
+      ],
+      "nativeQueryMs": 28.481386999999998,
+      "sqlCursorMs": 7.9187650000000005
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "forgivePartial",
+      "samples": 1,
+      "medianMs": 93.19323098659515,
+      "transactionMs": 92.96223104000092,
+      "reads": 10,
+      "rows": 319,
+      "characters": 101561,
+      "milliseconds": [
+        93.19323098659515
+      ],
+      "nativeQueryMs": 24.714305,
+      "sqlCursorMs": 4.319694
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "forgiveFull",
+      "samples": 1,
+      "medianMs": 191.61976897716522,
+      "transactionMs": 191.36946099996567,
+      "reads": 10,
+      "rows": 320,
+      "characters": 101849,
+      "milliseconds": [
+        191.61976897716522
+      ],
+      "nativeQueryMs": 29.01446,
+      "sqlCursorMs": 9.543783999999999
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recoveryReceipt",
+      "samples": 1,
+      "medianMs": 854.866693019867,
+      "transactionMs": 854.0882300138474,
+      "reads": 27,
+      "rows": 18539,
+      "characters": 1088264,
+      "milliseconds": [
+        854.866693019867
+      ],
+      "nativeQueryMs": 445.46699899999993,
+      "sqlCursorMs": 230.42036699999994
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recoverForgiveness",
+      "samples": 1,
+      "medianMs": 143.63169199228287,
+      "transactionMs": 143.37038499116898,
+      "reads": 10,
+      "rows": 322,
+      "characters": 102390,
+      "milliseconds": [
+        143.63169199228287
+      ],
+      "nativeQueryMs": 48.70846199999998,
+      "sqlCursorMs": 14.33923
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "reverseRecovery",
+      "samples": 1,
+      "medianMs": 163.22576904296875,
+      "transactionMs": 163.0008459687233,
+      "reads": 10,
+      "rows": 323,
+      "characters": 102719,
+      "milliseconds": [
+        163.22576904296875
+      ],
+      "nativeQueryMs": 21.404459999999997,
+      "sqlCursorMs": 3.8985440000000002
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "reverseForgiveness",
+      "samples": 1,
+      "medianMs": 127.3833839893341,
+      "transactionMs": 127.159923017025,
+      "reads": 10,
+      "rows": 324,
+      "characters": 103064,
+      "milliseconds": [
+        127.3833839893341
+      ],
+      "nativeQueryMs": 41.848078,
+      "sqlCursorMs": 12.120446
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "returnAdvance",
+      "samples": 1,
+      "medianMs": 937.7166149616241,
+      "transactionMs": 937.4708459973335,
+      "reads": 26,
+      "rows": 18542,
+      "characters": 1088831,
+      "milliseconds": [
+        937.7166149616241
+      ],
+      "nativeQueryMs": 404.753614,
+      "sqlCursorMs": 205.99528
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "cancelDivision",
+      "samples": 1,
+      "medianMs": 731.879615008831,
+      "transactionMs": 731.6837689876556,
+      "reads": 12,
+      "rows": 18536,
+      "characters": 1087504,
+      "milliseconds": [
+        731.879615008831
+      ],
+      "nativeQueryMs": 362.742845,
+      "sqlCursorMs": 166.08046299999998
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "deleteMovement",
+      "samples": 1,
+      "medianMs": 942.1301530003548,
+      "transactionMs": 941.9397690296173,
+      "reads": 61,
+      "rows": 19196,
+      "characters": 1295613,
+      "milliseconds": [
+        942.1301530003548
+      ],
+      "nativeQueryMs": 403.17392299999995,
+      "sqlCursorMs": 161.79686400000003
+    },
+    {
+      "size": 10000,
+      "shared": 100,
+      "version": "after",
+      "operation": "idempotentReplay",
+      "samples": 1,
+      "medianMs": 15.03915399312973,
+      "transactionMs": 14.657307028770447,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        15.03915399312973
+      ],
+      "nativeQueryMs": 0.472615,
+      "sqlCursorMs": 0.363614
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "createPurchase",
+      "samples": 1,
+      "medianMs": 5833.11130797863,
+      "transactionMs": 5831.639999985695,
+      "reads": 31,
+      "rows": 182163,
+      "characters": 9921408,
+      "milliseconds": [
+        5833.11130797863
+      ],
+      "nativeQueryMs": 3855.82023,
+      "sqlCursorMs": 2249.37456
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "sharePurchase",
+      "samples": 1,
+      "medianMs": 5648.047384023666,
+      "transactionMs": 5647.83453899622,
+      "reads": 14,
+      "rows": 182154,
+      "characters": 9919973,
+      "milliseconds": [
+        5648.047384023666
+      ],
+      "nativeQueryMs": 3718.5330759999997,
+      "sqlCursorMs": 2147.592669
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "updateDistribution",
+      "samples": 1,
+      "medianMs": 5605.347770035267,
+      "transactionMs": 5605.114538013935,
+      "reads": 14,
+      "rows": 182157,
+      "characters": 9921102,
+      "milliseconds": [
+        5605.347770035267
+      ],
+      "nativeQueryMs": 3720.6346139999996,
+      "sqlCursorMs": 2146.975993
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "updatePurchase",
+      "samples": 1,
+      "medianMs": 6118.193230986595,
+      "transactionMs": 6117.939615011215,
+      "reads": 38,
+      "rows": 182479,
+      "characters": 10023055,
+      "milliseconds": [
+        6118.193230986595
+      ],
+      "nativeQueryMs": 3903.0836910000007,
+      "sqlCursorMs": 2264.1109629999996
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recordReceipt",
+      "samples": 1,
+      "medianMs": 5723.432076990604,
+      "transactionMs": 5723.1965389847755,
+      "reads": 27,
+      "rows": 182165,
+      "characters": 9922331,
+      "milliseconds": [
+        5723.432076990604
+      ],
+      "nativeQueryMs": 3819.7966150000007,
+      "sqlCursorMs": 2209.6140319999995
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "linkReceipt",
+      "samples": 1,
+      "medianMs": 5569.801847040653,
+      "transactionMs": 5569.590385019779,
+      "reads": 14,
+      "rows": 182161,
+      "characters": 9921783,
+      "milliseconds": [
+        5569.801847040653
+      ],
+      "nativeQueryMs": 3727.797691,
+      "sqlCursorMs": 2154.769552
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recordAdvance",
+      "samples": 1,
+      "medianMs": 5719.938154041767,
+      "transactionMs": 5719.6353080272675,
+      "reads": 27,
+      "rows": 182171,
+      "characters": 9923490,
+      "milliseconds": [
+        5719.938154041767
+      ],
+      "nativeQueryMs": 3812.6337700000004,
+      "sqlCursorMs": 2238.805422
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "applyReceipt",
+      "samples": 1,
+      "medianMs": 114.47699999809265,
+      "transactionMs": 114.22669196128845,
+      "reads": 10,
+      "rows": 318,
+      "characters": 101293,
+      "milliseconds": [
+        114.47699999809265
+      ],
+      "nativeQueryMs": 36.013998,
+      "sqlCursorMs": 10.650925
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "forgivePartial",
+      "samples": 1,
+      "medianMs": 101.27915400266647,
+      "transactionMs": 99.79723000526428,
+      "reads": 10,
+      "rows": 319,
+      "characters": 101561,
+      "milliseconds": [
+        101.27915400266647
+      ],
+      "nativeQueryMs": 16.735768,
+      "sqlCursorMs": 6.09622
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "forgiveFull",
+      "samples": 1,
+      "medianMs": 95.4190000295639,
+      "transactionMs": 95.1735389828682,
+      "reads": 10,
+      "rows": 320,
+      "characters": 101849,
+      "milliseconds": [
+        95.4190000295639
+      ],
+      "nativeQueryMs": 25.911383999999998,
+      "sqlCursorMs": 6.708996000000001
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recoveryReceipt",
+      "samples": 1,
+      "medianMs": 5784.129615962505,
+      "transactionMs": 5783.897846996784,
+      "reads": 27,
+      "rows": 182177,
+      "characters": 9924717,
+      "milliseconds": [
+        5784.129615962505
+      ],
+      "nativeQueryMs": 3832.039999,
+      "sqlCursorMs": 2225.0546710000003
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "recoverForgiveness",
+      "samples": 1,
+      "medianMs": 139.2611540555954,
+      "transactionMs": 139.0248460173607,
+      "reads": 10,
+      "rows": 322,
+      "characters": 102390,
+      "milliseconds": [
+        139.2611540555954
+      ],
+      "nativeQueryMs": 21.887999,
+      "sqlCursorMs": 5.963157
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "reverseRecovery",
+      "samples": 1,
+      "medianMs": 115.70215404033661,
+      "transactionMs": 115.45138502120972,
+      "reads": 10,
+      "rows": 323,
+      "characters": 102719,
+      "milliseconds": [
+        115.70215404033661
+      ],
+      "nativeQueryMs": 34.994614000000006,
+      "sqlCursorMs": 11.374077
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "reverseForgiveness",
+      "samples": 1,
+      "medianMs": 118.52899998426437,
+      "transactionMs": 118.2618460059166,
+      "reads": 10,
+      "rows": 324,
+      "characters": 103064,
+      "milliseconds": [
+        118.52899998426437
+      ],
+      "nativeQueryMs": 25.37507799999999,
+      "sqlCursorMs": 8.001004
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "returnAdvance",
+      "samples": 1,
+      "medianMs": 17544.345308959484,
+      "transactionMs": 17542.069769978523,
+      "reads": 26,
+      "rows": 182180,
+      "characters": 9925284,
+      "milliseconds": [
+        17544.345308959484
+      ],
+      "nativeQueryMs": 11374.825385999999,
+      "sqlCursorMs": 7707.128146
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "cancelDivision",
+      "samples": 1,
+      "medianMs": 16849.145462989807,
+      "transactionMs": 16848.68800097704,
+      "reads": 12,
+      "rows": 182174,
+      "characters": 9923956,
+      "milliseconds": [
+        16849.145462989807
+      ],
+      "nativeQueryMs": 10835.464308999999,
+      "sqlCursorMs": 7182.9352610000005
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "deleteMovement",
+      "samples": 1,
+      "medianMs": 20426.313002049923,
+      "transactionMs": 20422.851693987846,
+      "reads": 61,
+      "rows": 182834,
+      "characters": 10132066,
+      "milliseconds": [
+        20426.313002049923
+      ],
+      "nativeQueryMs": 13465.247156000001,
+      "sqlCursorMs": 9441.248403
+    },
+    {
+      "size": 100000,
+      "shared": 100,
+      "version": "after",
+      "operation": "idempotentReplay",
+      "samples": 1,
+      "medianMs": 7.779307007789612,
+      "transactionMs": 7.073462009429932,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        7.779307007789612
+      ],
+      "nativeQueryMs": 0.663078,
+      "sqlCursorMs": 0.51723
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "createPurchase",
+      "samples": 1,
+      "medianMs": 25558.952925026417,
+      "transactionMs": 25555.263692975044,
+      "reads": 31,
+      "rows": 185027,
+      "characters": 10805078,
+      "milliseconds": [
+        25558.952925026417
+      ],
+      "nativeQueryMs": 16108.372692999996,
+      "sqlCursorMs": 10850.209436999998
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "sharePurchase",
+      "samples": 1,
+      "medianMs": 17617.013617038727,
+      "transactionMs": 17616.587693035603,
+      "reads": 14,
+      "rows": 185018,
+      "characters": 10803643,
+      "milliseconds": [
+        17617.013617038727
+      ],
+      "nativeQueryMs": 11126.292847,
+      "sqlCursorMs": 7368.692279
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "updateDistribution",
+      "samples": 1,
+      "medianMs": 17456.71569299698,
+      "transactionMs": 17456.03084796667,
+      "reads": 14,
+      "rows": 185021,
+      "characters": 10804772,
+      "milliseconds": [
+        17456.71569299698
+      ],
+      "nativeQueryMs": 11010.526384,
+      "sqlCursorMs": 7298.308766
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "updatePurchase",
+      "samples": 1,
+      "medianMs": 18442.871769964695,
+      "transactionMs": 18442.174847006798,
+      "reads": 38,
+      "rows": 188043,
+      "characters": 11777939,
+      "milliseconds": [
+        18442.871769964695
+      ],
+      "nativeQueryMs": 11368.048620999996,
+      "sqlCursorMs": 7317.975348
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "recordReceipt",
+      "samples": 1,
+      "medianMs": 17375.128693044186,
+      "transactionMs": 17374.634770035744,
+      "reads": 27,
+      "rows": 185029,
+      "characters": 10806001,
+      "milliseconds": [
+        17375.128693044186
+      ],
+      "nativeQueryMs": 11038.051307,
+      "sqlCursorMs": 7222.437883
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "linkReceipt",
+      "samples": 1,
+      "medianMs": 17437.948309004307,
+      "transactionMs": 17437.37376999855,
+      "reads": 14,
+      "rows": 185025,
+      "characters": 10805453,
+      "milliseconds": [
+        17437.948309004307
+      ],
+      "nativeQueryMs": 10889.025000999998,
+      "sqlCursorMs": 7156.202163
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "recordAdvance",
+      "samples": 1,
+      "medianMs": 18638.577002048492,
+      "transactionMs": 18638.01107800007,
+      "reads": 27,
+      "rows": 185035,
+      "characters": 10807160,
+      "milliseconds": [
+        18638.577002048492
+      ],
+      "nativeQueryMs": 11711.469613999998,
+      "sqlCursorMs": 7456.823079999999
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "applyReceipt",
+      "samples": 1,
+      "medianMs": 676.4562309980392,
+      "transactionMs": 676.0734620094299,
+      "reads": 10,
+      "rows": 3018,
+      "characters": 972507,
+      "milliseconds": [
+        676.4562309980392
+      ],
+      "nativeQueryMs": 221.09423100000004,
+      "sqlCursorMs": 23.126977000000004
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "forgivePartial",
+      "samples": 1,
+      "medianMs": 739.4094620347023,
+      "transactionMs": 738.6057700514793,
+      "reads": 10,
+      "rows": 3019,
+      "characters": 972775,
+      "milliseconds": [
+        739.4094620347023
+      ],
+      "nativeQueryMs": 251.953768,
+      "sqlCursorMs": 25.176806
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "forgiveFull",
+      "samples": 1,
+      "medianMs": 786.9169229865074,
+      "transactionMs": 781.4414620399475,
+      "reads": 10,
+      "rows": 3020,
+      "characters": 973063,
+      "milliseconds": [
+        786.9169229865074
+      ],
+      "nativeQueryMs": 242.49653699999996,
+      "sqlCursorMs": 24.907428999999997
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "recoveryReceipt",
+      "samples": 1,
+      "medianMs": 20821.088617026806,
+      "transactionMs": 20814.060846984386,
+      "reads": 27,
+      "rows": 185041,
+      "characters": 10808387,
+      "milliseconds": [
+        20821.088617026806
+      ],
+      "nativeQueryMs": 13614.857458,
+      "sqlCursorMs": 9247.747601
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "recoverForgiveness",
+      "samples": 1,
+      "medianMs": 823.1343839764595,
+      "transactionMs": 822.6326160430908,
+      "reads": 10,
+      "rows": 3022,
+      "characters": 973604,
+      "milliseconds": [
+        823.1343839764595
+      ],
+      "nativeQueryMs": 249.81876799999998,
+      "sqlCursorMs": 29.164347000000003
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "reverseRecovery",
+      "samples": 1,
+      "medianMs": 927.0133069753647,
+      "transactionMs": 920.9384620189667,
+      "reads": 10,
+      "rows": 3023,
+      "characters": 973933,
+      "milliseconds": [
+        927.0133069753647
+      ],
+      "nativeQueryMs": 263.31592199999994,
+      "sqlCursorMs": 25.833611
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "reverseForgiveness",
+      "samples": 1,
+      "medianMs": 759.3726159930229,
+      "transactionMs": 758.9459239840508,
+      "reads": 10,
+      "rows": 3024,
+      "characters": 974278,
+      "milliseconds": [
+        759.3726159930229
+      ],
+      "nativeQueryMs": 245.58461499999999,
+      "sqlCursorMs": 22.477483000000003
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "returnAdvance",
+      "samples": 1,
+      "medianMs": 18711.475770950317,
+      "transactionMs": 18710.817155003548,
+      "reads": 26,
+      "rows": 185044,
+      "characters": 10808954,
+      "milliseconds": [
+        18711.475770950317
+      ],
+      "nativeQueryMs": 11979.626307,
+      "sqlCursorMs": 8044.486209999999
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "cancelDivision",
+      "samples": 1,
+      "medianMs": 21268.65969401598,
+      "transactionMs": 21268.141846954823,
+      "reads": 12,
+      "rows": 185038,
+      "characters": 10807626,
+      "milliseconds": [
+        21268.65969401598
+      ],
+      "nativeQueryMs": 14766.931847,
+      "sqlCursorMs": 7644.133854
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "deleteMovement",
+      "samples": 1,
+      "medianMs": 18798.188616991043,
+      "transactionMs": 18797.680232048035,
+      "reads": 61,
+      "rows": 191098,
+      "characters": 12758164,
+      "milliseconds": [
+        18798.188616991043
+      ],
+      "nativeQueryMs": 11520.72931,
+      "sqlCursorMs": 7146.067892999999
+    },
+    {
+      "size": 100000,
+      "shared": 1000,
+      "version": "after",
+      "operation": "idempotentReplay",
+      "samples": 1,
+      "medianMs": 19.288614988327026,
+      "transactionMs": 18.79792296886444,
+      "reads": 1,
+      "rows": 1,
+      "characters": 582,
+      "milliseconds": [
+        19.288614988327026
+      ],
+      "nativeQueryMs": 0.973154,
+      "sqlCursorMs": 0.774233
+    }
+  ]
+}

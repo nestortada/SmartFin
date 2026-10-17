@@ -1,0 +1,14 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/creditCardPaymentScreen.test.tsx
+
+PASS __tests__/creditCardPaymentScreen.test.tsx
+  √ two save calls from the same rendered button debit once; confirmed stale handler cannot resubmit (945 ms)
+  √ a toast failure after COMMIT reports saved payment and prevents repeated debit (69 ms)
+  √ unknown payment displays uncertainty and a second press sends no SQL (82 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        3.247 s
+Ran all test suites matching /__tests__\\creditCardPaymentScreen.test.tsx/i.

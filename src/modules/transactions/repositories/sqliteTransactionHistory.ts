@@ -2,6 +2,7 @@ import { getFinancialDataRevision, type SmartFinSQLiteDatabase } from '../../../
 import { readNumber, readString, resultSetToRows, type SQLitePrimitive, type SQLiteRow } from '../../../database/sqliteRows';
 import type { Transaction } from '../types';
 import type { TransactionHistoryCursor, TransactionHistoryPage, TransactionHistoryQuery } from '../types/TransactionHistoryQuery';
+import { TRANSACTION_DAY_SQL, TRANSACTION_SORT_SQL } from '../../../shared/utils/transactionDate';
 
 export const HISTORY_PAGE_SIZE = 50;
 const SCAN_SIZE = 200;
@@ -40,7 +41,7 @@ function filters(query: TransactionHistoryQuery) {
   const clauses = ['1 = 1'];
   const values: SQLitePrimitive[] = [];
   if (query.month !== 'all') {
-    clauses.push('substr(date, 1, ?) = ?');
+    clauses.push(`substr(${TRANSACTION_DAY_SQL}, 1, ?) = ?`);
     values.push(query.month.length, query.month);
   }
   if (query.accountId !== 'all') {
@@ -67,9 +68,9 @@ function filters(query: TransactionHistoryQuery) {
 function pageBoundary(sort: TransactionHistoryQuery['sort'], after: TransactionHistoryCursor['after']) {
   if (!after) return { sql: '', values: [] as SQLitePrimitive[] };
   const comparison = sort === 'newest' ? '<' : '>';
-  return { sql: `AND date ${comparison}= ? AND (date ${comparison} ?
-    OR (date = ? AND created_at < ?)
-    OR (date = ? AND created_at = ? AND rowid < ?))`,
+  return { sql: `AND ${TRANSACTION_SORT_SQL} ${comparison}= ? AND (${TRANSACTION_SORT_SQL} ${comparison} ?
+    OR (${TRANSACTION_SORT_SQL} = ? AND created_at < ?)
+    OR (${TRANSACTION_SORT_SQL} = ? AND created_at = ? AND rowid < ?))`,
     values: [after.date, after.date, after.date, after.createdAt,
       after.date, after.createdAt, after.rowId] as SQLitePrimitive[] };
 }
@@ -79,7 +80,7 @@ function pageBoundary(sort: TransactionHistoryQuery['sort'], after: TransactionH
 async function hasCanonicalDates(database: SmartFinSQLiteDatabase, where: string, values: SQLitePrimitive[], checkCancelled: () => void) {
   checkCancelled();
   const [first] = await database.executeSql(
-    `SELECT date FROM transactions INDEXED BY idx_transactions_date WHERE ${where} LIMIT 1;`, values);
+    `SELECT ${TRANSACTION_SORT_SQL} AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE ${where} LIMIT 1;`, values);
   checkCancelled();
   if (!first.rows.length) return true;
   const firstRow = resultSetToRows(first)[0];
@@ -91,7 +92,7 @@ async function hasCanonicalDates(database: SmartFinSQLiteDatabase, where: string
     (length === 24 ? '.[0-9][0-9][0-9]Z' : 'Z');
   const [invalid] = await database.executeSql(
     `SELECT date FROM (
-      SELECT DISTINCT date FROM transactions INDEXED BY idx_transactions_date WHERE ${where} LIMIT -1
+      SELECT DISTINCT ${TRANSACTION_SORT_SQL} AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE ${where} LIMIT -1
     ) WHERE (
       length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?
       OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'
@@ -156,15 +157,15 @@ export async function getSQLiteTransactionHistoryPage(
       checkCancelled();
       const boundary = pageBoundary('newest', after);
       const [result] = await database.executeSql(
-        `SELECT rowid AS history_rowid, id, date, created_at, merchant_name, description, notes
-         FROM transactions INDEXED BY idx_transactions_date
-         WHERE ${filter.where} ${boundary.sql} ORDER BY date DESC, created_at DESC, rowid DESC LIMIT ?;`,
+        `SELECT rowid AS history_rowid, id, date, ${TRANSACTION_SORT_SQL} AS history_sort_key, created_at, merchant_name, description, notes
+         FROM transactions INDEXED BY idx_transactions_civil_sort
+         WHERE ${filter.where} ${boundary.sql} ORDER BY ${TRANSACTION_SORT_SQL} DESC, created_at DESC, rowid DESC LIMIT ?;`,
         [...filter.values, ...boundary.values, SCAN_SIZE]);
       checkCancelled();
       const rows = resultSetToRows(result);
       for (const row of rows) {
-        if (matchesSearch(row, query.search)) entries.push({ id: readString(row, 'id'), date: readString(row, 'date') });
-        after = { date: readString(row, 'date'), createdAt: readString(row, 'created_at'), rowId: readNumber(row, 'history_rowid') };
+        if (matchesSearch(row, query.search)) entries.push({ id: readString(row, 'id'), date: readString(row, 'history_sort_key') });
+        after = { date: readString(row, 'history_sort_key'), createdAt: readString(row, 'created_at'), rowId: readNumber(row, 'history_rowid') };
       }
       if (rows.length < SCAN_SIZE) break;
     }
@@ -202,10 +203,10 @@ export async function getSQLiteTransactionHistoryPage(
       const direction = query.sort === 'newest' ? 'DESC' : 'ASC';
       const boundary = pageBoundary(query.sort, position.after);
       const [result] = await database.executeSql(
-        `SELECT rowid AS history_rowid, ${searchActive
-          ? 'id, date, created_at, merchant_name, description, notes' : '*'} FROM transactions INDEXED BY idx_transactions_date
+        `SELECT rowid AS history_rowid, ${TRANSACTION_SORT_SQL} AS history_sort_key, ${searchActive
+          ? 'id, date, created_at, merchant_name, description, notes' : '*'} FROM transactions INDEXED BY idx_transactions_civil_sort
          WHERE ${filter.where} ${boundary.sql}
-         ORDER BY date ${direction}, created_at DESC, rowid DESC LIMIT ?;`,
+         ORDER BY ${TRANSACTION_SORT_SQL} ${direction}, created_at DESC, rowid DESC LIMIT ?;`,
         [...filter.values, ...boundary.values, batchSize]);
       checkCancelled();
       const rows = resultSetToRows(result);
@@ -215,7 +216,7 @@ export async function getSQLiteTransactionHistoryPage(
         if (!row) continue;
         // Leave the lookahead unconsumed for the next page.
         if ((searchActive ? matchingIds.length : transactions.length) === HISTORY_PAGE_SIZE) { hasMore = true; break; }
-        position = { ...position, after: { date: readString(row, 'date'), createdAt: readString(row, 'created_at'),
+        position = { ...position, after: { date: readString(row, 'history_sort_key'), createdAt: readString(row, 'created_at'),
           rowId: readNumber(row, 'history_rowid') } };
         if (matchesSearch(row, query.search)) {
           if (searchActive) matchingIds.push(readString(row, 'id'));
@@ -261,6 +262,6 @@ export async function getSQLiteTransactionHistoryPage(
 
 export async function getSQLiteTransactionMonths(database: SmartFinSQLiteDatabase): Promise<string[]> {
   const [result] = await database.executeSql(
-    'SELECT DISTINCT substr(date, 1, 7) AS month FROM transactions WHERE length(date) >= 7;');
+    `SELECT DISTINCT substr(${TRANSACTION_DAY_SQL}, 1, 7) AS month FROM transactions WHERE length(date) >= 7;`);
   return resultSetToRows(result).map(row => readString(row, 'month')).sort((a, b) => b.localeCompare(a));
 }

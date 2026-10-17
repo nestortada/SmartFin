@@ -1,0 +1,39 @@
+  private fun syntheticCommandFile(name: String): File {
+    guard();require(name.matches(Regex("dashboard_phase2_cmd_[a-zA-Z0-9_]+\\.db")))
+    return context.getDatabasePath(name)
+  }
+  @ReactMethod fun commandSeed(name: String, statements: ReadableArray, promise: Promise) {
+    val file=syntheticCommandFile(name)
+    executor.execute {try {
+      file.parentFile?.mkdirs()
+      val db=SQLiteDatabase.openOrCreateDatabase(file,null)
+      try {db.execSQL("PRAGMA foreign_keys=ON");db.beginTransaction()
+        try {for(i in 0 until statements.size())db.execSQL(statements.getString(i));db.setTransactionSuccessful()}finally{db.endTransaction()}
+      }finally{db.close()}
+      promise.resolve(name)
+    }catch(error:Throwable){promise.reject("COMMAND_SEED",error)}}
+  }
+  @ReactMethod fun commandDigest(name: String, promise: Promise) {
+    val file=syntheticCommandFile(name)
+    executor.execute {try {
+      val db=SQLiteDatabase.openDatabase(file.path,null,SQLiteDatabase.OPEN_READONLY)
+      val result=JSONObject()
+      val manualPattern=Regex("tx_manual_\\d+(?:_\\d+)?")
+      val auditColumns=setOf("created_at","updated_at")
+      try {for(table in listOf("accounts","transactions","shared_contacts","shared_expenses","transaction_splits","shared_receipts","shared_allocations","shared_returns","shared_loss_events","shared_commands","installment_purchases","credit_card_statements")){
+        val digest=java.security.MessageDigest.getInstance("SHA-256")
+        var count=0
+        db.rawQuery("SELECT * FROM $table ORDER BY id",null).use {cursor ->
+          while(cursor.moveToNext()){count++
+            for(i in 0 until cursor.columnCount){if(cursor.getColumnName(i) in auditColumns)continue
+              val raw=if(cursor.isNull(i))"<NULL>" else if(cursor.getType(i)==android.database.Cursor.FIELD_TYPE_FLOAT)java.lang.Long.toHexString(java.lang.Double.doubleToLongBits(cursor.getDouble(i))) else cursor.getString(i)
+              val normalized=raw.replace(manualPattern,"generated-purchase")
+              digest.update((normalized.length.toString()+":"+normalized+";").toByteArray(Charsets.UTF_8))
+            }
+          }
+        }
+        result.put(table,JSONObject().put("count",count).put("sha256",digest.digest().joinToString(""){"%02x".format(it)}))
+      }}finally{db.close()}
+      promise.resolve(result.toString())
+    }catch(error:Throwable){promise.reject("COMMAND_DIGEST",error)}}
+  }
