@@ -1,0 +1,43 @@
+{
+  "runtime": "v24.16.0",
+  "operation": "forgiveParticipation",
+  "readerWaitMs": 1.1563000000023749,
+  "scope": "application maintenance queue; no injected sleep",
+  "summary": {
+    "currency": "COP",
+    "availableBalance": 970000,
+    "totalDebt": 0,
+    "netWorth": 980000,
+    "monthlyIncome": 0,
+    "monthlyExpenses": 15000,
+    "monthlySavings": -20000,
+    "monthlyForgivenessLosses": 5000,
+    "monthlyLossReversals": 0,
+    "monthlyLossRecoveries": 0,
+    "monthlyRecoveryReversals": 0,
+    "monthlyNetLosses": 5000,
+    "recentTransactionCount": 1,
+    "modules": [
+      {
+        "id": "accounts",
+        "title": "Cuentas",
+        "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+      },
+      {
+        "id": "categories",
+        "title": "Categorías",
+        "description": "Clasificación local para ingresos, gastos y deudas."
+      },
+      {
+        "id": "transactions",
+        "title": "Transacciones",
+        "description": "Movimientos en COP registrados localmente."
+      },
+      {
+        "id": "debts",
+        "title": "Deuda básica",
+        "description": "Tarjeta y préstamo separados de los gastos comunes."
+      }
+    ]
+  }
+}

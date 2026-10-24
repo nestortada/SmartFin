@@ -148,6 +148,21 @@ flowchart LR
 
 El caso de uso es responsable de evitar que una edición aplique dos veces el saldo anterior, crear la pata destino de una transferencia y mantener la relación de cuotas.
 
+### Gestión de tarjetas: fase 3B
+
+`saveCreditCardFromForm` y `deleteCreditCard` adquieren el ámbito compartido si no reciben
+un participante activo. `reconcileCreditCardTransactions` y la asociación de pendientes
+usan el mismo protocolo de repositorios participantes de fase 3A. Los comandos
+`saveCreditCardWithAssociations` y `closeCreditCardWithReconciliation` agrupan la acción
+de pantalla completa bajo un permiso y un COMMIT: cuenta/perfil, asociación, referencias
+de cuotas, deuda/extractos y resolución de alerta, o reconciliación/validaciones/cierre.
+Las pantallas delegan la coordinación y presentan efectos después de confirmar.
+
+Las lecturas/validaciones se repiten dentro del ámbito; la edición rechaza una cuenta
+obsoleta y la pantalla de tarjetas comprueba también la tasa del perfil. Los resultados
+`unknown` conservan la cuarentena y no reintentan el cuerpo financiero. El runner, driver,
+esquema y dependencias permanecen sin cambios. [Evidencia y límites](atomicidad-financiera-fase3b.md).
+
 ## 8. Integraciones nativas Android
 
 ### `SmartFinSecurity`
@@ -229,8 +244,56 @@ bancario. Dashboard usa agregados, sin cargar el diario completo. No hay UI nuev
 
 ## Suscripciones y mantenimiento local
 
+La fase 4 conserva los ámbitos SQLite y añade consumo durable de planes IA dentro
+del mismo commit, mediante comprobantes internos en ai_command_drafts. El catálogo
+de generación lleva una revisión persistida; las acciones releen datos vigentes y
+rechazan conflictos. El hook publica el éxito después del commit y conserva el
+bloqueo ante unknown. Los recordatorios no convierten un éxito financiero en error.
+
+Suscripciones comparte ámbito exterior al crear categoría/subcategoría con sus
+derivados. Sus demás mutaciones conservan el generador transaccional existente.
+Inicio, primer plano, pantalla y Headless consolidan mantenimiento concurrente y
+liberan el permiso entre lotes. La revisión se vuelve a comprobar antes de terminar
+para incluir escritores intercalados. No se cambia el driver, esquema o Kotlin.
+[Implementación, pruebas y límites de fase 4](atomicidad-financiera-fase4.md).
+
 Suscripciones separa contratos de repositorio, casos de uso puros/injectables, adaptador SQLite y servicio de plataforma. Las mutaciones leen y escriben mediante un generador avanzado desde callbacks SQLite; no hay callbacks async dentro de una transacción. La intención de recordatorios se confirma junto al dominio y sus efectos Android se recuperan después del commit.
 
 WorkManager invoca Headless JS sobre ReactHost sin montar pantallas. Reutiliza los casos de uso TypeScript; Kotlin solo controla alarmas, notificaciones y ciclo de vida. La composición raíz ejecuta mantenimiento al iniciar/volver al primer plano. Un coordinador serializa mantenimiento y operaciones públicas con respaldo/cierre y borrado. [Contrato completo](SUSCRIPCIONES.md).
 
 La interfaz reside en `src/modules/subscriptions/ui/`, con controladores en `hooks/` y transformación/validación del formulario en `useCases/subscriptionPresentation.ts`. Consume exclusivamente la fachada; no consulta SQLite. Los hooks sincronizan al regresar al primer plano y bloquean envíos duplicados. Los componentes nativos comparten paletas clara/oscura, Manrope local bajo OFL, márgenes de 20 y tarjetas de radio 24. El HTML exportado de Stitch se conserva únicamente como referencia en `docs/design/subscriptions/`.
+
+## Coordinación Android y captura privada (fase 5B.1)
+
+`databaseCoordination.ts` conserva la cola JS y adquiere después un dueño nativo
+exclusivo. Los llamadores Kotlin de JS reciben su token explícito; los receptores
+independientes adquieren participación antes de abrir y la retienen hasta cerrar
+SQLite y terminar el efecto protegido. Los tokens tienen dueño, generación y
+revocación. WorkManager no conserva esa participación mientras espera Headless.
+Las esperas, copia e integridad nativas ejecutan fuera del hilo principal.
+
+`settings/services/localDatabaseSnapshot.ts` ofrece captura local privada, sin
+conectarla al botón/publicador SAF existente. Comprueba journal/checkpoint,
+metadatos/FK/integridad, cierra con recibo, copia y valida en Kotlin y reabre/verifica
+la conexión administrada antes de liberar. Una reapertura revalida al dueño nativo.
+Timeout de recibo o destrucción del host conservan cuarentena hasta reinicio del
+proceso. No se libera una operación activa por tiempo ni se reintentan finanzas.
+La cobertura nativa corresponde al proceso actual del manifest; no constituye IPC.
+
+El respaldo externo conserva su contrato y sus limitaciones: esta fase no añade
+generaciones, publicación verificada, restauración ni limpieza financiera durable.
+[Implementación, campañas y límites](atomicidad-financiera-fase5b1.md).
+
+### Publicación por generaciones (fase 5B.2, activación pendiente)
+
+El publicador heredado de nombres fijos se sustituye por
+`SmartFinBackupPublisher`: trabajos privados recuperables con `AtomicFile`, CSV
+leídos exclusivamente del snapshot validado, archivos SAF exclusivos por UUID y
+manifiesto v2 final. La captura entrega el handle recuperado y libera los permisos
+antes de exportar/publicar. Descubrimiento y recuperación verifican tamaños y
+SHA-256; un fallo externo conserva incertidumbre y evidencia, sin truncar archivos.
+No hay limpieza automática ni cambios financieros. La raíz histórica permanece
+congelada y legible, sin certificación retrospectiva. La interfaz está preparada
+pero desactivada mediante `BACKUP_PUBLICATION_UI_ENABLED`, hasta aceptar el contrato
+de lectores externos y los tiempos de bloqueo.
+[Protocolo, compatibilidad y validación](atomicidad-financiera-fase5b2.md).

@@ -1,0 +1,14 @@
+__tests__/financialDeletionPhase5C.test.ts(9,52): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+__tests__/financialDeletionPhase5C.test.ts(10,24): error TS2307: Cannot find module 'node:os' or its corresponding type declarations.
+__tests__/financialDeletionPhase5C.test.ts(11,22): error TS2307: Cannot find module 'node:path' or its corresponding type declarations.
+__tests__/financialDeletionPhase5C.test.ts(37,5): error TS2322: Type 'Mock<Promise<{ status: string; id: string; }>, [], any>' is not assignable to type '() => Promise<{ status: "unknown" | "admitted" | "rejected"; id?: string | undefined; }>'.
+  Type 'Promise<{ status: string; id: string; }>' is not assignable to type 'Promise<{ status: "unknown" | "admitted" | "rejected"; id?: string | undefined; }>'.
+    Type '{ status: string; id: string; }' is not assignable to type '{ status: "unknown" | "admitted" | "rejected"; id?: string | undefined; }'.
+      Types of property 'status' are incompatible.
+        Type 'string' is not assignable to type '"unknown" | "admitted" | "rejected"'.
+__tests__/financialDeletionPhase5C.test.ts(40,5): error TS2322: Type 'Mock<Promise<{ status: string; id?: undefined; } | { status: string; id: string; }>, [], any>' is not assignable to type '() => Promise<DeletionRecovery>'.
+  Type 'Promise<{ status: string; id?: undefined; } | { status: string; id: string; }>' is not assignable to type 'Promise<DeletionRecovery>'.
+    Type '{ status: string; id?: undefined; } | { status: string; id: string; }' is not assignable to type 'DeletionRecovery'.
+      Type '{ status: string; id?: undefined; }' is not assignable to type 'DeletionRecovery'.
+        Types of property 'status' are incompatible.
+          Type 'string' is not assignable to type '"unknown" | "none" | "completed" | "cleanupPending"'.

@@ -1,0 +1,62 @@
+// Isolated harness only. SQL durations include driver scheduling, SQLite and bridge.
+const performance = global.performance;
+let current;
+let phase = 'outside';
+const nativeReport = () => require('react-native').NativeModules.AtomicityReport;
+export function errorText(error) {
+  return typeof error?.message === 'string' ? error.message : typeof error === 'string' ? error : JSON.stringify(error);
+}
+export function beginProfile() {
+  current = { started: performance.now(), stages: [], sql: {}, queries: [], queue: [], lastSqlEnd: undefined };
+}
+export function endProfile() { const result = current; current = undefined; return result; }
+export function span(name, ms) { if (current) current.stages.push({ name, ms }); }
+export async function timed(name, operation) {
+  const previous = phase; phase = name; const started = performance.now();
+  try { return await operation(); } finally { span(name, performance.now() - started); phase = previous; }
+}
+export function queueWait(ms) { if (current) current.queue.push(ms); }
+function category(sql) {
+  if (/^BEGIN/.test(sql)) return 'BEGIN';
+  if (/^COMMIT/.test(sql)) return 'COMMIT';
+  if (/^ROLLBACK/.test(sql)) return 'ROLLBACK';
+  const table = sql.match(/\b(?:FROM|UPDATE|INTO)\s+([a-z_]+)/i)?.[1] ?? 'other';
+  return `${sql.trim().split(/\s/)[0]} ${table}`;
+}
+export function profileDatabase(raw) {
+  return new Proxy(raw, { get(target, key) {
+    if (key === 'then') return undefined;
+    if (key === 'executeSql') return async (sql, values = []) => {
+      const recording = current; const started = performance.now(); const stage = phase;
+      let rows = 0; let error;
+      try { const result = await target.executeSql(sql, values); rows = result[0].rows.length; return result; }
+      catch (caught) { error = errorText(caught); throw caught; }
+      finally {
+        const ended = performance.now();
+        if (recording) {
+          const label = `${stage}: ${category(sql)}`;
+          const group = recording.sql[label] ??= { count: 0, ms: 0, rows: 0, maxParameters: 0, maxMs: 0, errors: [] };
+          group.count++; group.ms += ended - started; group.rows += rows;
+          group.maxParameters = Math.max(group.maxParameters, values.length); group.maxMs = Math.max(group.maxMs, ended - started);
+          if (error) group.errors.push(error);
+          if (/^BEGIN/.test(sql)) recording.begin = started;
+          if (/^COMMIT/.test(sql) || /^ROLLBACK/.test(sql)) recording.finish = ended;
+          recording.lastSqlEnd = ended;
+          if (/^\s*SELECT/i.test(sql) && values.length <= 6 && !recording.queries.some(q => q.sql === sql)) {
+            recording.queries.push({ sql, values, rows, ms: ended - started });
+          }
+        }
+      }
+    };
+    const value = Reflect.get(target, key); return typeof value === 'function' ? value.bind(target) : value;
+  } });
+}
+export async function startMemory() { return nativeReport().startSyntheticMemory(); }
+export async function stopMemory() { return nativeReport().stopSyntheticMemory(); }
+export function jsMemory() {
+  try {
+    const hermes = global.HermesInternal;
+    if (typeof hermes?.getInstrumentedStats === 'function') return { available: true, stats: Object.fromEntries(Object.entries(hermes.getInstrumentedStats()).filter(([, value]) => typeof value === 'number' && Number.isFinite(value))) };
+    return { available: false, reason: 'Hermes JS heap counters are not exposed in this release runtime.' };
+  } catch (error) { return { available: false, reason: String(error) }; }
+}

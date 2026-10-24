@@ -1,0 +1,1713 @@
+{
+  "campaign": "post-reader-control",
+  "config": {
+    "release": true,
+    "model": "CRT-NX3",
+    "android": "15",
+    "api": 35,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "environment": {
+    "compileOptions": [],
+    "journalMode": [
+      {
+        "journal_mode": "truncate"
+      }
+    ]
+  },
+  "sqlite": "3.44.5",
+  "passed": true,
+  "cases": [
+    {
+      "name": "reader control reconcile {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 0",
+      "passed": true,
+      "durationMs": 7886.252307891846,
+      "evidence": {
+        "operationMs": 202.01353895664215,
+        "readerMs": 204.442538022995,
+        "actualReaderQueueMs": 200.94961607456207,
+        "transactionMs": 200.58122992515564
+      }
+    },
+    {
+      "name": "reader control reconcile {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 1",
+      "passed": true,
+      "durationMs": 8106.623615980148,
+      "evidence": {
+        "operationMs": 205.47361600399017,
+        "readerMs": 208.43569207191467,
+        "actualReaderQueueMs": 204.36684596538544,
+        "transactionMs": 204.02984607219696
+      }
+    },
+    {
+      "name": "reader control reconcile {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 2",
+      "passed": true,
+      "durationMs": 8084.434539079666,
+      "evidence": {
+        "operationMs": 206.42546200752258,
+        "readerMs": 208.06115400791168,
+        "actualReaderQueueMs": 205.78792297840118,
+        "transactionMs": 205.5534610748291
+      }
+    },
+    {
+      "name": "reader control reconcile {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 3",
+      "passed": true,
+      "durationMs": 7910.659924030304,
+      "evidence": {
+        "operationMs": 214.03230810165405,
+        "readerMs": 215.6237689256668,
+        "actualReaderQueueMs": 212.64707708358765,
+        "transactionMs": 212.4095389842987
+      }
+    },
+    {
+      "name": "reader control reconcile {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 4",
+      "passed": true,
+      "durationMs": 8127.318462014198,
+      "evidence": {
+        "operationMs": 205.63746094703674,
+        "readerMs": 207.53900003433228,
+        "actualReaderQueueMs": 204.97161507606506,
+        "transactionMs": 204.11715400218964
+      }
+    },
+    {
+      "name": "reader control reconcile {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 5",
+      "passed": true,
+      "durationMs": 7932.399999976158,
+      "evidence": {
+        "operationMs": 204.00830793380737,
+        "readerMs": 205.72246205806732,
+        "actualReaderQueueMs": 203.24123001098633,
+        "transactionMs": 203.00069296360016
+      }
+    },
+    {
+      "name": "reader control close {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 0",
+      "passed": true,
+      "durationMs": 7964.451462030411,
+      "evidence": {
+        "operationMs": 221.76792299747467,
+        "readerMs": 222.62676894664764,
+        "actualReaderQueueMs": 220.12184596061707,
+        "transactionMs": 219.86830699443817
+      }
+    },
+    {
+      "name": "reader control close {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 1",
+      "passed": true,
+      "durationMs": 7963.151077032089,
+      "evidence": {
+        "operationMs": 222.17930805683136,
+        "readerMs": 223.88423001766205,
+        "actualReaderQueueMs": 221.45284700393677,
+        "transactionMs": 221.14461505413055
+      }
+    },
+    {
+      "name": "reader control close {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 2",
+      "passed": true,
+      "durationMs": 7980.406768918037,
+      "evidence": {
+        "operationMs": 217.56253802776337,
+        "readerMs": 219.37261497974396,
+        "actualReaderQueueMs": 216.98484599590302,
+        "transactionMs": 216.74338495731354
+      }
+    },
+    {
+      "name": "reader control close {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 3",
+      "passed": true,
+      "durationMs": 7951.228847026825,
+      "evidence": {
+        "operationMs": 220.8302299976349,
+        "readerMs": 222.77607703208923,
+        "actualReaderQueueMs": 220.12584602832794,
+        "transactionMs": 219.85292303562164
+      }
+    },
+    {
+      "name": "reader control close {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 4",
+      "passed": true,
+      "durationMs": 8026.027078032494,
+      "evidence": {
+        "operationMs": 219.62853801250458,
+        "readerMs": 221.32053899765015,
+        "actualReaderQueueMs": 218.80369293689728,
+        "transactionMs": 218.5424610376358
+      }
+    },
+    {
+      "name": "reader control close {\"originalCloseFixture\":true,\"noise\":100000,\"light\":true} round 5",
+      "passed": true,
+      "durationMs": 8006.206153988838,
+      "evidence": {
+        "operationMs": 217.5929229259491,
+        "readerMs": 219.30123102664948,
+        "actualReaderQueueMs": 216.9860770702362,
+        "transactionMs": 216.68315398693085
+      }
+    },
+    {
+      "name": "reader control associate {\"relevant\":1000,\"light\":true} round 0",
+      "passed": true,
+      "durationMs": 6982.078691959381,
+      "evidence": {
+        "operationMs": 6078.260924100876,
+        "readerMs": 6080.3108459711075,
+        "actualReaderQueueMs": 6077.544000983238,
+        "transactionMs": 6077.276231050491
+      }
+    },
+    {
+      "name": "reader control associate {\"relevant\":1000,\"light\":true} round 1",
+      "passed": true,
+      "durationMs": 6874.790537953377,
+      "evidence": {
+        "operationMs": 5972.04315507412,
+        "readerMs": 5973.855308055878,
+        "actualReaderQueueMs": 5971.413461923599,
+        "transactionMs": 5970.888231039047
+      }
+    },
+    {
+      "name": "reader control associate {\"relevant\":1000,\"light\":true} round 2",
+      "passed": true,
+      "durationMs": 6817.584923028946,
+      "evidence": {
+        "operationMs": 5912.933845996857,
+        "readerMs": 5914.720307946205,
+        "actualReaderQueueMs": 5912.213307976723,
+        "transactionMs": 5911.952309012413
+      }
+    },
+    {
+      "name": "reader control associate {\"relevant\":1000,\"light\":true} round 3",
+      "passed": true,
+      "durationMs": 6824.711616039276,
+      "evidence": {
+        "operationMs": 5926.222462058067,
+        "readerMs": 5928.057153940201,
+        "actualReaderQueueMs": 5925.6353850364685,
+        "transactionMs": 5925.361231088638
+      }
+    },
+    {
+      "name": "reader control associate {\"relevant\":10000,\"light\":true} round 0",
+      "passed": true,
+      "durationMs": 60596.223157048225,
+      "evidence": {
+        "operationMs": 59076.05323398113,
+        "readerMs": 59078.83784997463,
+        "actualReaderQueueMs": 59075.421234965324,
+        "transactionMs": 59075.16584908962
+      }
+    },
+    {
+      "name": "reader control associate {\"relevant\":10000,\"light\":true} round 1",
+      "passed": true,
+      "durationMs": 60414.597157001495,
+      "evidence": {
+        "operationMs": 58840.82892692089,
+        "readerMs": 58842.277233958244,
+        "actualReaderQueueMs": 58839.99292600155,
+        "transactionMs": 58839.69423401356
+      }
+    },
+    {
+      "name": "reader control associate {\"relevant\":10000,\"light\":true} round 2",
+      "passed": true,
+      "durationMs": 59429.72900402546,
+      "evidence": {
+        "operationMs": 57881.647465109825,
+        "readerMs": 57883.930772066116,
+        "actualReaderQueueMs": 57881.071773052216,
+        "transactionMs": 57880.81946492195
+      }
+    },
+    {
+      "name": "reader control associate {\"relevant\":10000,\"light\":true} round 3",
+      "passed": true,
+      "durationMs": 55421.31638801098,
+      "evidence": {
+        "operationMs": 53872.846849918365,
+        "readerMs": 53883.34377205372,
+        "actualReaderQueueMs": 53872.19961810112,
+        "transactionMs": 53871.94915699959
+      }
+    }
+  ],
+  "samples": [
+    {
+      "variant": "after",
+      "operation": "reconcile",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": true,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 202.01353895664215,
+      "readerMs": 204.442538022995,
+      "transactionMs": 200.58122992515564,
+      "connectionWaitMs": 0.07915401458740234,
+      "queueWaitsMs": [
+        0.07915401458740234,
+        200.94961607456207
+      ],
+      "stages": [],
+      "sql": {
+        "reconciliation: BEGIN": {
+          "count": 1,
+          "ms": 1.7012299299240112,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.7012299299240112,
+          "errors": []
+        },
+        "reconciliation: COMMIT": {
+          "count": 1,
+          "ms": 4.4976149797439575,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 4.4976149797439575,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 1,
+          "js_gcCPUTime": 0.005004,
+          "js_gcTime": 0.005112231,
+          "js_totalAllocatedBytes": 4823736,
+          "js_allocatedBytes": 1523848,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 1,
+          "js_gcCPUTime": 0.005004,
+          "js_gcTime": 0.005112231,
+          "js_totalAllocatedBytes": 4958168,
+          "js_allocatedBytes": 1658280,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "reconcile",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 205.47361600399017,
+      "readerMs": 208.43569207191467,
+      "transactionMs": 204.02984607219696,
+      "connectionWaitMs": 0.07884597778320312,
+      "queueWaitsMs": [
+        0.07884597778320312,
+        204.36684596538544
+      ],
+      "stages": [],
+      "sql": {
+        "reconciliation: BEGIN": {
+          "count": 1,
+          "ms": 2.85261607170105,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.85261607170105,
+          "errors": []
+        },
+        "reconciliation: COMMIT": {
+          "count": 1,
+          "ms": 2.996000051498413,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.996000051498413,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 2,
+          "js_gcCPUTime": 0.006130999999999999,
+          "js_gcTime": 0.006232154,
+          "js_totalAllocatedBytes": 6789264,
+          "js_allocatedBytes": 1292328,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 2,
+          "js_gcCPUTime": 0.006130999999999999,
+          "js_gcTime": 0.006232154,
+          "js_totalAllocatedBytes": 6913656,
+          "js_allocatedBytes": 1416720,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "reconcile",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 206.42546200752258,
+      "readerMs": 208.06115400791168,
+      "transactionMs": 205.5534610748291,
+      "connectionWaitMs": 0.07476997375488281,
+      "queueWaitsMs": [
+        0.07476997375488281,
+        205.78792297840118
+      ],
+      "stages": [],
+      "sql": {
+        "reconciliation: BEGIN": {
+          "count": 1,
+          "ms": 1.8716920614242554,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.8716920614242554,
+          "errors": []
+        },
+        "reconciliation: COMMIT": {
+          "count": 1,
+          "ms": 4.128538012504578,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 4.128538012504578,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 2,
+          "js_gcCPUTime": 0.006130999999999999,
+          "js_gcTime": 0.006232154,
+          "js_totalAllocatedBytes": 8740832,
+          "js_allocatedBytes": 3243896,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 2,
+          "js_gcCPUTime": 0.006130999999999999,
+          "js_gcTime": 0.006232154,
+          "js_totalAllocatedBytes": 8864448,
+          "js_allocatedBytes": 3367512,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "reconcile",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 214.03230810165405,
+      "readerMs": 215.6237689256668,
+      "transactionMs": 212.4095389842987,
+      "connectionWaitMs": 0.07515394687652588,
+      "queueWaitsMs": [
+        0.07515394687652588,
+        212.64707708358765
+      ],
+      "stages": [],
+      "sql": {
+        "reconciliation: BEGIN": {
+          "count": 1,
+          "ms": 2.219308018684387,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.219308018684387,
+          "errors": []
+        },
+        "reconciliation: COMMIT": {
+          "count": 1,
+          "ms": 2.579384922981262,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.579384922981262,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 3,
+          "js_gcCPUTime": 0.007076999999999999,
+          "js_gcTime": 0.007171538,
+          "js_totalAllocatedBytes": 10691856,
+          "js_allocatedBytes": 2742960,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 3,
+          "js_gcCPUTime": 0.007076999999999999,
+          "js_gcTime": 0.007171538,
+          "js_totalAllocatedBytes": 10815088,
+          "js_allocatedBytes": 2866192,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "reconcile",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 205.63746094703674,
+      "readerMs": 207.53900003433228,
+      "transactionMs": 204.11715400218964,
+      "connectionWaitMs": 0.07746100425720215,
+      "queueWaitsMs": [
+        0.07746100425720215,
+        204.97161507606506
+      ],
+      "stages": [],
+      "sql": {
+        "reconciliation: BEGIN": {
+          "count": 1,
+          "ms": 1.9762309789657593,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.9762309789657593,
+          "errors": []
+        },
+        "reconciliation: COMMIT": {
+          "count": 1,
+          "ms": 2.507691979408264,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.507691979408264,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 4,
+          "js_gcCPUTime": 0.008013999999999999,
+          "js_gcTime": 0.008101768,
+          "js_totalAllocatedBytes": 12641616,
+          "js_allocatedBytes": 1977192,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 4,
+          "js_gcCPUTime": 0.008013999999999999,
+          "js_gcTime": 0.008101768,
+          "js_totalAllocatedBytes": 12764432,
+          "js_allocatedBytes": 2100008,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "reconcile",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 204.00830793380737,
+      "readerMs": 205.72246205806732,
+      "transactionMs": 203.00069296360016,
+      "connectionWaitMs": 0.0756920576095581,
+      "queueWaitsMs": [
+        0.0756920576095581,
+        203.24123001098633
+      ],
+      "stages": [],
+      "sql": {
+        "reconciliation: BEGIN": {
+          "count": 1,
+          "ms": 1.7649999856948853,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.7649999856948853,
+          "errors": []
+        },
+        "reconciliation: COMMIT": {
+          "count": 1,
+          "ms": 4.51199996471405,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 4.51199996471405,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 4,
+          "js_gcCPUTime": 0.008013999999999999,
+          "js_gcTime": 0.008101768,
+          "js_totalAllocatedBytes": 14589968,
+          "js_allocatedBytes": 3925544,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 4,
+          "js_gcCPUTime": 0.008013999999999999,
+          "js_gcTime": 0.008101768,
+          "js_totalAllocatedBytes": 14712688,
+          "js_allocatedBytes": 4048264,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "close",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": true,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 221.76792299747467,
+      "readerMs": 222.62676894664764,
+      "transactionMs": 219.86830699443817,
+      "connectionWaitMs": 0.09761500358581543,
+      "queueWaitsMs": [
+        0.09761500358581543,
+        220.12184596061707
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.839768886566162,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.839768886566162,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 3.538691997528076,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 3.538691997528076,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 5,
+          "js_gcCPUTime": 0.009174999999999999,
+          "js_gcTime": 0.009359614,
+          "js_totalAllocatedBytes": 16538368,
+          "js_allocatedBytes": 2905728,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 5,
+          "js_gcCPUTime": 0.009174999999999999,
+          "js_gcTime": 0.009359614,
+          "js_totalAllocatedBytes": 16736800,
+          "js_allocatedBytes": 3104160,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "close",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 222.17930805683136,
+      "readerMs": 223.88423001766205,
+      "transactionMs": 221.14461505413055,
+      "connectionWaitMs": 0.07176899909973145,
+      "queueWaitsMs": [
+        0.07176899909973145,
+        221.45284700393677
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 2.2313849925994873,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.2313849925994873,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 4.3748459815979,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 4.3748459815979,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 6,
+          "js_gcCPUTime": 0.010303999999999999,
+          "js_gcTime": 0.010519922000000001,
+          "js_totalAllocatedBytes": 18574152,
+          "js_allocatedBytes": 1657480,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 6,
+          "js_gcCPUTime": 0.010303999999999999,
+          "js_gcTime": 0.010519922000000001,
+          "js_totalAllocatedBytes": 18764296,
+          "js_allocatedBytes": 1847624,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "close",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 217.56253802776337,
+      "readerMs": 219.37261497974396,
+      "transactionMs": 216.74338495731354,
+      "connectionWaitMs": 0.07053899765014648,
+      "queueWaitsMs": [
+        0.07053899765014648,
+        216.98484599590302
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.9011539220809937,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.9011539220809937,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 4.518846035003662,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 4.518846035003662,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 6,
+          "js_gcCPUTime": 0.010303999999999999,
+          "js_gcTime": 0.010519922000000001,
+          "js_totalAllocatedBytes": 20600760,
+          "js_allocatedBytes": 3684088,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 6,
+          "js_gcCPUTime": 0.010303999999999999,
+          "js_gcTime": 0.010519922000000001,
+          "js_totalAllocatedBytes": 20790704,
+          "js_allocatedBytes": 3874032,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "close",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 220.8302299976349,
+      "readerMs": 222.77607703208923,
+      "transactionMs": 219.85292303562164,
+      "connectionWaitMs": 0.07476890087127686,
+      "queueWaitsMs": [
+        0.07476890087127686,
+        220.12584602832794
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.9578460454940796,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.9578460454940796,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 5.049845933914185,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 5.049845933914185,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 7,
+          "js_gcCPUTime": 0.011695999999999998,
+          "js_gcTime": 0.011937152000000001,
+          "js_totalAllocatedBytes": 22627096,
+          "js_allocatedBytes": 2114928,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 7,
+          "js_gcCPUTime": 0.011695999999999998,
+          "js_gcTime": 0.011937152000000001,
+          "js_totalAllocatedBytes": 22816672,
+          "js_allocatedBytes": 2304504,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "close",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 219.62853801250458,
+      "readerMs": 221.32053899765015,
+      "transactionMs": 218.5424610376358,
+      "connectionWaitMs": 0.09507691860198975,
+      "queueWaitsMs": [
+        0.09507691860198975,
+        218.80369293689728
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 2.3093080520629883,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.3093080520629883,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 4.659922957420349,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 4.659922957420349,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 7,
+          "js_gcCPUTime": 0.011695999999999998,
+          "js_gcTime": 0.011937152000000001,
+          "js_totalAllocatedBytes": 24652824,
+          "js_allocatedBytes": 4140656,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 7,
+          "js_gcCPUTime": 0.011695999999999998,
+          "js_gcTime": 0.011937152000000001,
+          "js_totalAllocatedBytes": 24842400,
+          "js_allocatedBytes": 4330232,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "close",
+      "spec": {
+        "originalCloseFixture": true,
+        "noise": 100000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 217.5929229259491,
+      "readerMs": 219.30123102664948,
+      "transactionMs": 216.68315398693085,
+      "connectionWaitMs": 0.0728459358215332,
+      "queueWaitsMs": [
+        0.0728459358215332,
+        216.9860770702362
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 2.538769006729126,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.538769006729126,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 4.277230978012085,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 4.277230978012085,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 8,
+          "js_gcCPUTime": 0.013199999999999998,
+          "js_gcTime": 0.013467306000000002,
+          "js_totalAllocatedBytes": 26678512,
+          "js_allocatedBytes": 2197352,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 8,
+          "js_gcCPUTime": 0.013199999999999998,
+          "js_gcTime": 0.013467306000000002,
+          "js_totalAllocatedBytes": 26868104,
+          "js_allocatedBytes": 2386944,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": []
+    },
+    {
+      "variant": "after",
+      "operation": "associate",
+      "spec": {
+        "relevant": 1000,
+        "light": true
+      },
+      "warmup": true,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 6078.260924100876,
+      "readerMs": 6080.3108459711075,
+      "transactionMs": 6077.276231050491,
+      "connectionWaitMs": 0.08646190166473389,
+      "queueWaitsMs": [
+        0.08646190166473389,
+        6077.544000983238
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.7646160125732422,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.7646160125732422,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 9.93930697441101,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 9.93930697441101,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 8,
+          "js_gcCPUTime": 0.013199999999999998,
+          "js_gcTime": 0.013467306000000002,
+          "js_totalAllocatedBytes": 28426344,
+          "js_allocatedBytes": 3945184,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 17,
+          "js_gcCPUTime": 0.051398000000000006,
+          "js_gcTime": 0.054789460000000005,
+          "js_totalAllocatedBytes": 63780944,
+          "js_allocatedBytes": 3585640,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": [],
+      "value": 1000
+    },
+    {
+      "variant": "after",
+      "operation": "associate",
+      "spec": {
+        "relevant": 1000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 5972.04315507412,
+      "readerMs": 5973.855308055878,
+      "transactionMs": 5970.888231039047,
+      "connectionWaitMs": 0.08161509037017822,
+      "queueWaitsMs": [
+        0.08161509037017822,
+        5971.413461923599
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 3.8325380086898804,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 3.8325380086898804,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 9.896539092063904,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 9.896539092063904,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 17,
+          "js_gcCPUTime": 0.051398000000000006,
+          "js_gcTime": 0.054789460000000005,
+          "js_totalAllocatedBytes": 65336944,
+          "js_allocatedBytes": 5141640,
+          "js_heapSize": 8388608,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 8388608,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 26,
+          "js_gcCPUTime": 0.09321700000000002,
+          "js_gcTime": 0.100203999,
+          "js_totalAllocatedBytes": 100649616,
+          "js_allocatedBytes": 5008384,
+          "js_heapSize": 12582912,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 12582912,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": [],
+      "value": 1000
+    },
+    {
+      "variant": "after",
+      "operation": "associate",
+      "spec": {
+        "relevant": 1000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 5912.933845996857,
+      "readerMs": 5914.720307946205,
+      "transactionMs": 5911.952309012413,
+      "connectionWaitMs": 0.07976889610290527,
+      "queueWaitsMs": [
+        0.07976889610290527,
+        5912.213307976723
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.6759240627288818,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.6759240627288818,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 9.419461965560913,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 9.419461965560913,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 26,
+          "js_gcCPUTime": 0.09321700000000002,
+          "js_gcTime": 0.100203999,
+          "js_totalAllocatedBytes": 102205448,
+          "js_allocatedBytes": 6564216,
+          "js_heapSize": 12582912,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 12582912,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 35,
+          "js_gcCPUTime": 0.13421500000000006,
+          "js_gcTime": 0.14267146,
+          "js_totalAllocatedBytes": 137517936,
+          "js_allocatedBytes": 6429152,
+          "js_heapSize": 12582912,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 12582912,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": [],
+      "value": 1000
+    },
+    {
+      "variant": "after",
+      "operation": "associate",
+      "spec": {
+        "relevant": 1000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 5926.222462058067,
+      "readerMs": 5928.057153940201,
+      "transactionMs": 5925.361231088638,
+      "connectionWaitMs": 0.07999992370605469,
+      "queueWaitsMs": [
+        0.07999992370605469,
+        5925.6353850364685
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.7983850240707397,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.7983850240707397,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 10.510154008865356,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 10.510154008865356,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 35,
+          "js_gcCPUTime": 0.13421500000000006,
+          "js_gcTime": 0.14267146,
+          "js_totalAllocatedBytes": 139074440,
+          "js_allocatedBytes": 7985656,
+          "js_heapSize": 12582912,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 12582912,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 44,
+          "js_gcCPUTime": 0.17402600000000007,
+          "js_gcTime": 0.186982075,
+          "js_totalAllocatedBytes": 174386824,
+          "js_allocatedBytes": 7625848,
+          "js_heapSize": 12582912,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 12582912,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": [],
+      "value": 1000
+    },
+    {
+      "variant": "after",
+      "operation": "associate",
+      "spec": {
+        "relevant": 10000,
+        "light": true
+      },
+      "warmup": true,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 59076.05323398113,
+      "readerMs": 59078.83784997463,
+      "transactionMs": 59075.16584908962,
+      "connectionWaitMs": 0.06669199466705322,
+      "queueWaitsMs": [
+        0.06669199466705322,
+        59075.421234965324
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.5068460702896118,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.5068460702896118,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 29.96492302417755,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 29.96492302417755,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 44,
+          "js_gcCPUTime": 0.17402600000000007,
+          "js_gcTime": 0.186982075,
+          "js_totalAllocatedBytes": 175943088,
+          "js_allocatedBytes": 9182112,
+          "js_heapSize": 12582912,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 12582912,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 129,
+          "js_gcCPUTime": 0.5811670000000001,
+          "js_gcTime": 0.6113875350000001,
+          "js_totalAllocatedBytes": 527268400,
+          "js_allocatedBytes": 25479160,
+          "js_heapSize": 29360128,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 29360128,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": [],
+      "value": 10000
+    },
+    {
+      "variant": "after",
+      "operation": "associate",
+      "spec": {
+        "relevant": 10000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 58840.82892692089,
+      "readerMs": 58842.277233958244,
+      "transactionMs": 58839.69423401356,
+      "connectionWaitMs": 0.10915398597717285,
+      "queueWaitsMs": [
+        0.10915398597717285,
+        58839.99292600155
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.5067689418792725,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.5067689418792725,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 34.021000027656555,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 34.021000027656555,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 130,
+          "js_gcCPUTime": 0.5895120000000001,
+          "js_gcTime": 0.6212336890000001,
+          "js_totalAllocatedBytes": 528824744,
+          "js_allocatedBytes": 24215032,
+          "js_heapSize": 29360128,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 29360128,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 217,
+          "js_gcCPUTime": 1.030052,
+          "js_gcTime": 1.0773764609999998,
+          "js_totalAllocatedBytes": 880195200,
+          "js_allocatedBytes": 13644120,
+          "js_heapSize": 20971520,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 20971520,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": [],
+      "value": 10000
+    },
+    {
+      "variant": "after",
+      "operation": "associate",
+      "spec": {
+        "relevant": 10000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 57881.647465109825,
+      "readerMs": 57883.930772066116,
+      "transactionMs": 57880.81946492195,
+      "connectionWaitMs": 0.06299996376037598,
+      "queueWaitsMs": [
+        0.06299996376037598,
+        57881.071773052216
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.3446149826049805,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.3446149826049805,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 25.79976999759674,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 25.79976999759674,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 219,
+          "js_gcCPUTime": 1.0476239999999999,
+          "js_gcTime": 1.095954999,
+          "js_totalAllocatedBytes": 881756472,
+          "js_allocatedBytes": 12327680,
+          "js_heapSize": 20971520,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 20971520,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 306,
+          "js_gcCPUTime": 1.4739290000000007,
+          "js_gcTime": 1.5391394519999997,
+          "js_totalAllocatedBytes": 1233150680,
+          "js_allocatedBytes": 14194024,
+          "js_heapSize": 20971520,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 20971520,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": [],
+      "value": 10000
+    },
+    {
+      "variant": "after",
+      "operation": "associate",
+      "spec": {
+        "relevant": 10000,
+        "light": true
+      },
+      "warmup": false,
+      "literalOracle": false,
+      "mode": "light-reader-control",
+      "readerTiming": "completion-captured",
+      "operationMs": 53872.846849918365,
+      "readerMs": 53883.34377205372,
+      "transactionMs": 53871.94915699959,
+      "connectionWaitMs": 0.06676900386810303,
+      "queueWaitsMs": [
+        0.06676900386810303,
+        53872.19961810112
+      ],
+      "stages": [],
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.4089230298995972,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.4089230298995972,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 30.619306921958923,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 30.619306921958923,
+          "errors": []
+        }
+      },
+      "jsMemoryBefore": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 306,
+          "js_gcCPUTime": 1.4739290000000007,
+          "js_gcTime": 1.5391394519999997,
+          "js_totalAllocatedBytes": 1234711704,
+          "js_allocatedBytes": 15755048,
+          "js_heapSize": 20971520,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 20971520,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "jsMemoryAfter": {
+        "available": true,
+        "stats": {
+          "js_VMExperiments": 0,
+          "js_numGCs": 396,
+          "js_gcCPUTime": 1.8880979999999998,
+          "js_gcTime": 2.1034514519999994,
+          "js_totalAllocatedBytes": 1586107104,
+          "js_allocatedBytes": 13549792,
+          "js_heapSize": 20971520,
+          "js_mallocSizeEstimate": 0,
+          "js_vaSize": 20971520,
+          "js_externalBytes": 0,
+          "js_markStackOverflows": 0
+        }
+      },
+      "queries": [],
+      "value": 10000
+    }
+  ],
+  "probes": [],
+  "protocol": {
+    "fixedAuditClock": true,
+    "warmup": 1,
+    "measuredSamples": "3; 5 for the original 100k noise close/reconcile comparison",
+    "alternatingOrder": true,
+    "profiling": "test-only copied sources; driver timings include SQLite/bridge; native READONLY SELECT probes are separate samples; native memory sampled at 100ms",
+    "financialComparison": "all tables, types, Double bits, audit and revision; no generated IDs or tolerances"
+  }
+}

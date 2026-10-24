@@ -11,6 +11,7 @@ class SmartFinNativePackage : ReactPackage {
   ): List<NativeModule> =
       listOf(
           SmartFinDriveBackupModule(reactContext),
+          SmartFinDatabaseLifecycleModule(reactContext),
           SmartFinSecurityModule(reactContext),
           SmartFinSubscriptionRemindersModule(reactContext),
       )

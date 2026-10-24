@@ -1,5 +1,6 @@
 import { openDatabase, type DatabaseParams } from 'react-native-sqlite-storage';
 import type { SmartFinSQLiteDatabase } from './sqliteDatabase';
+import { quarantineNativeDatabase } from './nativeDatabaseLifecycle';
 
 export const SQLITE_LIFECYCLE_TIMEOUT_MS = 10000;
 
@@ -19,6 +20,10 @@ export async function sqliteLifecycleReceipt<T>(
         );
       }),
     ]);
+  } catch (error) {
+    if (error instanceof Error && error.message.endsWith('receipt timed out'))
+      await quarantineNativeDatabase();
+    throw error;
   } finally {
     if (timer !== undefined) clearTimeout(timer);
   }

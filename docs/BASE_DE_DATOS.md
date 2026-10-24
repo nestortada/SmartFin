@@ -1,5 +1,15 @@
 # Base de datos de SmartFin
 
+La fase 4 no añade tablas, columnas, índices ni migraciones. ai_command_drafts.phase
+reserva internamente confirmed y plan_json conserva revisión local o comprobante
+con el resumen financiero. Los contratos públicos siguen mostrando solo borradores
+clarifying/review; guardar/cancelar activos preserva comprobantes. El mismo ID
+confirmado no admite otro contenido y su consumo comparte commit con el plan.
+La revisión del catálogo rechaza cambios desde generación; los borradores legados
+sin evidencia necesitan verificación y una solicitud nueva. No hay idempotencia
+universal entre IDs, restauraciones o versiones antiguas.
+[Contrato y límites](atomicidad-financiera-fase4.md).
+
 > Fechas y gastos compartidos actualizados: 11 de octubre de 2026 (migración 3).
 > Condonaciones: migración 4; diario, recuperaciones y reversos en [Condonaciones compartidas](CONDONACIONES_COMPARTIDAS.md).
 > Fuentes de verdad: `src/database/sqliteSchema.ts`, `src/database/sqliteDatabase.ts` y los repositorios `sqlite*Repository.ts` de cada modulo.
@@ -160,6 +170,20 @@ erDiagram
 | `smart_alerts` | Alertas tipadas con severidad, entidad relacionada, estado y fechas. | Referencia logica por tipo/id, no FK | Se usa para avisar tarjetas faltantes |
 
 Los metadatos visuales de una tarjeta (`closingDay`, `paymentDay`, ultimos cuatro digitos y cuota de manejo) no tienen columnas propias. Se serializan como JSON dentro de `accounts.description`, con el prefijo `smartfin:credit-card:`.
+
+La fase 3B conserva este esquema y los métodos de escritura existentes. La gestión
+compuesta utiliza repositorios participantes de un único `runSharedSQLiteTransaction`:
+cuenta/perfil, compras asociadas, referencias de cuotas, reconciliación, extractos y
+alertas se confirman juntos cuando pertenecen a la misma acción. El cierre conserva
+historial y comparte commit con la reconciliación previa de la pantalla. Un ROLLBACK
+confirmado debe conservar todas las filas y la revisión, incluidos los triggers.
+
+La asociación consulta todo el historial `account_id=por clasificar/payment_method=credit`
+en el orden anterior, sin cargar movimientos ajenos ni limitarse a una página. Conserva
+la decisión final de coincidencia en el dominio. La reconciliación mantiene la consulta
+optimizada de fase 3A.1 y sus sumas JS. El pago exige un importe efectivo entero seguro
+positivo después del redondeo y el límite por deuda: rechaza $0,40 y límites fraccionarios
+inválidos, sin migrar ni corregir datos históricos. [Informe de fase 3B](atomicidad-financiera-fase3b.md).
 
 ### Metas, inversiones y documentos
 
@@ -381,3 +405,39 @@ Fechas UTC canónicas homogéneas usan cursor de fecha, `created_at DESC` y `row
 Para offsets, precisión mixta, fechas locales o inválidas, el orden textual no equivale a `Date` de JavaScript. La ruta de compatibilidad filtra una proyección por lotes, conserva solo ID/fecha, aplica el comparador estable anterior y después materializa páginas por ID. Esto mantiene resultados incluso con `NaN` y fechas normalizadas, pero requiere trabajo y memoria proporcionales al número de candidatos en esa ruta. Se documenta expresamente; no se omiten registros. [Evidencia y reproducción](performance/transactions-phase3.md).
 
 En fase 3.1 el prefiltro ASCII utiliza `INSTR(LOWER(campo), ?) OR LENGTH(CAST(campo AS BLOB)) <> LENGTH(campo)`. La desigualdad deja pasar Unicode y NUL para que JavaScript conserve la decisión final; elimina el escaneo `GLOB` por carácter del prefiltro anterior. No hay cambios de esquema, índices o reglas financieras. Una comprobación positiva de fechas canónicas en todo el historial puede reutilizarse en cualquier subconjunto de la misma revisión; una negativa exige comprobar cada filtro. Cada página, incluso un vacío reutilizado, sigue verificando la revisión antes y después. Las comprobaciones se publican únicamente tras completar una consulta sin cancelación ni escrituras concurrentes. [Validación y evidencia de fase 3.1](performance/transactions-phase31.md).
+
+## Captura SQLite local, fase 5B.1
+
+La captura privada coordina la conexión administrada y las fábricas Kotlin en el
+mismo proceso. Conserva el driver/esquema y todas las tablas, incluidos comprobantes
+IA, compartidos, cuotas, suscripciones, historial de saldos y metadatos. Requiere
+checkpoint WAL TRUNCATE con resultado completo, cierre confirmado y ausencia de
+participantes antes de la copia. Rechaza modos OFF/MEMORY o resultados inciertos.
+No elimina manualmente WAL/journal ni interpreta una revisión como checksum.
+
+El archivo nuevo se escribe/sincroniza en `noBackupFilesDir`, con identidad UUID
+privada; se abre READONLY, configura/verifica FK, comprueba integridad, esquema,
+conteos y revisión y compara SHA-256 de los bytes leídos del origen con la copia.
+PERSIST/TRUNCATE son modos de conexión; una apertura RO puede observar DELETE.
+Las conexiones RO usan un PRAGMA FK explícito porque Android omite ese ajuste de
+configuración en ellas. La limpieza de un temporal propio deja que SQLite cierre
+sus auxiliares, sin desvincular manualmente WAL/SHM del archivo financiero.
+
+No hay migración, restauración o política nueva de retención/publicación externa.
+Un temporal abandonado no se descubre como respaldo válido ni se publica al
+reiniciar. La reapertura no convierte un COMMIT sin respuesta en rollback.
+[Protocolo, resultados y límites](atomicidad-financiera-fase5b1.md).
+
+## Publicación verificable, fase 5B.2
+
+La publicación nueva consume exclusivamente esa captura privada y no modifica
+el esquema financiero. Los trabajos se conservan en archivos privados `AtomicFile`;
+`backup_records` sigue sin funcionar como su historial. Los nombres fijos descritos
+en la sección histórica de Drive quedan intactos y no se actualizan. Nuevos archivos
+`smartfin-<UUID>--<nombre>` y manifiestos `smartfin-generation-<UUID>.json` se añaden
+a la carpeta. El formato v2 distingue identidad, revisión financiera y SHA-256 de
+cada componente. Solo una relectura íntegra permite seleccionar una generación.
+El filtro CSV de tarjetas usa ahora el valor persistido `creditCard`.
+La activación de UI está pendiente del acuerdo de lectores/latencia; la
+sincronización remota del proveedor no está certificada.
+[Contrato y recuperación](atomicidad-financiera-fase5b2.md).

@@ -22,6 +22,9 @@ class SmartFinSubscriptionReminderReceiver : BroadcastReceiver() {
         val id = intent.getStringExtra("id") ?: return@execute
         val revision = intent.getIntExtra("revision",-1)
         SmartFinSubscriptionRemindersModule.withDatabase(context) { db ->
+          if (!SmartFinFinancialDeletion.resourcesAllowed(context, db)) return@withDatabase
+          val epoch = SmartFinFinancialDeletion.epoch(db)
+          if ((intent.getStringExtra("datasetEpoch") ?: "legacy") != epoch) return@withDatabase
           db.beginTransaction()
           try {
             db.rawQuery("""SELECT r.title,r.message,o.expected_date FROM subscription_reminders r
@@ -41,7 +44,7 @@ class SmartFinSubscriptionReminderReceiver : BroadcastReceiver() {
                       .setContentTitle(cursor.getString(0)).setContentText(cursor.getString(1))
                       .setVisibility(Notification.VISIBILITY_PRIVATE).setPublicVersion(generic)
                       .setContentIntent(open).setAutoCancel(true).build()
-                  manager.notify(id,1,notification)
+                  manager.notify(SmartFinSubscriptionRemindersModule.notificationTag(id,epoch),1,notification)
                   db.execSQL("UPDATE subscription_reminders SET delivery_status='delivered',applied_revision=revision,error=NULL WHERE id=? AND revision=?",arrayOf<Any>(id,revision))
                 } else {
                   db.execSQL("UPDATE subscription_reminders SET delivery_status='blocked',error='denied' WHERE id=? AND revision=?",arrayOf<Any>(id,revision))
@@ -63,6 +66,10 @@ class SmartFinSubscriptionReminderReceiver : BroadcastReceiver() {
 
 class SmartFinSubscriptionRecoveryReceiver : BroadcastReceiver() {
   override fun onReceive(context: Context,intent: Intent) {
-    SmartFinSubscriptionRemindersModule.enqueueRecovery(context)
+    val pending = goAsync()
+    java.util.concurrent.Executors.newSingleThreadExecutor().also { executor -> executor.execute {
+      try { SmartFinFinancialDeletion.recover(context); SmartFinSubscriptionRemindersModule.enqueueRecovery(context) }
+      finally { pending.finish(); executor.shutdown() }
+    } }
   }
 }

@@ -1,0 +1,22 @@
+{
+  "exactStateEquivalence": true,
+  "samples": [
+    {
+      "version": "before",
+      "batches": 2,
+      "platformPasses": 2,
+      "operationMs": 3.2078999999939697,
+      "readerMs": 2.7920000000012806,
+      "readerBatch": 2
+    },
+    {
+      "version": "after",
+      "batches": 1,
+      "platformPasses": 1,
+      "operationMs": 1.2583000000013271,
+      "readerMs": 0.9389999999984866,
+      "readerBatch": 1
+    }
+  ],
+  "scope": "One synthetic sample each, Node SQLite in memory; no FPS claim"
+}

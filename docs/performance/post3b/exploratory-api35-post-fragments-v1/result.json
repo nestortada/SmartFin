@@ -1,0 +1,72 @@
+{
+  "campaign": "post-fragments",
+  "config": {
+    "release": true,
+    "model": "CRT-NX3",
+    "android": "15",
+    "api": 35,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "environment": {
+    "compileOptions": [],
+    "journalMode": [
+      {
+        "journal_mode": "truncate"
+      }
+    ]
+  },
+  "sqlite": "3.44.5",
+  "passed": false,
+  "cases": [
+    {
+      "name": "fragment 1 before: entire association rollback",
+      "passed": false,
+      "error": "SQLite connection is not usable"
+    },
+    {
+      "name": "fragment 2 before: entire association rollback",
+      "passed": false,
+      "error": "SQLite connection is not usable"
+    },
+    {
+      "name": "fragment 3 before: entire association rollback",
+      "passed": false,
+      "error": "SQLite connection is not usable"
+    },
+    {
+      "name": "fragment 1 after: entire association rollback",
+      "passed": false,
+      "error": "SQLite connection is not usable"
+    },
+    {
+      "name": "fragment 2 after: entire association rollback",
+      "passed": false,
+      "error": "SQLite connection is not usable"
+    },
+    {
+      "name": "fragment 3 after: entire association rollback",
+      "passed": false,
+      "error": "SQLite connection is not usable"
+    },
+    {
+      "name": "standalone fragments share one driver transaction and match the old single UPDATE",
+      "passed": false,
+      "error": "SQLite connection is not usable"
+    },
+    {
+      "name": "a real SQLite failure in the second standalone fragment rolls back the first",
+      "passed": false,
+      "error": "SQLite connection is not usable"
+    }
+  ],
+  "samples": [],
+  "probes": [],
+  "protocol": {
+    "fixedAuditClock": true,
+    "warmup": 1,
+    "measuredSamples": "3; 5 for the original 100k noise close/reconcile comparison",
+    "alternatingOrder": true,
+    "profiling": "test-only copied sources; driver timings include SQLite/bridge; native READONLY SELECT probes are separate samples; native memory sampled at 100ms",
+    "financialComparison": "all tables, types, Double bits, audit and revision; no generated IDs or tolerances"
+  }
+}

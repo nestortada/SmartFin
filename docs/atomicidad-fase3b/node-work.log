@@ -1,0 +1,56 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/financialAtomicityPhase3B.test.ts
+
+PASS __tests__/financialAtomicityPhase3B.test.ts (6.504 s)
+  √ create: successful historical equivalence and every write before/after rolls back exactly (200 ms)
+  √ edit: successful historical equivalence and every write before/after rolls back exactly (169 ms)
+  √ associate: successful historical equivalence and every write before/after rolls back exactly (614 ms)
+  √ create-and-associate: successful historical equivalence and every write before/after rolls back exactly (741 ms)
+  √ edit-and-associate: successful historical equivalence and every write before/after rolls back exactly (740 ms)
+  √ close: successful historical equivalence and every write before/after rolls back exactly (82 ms)
+  √ reconcile-and-close: successful historical equivalence and every write before/after rolls back exactly (283 ms)
+  √ reconcile: successful historical equivalence and every write before/after rolls back exactly (169 ms)
+  √ association preserves old identities, status, dates, progress and other cards; no automatic debt before association (35 ms)
+  √ payment 0.01 rejects with complete state unchanged (46 ms)
+  √ payment 0.4 rejects with complete state unchanged (21 ms)
+  √ payment 0.49 rejects with complete state unchanged (20 ms)
+  √ payment -1 rejects with complete state unchanged (20 ms)
+  √ payment 0 rejects with complete state unchanged (22 ms)
+  √ payment NaN rejects with complete state unchanged (21 ms)
+  √ payment Infinity rejects with complete state unchanged (21 ms)
+  √ payment -Infinity rejects with complete state unchanged (19 ms)
+  √ payment 0.5 preserves valid round/cap: 1 (18 ms)
+  √ payment 1 preserves valid round/cap: 1 (18 ms)
+  √ payment 100000 preserves valid round/cap: 90000 (16 ms)
+  √ payment 1000.6 preserves valid round/cap: 1001 (16 ms)
+  √ capped invalid effective amount/debt 0.01 rolls back initial reconciliation (22 ms)
+  √ capped invalid effective amount/debt 0.4 rolls back initial reconciliation (25 ms)
+  √ capped invalid effective amount/debt 0.49 rolls back initial reconciliation (19 ms)
+  √ capped invalid effective amount/debt 0.5 rolls back initial reconciliation (18 ms)
+  √ capped invalid effective amount/debt 1.4 rolls back initial reconciliation (20 ms)
+  √ capped invalid effective amount/debt 90000.5 rolls back initial reconciliation (18 ms)
+  √ capped invalid effective amount/debt 9007199254740992 rolls back initial reconciliation (19 ms)
+  √ insufficient funds rejects after reconciliation without persisting any effect (18 ms)
+  √ queued edits reread persisted state, reject even same-millisecond conflicts and exclude readers (16 ms)
+  √ association to closed card rejects without effects (24 ms)
+  √ association to inactive card rejects without effects (20 ms)
+  √ association to missing card rejects without effects (23 ms)
+  √ close with debt fails and rolls back the reconciliation of every active card (26 ms)
+  √ outer participant keeps results provisional, shares one BEGIN and revokes after rollback (28 ms)
+  √ COMMIT before stays unknown and never repeats the same command (19 ms)
+  √ COMMIT after stays unknown and never repeats the same command (17 ms)
+  √ ROLLBACK before stays unknown, without automatic retry (15 ms)
+  √ ROLLBACK after stays unknown, without automatic retry (15 ms)
+  √ same create intention runs once, including association and alert; another create with that ID conflicts (20 ms)
+  √ a purchase committed while closing is queued blocks closure after rereading current debt (16 ms)
+  √ mixed connections reject association and reconciliation before BEGIN (48 ms)
+  √ synthetic 1000 rows: new command duration and reader wait (63 ms)
+  √ synthetic 10000 rows: new command duration and reader wait (167 ms)
+  √ synthetic 100000 rows: new command duration and reader wait (1188 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       45 passed, 45 total
+Snapshots:   0 total
+Time:        6.613 s
+Ran all test suites matching /__tests__\\financialAtomicityPhase3B.test.ts/i.

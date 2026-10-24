@@ -1,0 +1,52 @@
+diff --git a/C:/sf-5b3-20261023/src/navigation/AppNavigator.tsx b/src/navigation/AppNavigator.tsx
+index e134210..917ffb7 100644
+--- a/C:/sf-5b3-20261023/src/navigation/AppNavigator.tsx
++++ b/src/navigation/AppNavigator.tsx
+@@ -369,6 +369,7 @@ export function AppNavigator() {
+     if (
+       !BACKUP_PUBLICATION_UI_ENABLED ||
+       !backupStatus?.configured ||
++      backupStatus.accessNeedsRenewal ||
+       !backupStatus.outdated ||
+       accessLocked ||
+       lastPromptedBackupRevision.current === backupStatus.localRevision
+diff --git a/C:/sf-5b3-20261023/src/modules/settings/ui/components/DriveBackupSection.tsx b/src/modules/settings/ui/components/DriveBackupSection.tsx
+index 0cb369c..86aa67b 100644
+--- a/C:/sf-5b3-20261023/src/modules/settings/ui/components/DriveBackupSection.tsx
++++ b/src/modules/settings/ui/components/DriveBackupSection.tsx
+@@ -41,13 +41,13 @@ export function DriveBackupSection({
+ }: DriveBackupSectionProps) {
+   if (backupStatus?.available === false) return null;
+ 
+-  const configured = backupStatus?.configured === true;
+-  const stateText = backupStatus?.pendingJobs?.length
++  const configured = backupStatus?.configured === true && !backupStatus.accessNeedsRenewal;
++  const stateText = backupStatus?.accessNeedsRenewal
++    ? 'Android perdió el acceso. Vuelve a seleccionar la carpeta original. Los trabajos conservan su identidad y evidencia.'
++    : backupStatus?.pendingJobs?.length
+     ? `Hay ${backupStatus.pendingJobs.length} trabajo(s) pendiente(s) o incierto(s). Verifica el trabajo original; no se recapturan datos actuales.`
+     : !configured
+-    ? backupStatus?.accessNeedsRenewal
+-      ? 'Android perdió el acceso. Vuelve a seleccionar la carpeta.'
+-      : 'Selecciona una carpeta de Google Drive desde el selector de Android.'
++    ? 'Selecciona una carpeta de Google Drive desde el selector de Android.'
+     : backupStatus.outdated
+       ? `Respaldo desactualizado en ${backupStatus.locationName ?? 'la carpeta elegida'}`
+       : backupStatus.validation === 'verified'
+
+Final presentation-only follow-up (pending-work help):
+diff --git a/C:/sf-5b3-20261023/src/modules/settings/ui/components/DriveBackupSection.tsx b/src/modules/settings/ui/components/DriveBackupSection.tsx
+index 86aa67b..2d2ca1f 100644
+--- a/C:/sf-5b3-20261023/src/modules/settings/ui/components/DriveBackupSection.tsx
++++ b/src/modules/settings/ui/components/DriveBackupSection.tsx
+@@ -78,7 +78,9 @@ export function DriveBackupSection({
+           label={backupStatus.pendingJobs?.length ? 'Verificar trabajo original' : 'Publicar nueva generación'}
+           palette={palette}
+           supportingText={BACKUP_PUBLICATION_UI_ENABLED
+-            ? 'Crea una generación independiente; conserva los archivos históricos de la raíz.'
++            ? backupStatus.pendingJobs?.length
++              ? 'Verifica el trabajo original y su captura; no crea otra generación ni recaptura los datos actuales.'
++              : 'Crea una generación independiente; conserva los archivos históricos de la raíz.'
+             : 'Publicación pendiente de aceptación de compatibilidad y tiempos de captura. Los archivos históricos se conservan.'}
+           trailing={
+             <GlassButton

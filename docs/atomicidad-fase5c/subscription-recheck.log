@@ -1,0 +1,25 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/subscriptionAtomicityPhase4.test.ts
+
+PASS __tests__/subscriptionAtomicityPhase4.test.ts (7.734 s)
+  √ create: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (734 ms)
+  √ update: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (846 ms)
+  √ pause: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (749 ms)
+  √ resume: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (838 ms)
+  √ cancel: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (832 ms)
+  √ amount: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (357 ms)
+  √ confirm: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (461 ms)
+  √ skip: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (365 ms)
+  √ category: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (207 ms)
+  √ subcategory: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (203 ms)
+  √ maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs (889 ms)
+  √ confirmed reminder cancellation is not repeated and scheduling still recovers after reboot (27 ms)
+  √ a writer between the last batch and platform sync invalidates coalescing and cannot omit new obligations (17 ms)
+  √ legacy deterministic subscription ID cannot silently accept different contract terms (27 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        7.898 s, estimated 11 s
+Ran all test suites matching /__tests__\\subscriptionAtomicityPhase4.test.ts/i.

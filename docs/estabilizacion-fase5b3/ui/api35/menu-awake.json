@@ -1,0 +1,24 @@
+node:child_process:964
+    throw err;
+    ^
+
+Error: Command failed: adb -s AXCC6R3919012932 shell uiautomator dump /sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/ui.xml
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execFileSync (node:child_process:961:15)
+    at adb (C:\Users\nesto\Proyectos\SmartFin\scripts\phase5b3\ui.cjs:7:32)
+    at Object.<anonymous> (C:\Users\nesto\Proyectos\SmartFin\scripts\phase5b3\ui.cjs:11:1)
+    at Module._compile (node:internal/modules/cjs/loader:1854:14)
+    at Object..js (node:internal/modules/cjs/loader:1985:10)
+    at Module.load (node:internal/modules/cjs/loader:1577:32)
+    at Module._load (node:internal/modules/cjs/loader:1379:12) {
+  status: 137,
+  signal: null,
+  output: [ null, '', '' ],
+  pid: 21932,
+  stdout: '',
+  stderr: ''
+}
+
+Node.js v24.16.0

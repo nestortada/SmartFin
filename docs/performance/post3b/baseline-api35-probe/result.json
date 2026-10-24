@@ -1,0 +1,585 @@
+{
+  "campaign": "post-probe",
+  "config": {
+    "release": true,
+    "model": "CRT-NX3",
+    "android": "15",
+    "api": 35,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "environment": {
+    "compileOptions": [],
+    "journalMode": [
+      {
+        "journal_mode": "truncate"
+      }
+    ]
+  },
+  "sqlite": "3.44.5",
+  "passed": true,
+  "cases": [
+    {
+      "name": "before: binding envelope 997 IDs",
+      "passed": true,
+      "durationMs": 883.7991540431976,
+      "evidence": {
+        "variant": "before",
+        "ids": 997,
+        "accepted": true,
+        "status": "confirmed",
+        "sql": {
+          "outside: BEGIN": {
+            "count": 1,
+            "ms": 0.9880000352859497,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 0.9880000352859497,
+            "errors": []
+          },
+          "outside: UPDATE installment_purchases": {
+            "count": 1,
+            "ms": 4.566460967063904,
+            "rows": 0,
+            "maxParameters": 999,
+            "maxMs": 4.566460967063904,
+            "errors": []
+          },
+          "outside: COMMIT": {
+            "count": 1,
+            "ms": 1.3619229793548584,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.3619229793548584,
+            "errors": []
+          }
+        }
+      }
+    },
+    {
+      "name": "before: binding envelope 998 IDs",
+      "passed": true,
+      "durationMs": 886.0102308988571,
+      "evidence": {
+        "variant": "before",
+        "ids": 998,
+        "accepted": true,
+        "status": "confirmed",
+        "sql": {
+          "outside: BEGIN": {
+            "count": 1,
+            "ms": 1.2132309675216675,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.2132309675216675,
+            "errors": []
+          },
+          "outside: UPDATE installment_purchases": {
+            "count": 1,
+            "ms": 5.962153911590576,
+            "rows": 0,
+            "maxParameters": 1000,
+            "maxMs": 5.962153911590576,
+            "errors": []
+          },
+          "outside: COMMIT": {
+            "count": 1,
+            "ms": 1.4014610052108765,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.4014610052108765,
+            "errors": []
+          }
+        }
+      }
+    },
+    {
+      "name": "before: binding envelope 1000 IDs",
+      "passed": true,
+      "durationMs": 837.2873070240021,
+      "evidence": {
+        "variant": "before",
+        "ids": 1000,
+        "accepted": true,
+        "status": "confirmed",
+        "sql": {
+          "outside: BEGIN": {
+            "count": 1,
+            "ms": 1.3673840761184692,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.3673840761184692,
+            "errors": []
+          },
+          "outside: UPDATE installment_purchases": {
+            "count": 1,
+            "ms": 5.507076978683472,
+            "rows": 0,
+            "maxParameters": 1002,
+            "maxMs": 5.507076978683472,
+            "errors": []
+          },
+          "outside: COMMIT": {
+            "count": 1,
+            "ms": 1.4543849229812622,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.4543849229812622,
+            "errors": []
+          }
+        }
+      }
+    },
+    {
+      "name": "before: binding envelope 10000 IDs",
+      "passed": true,
+      "durationMs": 1096.336923956871,
+      "evidence": {
+        "variant": "before",
+        "ids": 10000,
+        "accepted": true,
+        "status": "confirmed",
+        "sql": {
+          "outside: BEGIN": {
+            "count": 1,
+            "ms": 1.2303839921951294,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.2303839921951294,
+            "errors": []
+          },
+          "outside: UPDATE installment_purchases": {
+            "count": 1,
+            "ms": 48.211923003196716,
+            "rows": 0,
+            "maxParameters": 10002,
+            "maxMs": 48.211923003196716,
+            "errors": []
+          },
+          "outside: COMMIT": {
+            "count": 1,
+            "ms": 1.5014610290527344,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.5014610290527344,
+            "errors": []
+          }
+        }
+      }
+    },
+    {
+      "name": "after: binding envelope 997 IDs",
+      "passed": true,
+      "durationMs": 1084.3417689800262,
+      "evidence": {
+        "variant": "after",
+        "ids": 997,
+        "accepted": true,
+        "status": "confirmed",
+        "sql": {
+          "outside: BEGIN": {
+            "count": 1,
+            "ms": 1.9376161098480225,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.9376161098480225,
+            "errors": []
+          },
+          "outside: UPDATE installment_purchases": {
+            "count": 1,
+            "ms": 10.825538039207458,
+            "rows": 0,
+            "maxParameters": 999,
+            "maxMs": 10.825538039207458,
+            "errors": []
+          },
+          "outside: COMMIT": {
+            "count": 1,
+            "ms": 1.8498460054397583,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.8498460054397583,
+            "errors": []
+          }
+        }
+      }
+    },
+    {
+      "name": "after: binding envelope 998 IDs",
+      "passed": true,
+      "durationMs": 1213.4533081054688,
+      "evidence": {
+        "variant": "after",
+        "ids": 998,
+        "accepted": true,
+        "status": "confirmed",
+        "sql": {
+          "outside: BEGIN": {
+            "count": 1,
+            "ms": 1.4021539688110352,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.4021539688110352,
+            "errors": []
+          },
+          "outside: UPDATE installment_purchases": {
+            "count": 1,
+            "ms": 9.775383949279785,
+            "rows": 0,
+            "maxParameters": 1000,
+            "maxMs": 9.775383949279785,
+            "errors": []
+          },
+          "outside: COMMIT": {
+            "count": 1,
+            "ms": 1.3763070106506348,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.3763070106506348,
+            "errors": []
+          }
+        }
+      }
+    },
+    {
+      "name": "after: binding envelope 1000 IDs",
+      "passed": true,
+      "durationMs": 1390.5784620046616,
+      "evidence": {
+        "variant": "after",
+        "ids": 1000,
+        "accepted": true,
+        "status": "confirmed",
+        "sql": {
+          "outside: BEGIN": {
+            "count": 1,
+            "ms": 1.8779230117797852,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 1.8779230117797852,
+            "errors": []
+          },
+          "outside: UPDATE installment_purchases": {
+            "count": 1,
+            "ms": 11.491999983787537,
+            "rows": 0,
+            "maxParameters": 1002,
+            "maxMs": 11.491999983787537,
+            "errors": []
+          },
+          "outside: COMMIT": {
+            "count": 1,
+            "ms": 2.8646920919418335,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 2.8646920919418335,
+            "errors": []
+          }
+        }
+      }
+    },
+    {
+      "name": "after: binding envelope 10000 IDs",
+      "passed": true,
+      "durationMs": 1378.1778469085693,
+      "evidence": {
+        "variant": "after",
+        "ids": 10000,
+        "accepted": true,
+        "status": "confirmed",
+        "sql": {
+          "outside: BEGIN": {
+            "count": 1,
+            "ms": 2.4470770359039307,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 2.4470770359039307,
+            "errors": []
+          },
+          "outside: UPDATE installment_purchases": {
+            "count": 1,
+            "ms": 74.10361504554749,
+            "rows": 0,
+            "maxParameters": 10002,
+            "maxMs": 74.10361504554749,
+            "errors": []
+          },
+          "outside: COMMIT": {
+            "count": 1,
+            "ms": 3.700000047683716,
+            "rows": 0,
+            "maxParameters": 0,
+            "maxMs": 3.700000047683716,
+            "errors": []
+          }
+        }
+      }
+    }
+  ],
+  "samples": [],
+  "probes": [
+    {
+      "variant": "before",
+      "ids": 997,
+      "accepted": true,
+      "status": "confirmed",
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 0.9880000352859497,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 0.9880000352859497,
+          "errors": []
+        },
+        "outside: UPDATE installment_purchases": {
+          "count": 1,
+          "ms": 4.566460967063904,
+          "rows": 0,
+          "maxParameters": 999,
+          "maxMs": 4.566460967063904,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 1.3619229793548584,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.3619229793548584,
+          "errors": []
+        }
+      }
+    },
+    {
+      "variant": "before",
+      "ids": 998,
+      "accepted": true,
+      "status": "confirmed",
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.2132309675216675,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.2132309675216675,
+          "errors": []
+        },
+        "outside: UPDATE installment_purchases": {
+          "count": 1,
+          "ms": 5.962153911590576,
+          "rows": 0,
+          "maxParameters": 1000,
+          "maxMs": 5.962153911590576,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 1.4014610052108765,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.4014610052108765,
+          "errors": []
+        }
+      }
+    },
+    {
+      "variant": "before",
+      "ids": 1000,
+      "accepted": true,
+      "status": "confirmed",
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.3673840761184692,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.3673840761184692,
+          "errors": []
+        },
+        "outside: UPDATE installment_purchases": {
+          "count": 1,
+          "ms": 5.507076978683472,
+          "rows": 0,
+          "maxParameters": 1002,
+          "maxMs": 5.507076978683472,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 1.4543849229812622,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.4543849229812622,
+          "errors": []
+        }
+      }
+    },
+    {
+      "variant": "before",
+      "ids": 10000,
+      "accepted": true,
+      "status": "confirmed",
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.2303839921951294,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.2303839921951294,
+          "errors": []
+        },
+        "outside: UPDATE installment_purchases": {
+          "count": 1,
+          "ms": 48.211923003196716,
+          "rows": 0,
+          "maxParameters": 10002,
+          "maxMs": 48.211923003196716,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 1.5014610290527344,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.5014610290527344,
+          "errors": []
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "ids": 997,
+      "accepted": true,
+      "status": "confirmed",
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.9376161098480225,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.9376161098480225,
+          "errors": []
+        },
+        "outside: UPDATE installment_purchases": {
+          "count": 1,
+          "ms": 10.825538039207458,
+          "rows": 0,
+          "maxParameters": 999,
+          "maxMs": 10.825538039207458,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 1.8498460054397583,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.8498460054397583,
+          "errors": []
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "ids": 998,
+      "accepted": true,
+      "status": "confirmed",
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.4021539688110352,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.4021539688110352,
+          "errors": []
+        },
+        "outside: UPDATE installment_purchases": {
+          "count": 1,
+          "ms": 9.775383949279785,
+          "rows": 0,
+          "maxParameters": 1000,
+          "maxMs": 9.775383949279785,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 1.3763070106506348,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.3763070106506348,
+          "errors": []
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "ids": 1000,
+      "accepted": true,
+      "status": "confirmed",
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 1.8779230117797852,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 1.8779230117797852,
+          "errors": []
+        },
+        "outside: UPDATE installment_purchases": {
+          "count": 1,
+          "ms": 11.491999983787537,
+          "rows": 0,
+          "maxParameters": 1002,
+          "maxMs": 11.491999983787537,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 2.8646920919418335,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.8646920919418335,
+          "errors": []
+        }
+      }
+    },
+    {
+      "variant": "after",
+      "ids": 10000,
+      "accepted": true,
+      "status": "confirmed",
+      "sql": {
+        "outside: BEGIN": {
+          "count": 1,
+          "ms": 2.4470770359039307,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 2.4470770359039307,
+          "errors": []
+        },
+        "outside: UPDATE installment_purchases": {
+          "count": 1,
+          "ms": 74.10361504554749,
+          "rows": 0,
+          "maxParameters": 10002,
+          "maxMs": 74.10361504554749,
+          "errors": []
+        },
+        "outside: COMMIT": {
+          "count": 1,
+          "ms": 3.700000047683716,
+          "rows": 0,
+          "maxParameters": 0,
+          "maxMs": 3.700000047683716,
+          "errors": []
+        }
+      }
+    }
+  ],
+  "protocol": {
+    "fixedAuditClock": true,
+    "warmup": 1,
+    "measuredSamples": "3; 5 for the original 100k noise close/reconcile comparison",
+    "alternatingOrder": true,
+    "profiling": "test-only copied sources; driver timings include SQLite/bridge; native READONLY SELECT probes are separate samples; native memory sampled at 100ms",
+    "financialComparison": "all tables, types, Double bits, audit and revision; no generated IDs or tolerances"
+  }
+}

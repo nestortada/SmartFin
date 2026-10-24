@@ -1,0 +1,1783 @@
+{
+  "campaign": "phase3b",
+  "passed": true,
+  "config": {
+    "release": true,
+    "model": "Android SDK built for x86_64",
+    "android": "7.0",
+    "api": 24,
+    "packageId": "com.smartfin.atomicityphase1.tests"
+  },
+  "sqlite": "3.9.2",
+  "cases": [
+    {
+      "name": "create write 1 before",
+      "passed": true,
+      "durationMs": 2114,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create write 1 after",
+      "passed": true,
+      "durationMs": 2666,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create write 2 before",
+      "passed": true,
+      "durationMs": 2197,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create write 2 after",
+      "passed": true,
+      "durationMs": 2038,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create write 3 before",
+      "passed": true,
+      "durationMs": 2357,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_profiles (\n            account_id,\n            monthly_interest_rate,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create write 3 after",
+      "passed": true,
+      "durationMs": 2109,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_profiles (\n            account_id,\n            monthly_interest_rate,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit write 1 before",
+      "passed": true,
+      "durationMs": 2461,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit write 1 after",
+      "passed": true,
+      "durationMs": 2523,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit write 2 before",
+      "passed": true,
+      "durationMs": 2210,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit write 2 after",
+      "passed": true,
+      "durationMs": 2358,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit write 3 before",
+      "passed": true,
+      "durationMs": 2204,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_profiles (\n            account_id,\n            monthly_interest_rate,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit write 3 after",
+      "passed": true,
+      "durationMs": 2285,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_profiles (\n            account_id,\n            monthly_interest_rate,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 1 before",
+      "passed": true,
+      "durationMs": 4063,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 1 after",
+      "passed": true,
+      "durationMs": 10646,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 2 before",
+      "passed": true,
+      "durationMs": 9338,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 2 after",
+      "passed": true,
+      "durationMs": 10677,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 3 before",
+      "passed": true,
+      "durationMs": 10108,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 3 after",
+      "passed": true,
+      "durationMs": 9514,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 4 before",
+      "passed": true,
+      "durationMs": 6048,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 4 after",
+      "passed": true,
+      "durationMs": 2860,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 5 before",
+      "passed": true,
+      "durationMs": 2468,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 5 after",
+      "passed": true,
+      "durationMs": 2450,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 6 before",
+      "passed": true,
+      "durationMs": 2158,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 6 after",
+      "passed": true,
+      "durationMs": 2646,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 7 before",
+      "passed": true,
+      "durationMs": 2481,
+      "evidence": {
+        "sql": "UPDATE installment_purchases\n        SET account_id = ?, updated_at = ?\n        WHERE transaction_id IN (?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 7 after",
+      "passed": true,
+      "durationMs": 2068,
+      "evidence": {
+        "sql": "UPDATE installment_purchases\n        SET account_id = ?, updated_at = ?\n        WHERE transaction_id IN (?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 8 before",
+      "passed": true,
+      "durationMs": 2205,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 8 after",
+      "passed": true,
+      "durationMs": 2307,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 9 before",
+      "passed": true,
+      "durationMs": 2829,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 9 after",
+      "passed": true,
+      "durationMs": 2173,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 10 before",
+      "passed": true,
+      "durationMs": 2587,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 10 after",
+      "passed": true,
+      "durationMs": 2550,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 11 before",
+      "passed": true,
+      "durationMs": 2407,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 11 after",
+      "passed": true,
+      "durationMs": 2759,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 12 before",
+      "passed": true,
+      "durationMs": 2330,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 12 after",
+      "passed": true,
+      "durationMs": 2697,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 13 before",
+      "passed": true,
+      "durationMs": 2779,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "associate write 13 after",
+      "passed": true,
+      "durationMs": 2442,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 1 before",
+      "passed": true,
+      "durationMs": 2756,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 1 after",
+      "passed": true,
+      "durationMs": 2946,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 2 before",
+      "passed": true,
+      "durationMs": 2815,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 2 after",
+      "passed": true,
+      "durationMs": 2236,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 3 before",
+      "passed": true,
+      "durationMs": 2025,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_profiles (\n            account_id,\n            monthly_interest_rate,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 3 after",
+      "passed": true,
+      "durationMs": 2641,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_profiles (\n            account_id,\n            monthly_interest_rate,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 4 before",
+      "passed": true,
+      "durationMs": 2440,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 4 after",
+      "passed": true,
+      "durationMs": 2216,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 5 before",
+      "passed": true,
+      "durationMs": 2633,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 5 after",
+      "passed": true,
+      "durationMs": 2443,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 6 before",
+      "passed": true,
+      "durationMs": 2576,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 6 after",
+      "passed": true,
+      "durationMs": 2886,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 7 before",
+      "passed": true,
+      "durationMs": 2516,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 7 after",
+      "passed": true,
+      "durationMs": 2190,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 8 before",
+      "passed": true,
+      "durationMs": 2463,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 8 after",
+      "passed": true,
+      "durationMs": 2415,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 9 before",
+      "passed": true,
+      "durationMs": 2589,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 9 after",
+      "passed": true,
+      "durationMs": 2389,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 10 before",
+      "passed": true,
+      "durationMs": 2522,
+      "evidence": {
+        "sql": "UPDATE installment_purchases\n        SET account_id = ?, updated_at = ?\n        WHERE transaction_id IN (?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 10 after",
+      "passed": true,
+      "durationMs": 2175,
+      "evidence": {
+        "sql": "UPDATE installment_purchases\n        SET account_id = ?, updated_at = ?\n        WHERE transaction_id IN (?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 11 before",
+      "passed": true,
+      "durationMs": 2483,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 11 after",
+      "passed": true,
+      "durationMs": 2613,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 12 before",
+      "passed": true,
+      "durationMs": 2740,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 12 after",
+      "passed": true,
+      "durationMs": 2943,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 13 before",
+      "passed": true,
+      "durationMs": 2959,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 13 after",
+      "passed": true,
+      "durationMs": 2106,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 14 before",
+      "passed": true,
+      "durationMs": 2225,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 14 after",
+      "passed": true,
+      "durationMs": 2606,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 15 before",
+      "passed": true,
+      "durationMs": 2261,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 15 after",
+      "passed": true,
+      "durationMs": 2206,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 16 before",
+      "passed": true,
+      "durationMs": 2020,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 16 after",
+      "passed": true,
+      "durationMs": 1928,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 17 before",
+      "passed": true,
+      "durationMs": 2187,
+      "evidence": {
+        "sql": "UPDATE smart_alerts\n        SET status = ?, resolved_at = ?, updated_at = ?\n        WHERE alert_type = ? AND related_entity_type = ? AND related_entity_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "create-and-associate write 17 after",
+      "passed": true,
+      "durationMs": 2345,
+      "evidence": {
+        "sql": "UPDATE smart_alerts\n        SET status = ?, resolved_at = ?, updated_at = ?\n        WHERE alert_type = ? AND related_entity_type = ? AND related_entity_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 1 before",
+      "passed": true,
+      "durationMs": 2019,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 1 after",
+      "passed": true,
+      "durationMs": 2525,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 2 before",
+      "passed": true,
+      "durationMs": 2006,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 2 after",
+      "passed": true,
+      "durationMs": 2158,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 3 before",
+      "passed": true,
+      "durationMs": 2184,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_profiles (\n            account_id,\n            monthly_interest_rate,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 3 after",
+      "passed": true,
+      "durationMs": 1888,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_profiles (\n            account_id,\n            monthly_interest_rate,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 4 before",
+      "passed": true,
+      "durationMs": 2430,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 4 after",
+      "passed": true,
+      "durationMs": 2250,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 5 before",
+      "passed": true,
+      "durationMs": 2487,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 5 after",
+      "passed": true,
+      "durationMs": 2983,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 6 before",
+      "passed": true,
+      "durationMs": 3344,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 6 after",
+      "passed": true,
+      "durationMs": 2947,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 7 before",
+      "passed": true,
+      "durationMs": 2077,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 7 after",
+      "passed": true,
+      "durationMs": 2407,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 8 before",
+      "passed": true,
+      "durationMs": 2299,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 8 after",
+      "passed": true,
+      "durationMs": 2449,
+      "evidence": {
+        "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 9 before",
+      "passed": true,
+      "durationMs": 2276,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 9 after",
+      "passed": true,
+      "durationMs": 2754,
+      "evidence": {
+        "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 10 before",
+      "passed": true,
+      "durationMs": 2378,
+      "evidence": {
+        "sql": "UPDATE installment_purchases\n        SET account_id = ?, updated_at = ?\n        WHERE transaction_id IN (?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 10 after",
+      "passed": true,
+      "durationMs": 2110,
+      "evidence": {
+        "sql": "UPDATE installment_purchases\n        SET account_id = ?, updated_at = ?\n        WHERE transaction_id IN (?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 11 before",
+      "passed": true,
+      "durationMs": 2670,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 11 after",
+      "passed": true,
+      "durationMs": 2846,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 12 before",
+      "passed": true,
+      "durationMs": 3202,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 12 after",
+      "passed": true,
+      "durationMs": 2890,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 13 before",
+      "passed": true,
+      "durationMs": 2570,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 13 after",
+      "passed": true,
+      "durationMs": 2274,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 14 before",
+      "passed": true,
+      "durationMs": 2498,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 14 after",
+      "passed": true,
+      "durationMs": 2629,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 3,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 15 before",
+      "passed": true,
+      "durationMs": 2408,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 15 after",
+      "passed": true,
+      "durationMs": 3099,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 16 before",
+      "passed": true,
+      "durationMs": 2607,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 16 after",
+      "passed": true,
+      "durationMs": 2669,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 2,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 17 before",
+      "passed": true,
+      "durationMs": 2733,
+      "evidence": {
+        "sql": "UPDATE smart_alerts\n        SET status = ?, resolved_at = ?, updated_at = ?\n        WHERE alert_type = ? AND related_entity_type = ? AND related_entity_id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "edit-and-associate write 17 after",
+      "passed": true,
+      "durationMs": 3074,
+      "evidence": {
+        "sql": "UPDATE smart_alerts\n        SET status = ?, resolved_at = ?, updated_at = ?\n        WHERE alert_type = ? AND related_entity_type = ? AND related_entity_id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "close write 1 before",
+      "passed": true,
+      "durationMs": 2838,
+      "evidence": {
+        "sql": "UPDATE accounts\n        SET status = ?, updated_at = ?\n        WHERE id = ? AND type = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "close write 1 after",
+      "passed": true,
+      "durationMs": 2651,
+      "evidence": {
+        "sql": "UPDATE accounts\n        SET status = ?, updated_at = ?\n        WHERE id = ? AND type = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile-and-close write 1 before",
+      "passed": true,
+      "durationMs": 2929,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile-and-close write 1 after",
+      "passed": true,
+      "durationMs": 2613,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile-and-close write 2 before",
+      "passed": true,
+      "durationMs": 2613,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile-and-close write 2 after",
+      "passed": true,
+      "durationMs": 2791,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile-and-close write 3 before",
+      "passed": true,
+      "durationMs": 2649,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile-and-close write 3 after",
+      "passed": true,
+      "durationMs": 2464,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile-and-close write 4 before",
+      "passed": true,
+      "durationMs": 2656,
+      "evidence": {
+        "sql": "UPDATE accounts\n        SET status = ?, updated_at = ?\n        WHERE id = ? AND type = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile-and-close write 4 after",
+      "passed": true,
+      "durationMs": 3067,
+      "evidence": {
+        "sql": "UPDATE accounts\n        SET status = ?, updated_at = ?\n        WHERE id = ? AND type = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile write 1 before",
+      "passed": true,
+      "durationMs": 2554,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile write 1 after",
+      "passed": true,
+      "durationMs": 2329,
+      "evidence": {
+        "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile write 2 before",
+      "passed": true,
+      "durationMs": 2916,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile write 2 after",
+      "passed": true,
+      "durationMs": 2278,
+      "evidence": {
+        "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile write 3 before",
+      "passed": true,
+      "durationMs": 2420,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "before",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "reconcile write 3 after",
+      "passed": true,
+      "durationMs": 2811,
+      "evidence": {
+        "sql": "INSERT OR REPLACE INTO credit_card_statements (\n            id,\n            account_id,\n            statement_start_date,\n            statement_end_date,\n            payment_due_date,\n            total_amount,\n            minimum_payment_amount,\n            currency,\n            status,\n            created_at,\n            updated_at\n          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+        "phase": "after",
+        "occurrence": 1,
+        "rollback": "confirmed"
+      }
+    },
+    {
+      "name": "invalid payment 0.01",
+      "passed": true,
+      "durationMs": 2011
+    },
+    {
+      "name": "invalid payment 0.4",
+      "passed": true,
+      "durationMs": 2228
+    },
+    {
+      "name": "invalid payment 0.49",
+      "passed": true,
+      "durationMs": 5705
+    },
+    {
+      "name": "invalid payment -1",
+      "passed": true,
+      "durationMs": 2867
+    },
+    {
+      "name": "invalid payment 0",
+      "passed": true,
+      "durationMs": 2120
+    },
+    {
+      "name": "invalid payment NaN",
+      "passed": true,
+      "durationMs": 2334
+    },
+    {
+      "name": "invalid payment Infinity",
+      "passed": true,
+      "durationMs": 2752
+    },
+    {
+      "name": "invalid payment -Infinity",
+      "passed": true,
+      "durationMs": 2687
+    },
+    {
+      "name": "valid payment 0.5",
+      "passed": true,
+      "durationMs": 2059
+    },
+    {
+      "name": "valid payment 1",
+      "passed": true,
+      "durationMs": 2776
+    },
+    {
+      "name": "valid payment 100000",
+      "passed": true,
+      "durationMs": 2173
+    },
+    {
+      "name": "valid payment 1000.6",
+      "passed": true,
+      "durationMs": 2186
+    },
+    {
+      "name": "invalid debt cap 0.01",
+      "passed": true,
+      "durationMs": 2471
+    },
+    {
+      "name": "invalid debt cap 0.4",
+      "passed": true,
+      "durationMs": 2822
+    },
+    {
+      "name": "invalid debt cap 0.49",
+      "passed": true,
+      "durationMs": 3114
+    },
+    {
+      "name": "invalid debt cap 0.5",
+      "passed": true,
+      "durationMs": 3947
+    },
+    {
+      "name": "invalid debt cap 1.4",
+      "passed": true,
+      "durationMs": 7021
+    },
+    {
+      "name": "invalid debt cap 90000.5",
+      "passed": true,
+      "durationMs": 3597
+    },
+    {
+      "name": "insufficient funds rolls back reconciliations",
+      "passed": true,
+      "durationMs": 2792
+    },
+    {
+      "name": "association and edit reject closed",
+      "passed": true,
+      "durationMs": 3063
+    },
+    {
+      "name": "association and edit reject inactive",
+      "passed": true,
+      "durationMs": 2691
+    },
+    {
+      "name": "concurrent edits, same intent once and queued reader",
+      "passed": true,
+      "durationMs": 2678
+    },
+    {
+      "name": "management unknown COMMIT before",
+      "passed": true,
+      "durationMs": 2506,
+      "evidence": {
+        "status": "unknown",
+        "control": "COMMIT",
+        "phase": "before"
+      }
+    },
+    {
+      "name": "management unknown COMMIT after",
+      "passed": true,
+      "durationMs": 2890,
+      "evidence": {
+        "status": "unknown",
+        "control": "COMMIT",
+        "phase": "after"
+      }
+    },
+    {
+      "name": "management unknown ROLLBACK before",
+      "passed": true,
+      "durationMs": 2348,
+      "evidence": {
+        "status": "unknown",
+        "control": "ROLLBACK",
+        "phase": "before"
+      }
+    },
+    {
+      "name": "management unknown ROLLBACK after",
+      "passed": true,
+      "durationMs": 2337,
+      "evidence": {
+        "status": "unknown",
+        "control": "ROLLBACK",
+        "phase": "after"
+      }
+    },
+    {
+      "name": "timing create-and-associate 1000",
+      "passed": true,
+      "durationMs": 2097,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 1000,
+            "flow": "create-and-associate",
+            "operationMs": 107.89449999947101,
+            "readerMs": 107.85470000002533,
+            "transactionMs": 103.77220000047237,
+            "transactionRowsReturned": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "timing reconcile-and-close 1000",
+      "passed": true,
+      "durationMs": 2107,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 1000,
+            "flow": "reconcile-and-close",
+            "operationMs": 38.36490000039339,
+            "readerMs": 38.31429999973625,
+            "transactionMs": 33.273999999277294,
+            "transactionRowsReturned": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "timing reconcile 1000",
+      "passed": true,
+      "durationMs": 2211,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 1000,
+            "flow": "reconcile",
+            "operationMs": 33.02450000029057,
+            "readerMs": 32.96960000041872,
+            "transactionMs": 27.507800000719726,
+            "transactionRowsReturned": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "timing create-and-associate 10000",
+      "passed": true,
+      "durationMs": 2282,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 10000,
+            "flow": "create-and-associate",
+            "operationMs": 102.31180000025779,
+            "readerMs": 102.25599999912083,
+            "transactionMs": 98.68819999974221,
+            "transactionRowsReturned": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "timing reconcile-and-close 10000",
+      "passed": true,
+      "durationMs": 3030,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 10000,
+            "flow": "reconcile-and-close",
+            "operationMs": 42.72900000028312,
+            "readerMs": 42.67150000017136,
+            "transactionMs": 38.444899999536574,
+            "transactionRowsReturned": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "timing reconcile 10000",
+      "passed": true,
+      "durationMs": 2401,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 10000,
+            "flow": "reconcile",
+            "operationMs": 30.663200000301003,
+            "readerMs": 30.613200000487268,
+            "transactionMs": 26.42689999938011,
+            "transactionRowsReturned": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "timing create-and-associate 100000",
+      "passed": true,
+      "durationMs": 4115,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 100000,
+            "flow": "create-and-associate",
+            "operationMs": 235.17820000089705,
+            "readerMs": 235.1260000001639,
+            "transactionMs": 228.1784999994561,
+            "transactionRowsReturned": 6
+          }
+        ]
+      }
+    },
+    {
+      "name": "timing reconcile-and-close 100000",
+      "passed": true,
+      "durationMs": 4187,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 100000,
+            "flow": "reconcile-and-close",
+            "operationMs": 108.12409999966621,
+            "readerMs": 108.0890999995172,
+            "transactionMs": 103.18570000026375,
+            "transactionRowsReturned": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "timing reconcile 100000",
+      "passed": true,
+      "durationMs": 3614,
+      "evidence": {
+        "samples": [
+          {
+            "rows": 100000,
+            "flow": "reconcile",
+            "operationMs": 114.57010000012815,
+            "readerMs": 114.5323999999091,
+            "transactionMs": 109.90629999991506,
+            "transactionRowsReturned": 1
+          }
+        ]
+      }
+    }
+  ],
+  "matrix": [
+    {
+      "flow": "create",
+      "writes": 3,
+      "points": 6,
+      "historicalExact": true
+    },
+    {
+      "flow": "edit",
+      "writes": 3,
+      "points": 6,
+      "historicalExact": true
+    },
+    {
+      "flow": "associate",
+      "writes": 13,
+      "points": 26,
+      "historicalExact": true
+    },
+    {
+      "flow": "create-and-associate",
+      "writes": 17,
+      "points": 34,
+      "historicalExact": true
+    },
+    {
+      "flow": "edit-and-associate",
+      "writes": 17,
+      "points": 34,
+      "historicalExact": true
+    },
+    {
+      "flow": "close",
+      "writes": 1,
+      "points": 2,
+      "historicalExact": true
+    },
+    {
+      "flow": "reconcile-and-close",
+      "writes": 4,
+      "points": 8,
+      "historicalExact": true
+    },
+    {
+      "flow": "reconcile",
+      "writes": 3,
+      "points": 6,
+      "historicalExact": true
+    }
+  ],
+  "timings": [
+    {
+      "rows": 1000,
+      "flow": "create-and-associate",
+      "operationMs": 107.89449999947101,
+      "readerMs": 107.85470000002533,
+      "transactionMs": 103.77220000047237,
+      "transactionRowsReturned": 6
+    },
+    {
+      "rows": 1000,
+      "flow": "reconcile-and-close",
+      "operationMs": 38.36490000039339,
+      "readerMs": 38.31429999973625,
+      "transactionMs": 33.273999999277294,
+      "transactionRowsReturned": 0
+    },
+    {
+      "rows": 1000,
+      "flow": "reconcile",
+      "operationMs": 33.02450000029057,
+      "readerMs": 32.96960000041872,
+      "transactionMs": 27.507800000719726,
+      "transactionRowsReturned": 1
+    },
+    {
+      "rows": 10000,
+      "flow": "create-and-associate",
+      "operationMs": 102.31180000025779,
+      "readerMs": 102.25599999912083,
+      "transactionMs": 98.68819999974221,
+      "transactionRowsReturned": 6
+    },
+    {
+      "rows": 10000,
+      "flow": "reconcile-and-close",
+      "operationMs": 42.72900000028312,
+      "readerMs": 42.67150000017136,
+      "transactionMs": 38.444899999536574,
+      "transactionRowsReturned": 0
+    },
+    {
+      "rows": 10000,
+      "flow": "reconcile",
+      "operationMs": 30.663200000301003,
+      "readerMs": 30.613200000487268,
+      "transactionMs": 26.42689999938011,
+      "transactionRowsReturned": 1
+    },
+    {
+      "rows": 100000,
+      "flow": "create-and-associate",
+      "operationMs": 235.17820000089705,
+      "readerMs": 235.1260000001639,
+      "transactionMs": 228.1784999994561,
+      "transactionRowsReturned": 6
+    },
+    {
+      "rows": 100000,
+      "flow": "reconcile-and-close",
+      "operationMs": 108.12409999966621,
+      "readerMs": 108.0890999995172,
+      "transactionMs": 103.18570000026375,
+      "transactionRowsReturned": 0
+    },
+    {
+      "rows": 100000,
+      "flow": "reconcile",
+      "operationMs": 114.57010000012815,
+      "readerMs": 114.5323999999091,
+      "transactionMs": 109.90629999991506,
+      "transactionRowsReturned": 1
+    }
+  ]
+}

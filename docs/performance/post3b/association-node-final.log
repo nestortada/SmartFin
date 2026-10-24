@@ -1,0 +1,22 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/creditCardAssociationScaling.test.ts
+
+PASS __tests__/creditCardAssociationScaling.test.ts (12.148 s)
+  √ reproduces the previous binding failure after transaction updates and requires exact rollback (231 ms)
+  √ 0 matching purchases are associated without exceeding 999 bindings (15 ms)
+  √ 1 matching purchases are associated without exceeding 999 bindings (16 ms)
+  √ 997 matching purchases are associated without exceeding 999 bindings (193 ms)
+  √ 998 matching purchases are associated without exceeding 999 bindings (208 ms)
+  √ 1000 matching purchases are associated without exceeding 999 bindings (199 ms)
+  √ 10000 matching purchases are associated without exceeding 999 bindings (1810 ms)
+  √ ten thousand real matches preserve exact financial rows against the previous successful Node implementation (4495 ms)
+  √ failure before each fragment restores every row and revision (1464 ms)
+  √ failure after each fragment restores every row and revision (1491 ms)
+  √ duplicate IDs spanning fragments update each purchase once, preserving revision equivalence (153 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        12.334 s
+Ran all test suites matching /__tests__\\creditCardAssociationScaling.test.ts/i.

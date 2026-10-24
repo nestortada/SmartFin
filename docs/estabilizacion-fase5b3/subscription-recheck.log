@@ -1,0 +1,21 @@
+PASS __tests__/subscriptionAtomicityPhase4.test.ts (8.893 s)
+  √ create: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (831 ms)
+  √ update: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (1061 ms)
+  √ pause: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (981 ms)
+  √ resume: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (1033 ms)
+  √ cancel: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (982 ms)
+  √ amount: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (269 ms)
+  √ confirm: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (439 ms)
+  √ skip: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (365 ms)
+  √ category: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (188 ms)
+  √ subcategory: all financial writes before/after failure preserve exact initial snapshot; OS effects only follow success (196 ms)
+  √ maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs (892 ms)
+  √ confirmed reminder cancellation is not repeated and scheduling still recovers after reboot (20 ms)
+  √ a writer between the last batch and platform sync invalidates coalescing and cannot omit new obligations (16 ms)
+  √ legacy deterministic subscription ID cannot silently accept different contract terms (28 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       14 passed, 14 total
+Snapshots:   0 total
+Time:        9.176 s, estimated 18 s
+Ran all test suites matching /__tests__\\subscriptionAtomicityPhase4.test.ts/i.

@@ -1,34 +1,17 @@
-import type { Transaction } from 'react-native-sqlite-storage';
-
-import type { SmartFinSQLiteDatabase } from '../src/database';
+jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn(), openDatabase: jest.fn() }));
+import { financialIntegrityFixture } from './helpers/financialIntegrityFixture';
 import { createSqliteFinancialDataRepository } from '../src/modules/settings/repositories/sqliteFinancialDataRepository';
-
-test('financial wipe deletes finance tables but does not delete app settings', async () => {
-  const statements: string[] = [];
-  const database = {
-    transaction: async (operation: (tx: Transaction) => void) => {
-      operation({
-        executeSql: (
-          statement: string,
-          _values: unknown[],
-          success: (tx: Transaction, result: unknown) => void,
-        ) => {
-          statements.push(statement);
-          success?.({} as Transaction, { rows: { length: 0 } });
-        },
-      } as unknown as Transaction);
-    },
-    executeSql: jest.fn(async (statement: string) => {
-      statements.push(statement);
-      return [];
-    }),
-  } as unknown as SmartFinSQLiteDatabase;
-  const repository = createSqliteFinancialDataRepository(database);
-
-  await repository.deleteFinancialData();
-
-  expect(statements).toContain('DELETE FROM transactions;');
-  expect(statements).toContain('DELETE FROM raw_financial_messages;');
-  expect(statements).toContain('DELETE FROM accounts;');
-  expect(statements).not.toContain('DELETE FROM app_settings;');
+test('financial wipe uses one shared commit and preserves public app settings', async () => {
+  const f = await financialIntegrityFixture();
+  try {
+    f.query("INSERT INTO app_settings VALUES ('theme','dark','2026-01-01')");
+    f.resetTrace();
+    const result = await createSqliteFinancialDataRepository(f.database).deleteFinancialData(
+      '11111111-1111-4111-8111-111111111111', { workIds: [], backupJobIds: [], snapshotIds: [] });
+    expect(result.status).toBe('confirmed');
+    expect(f.trace.filter(entry => /^DELETE/.test(entry.sql))).toHaveLength(36);
+    expect(f.trace.filter(entry => /^BEGIN/.test(entry.sql))).toHaveLength(1);
+    expect(f.trace.filter(entry => /^COMMIT/.test(entry.sql))).toHaveLength(1);
+    expect(f.query("SELECT setting_value FROM app_settings WHERE setting_key='theme'").rows.item(0)).toEqual({ setting_value: 'dark' });
+  } finally { f.native.close(); }
 });

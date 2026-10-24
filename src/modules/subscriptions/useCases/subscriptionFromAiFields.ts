@@ -15,7 +15,7 @@ export function subscriptionFromAiFields(
     id: string | null | undefined,
     ref: string | null | undefined,
   ) => {
-    if (ref && !references.has(ref))
+    if (ref && (!references.has(ref) || (id && id !== references.get(ref))))
       throw new Error(`Referencia no resuelta: ${ref}`);
     return id ?? (ref ? references.get(ref) : undefined);
   };

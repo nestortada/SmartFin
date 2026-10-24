@@ -75,14 +75,22 @@ function usePressMotion() {
 export function PressableMotion({
   children,
   onPress,
+  disabled = false,
+  label,
 }: {
   children: React.ReactNode;
   onPress?: () => void;
+  disabled?: boolean;
+  label?: string;
 }) {
   const motion = usePressMotion();
 
   return (
     <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       onPress={onPress}
       onPressIn={motion.pressIn}
       onPressOut={motion.pressOut}>
@@ -169,19 +177,22 @@ export function SettingsRow({
 export function GlassButton({
   label,
   onPress,
+  disabled = false,
   palette,
   variant = 'soft',
 }: {
   label: string;
   onPress: () => void;
+  disabled?: boolean;
   palette: SettingsPalette;
   variant?: 'filled' | 'soft';
 }) {
   return (
-    <PressableMotion onPress={onPress}>
+    <PressableMotion disabled={disabled} label={label} onPress={onPress}>
       <View
         style={[
           primitiveStyles.glassButton,
+          { opacity: disabled ? 0.45 : 1, minHeight: 48, justifyContent: 'center' },
           {
             backgroundColor:
               variant === 'filled' ? palette.primary : palette.primarySoft,

@@ -1,0 +1,68 @@
+{
+  "baselineSha256": "2bd8814ca5dfc17561aec33b1785301198ae241d8af41502216a2a495d90e7f7",
+  "baselineMatchesInitialProduct": true,
+  "rows": [
+    {
+      "api": 24,
+      "count": 100000,
+      "baseline": {
+        "n": 5,
+        "min": 2586.0787,
+        "median": 2989.1693,
+        "max": 3417.7694
+      },
+      "candidate": {
+        "n": 5,
+        "min": 2325.8823,
+        "median": 2614.6711,
+        "max": 3161.2007
+      },
+      "medianReductionPercent": 12.528504156656496,
+      "pairedWins": 5,
+      "baselineCpu": {
+        "n": 5,
+        "min": 2501.894413,
+        "median": 2921.925026,
+        "max": 3386.699177
+      },
+      "candidateCpu": {
+        "n": 5,
+        "min": 2308.402028,
+        "median": 2544.667754,
+        "max": 3105.817672
+      },
+      "allCsvByteEquivalent": true
+    },
+    {
+      "api": 35,
+      "count": 100000,
+      "baseline": {
+        "n": 5,
+        "min": 11569.245924,
+        "median": 12607.689616,
+        "max": 12974.457847
+      },
+      "candidate": {
+        "n": 5,
+        "min": 10957.468001,
+        "median": 11386.336231,
+        "max": 12268.134077
+      },
+      "medianReductionPercent": 9.68736875826972,
+      "pairedWins": 4,
+      "baselineCpu": {
+        "n": 5,
+        "min": 11390.255174,
+        "median": 12419.341317,
+        "max": 12777.098529
+      },
+      "candidateCpu": {
+        "n": 5,
+        "min": 10815.878672,
+        "median": 11242.834863,
+        "max": 12115.595456
+      },
+      "allCsvByteEquivalent": true
+    }
+  ]
+}

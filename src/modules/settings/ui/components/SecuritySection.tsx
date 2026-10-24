@@ -10,6 +10,7 @@ import {
 } from './primitives';
 
 type SecuritySectionProps = {
+  disabled?: boolean;
   biometricsEnabled: boolean;
   localCredentialEnabled: boolean;
   palette: SettingsPalette;
@@ -19,6 +20,7 @@ type SecuritySectionProps = {
 };
 
 export function SecuritySection({
+  disabled = false,
   biometricsEnabled,
   localCredentialEnabled,
   palette,
@@ -53,6 +55,7 @@ export function SecuritySection({
         palette={palette}
         trailing={
           <Switch
+            disabled={disabled}
             ios_backgroundColor="rgba(120, 120, 130, 0.2)"
             onValueChange={onToggleBiometrics}
             thumbColor={biometricsEnabled ? '#ffffff' : '#f4f2f8'}
@@ -78,6 +81,7 @@ export function SecuritySection({
         }
         trailing={
           <Switch
+            disabled={disabled}
             ios_backgroundColor="rgba(120, 120, 130, 0.2)"
             onValueChange={enabled => {
               if (enabled) {
@@ -98,6 +102,7 @@ export function SecuritySection({
 
       <View style={styles.pinActions}>
         <Pressable
+          disabled={disabled}
           onPress={() => setShowEditor(value => !value)}
           style={[styles.inlineButton, { borderColor: palette.border }]}>
           <Text style={[styles.inlineButtonText, { color: palette.primary }]}>
@@ -132,6 +137,7 @@ export function SecuritySection({
             </Text>
           </Pressable>
           <GlassButton
+            disabled={disabled}
             label={localCredentialEnabled ? 'Cambiar' : 'Guardar'}
             onPress={saveCredential}
             palette={palette}

@@ -1,0 +1,24 @@
+{
+  "reason": "El usuario anunció que desconectaría el celular y lo desconectó durante phase2. Se detuvo la espera local de ese equipo y se continuó API 24.",
+  "collectedPassed": [
+    "phase3b",
+    "phase3a"
+  ],
+  "interruptedWithoutCollectedResult": [
+    "phase2"
+  ],
+  "notExecuted": [
+    "core",
+    "begin-after",
+    "commit-before",
+    "rollback-before"
+  ],
+  "financialData": "Synthetic isolated application only; no real financial database accessed.",
+  "resolution": {
+    "date": "2026-10-18",
+    "status": "resolved",
+    "allPreviouslyPendingCampaignsPassed": true,
+    "repeatFromFreshFixtures": true,
+    "evidence": "resume-20261018-completion.json"
+  }
+}

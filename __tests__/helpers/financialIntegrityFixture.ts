@@ -11,8 +11,8 @@ import { saveManualTransaction as phase0Save } from './phase0ManualTransactions'
 
 export const FINANCIAL_TEST_DATE = new Date('2026-10-11T12:00:00.000Z');
 
-export async function financialIntegrityFixture(options: {managed?: boolean; historical?: boolean} = {}) {
-  const sql = realSQLite({ fixedSqlDate: FINANCIAL_TEST_DATE });
+export async function financialIntegrityFixture(options: {managed?: boolean; historical?: boolean; syntheticPath?: string} = {}) {
+  const sql = realSQLite({ fixedSqlDate: FINANCIAL_TEST_DATE, syntheticPath: options.syntheticPath });
   sql.native.exec('PRAGMA foreign_keys = ON;');
   for (const statement of SQLITE_SCHEMA_STATEMENTS) sql.native.exec(statement);
   await applyVersionedMigrations(sql.database);

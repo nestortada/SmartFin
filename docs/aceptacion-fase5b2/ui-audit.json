@@ -1,0 +1,50 @@
+{
+  "file": "src/navigation/AppNavigator.tsx",
+  "sha256": "2705f640afb9aa1be06ad33f3d0b2e8065745025520a3b1a727bbe221f5cf289",
+  "method": "Extracted current callback, synthetic promises; not a mounted device UI test",
+  "busyHiddenWhileFirstStillPending": true,
+  "messages": {
+    "prepared": "Preparando generación...",
+    "capturing": "Capturando SQLite. Las operaciones financieras esperan...",
+    "snapshotValidated": "Captura recuperada. Preparando archivos...",
+    "publicationPending": "Publicando y verificando archivos...",
+    "verified": "Generación verificada mediante SAF.",
+    "failed": "Publicación fallida.",
+    "uncertain": "Publicación incierta. Requiere verificación."
+  },
+  "events": [
+    {
+      "kind": "busy",
+      "value": "Capturando SQLite. Las operaciones financieras esperan..."
+    },
+    {
+      "kind": "error",
+      "value": null
+    },
+    {
+      "kind": "busy",
+      "value": "Actualizando respaldo en Google Drive..."
+    },
+    {
+      "kind": "error",
+      "value": null
+    },
+    {
+      "kind": "error",
+      "value": "Ya hay un respaldo en curso."
+    },
+    {
+      "kind": "busy",
+      "value": null
+    },
+    {
+      "kind": "busy",
+      "value": null
+    }
+  ],
+  "findings": [
+    "Second request is financially blocked by the service, but its task wrapper clears the shared progress indicator.",
+    "Recovery calls verifyDriveBackupJob without an onProgress callback; only its generic busy message is shown.",
+    "Production flag remains false; end-to-end activated UI is not certified."
+  ]
+}

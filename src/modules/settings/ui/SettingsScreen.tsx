@@ -64,6 +64,7 @@ const palettes: Record<AppTheme, SettingsPalette> = {
 type SettingsScreenProps = {
   backupStatus?: DriveBackupStatus;
   busyMessage?: string;
+  backupNotice?: string;
   errorMessage?: string;
   settings: SettingsState;
   onBack: () => void;
@@ -87,6 +88,7 @@ type SettingsScreenProps = {
 export function SettingsScreen({
   backupStatus,
   busyMessage,
+  backupNotice,
   errorMessage,
   settings,
   onBack,
@@ -116,6 +118,7 @@ export function SettingsScreen({
   };
 
   const confirmFinancialDataDeletion = () => {
+    if (busyMessage) return;
     Alert.alert(
       'Eliminar datos financieros',
       'Se borrarán cuentas, movimientos, presupuestos y cálculos locales. Tus ajustes se conservarán.',
@@ -181,9 +184,11 @@ export function SettingsScreen({
         {errorMessage ? (
           <StatusPill palette={palette} text={errorMessage} tone="danger" />
         ) : null}
+        {!busyMessage && backupNotice ? <StatusPill palette={palette} text={backupNotice} tone="primary" /> : null}
 
         {/* SECURITY CARD */}
         <SecuritySection
+          disabled={!!busyMessage}
           biometricsEnabled={settings.biometricsEnabled}
           localCredentialEnabled={settings.localCredentialEnabled}
           onSaveCredential={onSaveCredential}
@@ -193,6 +198,9 @@ export function SettingsScreen({
         />
 
         <DriveBackupSection
+          busy={!!busyMessage}
+          progressMessage={busyMessage ?? backupNotice}
+          errorMessage={errorMessage}
           backupStatus={backupStatus}
           onChooseDirectory={onChooseDriveBackupDirectory}
           onExport={onExportDriveBackup}
@@ -201,6 +209,7 @@ export function SettingsScreen({
 
         {/* PERSONALIZATION & DELETION CARD */}
         <PersonalizationSection
+          destructiveDisabled={!!busyMessage}
           onOpenCategories={onOpenCategories}
           onThemeChange={onThemeChange}
           onDeleteFinancialData={confirmFinancialDataDeletion}

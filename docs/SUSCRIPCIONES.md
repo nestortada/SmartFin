@@ -1,5 +1,19 @@
 # Suscripciones: interfaz nativa, dominio y API local
 
+La [fase 4 de atomicidad](atomicidad-financiera-fase4.md) conserva las mutaciones
+transaccionales del repositorio y su participación exterior. Crear categoría o
+subcategoría desde la fachada comparte commit con la sincronización derivada.
+IA confirma el plan y su comprobante durable juntos; la pasada final acotada de
+generación se completa antes del commit y los recordatorios se programan después.
+No se crean gastos por generar compromisos u obligaciones.
+
+Inicio, reanudación, montaje y Headless consolidan mantenimiento concurrente, con
+un permiso por lote y hasta veinte lotes. Una revisión antes de terminar detecta
+escritores intercalados. Los recordatorios se recuperan al finalizar; solo se omite
+una cancelación ya confirmada en su misma revisión. La programación se vuelve a
+solicitar para recuperar reinicios. Fallar plataforma conserva éxito financiero e
+intención persistida para reintento. Los módulos Kotlin y el esquema no cambian.
+
 Dominio e interfaz implementados el 3 de octubre de 2026. Acceso: Más → Suscripciones.
 
 ## Uso de la fachada pública

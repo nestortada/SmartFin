@@ -1,7 +1,6 @@
 import { NativeModules, Platform } from 'react-native';
 
 import {
-  exportDriveBackup,
   getDriveBackupStatus,
 } from '../src/modules/settings';
 
@@ -16,7 +15,7 @@ afterEach(() => {
 test('getDriveBackupStatus validates and maps the Android status', async () => {
   NativeModules.SmartFinDriveBackup = {
     chooseBackupDirectory: jest.fn(),
-    exportBackup: jest.fn(),
+    preparePublication: jest.fn(), publishSnapshot: jest.fn(), getPublicationJobs: jest.fn(async () => '[]'), failCapture: jest.fn(),
     getBackupStatus: jest.fn(async () => ({
       accessNeedsRenewal: false,
       configured: true,
@@ -29,6 +28,7 @@ test('getDriveBackupStatus validates and maps the Android status', async () => {
   };
 
   await expect(getDriveBackupStatus(12)).resolves.toEqual({
+    datasetCurrency: 'unknown',
     accessNeedsRenewal: false,
     available: true,
     configured: true,
@@ -38,37 +38,17 @@ test('getDriveBackupStatus validates and maps the Android status', async () => {
     outdated: true,
     permissionPersistent: true,
     remoteRevision: 10,
+    validation: 'unverified',
+    pendingJobs: [],
   });
 });
 
 test('getDriveBackupStatus rejects malformed native data', async () => {
   NativeModules.SmartFinDriveBackup = {
     chooseBackupDirectory: jest.fn(),
-    exportBackup: jest.fn(),
+    preparePublication: jest.fn(), publishSnapshot: jest.fn(), getPublicationJobs: jest.fn(async () => '[]'), failCapture: jest.fn(),
     getBackupStatus: jest.fn(async () => ({ configured: 'yes' })),
   };
 
   await expect(getDriveBackupStatus(2)).rejects.toThrow('estado de respaldo inválido');
-});
-
-test('exportDriveBackup returns the confirmed exported file count', async () => {
-  NativeModules.SmartFinDriveBackup = {
-    chooseBackupDirectory: jest.fn(),
-    getBackupStatus: jest.fn(),
-    exportBackup: jest.fn(async () => ({
-      fileCount: 9,
-      lastBackupAt: '2026-09-26T15:00:00.000Z',
-      locationName: 'SmartFin',
-      permissionPersistent: true,
-      revision: 42,
-    })),
-  };
-
-  await expect(exportDriveBackup(42)).resolves.toEqual({
-    fileCount: 9,
-    lastBackupAt: '2026-09-26T15:00:00.000Z',
-    locationName: 'SmartFin',
-    permissionPersistent: true,
-    revision: 42,
-  });
 });

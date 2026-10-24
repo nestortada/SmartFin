@@ -6,6 +6,7 @@ import type {
   CreditCardVisualMetadata,
 } from '../types';
 import { buildCreditCardsOverview } from './getCreditCardsOverview';
+import { withCreditCardManagementScope } from './creditCardManagementScope';
 
 const DESCRIPTION_METADATA_PREFIX = 'smartfin:credit-card:';
 
@@ -67,6 +68,37 @@ export async function saveCreditCardFromForm(
   input: CreditCardFormInput,
   existingAccount?: Account,
 ): Promise<Account> {
+  const intention = { ...input, accountId: existingAccount?.id ?? input.accountId ?? createCreditCardId() };
+  const expected = existingAccount ? JSON.parse(JSON.stringify(existingAccount)) as Account : undefined;
+  return withCreditCardManagementScope(repository, async (current, dependencies) => {
+    let persisted = expected;
+    if (dependencies) {
+      const accounts = await dependencies.accountRepository.getAccounts();
+      persisted = accounts.find(account => account.id === (expected?.id ?? intention.accountId));
+      if (expected) {
+        requireCurrentCreditCard(expected, persisted);
+      } else if (persisted) {
+        throw new Error('La identidad de la tarjeta ya existe. Actualiza las tarjetas antes de guardarla.');
+      }
+    }
+    return saveCreditCardFromFormInScope(current, intention, persisted);
+  });
+}
+
+export function requireCurrentCreditCard(expected: Account, current?: Account): Account {
+  const keys = new Set([...Object.keys(expected), ...Object.keys(current ?? {})]);
+  if (!current || current.type !== 'creditCard' || current.status !== 'active' ||
+      [...keys].some(key => JSON.stringify(expected[key as keyof Account]) !== JSON.stringify(current[key as keyof Account]))) {
+    throw new Error('La tarjeta cambió o fue cerrada. Actualiza las tarjetas antes de volver a editarla.');
+  }
+  return current;
+}
+
+async function saveCreditCardFromFormInScope(
+  repository: CreditCardRepository,
+  input: CreditCardFormInput,
+  existingAccount?: Account,
+): Promise<Account> {
   const now = new Date().toISOString();
   const normalizedLimit = Math.max(0, input.creditLimit);
   const account: Account = {
@@ -115,6 +147,13 @@ export async function saveCreditCardFromForm(
 }
 
 export async function deleteCreditCard(
+  repository: CreditCardRepository,
+  accountId: string,
+): Promise<void> {
+  return withCreditCardManagementScope(repository, current => deleteCreditCardInScope(current, accountId));
+}
+
+async function deleteCreditCardInScope(
   repository: CreditCardRepository,
   accountId: string,
 ): Promise<void> {

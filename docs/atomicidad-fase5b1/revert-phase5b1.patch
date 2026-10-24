@@ -1,0 +1,1013 @@
+diff --git a/src/database/databaseCoordination.ts b/src/database/databaseCoordination.ts
+--- a/src/database/databaseCoordination.ts
++++ b/src/database/databaseCoordination.ts
+@@ -1,18 +1,8 @@
+-import { nativeDatabaseLifecycle } from './nativeDatabaseLifecycle';
+-
+-// Same JS runtime is used by UI and Headless. Always acquire JS before native.
++// Same JS runtime is used by the UI and Headless JS worker. Serialize exclusive
++// backup/wipe against maintenance without a permanently running timer.
+ let pending: Promise<unknown> = Promise.resolve();
+ export type DatabasePermit = { readonly id: symbol };
+ const permits = new WeakSet<DatabasePermit>();
+-const nativeTokens = new WeakMap<DatabasePermit, string>();
+-export function nativeDatabaseToken(permit: DatabasePermit): string | undefined {
+-  assertDatabasePermit(permit);
+-  return nativeTokens.get(permit);
+-}
+-export async function verifyNativeDatabaseOwner(permit: DatabasePermit): Promise<void> {
+-  const token = nativeDatabaseToken(permit);
+-  if (token !== undefined) await nativeDatabaseLifecycle()!.checkOwner(token);
+-}
+ export function assertDatabasePermit(permit: DatabasePermit): void {
+   if (!permits.has(permit))
+     throw new Error('Database permit is expired or invalid');
+@@ -26,24 +16,14 @@ export function withDatabaseMaintenance<T>(
+     return operation(borrowed);
+   }
+   const execute = async () => {
+-    const native = nativeDatabaseLifecycle();
+-    // No JS timeout: a lost acquisition response must not grant another owner.
+-    const token = await native?.acquire();
+-    if (native && (typeof token !== 'string' || !token)) {
+-      await native.quarantine();
+-      throw new Error('Android devolvió un permiso SQLite inválido.');
+-    }
+     const permit: DatabasePermit = Object.freeze({
+       id: Symbol('database-owner'),
+     });
+     permits.add(permit);
+-    if (token !== undefined) nativeTokens.set(permit, token);
+     try {
+       return await operation(permit);
+     } finally {
+       permits.delete(permit);
+-      nativeTokens.delete(permit);
+-      if (token !== undefined) await native!.release(token);
+     }
+   };
+   const result = pending.then(execute, execute);
+diff --git a/src/database/nativeDatabaseLifecycle.ts b/src/database/nativeDatabaseLifecycle.ts
+deleted file mode 100644
+--- a/src/database/nativeDatabaseLifecycle.ts
++++ /dev/null
+@@ -1,25 +0,0 @@
+-import { NativeModules, Platform } from 'react-native';
+-
+-type NativeDatabaseLifecycle = {
+-  acquire: () => Promise<string>;
+-  checkOwner: (token: string) => Promise<void>;
+-  release: (token: string) => Promise<void>;
+-  quarantine: () => Promise<void>;
+-  capture: (token: string, expected: string) => Promise<string>;
+-  discard: (token: string, id: string) => Promise<void>;
+-};
+-
+-export function nativeDatabaseLifecycle(): NativeDatabaseLifecycle | undefined {
+-  if (Platform.OS !== 'android') return undefined;
+-  const value: unknown = NativeModules.SmartFinDatabaseLifecycle;
+-  if (!value || typeof value !== 'object' ||
+-      ['acquire', 'checkOwner', 'release', 'quarantine', 'capture', 'discard'].some(
+-        key => typeof Reflect.get(value, key) !== 'function',
+-      )) throw new Error('La coordinación nativa SQLite no está disponible.');
+-  return value as NativeDatabaseLifecycle;
+-}
+-
+-/** A timed-out receipt never certifies the end of the underlying native work. */
+-export async function quarantineNativeDatabase(): Promise<void> {
+-  await nativeDatabaseLifecycle()?.quarantine();
+-}
+diff --git a/src/database/sqliteDatabase.ts b/src/database/sqliteDatabase.ts
+--- a/src/database/sqliteDatabase.ts
++++ b/src/database/sqliteDatabase.ts
+@@ -13,7 +13,6 @@ import { SHARED_LOSS_SCHEMA } from '../modules/transactions/database/sharedLossS
+ import { SHARED_EXPENSE_INDEXES, SHARED_EXPENSE_SCHEMA, SHARED_EXPENSE_TRIGGERS } from '../modules/transactions/database/sharedExpenseSchema';
+ import {
+   withDatabaseMaintenance,
+-  verifyNativeDatabaseOwner,
+   type DatabasePermit,
+ } from './databaseCoordination';
+ import {
+@@ -50,7 +49,6 @@ export async function openSmartFinDatabase(
+   permit?: DatabasePermit,
+ ): Promise<SmartFinSQLiteDatabase> {
+   return withDatabaseMaintenance(async owner => {
+-    await verifyNativeDatabaseOwner(owner);
+     if (openingFailure) throw openingFailure.error;
+     if (failedInitialization) {
+       await discardSQLiteConnection(failedInitialization, owner);
+diff --git a/src/database/managedSQLite.ts b/src/database/managedSQLite.ts
+--- a/src/database/managedSQLite.ts
++++ b/src/database/managedSQLite.ts
+@@ -1,7 +1,6 @@
+ import type { SmartFinSQLiteDatabase } from './sqliteDatabase';
+ import type { Transaction as SQLiteCallbackTransaction } from 'react-native-sqlite-storage';
+ import { sqliteLifecycleReceipt } from './sqliteLifecycle';
+-import { quarantineNativeDatabase } from './nativeDatabaseLifecycle';
+ import {
+   assertDatabasePermit,
+   withDatabaseMaintenance,
+@@ -32,7 +31,6 @@ async function closeConnection(connection: Connection) {
+     connection.status = 'closed';
+   } catch (error) {
+     connection.closeFailure = { error };
+-    await quarantineNativeDatabase();
+     throw error;
+   }
+ }
+diff --git a/src/database/sqliteLifecycle.ts b/src/database/sqliteLifecycle.ts
+--- a/src/database/sqliteLifecycle.ts
++++ b/src/database/sqliteLifecycle.ts
+@@ -1,6 +1,5 @@
+ import { openDatabase, type DatabaseParams } from 'react-native-sqlite-storage';
+ import type { SmartFinSQLiteDatabase } from './sqliteDatabase';
+-import { quarantineNativeDatabase } from './nativeDatabaseLifecycle';
+ 
+ export const SQLITE_LIFECYCLE_TIMEOUT_MS = 10000;
+ 
+@@ -20,10 +19,6 @@ export async function sqliteLifecycleReceipt<T>(
+         );
+       }),
+     ]);
+-  } catch (error) {
+-    if (error instanceof Error && error.message.endsWith('receipt timed out'))
+-      await quarantineNativeDatabase();
+-    throw error;
+   } finally {
+     if (timer !== undefined) clearTimeout(timer);
+   }
+diff --git a/src/modules/settings/services/localDatabaseSnapshot.ts b/src/modules/settings/services/localDatabaseSnapshot.ts
+deleted file mode 100644
+--- a/src/modules/settings/services/localDatabaseSnapshot.ts
++++ /dev/null
+@@ -1,174 +0,0 @@
+-import {
+-  nativeDatabaseToken,
+-  withExclusiveDatabase,
+-} from '../../../database/databaseCoordination';
+-import { borrowSQLiteDatabase, sqliteConnectionState } from '../../../database/managedSQLite';
+-import { nativeDatabaseLifecycle } from '../../../database/nativeDatabaseLifecycle';
+-import {
+-  closeSmartFinDatabase,
+-  openSmartFinDatabase,
+-  type SmartFinSQLiteDatabase,
+-} from '../../../database/sqliteDatabase';
+-import { resultSetToRows } from '../../../database/sqliteRows';
+-
+-const monotonic = (globalThis as unknown as { performance: { now: () => number } }).performance;
+-
+-export type LocalDatabaseSnapshot = {
+-  id: string;
+-  path: string;
+-  bytes: number;
+-  revision: number;
+-  sha256: string;
+-  journal: string;
+-  journalBeforeClose: string;
+-  sourceValidationMs: number;
+-  copyMs: number;
+-  validationAndHashMs: number;
+-  nativeTotalMs: number;
+-};
+-
+-export class LocalSnapshotFailure extends Error {
+-  constructor(
+-    readonly captureError: unknown,
+-    readonly recoveryError: unknown,
+-    readonly database?: SmartFinSQLiteDatabase,
+-  ) {
+-    super(recoveryError
+-      ? 'No se pudo recuperar la conexión SQLite. Reinicia y verifica su estado.'
+-      : 'No se pudo certificar la captura local.');
+-  }
+-}
+-
+-function safeInteger(value: unknown): number {
+-  if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 0)
+-    throw new Error('Metadatos SQLite inválidos.');
+-  return value;
+-}
+-
+-/** Also used to validate the managed checkpoint response, including busy without exception. */
+-export function assertCompleteCheckpoint(rows: Record<string, unknown>[]): void {
+-  const row = rows[0];
+-  if (rows.length !== 1 || !row || row.busy !== 0 ||
+-      safeInteger(row.log) !== 0 || safeInteger(row.checkpointed) !== 0)
+-    throw new Error('Checkpoint SQLite incompleto.');
+-}
+-
+-async function describe(database: SmartFinSQLiteDatabase, journal: string) {
+-  const query = async (sql: string) => {
+-    const [result] = await database.executeSql(sql);
+-    return resultSetToRows(result);
+-  };
+-  if (sqliteConnectionState(database)?.owned)
+-    throw new Error('No se puede capturar una transacción activa.');
+-  const fk = await query('PRAGMA foreign_keys;');
+-  const references = await query('PRAGMA foreign_key_check;');
+-  const integrity = await query('PRAGMA integrity_check;');
+-  if (fk.length !== 1 || fk[0]?.foreign_keys !== 1 || references.length ||
+-      integrity.length !== 1 || integrity[0]?.integrity_check !== 'ok')
+-    throw new Error('La base de datos no supera la validación de integridad.');
+-  const schema = await query('SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name');
+-  const tables: [string, number][] = [];
+-  for (const row of schema) {
+-    if (row.type !== 'table' || typeof row.name !== 'string') continue;
+-    const name = row.name;
+-    const count = await query(`SELECT count(*) AS total FROM "${name.replace(/"/g, '""')}"`);
+-    tables.push([name, safeInteger(count[0]?.total)]);
+-  }
+-  const revision = await query('SELECT revision FROM financial_data_revision WHERE id=1;');
+-  if (revision.length !== 1) throw new Error('Revisión SQLite ausente.');
+-  return {
+-    schema: schema.map(row => [row.type, row.name, row.tbl_name, row.sql]),
+-    tables,
+-    revision: safeInteger(revision[0]?.revision),
+-    userVersion: safeInteger((await query('PRAGMA user_version;'))[0]?.user_version),
+-    schemaVersion: safeInteger((await query('PRAGMA schema_version;'))[0]?.schema_version),
+-    journal,
+-  };
+-}
+-
+-function parseSnapshot(json: string): LocalDatabaseSnapshot {
+-  const value: unknown = JSON.parse(json);
+-  if (!value || typeof value !== 'object') throw new Error('Captura nativa inválida.');
+-  const row = value as Record<string, unknown>;
+-  if (typeof row.id !== 'string' || !/^[0-9a-f-]{36}$/.test(row.id) ||
+-      typeof row.path !== 'string' || !row.path.startsWith('/') ||
+-      typeof row.sha256 !== 'string' || !/^[0-9a-f]{64}$/.test(row.sha256) ||
+-      typeof row.journal !== 'string' || typeof row.journalBeforeClose !== 'string' || safeInteger(row.bytes) === 0)
+-    throw new Error('Captura nativa inválida.');
+-  safeInteger(row.revision);
+-  for (const key of ['sourceValidationMs', 'copyMs', 'validationAndHashMs', 'nativeTotalMs'])
+-    if (typeof row[key] !== 'number' || !Number.isFinite(row[key]) || row[key] < 0)
+-      throw new Error('Duración de captura inválida.');
+-  return value as LocalDatabaseSnapshot;
+-}
+-
+-/** Internal local-only entry point for the next backup component. No SAF publication. */
+-export async function captureLocalDatabaseSnapshot() {
+-  const requested = monotonic.now();
+-  const result = await withExclusiveDatabase(async permit => {
+-    const acquired = monotonic.now();
+-    const native = nativeDatabaseLifecycle();
+-    const token = nativeDatabaseToken(permit);
+-    if (!native || !token) throw new Error('La captura local requiere coordinación Android.');
+-    const database = await openSmartFinDatabase(permit);
+-    const owned = borrowSQLiteDatabase(database, permit);
+-    const [mode] = await owned.executeSql('PRAGMA journal_mode;');
+-    const journal: unknown = mode.rows.item(0)?.journal_mode;
+-    if (typeof journal !== 'string' || !['wal', 'delete', 'truncate', 'persist'].includes(journal))
+-      throw new Error('Modo journal no apto para captura física.');
+-    const checkpointStart = monotonic.now();
+-    if (journal === 'wal') {
+-      const [checkpoint] = await owned.executeSql('PRAGMA wal_checkpoint(TRUNCATE);');
+-      assertCompleteCheckpoint(resultSetToRows(checkpoint));
+-    }
+-    const checkpointMs = monotonic.now() - checkpointStart;
+-    const verificationStart = monotonic.now();
+-    const expected = await describe(owned, journal);
+-    const sourceVerificationMs = monotonic.now() - verificationStart;
+-    const closeStart = monotonic.now();
+-    let closeMs = 0;
+-    let reopenMs = 0;
+-    let snapshot: LocalDatabaseSnapshot | undefined;
+-    let captureError: unknown;
+-    let recoveryError: unknown;
+-    let recovered: SmartFinSQLiteDatabase | undefined;
+-    try {
+-      await closeSmartFinDatabase(permit);
+-      closeMs = monotonic.now() - closeStart;
+-      snapshot = parseSnapshot(await native.capture(token, JSON.stringify(expected)));
+-      if (snapshot.revision !== expected.revision) throw new Error('Revisión de captura incompatible.');
+-    } catch (error) {
+-      captureError = error;
+-    } finally {
+-      const reopenStart = monotonic.now();
+-      try { recovered = await openSmartFinDatabase(permit); }
+-      catch (error) { recoveryError = error; }
+-      reopenMs = monotonic.now() - reopenStart;
+-    }
+-    if (captureError || recoveryError || !snapshot || !recovered)
+-      throw new LocalSnapshotFailure(captureError, recoveryError, recovered);
+-    return {
+-      snapshot,
+-      database: recovered,
+-      timings: {
+-        permissionWaitMs: acquired - requested,
+-        checkpointMs,
+-        sourceVerificationMs,
+-        closeMs,
+-        reopenMs,
+-        totalMs: monotonic.now() - requested,
+-      },
+-    };
+-  });
+-  result.timings.totalMs = monotonic.now() - requested;
+-  return result;
+-}
+-
+-export async function discardLocalDatabaseSnapshot(id: string): Promise<void> {
+-  await withExclusiveDatabase(async permit => {
+-    const native = nativeDatabaseLifecycle();
+-    const token = nativeDatabaseToken(permit);
+-    if (!native || !token) throw new Error('Coordinación Android no disponible.');
+-    await native.discard(token, id);
+-  });
+-}
+diff --git a/src/modules/settings/services/androidDriveBackupService.ts b/src/modules/settings/services/androidDriveBackupService.ts
+--- a/src/modules/settings/services/androidDriveBackupService.ts
++++ b/src/modules/settings/services/androidDriveBackupService.ts
+@@ -1,5 +1,4 @@
+ import { NativeModules, Platform } from 'react-native';
+-import { nativeDatabaseToken, type DatabasePermit } from '../../../database/databaseCoordination';
+ 
+ export type DriveBackupStatus = {
+   accessNeedsRenewal: boolean;
+@@ -28,7 +27,7 @@ export type DriveDirectorySelection = {
+ 
+ type NativeDriveBackupModule = {
+   chooseBackupDirectory: () => Promise<unknown>;
+-  exportBackup: (currentRevision: number, token: string | null) => Promise<unknown>;
++  exportBackup: (currentRevision: number) => Promise<unknown>;
+   getBackupStatus: (currentRevision: number) => Promise<unknown>;
+ };
+ 
+@@ -108,9 +107,8 @@ export async function getDriveBackupStatus(
+ 
+ export async function exportDriveBackup(
+   currentRevision: number,
+-  permit?: DatabasePermit,
+ ): Promise<DriveBackupResult> {
+-  const value = asRecord(await getNativeModule().exportBackup(currentRevision, permit ? nativeDatabaseToken(permit) ?? null : null));
++  const value = asRecord(await getNativeModule().exportBackup(currentRevision));
+   const fileCount = value ? optionalNumber(value.fileCount) : undefined;
+   const lastBackupAt = value ? optionalString(value.lastBackupAt) : undefined;
+   const locationName = value ? optionalString(value.locationName) : undefined;
+diff --git a/src/modules/settings/useCases/deleteFinancialData.ts b/src/modules/settings/useCases/deleteFinancialData.ts
+--- a/src/modules/settings/useCases/deleteFinancialData.ts
++++ b/src/modules/settings/useCases/deleteFinancialData.ts
+@@ -1,11 +1,9 @@
+ import { createSubscriptionReminderService } from '../../subscriptions/services/androidSubscriptionReminderService';
+ import type { FinancialDataRepository } from '../repositories/sqliteFinancialDataRepository';
+-import type { DatabasePermit } from '../../../database/databaseCoordination';
+ 
+ export async function deleteFinancialData(
+   financialDataRepository: FinancialDataRepository,
+-  permit?: DatabasePermit,
+ ): Promise<void> {
+-  await createSubscriptionReminderService(permit).cancelAll();
++  await createSubscriptionReminderService().cancelAll();
+   await financialDataRepository.deleteFinancialData();
+ }
+diff --git a/src/modules/subscriptions/services/androidSubscriptionReminderService.ts b/src/modules/subscriptions/services/androidSubscriptionReminderService.ts
+--- a/src/modules/subscriptions/services/androidSubscriptionReminderService.ts
++++ b/src/modules/subscriptions/services/androidSubscriptionReminderService.ts
+@@ -1,14 +1,13 @@
+ import { NativeModules, PermissionsAndroid, Platform } from 'react-native';
+ import type { SubscriptionReminderService } from './SubscriptionReminderService';
+ import type { ReminderStatus } from '../types';
+-import { nativeDatabaseToken, type DatabasePermit } from '../../../database/databaseCoordination';
+ 
+ type NativeReminderModule = {
+   getStatus: () => Promise<unknown>;
+-  schedule: (value: string, token: string | null) => Promise<void>;
+-  cancel: (id: string, token: string | null) => Promise<void>;
+-  cancelAll: (token: string | null) => Promise<void>;
+-  ensureMaintenance: (token: string | null) => Promise<void>;
++  schedule: (value: string) => Promise<void>;
++  cancel: (id: string) => Promise<void>;
++  cancelAll: () => Promise<void>;
++  ensureMaintenance: () => Promise<void>;
+   completeMaintenance: (runId: string, success: boolean) => void;
+ };
+ export function getNativeSubscriptionReminders():
+@@ -30,9 +29,8 @@ export function getNativeSubscriptionReminders():
+   }
+   return value as NativeReminderModule;
+ }
+-export function createSubscriptionReminderService(permit?: DatabasePermit): SubscriptionReminderService {
++export function createSubscriptionReminderService(): SubscriptionReminderService {
+   const native = getNativeSubscriptionReminders();
+-  const token = () => permit ? nativeDatabaseToken(permit) ?? null : null;
+   const getStatus = async (): Promise<ReminderStatus> => {
+     if (!native) return { available: false, permission: 'unsupported' };
+     const value = await native.getStatus();
+@@ -58,16 +56,16 @@ export function createSubscriptionReminderService(permit?: DatabasePermit): Subs
+       return getStatus();
+     },
+     schedule: async reminder => {
+-      if (native) await native.schedule(JSON.stringify(reminder), token());
++      if (native) await native.schedule(JSON.stringify(reminder));
+     },
+     cancel: async id => {
+-      if (native) await native.cancel(id, token());
++      if (native) await native.cancel(id);
+     },
+     cancelAll: async () => {
+-      if (native) await native.cancelAll(token());
++      if (native) await native.cancelAll();
+     },
+     ensureMaintenance: async () => {
+-      if (native) await native.ensureMaintenance(token());
++      if (native) await native.ensureMaintenance();
+     },
+   };
+ }
+diff --git a/src/modules/subscriptions/services/subscriptionRuntime.ts b/src/modules/subscriptions/services/subscriptionRuntime.ts
+--- a/src/modules/subscriptions/services/subscriptionRuntime.ts
++++ b/src/modules/subscriptions/services/subscriptionRuntime.ts
+@@ -9,7 +9,7 @@ import {
+   runSharedSQLiteTransaction,
+   SQLiteCommandFailure,
+ } from '../../../database/atomicSQLite';
+-import { sqliteConnectionState, sqliteBorrowedPermit } from '../../../database/managedSQLite';
++import { sqliteConnectionState } from '../../../database/managedSQLite';
+ import type { SubscriptionSyncResult } from '../types';
+ import {
+   createSubscriptionReminderService,
+@@ -114,7 +114,7 @@ function runtimeApi(
+     repository: createSqliteSubscriptionRepository(database),
+     categoryRepository: createSqliteCategoryRepository(database),
+     subcategoryRepository: createSqliteSubcategoryRepository(database),
+-    reminderService: createSubscriptionReminderService(sqliteBorrowedPermit(database)),
++    reminderService: createSubscriptionReminderService(),
+   });
+ }
+ const maintenanceMethods = new Set([
+diff --git a/src/modules/transactions/useCases/executeAiCommandPlan.ts b/src/modules/transactions/useCases/executeAiCommandPlan.ts
+--- a/src/modules/transactions/useCases/executeAiCommandPlan.ts
++++ b/src/modules/transactions/useCases/executeAiCommandPlan.ts
+@@ -303,7 +303,7 @@ export async function executeAiCommandPlan(
+         // This is one existing batch, never the runtime's twenty-batch maintenance loop.
+         await createSubscriptionCommandApi({
+           repository: createSqliteSubscriptionRepository(scopedDatabase),
+-          reminderService: reminderService ?? createSubscriptionReminderService(permit),
++          reminderService: reminderService ?? createSubscriptionReminderService(),
+         }).syncSubscriptions();
+       }
+       await confirmAiCommandReceipt(scopedDatabase, draftId, command, completed);
+@@ -317,7 +317,7 @@ export async function executeAiCommandPlan(
+       try {
+         const sync = await createSubscriptionApi({
+           repository: createSqliteSubscriptionRepository(borrowSQLiteDatabase(database, permit)),
+-          reminderService: reminderService ?? createSubscriptionReminderService(permit),
++          reminderService: reminderService ?? createSubscriptionReminderService(),
+         }).syncSubscriptionReminders();
+         if (sync.reminderErrors.length) completed.push('Operaciones guardadas. Hay recordatorios pendientes; reintenta su programación desde Suscripciones.');
+         else if (sync.reminders.permission !== 'granted' && command.actions.some(action => action.entity === 'subscription')) completed.push('Suscripción guardada. Los recordatorios requieren disponibilidad y permiso; puedes gestionarlos desde Suscripciones.');
+diff --git a/src/navigation/AppNavigator.tsx b/src/navigation/AppNavigator.tsx
+--- a/src/navigation/AppNavigator.tsx
++++ b/src/navigation/AppNavigator.tsx
+@@ -279,7 +279,7 @@ export function AppNavigator() {
+       }
+ 
+       await withExclusiveDatabase(async permit => {
+-        await deleteFinancialData(createSqliteFinancialDataRepository(borrowSQLiteDatabase(database, permit)), permit);
++        await deleteFinancialData(createSqliteFinancialDataRepository(borrowSQLiteDatabase(database, permit)));
+       });
+ 
+       // Refresh dashboard so it reflects the now-empty DB immediately
+@@ -310,7 +310,7 @@ export function AppNavigator() {
+ 
+     try {
+       await closeSmartFinDatabase(permit);
+-      const result = await exportDriveBackup(revision, permit);
++      const result = await exportDriveBackup(revision);
+       setBackupStatus({
+         accessNeedsRenewal: false,
+         available: true,
+diff --git a/android/app/src/main/java/com/smartfin/SmartFinDatabaseCoordinator.kt b/android/app/src/main/java/com/smartfin/SmartFinDatabaseCoordinator.kt
+deleted file mode 100644
+--- a/android/app/src/main/java/com/smartfin/SmartFinDatabaseCoordinator.kt
++++ /dev/null
+@@ -1,137 +0,0 @@
+-package com.smartfin
+-
+-import android.os.Looper
+-import java.util.UUID
+-import java.util.concurrent.TimeUnit
+-import java.util.concurrent.locks.ReentrantLock
+-import kotlin.concurrent.withLock
+-
+-/** Process-local lifecycle gate. No SQLite handles, JS callbacks or thread-owned leases. */
+-object SmartFinDatabaseCoordinator {
+-  private val lock = ReentrantLock()
+-  private val changed = lock.newCondition()
+-  private val waiting = ArrayDeque<String>()
+-  private val revokedHosts = mutableSetOf<String>()
+-  private var generation = 0L
+-  private var exclusive: Owner? = null
+-  private var independent = 0
+-  private var quarantined = false
+-
+-  private class Owner(val host: String, val generation: Long) {
+-    val token = UUID.randomUUID().toString()
+-    var participants = 0
+-    var revoked = false
+-  }
+-
+-  class Participant internal constructor(
+-    internal val token: String?,
+-    internal val generation: Long,
+-  ) : AutoCloseable {
+-    internal var active = true
+-    override fun close() = finish(this)
+-  }
+-
+-  private fun background() {
+-    check(Looper.myLooper() != Looper.getMainLooper()) { "Database gate cannot wait on UI" }
+-  }
+-
+-  fun acquire(host: String, timeoutMs: Long = 10_000): String {
+-    background()
+-    val request = UUID.randomUUID().toString()
+-    var remaining = TimeUnit.MILLISECONDS.toNanos(timeoutMs)
+-    lock.withLock {
+-      waiting.addLast(request)
+-      try {
+-        while (true) {
+-          check(!quarantined && host !in revokedHosts) { "Database lifecycle quarantined; restart process" }
+-          if (waiting.first() == request && exclusive == null && independent == 0) {
+-            val owner = Owner(host, ++generation)
+-            exclusive = owner
+-            return owner.token
+-          }
+-          check(remaining > 0) { "Database permission acquisition timed out" }
+-          remaining = changed.awaitNanos(remaining)
+-        }
+-      } finally {
+-        waiting.remove(request)
+-        changed.signalAll()
+-      }
+-    }
+-  }
+-
+-  fun participate(token: String? = null, timeoutMs: Long = 2_000): Participant {
+-    background()
+-    var remaining = TimeUnit.MILLISECONDS.toNanos(timeoutMs)
+-    lock.withLock {
+-      while (true) {
+-        check(!quarantined) { "Database lifecycle quarantined; restart process" }
+-        if (token != null) {
+-          val owner = exclusive
+-          check(owner != null && owner.token == token && !owner.revoked) { "Native owner is revoked or invalid" }
+-          owner.participants++
+-          return Participant(token, owner.generation)
+-        }
+-        if (exclusive == null && waiting.isEmpty()) {
+-          independent++
+-          return Participant(null, generation)
+-        }
+-        check(remaining > 0) { "Database participation acquisition timed out" }
+-        remaining = changed.awaitNanos(remaining)
+-      }
+-    }
+-  }
+-
+-  fun assertParticipant(permit: Participant) = lock.withLock {
+-    check(permit.active && !quarantined) { "Native participant is revoked" }
+-    if (permit.token != null) {
+-      val owner = exclusive
+-      check(owner != null && owner.token == permit.token && owner.generation == permit.generation && !owner.revoked)
+-    }
+-  }
+-
+-  private fun finish(permit: Participant) = lock.withLock {
+-    if (permit.active) {
+-      permit.active = false
+-      if (permit.token == null) independent--
+-      else {
+-        val owner = exclusive
+-        check(owner != null && owner.token == permit.token && owner.generation == permit.generation)
+-        owner.participants--
+-      }
+-      changed.signalAll()
+-    }
+-  }
+-
+-  fun release(host: String, token: String) {
+-    background()
+-    lock.withLock {
+-      val owner = exclusive
+-      check(owner != null && owner.host == host && owner.token == token) { "Invalid native release" }
+-      owner.revoked = true
+-      // No timeout: existing work keeps its protection until it really finishes.
+-      while (owner.participants != 0) changed.await()
+-      if (!quarantined) exclusive = null
+-      changed.signalAll()
+-    }
+-  }
+-
+-  fun quarantine() = lock.withLock {
+-    quarantined = true
+-    exclusive?.revoked = true
+-    changed.signalAll()
+-  }
+-
+-  fun isQuarantined(): Boolean = lock.withLock { quarantined }
+-
+-  fun invalidateHost(host: String) = lock.withLock {
+-    revokedHosts.add(host)
+-    // The RN driver may still own a connection or a queued native operation.
+-    // Without its confirmed close, only a process restart certifies its destruction.
+-    quarantined = true
+-    exclusive?.revoked = true
+-    changed.signalAll()
+-  }
+-
+-  fun <T> withParticipant(token: String? = null, operation: (Participant) -> T): T =
+-    participate(token).use(operation)
+-}
+diff --git a/android/app/src/main/java/com/smartfin/SmartFinDatabaseLifecycleModule.kt b/android/app/src/main/java/com/smartfin/SmartFinDatabaseLifecycleModule.kt
+deleted file mode 100644
+--- a/android/app/src/main/java/com/smartfin/SmartFinDatabaseLifecycleModule.kt
++++ /dev/null
+@@ -1,46 +0,0 @@
+-package com.smartfin
+-
+-import com.facebook.react.bridge.Promise
+-import com.facebook.react.bridge.ReactApplicationContext
+-import com.facebook.react.bridge.ReactContextBaseJavaModule
+-import com.facebook.react.bridge.ReactMethod
+-import java.util.UUID
+-import java.util.concurrent.Executors
+-import org.json.JSONObject
+-
+-class SmartFinDatabaseLifecycleModule(private val context: ReactApplicationContext) :
+-  ReactContextBaseJavaModule(context) {
+-  private val host = UUID.randomUUID().toString()
+-  // Acquisition must not occupy the RN executor needed by driver close/SQL.
+-  private val executor = Executors.newCachedThreadPool()
+-  override fun getName() = "SmartFinDatabaseLifecycle"
+-
+-  private fun submit(promise: Promise, operation: () -> Any?) {
+-    executor.execute {
+-      try { promise.resolve(operation()) }
+-      catch (error: Exception) { promise.reject("DATABASE_LIFECYCLE", "No se pudo confirmar el ciclo de vida SQLite.", error) }
+-    }
+-  }
+-
+-  @ReactMethod fun acquire(promise: Promise) = submit(promise) { SmartFinDatabaseCoordinator.acquire(host) }
+-  @ReactMethod fun checkOwner(token: String, promise: Promise) = submit(promise) {
+-    SmartFinDatabaseCoordinator.withParticipant(token) { }; null
+-  }
+-  @ReactMethod fun release(token: String, promise: Promise) = submit(promise) {
+-    SmartFinDatabaseCoordinator.release(host, token); null
+-  }
+-  @ReactMethod fun quarantine(promise: Promise) = submit(promise) {
+-    SmartFinDatabaseCoordinator.quarantine(); null
+-  }
+-  @ReactMethod fun capture(token: String, expected: String, promise: Promise) = submit(promise) {
+-    SmartFinLocalSnapshot.capture(context, token, JSONObject(expected)).toString()
+-  }
+-  @ReactMethod fun discard(token: String, id: String, promise: Promise) = submit(promise) {
+-    SmartFinLocalSnapshot.discard(context, token, id); null
+-  }
+-  override fun invalidate() {
+-    SmartFinDatabaseCoordinator.invalidateHost(host)
+-    executor.shutdown() // Never interrupt a copy and release its protection early.
+-    super.invalidate()
+-  }
+-}
+diff --git a/android/app/src/main/java/com/smartfin/SmartFinLocalSnapshot.kt b/android/app/src/main/java/com/smartfin/SmartFinLocalSnapshot.kt
+deleted file mode 100644
+--- a/android/app/src/main/java/com/smartfin/SmartFinLocalSnapshot.kt
++++ /dev/null
+@@ -1,157 +0,0 @@
+-package com.smartfin
+-
+-import android.content.Context
+-import android.database.sqlite.SQLiteDatabase
+-import java.io.File
+-import java.io.FileOutputStream
+-import java.security.MessageDigest
+-import java.security.DigestInputStream
+-import java.util.UUID
+-import org.json.JSONArray
+-import org.json.JSONObject
+-
+-/** Private local capture only. Never uses SAF or exports from a live connection. */
+-object SmartFinLocalSnapshot {
+-  private inline fun <T> usingDatabase(db: SQLiteDatabase, operation: (SQLiteDatabase) -> T): T {
+-    try { return operation(db) }
+-    finally {
+-      try { db.close() }
+-      catch (error: Exception) { SmartFinDatabaseCoordinator.quarantine(); throw error }
+-    }
+-  }
+-  private val requiredTables = setOf(
+-    "accounts", "transactions", "ai_command_drafts", "shared_commands",
+-    "shared_expenses", "shared_loss_events", "installment_purchases",
+-    "subscription_occurrences", "subscription_reminders", "recurring_subscriptions",
+-    "financial_data_revision", "schema_migrations", "app_settings",
+-  )
+-
+-  private fun scalar(db: SQLiteDatabase, sql: String): String =
+-    db.rawQuery(sql, null).use { check(it.moveToFirst()); it.getString(0) }
+-
+-  fun describe(db: SQLiteDatabase): JSONObject {
+-    check(!db.inTransaction()) { "Active SQLite transaction" }
+-    check(scalar(db, "PRAGMA foreign_keys") == "1") { "Foreign keys disabled" }
+-    db.rawQuery("PRAGMA foreign_key_check", null).use { check(!it.moveToFirst()) { "Foreign key check failed" } }
+-    db.rawQuery("PRAGMA integrity_check", null).use {
+-      check(it.moveToFirst() && it.getString(0) == "ok" && !it.moveToNext()) { "SQLite integrity check failed" }
+-    }
+-    val schema = JSONArray()
+-    val tables = JSONArray()
+-    val names = mutableSetOf<String>()
+-    db.rawQuery("SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name", null).use { cursor ->
+-      while (cursor.moveToNext()) {
+-        val row = JSONArray()
+-        for (column in 0..3) row.put(if (cursor.isNull(column)) JSONObject.NULL else cursor.getString(column))
+-        schema.put(row)
+-        if (cursor.getString(0) == "table") {
+-          val name = cursor.getString(1)
+-          names.add(name)
+-          val quoted = name.replace("\"", "\"\"")
+-          tables.put(JSONArray().put(name).put(scalar(db, "SELECT count(*) FROM \"$quoted\"").toLong()))
+-        }
+-      }
+-    }
+-    check(names.containsAll(requiredTables)) { "Expected SmartFin tables missing" }
+-    val revision = scalar(db, "SELECT revision FROM financial_data_revision WHERE id=1").toLong()
+-    check(revision in 0..9_007_199_254_740_991L)
+-    return JSONObject().put("schema", schema).put("tables", tables)
+-      .put("revision", revision).put("userVersion", scalar(db, "PRAGMA user_version").toLong())
+-      .put("schemaVersion", scalar(db, "PRAGMA schema_version").toLong())
+-  }
+-
+-  private fun verify(actual: JSONObject, expected: JSONObject) {
+-    for (key in listOf("schema", "tables", "revision", "userVersion", "schemaVersion")) {
+-      check(actual.get(key).toString() == expected.get(key).toString()) { "Snapshot metadata mismatch: $key" }
+-    }
+-  }
+-
+-  fun capture(context: Context, token: String, expected: JSONObject): JSONObject =
+-    SmartFinDatabaseCoordinator.withParticipant(token) { permit ->
+-      val started = System.nanoTime()
+-      val source = context.getDatabasePath("smartfin.db")
+-      check(source.isFile) { "Database file unavailable" }
+-      val root = File(context.noBackupFilesDir, "smartfin-local-snapshots")
+-      check(root.isDirectory || root.mkdirs())
+-      val id = UUID.randomUUID().toString()
+-      val directory = File(root, id)
+-      check(directory.mkdir()) { "Snapshot directory must be new" }
+-      val destination = File(directory, "snapshot.db")
+-      try {
+-        val sourceValidationStart = System.nanoTime()
+-        var journal = ""
+-        // Driver checkpoint and close have already been acknowledged. Use RO:
+-        // Android RW open may reset the journal mode from platform defaults.
+-        usingDatabase(SQLiteDatabase.openDatabase(source.path, null, SQLiteDatabase.OPEN_READONLY)) { db ->
+-          // Android skips configuration FK PRAGMA on a read-only connection.
+-          // SQLite itself permits this connection-local setting without writes.
+-          db.execSQL("PRAGMA foreign_keys=ON")
+-          journal = scalar(db, "PRAGMA journal_mode").lowercase()
+-          check(journal in setOf("wal", "delete", "truncate", "persist")) { "Unsafe journal mode for capture" }
+-          // Rollback modes are connection-local and a new RO connection may
+-          // report DELETE after PERSIST/TRUNCATE close. WAL persists in header.
+-          check((journal == "wal") == (expected.getString("journal") == "wal")) { "Journal family changed during capture" }
+-          verify(describe(db), expected)
+-        }
+-        val sourceValidationMs = elapsed(sourceValidationStart)
+-        SmartFinDatabaseCoordinator.assertParticipant(permit)
+-        val copyStart = System.nanoTime()
+-        val sourceDigest = MessageDigest.getInstance("SHA-256")
+-        check(destination.createNewFile())
+-        FileOutputStream(destination).use { output ->
+-          DigestInputStream(source.inputStream(), sourceDigest).use { input -> input.copyTo(output) }
+-          output.fd.sync()
+-        }
+-        check(destination.length() > 0 && destination.length() == source.length()) { "Incomplete private copy" }
+-        val copyMs = elapsed(copyStart)
+-        val validationStart = System.nanoTime()
+-        usingDatabase(SQLiteDatabase.openDatabase(destination.path, null, SQLiteDatabase.OPEN_READONLY)) { snapshot ->
+-          snapshot.execSQL("PRAGMA foreign_keys=ON")
+-          verify(describe(snapshot), expected)
+-        }
+-        val digest = MessageDigest.getInstance("SHA-256")
+-        destination.inputStream().use { input ->
+-          val buffer = ByteArray(64 * 1024)
+-          while (true) { val length = input.read(buffer); if (length < 0) break; digest.update(buffer, 0, length) }
+-        }
+-        val copiedHash = digest.digest()
+-        check(MessageDigest.isEqual(sourceDigest.digest(), copiedHash)) { "Private snapshot byte verification failed" }
+-        SmartFinDatabaseCoordinator.assertParticipant(permit)
+-        JSONObject().put("id", id).put("path", destination.absolutePath)
+-          .put("bytes", destination.length()).put("revision", expected.getLong("revision"))
+-          .put("sha256", copiedHash.joinToString("") { "%02x".format(it) })
+-          .put("journal", journal).put("journalBeforeClose", expected.getString("journal"))
+-          .put("sourceValidationMs", sourceValidationMs)
+-          .put("copyMs", copyMs).put("validationAndHashMs", elapsed(validationStart))
+-          .put("nativeTotalMs", elapsed(started))
+-      } catch (error: Exception) {
+-        // Only the new private main file is ours. Never remove WAL/journal files.
+-        if (!SmartFinDatabaseCoordinator.isQuarantined()) {
+-          destination.delete()
+-          directory.delete()
+-        }
+-        throw error
+-      }
+-    }
+-
+-  fun discard(context: Context, token: String, id: String) =
+-    SmartFinDatabaseCoordinator.withParticipant(token) {
+-      check(UUID.fromString(id).toString() == id) { "Invalid private snapshot identity" }
+-      val directory = File(File(context.noBackupFilesDir, "smartfin-local-snapshots"), id)
+-      val snapshot = File(directory, "snapshot.db")
+-      if (snapshot.exists()) {
+-        // A RO WAL validation may leave SQLite-owned zero-length WAL/SHM files.
+-        // Let SQLite clean its own resources on last RW close, never unlink them.
+-        check(snapshot.setWritable(true, true))
+-        usingDatabase(SQLiteDatabase.openDatabase(snapshot.path, null, SQLiteDatabase.OPEN_READWRITE)) { db ->
+-          db.rawQuery("PRAGMA journal_mode=DELETE", null).use { row ->
+-            check(row.moveToFirst() && row.getString(0).lowercase() == "delete")
+-          }
+-        }
+-      }
+-      check(!snapshot.exists() || snapshot.delete()) { "Cannot remove private snapshot" }
+-      check(!directory.exists() || directory.delete()) { "Private snapshot still has resources" }
+-    }
+-
+-  private fun elapsed(start: Long): Double = (System.nanoTime() - start) / 1_000_000.0
+-}
+diff --git a/android/app/src/main/java/com/smartfin/SmartFinDriveBackupModule.kt b/android/app/src/main/java/com/smartfin/SmartFinDriveBackupModule.kt
+--- a/android/app/src/main/java/com/smartfin/SmartFinDriveBackupModule.kt
++++ b/android/app/src/main/java/com/smartfin/SmartFinDriveBackupModule.kt
+@@ -167,12 +167,10 @@ class SmartFinDriveBackupModule(
+   }
+ 
+   @ReactMethod
+-  fun exportBackup(currentRevision: Double, token: String?, promise: Promise) {
++  fun exportBackup(currentRevision: Double, promise: Promise) {
+     executor.execute {
+       var database: SQLiteDatabase? = null
+-      var participant: SmartFinDatabaseCoordinator.Participant? = null
+       try {
+-        participant = SmartFinDatabaseCoordinator.participate(token)
+         val directoryUri = storedDirectoryUri()
+             ?: throw IllegalStateException("Primero selecciona una carpeta de Google Drive.")
+         val databaseFile = reactContext.getDatabasePath(DATABASE_NAME)
+@@ -187,8 +185,6 @@ class SmartFinDriveBackupModule(
+         ) { output -> databaseFile.inputStream().use { input -> input.copyTo(output) } }
+ 
+         database = SQLiteDatabase.openDatabase(databaseFile.path, null, SQLiteDatabase.OPEN_READONLY)
+-        database.execSQL("PRAGMA foreign_keys=ON")
+-        database.rawQuery("PRAGMA foreign_keys", null).use { check(it.moveToFirst() && it.getInt(0) == 1) }
+         val generatedFiles = mutableListOf(DATABASE_BACKUP_FILE_NAME)
+ 
+         EXPORTS.forEach { export ->
+@@ -238,9 +234,7 @@ class SmartFinDriveBackupModule(
+       } catch (error: Exception) {
+         promise.reject("BACKUP_EXPORT_ERROR", "No se pudo actualizar el respaldo de Google Drive.", error)
+       } finally {
+-        try { database?.close() }
+-        catch (error: Exception) { SmartFinDatabaseCoordinator.quarantine(); throw error }
+-        finally { participant?.close() }
++        database?.close()
+       }
+     }
+   }
+diff --git a/android/app/src/main/java/com/smartfin/SmartFinSubscriptionRemindersModule.kt b/android/app/src/main/java/com/smartfin/SmartFinSubscriptionRemindersModule.kt
+--- a/android/app/src/main/java/com/smartfin/SmartFinSubscriptionRemindersModule.kt
++++ b/android/app/src/main/java/com/smartfin/SmartFinSubscriptionRemindersModule.kt
+@@ -25,28 +25,11 @@ import java.text.SimpleDateFormat
+ import java.util.Locale
+ import java.util.TimeZone
+ import java.util.concurrent.TimeUnit
+-import java.util.concurrent.Executors
+ import org.json.JSONObject
+ 
+ class SmartFinSubscriptionRemindersModule(private val context: ReactApplicationContext) :
+     ReactContextBaseJavaModule(context) {
+   override fun getName(): String = "SmartFinSubscriptionReminders"
+-  private val executor = Executors.newCachedThreadPool()
+-
+-  private fun protectedOperation(token: String?, promise: Promise, code: String,
+-      operation: (SmartFinDatabaseCoordinator.Participant) -> Unit) {
+-    executor.execute {
+-      try {
+-        SmartFinDatabaseCoordinator.withParticipant(token, operation)
+-        promise.resolve(null)
+-      } catch (error: Exception) { promise.reject(code, "No se pudo completar el recordatorio local.", error) }
+-    }
+-  }
+-
+-  override fun invalidate() {
+-    executor.shutdown() // Drain resources; never release an active permit by timeout.
+-    super.invalidate()
+-  }
+ 
+   @ReactMethod
+   fun getStatus(promise: Promise) {
+@@ -58,12 +41,12 @@ class SmartFinSubscriptionRemindersModule(private val context: ReactApplicationC
+   }
+ 
+   @ReactMethod
+-  fun schedule(json: String, token: String?, promise: Promise) {
+-    protectedOperation(token, promise, "REMINDER_SCHEDULE") { permit ->
++  fun schedule(json: String, promise: Promise) {
++    try {
+       val input = JSONObject(json)
+       val id = input.getString("id")
+       val revision = input.getInt("revision")
+-      val valid = withDatabase(context, permit) { db ->
++      val valid = withDatabase(context) { db ->
+         db.rawQuery("SELECT revision, desired, delivery_status FROM subscription_reminders WHERE id = ?", arrayOf(id)).use { cursor ->
+           cursor.moveToFirst() && cursor.getInt(0) == revision && cursor.getString(1) == "scheduled" && cursor.getString(2) != "delivered"
+         }
+@@ -74,23 +57,25 @@ class SmartFinSubscriptionRemindersModule(private val context: ReactApplicationC
+         val timestamp = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.US).apply { timeZone = TimeZone.getTimeZone("UTC") }.parse(input.getString("fireAt"))!!.time
+         manager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,timestamp,pending)
+       }
+-    }
++      promise.resolve(null)
++    } catch (error: Exception) { promise.reject("REMINDER_SCHEDULE", "No se pudo programar el recordatorio local.", error) }
+   }
+ 
+   @ReactMethod
+-  fun cancel(id: String, token: String?, promise: Promise) {
+-    protectedOperation(token, promise, "REMINDER_CANCEL") { permit ->
+-      val shouldCancel = withDatabase(context, permit) { db ->
++  fun cancel(id: String, promise: Promise) {
++    try {
++      val shouldCancel = withDatabase(context) { db ->
+         db.rawQuery("SELECT desired FROM subscription_reminders WHERE id = ?",arrayOf(id)).use { !it.moveToFirst() || it.getString(0) == "cancelled" }
+       } ?: true
+       if (shouldCancel) cancelAlarm(context,id)
+-    }
++      promise.resolve(null)
++    } catch (error: Exception) { promise.reject("REMINDER_CANCEL", "No se pudo cancelar el recordatorio.", error) }
+   }
+ 
+   @ReactMethod
+-  fun cancelAll(token: String?, promise: Promise) {
+-    protectedOperation(token, promise, "REMINDER_CANCEL_ALL") { permit ->
+-      withDatabase(context, permit) { db ->
++  fun cancelAll(promise: Promise) {
++    try {
++      withDatabase(context) { db ->
+         db.rawQuery("SELECT id FROM subscription_reminders",null).use { cursor -> while(cursor.moveToNext()) cancelAlarm(context,cursor.getString(0)) }
+       }
+       (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).activeNotifications
+@@ -98,16 +83,18 @@ class SmartFinSubscriptionRemindersModule(private val context: ReactApplicationC
+           .forEach { (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).cancel(it.tag,it.id) }
+       WorkManager.getInstance(context).cancelUniqueWork(MAINTENANCE)
+       WorkManager.getInstance(context).cancelUniqueWork(RECOVERY)
+-    }
++      promise.resolve(null)
++    } catch (error: Exception) { promise.reject("REMINDER_CANCEL_ALL", "No se pudieron cancelar los recordatorios.", error) }
+   }
+ 
+   @ReactMethod
+-  fun ensureMaintenance(token: String?, promise: Promise) {
+-    protectedOperation(token, promise, "REMINDER_MAINTENANCE") {
++  fun ensureMaintenance(promise: Promise) {
++    try {
+       ensureChannel(context)
+       val request = PeriodicWorkRequestBuilder<SmartFinSubscriptionWorker>(24,TimeUnit.HOURS).build()
+       WorkManager.getInstance(context).enqueueUniquePeriodicWork(MAINTENANCE,ExistingPeriodicWorkPolicy.KEEP,request)
+-    }
++      promise.resolve(null)
++    } catch (error: Exception) { promise.reject("REMINDER_MAINTENANCE", "No se pudo programar el mantenimiento local.", error) }
+   }
+ 
+   @ReactMethod
+@@ -144,23 +131,10 @@ class SmartFinSubscriptionRemindersModule(private val context: ReactApplicationC
+       if (pending != null) { (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager).cancel(pending); pending.cancel() }
+       (context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).cancel(id,1)
+     }
+-    fun <T> withDatabase(context: Context, block: (SQLiteDatabase) -> T): T? =
+-      SmartFinDatabaseCoordinator.withParticipant { permit -> withDatabase(context, permit, block) }
+-
+-    fun <T> withDatabase(context: Context, permit: SmartFinDatabaseCoordinator.Participant,
+-        block: (SQLiteDatabase) -> T): T? {
+-      SmartFinDatabaseCoordinator.assertParticipant(permit)
++    fun <T> withDatabase(context: Context, block: (SQLiteDatabase) -> T): T? {
+       val file = context.getDatabasePath("smartfin.db")
+       if (!file.exists()) return null
+-      val db = SQLiteDatabase.openDatabase(file.path,null,SQLiteDatabase.OPEN_READWRITE)
+-      try {
+-        db.setForeignKeyConstraintsEnabled(true)
+-        db.rawQuery("PRAGMA foreign_keys", null).use { check(it.moveToFirst() && it.getInt(0) == 1) }
+-        return block(db)
+-      } finally {
+-        try { db.close() }
+-        catch (error: Exception) { SmartFinDatabaseCoordinator.quarantine(); throw error }
+-      }
++      return SQLiteDatabase.openDatabase(file.path,null,SQLiteDatabase.OPEN_READWRITE).use(block)
+     }
+   }
+ }
+diff --git a/android/app/src/main/java/com/smartfin/SmartFinNativePackage.kt b/android/app/src/main/java/com/smartfin/SmartFinNativePackage.kt
+--- a/android/app/src/main/java/com/smartfin/SmartFinNativePackage.kt
++++ b/android/app/src/main/java/com/smartfin/SmartFinNativePackage.kt
+@@ -11,7 +11,6 @@ class SmartFinNativePackage : ReactPackage {
+   ): List<NativeModule> =
+       listOf(
+           SmartFinDriveBackupModule(reactContext),
+-          SmartFinDatabaseLifecycleModule(reactContext),
+           SmartFinSecurityModule(reactContext),
+           SmartFinSubscriptionRemindersModule(reactContext),
+       )

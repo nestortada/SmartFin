@@ -1,0 +1,326 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand
+
+PASS __tests__/driveBackupService.test.ts
+PASS __tests__/creditCardReconciliationEquivalence.test.ts (44.03 s)
+PASS __tests__/creditCardAssociationScaling.test.ts (9.514 s)
+PASS __tests__/transactionHistoryPagination.test.ts (10.653 s)
+FAIL __tests__/subscriptionAtomicityPhase4.test.ts (10.974 s)
+  ● maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs
+
+    RangeError: Maximum call stack size exceeded
+
+      133 |       if (/^\s*(SELECT|PRAGMA|WITH|EXPLAIN)\b/i.test(sql))
+      134 |         rows = statement.all(...values);
+    > 135 |       else changes = Number(statement.run(...values).changes);
+          |                                       ^
+      136 |       return {
+      137 |         rows: {
+      138 |           length: rows.length,
+
+      at run (__tests__/helpers/realSQLite.ts:135:39)
+      at execute (__tests__/helpers/realSQLite.ts:119:16)
+      at run (__tests__/helpers/realSQLite.ts:129:12)
+      at Object.query [as executeSql] (__tests__/helpers/realSQLite.ts:166:26)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+
+  ● maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      91 | });
+      92 |
+    > 93 | test('maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs', async () => {
+         | ^
+      94 |   const f = await financialIntegrityFixture();
+      95 |   const service = makeService();
+      96 |   const direct = createSubscriptionApi({ repository: createSqliteSubscriptionRepository(f.database), reminderService: service });
+
+      at Object.test (__tests__/subscriptionAtomicityPhase4.test.ts:93:1)
+
+PASS __tests__/financialAtomicityPhase2.test.ts (8.848 s)
+PASS __tests__/localSnapshotCoordination.test.ts (7.413 s)
+PASS __tests__/financialAtomicityPhase3B.test.ts (5.929 s)
+PASS __tests__/financialAtomicityPhase0.test.ts
+PASS __tests__/transactionsScreen.test.tsx
+PASS __tests__/financialAtomicityPhase4.test.ts
+PASS __tests__/financialDeletionPhase5C.test.ts
+PASS __tests__/dashboardSummary.test.ts
+PASS __tests__/creditCardReconciliationBaseline.test.ts
+PASS __tests__/financialAtomicityPhase3A.test.ts
+PASS __tests__/subscriptions.test.ts
+PASS __tests__/sharedForgiveness.test.ts
+PASS __tests__/settingsTaskOwner.test.ts
+PASS __tests__/subscriptionInterface.test.tsx
+PASS __tests__/geminiCommandService.test.ts
+PASS __tests__/sharedExpenses.test.ts
+PASS __tests__/creditCardPaymentScreen.test.tsx
+PASS __tests__/sharedFinancialTotals.test.ts
+PASS __tests__/transactionHistoryRefinement.test.ts
+PASS __tests__/sharedSQLiteCoordination.test.ts
+PASS __tests__/transactionDates.test.ts
+PASS __tests__/sqliteRecoveryLifecycle.test.ts
+PASS __tests__/financialIntegrity.test.ts
+PASS __tests__/sharedCommandReads.test.ts
+PASS __tests__/financialAtomicityInfrastructure.test.ts
+PASS __tests__/aiSubscriptions.test.ts
+PASS __tests__/aiTransfers.test.ts
+PASS __tests__/backupControls.test.tsx
+PASS __tests__/aiConfirmationPhase4.test.tsx
+PASS __tests__/creditCardTransactionRelations.test.ts
+PASS __tests__/aiDraftRepository.test.ts
+PASS __tests__/subscriptionMaintenanceComparison.test.ts
+PASS __tests__/manageSecurity.test.ts
+PASS __tests__/sharedCommandReaderWait.test.ts
+PASS __tests__/financialDeletionBaseline.test.ts
+PASS __tests__/settingsRepository.test.ts
+PASS __tests__/useTransactionsPagination.test.tsx
+PASS __tests__/debitCardManagement.test.ts
+PASS __tests__/sqliteAndroidRecoveryPatch.test.ts
+PASS __tests__/financialDataRepository.test.ts
+PASS __tests__/aiCommandPlanner.test.ts
+PASS __tests__/saveManualTransaction.test.ts
+PASS __tests__/transactionAccountFilter.test.ts
+PASS __tests__/creditCardsOverview.test.ts
+PASS __tests__/categoryManagement.test.ts
+PASS __tests__/backupPublication.test.ts
+PASS __tests__/debitCardsOverview.test.ts
+PASS __tests__/creditCardRepository.test.ts
+PASS __tests__/creditCardFormatters.test.ts
+PASS __tests__/subscriptionPresentation.test.ts
+PASS __tests__/subscriptionRecurrence.test.ts
+PASS __tests__/copAmountInput.test.ts
+
+Summary of all failing tests
+FAIL __tests__/subscriptionAtomicityPhase4.test.ts (10.974 s)
+  ● maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs
+
+    RangeError: Maximum call stack size exceeded
+
+      133 |       if (/^\s*(SELECT|PRAGMA|WITH|EXPLAIN)\b/i.test(sql))
+      134 |         rows = statement.all(...values);
+    > 135 |       else changes = Number(statement.run(...values).changes);
+          |                                       ^
+      136 |       return {
+      137 |         rows: {
+      138 |           length: rows.length,
+
+      at run (__tests__/helpers/realSQLite.ts:135:39)
+      at execute (__tests__/helpers/realSQLite.ts:119:16)
+      at run (__tests__/helpers/realSQLite.ts:129:12)
+      at Object.query [as executeSql] (__tests__/helpers/realSQLite.ts:166:26)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:167:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+
+  ● maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      91 | });
+      92 |
+    > 93 | test('maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs', async () => {
+         | ^
+      94 |   const f = await financialIntegrityFixture();
+      95 |   const service = makeService();
+      96 |   const direct = createSubscriptionApi({ repository: createSqliteSubscriptionRepository(f.database), reminderService: service });
+
+      at Object.test (__tests__/subscriptionAtomicityPhase4.test.ts:93:1)
+
+
+Test Suites: 1 failed, 3 skipped, 56 passed, 57 of 60 total
+Tests:       1 failed, 3 skipped, 628 passed, 632 total
+Snapshots:   8 passed, 8 total
+Time:        135.607 s, estimated 242 s
+Ran all test suites.

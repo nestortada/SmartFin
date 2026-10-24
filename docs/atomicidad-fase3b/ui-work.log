@@ -1,0 +1,19 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/creditCardPaymentScreen.test.tsx
+
+PASS __tests__/creditCardPaymentScreen.test.tsx
+  √ two save calls from the same rendered button debit once; confirmed stale handler cannot resubmit (901 ms)
+  √ a toast failure after COMMIT reports saved payment and prevents repeated debit (70 ms)
+  √ unknown payment displays uncertainty and a second press sends no SQL (58 ms)
+  √ payment UI preserves decimal 0,01 and explains minimum without financial effects (77 ms)
+  √ payment UI preserves decimal 0,40 and explains minimum without financial effects (71 ms)
+  √ payment UI preserves decimal 0,49 and explains minimum without financial effects (70 ms)
+  √ card edit double press shares one commit and a post-commit toast failure does not permit another write (80 ms)
+  √ card edit unknown blocks another save even through the old rendered handler (73 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       8 passed, 8 total
+Snapshots:   0 total
+Time:        3.31 s
+Ran all test suites matching /__tests__\\creditCardPaymentScreen.test.tsx/i.

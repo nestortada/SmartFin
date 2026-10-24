@@ -700,7 +700,7 @@ test('cancellation, deletion, distribution and quick edits cannot erase or overs
       monthlyNetLosses: 0,
     });
     await verifyPosition(f);
-    await createSqliteFinancialDataRepository(f.database).deleteFinancialData();
+    await createSqliteFinancialDataRepository(f.database).deleteFinancialData('11111111-1111-4111-8111-111111111111', { workIds: [], backupJobIds: [], snapshotIds: [] });
     expect(f.query('SELECT * FROM shared_loss_events').rows.raw()).toEqual([]);
     f.verifyForeignKeys();
   } finally {

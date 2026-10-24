@@ -1,13 +1,14 @@
 import { NativeModules, PermissionsAndroid, Platform } from 'react-native';
 import type { SubscriptionReminderService } from './SubscriptionReminderService';
 import type { ReminderStatus } from '../types';
+import { nativeDatabaseToken, type DatabasePermit } from '../../../database/databaseCoordination';
 
 type NativeReminderModule = {
   getStatus: () => Promise<unknown>;
-  schedule: (value: string) => Promise<void>;
-  cancel: (id: string) => Promise<void>;
-  cancelAll: () => Promise<void>;
-  ensureMaintenance: () => Promise<void>;
+  schedule: (value: string, token: string | null) => Promise<void>;
+  cancel: (id: string, token: string | null) => Promise<void>;
+  cancelAll: (token: string | null) => Promise<void>;
+  ensureMaintenance: (token: string | null) => Promise<void>;
   completeMaintenance: (runId: string, success: boolean) => void;
 };
 export function getNativeSubscriptionReminders():
@@ -29,8 +30,9 @@ export function getNativeSubscriptionReminders():
   }
   return value as NativeReminderModule;
 }
-export function createSubscriptionReminderService(): SubscriptionReminderService {
+export function createSubscriptionReminderService(permit?: DatabasePermit): SubscriptionReminderService {
   const native = getNativeSubscriptionReminders();
+  const token = () => permit ? nativeDatabaseToken(permit) ?? null : null;
   const getStatus = async (): Promise<ReminderStatus> => {
     if (!native) return { available: false, permission: 'unsupported' };
     const value = await native.getStatus();
@@ -56,16 +58,16 @@ export function createSubscriptionReminderService(): SubscriptionReminderService
       return getStatus();
     },
     schedule: async reminder => {
-      if (native) await native.schedule(JSON.stringify(reminder));
+      if (native) await native.schedule(JSON.stringify(reminder), token());
     },
     cancel: async id => {
-      if (native) await native.cancel(id);
+      if (native) await native.cancel(id, token());
     },
     cancelAll: async () => {
-      if (native) await native.cancelAll();
+      if (native) await native.cancelAll(token());
     },
     ensureMaintenance: async () => {
-      if (native) await native.ensureMaintenance();
+      if (native) await native.ensureMaintenance(token());
     },
   };
 }

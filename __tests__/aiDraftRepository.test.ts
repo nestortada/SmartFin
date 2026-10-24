@@ -2,6 +2,9 @@ import type { ResultSet } from 'react-native-sqlite-storage';
 
 import type { SmartFinSQLiteDatabase } from '../src/database';
 import { createSqliteAiDraftRepository, type AiCommandDraft } from '../src/modules/transactions';
+import { realSQLite } from './helpers/realSQLite';
+import { SQLITE_SCHEMA_STATEMENTS } from '../src/database/sqliteSchema';
+import { applyVersionedMigrations } from '../src/database/migrations';
 
 function createResultSet(rows: Record<string, string>[]): ResultSet {
   return {
@@ -42,8 +45,10 @@ test('AI draft repository restores migrated drafts with empty conversation histo
 });
 
 test('AI draft repository persists messages and question answers in local JSON', async () => {
-  const executeSql = jest.fn(async (_statement: string, _values?: unknown[]) => [createResultSet([])] as const);
-  const repository = createSqliteAiDraftRepository({ executeSql } as unknown as SmartFinSQLiteDatabase);
+  const sql = realSQLite();
+  for (const statement of SQLITE_SCHEMA_STATEMENTS) sql.native.exec(statement);
+  await applyVersionedMigrations(sql.database);
+  const repository = createSqliteAiDraftRepository(sql.database);
   const draft: AiCommandDraft = {
     clarificationHistory: [{
       actionId: 'income', answerLabel: 'No, ocurre solo esta vez', answerValue: 'false',
@@ -62,9 +67,31 @@ test('AI draft repository persists messages and question answers in local JSON',
     updatedAt: '2026-09-27T12:01:00.000Z',
   };
 
-  await repository.saveActiveDraft(draft);
+  try {
+    await repository.saveActiveDraft(draft);
+    const row = sql.query('SELECT * FROM ai_command_drafts').rows.item(0);
+    expect(row?.messages_json).toContain('Recibí 900 mil');
+    expect(row?.clarification_history_json).toContain('No, ocurre solo esta vez');
+    expect(await repository.loadActiveDraft()).toEqual(draft);
+  } finally { sql.native.close(); }
+});
 
-  const insertCall = executeSql.mock.calls.find(call => String(call[0]).includes('INSERT OR REPLACE'));
-  expect(insertCall?.[1]?.[3]).toContain('Recibí 900 mil');
-  expect(insertCall?.[1]?.[4]).toContain('No, ocurre solo esta vez');
+test('replacing the active draft is atomic at every write and preserves the original createdAt', async () => {
+  const original: AiCommandDraft = { id: 'previous', rawInput: 'Anterior', phase: 'review', clarificationHistory: [], messages: [],
+    createdAt: '2026-10-01', updatedAt: '2026-10-01', plan: { version: 1, summary: 'Anterior', actions: [{ id: 'category', entity: 'category', operation: 'create', fields: { name: 'Servicios' } }], answeredFields: [] } };
+  for (const write of [1, 2, 3]) for (const phase of ['before', 'after'] as const) {
+    const sql = realSQLite();
+    try {
+      for (const statement of SQLITE_SCHEMA_STATEMENTS) sql.native.exec(statement);
+      await applyVersionedMigrations(sql.database);
+      const repository = createSqliteAiDraftRepository(sql.database);
+      await repository.saveActiveDraft(original);
+      const before = sql.query('SELECT * FROM ai_command_drafts').rows.raw();
+      sql.resetTrace(); sql.injectFault({ write, phase });
+      await expect(repository.saveActiveDraft({ ...original, id: 'new' })).rejects.toThrow('Injected');
+      expect(sql.query('SELECT * FROM ai_command_drafts').rows.raw()).toEqual(before);
+      await repository.saveActiveDraft({ ...original, rawInput: 'Editado', createdAt: 'wrong', updatedAt: '2026-10-02' });
+      expect((await repository.loadActiveDraft())?.createdAt).toBe(original.createdAt);
+    } finally { sql.native.close(); }
+  }
 });

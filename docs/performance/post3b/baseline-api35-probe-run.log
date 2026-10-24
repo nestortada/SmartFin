@@ -1,0 +1,15 @@
+Performing Streamed Install
+Success
+Starting: Intent { act=android.intent.action.VIEW dat=atomicity-phase1://campaign/... cmp=com.smartfin.atomicityphase1.tests/com.smartfin.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.smartfin.atomicityphase1.tests/com.smartfin.MainActivity
+TotalTime: 900
+WaitTime: 903
+Complete
+{"campaign":"post-probe","stage":"before: binding envelope 1000 IDs","completedCases":2,"measuredSamples":0,"time":1792307328690}
+{"campaign":"post-probe","stage":"after: binding envelope 998 IDs","completedCases":5,"measuredSamples":0,"time":1792307331715}
+{"campaign":"post-probe","stage":"after: binding envelope 10000 IDs","completedCases":7,"measuredSamples":0,"time":1792307334324}
+{"campaign":"post-probe","stage":"complete","completedCases":8,"measuredSamples":0,"time":1792307335705}
+/sdcard/Android/data/com.smartfin.atomicityphase1.tests/files/atomicity-results/result.json: 1 file pulled, 0 skipped. 0.6 MB/s (15084 bytes in 0.025s)
+Passed 8 Android cases. Production package metadata unchanged.

@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-18",
+  "scope": "Complete the five API 35 campaigns interrupted or pending after the prior disconnection.",
+  "sameApkAndProductionSources": true,
+  "productionFilesChanged": false,
+  "syntheticApplication": "com.smartfin.atomicityphase1.tests",
+  "resumedCases": 291,
+  "campaigns": [
+    {
+      "campaign": "phase2",
+      "passed": true,
+      "cases": 274,
+      "rollbackPoints": 268,
+      "api": 35,
+      "model": "CRT-NX3",
+      "driver": "3.44.5",
+      "productionPackageUnchanged": true,
+      "result": "final-api35-phase2/result.json"
+    },
+    {
+      "campaign": "core",
+      "passed": true,
+      "cases": 14,
+      "api": 35,
+      "model": "CRT-NX3",
+      "driver": {
+        "sqliteVersion": "3.44.5",
+        "journal": [
+          {
+            "journal_mode": "truncate"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "foreign_keys": 1
+          }
+        ]
+      },
+      "productionPackageUnchanged": true,
+      "result": "final-api35-core/result.json"
+    },
+    {
+      "campaign": "begin-after",
+      "passed": true,
+      "cases": 1,
+      "api": 35,
+      "model": "CRT-NX3",
+      "driver": {
+        "sqliteVersion": "3.44.5",
+        "journal": [
+          {
+            "journal_mode": "truncate"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "foreign_keys": 1
+          }
+        ]
+      },
+      "productionPackageUnchanged": true,
+      "result": "final-api35-begin-after/result.json"
+    },
+    {
+      "campaign": "commit-before",
+      "passed": true,
+      "cases": 1,
+      "api": 35,
+      "model": "CRT-NX3",
+      "driver": {
+        "sqliteVersion": "3.44.5",
+        "journal": [
+          {
+            "journal_mode": "truncate"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "foreign_keys": 1
+          }
+        ]
+      },
+      "productionPackageUnchanged": true,
+      "result": "final-api35-commit-before/result.json"
+    },
+    {
+      "campaign": "rollback-before",
+      "passed": true,
+      "cases": 1,
+      "api": 35,
+      "model": "CRT-NX3",
+      "driver": {
+        "sqliteVersion": "3.44.5",
+        "journal": [
+          {
+            "journal_mode": "truncate"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "foreign_keys": 1
+          }
+        ]
+      },
+      "productionPackageUnchanged": true,
+      "result": "final-api35-rollback-before/result.json"
+    }
+  ],
+  "totalCompletedCampaigns": 14,
+  "pendingCampaigns": 0,
+  "nodeChecks": "The 542 passing tests, TypeScript and ESLint were executed on 2026-10-17 against the same unchanged production sources; not rerun during this Android-only resumption."
+}

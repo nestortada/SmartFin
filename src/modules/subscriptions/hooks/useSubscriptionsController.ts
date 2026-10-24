@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { AppState } from 'react-native';
 import { getSubscriptionApi } from '../services/subscriptionRuntime';
 import type { SubscriptionApi } from '../useCases/createSubscriptionApi';
+import { SQLiteCommandFailure } from '../../../database/atomicSQLite';
 import type {
   Subscription,
   SubscriptionFormOptions,
@@ -85,9 +86,12 @@ export function useSubscriptionsController(
       setBusy(true);
       setError(undefined);
       setNotice(undefined);
+      let uncertain = false;
+      let committed = false;
       try {
         const current = api.current ?? (await acquireApi());
         const result = await task(current);
+        committed = true;
         if (alive.current) {
           setSync(result.sync);
           setNotice(
@@ -100,6 +104,11 @@ export function useSubscriptionsController(
         await reload();
         return true;
       } catch (reason) {
+        if (committed) {
+          if (alive.current) setNotice('Cambios guardados. No se pudo actualizar la vista; vuelve a abrirla.');
+          return true;
+        }
+        uncertain = reason instanceof SQLiteCommandFailure && reason.result.status === 'unknown';
         if (alive.current)
           setError(
             reason instanceof Error
@@ -108,7 +117,8 @@ export function useSubscriptionsController(
           );
         return false;
       } finally {
-        operationActive.current = false;
+        // Unknown commands stay blocked for this controller instance.
+        operationActive.current = uncertain;
         if (alive.current) setBusy(false);
       }
     },

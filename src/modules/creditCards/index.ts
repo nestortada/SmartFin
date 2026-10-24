@@ -22,6 +22,8 @@ export {
   registerCreditCardPayment,
   resolveCreditCardTransactionTarget,
   saveCreditCardFromForm,
+  saveCreditCardWithAssociations,
+  closeCreditCardWithReconciliation,
   serializeCreditCardVisualMetadata,
   type RegisterCreditCardPaymentResult,
   type ResolveCreditCardTransactionTargetResult,

@@ -3,6 +3,7 @@ export {
   buildCreditCardsOverview,
   getCreditCardsOverview,
 } from './getCreditCardsOverview';
+export { saveCreditCardWithAssociations, closeCreditCardWithReconciliation } from './creditCardManagementCommands';
 export {
   deleteCreditCard,
   parseCreditCardVisualMetadata,

@@ -110,7 +110,7 @@ export function CreditCardPaymentModal({
             <View style={[styles.paymentInputShell, { borderColor: palette.border }]}>
               <Text style={[styles.inputPrefix, { color: palette.muted }]}>$</Text>
               <TextInput
-                keyboardType="number-pad"
+                keyboardType="decimal-pad"
                 onChangeText={onAmountChange}
                 placeholder="0"
                 placeholderTextColor={palette.muted}

@@ -1,0 +1,56 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/financialDeletionPhase5C.test.ts
+
+FAIL __tests__/financialDeletionPhase5C.test.ts
+  √ one commit preserves the exact historical DELETE outcome, with only internal metadata added (43 ms)
+  √ before/after every financial and intent write: integral rollback and no OS cancellation (1358 ms)
+  × lost COMMIT response before: unknown, no cancellation or financial retry (13 ms)
+  × lost COMMIT response after: unknown, no cancellation or financial retry (13 ms)
+  √ confirmed commit followed by cleanup failure remains confirmed and does not run DELETE again (18 ms)
+  √ admission rejection, unknown prior result, and lost admission response never start SQL (37 ms)
+  √ same deletion ID cannot eliminate a second financial history even after completed cleanup (12 ms)
+
+  ● lost COMMIT response before: unknown, no cancellation or financial retry
+
+    database is not open
+
+      128 |   const query = (sql: string, values: SQLitePrimitive[] = []) => {
+      129 |     return run(sql, values, () => {
+    > 130 |       const statement = native.prepare(sql);
+          |                                ^
+      131 |       let rows: Record<string, SQLitePrimitive>[] = [];
+      132 |       let changes = 0;
+      133 |       if (/^\s*(SELECT|PRAGMA|WITH|EXPLAIN)\b/i.test(sql))
+
+      at prepare (__tests__/helpers/realSQLite.ts:130:32)
+      at execute (__tests__/helpers/realSQLite.ts:119:16)
+      at Object.run [as query] (__tests__/helpers/realSQLite.ts:129:12)
+      at query (__tests__/financialDeletionPhase5C.test.ts:94:14)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● lost COMMIT response after: unknown, no cancellation or financial retry
+
+    database is not open
+
+      128 |   const query = (sql: string, values: SQLitePrimitive[] = []) => {
+      129 |     return run(sql, values, () => {
+    > 130 |       const statement = native.prepare(sql);
+          |                                ^
+      131 |       let rows: Record<string, SQLitePrimitive>[] = [];
+      132 |       let changes = 0;
+      133 |       if (/^\s*(SELECT|PRAGMA|WITH|EXPLAIN)\b/i.test(sql))
+
+      at prepare (__tests__/helpers/realSQLite.ts:130:32)
+      at execute (__tests__/helpers/realSQLite.ts:119:16)
+      at Object.run [as query] (__tests__/helpers/realSQLite.ts:129:12)
+      at query (__tests__/financialDeletionPhase5C.test.ts:94:14)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 5 passed, 7 total
+Snapshots:   0 total
+Time:        2.935 s
+Ran all test suites matching /__tests__\\financialDeletionPhase5C.test.ts/i.

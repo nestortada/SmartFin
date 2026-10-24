@@ -13,6 +13,7 @@ import { SHARED_LOSS_SCHEMA } from '../modules/transactions/database/sharedLossS
 import { SHARED_EXPENSE_INDEXES, SHARED_EXPENSE_SCHEMA, SHARED_EXPENSE_TRIGGERS } from '../modules/transactions/database/sharedExpenseSchema';
 import {
   withDatabaseMaintenance,
+  verifyNativeDatabaseOwner,
   type DatabasePermit,
 } from './databaseCoordination';
 import {
@@ -49,6 +50,7 @@ export async function openSmartFinDatabase(
   permit?: DatabasePermit,
 ): Promise<SmartFinSQLiteDatabase> {
   return withDatabaseMaintenance(async owner => {
+    await verifyNativeDatabaseOwner(owner);
     if (openingFailure) throw openingFailure.error;
     if (failedInitialization) {
       await discardSQLiteConnection(failedInitialization, owner);

@@ -1,0 +1,320 @@
+{
+  "complete": true,
+  "package": "com.smartfin.atomicityphase1.tests",
+  "apkSha256": "663257b74bc4a84b0c1f64517bb34faa04d786300ea88d1cfc1e7a3e7f3ace95",
+  "installedBinaries": [
+    {
+      "api": "api24",
+      "comparisonAlgorithm": "MD5",
+      "matches": true
+    },
+    {
+      "api": "api35",
+      "comparisonAlgorithm": "SHA256",
+      "matches": true
+    }
+  ],
+  "sourceFingerprintsVerified": true,
+  "installedDriverMatches": true,
+  "runtimeInjection": "Only copied runtime opens the explicitly selected synthetic fixture; original source hash recorded separately.",
+  "productionSourceFilesVerified": 291,
+  "nativeReminders": "Mocked in isolated app; production Kotlin receiver/worker not executed",
+  "results": [
+    {
+      "api": "api24",
+      "campaign": "phase4",
+      "cases": 291,
+      "matrixPositions": 280,
+      "environment": {
+        "productionMetadata": "",
+        "api": "24",
+        "model": "Android SDK built for x86_64",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "7.0",
+        "serial": "emulator-5554"
+      },
+      "timings": [
+        {
+          "flow": "mixed plan",
+          "operationMs": 154.79650000017136,
+          "writes": 26
+        },
+        {
+          "flow": "maintenance backlog since 2022",
+          "operationMs": 3838.343900000211,
+          "readerMs": 1108.4495000001043,
+          "occurrences": 1835
+        }
+      ],
+      "result": "complete-api24-phase4/result.json"
+    },
+    {
+      "api": "api24",
+      "campaign": "phase4-restart-create",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "productionMetadata": "",
+        "api": "24",
+        "model": "Android SDK built for x86_64",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "7.0",
+        "serial": "emulator-5554"
+      },
+      "result": "complete-api24-phase4-restart-create/result.json"
+    },
+    {
+      "api": "api24",
+      "campaign": "phase4-restart-verify",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "productionMetadata": "",
+        "api": "24",
+        "model": "Android SDK built for x86_64",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "7.0",
+        "serial": "emulator-5554"
+      },
+      "result": "complete-api24-phase4-restart-verify/result.json"
+    },
+    {
+      "api": "api24",
+      "campaign": "core",
+      "cases": 14,
+      "matrixPositions": 0,
+      "environment": {
+        "productionMetadata": "",
+        "api": "24",
+        "model": "Android SDK built for x86_64",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "7.0",
+        "serial": "emulator-5554"
+      },
+      "result": "complete-api24-core/result.json"
+    },
+    {
+      "api": "api24",
+      "campaign": "begin-after",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "productionMetadata": "",
+        "api": "24",
+        "model": "Android SDK built for x86_64",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "7.0",
+        "serial": "emulator-5554"
+      },
+      "result": "complete-api24-begin-after/result.json"
+    },
+    {
+      "api": "api24",
+      "campaign": "commit-before",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "productionMetadata": "",
+        "api": "24",
+        "model": "Android SDK built for x86_64",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "7.0",
+        "serial": "emulator-5554"
+      },
+      "result": "complete-api24-commit-before/result.json"
+    },
+    {
+      "api": "api24",
+      "campaign": "rollback-before",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "productionMetadata": "",
+        "api": "24",
+        "model": "Android SDK built for x86_64",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "7.0",
+        "serial": "emulator-5554"
+      },
+      "result": "complete-api24-rollback-before/result.json"
+    },
+    {
+      "api": "api24",
+      "campaign": "phase2",
+      "cases": 274,
+      "matrixPositions": 268,
+      "environment": {
+        "model": "Android SDK built for x86_64",
+        "android": "7.0",
+        "serial": "emulator-5554",
+        "productionMetadata": "",
+        "api": "24",
+        "package": "com.smartfin.atomicityphase1.tests"
+      },
+      "result": "complete-api24-phase2/result.json"
+    },
+    {
+      "api": "api24",
+      "campaign": "phase3a",
+      "cases": 72,
+      "matrixPositions": 52,
+      "environment": {
+        "model": "Android SDK built for x86_64",
+        "android": "7.0",
+        "serial": "emulator-5554",
+        "productionMetadata": "",
+        "api": "24",
+        "package": "com.smartfin.atomicityphase1.tests"
+      },
+      "result": "complete-api24-phase3a/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "phase4",
+      "cases": 291,
+      "matrixPositions": 280,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "timings": [
+        {
+          "flow": "mixed plan",
+          "operationMs": 859.822154045105,
+          "writes": 26
+        },
+        {
+          "flow": "maintenance backlog since 2022",
+          "operationMs": 32659.743924975395,
+          "readerMs": 5456.768307924271,
+          "occurrences": 1835
+        }
+      ],
+      "result": "complete-api35-phase4/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "phase4-restart-create",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "result": "complete-api35-phase4-restart-create/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "phase4-restart-verify",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "result": "complete-api35-phase4-restart-verify/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "core",
+      "cases": 14,
+      "matrixPositions": 0,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "result": "complete-api35-core/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "begin-after",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "result": "complete-api35-begin-after/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "commit-before",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "result": "complete-api35-commit-before/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "rollback-before",
+      "cases": 1,
+      "matrixPositions": 0,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "result": "complete-api35-rollback-before/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "phase2",
+      "cases": 274,
+      "matrixPositions": 268,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "result": "complete-api35-phase2/result.json"
+    },
+    {
+      "api": "api35",
+      "campaign": "phase3a",
+      "cases": 72,
+      "matrixPositions": 52,
+      "environment": {
+        "model": "CRT-NX3",
+        "productionMetadata": "    versionCode=1 minSdk=24 targetSdk=36\n    versionName=1.0\n    lastUpdateTime=2026-10-11 16:27:48\n      firstInstallTime=2026-09-27 21:10:23",
+        "serial": "AXCC6R3919012932",
+        "api": "35",
+        "package": "com.smartfin.atomicityphase1.tests",
+        "android": "15"
+      },
+      "result": "complete-api35-phase3a/result.json"
+    }
+  ]
+}

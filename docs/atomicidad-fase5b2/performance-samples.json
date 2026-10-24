@@ -1,0 +1,5114 @@
+[
+  {
+    "api": 24,
+    "count": 1000,
+    "repeat": 0,
+    "snapshot": {
+      "id": "50573bf8-d7ac-4afd-b1f2-cd6953160489",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/50573bf8-d7ac-4afd-b1f2-cd6953160489/snapshot.db",
+      "bytes": 815104,
+      "revision": 1015,
+      "sha256": "bdc85496ee11082932add492495cbd5a1d43a2f9369e16bc0c1cb5403ad09ffa",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 72.5331,
+      "copyMs": 22.5362,
+      "validationAndHashMs": 23.3889,
+      "snapshotVerificationMs": 20.048,
+      "hashMs": 3.3442,
+      "nativeTotalMs": 118.9916
+    },
+    "timings": {
+      "permissionWaitMs": 0.5619999999180436,
+      "checkpointMs": 0.012300000060349703,
+      "sourceVerificationMs": 96.64999999990687,
+      "closeMs": 2.0452999998815358,
+      "reopenMs": 319.0720000001602,
+      "totalMs": 555.2420999999158
+    },
+    "reader": {
+      "count": 1000,
+      "waitMs": 563.6806999999098
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 577.6328999996185
+    },
+    "publicationMs": 261.83740000007674,
+    "published": {
+      "generationId": "f57f8166-d46f-4932-9f1a-6c9d38723dae",
+      "state": "verified",
+      "revision": 1015,
+      "lastBackupAt": "2026-10-24T00:16:22.936Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 53.5574,
+        "csvExportMs": 37.9516,
+        "componentHashMs": 5.2332,
+        "safWriteMs": 26.9737,
+        "safReadbackMs": 21.647499999999997,
+        "publicationTotalMs": 257.6482
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 1015,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          1000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 1000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 112142,
+          "sha256": "d6372f6148ae882bb127e0099d9cde5ef0bac5ca68a4d319b96889cc654444d2"
+        }
+      ]
+    }
+  },
+  {
+    "api": 24,
+    "count": 1000,
+    "repeat": 1,
+    "snapshot": {
+      "id": "147f49f6-f7a6-4cba-93f6-901b71f35258",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/147f49f6-f7a6-4cba-93f6-901b71f35258/snapshot.db",
+      "bytes": 815104,
+      "revision": 1016,
+      "sha256": "a246e9863932bb5dac0847d2b4f6c3af04d120289f1cb7607dbcc8f92f7c885f",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 21.2864,
+      "copyMs": 11.878,
+      "validationAndHashMs": 22.2597,
+      "snapshotVerificationMs": 20.0185,
+      "hashMs": 2.2501,
+      "nativeTotalMs": 55.8404
+    },
+    "timings": {
+      "permissionWaitMs": 1.3475000001490116,
+      "checkpointMs": 0.02479999978095293,
+      "sourceVerificationMs": 107.78220000024885,
+      "closeMs": 1.2397999996319413,
+      "reopenMs": 194.064900000114,
+      "totalMs": 375.8110000002198
+    },
+    "reader": {
+      "count": 1000,
+      "waitMs": 384.6864999998361
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 397.55099999997765
+    },
+    "publicationMs": 259.53470000019297,
+    "published": {
+      "generationId": "28943ffb-be4f-454e-95f9-547e62b804d9",
+      "state": "verified",
+      "revision": 1016,
+      "lastBackupAt": "2026-10-24T00:16:23.869Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 39.1866,
+        "csvExportMs": 35.3205,
+        "componentHashMs": 6.4312,
+        "safWriteMs": 17.2238,
+        "safReadbackMs": 16.086599999999997,
+        "publicationTotalMs": 254.61
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 1016,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          1000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 1000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 112142,
+          "sha256": "d6372f6148ae882bb127e0099d9cde5ef0bac5ca68a4d319b96889cc654444d2"
+        }
+      ]
+    }
+  },
+  {
+    "api": 24,
+    "count": 1000,
+    "repeat": 2,
+    "snapshot": {
+      "id": "29ca5b10-9f7b-4736-822f-82b6da50d596",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/29ca5b10-9f7b-4736-822f-82b6da50d596/snapshot.db",
+      "bytes": 815104,
+      "revision": 1017,
+      "sha256": "c50eac412b57993dddddb106a12fbc0d0973f8ffdf4109216dc0bf2c86e0332c",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 18.6757,
+      "copyMs": 7.9137,
+      "validationAndHashMs": 18.4634,
+      "snapshotVerificationMs": 16.4446,
+      "hashMs": 2.0236,
+      "nativeTotalMs": 45.8014
+    },
+    "timings": {
+      "permissionWaitMs": 0.7439000001177192,
+      "checkpointMs": 0.013299999758601189,
+      "sourceVerificationMs": 101.37550000008196,
+      "closeMs": 2.043700000271201,
+      "reopenMs": 285.42130000004545,
+      "totalMs": 449.724900000263
+    },
+    "reader": {
+      "count": 1000,
+      "waitMs": 458.16259999992326
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 472.96919999970123
+    },
+    "publicationMs": 252.099900000263,
+    "published": {
+      "generationId": "9286fae3-dd75-4551-9c32-7fd2ea77454c",
+      "state": "verified",
+      "revision": 1017,
+      "lastBackupAt": "2026-10-24T00:16:24.597Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 19.0152,
+        "csvExportMs": 31.5884,
+        "componentHashMs": 5.7899,
+        "safWriteMs": 35.4727,
+        "safReadbackMs": 20.144300000000005,
+        "publicationTotalMs": 245.8179
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 1017,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          1000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 1000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 112142,
+          "sha256": "d6372f6148ae882bb127e0099d9cde5ef0bac5ca68a4d319b96889cc654444d2"
+        }
+      ]
+    }
+  },
+  {
+    "api": 24,
+    "count": 10000,
+    "repeat": 0,
+    "snapshot": {
+      "id": "f323cff7-a1b0-4c96-901c-7ebe992ec252",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/f323cff7-a1b0-4c96-901c-7ebe992ec252/snapshot.db",
+      "bytes": 3006464,
+      "revision": 12016,
+      "sha256": "fd96839a9834e90506302873b180663c1e06b2a046b171d3b5886ac4bf7d0a28",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 85.9554,
+      "copyMs": 20.2588,
+      "validationAndHashMs": 77.3188,
+      "snapshotVerificationMs": 63.5464,
+      "hashMs": 13.7857,
+      "nativeTotalMs": 184.2486
+    },
+    "timings": {
+      "permissionWaitMs": 1.0064999996684492,
+      "checkpointMs": 0.02420000033453107,
+      "sourceVerificationMs": 147.95910000009462,
+      "closeMs": 2.095699999947101,
+      "reopenMs": 378.27530000032857,
+      "totalMs": 728.4498999998905
+    },
+    "reader": {
+      "count": 10000,
+      "waitMs": 739.3175999997184
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 755.8796999999322
+    },
+    "publicationMs": 563.2588999997824,
+    "published": {
+      "generationId": "b36a3144-288b-4f35-b0e2-ea9e144208fe",
+      "state": "verified",
+      "revision": 12016,
+      "lastBackupAt": "2026-10-24T00:16:25.525Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 80.0593,
+        "csvExportMs": 248.6446,
+        "componentHashMs": 12.4735,
+        "safWriteMs": 47.1441,
+        "safReadbackMs": 48.48919999999999,
+        "publicationTotalMs": 557.6615
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 12016,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          10000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 10000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 1129142,
+          "sha256": "68b84f7129e82648855e003a7bdbbca8b25c03fd1854856f71e6f9dcae5c2d69"
+        }
+      ]
+    }
+  },
+  {
+    "api": 24,
+    "count": 10000,
+    "repeat": 1,
+    "snapshot": {
+      "id": "0735758a-6c18-47c7-95f7-bb035bf86afc",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/0735758a-6c18-47c7-95f7-bb035bf86afc/snapshot.db",
+      "bytes": 3006464,
+      "revision": 12017,
+      "sha256": "977e485fb024f2c965950a4a5a03770a41f904d8928d5cdaa5f40f3ac33ade93",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 65.8641,
+      "copyMs": 26.3019,
+      "validationAndHashMs": 75.0782,
+      "snapshotVerificationMs": 62.3159,
+      "hashMs": 12.7707,
+      "nativeTotalMs": 167.7117
+    },
+    "timings": {
+      "permissionWaitMs": 0.8051999998278916,
+      "checkpointMs": 0.026000000070780516,
+      "sourceVerificationMs": 147.96449999976903,
+      "closeMs": 1.9229999999515712,
+      "reopenMs": 318.9052000003867,
+      "totalMs": 653.7521999999881
+    },
+    "reader": {
+      "count": 10000,
+      "waitMs": 660.37369999988
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 672.939100000076
+    },
+    "publicationMs": 555.3697999999858,
+    "published": {
+      "generationId": "7e09ee2c-cc7a-46ce-85d3-14114b39f3b5",
+      "state": "verified",
+      "revision": 12017,
+      "lastBackupAt": "2026-10-24T00:16:27.246Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 73.8491,
+        "csvExportMs": 259.6348,
+        "componentHashMs": 13.8133,
+        "safWriteMs": 45.923599999999986,
+        "safReadbackMs": 40.29069999999999,
+        "publicationTotalMs": 549.879
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 12017,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          10000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 10000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 1129142,
+          "sha256": "68b84f7129e82648855e003a7bdbbca8b25c03fd1854856f71e6f9dcae5c2d69"
+        }
+      ]
+    }
+  },
+  {
+    "api": 24,
+    "count": 10000,
+    "repeat": 2,
+    "snapshot": {
+      "id": "a0574509-5fb0-489d-8489-1f6cbc272475",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/a0574509-5fb0-489d-8489-1f6cbc272475/snapshot.db",
+      "bytes": 3006464,
+      "revision": 12018,
+      "sha256": "94f4fce247e0005e073cd99afac835e66a136a6aee20533efb84b9664b6d2fc9",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 97.2888,
+      "copyMs": 29.2797,
+      "validationAndHashMs": 68.8992,
+      "snapshotVerificationMs": 59.6533,
+      "hashMs": 9.247,
+      "nativeTotalMs": 196.5304
+    },
+    "timings": {
+      "permissionWaitMs": 1.0189999998547137,
+      "checkpointMs": 0.024299999698996544,
+      "sourceVerificationMs": 153.11430000001565,
+      "closeMs": 2.689100000075996,
+      "reopenMs": 330.83360000001267,
+      "totalMs": 696.4440000001341
+    },
+    "reader": {
+      "count": 10000,
+      "waitMs": 704.8124000001699
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 718.6836999999359
+    },
+    "publicationMs": 532.1526000001468,
+    "published": {
+      "generationId": "a2d33fbb-bc34-474a-97b7-eadffa376a40",
+      "state": "verified",
+      "revision": 12018,
+      "lastBackupAt": "2026-10-24T00:16:28.839Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 56.8007,
+        "csvExportMs": 228.7108,
+        "componentHashMs": 15.5903,
+        "safWriteMs": 38.8234,
+        "safReadbackMs": 43.4486,
+        "publicationTotalMs": 519.2416
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 12018,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          10000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 10000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 1129142,
+          "sha256": "68b84f7129e82648855e003a7bdbbca8b25c03fd1854856f71e6f9dcae5c2d69"
+        }
+      ]
+    }
+  },
+  {
+    "api": 24,
+    "count": 100000,
+    "repeat": 0,
+    "snapshot": {
+      "id": "17f62e20-9667-4bca-92d0-2622fd4f02b2",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/17f62e20-9667-4bca-92d0-2622fd4f02b2/snapshot.db",
+      "bytes": 26009600,
+      "revision": 122017,
+      "sha256": "8d9e66a819df9c7075dce83fc2dc029bda0c5bc67324759a8ba26af034d59be2",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 528.5468,
+      "copyMs": 180.3605,
+      "validationAndHashMs": 676.3919,
+      "snapshotVerificationMs": 583.4157,
+      "hashMs": 92.9967,
+      "nativeTotalMs": 1386.0639
+    },
+    "timings": {
+      "permissionWaitMs": 1.0356999998912215,
+      "checkpointMs": 0.009199999738484621,
+      "sourceVerificationMs": 642.6737999999896,
+      "closeMs": 4.4354999996721745,
+      "reopenMs": 926.3811999997124,
+      "totalMs": 2973.7680000001565
+    },
+    "reader": {
+      "count": 100000,
+      "waitMs": 2986.811999999918
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 3006.1719999997877
+    },
+    "publicationMs": 6162.801299999934,
+    "published": {
+      "generationId": "172750c5-fcbd-45e2-8a27-7162ad866f86",
+      "state": "verified",
+      "revision": 122017,
+      "lastBackupAt": "2026-10-24T00:16:31.708Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 797.5114,
+        "csvExportMs": 4582.0781,
+        "componentHashMs": 137.6985,
+        "safWriteMs": 216.21909999999997,
+        "safReadbackMs": 267.58560000000006,
+        "publicationTotalMs": 6156.3232
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 122017,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          100000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 100000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 11389142,
+          "sha256": "7885b8e17e5878b54656575bf8db1d02ac498ce4e882427a6eef61fe65303cb9"
+        }
+      ]
+    }
+  },
+  {
+    "api": 24,
+    "count": 100000,
+    "repeat": 1,
+    "snapshot": {
+      "id": "d2283f8d-3d82-48e9-a967-7fa5ccf0dc5e",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/d2283f8d-3d82-48e9-a967-7fa5ccf0dc5e/snapshot.db",
+      "bytes": 26009600,
+      "revision": 122018,
+      "sha256": "1a4a33e025d6ec2e6188d682cbfa82233932449032360e68b169ffda45b70cdf",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 523.6124,
+      "copyMs": 166.5822,
+      "validationAndHashMs": 609.8317,
+      "snapshotVerificationMs": 520.5231,
+      "hashMs": 89.3212,
+      "nativeTotalMs": 1301.5221
+    },
+    "timings": {
+      "permissionWaitMs": 1.2549000000581145,
+      "checkpointMs": 0.030400000046938658,
+      "sourceVerificationMs": 642.9790999996476,
+      "closeMs": 3.6803000001236796,
+      "reopenMs": 830.1924000000581,
+      "totalMs": 2794.0768999997526
+    },
+    "reader": {
+      "count": 100000,
+      "waitMs": 2805.5131000000983
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 2818.6979000000283
+    },
+    "publicationMs": 5347.1977999997325,
+    "published": {
+      "generationId": "24f0b305-fb0e-4e9a-ae92-cc0e91b6e0af",
+      "state": "verified",
+      "revision": 122018,
+      "lastBackupAt": "2026-10-24T00:16:47.422Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 636.0719,
+        "csvExportMs": 3914.0834,
+        "componentHashMs": 120.2277,
+        "safWriteMs": 227.4543,
+        "safReadbackMs": 271.2693,
+        "publicationTotalMs": 5340.9658
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 122018,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          100000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 100000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 11389142,
+          "sha256": "7885b8e17e5878b54656575bf8db1d02ac498ce4e882427a6eef61fe65303cb9"
+        }
+      ]
+    }
+  },
+  {
+    "api": 24,
+    "count": 100000,
+    "repeat": 2,
+    "snapshot": {
+      "id": "bf24707b-7290-4037-b73e-cb82ba8a4414",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/bf24707b-7290-4037-b73e-cb82ba8a4414/snapshot.db",
+      "bytes": 26009600,
+      "revision": 122019,
+      "sha256": "af7b907ea232d30c866c429ac83f1139427dc4f241825b9fa4eb1e48556589c1",
+      "journal": "delete",
+      "journalBeforeClose": "persist",
+      "sourceValidationMs": 493.259,
+      "copyMs": 168.919,
+      "validationAndHashMs": 575.5878,
+      "snapshotVerificationMs": 495.0907,
+      "hashMs": 80.5017,
+      "nativeTotalMs": 1238.4334
+    },
+    "timings": {
+      "permissionWaitMs": 1.1485000001266599,
+      "checkpointMs": 0.026000000070780516,
+      "sourceVerificationMs": 561.3834000001661,
+      "closeMs": 3.897600000258535,
+      "reopenMs": 741.5969000002369,
+      "totalMs": 2557.897799999919
+    },
+    "reader": {
+      "count": 100000,
+      "waitMs": 2564.7517999997362
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 2580.1359999999404
+    },
+    "publicationMs": 4935.560800000094,
+    "published": {
+      "generationId": "7ae2708a-0c99-427b-975f-e598c032db05",
+      "state": "verified",
+      "revision": 122019,
+      "lastBackupAt": "2026-10-24T00:17:01.874Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 588.1141,
+        "csvExportMs": 3601.7311,
+        "componentHashMs": 109.5641,
+        "safWriteMs": 272.0719,
+        "safReadbackMs": 218.1069,
+        "publicationTotalMs": 4929.682
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 122019,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          100000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 100000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 11389142,
+          "sha256": "7885b8e17e5878b54656575bf8db1d02ac498ce4e882427a6eef61fe65303cb9"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 1000,
+    "repeat": 0,
+    "snapshot": {
+      "id": "ecbe5b8a-986d-4a73-9ac5-f8f8b7a8caaa",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/ecbe5b8a-986d-4a73-9ac5-f8f8b7a8caaa/snapshot.db",
+      "bytes": 815104,
+      "revision": 1015,
+      "sha256": "1dbf718e5c729327e4e70964205141c7021b6bb664d198ec6f691be36ffb4d2c",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 26.354692,
+      "copyMs": 10.253923,
+      "validationAndHashMs": 20.617154,
+      "snapshotVerificationMs": 18.948846,
+      "hashMs": 1.672,
+      "nativeTotalMs": 57.813769
+    },
+    "timings": {
+      "permissionWaitMs": 0.5895380079746246,
+      "checkpointMs": 0.0006150007247924805,
+      "sourceVerificationMs": 84.4793850183487,
+      "closeMs": 1.6619230210781097,
+      "reopenMs": 160.3839229941368,
+      "totalMs": 313.0259229838848
+    },
+    "reader": {
+      "count": 1000,
+      "waitMs": 318.6393850147724
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 324.2422310113907
+    },
+    "publicationMs": 181.47823098301888,
+    "published": {
+      "generationId": "b50ff957-c247-41ca-9181-fbb8a66f4520",
+      "state": "verified",
+      "revision": 1015,
+      "lastBackupAt": "2026-10-24T00:16:44.446Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 26.711385,
+        "csvExportMs": 62.648308,
+        "componentHashMs": 3.824,
+        "safWriteMs": 35.204386,
+        "safReadbackMs": 13.236924,
+        "publicationTotalMs": 177.728616
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 1015,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          1000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 1000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 112142,
+          "sha256": "d6372f6148ae882bb127e0099d9cde5ef0bac5ca68a4d319b96889cc654444d2"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 1000,
+    "repeat": 1,
+    "snapshot": {
+      "id": "4d838799-793c-497f-b1ee-20bb8ee75074",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/4d838799-793c-497f-b1ee-20bb8ee75074/snapshot.db",
+      "bytes": 815104,
+      "revision": 1016,
+      "sha256": "2e11661307b95d7273517c39d2025d1f059ac6553788ac5b43117920d6235021",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 22.058461,
+      "copyMs": 12.936615,
+      "validationAndHashMs": 23.074231,
+      "snapshotVerificationMs": 21.455692,
+      "hashMs": 1.620308,
+      "nativeTotalMs": 58.512616
+    },
+    "timings": {
+      "permissionWaitMs": 0.5886920094490051,
+      "checkpointMs": 0.0006150007247924805,
+      "sourceVerificationMs": 82.60738399624825,
+      "closeMs": 1.4486149847507477,
+      "reopenMs": 161.40669199824333,
+      "totalMs": 313.0831539928913
+    },
+    "reader": {
+      "count": 1000,
+      "waitMs": 319.51969200372696
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 324.92453798651695
+    },
+    "publicationMs": 168.1683849990368,
+    "published": {
+      "generationId": "c458dcc5-5b9e-499d-b978-7b603df8a7f8",
+      "state": "verified",
+      "revision": 1016,
+      "lastBackupAt": "2026-10-24T00:16:45.051Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 25.194692,
+        "csvExportMs": 42.962153,
+        "componentHashMs": 3.739923,
+        "safWriteMs": 36.939922,
+        "safReadbackMs": 13.584692000000002,
+        "publicationTotalMs": 164.807154
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 1016,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          1000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 1000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 112142,
+          "sha256": "d6372f6148ae882bb127e0099d9cde5ef0bac5ca68a4d319b96889cc654444d2"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 1000,
+    "repeat": 2,
+    "snapshot": {
+      "id": "0ad47942-af5f-4028-b5b9-f161d4b5edad",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/0ad47942-af5f-4028-b5b9-f161d4b5edad/snapshot.db",
+      "bytes": 815104,
+      "revision": 1017,
+      "sha256": "fd9255d2b740a28eb0a5ef5b61115074afc119dd75f25f96c6a7e8f30925f7e1",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 22.53077,
+      "copyMs": 14.768,
+      "validationAndHashMs": 23.171154,
+      "snapshotVerificationMs": 21.578154,
+      "hashMs": 1.594769,
+      "nativeTotalMs": 60.846846
+    },
+    "timings": {
+      "permissionWaitMs": 0.5258469879627228,
+      "checkpointMs": 0.0003839731216430664,
+      "sourceVerificationMs": 62.11607700586319,
+      "closeMs": 1.6143850088119507,
+      "reopenMs": 165.98276901245117,
+      "totalMs": 299.74769300222397
+    },
+    "reader": {
+      "count": 1000,
+      "waitMs": 304.5061540007591
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 310.09692299366
+    },
+    "publicationMs": 178.33446198701859,
+    "published": {
+      "generationId": "87f1c847-8934-4b3f-8b58-c5411c13271a",
+      "state": "verified",
+      "revision": 1017,
+      "lastBackupAt": "2026-10-24T00:16:45.612Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 26.468923,
+        "csvExportMs": 32.830692,
+        "componentHashMs": 4.215385,
+        "safWriteMs": 44.78676600000001,
+        "safReadbackMs": 14.826384999999998,
+        "publicationTotalMs": 174.686154
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 1017,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          1000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 1000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 112142,
+          "sha256": "d6372f6148ae882bb127e0099d9cde5ef0bac5ca68a4d319b96889cc654444d2"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 10000,
+    "repeat": 0,
+    "snapshot": {
+      "id": "2923dc71-b48b-4b69-8d78-c8a5d0259868",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/2923dc71-b48b-4b69-8d78-c8a5d0259868/snapshot.db",
+      "bytes": 3006464,
+      "revision": 12016,
+      "sha256": "5596455b54d8687bc8d9880a837b1f392a5959636d9f3670a62a77c4f80fae5b",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 175.743384,
+      "copyMs": 30.350769,
+      "validationAndHashMs": 89.08923,
+      "snapshotVerificationMs": 84.947923,
+      "hashMs": 4.142769,
+      "nativeTotalMs": 295.746385
+    },
+    "timings": {
+      "permissionWaitMs": 0.47200000286102295,
+      "checkpointMs": 0.0005379915237426758,
+      "sourceVerificationMs": 119.37746202945709,
+      "closeMs": 2.578077018260956,
+      "reopenMs": 446.6883069872856,
+      "totalMs": 881.7138459980488
+    },
+    "reader": {
+      "count": 10000,
+      "waitMs": 891.3359230160713
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 901.7676160037518
+    },
+    "publicationMs": 564.6153849959373,
+    "published": {
+      "generationId": "19703a7e-7952-435c-8e70-f6d99957418e",
+      "state": "verified",
+      "revision": 12016,
+      "lastBackupAt": "2026-10-24T00:16:46.309Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 138.253616,
+        "csvExportMs": 260.493538,
+        "componentHashMs": 8.711384,
+        "safWriteMs": 67.36631,
+        "safReadbackMs": 22.091465,
+        "publicationTotalMs": 558.686846
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 12016,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          10000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 10000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 1129142,
+          "sha256": "68b84f7129e82648855e003a7bdbbca8b25c03fd1854856f71e6f9dcae5c2d69"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 10000,
+    "repeat": 1,
+    "snapshot": {
+      "id": "3c10f445-d04c-4603-ac8d-f9568e9cd808",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/3c10f445-d04c-4603-ac8d-f9568e9cd808/snapshot.db",
+      "bytes": 3006464,
+      "revision": 12017,
+      "sha256": "df9b1acc22c555a118f20bf11f6b6fad3ed8650f24f9c831ff53a737a348f644",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 151.695385,
+      "copyMs": 24.167,
+      "validationAndHashMs": 84.066154,
+      "snapshotVerificationMs": 79.838154,
+      "hashMs": 4.229462,
+      "nativeTotalMs": 260.569
+    },
+    "timings": {
+      "permissionWaitMs": 1.632999986410141,
+      "checkpointMs": 0.0024619996547698975,
+      "sourceVerificationMs": 285.76823100447655,
+      "closeMs": 6.027922987937927,
+      "reopenMs": 561.7686160206795,
+      "totalMs": 1138.2274619936943
+    },
+    "reader": {
+      "count": 10000,
+      "waitMs": 1149.6406149864197
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 1168.008230984211
+    },
+    "publicationMs": 555.1298460066319,
+    "published": {
+      "generationId": "eae20d4d-cdf3-485a-bb5c-1125ae1ead75",
+      "state": "verified",
+      "revision": 12017,
+      "lastBackupAt": "2026-10-24T00:16:48.218Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 128.492308,
+        "csvExportMs": 253.111077,
+        "componentHashMs": 7.71877,
+        "safWriteMs": 70.659153,
+        "safReadbackMs": 22.302921,
+        "publicationTotalMs": 550.201231
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 12017,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          10000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 10000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 1129142,
+          "sha256": "68b84f7129e82648855e003a7bdbbca8b25c03fd1854856f71e6f9dcae5c2d69"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 10000,
+    "repeat": 2,
+    "snapshot": {
+      "id": "abc4eaf1-9d7d-4660-a858-cc1bd1f6bd29",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/abc4eaf1-9d7d-4660-a858-cc1bd1f6bd29/snapshot.db",
+      "bytes": 3006464,
+      "revision": 12018,
+      "sha256": "d59b5c948a939fd149ca6e1dfe3e66107a4fb12d5fc7e5a849a06461d76e91cf",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 182.117923,
+      "copyMs": 27.629,
+      "validationAndHashMs": 90.651385,
+      "snapshotVerificationMs": 86.727308,
+      "hashMs": 3.926154,
+      "nativeTotalMs": 301.966461
+    },
+    "timings": {
+      "permissionWaitMs": 2.6304610073566437,
+      "checkpointMs": 0.002692997455596924,
+      "sourceVerificationMs": 322.1673850119114,
+      "closeMs": 5.488384991884232,
+      "reopenMs": 834.5002299845219,
+      "totalMs": 1489.8830769956112
+    },
+    "reader": {
+      "count": 10000,
+      "waitMs": 1507.0830770134926
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 1523.5913079977036
+    },
+    "publicationMs": 547.3426930010319,
+    "published": {
+      "generationId": "434a25db-053a-4348-9b69-b54df841c7e7",
+      "state": "verified",
+      "revision": 12018,
+      "lastBackupAt": "2026-10-24T00:16:50.366Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 122.955692,
+        "csvExportMs": 243.728924,
+        "componentHashMs": 7.516693,
+        "safWriteMs": 70.840383,
+        "safReadbackMs": 23.236926,
+        "publicationTotalMs": 543.002154
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 12018,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          10000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 10000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 1129142,
+          "sha256": "68b84f7129e82648855e003a7bdbbca8b25c03fd1854856f71e6f9dcae5c2d69"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 100000,
+    "repeat": 0,
+    "snapshot": {
+      "id": "87561faa-41ef-4f69-b668-414254f00213",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/87561faa-41ef-4f69-b668-414254f00213/snapshot.db",
+      "bytes": 26009600,
+      "revision": 122017,
+      "sha256": "317438429ba4b53427e85372df36e423430b5157bd96abee30e2381776e55f5f",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 908.78577,
+      "copyMs": 187.517539,
+      "validationAndHashMs": 861.756307,
+      "snapshotVerificationMs": 831.465154,
+      "hashMs": 30.293615,
+      "nativeTotalMs": 1959.223077
+    },
+    "timings": {
+      "permissionWaitMs": 2.01876899600029,
+      "checkpointMs": 0.002768993377685547,
+      "sourceVerificationMs": 990.9814620018005,
+      "closeMs": 3.767076998949051,
+      "reopenMs": 1523.1821539998055,
+      "totalMs": 4502.502153992653
+    },
+    "reader": {
+      "count": 100000,
+      "waitMs": 4514.622768998146
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 4525.557538986206
+    },
+    "publicationMs": 10267.35315400362,
+    "published": {
+      "generationId": "91ba881e-3c64-4801-8b38-af7f8ee517eb",
+      "state": "verified",
+      "revision": 122017,
+      "lastBackupAt": "2026-10-24T00:16:55.336Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 851.079308,
+        "csvExportMs": 8929.271077,
+        "componentHashMs": 49.845538,
+        "safWriteMs": 242.81884499999998,
+        "safReadbackMs": 95.516926,
+        "publicationTotalMs": 10262.513462
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 122017,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          100000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 100000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 11389142,
+          "sha256": "7885b8e17e5878b54656575bf8db1d02ac498ce4e882427a6eef61fe65303cb9"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 100000,
+    "repeat": 1,
+    "snapshot": {
+      "id": "f862b044-3244-467a-8740-edf8ac29af49",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/f862b044-3244-467a-8740-edf8ac29af49/snapshot.db",
+      "bytes": 26009600,
+      "revision": 122018,
+      "sha256": "dc75ef354c08df30deb3e199f5b01e16e13e7fc3aaa054e2e27e8e74607247a4",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 855.021538,
+      "copyMs": 184.187077,
+      "validationAndHashMs": 857.984384,
+      "snapshotVerificationMs": 826.666461,
+      "hashMs": 31.32,
+      "nativeTotalMs": 1897.697923
+    },
+    "timings": {
+      "permissionWaitMs": 1.289152979850769,
+      "checkpointMs": 0.00030800700187683105,
+      "sourceVerificationMs": 931.4657689929008,
+      "closeMs": 3.0975379943847656,
+      "reopenMs": 1535.4710769951344,
+      "totalMs": 4383.759922981262
+    },
+    "reader": {
+      "count": 100000,
+      "waitMs": 4394.703999996185
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 4405.7689229846
+    },
+    "publicationMs": 10372.14853900671,
+    "published": {
+      "generationId": "408877d3-64d5-4d24-ba6c-99afa01a9cf5",
+      "state": "verified",
+      "revision": 122018,
+      "lastBackupAt": "2026-10-24T00:17:20.543Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 890.731385,
+        "csvExportMs": 8964.230077,
+        "componentHashMs": 47.969615,
+        "safWriteMs": 260.838384,
+        "safReadbackMs": 101.57769300000001,
+        "publicationTotalMs": 10367.873155
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 122018,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          100000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 100000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 11389142,
+          "sha256": "7885b8e17e5878b54656575bf8db1d02ac498ce4e882427a6eef61fe65303cb9"
+        }
+      ]
+    }
+  },
+  {
+    "api": 35,
+    "count": 100000,
+    "repeat": 2,
+    "snapshot": {
+      "id": "fcbbcb2f-6e60-44f8-ade0-eb15c8a311e4",
+      "path": "/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/smartfin-local-snapshots/fcbbcb2f-6e60-44f8-ade0-eb15c8a311e4/snapshot.db",
+      "bytes": 26009600,
+      "revision": 122019,
+      "sha256": "26b255a7e95127e58d2da9cd1e532cc0341a0389e6ad5395c7455a05bc860ae3",
+      "journal": "delete",
+      "journalBeforeClose": "truncate",
+      "sourceValidationMs": 889.212,
+      "copyMs": 187.31177,
+      "validationAndHashMs": 862.743077,
+      "snapshotVerificationMs": 833.641461,
+      "hashMs": 29.104,
+      "nativeTotalMs": 1940.386847
+    },
+    "timings": {
+      "permissionWaitMs": 1.6103839874267578,
+      "checkpointMs": 0.001538991928100586,
+      "sourceVerificationMs": 976.2683070003986,
+      "closeMs": 11.13007602095604,
+      "reopenMs": 1322.0865390002728,
+      "totalMs": 4276.911307007074
+    },
+    "reader": {
+      "count": 100000,
+      "waitMs": 4287.743461996317
+    },
+    "financial": {
+      "status": "confirmed",
+      "waitMs": 4299.18307697773
+    },
+    "publicationMs": 10218.919078022242,
+    "published": {
+      "generationId": "b8b5ea6c-a764-4db8-81b4-4aca6771522b",
+      "state": "verified",
+      "revision": 122019,
+      "lastBackupAt": "2026-10-24T00:17:45.765Z",
+      "fileCount": 14,
+      "timings": {
+        "snapshotRevalidationMs": 847.365539,
+        "csvExportMs": 8860.429462,
+        "componentHashMs": 47.577846,
+        "safWriteMs": 258.776155,
+        "safReadbackMs": 103.43807700000004,
+        "publicationTotalMs": 10214.520231
+      },
+      "locationName": "saf-synthetic",
+      "permissionPersistent": false
+    },
+    "evidence": {
+      "revision": 122019,
+      "tables": [
+        [
+          "account_balance_history",
+          1
+        ],
+        [
+          "accounts",
+          2
+        ],
+        [
+          "ai_command_drafts",
+          1
+        ],
+        [
+          "amortization_schedule_items",
+          0
+        ],
+        [
+          "android_metadata",
+          1
+        ],
+        [
+          "app_settings",
+          1
+        ],
+        [
+          "backup_records",
+          0
+        ],
+        [
+          "budgets",
+          0
+        ],
+        [
+          "cash_flow_events",
+          0
+        ],
+        [
+          "categories",
+          0
+        ],
+        [
+          "credit_card_profiles",
+          1
+        ],
+        [
+          "credit_card_statements",
+          1
+        ],
+        [
+          "envelope_movements",
+          0
+        ],
+        [
+          "envelopes",
+          0
+        ],
+        [
+          "financial_data_revision",
+          1
+        ],
+        [
+          "financial_goals",
+          0
+        ],
+        [
+          "financial_health_scores",
+          0
+        ],
+        [
+          "installment_purchases",
+          1
+        ],
+        [
+          "investment_assets",
+          0
+        ],
+        [
+          "loans",
+          0
+        ],
+        [
+          "merchant_mappings",
+          0
+        ],
+        [
+          "raw_financial_messages",
+          0
+        ],
+        [
+          "receipt_attachments",
+          0
+        ],
+        [
+          "recurring_subscriptions",
+          1
+        ],
+        [
+          "schema_migrations",
+          4
+        ],
+        [
+          "shared_allocations",
+          0
+        ],
+        [
+          "shared_commands",
+          1
+        ],
+        [
+          "shared_contacts",
+          1
+        ],
+        [
+          "shared_expenses",
+          1
+        ],
+        [
+          "shared_loss_events",
+          1
+        ],
+        [
+          "shared_receipts",
+          0
+        ],
+        [
+          "shared_returns",
+          0
+        ],
+        [
+          "smart_alerts",
+          0
+        ],
+        [
+          "subcategories",
+          0
+        ],
+        [
+          "subscription_occurrences",
+          1
+        ],
+        [
+          "subscription_reminders",
+          1
+        ],
+        [
+          "tax_tags",
+          0
+        ],
+        [
+          "transaction_splits",
+          1
+        ],
+        [
+          "transaction_tax_tags",
+          0
+        ],
+        [
+          "transactions",
+          100000
+        ]
+      ],
+      "receipts": 1,
+      "cardRows": 1,
+      "transactionRows": 100000,
+      "csv": [
+        {
+          "name": "cuentas.csv",
+          "bytes": 282,
+          "sha256": "35b661a64b95838d13fc5d0d15d768af01957fb3ebbd544946e53c63792447b6"
+        },
+        {
+          "name": "categorias.csv",
+          "bytes": 37,
+          "sha256": "7acb3975a9591d012163fca11820ce2a3a7d6250dc716f77f046011e5843de21"
+        },
+        {
+          "name": "subcategorias.csv",
+          "bytes": 61,
+          "sha256": "66bc991190eafb82b5dbf7990996d5ac8b708cd597fe250f7c5ff3e91e2e460c"
+        },
+        {
+          "name": "tarjetas-credito.csv",
+          "bytes": 238,
+          "sha256": "7440e6ea26d74a0338595c7489b55095f966fe8a32d71b6b0897a006c2d8925f"
+        },
+        {
+          "name": "compras-cuotas.csv",
+          "bytes": 246,
+          "sha256": "5d048c7c7f7dfec43a6a0abb25e5e464cc73a70c0113be48254f75e42f53b0c6"
+        },
+        {
+          "name": "personas.csv",
+          "bytes": 81,
+          "sha256": "083e0d80f88ff7b528799885c35f1595847ecd02333201db458a028154694254"
+        },
+        {
+          "name": "gastos-compartidos.csv",
+          "bytes": 201,
+          "sha256": "d981fd6f6332eed46743576a751088327e45b37bd9e6bf24167090b34284b3e0"
+        },
+        {
+          "name": "participaciones.csv",
+          "bytes": 255,
+          "sha256": "6b41413b046ec5258be2bece916e4ac80dc5e3d7feb192796c0b408495ffc05d"
+        },
+        {
+          "name": "reembolsos.csv",
+          "bytes": 79,
+          "sha256": "2b32d64afca8ac57ad1a6973d6de5ce57425ad13a09fcc2b85d066f13e89abc1"
+        },
+        {
+          "name": "abonos-compartidos.csv",
+          "bytes": 94,
+          "sha256": "c9139e8506e92b1e0e4a8d7b0ef183566b39cd16abc953e207c9927930a648af"
+        },
+        {
+          "name": "devoluciones-anticipos.csv",
+          "bytes": 79,
+          "sha256": "6b029cb28e536feb237d51220590b767168ce59ecb074c5f9c54c54058672bbc"
+        },
+        {
+          "name": "movimientos-2026.csv",
+          "bytes": 11389142,
+          "sha256": "7885b8e17e5878b54656575bf8db1d02ac498ce4e882427a6eef61fe65303cb9"
+        }
+      ]
+    }
+  }
+]

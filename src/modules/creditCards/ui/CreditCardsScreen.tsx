@@ -13,23 +13,21 @@ import Toast from 'react-native-toast-message';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import { SQLiteCommandFailure } from '../../../database/atomicSQLite';
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
+import { formatCopAmountInput, parseCopAmountDraft } from '../../../shared/utils/copAmountInput';
 import { formatCurrency } from '../../../shared/utils/formatCurrency';
 import type { Account } from '../../accounts';
 import type { AppTheme } from '../../settings';
 import { useCreditCardsOverview } from '../hooks';
 import {
-  createSqliteCreditCardAlertRepository,
   createSqliteCreditCardRepository,
 } from '../repositories';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import { createSqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
 import type { CreditCardSummary } from '../types';
 import {
-  associatePendingTransactionsForCreditCard,
-  deleteCreditCard,
-  reconcileCreditCardTransactions,
+  closeCreditCardWithReconciliation,
   registerCreditCardPayment,
-  saveCreditCardFromForm,
+  saveCreditCardWithAssociations,
 } from '../useCases';
 import { CreditCardFormModal } from './components/CreditCardFormModal';
 import { CreditCardCarousel } from './components/CreditCardCarousel';
@@ -59,7 +57,6 @@ import { creditCardsPalettes } from './creditCardsPalette';
 import {
   formatCreditLimitInput,
   formStateFromCard,
-  parseMoneyInput,
   toFormInput,
 } from './creditCardFormatters';
 
@@ -91,6 +88,8 @@ export function CreditCardsScreen({
   const [selectedCardId, setSelectedCardId] = useState<string>();
   const [formMode, setFormMode] = useState<CreditCardFormMode>('create');
   const [formCardId, setFormCardId] = useState<string>();
+  const formAccount = useRef<Account | undefined>(undefined);
+  const formMonthlyRate = useRef<number | undefined>(undefined);
   const [formState, setFormState] = useState<CreditCardFormState>(EMPTY_FORM_STATE);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [paymentAccounts, setPaymentAccounts] = useState<Account[]>([]);
@@ -100,6 +99,7 @@ export function CreditCardsScreen({
   const [payingCard, setPayingCard] = useState(false);
   const paymentSubmission = useRef<'idle' | 'running' | 'confirmed' | 'unknown'>('idle');
   const [savingCard, setSavingCard] = useState(false);
+  const cardSubmission = useRef<'idle' | 'running' | 'confirmed' | 'unknown'>('idle');
 
   useEffect(() => {
     if (overview.cards.length === 0) {
@@ -128,16 +128,22 @@ export function CreditCardsScreen({
   };
 
   const openCreateForm = () => {
+    if (cardSubmission.current === 'confirmed') cardSubmission.current = 'idle';
     setFormMode('create');
     setFormCardId(undefined);
+    formAccount.current = undefined;
+    formMonthlyRate.current = undefined;
     setFormState(EMPTY_FORM_STATE);
     setIsFormVisible(true);
   };
 
   const openEditForm = (card: CreditCardSummary) => {
+    if (cardSubmission.current === 'confirmed') cardSubmission.current = 'idle';
     setSelectedCardId(card.account.id);
     setFormMode('edit');
     setFormCardId(card.account.id);
+    formAccount.current = card.account;
+    formMonthlyRate.current = card.minimumPaymentSimulation.monthlyInterestRate;
     setFormState(formStateFromCard(card));
     setIsFormVisible(true);
   };
@@ -158,6 +164,11 @@ export function CreditCardsScreen({
   };
 
   const handleSaveCard = async () => {
+    if (cardSubmission.current === 'running' || cardSubmission.current === 'confirmed') return;
+    if (cardSubmission.current === 'unknown') {
+      Alert.alert('SmartFin', 'El resultado es desconocido. Verifica la tarjeta antes de repetir la operación.');
+      return;
+    }
     if (!database) {
       Alert.alert('SmartFin', 'La base de datos local no esta disponible.');
       return;
@@ -169,32 +180,32 @@ export function CreditCardsScreen({
       return;
     }
 
+    cardSubmission.current = 'running';
     setSavingCard(true);
+    let confirmed = false;
     try {
       const repository = createSqliteCreditCardRepository(database);
-      const existingCard = overview.cards.find(card => card.account.id === formCardId);
-      const savedAccount = await saveCreditCardFromForm(repository, input, existingCard?.account);
-      const associatedCount = await associatePendingTransactionsForCreditCard({
-        account: savedAccount,
-        accountRepository: createSqliteAccountRepository(database),
-        creditCardRepository: repository,
-        transactionRepository: createSqliteTransactionRepository(database),
+      const { account: savedAccount, associatedCount } = await saveCreditCardWithAssociations({
+        repository, input, existingAccount: formAccount.current, expectedMonthlyInterestRate: formMonthlyRate.current,
       });
+      confirmed = true;
+      cardSubmission.current = 'confirmed';
+      setSelectedCardId(savedAccount.id);
+      refreshCards();
+      setIsFormVisible(false);
       if (associatedCount > 0) {
-        await createSqliteCreditCardAlertRepository(database).resolveMissingCreditCardAlert(savedAccount.name);
         Toast.show({
           type: 'success',
           text1: 'Movimientos asociados',
           text2: `${associatedCount} movimiento${associatedCount === 1 ? '' : 's'} pendiente${associatedCount === 1 ? '' : 's'} se vinculó a la tarjeta.`,
         });
       }
-      setSelectedCardId(savedAccount.id);
-      refreshCards();
-      setIsFormVisible(false);
     } catch (saveError) {
+      if (!confirmed) cardSubmission.current = saveError instanceof SQLiteCommandFailure ? 'unknown' : 'idle';
       Alert.alert(
         'SmartFin',
-        saveError instanceof Error ? saveError.message : 'No se pudo guardar la tarjeta.',
+        confirmed ? 'La tarjeta quedó guardada. No se pudo mostrar su confirmación.'
+          : saveError instanceof Error ? saveError.message : 'No se pudo guardar la tarjeta.',
       );
     } finally {
       setSavingCard(false);
@@ -212,25 +223,30 @@ export function CreditCardsScreen({
         text: 'Eliminar',
         style: 'destructive',
         onPress: async () => {
+          if (cardSubmission.current === 'running' || cardSubmission.current === 'confirmed') return;
+          if (cardSubmission.current === 'unknown') {
+            Alert.alert('SmartFin', 'El resultado es desconocido. Verifica la tarjeta antes de repetir la operación.');
+            return;
+          }
+          cardSubmission.current = 'running';
+          let confirmed = false;
           setSavingCard(true);
           try {
-            const accountRepository = createSqliteAccountRepository(database);
-            const creditCardRepository = createSqliteCreditCardRepository(database);
-            const transactionRepository = createSqliteTransactionRepository(database);
-
-            await reconcileCreditCardTransactions({
-              accountRepository,
-              creditCardRepository,
-              transactionRepository,
+            await closeCreditCardWithReconciliation({
+              repository: createSqliteCreditCardRepository(database), accountId: formCardId,
+              expectedAccount: formAccount.current,
             });
-            await deleteCreditCard(creditCardRepository, formCardId);
+            confirmed = true;
+            cardSubmission.current = 'confirmed';
             setSelectedCardId(undefined);
             refreshCards();
             setIsFormVisible(false);
           } catch (deleteError) {
+            if (!confirmed) cardSubmission.current = deleteError instanceof SQLiteCommandFailure ? 'unknown' : 'idle';
             Alert.alert(
               'SmartFin',
-              deleteError instanceof Error ? deleteError.message : 'No se pudo eliminar la tarjeta.',
+              confirmed ? 'La tarjeta quedó cerrada. Actualiza la vista.'
+                : deleteError instanceof Error ? deleteError.message : 'No se pudo eliminar la tarjeta.',
             );
           } finally {
             setSavingCard(false);
@@ -297,7 +313,7 @@ export function CreditCardsScreen({
       return;
     }
 
-    const amount = parseMoneyInput(paymentAmount);
+    const amount = parseCopAmountDraft(paymentAmount);
     if (!paymentSourceAccountId || amount <= 0) {
       Alert.alert('SmartFin', 'Selecciona una cuenta origen e ingresa un monto valido.');
       return;
@@ -410,7 +426,7 @@ export function CreditCardsScreen({
         accounts={paymentAccounts}
         amount={paymentAmount}
         card={selectedCard}
-        onAmountChange={value => setPaymentAmount(formatCreditLimitInput(value))}
+        onAmountChange={value => setPaymentAmount(formatCopAmountInput(value))}
         onClose={closePaymentModal}
         onSave={handleRegisterPayment}
         onSelectAccount={setPaymentSourceAccountId}

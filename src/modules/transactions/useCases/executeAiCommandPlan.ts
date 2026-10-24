@@ -4,7 +4,7 @@ import { borrowSQLiteDatabase } from '../../../database/managedSQLite';
 import { withDatabaseMaintenance } from '../../../database/databaseCoordination';
 import { createSubscriptionInCommand } from '../../subscriptions/useCases/createSubscriptionInCommand';
 import { subscriptionFromAiFields } from '../../subscriptions/useCases/subscriptionFromAiFields';
-import { createSubscriptionApi } from '../../subscriptions/useCases/createSubscriptionApi';
+import { createSubscriptionApi, createSubscriptionCommandApi } from '../../subscriptions/useCases/createSubscriptionApi';
 import { createSqliteSubscriptionRepository } from '../../subscriptions/repositories/sqliteSubscriptionRepository';
 import { createSubscriptionReminderService } from '../../subscriptions/services/androidSubscriptionReminderService';
 import type { SubscriptionReminderService } from '../../subscriptions/services/SubscriptionReminderService';
@@ -35,6 +35,7 @@ import { createSqliteTransactionRepository } from '../repositories';
 import type { AiCommandAction, AiCommandPlan, Transaction } from '../types';
 import { deleteManualTransactionSafely, saveManualTransaction } from './saveManualTransaction';
 import { bogotaToday, parseTransactionDate } from '../../../shared/utils/transactionDate';
+import { aiPlanIdentity, readAiCommandReceipt, confirmAiCommandReceipt } from '../repositories/aiCommandReceipt';
 
 export type ExecuteAiCommandPlanResult = {
   completed: string[];
@@ -56,7 +57,10 @@ function resolveId(
   reference: string | null | undefined,
   references: Map<string, string>,
 ): string | undefined {
-  return direct ?? (reference ? references.get(reference) : undefined);
+  const resolved = reference ? references.get(reference) : undefined;
+  if (reference && (!resolved || (direct && direct !== resolved)))
+    throw new Error('La referencia del plan no está disponible o es incompatible.');
+  return direct ?? resolved;
 }
 
 async function resolveTarget<T extends { id: string }>(
@@ -270,27 +274,55 @@ export async function executeAiCommandPlan(
   plan: AiCommandPlan,
   reminderService?: SubscriptionReminderService,
 ): Promise<ExecuteAiCommandPlanResult> {
+  if (!draftId.trim()) throw new Error('El borrador necesita un ID único.');
+  // Freeze the intention across awaits and reject NaN/Infinity before any write.
+  const command = JSON.parse(aiPlanIdentity(plan)) as AiCommandPlan;
+  const ids = new Set<string>();
+  const refs = new Set<string>();
+  for (const action of command.actions) {
+    if (!action.id.trim() || ids.has(action.id) || (action.clientRef && refs.has(action.clientRef)))
+      throw new Error('El plan contiene IDs o referencias duplicados.');
+    ids.add(action.id);
+    if (action.clientRef) refs.add(action.clientRef);
+  }
   return withDatabaseMaintenance(async permit => {
     const completed: string[] = [];
     const references = new Map<string, string>();
     const result = await runSharedSQLiteTransaction(database, async scopedDatabase => {
-      for (const action of plan.actions) {
+      const receipt = await readAiCommandReceipt(scopedDatabase, draftId, command);
+      if (receipt) return { completed: receipt, replayed: true };
+      for (const action of command.actions) {
+        for (const [field, value] of Object.entries(action.fields)) {
+          if (field.endsWith('Ref') && typeof value === 'string' && !references.has(value))
+            throw new Error('La referencia del plan todavía no existe. Revisa el orden de las acciones.');
+        }
         completed.push(await executeAction(scopedDatabase, action, draftId, references));
       }
+      if (command.actions.some(action => action.entity === 'subscription')) {
+        // Preserve the former bounded final synchronization, now before the plan's COMMIT.
+        // This is one existing batch, never the runtime's twenty-batch maintenance loop.
+        await createSubscriptionCommandApi({
+          repository: createSqliteSubscriptionRepository(scopedDatabase),
+          reminderService: reminderService ?? createSubscriptionReminderService(permit),
+        }).syncSubscriptions();
+      }
+      await confirmAiCommandReceipt(scopedDatabase, draftId, command, completed);
+      return { completed, replayed: false };
     }, permit);
     if (result.status === 'rolledBack') throw result.error;
     if (result.status === 'unknown') throw new SQLiteCommandFailure(result);
-    if (plan.actions.some(action => action.entity === 'subscription')) {
+    if (result.value.replayed) return { completed: result.value.completed };
+    if (command.actions.some(action => action.entity === 'subscription' || (action.entity === 'transaction' && action.operation !== 'create'))) {
       // A platform failure must never turn a committed financial command into a retry/duplicate.
       try {
         const sync = await createSubscriptionApi({
           repository: createSqliteSubscriptionRepository(borrowSQLiteDatabase(database, permit)),
-          reminderService: reminderService ?? createSubscriptionReminderService(),
-        }).syncSubscriptions();
-        if (sync.reminderErrors.length) completed.push('Suscripción guardada. Hay recordatorios pendientes; reintenta su programación desde Suscripciones.');
-        else if (sync.reminders.permission !== 'granted') completed.push('Suscripción guardada. Los recordatorios requieren disponibilidad y permiso; puedes gestionarlos desde Suscripciones.');
+          reminderService: reminderService ?? createSubscriptionReminderService(permit),
+        }).syncSubscriptionReminders();
+        if (sync.reminderErrors.length) completed.push('Operaciones guardadas. Hay recordatorios pendientes; reintenta su programación desde Suscripciones.');
+        else if (sync.reminders.permission !== 'granted' && command.actions.some(action => action.entity === 'subscription')) completed.push('Suscripción guardada. Los recordatorios requieren disponibilidad y permiso; puedes gestionarlos desde Suscripciones.');
       } catch {
-        completed.push('Suscripción guardada. No se pudo completar la programación; reinténtala desde Suscripciones.');
+        completed.push('Operaciones guardadas. No se pudo completar la programación; reinténtala desde Suscripciones.');
       }
     }
     return { completed };

@@ -1,0 +1,19 @@
+Performing Streamed Install
+Success
+Starting: Intent { act=android.intent.action.VIEW dat=atomicity-phase1://campaign/post-fragments cmp=com.smartfin.atomicityphase1.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.atomicityphase1.tests/com.smartfin.MainActivity
+ThisTime: 570
+TotalTime: 570
+WaitTime: 601
+Complete
+{"campaign":"post-fragments","stage":"fragment 1 before: entire association rollback","completedCases":0,"measuredSamples":0,"time":1792307828907}
+{"campaign":"post-fragments","stage":"fragment 2 before: entire association rollback","completedCases":1,"measuredSamples":0,"time":1792307837473}
+{"campaign":"post-fragments","stage":"fragment 3 before: entire association rollback","completedCases":2,"measuredSamples":0,"time":1792307846131}
+{"campaign":"post-fragments","stage":"fragment 1 after: entire association rollback","completedCases":3,"measuredSamples":0,"time":1792307853230}
+{"campaign":"post-fragments","stage":"fragment 2 after: entire association rollback","completedCases":4,"measuredSamples":0,"time":1792307860404}
+{"campaign":"post-fragments","stage":"fragment 3 after: entire association rollback","completedCases":5,"measuredSamples":0,"time":1792307867119}
+{"campaign":"post-fragments","stage":"standalone fragments share one driver transaction and match the old single UPDATE","completedCases":6,"measuredSamples":0,"time":1792307874803}
+{"campaign":"post-fragments","stage":"a real SQLite failure in the second standalone fragment rolls back the first","completedCases":7,"measuredSamples":0,"time":1792307877414}
+{"campaign":"post-fragments","stage":"complete","completedCases":8,"measuredSamples":0,"time":1792307879909}
+/sdcard/Android/data/com.smartfin.atomicityphase1.tests/files/atomicity-results/result.json: 1 file pulled, 0 skipped. 1.0 MB/s (2143 bytes in 0.002s)

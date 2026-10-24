@@ -1,5 +1,6 @@
 import { saveSqliteAccounts } from '../../accounts/repositories/saveSqliteAccounts';
 import { registerSQLiteRepository } from '../../../database/sqliteRepositoryScope';
+import { runSQLiteTransaction } from '../../../database/atomicSQLite';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import {
   readNullableNumber,
@@ -316,11 +317,31 @@ export function createSqliteCreditCardRepository(
         return;
       }
 
+      // IN updates each matching row once, even if the caller repeats an ID.
+      const uniqueIds = [...new Set(transactionIds)];
+      const updatedAt = new Date().toISOString();
+      if (uniqueIds.length > 997) {
+        // API 24 permits 999 bindings, including account and audit timestamp.
+        // Reuse the outer participant; standalone callers get one local transaction.
+        await runSQLiteTransaction(database, function* () {
+          for (let offset = 0; offset < uniqueIds.length; offset += 900) {
+            const ids = uniqueIds.slice(offset, offset + 900);
+            yield {
+              sql: `UPDATE installment_purchases SET account_id = ?, updated_at = ?
+                WHERE transaction_id IN (${placeholders(ids)});`,
+              values: [accountId, updatedAt, ...ids],
+            };
+          }
+          return undefined;
+        });
+        return;
+      }
+
       await database.executeSql(
         `UPDATE installment_purchases
         SET account_id = ?, updated_at = ?
-        WHERE transaction_id IN (${placeholders(transactionIds)});`,
-        [accountId, new Date().toISOString(), ...transactionIds],
+        WHERE transaction_id IN (${placeholders(uniqueIds)});`,
+        [accountId, updatedAt, ...uniqueIds],
       );
     },
   });

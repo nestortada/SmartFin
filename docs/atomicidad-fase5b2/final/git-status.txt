@@ -1,0 +1,82 @@
+ M .agents/skills/smartfin-financial-domain/SKILL.md
+ M __tests__/aiDraftRepository.test.ts
+ M __tests__/aiTransfers.test.ts
+ M __tests__/creditCardPaymentScreen.test.tsx
+ M __tests__/driveBackupService.test.ts
+ M __tests__/financialAtomicityPhase3A.test.ts
+ M android/app/src/main/java/com/smartfin/SmartFinDriveBackupModule.kt
+ M android/app/src/main/java/com/smartfin/SmartFinNativePackage.kt
+ M android/app/src/main/java/com/smartfin/SmartFinSubscriptionRemindersModule.kt
+ M docs/ARQUITECTURA.md
+ M docs/BASE_DE_DATOS.md
+ M docs/SUSCRIPCIONES.md
+ M src/database/databaseCoordination.ts
+ M src/database/managedSQLite.ts
+ M src/database/sqliteDatabase.ts
+ M src/database/sqliteLifecycle.ts
+ M src/modules/creditCards/index.ts
+ M src/modules/creditCards/repositories/sqliteCreditCardRepository.ts
+ M src/modules/creditCards/ui/CreditCardsScreen.tsx
+ M src/modules/creditCards/ui/components/CreditCardPayment.tsx
+ M src/modules/creditCards/useCases/creditCardTransactionRelations.ts
+ M src/modules/creditCards/useCases/index.ts
+ M src/modules/creditCards/useCases/manageCreditCards.ts
+ M src/modules/settings/services/androidDriveBackupService.ts
+ M src/modules/settings/ui/components/DriveBackupSection.tsx
+ M src/modules/settings/useCases/deleteFinancialData.ts
+ M src/modules/subscriptions/hooks/useSubscriptionsController.ts
+ M src/modules/subscriptions/services/androidSubscriptionReminderService.ts
+ M src/modules/subscriptions/services/subscriptionRuntime.ts
+ M src/modules/subscriptions/useCases/createSubscriptionApi.ts
+ M src/modules/subscriptions/useCases/createSubscriptionInCommand.ts
+ M src/modules/subscriptions/useCases/subscriptionFromAiFields.ts
+ M src/modules/transactions/hooks/useAiAssistantController.ts
+ M src/modules/transactions/repositories/sqliteAiDraftRepository.ts
+ M src/modules/transactions/ui/TransactionsScreen.tsx
+ M src/modules/transactions/useCases/executeAiCommandPlan.ts
+ M src/navigation/AppNavigator.tsx
+?? __tests__/aiConfirmationPhase4.test.tsx
+?? __tests__/backupPublication.test.ts
+?? __tests__/creditCardAssociationScaling.test.ts
+?? __tests__/financialAtomicityPhase3B.test.ts
+?? __tests__/financialAtomicityPhase4.test.ts
+?? __tests__/helpers/phase3BCreditCardRelations.ts
+?? __tests__/helpers/phase3BManageCreditCards.ts
+?? __tests__/helpers/phase4ExecuteAiCommandPlan.ts
+?? __tests__/helpers/phase4SubscriptionApi.ts
+?? __tests__/helpers/phase4SubscriptionRuntime.ts
+?? __tests__/helpers/post3BCreditCardRepositoryBaseline.ts
+?? __tests__/localSnapshotCoordination.test.ts
+?? __tests__/subscriptionAtomicityPhase4.test.ts
+?? __tests__/subscriptionMaintenanceComparison.test.ts
+?? android/app/src/main/java/com/smartfin/SmartFinBackupCsv.kt
+?? android/app/src/main/java/com/smartfin/SmartFinBackupPublisher.kt
+?? android/app/src/main/java/com/smartfin/SmartFinDatabaseCoordinator.kt
+?? android/app/src/main/java/com/smartfin/SmartFinDatabaseLifecycleModule.kt
+?? android/app/src/main/java/com/smartfin/SmartFinLocalSnapshot.kt
+?? docs/atomicidad-fase3b/
+?? docs/atomicidad-fase4/
+?? docs/atomicidad-fase5a/
+?? docs/atomicidad-fase5b1/
+?? docs/atomicidad-fase5b2/
+?? docs/atomicidad-financiera-fase3b.md
+?? docs/atomicidad-financiera-fase4.md
+?? docs/atomicidad-financiera-fase5a.md
+?? docs/atomicidad-financiera-fase5b1.md
+?? docs/atomicidad-financiera-fase5b2.md
+?? docs/performance/post3b/
+?? docs/verificacion-rendimiento-post3b.md
+?? scripts/androidAtomicityPhase3B/
+?? scripts/androidAtomicityPhase4/
+?? scripts/androidPost3BPerformance/
+?? scripts/phase5a/
+?? scripts/phase5b1/
+?? scripts/phase5b2/
+?? src/database/nativeDatabaseLifecycle.ts
+?? src/modules/creditCards/repositories/readUnclassifiedCreditTransactions.ts
+?? src/modules/creditCards/useCases/creditCardManagementCommands.ts
+?? src/modules/creditCards/useCases/creditCardManagementScope.ts
+?? src/modules/settings/services/backupPublicationPolicy.ts
+?? src/modules/settings/services/localDatabaseSnapshot.ts
+?? src/modules/transactions/repositories/aiCommandReceipt.ts
+?? src/shared/utils/stableJson.ts

@@ -1,0 +1,441 @@
+Starting a Gradle Daemon (subsequent builds will be faster)
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+> Task :gradle-plugin:settings-plugin:pluginDescriptors
+> Task :gradle-plugin:settings-plugin:processResources
+> Task :gradle-plugin:shared:compileKotlin
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+> Task :gradle-plugin:shared:jar
+> Task :gradle-plugin:settings-plugin:compileKotlin
+> Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:settings-plugin:classes
+> Task :gradle-plugin:settings-plugin:jar
+> Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors
+> Task :gradle-plugin:react-native-gradle-plugin:processResources
+> Task :gradle-plugin:react-native-gradle-plugin:compileKotlin
+> Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:react-native-gradle-plugin:classes
+> Task :gradle-plugin:react-native-gradle-plugin:jar
+
+> Configure project :app
+Reading env from: .env
+Warning: SDK processing. This version only understands SDK XML versions up to 3 but an SDK XML file of version 4 was encountered. This can happen if you use versions of Android Studio and the command-line tools that were released at different times.
+
+> Task :app:generateAutolinkingNewArchitectureFiles
+> Task :app:generateAutolinkingPackageList
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :app:generateReactNativeEntryPoint
+> Task :react-native-config:generateCodegenSchemaFromJavaScript
+> Task :react-native-config:generateCodegenArtifactsFromSchema
+> Task :react-native-config:preBuild
+> Task :react-native-safe-area-context:generateCodegenSchemaFromJavaScript
+> Task :react-native-safe-area-context:generateCodegenArtifactsFromSchema
+> Task :react-native-safe-area-context:preBuild
+> Task :react-native-sqlite-storage:preBuild UP-TO-DATE
+> Task :react-native-vector-icons:generateCodegenSchemaFromJavaScript
+> Task :react-native-vector-icons:generateCodegenArtifactsFromSchema
+> Task :react-native-vector-icons:preBuild
+> Task :rn-speech-recognition:preBuild UP-TO-DATE
+> Task :app:preBuild
+> Task :app:preReleaseBuild
+> Task :app:configureCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:buildCMakeRelWithDebInfo[arm64-v8a]
+> Task :app:configureCMakeRelWithDebInfo[x86_64]
+> Task :app:buildCMakeRelWithDebInfo[x86_64]
+> Task :app:mergeReleaseJniLibFolders
+> Task :react-native-config:preReleaseBuild
+> Task :react-native-config:mergeReleaseJniLibFolders
+> Task :react-native-config:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-safe-area-context:preReleaseBuild
+> Task :react-native-config:copyReleaseJniLibsProjectOnly
+> Task :react-native-safe-area-context:mergeReleaseJniLibFolders
+> Task :react-native-safe-area-context:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-sqlite-storage:preReleaseBuild UP-TO-DATE
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectOnly
+> Task :react-native-sqlite-storage:mergeReleaseJniLibFolders
+> Task :react-native-sqlite-storage:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-vector-icons:preReleaseBuild
+> Task :react-native-sqlite-storage:copyReleaseJniLibsProjectOnly
+> Task :react-native-vector-icons:mergeReleaseJniLibFolders
+> Task :react-native-vector-icons:mergeReleaseNativeLibs NO-SOURCE
+> Task :rn-speech-recognition:preReleaseBuild UP-TO-DATE
+> Task :react-native-vector-icons:copyReleaseJniLibsProjectOnly
+> Task :rn-speech-recognition:mergeReleaseJniLibFolders
+> Task :rn-speech-recognition:mergeReleaseNativeLibs NO-SOURCE
+> Task :react-native-safe-area-context:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :rn-speech-recognition:copyReleaseJniLibsProjectOnly
+> Task :react-native-safe-area-context:generateReleaseBuildConfig
+> Task :react-native-safe-area-context:generateReleaseResValues
+> Task :react-native-safe-area-context:generateReleaseResources
+> Task :react-native-safe-area-context:packageReleaseResources
+> Task :rn-speech-recognition:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-safe-area-context:javaPreCompileRelease
+> Task :rn-speech-recognition:generateReleaseBuildConfig
+> Task :rn-speech-recognition:generateReleaseResValues
+> Task :rn-speech-recognition:generateReleaseResources
+> Task :react-native-safe-area-context:parseReleaseLocalResources
+> Task :rn-speech-recognition:packageReleaseResources
+> Task :rn-speech-recognition:javaPreCompileRelease
+> Task :rn-speech-recognition:parseReleaseLocalResources
+> Task :react-native-config:generateReleaseBuildConfig
+> Task :react-native-safe-area-context:generateReleaseRFile
+> Task :react-native-config:generateReleaseResValues
+> Task :rn-speech-recognition:generateReleaseRFile
+> Task :app:mergeReleaseNativeLibs
+> Task :react-native-config:generateReleaseResources
+> Task :react-native-config:packageReleaseResources
+> Task :react-native-sqlite-storage:generateReleaseBuildConfig
+> Task :react-native-sqlite-storage:generateReleaseResValues
+> Task :react-native-sqlite-storage:generateReleaseResources
+> Task :react-native-sqlite-storage:packageReleaseResources
+> Task :react-native-sqlite-storage:parseReleaseLocalResources
+> Task :react-native-config:parseReleaseLocalResources
+> Task :react-native-vector-icons:generateReleaseBuildConfig
+> Task :react-native-sqlite-storage:javaPreCompileRelease
+> Task :react-native-config:javaPreCompileRelease
+> Task :react-native-sqlite-storage:generateReleaseRFile
+> Task :react-native-config:generateReleaseRFile
+> Task :app:stripReleaseDebugSymbols
+
+> Task :react-native-safe-area-context:compileReleaseKotlin
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaProviderManager.kt:39:19 'fun getEventDispatcherForReactTag(context: ReactContext, reactTag: Int): EventDispatcher?' is deprecated. reactTag is no longer needed.
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:9:8 'class UIManagerModule : ReactContextBaseJavaModule, LifecycleEventListener, UIManager' is deprecated. Deprecated in Java.
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:50:54 'class UIManagerModule : ReactContextBaseJavaModule, LifecycleEventListener, UIManager' is deprecated. Deprecated in Java.
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaView.kt:59:23 'val uiImplementation: UIImplementation!' is deprecated. Deprecated in Java.
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaViewShadowNode.kt:9:32 'class LayoutShadowNode : ReactShadowNodeImpl' is deprecated. This class is part of Legacy Architecture and will be removed in a future release.
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaViewShadowNode.kt:110:61 'class NativeViewHierarchyOptimizer : Any' is deprecated. This class is part of Legacy Architecture and will be removed in a future release.
+
+> Task :rn-speech-recognition:compileReleaseKotlin
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/rn-speech-recognition/android/src/main/java/com/duysolo/speechrecognition/RNSpeechRecognitionModule.kt:51:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/rn-speech-recognition/android/src/main/java/com/duysolo/speechrecognition/RNSpeechRecognitionModule.kt:53:15 'fun onCatalystInstanceDestroy(): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/sfatomicity-phase4-20261018/node_modules/rn-speech-recognition/android/src/main/java/com/duysolo/speechrecognition/RNSpeechRecognitionPackage.kt:9:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+
+> Task :react-native-sqlite-storage:compileReleaseJavaWithJavac
+Note: C:\sfatomicity-phase4-20261018\vendor\sqlite\platforms\android\src\main\java\org\pgsqlite\SQLitePluginPackage.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :react-native-safe-area-context:compileReleaseJavaWithJavac
+> Task :app:extractReleaseNativeSymbolTables
+> Task :react-native-safe-area-context:bundleLibRuntimeToDirRelease
+> Task :rn-speech-recognition:compileReleaseJavaWithJavac
+> Task :rn-speech-recognition:bundleLibRuntimeToDirRelease
+
+> Task :react-native-config:compileReleaseJavaWithJavac
+Note: C:\sfatomicity-phase4-20261018\node_modules\react-native-config\android\src\main\java\com\lugg\RNCConfig\RNCConfigPackage.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :react-native-vector-icons:generateReleaseResValues
+> Task :react-native-vector-icons:generateReleaseResources
+> Task :react-native-config:bundleLibRuntimeToDirRelease
+> Task :react-native-vector-icons:packageReleaseResources
+> Task :react-native-vector-icons:parseReleaseLocalResources
+> Task :react-native-vector-icons:javaPreCompileRelease
+> Task :react-native-sqlite-storage:bundleLibRuntimeToDirRelease
+> Task :react-native-vector-icons:generateReleaseRFile
+> Task :app:buildKotlinToolingMetadata
+> Task :app:mergeReleaseNativeDebugMetadata
+> Task :app:checkReleaseDuplicateClasses
+
+> Task :react-native-vector-icons:compileReleaseJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateReleaseBuildConfig
+> Task :react-native-vector-icons:bundleLibRuntimeToDirRelease
+> Task :react-native-safe-area-context:writeReleaseAarMetadata
+> Task :react-native-config:writeReleaseAarMetadata
+> Task :react-native-sqlite-storage:writeReleaseAarMetadata
+> Task :react-native-vector-icons:writeReleaseAarMetadata
+> Task :rn-speech-recognition:writeReleaseAarMetadata
+
+> Task :app:createBundleReleaseJsAndAssets
+warn Package react-native-sqlite-storage contains invalid configuration: "dependency.platforms.ios.project" is not allowed. Please verify it's properly linked using "npx react-native config" command and contact the package maintainers about this.
+
+                        ▒▒▓▓▓▓▒▒
+                     ▒▓▓▓▒▒░░▒▒▓▓▓▒
+                  ▒▓▓▓▓░░░▒▒▒▒░░░▓▓▓▓▒
+                 ▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▓
+                 ▓▓░░░░░▒▓▓▓▓▓▓▒░░░░░▓▓
+                 ▓▓░░▓▓▒░░░▒▒░░░▒▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▒▒▒▒▓▓▓▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░▓▓
+                 ▓▓▒░░▒▒▓▓▓▓▓▓▓▓▒░░░▒▓▓
+                  ▒▓▓▓▒░░░▒▓▓▒░░░▒▓▓▓▒
+                     ▒▓▓▓▒░░░░▒▓▓▓▒
+                        ▒▒▓▓▓▓▒▒
+
+
+ WARN  the transform cache was reset.
+                Welcome to Metro v0.84.4
+              Fast - Scalable - Integrated
+
+
+transform[stderr]: (node:15732) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:28996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:25936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:34924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:40184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:37140) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:28388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+transform[stderr]: (node:11572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+transform[stderr]: (Use `node --trace-warnings ...` to show where the warning was created)
+LOG:Writing bundle output to: android\app\build\generated\assets\react\release\index.android.bundle
+LOG:Writing sourcemap output to: android\app\build\intermediates\sourcemaps\react\release\index.android.bundle.packager.map
+LOG:Done writing bundle output
+LOG:Done writing sourcemap output
+
+> Task :app:generateReleaseResValues
+> Task :app:checkReleaseAarMetadata
+> Task :app:mapReleaseSourceSetPaths
+> Task :app:generateReleaseResources
+> Task :app:packageReleaseResources
+> Task :app:createReleaseCompatibleScreenManifests
+> Task :app:parseReleaseLocalResources
+> Task :app:extractDeepLinksRelease
+> Task :react-native-config:extractDeepLinksRelease
+> Task :react-native-safe-area-context:extractDeepLinksRelease
+> Task :react-native-sqlite-storage:extractDeepLinksRelease
+> Task :react-native-vector-icons:extractDeepLinksRelease
+> Task :rn-speech-recognition:extractDeepLinksRelease
+> Task :react-native-config:compileReleaseLibraryResources
+> Task :react-native-safe-area-context:compileReleaseLibraryResources
+
+> Task :react-native-sqlite-storage:processReleaseManifest
+package="org.pgsqlite" found in source AndroidManifest.xml: C:\sfatomicity-phase4-20261018\vendor\sqlite\platforms\android\src\main\AndroidManifest.xml.
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Recommendation: remove package="org.pgsqlite" from the source AndroidManifest.xml: C:\sfatomicity-phase4-20261018\vendor\sqlite\platforms\android\src\main\AndroidManifest.xml.
+
+> Task :react-native-config:processReleaseManifest
+
+> Task :react-native-vector-icons:processReleaseManifest
+package="com.oblador.vectoricons" found in source AndroidManifest.xml: C:\sfatomicity-phase4-20261018\node_modules\react-native-vector-icons\android\src\main\AndroidManifest.xml.
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Recommendation: remove package="com.oblador.vectoricons" from the source AndroidManifest.xml: C:\sfatomicity-phase4-20261018\node_modules\react-native-vector-icons\android\src\main\AndroidManifest.xml.
+
+> Task :rn-speech-recognition:processReleaseManifest
+package="com.duysolo.speechrecognition" found in source AndroidManifest.xml: C:\sfatomicity-phase4-20261018\node_modules\rn-speech-recognition\android\src\main\AndroidManifest.xml.
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Recommendation: remove package="com.duysolo.speechrecognition" from the source AndroidManifest.xml: C:\sfatomicity-phase4-20261018\node_modules\rn-speech-recognition\android\src\main\AndroidManifest.xml.
+
+> Task :react-native-sqlite-storage:compileReleaseLibraryResources
+
+> Task :react-native-safe-area-context:processReleaseManifest
+package="com.th3rdwave.safeareacontext" found in source AndroidManifest.xml: C:\sfatomicity-phase4-20261018\node_modules\react-native-safe-area-context\android\src\main\AndroidManifest.xml.
+Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
+Recommendation: remove package="com.th3rdwave.safeareacontext" from the source AndroidManifest.xml: C:\sfatomicity-phase4-20261018\node_modules\react-native-safe-area-context\android\src\main\AndroidManifest.xml.
+
+> Task :react-native-vector-icons:compileReleaseLibraryResources
+> Task :app:processReleaseMainManifest
+> Task :app:mergeReleaseResources
+> Task :app:processReleaseManifest
+> Task :rn-speech-recognition:compileReleaseLibraryResources
+> Task :app:processReleaseManifestForPackage
+> Task :react-native-config:bundleLibCompileToJarRelease
+> Task :react-native-safe-area-context:bundleLibCompileToJarRelease
+> Task :react-native-sqlite-storage:bundleLibCompileToJarRelease
+> Task :react-native-vector-icons:bundleLibCompileToJarRelease
+> Task :app:javaPreCompileRelease
+> Task :app:desugarReleaseFileDependencies
+> Task :app:mergeReleaseStartupProfile
+> Task :rn-speech-recognition:bundleLibCompileToJarRelease
+> Task :react-native-config:prepareReleaseArtProfile
+> Task :react-native-safe-area-context:prepareReleaseArtProfile
+> Task :react-native-sqlite-storage:prepareReleaseArtProfile
+> Task :react-native-vector-icons:prepareReleaseArtProfile
+> Task :rn-speech-recognition:prepareReleaseArtProfile
+> Task :app:mergeReleaseArtProfile
+> Task :react-native-config:bundleLibRuntimeToJarRelease
+> Task :react-native-safe-area-context:bundleLibRuntimeToJarRelease
+> Task :rn-speech-recognition:bundleLibRuntimeToJarRelease
+> Task :react-native-sqlite-storage:bundleLibRuntimeToJarRelease
+> Task :react-native-vector-icons:bundleLibRuntimeToJarRelease
+> Task :app:mergeReleaseShaders
+> Task :app:compileReleaseShaders NO-SOURCE
+> Task :app:copyReactNativeVectorIconFonts
+> Task :app:generateReleaseAssets
+> Task :react-native-config:mergeReleaseShaders
+> Task :react-native-config:compileReleaseShaders NO-SOURCE
+> Task :react-native-config:generateReleaseAssets UP-TO-DATE
+> Task :react-native-config:mergeReleaseAssets
+> Task :react-native-safe-area-context:mergeReleaseShaders
+> Task :react-native-safe-area-context:compileReleaseShaders NO-SOURCE
+> Task :react-native-safe-area-context:generateReleaseAssets UP-TO-DATE
+> Task :react-native-safe-area-context:mergeReleaseAssets
+> Task :react-native-sqlite-storage:mergeReleaseShaders
+> Task :react-native-sqlite-storage:compileReleaseShaders NO-SOURCE
+> Task :react-native-sqlite-storage:generateReleaseAssets UP-TO-DATE
+> Task :react-native-sqlite-storage:mergeReleaseAssets
+> Task :react-native-vector-icons:mergeReleaseShaders
+> Task :react-native-vector-icons:compileReleaseShaders NO-SOURCE
+> Task :react-native-vector-icons:generateReleaseAssets UP-TO-DATE
+> Task :react-native-vector-icons:mergeReleaseAssets
+> Task :rn-speech-recognition:mergeReleaseShaders
+> Task :rn-speech-recognition:compileReleaseShaders NO-SOURCE
+> Task :rn-speech-recognition:generateReleaseAssets UP-TO-DATE
+> Task :rn-speech-recognition:mergeReleaseAssets
+> Task :app:mergeReleaseAssets
+> Task :app:compressReleaseAssets
+> Task :app:extractReleaseVersionControlInfo
+> Task :app:extractProguardFiles
+> Task :react-native-config:processReleaseJavaRes NO-SOURCE
+> Task :react-native-config:createFullJarRelease
+> Task :react-native-config:extractProguardFiles
+> Task :react-native-config:generateReleaseLintModel
+> Task :react-native-config:prepareLintJarForPublish
+> Task :react-native-safe-area-context:processReleaseJavaRes
+> Task :react-native-safe-area-context:createFullJarRelease
+> Task :react-native-safe-area-context:extractProguardFiles
+> Task :react-native-safe-area-context:generateReleaseLintModel
+> Task :react-native-safe-area-context:prepareLintJarForPublish
+> Task :react-native-sqlite-storage:processReleaseJavaRes NO-SOURCE
+> Task :react-native-sqlite-storage:createFullJarRelease
+> Task :react-native-sqlite-storage:extractProguardFiles
+> Task :react-native-sqlite-storage:generateReleaseLintModel
+> Task :react-native-sqlite-storage:prepareLintJarForPublish
+> Task :react-native-vector-icons:processReleaseJavaRes NO-SOURCE
+> Task :react-native-vector-icons:createFullJarRelease
+> Task :react-native-vector-icons:extractProguardFiles
+> Task :react-native-vector-icons:generateReleaseLintModel
+> Task :react-native-vector-icons:prepareLintJarForPublish
+> Task :rn-speech-recognition:processReleaseJavaRes
+> Task :rn-speech-recognition:createFullJarRelease
+> Task :rn-speech-recognition:extractProguardFiles
+> Task :rn-speech-recognition:generateReleaseLintModel
+> Task :rn-speech-recognition:prepareLintJarForPublish
+> Task :react-native-safe-area-context:stripReleaseDebugSymbols NO-SOURCE
+> Task :react-native-safe-area-context:copyReleaseJniLibsProjectAndLocalJars
+> Task :app:processReleaseResources
+> Task :react-native-safe-area-context:extractDeepLinksForAarRelease
+> Task :react-native-safe-area-context:extractReleaseAnnotations
+> Task :react-native-safe-area-context:mergeReleaseGeneratedProguardFiles
+> Task :react-native-safe-area-context:mergeReleaseConsumerProguardFiles
+> Task :rn-speech-recognition:stripReleaseDebugSymbols NO-SOURCE
+> Task :rn-speech-recognition:copyReleaseJniLibsProjectAndLocalJars
+> Task :rn-speech-recognition:extractDeepLinksForAarRelease
+> Task :rn-speech-recognition:extractReleaseAnnotations
+> Task :rn-speech-recognition:mergeReleaseGeneratedProguardFiles
+> Task :rn-speech-recognition:mergeReleaseConsumerProguardFiles
+> Task :react-native-config:stripReleaseDebugSymbols NO-SOURCE
+> Task :react-native-config:copyReleaseJniLibsProjectAndLocalJars
+> Task :react-native-config:extractDeepLinksForAarRelease
+> Task :react-native-config:extractReleaseAnnotations
+> Task :react-native-config:mergeReleaseGeneratedProguardFiles
+> Task :react-native-config:mergeReleaseConsumerProguardFiles
+> Task :react-native-sqlite-storage:stripReleaseDebugSymbols NO-SOURCE
+> Task :react-native-sqlite-storage:copyReleaseJniLibsProjectAndLocalJars
+> Task :react-native-config:mergeReleaseJavaResource
+> Task :react-native-sqlite-storage:extractDeepLinksForAarRelease
+> Task :rn-speech-recognition:mergeReleaseJavaResource
+> Task :react-native-safe-area-context:mergeReleaseJavaResource
+> Task :react-native-config:syncReleaseLibJars
+> Task :react-native-safe-area-context:syncReleaseLibJars
+> Task :react-native-safe-area-context:bundleReleaseLocalLintAar
+> Task :rn-speech-recognition:syncReleaseLibJars
+> Task :rn-speech-recognition:bundleReleaseLocalLintAar
+> Task :react-native-config:bundleReleaseLocalLintAar
+> Task :react-native-sqlite-storage:extractReleaseAnnotations
+> Task :react-native-sqlite-storage:mergeReleaseGeneratedProguardFiles
+> Task :react-native-sqlite-storage:mergeReleaseConsumerProguardFiles
+> Task :react-native-vector-icons:stripReleaseDebugSymbols NO-SOURCE
+> Task :react-native-sqlite-storage:mergeReleaseJavaResource
+> Task :react-native-vector-icons:copyReleaseJniLibsProjectAndLocalJars
+> Task :react-native-sqlite-storage:syncReleaseLibJars
+> Task :react-native-sqlite-storage:bundleReleaseLocalLintAar
+> Task :react-native-vector-icons:extractDeepLinksForAarRelease
+> Task :react-native-vector-icons:extractReleaseAnnotations
+> Task :react-native-vector-icons:mergeReleaseGeneratedProguardFiles
+> Task :react-native-vector-icons:mergeReleaseConsumerProguardFiles
+> Task :react-native-vector-icons:mergeReleaseJavaResource
+> Task :react-native-vector-icons:syncReleaseLibJars
+> Task :react-native-vector-icons:bundleReleaseLocalLintAar
+> Task :react-native-config:writeReleaseLintModelMetadata
+> Task :react-native-safe-area-context:writeReleaseLintModelMetadata
+> Task :react-native-sqlite-storage:writeReleaseLintModelMetadata
+> Task :react-native-vector-icons:writeReleaseLintModelMetadata
+> Task :rn-speech-recognition:writeReleaseLintModelMetadata
+> Task :react-native-config:generateReleaseLintVitalModel
+> Task :react-native-safe-area-context:generateReleaseLintVitalModel
+> Task :react-native-sqlite-storage:generateReleaseLintVitalModel
+> Task :react-native-vector-icons:generateReleaseLintVitalModel
+> Task :app:mergeExtDexRelease
+> Task :rn-speech-recognition:generateReleaseLintVitalModel
+> Task :app:collectReleaseDependencies
+
+> Task :app:compileReleaseKotlin
+w: file:///C:/sfatomicity-phase4-20261018/android/app/src/main/java/com/smartfin/AtomicityPackage.kt:11:14 This declaration overrides a deprecated member but is not marked as deprecated itself. Add the '@Deprecated' annotation or suppress the diagnostic.
+w: file:///C:/sfatomicity-phase4-20261018/android/app/src/main/java/com/smartfin/AtomicityPackage.kt:11:34 The corresponding parameter in the supertype 'ReactPackage' is named 'reactContext'. This may cause problems when calling this function with named arguments.
+w: file:///C:/sfatomicity-phase4-20261018/android/app/src/main/java/com/smartfin/AtomicityPackage.kt:12:33 The corresponding parameter in the supertype 'ReactPackage' is named 'reactContext'. This may cause problems when calling this function with named arguments.
+
+> Task :app:sdkReleaseDependencyData
+> Task :app:validateSigningRelease
+> Task :app:writeReleaseAppMetadata
+> Task :app:writeReleaseSigningConfigVersions
+> Task :react-native-config:bundleReleaseAar
+> Task :react-native-config:mapReleaseSourceSetPaths
+> Task :react-native-config:mergeReleaseResources
+> Task :app:compileReleaseJavaWithJavac
+> Task :app:dexBuilderRelease
+> Task :app:mergeReleaseGlobalSynthetics
+> Task :app:generateReleaseLintVitalReportModel
+> Task :app:processReleaseJavaRes
+> Task :react-native-safe-area-context:bundleReleaseAar
+> Task :react-native-safe-area-context:mapReleaseSourceSetPaths
+> Task :app:mergeReleaseJavaResource
+> Task :app:mergeDexRelease
+> Task :react-native-sqlite-storage:lintVitalAnalyzeRelease
+> Task :react-native-config:lintVitalAnalyzeRelease
+> Task :react-native-config:verifyReleaseResources
+> Task :react-native-safe-area-context:mergeReleaseResources
+> Task :app:optimizeReleaseResources
+> Task :react-native-config:assembleRelease
+> Task :app:compileReleaseArtProfile
+> Task :react-native-sqlite-storage:bundleReleaseAar
+> Task :react-native-sqlite-storage:mapReleaseSourceSetPaths
+> Task :react-native-vector-icons:lintVitalAnalyzeRelease
+> Task :react-native-safe-area-context:verifyReleaseResources
+> Task :react-native-safe-area-context:lintVitalAnalyzeRelease
+> Task :react-native-sqlite-storage:mergeReleaseResources
+> Task :react-native-safe-area-context:assembleRelease
+> Task :react-native-vector-icons:bundleReleaseAar
+> Task :react-native-vector-icons:mapReleaseSourceSetPaths
+> Task :rn-speech-recognition:lintVitalAnalyzeRelease
+> Task :react-native-sqlite-storage:verifyReleaseResources
+> Task :react-native-vector-icons:mergeReleaseResources
+> Task :react-native-sqlite-storage:assembleRelease
+> Task :rn-speech-recognition:bundleReleaseAar
+> Task :rn-speech-recognition:mapReleaseSourceSetPaths
+> Task :react-native-vector-icons:verifyReleaseResources
+> Task :app:lintVitalAnalyzeRelease
+> Task :rn-speech-recognition:mergeReleaseResources
+> Task :react-native-vector-icons:assembleRelease
+> Task :app:lintVitalReportRelease
+> Task :app:lintVitalRelease
+> Task :app:packageRelease
+> Task :app:createReleaseApkListingFileRedirect
+> Task :app:assembleRelease
+> Task :rn-speech-recognition:verifyReleaseResources
+> Task :rn-speech-recognition:assembleRelease
+
+[Incubating] Problems report is available at: file:///C:/sfatomicity-phase4-20261018/android/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 3m 10s
+275 actionable tasks: 275 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.3.1/userguide/configuration_cache_enabling.html

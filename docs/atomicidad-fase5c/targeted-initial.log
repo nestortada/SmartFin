@@ -1,0 +1,35 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/financialDeletionBaseline.test.ts __tests__/subscriptionAtomicityPhase4.test.ts __tests__/settingsTaskOwner.test.ts
+
+PASS __tests__/subscriptionAtomicityPhase4.test.ts (9.753 s)
+PASS __tests__/financialDeletionBaseline.test.ts
+FAIL __tests__/settingsTaskOwner.test.ts
+  ● presentation failure after verified success preserves confirmation and never repeats the action
+
+    expect(jest.fn()).toHaveBeenLastCalledWith(...expected)
+
+    Expected: StringContaining "No repitas la publicación"
+    Received
+           1: undefined
+    ->     2: "Verificado mediante SAF No se pudo actualizar la presentación: refresh unavailable. No repitas la operación confirmada por este error."
+
+    Number of calls: 2
+
+      46 |   expect(action).toHaveBeenCalledTimes(1);
+      47 |   expect(notice).toHaveBeenLastCalledWith('Verificado mediante SAF');
+    > 48 |   expect(error).toHaveBeenLastCalledWith(expect.stringContaining('No repitas la publicación'));
+         |                 ^
+      49 |   expect(busy).toHaveBeenLastCalledWith(undefined);
+      50 | });
+      51 |
+
+      at Object.toHaveBeenLastCalledWith (__tests__/settingsTaskOwner.test.ts:48:17)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 2 passed, 3 total
+Tests:       1 failed, 17 passed, 18 total
+Snapshots:   0 total
+Time:        10.309 s, estimated 11 s
+Ran all test suites matching /__tests__\\financialDeletionBaseline.test.ts|__tests__\\subscriptionAtomicityPhase4.test.ts|__tests__\\settingsTaskOwner.test.ts/i.

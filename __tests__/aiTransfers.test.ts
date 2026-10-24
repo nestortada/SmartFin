@@ -50,7 +50,8 @@ test.each([false, true])('AI transfer with tax=%s saves both legs and keeps dedu
     });
 
     const beforeRetry = await f.snapshot();
-    await expect(executeAiCommandPlan(f.database, 'draft-transfer', plan)).rejects.toThrow();
+    // Phase 4 recognizes the committed intention durably instead of reaching a UNIQUE error.
+    await expect(executeAiCommandPlan(f.database, 'draft-transfer', plan)).resolves.toEqual(result);
     expect(await f.snapshot()).toEqual(beforeRetry);
     expect(await f.transactionRepository.getTransactions()).toEqual(transactions);
 

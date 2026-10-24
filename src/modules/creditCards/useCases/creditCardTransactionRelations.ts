@@ -8,6 +8,7 @@ import { readCurrentManualTransaction } from '../../transactions/repositories/sq
 import { isSQLiteParticipant } from '../../../database/managedSQLite';
 import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
 import { withCreditCardPaymentScope } from './creditCardPaymentScope';
+import { readUnclassifiedCreditTransactions } from '../repositories/readUnclassifiedCreditTransactions';
 import { readCreditCardReconciliationTransactions, type CreditCardReconciliationTransaction } from '../repositories/readCreditCardReconciliationTransactions';
 import type { CreditCardRepository } from '../repositories';
 import type { CreditCardStatement } from '../types';
@@ -311,7 +312,13 @@ export async function resolveCreditCardTransactionTarget({
   };
 }
 
-export async function reconcileCreditCardTransactions({
+export async function reconcileCreditCardTransactions(params: ReconcileCreditCardTransactionsParams): Promise<void> {
+  const intention = { ...params, currentDate: new Date(params.currentDate?.getTime() ?? Date.now()) };
+  return withCreditCardPaymentScope(intention, dependencies =>
+    reconcileCreditCardTransactionsInScope({ ...intention, ...dependencies }));
+}
+
+async function reconcileCreditCardTransactionsInScope({
   accountRepository,
   creditCardRepository,
   currentDate = new Date(),
@@ -394,18 +401,31 @@ export async function reconcileCreditCardTransactions({
   }
 }
 
-export async function associatePendingTransactionsForCreditCard({
-  account,
-  accountRepository,
-  creditCardRepository,
-  transactionRepository,
-}: {
+type AssociatePendingTransactionsParams = {
   account: Account;
   accountRepository: AccountRepository;
   creditCardRepository: CreditCardRepository;
   transactionRepository: TransactionRepository;
-}): Promise<number> {
-  const transactions = await transactionRepository.getTransactions();
+};
+
+export async function associatePendingTransactionsForCreditCard(params: AssociatePendingTransactionsParams): Promise<number> {
+  const intention = { ...params, account: { ...params.account } };
+  return withCreditCardPaymentScope(intention, async dependencies => {
+    const current = (await dependencies.accountRepository.getAccounts()).find(card => card.id === intention.account.id);
+    if (!current || !isRealCreditCardAccount(current)) {
+      throw new Error('Selecciona una tarjeta de credito activa para asociar los movimientos.');
+    }
+    return associatePendingTransactionsInScope({ ...dependencies, account: current });
+  });
+}
+
+async function associatePendingTransactionsInScope({
+  account,
+  accountRepository,
+  creditCardRepository,
+  transactionRepository,
+}: AssociatePendingTransactionsParams): Promise<number> {
+  const transactions = await readUnclassifiedCreditTransactions(transactionRepository, UNCLASSIFIED_CREDIT_CARD_ACCOUNT_ID);
   const now = new Date().toISOString();
   const pendingTransactions = transactions.filter(
     transaction =>
@@ -453,6 +473,9 @@ export async function registerCreditCardPayment(
   if (existing) return existing;
   if (!Number.isFinite(params.amount) || params.amount <= 0) {
     throw new Error('Ingresa un monto valido para el pago de la tarjeta.');
+  }
+  if (Math.round(params.amount) < 1) {
+    throw new Error('El importe del pago debe ser de al menos $1 COP.');
   }
   // Capture the intention before waiting for the connection; never cache a mutable caller object.
   const intention = { ...params, currentDate: new Date(params.currentDate?.getTime() ?? Date.now()) };
@@ -502,6 +525,9 @@ async function registerCreditCardPaymentInScope({
   }
 
   const paidAmount = Math.min(Math.round(amount), previousDebt);
+  if (!Number.isSafeInteger(paidAmount) || paidAmount < 1) {
+    throw new Error('El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.');
+  }
   if (sourceAccount.balance.amount < paidAmount) {
     throw new Error('La cuenta origen no tiene saldo suficiente para ese pago.');
   }

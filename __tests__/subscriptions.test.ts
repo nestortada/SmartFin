@@ -549,12 +549,12 @@ test('closed accounts produce configuration alerts and financial wipe leaves set
     f.native.exec(
       "INSERT INTO app_settings VALUES ('theme','dark','2026-01-01');",
     );
-    await createSqliteFinancialDataRepository(f.database).deleteFinancialData();
+    await createSqliteFinancialDataRepository(f.database).deleteFinancialData('11111111-1111-4111-8111-111111111111', { workIds: [], backupJobIds: [], snapshotIds: [] });
     expect(f.query('SELECT * FROM subscription_occurrences').rows.length).toBe(
       0,
     );
     expect(f.query('SELECT * FROM subscription_reminders').rows.length).toBe(0);
-    expect(f.query('SELECT * FROM app_settings').rows.length).toBe(1);
+    expect(f.query("SELECT * FROM app_settings WHERE setting_key='theme'").rows.length).toBe(1);
     expect(f.query('SELECT * FROM schema_migrations').rows.length).toBe(4);
     expect(f.query('PRAGMA foreign_key_check').rows.length).toBe(0);
   } finally {

@@ -11,6 +11,7 @@ import {
 } from './primitives';
 
 type PersonalizationSectionProps = {
+  destructiveDisabled?: boolean;
   palette: SettingsPalette;
   theme: AppTheme;
   onDeleteFinancialData: () => void;
@@ -19,6 +20,7 @@ type PersonalizationSectionProps = {
 };
 
 export function PersonalizationSection({
+  destructiveDisabled = false,
   palette,
   theme,
   onDeleteFinancialData,
@@ -66,7 +68,7 @@ export function PersonalizationSection({
 
       <View style={styles.divider} />
 
-      <Pressable onPress={onDeleteFinancialData} style={styles.dangerRow}>
+      <Pressable accessibilityRole="button" accessibilityState={{ disabled: destructiveDisabled }} disabled={destructiveDisabled} onPress={onDeleteFinancialData} style={styles.dangerRow}>
         <View style={styles.dangerLabelWrap}>
           <MaterialIcons name="delete-forever" size={24} color={palette.danger} />
           <Text style={[styles.dangerText, { color: palette.danger }]}>

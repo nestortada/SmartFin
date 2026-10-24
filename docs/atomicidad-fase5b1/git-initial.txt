@@ -1,0 +1,53 @@
+ M .agents/skills/smartfin-financial-domain/SKILL.md
+ M __tests__/aiDraftRepository.test.ts
+ M __tests__/aiTransfers.test.ts
+ M __tests__/creditCardPaymentScreen.test.tsx
+ M __tests__/financialAtomicityPhase3A.test.ts
+ M docs/ARQUITECTURA.md
+ M docs/BASE_DE_DATOS.md
+ M docs/SUSCRIPCIONES.md
+ M src/modules/creditCards/index.ts
+ M src/modules/creditCards/repositories/sqliteCreditCardRepository.ts
+ M src/modules/creditCards/ui/CreditCardsScreen.tsx
+ M src/modules/creditCards/ui/components/CreditCardPayment.tsx
+ M src/modules/creditCards/useCases/creditCardTransactionRelations.ts
+ M src/modules/creditCards/useCases/index.ts
+ M src/modules/creditCards/useCases/manageCreditCards.ts
+ M src/modules/subscriptions/hooks/useSubscriptionsController.ts
+ M src/modules/subscriptions/services/subscriptionRuntime.ts
+ M src/modules/subscriptions/useCases/createSubscriptionApi.ts
+ M src/modules/subscriptions/useCases/createSubscriptionInCommand.ts
+ M src/modules/subscriptions/useCases/subscriptionFromAiFields.ts
+ M src/modules/transactions/hooks/useAiAssistantController.ts
+ M src/modules/transactions/repositories/sqliteAiDraftRepository.ts
+ M src/modules/transactions/ui/TransactionsScreen.tsx
+ M src/modules/transactions/useCases/executeAiCommandPlan.ts
+?? __tests__/aiConfirmationPhase4.test.tsx
+?? __tests__/creditCardAssociationScaling.test.ts
+?? __tests__/financialAtomicityPhase3B.test.ts
+?? __tests__/financialAtomicityPhase4.test.ts
+?? __tests__/helpers/phase3BCreditCardRelations.ts
+?? __tests__/helpers/phase3BManageCreditCards.ts
+?? __tests__/helpers/phase4ExecuteAiCommandPlan.ts
+?? __tests__/helpers/phase4SubscriptionApi.ts
+?? __tests__/helpers/phase4SubscriptionRuntime.ts
+?? __tests__/helpers/post3BCreditCardRepositoryBaseline.ts
+?? __tests__/subscriptionAtomicityPhase4.test.ts
+?? __tests__/subscriptionMaintenanceComparison.test.ts
+?? docs/atomicidad-fase3b/
+?? docs/atomicidad-fase4/
+?? docs/atomicidad-fase5a/
+?? docs/atomicidad-financiera-fase3b.md
+?? docs/atomicidad-financiera-fase4.md
+?? docs/atomicidad-financiera-fase5a.md
+?? docs/performance/post3b/
+?? docs/verificacion-rendimiento-post3b.md
+?? scripts/androidAtomicityPhase3B/
+?? scripts/androidAtomicityPhase4/
+?? scripts/androidPost3BPerformance/
+?? scripts/phase5a/
+?? src/modules/creditCards/repositories/readUnclassifiedCreditTransactions.ts
+?? src/modules/creditCards/useCases/creditCardManagementCommands.ts
+?? src/modules/creditCards/useCases/creditCardManagementScope.ts
+?? src/modules/transactions/repositories/aiCommandReceipt.ts
+?? src/shared/utils/stableJson.ts

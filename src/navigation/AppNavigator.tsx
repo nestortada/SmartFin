@@ -1,5 +1,9 @@
+import { BACKUP_PUBLICATION_UI_ENABLED } from '../modules/settings/services/backupPublicationPolicy';
+import { createSettingsTaskRunner, type SettingsTaskOwner } from '../modules/settings/services/settingsTaskOwner';
+import { backupProgressMessage } from '../modules/settings/services/backupProgressPresentation';
+import { getDriveBackupJobs, verifyDriveBackupJob, retainFailedDriveBackupJob } from '../modules/settings/services/androidDriveBackupService';
 import { withExclusiveDatabase } from '../database/databaseCoordination';
-import { borrowSQLiteDatabase } from '../database/managedSQLite';
+import { recoverFinancialDeletion } from '../modules/settings/services/financialDeletionLifecycle';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, AppState } from 'react-native';
 
@@ -61,9 +65,16 @@ export function AppNavigator() {
     useState<SettingsRepository>();
   const [settings, setSettings] = useState<SettingsState>(DEFAULT_SETTINGS);
   const [busyMessage, setBusyMessage] = useState<string>();
+  const [backupNotice, setBackupNotice] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string>();
+  const settingsTaskRunner = useRef<ReturnType<typeof createSettingsTaskRunner> | null>(null);
+  if (!settingsTaskRunner.current) {
+    settingsTaskRunner.current = createSettingsTaskRunner({ busy: setBusyMessage, error: setErrorMessage, notice: setBackupNotice });
+  }
+
   const [accessLocked, setAccessLocked] = useState(false);
   const [backupStatus, setBackupStatus] = useState<DriveBackupStatus>();
+  const backupStatusRequest = useRef(0);
   const [transactionsInitialDraft, setTransactionsInitialDraft] = useState<TransactionsInitialDraft>();
   const [subscriptionPaymentReturn, setSubscriptionPaymentReturn] = useState<SubscriptionCharge>();
   /**
@@ -90,6 +101,14 @@ export function AppNavigator() {
 
         const repository = createSqliteSettingsRepository(openedDatabase);
         const persistedSettings = await loadSettings(repository);
+        await settingsTaskRunner.current!('Comprobando limpieza financiera...', async owner => {
+          const recovery = await recoverFinancialDeletion();
+          if (!isMounted) return;
+          if (recovery.status === 'unknown') throw new Error('Resultado del borrado desconocido. No repitas la eliminación; requiere verificar su comprobante.');
+          if (recovery.status !== 'none') owner.confirmed(recovery.status === 'completed'
+            ? 'Último borrado confirmado. Limpieza Android completada.'
+            : 'Datos financieros eliminados. Limpieza de recursos Android pendiente; se reanudará al iniciar o mantener la aplicación.');
+        });
         
         setDatabase(openedDatabase);
         setSettingsRepository(repository);
@@ -145,25 +164,7 @@ export function AppNavigator() {
     [settingsRepository],
   );
 
-  const runSettingsTask = useCallback(
-    async (message: string, task: () => Promise<void>) => {
-      setBusyMessage(message);
-      setErrorMessage(undefined);
-
-      try {
-        await task();
-      } catch (error) {
-        setErrorMessage(
-          error instanceof Error
-            ? error.message
-            : 'No se pudo completar la acción.',
-        );
-      } finally {
-        setBusyMessage(undefined);
-      }
-    },
-    [],
-  );
+  const runSettingsTask = settingsTaskRunner.current;
 
   // ─── Handlers ─────────────────────────────────────────────────────────────
 
@@ -273,14 +274,23 @@ export function AppNavigator() {
   );
 
   const handleDeleteFinancialData = useCallback(async () => {
-    await runSettingsTask('Eliminando datos financieros...', async () => {
+    await runSettingsTask('Eliminando datos financieros...', async owner => {
+      backupStatusRequest.current++;
       if (!database) {
         throw new Error('La base de datos local aún no está lista.');
       }
 
-      await withExclusiveDatabase(async permit => {
-        await deleteFinancialData(createSqliteFinancialDataRepository(borrowSQLiteDatabase(database, permit)));
-      });
+      const result = await deleteFinancialData(createSqliteFinancialDataRepository(database));
+      if (result.status === 'unknown') throw new Error('Resultado del borrado desconocido. No repitas la eliminación. Reinicia para comprobar su intención durable.');
+      if (result.status === 'rejected') throw result.error;
+      if (result.status === 'rolledBack') throw new Error(result.admissionPending
+        ? 'El borrado se revirtió íntegramente. Los datos y recordatorios originales se conservaron; la coordinación sigue pendiente de verificación.'
+        : 'El borrado se revirtió íntegramente. Los datos y recordatorios originales se conservaron.');
+      owner.confirmed(result.cleanup === 'completed'
+        ? 'Datos financieros eliminados. Limpieza Android completada. Los respaldos externos se conservan como históricos.'
+        : 'Datos financieros eliminados. Limpieza Android pendiente; se reanudará sin repetir el borrado. Los respaldos externos se conservan.');
+      backupStatusRequest.current++;
+      setBackupStatus(undefined);
 
       // Refresh dashboard so it reflects the now-empty DB immediately
       setDashboardRefreshKey(k => k + 1);
@@ -289,55 +299,62 @@ export function AppNavigator() {
 
   const refreshDriveBackupStatus = useCallback(
     async (activeDatabase: SmartFinSQLiteDatabase) => {
+      const request = ++backupStatusRequest.current;
       const revision = await getFinancialDataRevision(activeDatabase);
       const status = await getDriveBackupStatus(revision);
-      setBackupStatus(status);
+      if (request === backupStatusRequest.current) setBackupStatus(status);
       return status;
     },
     [],
   );
 
-  const performDriveBackup = useCallback(async () => withExclusiveDatabase(async permit => {
-    if (!database) {
-      throw new Error('La base de datos local aún no está lista.');
+  const performDriveBackup = useCallback(async (owner: SettingsTaskOwner) => {
+    if (!BACKUP_PUBLICATION_UI_ENABLED) {
+      throw new Error('La publicación por generaciones requiere aceptar la transición de lectores externos y los tiempos de captura. Los respaldos históricos se conservan.');
     }
-
-    const ownedDatabase = borrowSQLiteDatabase(database, permit);
-    await ownedDatabase.executeSql('PRAGMA wal_checkpoint(FULL);');
-    const revision = await getFinancialDataRevision(ownedDatabase);
-    setDatabase(undefined);
-    setSettingsRepository(undefined);
-
-    try {
-      await closeSmartFinDatabase(permit);
-      const result = await exportDriveBackup(revision);
-      setBackupStatus({
-        accessNeedsRenewal: false,
-        available: true,
-        configured: true,
-        lastBackupAt: result.lastBackupAt,
-        localRevision: revision,
-        locationName: result.locationName,
-        outdated: false,
-        permissionPersistent: result.permissionPersistent,
-        remoteRevision: revision,
-      });
-      lastPromptedBackupRevision.current = revision;
-    } finally {
-      const reopenedDatabase = await openSmartFinDatabase(permit);
-      setDatabase(reopenedDatabase);
-      setSettingsRepository(createSqliteSettingsRepository(reopenedDatabase));
+    if (!database) throw new Error('La base de datos local aún no está lista.');
+    const pending = (await getDriveBackupJobs()).filter(job => !job.revoked && !['verified', 'failed'].includes(job.state));
+    if (pending.length) {
+      const job = pending[0]!;
+      try {
+        await verifyDriveBackupJob(job.id, progress => owner.report(backupProgressMessage(progress)));
+        owner.confirmed('Generación verificada mediante SAF. Sincronización remota sin confirmar.');
+      }
+      catch (error) {
+        Alert.alert('Trabajo sin verificar',
+          'Se conserva toda la evidencia. Puedes volver a verificar o dejar este trabajo sin reanudar para preparar otra generación con una nueva captura.',
+          [{ text: 'Conservar pendiente', style: 'cancel' }, {
+            text: 'Conservar sin reanudar', onPress: () => {
+              void runSettingsTask('Conservando evidencia...', async () => {
+                await retainFailedDriveBackupJob(job.id);
+                await refreshDriveBackupStatus(database);
+              });
+            },
+          }]);
+        throw error;
+      }
+      await refreshDriveBackupStatus(database);
+      return;
     }
-  }), [database]);
+    await exportDriveBackup({
+      onDatabase: recovered => {
+        setDatabase(recovered);
+        setSettingsRepository(recovered ? createSqliteSettingsRepository(recovered) : undefined);
+      },
+      onProgress: progress => owner.report(backupProgressMessage(progress)),
+    });
+    owner.confirmed('Generación verificada mediante SAF. Sincronización remota sin confirmar.');
+    await refreshDriveBackupStatus(await openSmartFinDatabase());
+  }, [database, refreshDriveBackupStatus, runSettingsTask]);
 
   const handleExportDriveBackup = useCallback(async () => {
     await runSettingsTask('Actualizando respaldo en Google Drive...', performDriveBackup);
   }, [performDriveBackup, runSettingsTask]);
 
   const handleChooseDriveBackupDirectory = useCallback(async () => {
-    await runSettingsTask('Preparando respaldo en Google Drive...', async () => {
+    await runSettingsTask('Preparando respaldo mediante Android...', async owner => {
       const selection = await chooseDriveBackupDirectory();
-      await performDriveBackup();
+      await performDriveBackup(owner);
       if (!selection.permissionPersistent) {
         Alert.alert(
           'Acceso temporal a la carpeta',
@@ -358,6 +375,13 @@ export function AppNavigator() {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'active' && database) {
+        void runSettingsTask('Comprobando limpieza financiera...', async owner => {
+          const recovery = await recoverFinancialDeletion();
+          if (recovery.status === 'unknown') throw new Error('Resultado del borrado desconocido. No repitas la eliminación.');
+          if (recovery.status !== 'none') owner.confirmed(recovery.status === 'completed'
+            ? 'Último borrado confirmado. Limpieza Android completada.'
+            : 'Datos financieros eliminados. Limpieza Android pendiente.');
+        });
         void refreshDriveBackupStatus(database).catch(() => {
           // The selected Drive provider can be unavailable while offline.
         });
@@ -365,11 +389,13 @@ export function AppNavigator() {
     });
 
     return () => subscription.remove();
-  }, [database, refreshDriveBackupStatus]);
+  }, [database, refreshDriveBackupStatus, runSettingsTask]);
 
   useEffect(() => {
     if (
+      !BACKUP_PUBLICATION_UI_ENABLED ||
       !backupStatus?.configured ||
+      backupStatus.accessNeedsRenewal ||
       !backupStatus.outdated ||
       accessLocked ||
       lastPromptedBackupRevision.current === backupStatus.localRevision
@@ -453,6 +479,7 @@ export function AppNavigator() {
         <SettingsScreen
           backupStatus={backupStatus}
           busyMessage={busyMessage}
+          backupNotice={backupNotice}
           errorMessage={errorMessage}
           onBack={() => setRoute('dashboard')}
           onNavigateToHome={() => setRoute('dashboard')}

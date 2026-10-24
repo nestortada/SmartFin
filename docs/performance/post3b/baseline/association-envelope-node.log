@@ -1,0 +1,216 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/creditCardAssociationScaling.test.ts
+
+FAIL __tests__/creditCardAssociationScaling.test.ts (8.003 s)
+  √ reproduces the previous binding failure after transaction updates and requires exact rollback (281 ms)
+  √ 0 matching purchases are associated without exceeding 999 bindings (15 ms)
+  √ 1 matching purchases are associated without exceeding 999 bindings (19 ms)
+  √ 997 matching purchases are associated without exceeding 999 bindings (224 ms)
+  × 998 matching purchases are associated without exceeding 999 bindings (199 ms)
+  × 1000 matching purchases are associated without exceeding 999 bindings (185 ms)
+  × 10000 matching purchases are associated without exceeding 999 bindings (2015 ms)
+  × ten thousand real matches preserve exact financial rows against the previous successful Node implementation (1812 ms)
+  × failure before each fragment restores every row and revision (428 ms)
+  × failure after each fragment restores every row and revision (405 ms)
+  × duplicate IDs spanning fragments update each purchase once, preserving revision equivalence (37 ms)
+
+  ● 998 matching purchases are associated without exceeding 999 bindings
+
+    too many SQL variables (test envelope)
+
+      23 |   const validate = (values: SQLitePrimitive[]) => {
+      24 |     bindings.push(values.length);
+    > 25 |     if (values.length > parameterLimit) throw new Error('too many SQL variables (test envelope)');
+         |                                               ^
+      26 |   };
+      27 |   const limited = new Proxy(f.database, { get(target, key) {
+      28 |     if (key === 'executeSql') return (sql: string, values: SQLitePrimitive[] = []) => { validate(values); return target.executeSql(sql, values); };
+
+      at validate (__tests__/creditCardAssociationScaling.test.ts:25:47)
+      at Proxy.validate (__tests__/creditCardAssociationScaling.test.ts:28:89)
+      at executeSql (src/database/managedSQLite.ts:74:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at operation (src/database/managedSQLite.ts:57:31)
+      at Proxy.access (src/database/managedSQLite.ts:69:11)
+      at Object.executeSql (src/modules/creditCards/repositories/sqliteCreditCardRepository.ts:319:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+      at Object.apply [as updateInstallmentPurchasesAccount] (src/modules/creditCards/repositories/sqliteCreditCardRepository.ts:314:38)
+      at updateInstallmentPurchasesAccount (src/modules/creditCards/useCases/creditCardTransactionRelations.ts:449:30)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● 1000 matching purchases are associated without exceeding 999 bindings
+
+    too many SQL variables (test envelope)
+
+      23 |   const validate = (values: SQLitePrimitive[]) => {
+      24 |     bindings.push(values.length);
+    > 25 |     if (values.length > parameterLimit) throw new Error('too many SQL variables (test envelope)');
+         |                                               ^
+      26 |   };
+      27 |   const limited = new Proxy(f.database, { get(target, key) {
+      28 |     if (key === 'executeSql') return (sql: string, values: SQLitePrimitive[] = []) => { validate(values); return target.executeSql(sql, values); };
+
+      at validate (__tests__/creditCardAssociationScaling.test.ts:25:47)
+      at Proxy.validate (__tests__/creditCardAssociationScaling.test.ts:28:89)
+      at executeSql (src/database/managedSQLite.ts:74:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at operation (src/database/managedSQLite.ts:57:31)
+      at Proxy.access (src/database/managedSQLite.ts:69:11)
+      at Object.executeSql (src/modules/creditCards/repositories/sqliteCreditCardRepository.ts:319:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+      at Object.apply [as updateInstallmentPurchasesAccount] (src/modules/creditCards/repositories/sqliteCreditCardRepository.ts:314:38)
+      at updateInstallmentPurchasesAccount (src/modules/creditCards/useCases/creditCardTransactionRelations.ts:449:30)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● 10000 matching purchases are associated without exceeding 999 bindings
+
+    too many SQL variables (test envelope)
+
+      23 |   const validate = (values: SQLitePrimitive[]) => {
+      24 |     bindings.push(values.length);
+    > 25 |     if (values.length > parameterLimit) throw new Error('too many SQL variables (test envelope)');
+         |                                               ^
+      26 |   };
+      27 |   const limited = new Proxy(f.database, { get(target, key) {
+      28 |     if (key === 'executeSql') return (sql: string, values: SQLitePrimitive[] = []) => { validate(values); return target.executeSql(sql, values); };
+
+      at validate (__tests__/creditCardAssociationScaling.test.ts:25:47)
+      at Proxy.validate (__tests__/creditCardAssociationScaling.test.ts:28:89)
+      at executeSql (src/database/managedSQLite.ts:74:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at operation (src/database/managedSQLite.ts:57:31)
+      at Proxy.access (src/database/managedSQLite.ts:69:11)
+      at Object.executeSql (src/modules/creditCards/repositories/sqliteCreditCardRepository.ts:319:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+      at Object.apply [as updateInstallmentPurchasesAccount] (src/modules/creditCards/repositories/sqliteCreditCardRepository.ts:314:38)
+      at updateInstallmentPurchasesAccount (src/modules/creditCards/useCases/creditCardTransactionRelations.ts:449:30)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● ten thousand real matches preserve exact financial rows against the previous successful Node implementation
+
+    too many SQL variables (test envelope)
+
+      23 |   const validate = (values: SQLitePrimitive[]) => {
+      24 |     bindings.push(values.length);
+    > 25 |     if (values.length > parameterLimit) throw new Error('too many SQL variables (test envelope)');
+         |                                               ^
+      26 |   };
+      27 |   const limited = new Proxy(f.database, { get(target, key) {
+      28 |     if (key === 'executeSql') return (sql: string, values: SQLitePrimitive[] = []) => { validate(values); return target.executeSql(sql, values); };
+
+      at validate (__tests__/creditCardAssociationScaling.test.ts:25:47)
+      at Proxy.validate (__tests__/creditCardAssociationScaling.test.ts:28:89)
+      at executeSql (src/database/managedSQLite.ts:74:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at operation (src/database/managedSQLite.ts:57:31)
+      at Proxy.access (src/database/managedSQLite.ts:69:11)
+      at Object.executeSql (src/modules/creditCards/repositories/sqliteCreditCardRepository.ts:319:22)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at Object.<anonymous> (node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12)
+      at Object.apply [as updateInstallmentPurchasesAccount] (src/modules/creditCards/repositories/sqliteCreditCardRepository.ts:314:38)
+      at updateInstallmentPurchasesAccount (src/modules/creditCards/useCases/creditCardTransactionRelations.ts:449:30)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● failure before each fragment restores every row and revision
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       97 |       f.injectFault({ sql: 'UPDATE installment_purchases', phase, occurrence });
+       98 |       await expect(f.associate()).rejects.toThrow();
+    >  99 |       expect(f.trace.some(entry => entry.outcome === `injected-${phase}`)).toBe(true);
+          |                                                                            ^
+      100 |       expect(f.trace.filter(entry => entry.sql.startsWith('ROLLBACK') && entry.outcome === 'ok')).toHaveLength(1);
+      101 |       requireIntegralRollback(before, await financialState(f));
+      102 |     } finally { f.native.close(); }
+
+      at toBe (__tests__/creditCardAssociationScaling.test.ts:99:76)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● failure after each fragment restores every row and revision
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       97 |       f.injectFault({ sql: 'UPDATE installment_purchases', phase, occurrence });
+       98 |       await expect(f.associate()).rejects.toThrow();
+    >  99 |       expect(f.trace.some(entry => entry.outcome === `injected-${phase}`)).toBe(true);
+          |                                                                            ^
+      100 |       expect(f.trace.filter(entry => entry.sql.startsWith('ROLLBACK') && entry.outcome === 'ok')).toHaveLength(1);
+      101 |       requireIntegralRollback(before, await financialState(f));
+      102 |     } finally { f.native.close(); }
+
+      at toBe (__tests__/creditCardAssociationScaling.test.ts:99:76)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● duplicate IDs spanning fragments update each purchase once, preserving revision equivalence
+
+    too many SQL variables (test envelope)
+
+      23 |   const validate = (values: SQLitePrimitive[]) => {
+      24 |     bindings.push(values.length);
+    > 25 |     if (values.length > parameterLimit) throw new Error('too many SQL variables (test envelope)');
+         |                                               ^
+      26 |   };
+      27 |   const limited = new Proxy(f.database, { get(target, key) {
+      28 |     if (key === 'executeSql') return (sql: string, values: SQLitePrimitive[] = []) => { validate(values); return target.executeSql(sql, values); };
+
+      at validate (__tests__/creditCardAssociationScaling.test.ts:25:47)
+      at Proxy.validate (__tests__/creditCardAssociationScaling.test.ts:28:89)
+      at executeSql (src/database/managedSQLite.ts:74:24)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at operation (src/database/managedSQLite.ts:60:14)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/database/managedSQLite.ts:61:6)
+      at operation (src/database/databaseCoordination.ts:24:20)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:22:7
+      at node_modules/@babel/runtime/helpers/asyncToGenerator.js:14:12
+      at apply (src/database/databaseCoordination.ts:18:16)
+
+Test Suites: 1 failed, 1 total
+Tests:       7 failed, 4 passed, 11 total
+Snapshots:   0 total
+Time:        8.176 s
+Ran all test suites matching /__tests__\\creditCardAssociationScaling.test.ts/i.

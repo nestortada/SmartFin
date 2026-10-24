@@ -1,0 +1,124 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/financialDeletionPhase5C.test.ts __tests__/financialDataRepository.test.ts
+
+FAIL __tests__/financialDeletionPhase5C.test.ts
+  ● one commit preserves the exact historical DELETE outcome, with only internal metadata added
+
+    table ai_command_drafts has 8 columns but 5 values were supplied
+
+      17 |   await f.save();
+      18 |   // Include the graph most vulnerable to partial deletion: debt, installments, shared loss and audit.
+    > 19 |   f.native.exec(`
+         |            ^
+      20 |     INSERT INTO recurring_subscriptions(id,name,amount,currency,account_id,periodicity,status,created_at,updated_at) VALUES ('s','Synthetic',44900,'COP','bank','monthly','active','2026-10-18','2026-10-18');
+      21 |     INSERT INTO subscription_occurrences(id,subscription_id,expected_date,expected_amount,currency,account_id,status,created_at,updated_at) VALUES ('o','s','2099-10-19',44900,'COP','bank','pending','2026-10-18','2026-10-18');
+      22 |     INSERT INTO subscription_reminders(id,occurrence_id,offset_days,revision,fire_at,title,message,desired,delivery_status,updated_at) VALUES ('subscription-reminder:r','o',1,1,'2099-10-18T15:00:00.000Z','Synthetic','Synthetic','scheduled','pending','2026-10-18');
+
+      at exec (__tests__/financialDeletionPhase5C.test.ts:19:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● before/after every financial and intent write: integral rollback and no OS cancellation
+
+    table ai_command_drafts has 8 columns but 5 values were supplied
+
+      17 |   await f.save();
+      18 |   // Include the graph most vulnerable to partial deletion: debt, installments, shared loss and audit.
+    > 19 |   f.native.exec(`
+         |            ^
+      20 |     INSERT INTO recurring_subscriptions(id,name,amount,currency,account_id,periodicity,status,created_at,updated_at) VALUES ('s','Synthetic',44900,'COP','bank','monthly','active','2026-10-18','2026-10-18');
+      21 |     INSERT INTO subscription_occurrences(id,subscription_id,expected_date,expected_amount,currency,account_id,status,created_at,updated_at) VALUES ('o','s','2099-10-19',44900,'COP','bank','pending','2026-10-18','2026-10-18');
+      22 |     INSERT INTO subscription_reminders(id,occurrence_id,offset_days,revision,fire_at,title,message,desired,delivery_status,updated_at) VALUES ('subscription-reminder:r','o',1,1,'2099-10-18T15:00:00.000Z','Synthetic','Synthetic','scheduled','pending','2026-10-18');
+
+      at exec (__tests__/financialDeletionPhase5C.test.ts:19:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● lost COMMIT response before: unknown, no cancellation or financial retry
+
+    table ai_command_drafts has 8 columns but 5 values were supplied
+
+      17 |   await f.save();
+      18 |   // Include the graph most vulnerable to partial deletion: debt, installments, shared loss and audit.
+    > 19 |   f.native.exec(`
+         |            ^
+      20 |     INSERT INTO recurring_subscriptions(id,name,amount,currency,account_id,periodicity,status,created_at,updated_at) VALUES ('s','Synthetic',44900,'COP','bank','monthly','active','2026-10-18','2026-10-18');
+      21 |     INSERT INTO subscription_occurrences(id,subscription_id,expected_date,expected_amount,currency,account_id,status,created_at,updated_at) VALUES ('o','s','2099-10-19',44900,'COP','bank','pending','2026-10-18','2026-10-18');
+      22 |     INSERT INTO subscription_reminders(id,occurrence_id,offset_days,revision,fire_at,title,message,desired,delivery_status,updated_at) VALUES ('subscription-reminder:r','o',1,1,'2099-10-18T15:00:00.000Z','Synthetic','Synthetic','scheduled','pending','2026-10-18');
+
+      at exec (__tests__/financialDeletionPhase5C.test.ts:19:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● lost COMMIT response after: unknown, no cancellation or financial retry
+
+    table ai_command_drafts has 8 columns but 5 values were supplied
+
+      17 |   await f.save();
+      18 |   // Include the graph most vulnerable to partial deletion: debt, installments, shared loss and audit.
+    > 19 |   f.native.exec(`
+         |            ^
+      20 |     INSERT INTO recurring_subscriptions(id,name,amount,currency,account_id,periodicity,status,created_at,updated_at) VALUES ('s','Synthetic',44900,'COP','bank','monthly','active','2026-10-18','2026-10-18');
+      21 |     INSERT INTO subscription_occurrences(id,subscription_id,expected_date,expected_amount,currency,account_id,status,created_at,updated_at) VALUES ('o','s','2099-10-19',44900,'COP','bank','pending','2026-10-18','2026-10-18');
+      22 |     INSERT INTO subscription_reminders(id,occurrence_id,offset_days,revision,fire_at,title,message,desired,delivery_status,updated_at) VALUES ('subscription-reminder:r','o',1,1,'2099-10-18T15:00:00.000Z','Synthetic','Synthetic','scheduled','pending','2026-10-18');
+
+      at exec (__tests__/financialDeletionPhase5C.test.ts:19:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● confirmed commit followed by cleanup failure remains confirmed and does not run DELETE again
+
+    table ai_command_drafts has 8 columns but 5 values were supplied
+
+      17 |   await f.save();
+      18 |   // Include the graph most vulnerable to partial deletion: debt, installments, shared loss and audit.
+    > 19 |   f.native.exec(`
+         |            ^
+      20 |     INSERT INTO recurring_subscriptions(id,name,amount,currency,account_id,periodicity,status,created_at,updated_at) VALUES ('s','Synthetic',44900,'COP','bank','monthly','active','2026-10-18','2026-10-18');
+      21 |     INSERT INTO subscription_occurrences(id,subscription_id,expected_date,expected_amount,currency,account_id,status,created_at,updated_at) VALUES ('o','s','2099-10-19',44900,'COP','bank','pending','2026-10-18','2026-10-18');
+      22 |     INSERT INTO subscription_reminders(id,occurrence_id,offset_days,revision,fire_at,title,message,desired,delivery_status,updated_at) VALUES ('subscription-reminder:r','o',1,1,'2099-10-18T15:00:00.000Z','Synthetic','Synthetic','scheduled','pending','2026-10-18');
+
+      at exec (__tests__/financialDeletionPhase5C.test.ts:19:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● admission rejection, unknown prior result, and lost admission response never start SQL
+
+    table ai_command_drafts has 8 columns but 5 values were supplied
+
+      17 |   await f.save();
+      18 |   // Include the graph most vulnerable to partial deletion: debt, installments, shared loss and audit.
+    > 19 |   f.native.exec(`
+         |            ^
+      20 |     INSERT INTO recurring_subscriptions(id,name,amount,currency,account_id,periodicity,status,created_at,updated_at) VALUES ('s','Synthetic',44900,'COP','bank','monthly','active','2026-10-18','2026-10-18');
+      21 |     INSERT INTO subscription_occurrences(id,subscription_id,expected_date,expected_amount,currency,account_id,status,created_at,updated_at) VALUES ('o','s','2099-10-19',44900,'COP','bank','pending','2026-10-18','2026-10-18');
+      22 |     INSERT INTO subscription_reminders(id,occurrence_id,offset_days,revision,fire_at,title,message,desired,delivery_status,updated_at) VALUES ('subscription-reminder:r','o',1,1,'2099-10-18T15:00:00.000Z','Synthetic','Synthetic','scheduled','pending','2026-10-18');
+
+      at exec (__tests__/financialDeletionPhase5C.test.ts:19:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● same deletion ID cannot eliminate a second financial history even after completed cleanup
+
+    table ai_command_drafts has 8 columns but 5 values were supplied
+
+      17 |   await f.save();
+      18 |   // Include the graph most vulnerable to partial deletion: debt, installments, shared loss and audit.
+    > 19 |   f.native.exec(`
+         |            ^
+      20 |     INSERT INTO recurring_subscriptions(id,name,amount,currency,account_id,periodicity,status,created_at,updated_at) VALUES ('s','Synthetic',44900,'COP','bank','monthly','active','2026-10-18','2026-10-18');
+      21 |     INSERT INTO subscription_occurrences(id,subscription_id,expected_date,expected_amount,currency,account_id,status,created_at,updated_at) VALUES ('o','s','2099-10-19',44900,'COP','bank','pending','2026-10-18','2026-10-18');
+      22 |     INSERT INTO subscription_reminders(id,occurrence_id,offset_days,revision,fire_at,title,message,desired,delivery_status,updated_at) VALUES ('subscription-reminder:r','o',1,1,'2099-10-18T15:00:00.000Z','Synthetic','Synthetic','scheduled','pending','2026-10-18');
+
+      at exec (__tests__/financialDeletionPhase5C.test.ts:19:12)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS __tests__/financialDataRepository.test.ts
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       7 failed, 1 passed, 8 total
+Snapshots:   0 total
+Time:        1.856 s
+Ran all test suites matching /__tests__\\financialDeletionPhase5C.test.ts|__tests__\\financialDataRepository.test.ts/i.

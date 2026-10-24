@@ -1,0 +1,388 @@
+--------- beginning of main
+10-24 02:14:45.959  6896  6896 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 38 lines
+10-24 02:14:46.021  6896  6911 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-1 expire 3 lines
+10-24 02:14:46.108  6896  6913 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-3 expire 1 line
+10-24 02:14:46.167  6896  6916 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) pool-1-thread-1 expire 47 lines
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.ReactInstance.<init>(com.facebook.react.runtime.BridgelessReactContext, com.facebook.react.runtime.ReactHostDelegate, com.facebook.react.fabric.ComponentFactory, com.facebook.react.devsupport.interfaces.DevSupportManager, com.facebook.react.bridge.queue.QueueThreadExceptionHandler, boolean, com.facebook.react.runtime.ReactHostInspectorTarget) (ReactInstance.kt:183)
+10-24 02:14:46.191  6896  6916 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.getOrCreateReactInstanceTask$lambda$44$lambda$40(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:1039)
+10-24 02:14:46.191  6896  6916 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.$r8$lambda$kGNcmxBxZbp8b1wWTaqIXDdkV8g(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:-1)
+10-24 02:14:46.191  6896  6916 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+10-24 02:14:46.191  6896  6916 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+10-24 02:14:46.191  6896  6916 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+10-24 02:14:46.191  6896  6916 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+10-24 02:14:46.191  6896  6916 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+10-24 02:14:46.191  6896  6916 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-24 02:14:46.191  6896  6916 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+10-24 02:14:46.191  6896  6916 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+10-24 02:14:46.191  6896  6916 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+10-24 02:14:46.191  6896  6916 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+10-24 02:14:46.191  6896  6916 I art     : 
+10-24 02:14:46.198  6896  6896 D         : HostConnection::get() New Host Connection established 0x79c1e6fd6ee0, tid 6896
+10-24 02:14:46.237  6896  6920 D         : HostConnection::get() New Host Connection established 0x79c1e6fd6fa0, tid 6920
+10-24 02:14:46.243  6896  6920 I OpenGLRenderer: Initialized EGL, version 1.4
+10-24 02:14:46.243  6896  6920 D OpenGLRenderer: Swap behavior 1
+10-24 02:14:46.246  6896  6920 D EGL_emulation: eglCreateContext: 0x79c1e6fb6980: maj 2 min 0 rcv 2
+10-24 02:14:46.248  6896  6920 D EGL_emulation: eglMakeCurrent: 0x79c1e6fb6980: ver 2 0 (tinfo 0x79c1e6f68c20)
+10-24 02:14:46.252  6896  6916 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+10-24 02:14:46.258  6896  6916 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+10-24 02:14:46.259  6896  6916 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+10-24 02:14:46.265  6896  6918 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+10-24 02:14:46.267  6896  6920 D EGL_emulation: eglMakeCurrent: 0x79c1e6fb6980: ver 2 0 (tinfo 0x79c1e6f68c20)
+10-24 02:14:46.268  6896  6917 I ReactNativeJS: Running "SmartFin"
+10-24 02:14:46.276  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+10-24 02:14:46.279  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+10-24 02:14:46.280  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+10-24 02:14:46.281  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+10-24 02:14:46.291  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+10-24 02:14:46.294  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+10-24 02:14:46.299  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+10-24 02:14:46.301  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+10-24 02:14:46.310  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+10-24 02:14:46.312  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+10-24 02:14:46.320  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+10-24 02:14:46.328  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+10-24 02:14:46.329  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+10-24 02:14:46.331  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+10-24 02:14:46.333  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+10-24 02:14:46.335  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+10-24 02:14:46.341  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+10-24 02:14:46.344  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+10-24 02:14:46.347  6896  6917 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+10-24 02:14:46.409  6896  6896 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+10-24 02:14:46.409  6896  6896 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+10-24 02:14:46.473  6896  6899 I art     : Do partial code cache collection, code=30KB, data=29KB
+10-24 02:14:46.473  6896  6899 I art     : After code cache collection, code=27KB, data=27KB
+10-24 02:14:46.473  6896  6899 I art     : Increasing code cache capacity to 128KB
+10-24 02:14:48.285  6896  6899 I art     : Do partial code cache collection, code=62KB, data=55KB
+10-24 02:14:48.285  6896  6899 I art     : After code cache collection, code=62KB, data=55KB
+10-24 02:14:48.285  6896  6899 I art     : Increasing code cache capacity to 256KB
+10-24 02:14:49.050  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:14:49.211  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:14:49.267  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.328  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.387  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.454  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.530  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.597  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.675  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.753  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.830  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.909  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:49.992  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:50.086  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:50.189  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:50.286  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:50.395  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:50.504  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:50.622  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:50.754  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:50.890  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:51.025  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:51.164  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:51.334  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:51.459  6896  6931 D ProfileInstaller: Installing profile for com.smartfin.snapshot5b2.tests
+10-24 02:14:51.485  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:52.850  6896  6907 W art     : Suspending all threads took: 6.656ms
+10-24 02:14:52.852  6896  6907 I art     : Background partial concurrent mark sweep GC freed 382(17KB) AllocSpace objects, 1(8MB) LOS objects, 6% free, 55MB/59MB, paused 7.114ms total 14.713ms
+10-24 02:14:53.307  6896  6922 W CursorWindow: Window is full: requested allocation 12 bytes, free space 4 bytes, window size 2097152 bytes
+10-24 02:14:53.608  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:14:53.778  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:14:53.834  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:53.891  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:53.952  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.021  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.092  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.179  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.270  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.367  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.453  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.537  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.629  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.723  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.833  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:54.937  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:55.043  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:55.154  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:55.269  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:55.378  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:55.490  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:55.624  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:55.750  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:55.875  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:56.001  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:56.764  6896  6899 I art     : Do full code cache collection, code=120KB, data=113KB
+10-24 02:14:56.765  6896  6899 I art     : After code cache collection, code=81KB, data=74KB
+10-24 02:14:58.655  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:14:58.820  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:14:58.879  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:58.938  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:58.999  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.065  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.131  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.207  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.278  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.353  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.429  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.509  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.594  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.685  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.780  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.872  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:14:59.971  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:00.086  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:00.195  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:00.308  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:00.420  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:00.532  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:00.646  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:00.759  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:00.881  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:02.159  6896  6907 W art     : Suspending all threads took: 10.529ms
+10-24 02:15:02.160  6896  6907 I art     : Background sticky concurrent mark sweep GC freed 130(6KB) AllocSpace objects, 0(0B) LOS objects, 0% free, 21MB/21MB, paused 11.004ms total 24.891ms
+10-24 02:15:02.590  6896  6922 W CursorWindow: Window is full: requested allocation 12 bytes, free space 4 bytes, window size 2097152 bytes
+10-24 02:15:02.977  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:03.125  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:03.184  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.248  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.308  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.373  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.438  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.506  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.577  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.654  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.738  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.821  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:03.911  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.006  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.103  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.200  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.303  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.408  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.511  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.615  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.723  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.836  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:04.949  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:05.068  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:05.189  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:07.661  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:07.809  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:07.869  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:07.935  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:07.995  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.060  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.129  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.201  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.272  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.349  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.424  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.503  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.585  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.669  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.766  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.858  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:08.959  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:09.073  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:09.181  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:09.295  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:09.407  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:09.521  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:09.634  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:09.752  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:09.873  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:11.329  6896  6907 W art     : Suspending all threads took: 6.397ms
+10-24 02:15:11.330  6896  6907 I art     : Background partial concurrent mark sweep GC freed 573(76KB) AllocSpace objects, 1(4MB) LOS objects, 20% free, 15MB/19MB, paused 6.869ms total 18.968ms
+10-24 02:15:11.490  6896  6907 I art     : Background sticky concurrent mark sweep GC freed 479(22KB) AllocSpace objects, 0(0B) LOS objects, 0% free, 55MB/55MB, paused 603us total 115.317ms
+10-24 02:15:12.383  6896  6922 W CursorWindow: Window is full: requested allocation 12 bytes, free space 4 bytes, window size 2097152 bytes
+10-24 02:15:12.645  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:12.793  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:12.854  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:12.922  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:12.995  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.064  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.133  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.208  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.297  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.386  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.467  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.556  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.651  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.747  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.860  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:13.966  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.083  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.190  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.303  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.411  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.521  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.634  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.754  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.872  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:14.994  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:17.510  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:17.660  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:17.717  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:17.775  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:17.838  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:17.906  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:17.979  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.051  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.125  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.209  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.291  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.377  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.465  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.554  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.643  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.736  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.832  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:18.933  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:19.036  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:19.141  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:19.257  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:19.373  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:19.493  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:19.616  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:19.735  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:19.972  6896  6899 I art     : Do partial code cache collection, code=110KB, data=110KB
+10-24 02:15:19.972  6896  6899 I art     : After code cache collection, code=109KB, data=110KB
+10-24 02:15:19.972  6896  6899 I art     : Increasing code cache capacity to 512KB
+10-24 02:15:19.972  6896  6899 I art     : Compiler allocated 4MB to compile org.json.JSONObject com.smartfin.SmartFinBackupPublisher.publish(android.content.Context, java.lang.String, java.lang.String)
+10-24 02:15:21.284  6896  6907 I art     : Background sticky concurrent mark sweep GC freed 576(25KB) AllocSpace objects, 0(0B) LOS objects, 0% free, 55MB/55MB, paused 407us total 205.128ms
+10-24 02:15:21.818  6896  6922 W CursorWindow: Window is full: requested allocation 12 bytes, free space 4 bytes, window size 2097152 bytes
+10-24 02:15:22.103  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:22.258  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:22.314  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.373  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.434  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.497  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.563  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.638  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.710  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.785  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.864  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:22.942  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.027  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.115  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.214  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.315  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.423  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.525  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.635  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.749  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.862  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:23.983  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:24.102  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:24.236  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:24.372  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:26.766  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:26.910  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:26.964  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.023  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.084  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.146  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.220  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.291  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.368  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.456  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.542  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.622  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.706  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.793  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.882  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:27.974  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.072  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.171  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.273  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.378  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.486  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.593  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.706  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.821  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:28.943  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:31.057  6896  6922 W CursorWindow: Window is full: requested allocation 12 bytes, free space 4 bytes, window size 2097152 bytes
+10-24 02:15:31.411  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:31.555  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:31.610  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:31.667  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:31.732  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:31.792  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:31.857  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:31.925  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:31.997  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.069  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.146  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.227  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.312  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.401  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.492  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.589  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.686  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.785  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:32.888  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:33.000  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:33.112  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:33.228  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:33.348  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:33.465  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:33.583  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:35.840  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:35.988  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:36.044  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.100  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.160  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.228  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.308  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.384  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.464  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.552  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.641  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.734  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.827  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:36.921  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.017  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.117  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.221  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.327  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.434  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.556  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.676  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.797  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:37.915  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:38.034  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:38.157  6896  6926 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:40.483  6896  6907 I art     : Background partial concurrent mark sweep GC freed 17013(1345KB) AllocSpace objects, 0(0B) LOS objects, 4% free, 85MB/89MB, paused 5.224ms total 84.911ms
+10-24 02:15:40.663  6896  6922 W CursorWindow: Window is full: requested allocation 12 bytes, free space 4 bytes, window size 2097152 bytes
+10-24 02:15:40.948  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 34 bytes, window size 2097152 bytes
+10-24 02:15:41.097  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 38 bytes, window size 2097152 bytes
+10-24 02:15:41.151  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.209  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.272  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.346  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.409  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.477  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.549  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.627  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.709  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.795  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.884  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:41.974  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.079  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.181  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.284  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.387  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.490  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.595  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.704  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.815  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:42.929  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:43.048  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes
+10-24 02:15:43.164  6896  6922 W CursorWindow: Window is full: requested allocation 264 bytes, free space 37 bytes, window size 2097152 bytes

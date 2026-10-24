@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import type { SmartFinSQLiteDatabase } from '../../../database';
+import { getFinancialDataRevision } from '../../../database/sqliteDatabase';
+import { withDatabaseMaintenance } from '../../../database/databaseCoordination';
+import { borrowSQLiteDatabase } from '../../../database/managedSQLite';
+import { SQLiteCommandFailure } from '../../../database/atomicSQLite';
+import { saveAiDraftForReview } from '../repositories/sqliteAiDraftRepository';
 import { createGeminiCommandService } from '../../../services';
 import { createSqliteAccountRepository } from '../../accounts';
 import { createSqliteCategoryRepository, createSqliteSubcategoryRepository } from '../../categories';
@@ -22,14 +27,18 @@ import {
 } from '../useCases';
 import type { AiEditableField } from '../types';
 
-async function loadContext(database: SmartFinSQLiteDatabase): Promise<AiPlanningContext> {
+type ReviewContext = AiPlanningContext & { financialRevision: number };
+async function loadContext(database: SmartFinSQLiteDatabase): Promise<ReviewContext> {
+  return withDatabaseMaintenance(async permit => {
+  const owned = borrowSQLiteDatabase(database, permit);
   const [accounts, categories, subcategories, transactions] = await Promise.all([
-    createSqliteAccountRepository(database).getAccounts(),
-    createSqliteCategoryRepository(database).getCategories(),
-    createSqliteSubcategoryRepository(database).getSubcategories(),
-    createSqliteTransactionRepository(database).getTransactions(),
+    createSqliteAccountRepository(owned).getAccounts(),
+    createSqliteCategoryRepository(owned).getCategories(),
+    createSqliteSubcategoryRepository(owned).getSubcategories(),
+    createSqliteTransactionRepository(owned).getTransactions(),
   ]);
-  return { accounts, categories, subcategories, transactions };
+  return { accounts, categories, subcategories, transactions, financialRevision: await getFinancialDataRevision(owned) };
+  });
 }
 
 function preserveAnsweredValues(current: AiCommandDraft['plan'], revised: AiCommandDraft['plan']): void {
@@ -68,7 +77,7 @@ export function useAiAssistantController(
 ) {
   const confirmationActive = useRef(false);
   const [busyMessage, setBusyMessage] = useState<string>();
-  const [context, setContext] = useState<AiPlanningContext>();
+  const [context, setContext] = useState<ReviewContext>();
   const [draft, setDraft] = useState<AiCommandDraft>();
   const [errorMessage, setErrorMessage] = useState<string>();
   const [input, setInput] = useState('');
@@ -89,9 +98,9 @@ export function useAiAssistantController(
 
   const persistDraft = useCallback(async (next: AiCommandDraft) => {
     if (!database) return;
-    await createSqliteAiDraftRepository(database).saveActiveDraft(next);
+    await saveAiDraftForReview(database, next, context?.financialRevision);
     setDraft(next);
-  }, [database]);
+  }, [context, database]);
 
   useEffect(() => {
     let mounted = true;
@@ -118,6 +127,7 @@ export function useAiAssistantController(
   }, [database]);
 
   const submit = useCallback(async () => {
+    if (confirmationActive.current) return;
     if (!database) {
       setErrorMessage('La base de datos local aun no esta lista.');
       return;
@@ -138,7 +148,7 @@ export function useAiAssistantController(
       const nextDraft: AiCommandDraft = {
         clarificationHistory: [],
         createdAt: now,
-        id: `ai-${Date.now().toString(36)}`,
+        id: `ai-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`,
         messages: [
           { createdAt: now, id: `message-${Date.now()}-user`, role: 'user', text: input.trim() },
           { createdAt: now, id: `message-${Date.now()}-assistant`, role: 'assistant', text: plan.summary },
@@ -149,20 +159,21 @@ export function useAiAssistantController(
         updatedAt: now,
       };
       setContext(nextContext);
-      await persistDraft(nextDraft);
+      await saveAiDraftForReview(database, nextDraft, nextContext.financialRevision);
+      setDraft(nextDraft);
       setInput('');
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'No se pudo interpretar la solicitud.');
     } finally {
       setBusyMessage(undefined);
     }
-  }, [database, input, persistDraft]);
+  }, [database, input]);
 
   const answerQuestion = useCallback(async (
     question: AiClarificationQuestion,
     value: string,
   ) => {
-    if (!draft || !context) return;
+    if (!draft || !context || confirmationActive.current) return;
     setErrorMessage(undefined);
     try {
       const plan = normalizeAiCommandPlan(
@@ -194,6 +205,7 @@ export function useAiAssistantController(
   }, [context, conversationSource, draft, persistDraft]);
 
   const cancelDraft = useCallback(async () => {
+    if (confirmationActive.current) return;
     if (database) await createSqliteAiDraftRepository(database).clearActiveDraft();
     setDraft(undefined);
     setInput('');
@@ -202,6 +214,7 @@ export function useAiAssistantController(
   }, [database]);
 
   const correctDraft = useCallback(() => {
+    if (confirmationActive.current) return;
     setInput('');
     setErrorMessage(undefined);
     setCorrectionComposerOpen(true);
@@ -213,7 +226,7 @@ export function useAiAssistantController(
   }, []);
 
   const reviseDraft = useCallback(async () => {
-    if (!database || !draft || !context || !input.trim()) return;
+    if (!database || !draft || !context || !input.trim() || confirmationActive.current) return;
     setBusyMessage('Gemini está revisando el borrador con el contexto anterior...');
     setErrorMessage(undefined);
     try {
@@ -253,7 +266,7 @@ export function useAiAssistantController(
   }, [context, conversationSource, database, draft, input, persistDraft]);
 
   const editField = useCallback(async (field: AiEditableField, value: string) => {
-    if (!draft || !context) return;
+    if (!draft || !context || confirmationActive.current) return;
     setErrorMessage(undefined);
     try {
       const plan = normalizeAiCommandPlan(updateAiActionField(draft.plan, field, value, context), context);
@@ -288,17 +301,22 @@ export function useAiAssistantController(
     setErrorMessage(undefined);
     try {
       const result = await executeAiCommandPlan(database, draft.id, plan);
-      await createSqliteAiDraftRepository(database).clearActiveDraft();
       setDraft(undefined);
       setInput('');
       setCorrectionComposerOpen(false);
       setResultMessages(result.completed);
-      setContext(await loadContext(database));
-      onCommitted();
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : 'No se pudo guardar el lote. No se aplico ningun cambio.');
-    } finally {
+      try {
+        onCommitted();
+        setContext(await loadContext(database));
+      } catch {
+        setErrorMessage('Operaciones guardadas. No se pudo actualizar la vista; vuelve a abrirla.');
+      }
       confirmationActive.current = false;
+    } catch (error) {
+      if (!(error instanceof SQLiteCommandFailure && error.result.status === 'unknown'))
+        confirmationActive.current = false;
+      setErrorMessage(error instanceof Error ? error.message : 'No se pudo verificar el resultado del lote.');
+    } finally {
       setBusyMessage(undefined);
     }
   }, [context, conversationSource, database, draft, onCommitted, persistDraft]);

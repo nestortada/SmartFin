@@ -1,0 +1,18 @@
+Performing Streamed Install
+Success
+Starting: Intent { act=android.intent.action.VIEW dat=atomicity-phase1://campaign/... cmp=com.smartfin.atomicityphase1.tests/com.smartfin.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.smartfin.atomicityphase1.tests/com.smartfin.MainActivity
+TotalTime: 1125
+WaitTime: 1131
+Complete
+{"campaign":"post-fragments","stage":"fragment 1 before: entire association rollback","completedCases":0,"measuredSamples":0,"time":1792307841260}
+{"campaign":"post-fragments","stage":"fragment 2 before: entire association rollback","completedCases":1,"measuredSamples":0,"time":1792307851880}
+{"campaign":"post-fragments","stage":"fragment 3 before: entire association rollback","completedCases":2,"measuredSamples":0,"time":1792307864671}
+{"campaign":"post-fragments","stage":"fragment 1 after: entire association rollback","completedCases":3,"measuredSamples":0,"time":1792307877557}
+{"campaign":"post-fragments","stage":"fragment 2 after: entire association rollback","completedCases":4,"measuredSamples":0,"time":1792307890548}
+{"campaign":"post-fragments","stage":"fragment 3 after: entire association rollback","completedCases":5,"measuredSamples":0,"time":1792307903548}
+{"campaign":"post-fragments","stage":"standalone fragments share one driver transaction and match the old single UPDATE","completedCases":6,"measuredSamples":0,"time":1792307916510}
+{"campaign":"post-fragments","stage":"complete","completedCases":8,"measuredSamples":0,"time":1792307920917}
+/sdcard/Android/data/com.smartfin.atomicityphase1.tests/files/atomicity-results/result.json: 1 file pulled, 0 skipped. 0.2 MB/s (2123 bytes in 0.009s)

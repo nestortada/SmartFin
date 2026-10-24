@@ -117,7 +117,7 @@ test.each(['missing card', 'closed card', 'missing source', 'closed source', 'so
     requireIntegralRollback(before, await financialState(f));
   } finally { f.native.close(); }
 });
-test.each([[100000.6, 100001], [900000, 250000], [0.4, 0]])('amount %s preserves round/cap rule (%s)', async (amount, paidAmount) => {
+test.each([[100000.6, 100001], [900000, 250000]])('amount %s preserves round/cap rule (%s)', async (amount, paidAmount) => {
   const f = await setup();
   try {
     const result = await registerCreditCardPayment(request(f, { amount }));

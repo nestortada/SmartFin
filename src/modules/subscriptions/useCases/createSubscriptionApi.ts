@@ -39,14 +39,25 @@ import {
 import { createSubcategory } from '../../categories/useCases/manageSubcategories';
 import type { SubcategoryRepository } from '../../categories/repositories';
 
-export function createSubscriptionApi(dependencies: {
+type SubscriptionDependencies = {
   repository: SubscriptionRepository;
   reminderService: SubscriptionReminderService;
   clock?: SubscriptionClock;
   createId?: () => string;
   categoryRepository?: CategoryManagementRepository;
   subcategoryRepository?: SubcategoryRepository;
-}) {
+};
+
+export function createSubscriptionApi(dependencies: SubscriptionDependencies) {
+  return buildSubscriptionApi(dependencies, false);
+}
+
+/** Internal composition only: the owner synchronizes OS effects after COMMIT. */
+export function createSubscriptionCommandApi(dependencies: SubscriptionDependencies) {
+  return buildSubscriptionApi(dependencies, true);
+}
+
+function buildSubscriptionApi(dependencies: SubscriptionDependencies, deferReminders: boolean) {
   const { repository, reminderService } = dependencies;
   const clock = dependencies.clock ?? { now: () => new Date() };
   const createId =
@@ -55,6 +66,9 @@ export function createSubscriptionApi(dependencies: {
   const synchronizeReminders = async (): Promise<
     Pick<SubscriptionSyncResult, 'reminders' | 'reminderErrors'>
   > => {
+    if (deferReminders) return {
+      reminders: { available: false, permission: 'unsupported' }, reminderErrors: [],
+    };
     const reminderErrors: string[] = [];
     let status: SubscriptionSyncResult['reminders'] = {
       available: false,
@@ -95,6 +109,8 @@ export function createSubscriptionApi(dependencies: {
       return { reminders: status, reminderErrors };
     }
     for (const reminder of reminders) {
+      if (reminder.desired === 'cancelled' && reminder.deliveryStatus === 'cancelled' && reminder.appliedRevision === reminder.revision)
+        continue; // Cancellation needs no reboot repair; a scheduled alarm still does.
       if (reminder.desired === 'scheduled' && status.permission !== 'granted') {
         await acknowledge(
           reminder.id,

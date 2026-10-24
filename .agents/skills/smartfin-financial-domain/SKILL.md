@@ -48,6 +48,82 @@ Este mapa describe la implementación revisada el 11 de octubre de 2026. Revalid
 - **Suscripciones.** Crear, generar, vencer, pausar, cancelar, proyectar o recordar un compromiso no crea movimientos ni cambia saldo/deuda. Los equivalentes mensual/anual son compromisos, no gasto del periodo. `confirmPayment` vincula un movimiento existente `expense/outflow/posted`, moneda coincidente, importe finito positivo y cuenta compatible si se especificó. No exige igualdad de importe ni fecha: conserva `expectedAmount` y `actualAmount`; las sugerencias no son confirmaciones. Repetir el mismo vínculo es idempotente, y un movimiento no puede vincularse a otra ocurrencia. Registrar un gasto desde Suscripciones utiliza Movimientos y requiere después conciliación explícita.
 - **Historial de suscripciones.** Editar un gasto vinculado compatible actualiza importe real y fecha de pago. Eliminarlo o incompatibilizarlo limpia el vínculo y deja el cobro `overdue` si su fecha es anterior a hoy, o `pending` en caso contrario, junto con sus entidades derivadas. Esto es atómico con la escritura/borrado del movimiento en el repositorio. Cambiar el contrato afecta pendientes estrictamente futuros, conservando pagos y obligaciones pasadas; la edición explícita del importe de una ocurrencia es una operación distinta que cambia solo su esperado, incluso si está pagada, sin cambiar gasto real ni contrato.
 
+### Atomicidad implementada: fases 2, 3A, 3A.1 y 3B
+
+El mapa anterior conserva observaciones históricas; contrasta sus límites con el código
+vigente y los [informes de atomicidad](../../../docs/atomicidad-financiera-fase3b.md).
+La observación histórica de ausencia de gastos compartidos tampoco describe este checkout:
+consulta [GASTOS_COMPARTIDOS_Y_FECHAS.md](../../../docs/GASTOS_COMPARTIDOS_Y_FECHAS.md) y
+las suites vigentes `sharedExpenses.test.ts`/`sharedForgiveness.test.ts`, conservadas en
+esta fase. Su existencia no autoriza cambiar políticas de reparto durante una refactorización.
+Los flujos manuales de fase 2 y el pago independiente de fase 3A ya comparten commit.
+La fase 3A.1 conserva las sumas y usa consultas especializadas para reconciliar todo
+el historial pertinente, sin limitarlo a las páginas visibles.
+
+La fase 3B añade ámbitos compartidos para guardar cuenta/perfil de tarjeta, asociar
+compras por clasificar, reconciliar tarjetas y validar/cerrar una tarjeta. Los comandos
+`saveCreditCardWithAssociations` y `closeCreditCardWithReconciliation` componen la acción
+de pantalla completa: incluyen referencias de cuotas, extractos y resolución de alerta
+cuando el flujo previo la requería. La asociación relee la tarjeta activa y conserva el
+predicado histórico de coincidencia por nombre/pistas, sin añadir filtro de fecha/estado.
+No crea deuda de tarjeta antes de una asociación válida.
+
+Los repositorios participantes reutilizan el dueño exterior, sin BEGIN anidado. El
+runner conserva `confirmed`, `rolledBack` y `unknown`; solo un ROLLBACK confirmado
+acredita reversión. No hay reintento financiero automático ni recibo durable universal.
+Las pantallas bloquean el doble envío, conservan el bloqueo tras `unknown` durante esa
+instancia y publican cierre/refresco/toast después del commit. La edición compara la
+cuenta capturada al abrir el formulario; la pantalla de tarjetas también comprueba la
+tasa mostrada frente al perfil vigente. Los dobles sin metadatos SQLite no acreditan
+atomicidad. La coordinación sigue limitada al mismo runtime/conexión administrada.
+
+**Nueva regla del pago:** después de `min(Math.round(amount), deuda)`, el importe efectivo
+debe ser un entero seguro positivo, al menos $1 COP. $0,01/$0,40/$0,49 se rechazan antes
+de escribir; $0,50 redondea a $1; $1 permanece $1; $100.000 conserva el límite por deuda
+si este produce pesos enteros válidos. Una deuda de $0,40 o un límite efectivo de $1,40
+se rechazan, sin redondearlos hacia arriba ni alterar la deuda histórica. El rechazo
+posterior a la reconciliación inicial revierte también sus escrituras/revisión bajo el
+runner. La UI permite coma decimal y muestra el error del dominio. No extender esta
+validación al impuesto, cuotas, suscripciones ni a los importes de todas las operaciones.
+
+La matriz de `financialAtomicityPhase3B.test.ts` compara todas las tablas, auditoría,
+revisión y métricas, descubre escrituras y falla antes/después de cada una. La equivalencia
+exitosa usa fuentes anteriores congeladas y solo normaliza identidades generadas con
+sus referencias. Las pruebas de fase 3A conservan sus 52 puntos; la expectativa anterior
+de pago cero se sustituye expresamente por el rechazo autorizado. Consulta el informe
+para distinguir validación Node, Android, muestras de rendimiento y límites pendientes.
+
+### Atomicidad implementada: fase 4, IA y Suscripciones
+
+`executeAiCommandPlan` conserva el runner compartido. La revisión financiera del
+catálogo se captura antes de interpretar y se persiste como metadato JSON del
+borrador. Una revisión distinta rechaza conservadoramente antes de escribir; los
+cambios de las propias acciones no producen autoconflicto. Cada acción relee sus
+dependencias y las referencias deben apuntar a acciones anteriores válidas.
+
+`ai_command_drafts` conserva internamente las filas `confirmed` con contenido y
+resumen del plan, en el mismo commit que todos sus impactos. Repetir ID/contenido
+devuelve ese resumen sin escrituras; otro contenido con el mismo ID se rechaza.
+Guardar/cancelar borradores activos no elimina comprobantes. Un borrador legado
+sin revisión no se actualiza ni confirma silenciosamente: exige verificar estado
+y generar otra solicitud explícita. No se añadió esquema ni contrato público.
+La ausencia de comprobante no acredita universalmente rollback; tampoco se deducen
+intenciones equivalentes entre IDs diferentes, respaldos restaurados o downgrades.
+
+La pasada final acotada de generación de Suscripciones del plan ocurre antes del
+COMMIT; no se ejecuta el bucle de veinte lotes dentro del plan. Recordatorios y
+presentación siguen después, con errores separados del éxito financiero. Unknown
+bloquea reenvío en esa instancia del controlador y no reintenta automáticamente.
+
+Las mutaciones de Suscripciones conservan su generador local. Crear categoría o
+subcategoría desde su fachada comparte commit con sus derivados. El mantenimiento
+consolida solicitudes concurrentes, libera el permiso entre lotes y compara revisión
+antes de terminar para no omitir trabajo intercalado. Mantiene 500 fechas por
+suscripción/lote y veinte lotes por ejecución. Recupera alarmas programadas tras
+reinicio; omite solo cancelaciones ya confirmadas para la misma revisión. El servicio
+Android no participa en rollback SQLite. Consultar [informe y límites de fase 4](../../../docs/atomicidad-financiera-fase4.md)
+para distinguir evidencia Node, driver Android y efectos nativos simulados.
+
 ## Procedimiento para un cambio financiero
 
 ### Delimitar el impacto y evitar duplicación
@@ -69,7 +145,7 @@ Este mapa describe la implementación revisada el 11 de octubre de 2026. Revalid
 
 ### Proteger integridad y atomicidad
 
-- Dibuja el límite real de commit: cuentas, movimientos, acompañantes, cuotas, extractos y conciliaciones afectados. Una secuencia de `await` no es una transacción global. `saveManualTransaction`, borrado manual, pagos de tarjeta y reasignaciones de categorías pueden encadenar escrituras separadas; registra el riesgo sin afirmar rollback integral.
+- Dibuja el límite real de commit: cuentas, movimientos, acompañantes, cuotas, extractos y conciliaciones afectados. Una secuencia de `await` no es una transacción global. Comprueba los ámbitos manuales/de tarjetas ya implementados y su participación exterior; no extiendas esa garantía a reasignaciones de categorías, efectos OS u otros llamadores sin evidencia.
 - Reutiliza `runSQLiteTransaction` y el patrón de generadores avanzados desde callbacks; no añadas callbacks `async` a una transacción del driver. En lotes de IA, `sqliteWithinExistingTransaction` participa en el `BEGIN IMMEDIATE` externo; evita transacciones anidadas.
 - Mantén `foreign_keys` habilitadas. Inspecciona FK, acciones de borrado, unicidad y referencias polimórficas sin FK. Las ocurrencias requieren unicidad por suscripción/fecha y por movimiento vinculado. Comprueba `PRAGMA foreign_key_check` en una base de prueba después de operaciones relevantes.
 - Conserva UPDATE + INSERT condicionado para cuentas y movimientos: `INSERT OR REPLACE` puede borrar padres y afectar hijos. No lo extiendas por analogía; existen usos heredados en otras tablas. Respeta compatibilidad con SQLite de Android API 24, sin exigir UPSERT moderno.

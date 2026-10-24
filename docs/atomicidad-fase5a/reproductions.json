@@ -1,0 +1,672 @@
+{
+  "complete": true,
+  "harnessSha256": "2df7f04f58076b7b46c123c6db7ce445026085af6000b6c6d0bbf348c6417acf",
+  "node": "v24.16.0",
+  "sqlite": "3.53.0",
+  "fixedClock": "2026-10-18T15:00:00.000Z",
+  "syntheticDirectory": "C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-phase5a-synthetic-oUoRZ1",
+  "androidExecuted": false,
+  "cases": [
+    {
+      "id": "R1-js-owner-vs-independent-writer",
+      "passed": true,
+      "before": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "duringJsPermit": {
+        "revision": 5,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "scheduled",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "result": {
+        "status": "confirmed",
+        "value": "writer excluded by SQLite, not by JS queue"
+      },
+      "after": {
+        "revision": 6,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 900000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "scheduled",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "scope": "Actual JS coordinator/runner; independent Node SQLite connection substitutes Kotlin"
+    },
+    {
+      "id": "R2-copy-then-csv-different-revisions",
+      "passed": true,
+      "manifestRevision": 4,
+      "copied": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "beforeCsv": {
+        "revision": 5,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "delivered",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "csvAccounts": [
+        {
+          "balance_amount": 1000000
+        }
+      ],
+      "afterCsv": {
+        "revision": 6,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 950000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "delivered",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "scope": "Raw-copy/query ordering from Kotlin, simulated barriers; account mutation is a possible independent writer, current receiver only changes reminders"
+    },
+    {
+      "id": "R3-wal-main-file-omits-confirmed-write",
+      "passed": true,
+      "checkpointBaseline": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "source": {
+        "revision": 5,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "delivered",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "copied": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "walBytes": 65952,
+      "scope": "WAL configured only in synthetic fixture; not a claim that production enables WAL"
+    },
+    {
+      "id": "R4-partial-destination-old-manifest-looks-current",
+      "passed": true,
+      "currentStatusPredicate": true,
+      "bytes": 128,
+      "manifestUnchanged": true,
+      "source": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "scope": "Filesystem stand-in for failing provider; Android ContentResolver itself not executed"
+    },
+    {
+      "id": "R5-every-wipe-write-rolls-back-but-alarms-do-not",
+      "passed": true,
+      "discoveredWrites": 36,
+      "verifiedPositions": 72,
+      "fullSnapshotRestored": true,
+      "alarmsCancelledBeforeRollback": true,
+      "statements": [
+        "DELETE FROM shared_commands;",
+        "DELETE FROM shared_loss_events;",
+        "DELETE FROM shared_allocations;",
+        "DELETE FROM shared_returns;",
+        "DELETE FROM shared_receipts;",
+        "DELETE FROM transaction_splits;",
+        "DELETE FROM shared_expenses;",
+        "DELETE FROM shared_contacts;",
+        "DELETE FROM subscription_reminders;",
+        "DELETE FROM subscription_occurrences;",
+        "DELETE FROM ai_command_drafts;",
+        "DELETE FROM transaction_tax_tags;",
+        "DELETE FROM tax_tags;",
+        "DELETE FROM receipt_attachments;",
+        "DELETE FROM installment_purchases;",
+        "DELETE FROM credit_card_statements;",
+        "DELETE FROM credit_card_profiles;",
+        "DELETE FROM amortization_schedule_items;",
+        "DELETE FROM loans;",
+        "DELETE FROM recurring_subscriptions;",
+        "DELETE FROM envelope_movements;",
+        "DELETE FROM envelopes;",
+        "DELETE FROM budgets;",
+        "DELETE FROM account_balance_history;",
+        "DELETE FROM transactions;",
+        "DELETE FROM merchant_mappings;",
+        "DELETE FROM subcategories;",
+        "DELETE FROM categories;",
+        "DELETE FROM cash_flow_events;",
+        "DELETE FROM smart_alerts;",
+        "DELETE FROM financial_health_scores;",
+        "DELETE FROM financial_goals;",
+        "DELETE FROM investment_assets;",
+        "DELETE FROM backup_records;",
+        "DELETE FROM raw_financial_messages;",
+        "DELETE FROM accounts;"
+      ],
+      "successfulEmptyDatabase": {
+        "revision": 8,
+        "balances": [],
+        "transactions": [],
+        "reminders": [],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "scope": "Actual delete use case/repository/schema/runner; native cancellation is a Set mock, every fault before/after DELETE"
+    },
+    {
+      "id": "R6-native-cancel-fails-before-sql",
+      "passed": true,
+      "sqlUnchanged": true,
+      "alarmsRemaining": 0,
+      "after": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "scope": "Actual use case; cancellation fails after one modeled external effect"
+    },
+    {
+      "id": "R7-commit-then-cleanup-fails-design-only",
+      "passed": true,
+      "outcome": "confirmed",
+      "cleanup": "failed",
+      "capturedIds": [
+        {
+          "id": "subscription-reminder:r"
+        }
+      ],
+      "after": {
+        "revision": 8,
+        "balances": [],
+        "transactions": [],
+        "reminders": [],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "afterReopen": {
+        "revision": 8,
+        "balances": [],
+        "transactions": [],
+        "reminders": [],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "scope": "Proposed SQL-before-cleanup order composed in harness, not current production behavior; no durable cleanup implemented"
+    },
+    {
+      "id": "R8-notify-before-ack-rollback-and-redelivery",
+      "passed": true,
+      "before": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "after": {
+        "revision": 5,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "delivered",
+            "applied_revision": 1
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "notifyCalls": 2,
+      "activeNotificationKeys": 1,
+      "scope": "Receiver SQL/effect ordering model, external notification map; does not prove Android sound/heads-up behavior"
+    },
+    {
+      "id": "R9-concurrent-receiver-vs-js-maintenance",
+      "passed": true,
+      "blocked": true,
+      "after": {
+        "revision": 5,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "delivered",
+            "applied_revision": 1
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "scope": "Actual JS acknowledgement; native SQLite transaction modeled with a second connection"
+    },
+    {
+      "id": "R10-receipt-backup-old-restore-deliberate-wipe",
+      "passed": true,
+      "withReceipt": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [
+          {
+            "id": "intent",
+            "phase": "confirmed",
+            "plan_json": "{\"version\":1,\"summary\":\"Synthetic\",\"answeredFields\":[],\"actions\":[],\"_localCompleted\":[\"Synthetic confirmed\"]}"
+          }
+        ],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "olderRestore": {
+        "revision": 4,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "pending",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "afterWipe": {
+        "revision": 8,
+        "balances": [],
+        "transactions": [],
+        "reminders": [],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "olderRead": "undefined",
+      "scope": "Actual receipt helpers and synthetic copied DBs; no restore feature or financial intention re-execution implemented"
+    },
+    {
+      "id": "R11-wipe-lost-commit-receipt-before-and-after",
+      "passed": true,
+      "outcomes": [
+        {
+          "phase": "before",
+          "connection": {
+            "generation": 84,
+            "status": "quarantined",
+            "owned": false
+          },
+          "reopened": {
+            "revision": 4,
+            "balances": [
+              {
+                "id": "bank",
+                "balance_amount": 1000000,
+                "debt_balance_amount": null
+              }
+            ],
+            "transactions": [],
+            "reminders": [
+              {
+                "id": "subscription-reminder:r",
+                "revision": 1,
+                "desired": "scheduled",
+                "delivery_status": "pending",
+                "applied_revision": null
+              }
+            ],
+            "receipts": [],
+            "foreignKeyCheck": [],
+            "integrityCheck": "ok"
+          },
+          "classification": "unknown despite reopened state",
+          "scope": "Injected response loss, actual managed quarantine; driver error text adapted explicitly"
+        },
+        {
+          "phase": "after",
+          "connection": {
+            "generation": 86,
+            "status": "quarantined",
+            "owned": false
+          },
+          "reopened": {
+            "revision": 8,
+            "balances": [],
+            "transactions": [],
+            "reminders": [],
+            "receipts": [],
+            "foreignKeyCheck": [],
+            "integrityCheck": "ok"
+          },
+          "classification": "unknown despite reopened state",
+          "scope": "Injected response loss, actual managed quarantine; driver error text adapted explicitly"
+        }
+      ]
+    },
+    {
+      "id": "R12-checkpoint-can-return-busy-without-throwing",
+      "passed": true,
+      "checkpoint": {
+        "busy": 1,
+        "log": 3,
+        "checkpointed": 0
+      },
+      "source": {
+        "revision": 5,
+        "balances": [
+          {
+            "id": "bank",
+            "balance_amount": 1000000,
+            "debt_balance_amount": null
+          }
+        ],
+        "transactions": [],
+        "reminders": [
+          {
+            "id": "subscription-reminder:r",
+            "revision": 1,
+            "desired": "scheduled",
+            "delivery_status": "delivered",
+            "applied_revision": null
+          }
+        ],
+        "receipts": [],
+        "foreignKeyCheck": [],
+        "integrityCheck": "ok"
+      },
+      "scope": "Synthetic WAL reader holds old snapshot; JS production currently discards checkpoint rows; not an Android driver result"
+    }
+  ],
+  "sourceHashes": {
+    "__tests__/helpers/realSQLite.ts": "d067dd589fe831bded90eb20c30de14d4ff4545d8dc9ea32731a0ba5fd3d30f1",
+    "src/database/sqliteSchema.ts": "cc37bdf3e0d161a8e05a5b5a18121871bc32f959b4df93ae1db3a63ea1d691d3",
+    "src/modules/transactions/database/sharedExpenseSchema.ts": "83c77cbf4b312e279399219535af7fb56b1083cc8ac4f510530151f583f16254",
+    "src/shared/utils/transactionDate.ts": "3e2592a8c77c43558007e6ae551415e7a83819568cb8232c83762bb6df80bb00",
+    "src/modules/transactions/database/sharedLossSchema.ts": "0aa91416a4785dfe05eecb3f4faa0982acd8a08171a6e01c57995b43956ce116",
+    "src/database/migrations.ts": "72ddb69a2b7ee643bccf6f5a219675fcc50e61e772635d32e4ea7244bf8d429d",
+    "src/database/atomicSQLite.ts": "d7aeeba8c0d2c91fe7fe16a3310ba9ed3ba8bf4196db224cb52a411ac008cf47",
+    "src/database/databaseCoordination.ts": "12e63dd240576110ce11cf01b13ce7f66f676fa115e1037b9b26f1b959226e8c",
+    "src/database/managedSQLite.ts": "e33eefd700088fe2b2a0faec3279e43b9637ff17238f2f5e72ebe725b139c4d6",
+    "src/database/sqliteLifecycle.ts": "58302f5f15df34664eb812054cd72950b43e59183dbb189f9972cfbcfe1c4f57",
+    "src/database/sqliteRows.ts": "c29f9a1357af232a3d93a27dbd6802c2a4e1f866a01ad0f5ad1004acb49c8259",
+    "src/modules/subscriptions/database/schema.ts": "1eaf5966180ca7efa0f75c69fc088a1eee1a42862134f3504a9833973689b5d0",
+    "src/modules/settings/repositories/sqliteFinancialDataRepository.ts": "80a0b8dcf6759691381ee0cb38c16baa1c136e222dbfcbab12e9003107ec5dfb",
+    "src/modules/settings/useCases/deleteFinancialData.ts": "47a806c5e646cc4d37003c3c4967f4f55403028f9031cc35fe0d15d6ee21be97",
+    "src/modules/subscriptions/services/androidSubscriptionReminderService.ts": "9ee854fd6826c4149fc9e63109abc27448afc09db6ca156ea2f82f6452e0a72e",
+    "src/modules/transactions/repositories/aiCommandReceipt.ts": "5e26767b1e10439dcba091a6da4f5bd9120227486b97ae3351e513652e7d8dc7",
+    "src/database/sqliteDatabase.ts": "4fd66884ba4d41f1cab8bf63b3947ca60bc9b5a4c74143bca39e1a9969e1b089",
+    "src/shared/utils/stableJson.ts": "e85ec77e688ce456290d40818aa742a68b638e5b3dabe369f4d7775d769349b9",
+    "src/modules/subscriptions/repositories/sqliteSubscriptionRepository.ts": "aaa90021f16589700aa560954abe7d0782a59e7fa5c1531c51e4133287f10e46",
+    "src/modules/transactions/repositories/sqliteTransactionRepository.ts": "5376bb50327e0645a50162550fef998a322edc62a878ac501647d5e1eef7967b",
+    "src/database/upsertSQLiteRow.ts": "2214f7f3afc5af022a78bacc888412de7e46215028ec3476831ea2f3039a7206",
+    "src/database/sqliteRepositoryScope.ts": "fffac1a5e72f9643bfc04e515500486981c96d79739fd1093578e922991357a8",
+    "src/modules/transactions/repositories/sqliteTransactionHistory.ts": "0ec054e7bcf813ad2fa0933353f3a6fe82d2aef065fe168609facd8b490e4203",
+    "src/modules/transactions/repositories/sharedTransactionIntegrity.ts": "e798be1962c5ab8af54dd90d4b9592cbed55e0175ae4967f8ec0d7e1d1587ce5",
+    "src/modules/transactions/useCases/sharedLossDomain.ts": "d1bacaa3d889dc38598a1d1ae6036d2bc6cae76d6762c5330ced28e40a09a1ec",
+    "src/modules/transactions/repositories/sqliteSharedExpenseRepository.ts": "79678fdc29a47d163d265e72750b85f995ea7f2ef54c6a9ee638692a61d81cff",
+    "src/modules/accounts/repositories/sqliteAccountRepository.ts": "387d8149db94f79ceef25783812b0a37e40095f7d4901840e457a713ca9accaa",
+    "src/modules/accounts/repositories/saveSqliteAccounts.ts": "b107a75619ed18c5aa28401835a6af71c9d93331fb767a4fb85b55ff9923bc87",
+    "src/modules/creditCards/repositories/sqliteCreditCardRepository.ts": "fd47bcb677dda98b5ac4019ba92dc55a265ce95d564415c8647d7b54286ff14d",
+    "src/modules/transactions/repositories/sqliteSharedCommandReads.ts": "e9f0621d10d1b69e57666dffb475c6cd9ca6ad40cfe3d09b833aefc5cc759de5",
+    "src/modules/transactions/useCases/sharedCommandEffects.ts": "037dad8647d9df780926484b29f21747a781405b74f322c86e2bb69dd0d5f381",
+    "src/modules/transactions/useCases/sharedExpenseDomain.ts": "fa0c3833a7962e0c4cd9cb518ddd440fca60181940de61ae598bddf53c891d0f",
+    "src/modules/transactions/repositories/sharedCommandResultValidation.ts": "3d5c1101032d25e3cb43811e05cb35bd3e7015e11efd0934850cec872f4e1f4f",
+    "src/modules/transactions/repositories/sharedFinancialTotalsSql.ts": "fc547617afe860ff2001f1dabde1d1f14978ad96155310cac84e65d8dd78d7e1",
+    "src/modules/transactions/useCases/readSharedFinancialTotals.ts": "311ce09528ed4c21db3c40c6ec3397fbb0538843b2a35dd509e8d6b06508dfc8",
+    "src/modules/transactions/repositories/sharedLossPeriodSql.ts": "2e53f68ee373eda82e511c2db6e41a998e4a53feb198788a5cb8670986b50b73",
+    "src/modules/transactions/repositories/sharedFinancialProjectionSql.ts": "117885af68b9dc76bf787eca249f56f00d06a36daec3792a2a1a9b69f4be3d68",
+    "src/modules/subscriptions/useCases/subscriptionLifecycle.ts": "cf7c11a2fb02043fe574dbed54fa89623c028c1a54a604ed315f7aa0321aaf3b",
+    "src/modules/subscriptions/useCases/recurrence.ts": "92cc2e24081b6972a447659b1ba5f97727ae60c13c129fc615f1bfa189513b74"
+  }
+}

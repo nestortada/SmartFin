@@ -32,8 +32,7 @@ import {
   type MissingCreditCardAlert,
 } from '../../creditCards/repositories';
 import {
-  associatePendingTransactionsForCreditCard,
-  saveCreditCardFromForm,
+  saveCreditCardWithAssociations,
 } from '../../creditCards/useCases';
 import { CreditCardFormModal } from '../../creditCards/ui/components/CreditCardFormModal';
 import {
@@ -147,6 +146,7 @@ export function TransactionsScreen({
   const [creditCardFormReturnsToTransaction, setCreditCardFormReturnsToTransaction] = useState(true);
   const [pendingNotificationCardName, setPendingNotificationCardName] = useState<string>();
   const [savingCreditCard, setSavingCreditCard] = useState(false);
+  const creditCardSubmission = useRef<'idle' | 'running' | 'confirmed' | 'unknown'>('idle');
   const [opTypePickerVisible, setOpTypePickerVisible] = useState(false);
   const [selectedTxForOpType, setSelectedTxForOpType] = useState<Transaction | null>(null);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
@@ -535,6 +535,7 @@ export function TransactionsScreen({
     setCreditCardFormReturnsToTransaction(true);
     setPendingNotificationCardName(undefined);
     setAddTxModalVisible(false);
+    if (creditCardSubmission.current === 'confirmed') creditCardSubmission.current = 'idle';
     setCreditCardFormVisible(true);
   };
 
@@ -572,10 +573,16 @@ export function TransactionsScreen({
     setPendingNotificationCardName(alert.creditCardName);
     setNotificationsVisible(false);
     setAddTxModalVisible(false);
+    if (creditCardSubmission.current === 'confirmed') creditCardSubmission.current = 'idle';
     setCreditCardFormVisible(true);
   };
 
   const handleSaveCreditCardFromTransactionModal = async () => {
+    if (creditCardSubmission.current === 'running' || creditCardSubmission.current === 'confirmed') return;
+    if (creditCardSubmission.current === 'unknown') {
+      Alert.alert('SmartFin', 'El resultado es desconocido. Verifica la tarjeta antes de repetir la operación.');
+      return;
+    }
     if (!database) {
       Alert.alert('SmartFin', 'La base de datos local no esta disponible.');
       return;
@@ -587,48 +594,43 @@ export function TransactionsScreen({
       return;
     }
 
+    creditCardSubmission.current = 'running';
     setSavingCreditCard(true);
+    let confirmed = false;
     try {
-      const accountRepository = createSqliteAccountRepository(database);
-      const alertRepository = createSqliteCreditCardAlertRepository(database);
-      const creditCardRepository = createSqliteCreditCardRepository(database);
-      const transactionRepository = createSqliteTransactionRepository(database);
-      const savedAccount = await saveCreditCardFromForm(creditCardRepository, input);
+      const { account: savedAccount, associatedCount } = await saveCreditCardWithAssociations({
+        repository: createSqliteCreditCardRepository(database), input,
+        pendingAlertName: pendingNotificationCardName,
+      });
+      confirmed = true;
+      creditCardSubmission.current = 'confirmed';
       setNewOperationType('Crédito');
       setNewAccount(savedAccount.id);
       setNewCreditCardHint(savedAccount.name);
-      const associatedCount = await associatePendingTransactionsForCreditCard({
-        account: savedAccount,
-        accountRepository,
-        creditCardRepository,
-        transactionRepository,
-      });
+      setCreditCardFormVisible(false);
+      if (creditCardFormReturnsToTransaction) setAddTxModalVisible(true);
+      setPendingNotificationCardName(undefined);
+      setCreditCardFormState(EMPTY_FORM_STATE);
+      onForceRefresh();
       if (associatedCount > 0) {
-        await alertRepository.resolveMissingCreditCardAlert(pendingNotificationCardName ?? savedAccount.name);
         Toast.show({
           type: 'success',
           text1: 'Movimientos asociados',
           text2: `${associatedCount} movimiento${associatedCount === 1 ? '' : 's'} pendiente${associatedCount === 1 ? '' : 's'} se vinculó a la tarjeta.`,
         });
       } else if (pendingNotificationCardName) {
-        await alertRepository.resolveMissingCreditCardAlert(pendingNotificationCardName);
         Toast.show({
           type: 'success',
           text1: 'Tarjeta creada',
           text2: `${savedAccount.name} se creo con cupo pendiente por completar.`,
         });
       }
-      setCreditCardFormVisible(false);
-      if (creditCardFormReturnsToTransaction) {
-        setAddTxModalVisible(true);
-      }
-      setPendingNotificationCardName(undefined);
-      setCreditCardFormState(EMPTY_FORM_STATE);
-      onForceRefresh();
     } catch (saveError) {
+      if (!confirmed) creditCardSubmission.current = saveError instanceof SQLiteCommandFailure ? 'unknown' : 'idle';
       Alert.alert(
         'SmartFin',
-        saveError instanceof Error ? saveError.message : 'No se pudo guardar la tarjeta.',
+        confirmed ? 'La tarjeta quedó guardada. No se pudo actualizar la vista o mostrar su confirmación.'
+          : saveError instanceof Error ? saveError.message : 'No se pudo guardar la tarjeta.',
       );
     } finally {
       setSavingCreditCard(false);

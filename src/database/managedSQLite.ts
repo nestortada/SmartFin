@@ -1,6 +1,7 @@
 import type { SmartFinSQLiteDatabase } from './sqliteDatabase';
 import type { Transaction as SQLiteCallbackTransaction } from 'react-native-sqlite-storage';
 import { sqliteLifecycleReceipt } from './sqliteLifecycle';
+import { quarantineNativeDatabase } from './nativeDatabaseLifecycle';
 import {
   assertDatabasePermit,
   withDatabaseMaintenance,
@@ -31,6 +32,7 @@ async function closeConnection(connection: Connection) {
     connection.status = 'closed';
   } catch (error) {
     connection.closeFailure = { error };
+    await quarantineNativeDatabase();
     throw error;
   }
 }

@@ -1,0 +1,35 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const { execFileSync } = require('node:child_process');
+const root = path.resolve(__dirname, '../..');
+const workspace = path.resolve(process.argv[2] || 'C:/sf-accept5b2-20261023');
+if (workspace === root || workspace.startsWith(root + path.sep)) throw Error('External isolated workspace required');
+execFileSync(process.execPath, [path.join(root, 'scripts/phase5b2/prepare-android.cjs'), workspace], { stdio: 'inherit' });
+const hash = data => crypto.createHash('sha256').update(data).digest('hex');
+const record = JSON.parse(fs.readFileSync(path.join(workspace, 'source-fingerprints.json'), 'utf8'));
+const moduleFile = 'scripts/phase5b2Acceptance/acceptanceHarness.js';
+const moduleBytes = fs.readFileSync(path.join(root, moduleFile));
+record.originalHashes[moduleFile] = hash(moduleBytes);
+fs.writeFileSync(path.join(workspace, 'acceptanceHarness.js'), moduleBytes);
+record.hashes['acceptanceHarness.js'] = hash(moduleBytes);
+let harness = fs.readFileSync(path.join(workspace, 'Harness.jsx'), 'utf8');
+harness = "import { runAcceptance } from './acceptanceHarness';\n" + harness;
+harness = harness.replace('async function run(campaign) {', `async function run(campaign) {
+  if (campaign.startsWith('acceptance-')) {
+    await runAcceptance(campaign, { owned, seed, record, samples, control, backup, config, check }); return;
+  }`);
+fs.writeFileSync(path.join(workspace, 'Harness.jsx'), harness);
+record.hashes['Harness.jsx'] = hash(harness);
+record.adaptations['Harness.jsx'] = 'Acceptance dispatcher; product UI flag unchanged.';
+const nativeFile = 'android/app/src/main/java/com/smartfin/Phase5B2Package.kt';
+let native = fs.readFileSync(path.join(workspace, nativeFile), 'utf8');
+native = native.replace('"api" to Build.VERSION.SDK_INT,', '"api" to Build.VERSION.SDK_INT, "processId" to Process.myPid(),');
+native = native.replace('"databaseBeforeSha256" to fileHash()', '"databaseBeforeSha256" to "deferred-to-capture-no-startup-hash-prewarming"');
+fs.writeFileSync(path.join(workspace, nativeFile), native);
+record.hashes[nativeFile] = hash(native);
+record.adaptations[nativeFile] = 'Adds processId; avoids hashing the entire source before a cold-process measurement. Capture hashes remain unchanged.';
+const encoded = JSON.stringify(record, null, 2);
+fs.writeFileSync(path.join(workspace, 'source-fingerprints.json'), encoded);
+fs.writeFileSync(path.join(workspace, 'android/app/src/main/assets/phase5b2-source-fingerprints.json'), encoded);
+console.log(workspace);

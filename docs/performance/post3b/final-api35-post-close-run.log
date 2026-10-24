@@ -1,0 +1,46 @@
+Performing Streamed Install
+Success
+Starting: Intent { act=android.intent.action.VIEW dat=atomicity-phase1://campaign/... cmp=com.smartfin.atomicityphase1.tests/com.smartfin.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.smartfin.atomicityphase1.tests/com.smartfin.MainActivity
+TotalTime: 907
+WaitTime: 910
+Complete
+{"campaign":"post-close","stage":"reconcile {\"noise\":1000} round 1","completedCases":1,"measuredSamples":2,"time":1792308155298}
+{"campaign":"post-close","stage":"reconcile {\"noise\":1000} round 2","completedCases":2,"measuredSamples":4,"time":1792308157564}
+{"campaign":"post-close","stage":"reconcile {\"noise\":1000} round 3","completedCases":3,"measuredSamples":6,"time":1792308159765}
+{"campaign":"post-close","stage":"close {\"noise\":1000} round 1","completedCases":5,"measuredSamples":10,"time":1792308164789}
+{"campaign":"post-close","stage":"close {\"noise\":1000} round 2","completedCases":6,"measuredSamples":12,"time":1792308168352}
+{"campaign":"post-close","stage":"close {\"noise\":1000} round 3","completedCases":7,"measuredSamples":14,"time":1792308170786}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000} round 0","completedCases":8,"measuredSamples":16,"time":1792308173273}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000} round 1","completedCases":9,"measuredSamples":18,"time":1792308190539}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000} round 2","completedCases":10,"measuredSamples":20,"time":1792308207740}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000} round 3","completedCases":11,"measuredSamples":22,"time":1792308224383}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000} round 4","completedCases":12,"measuredSamples":24,"time":1792308241073}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000} round 5","completedCases":13,"measuredSamples":26,"time":1792308258018}
+{"campaign":"post-close","stage":"close {\"noise\":100000} round 0","completedCases":14,"measuredSamples":28,"time":1792308274855}
+{"campaign":"post-close","stage":"close {\"noise\":100000} round 1","completedCases":15,"measuredSamples":30,"time":1792308291683}
+{"campaign":"post-close","stage":"close {\"noise\":100000} round 2","completedCases":16,"measuredSamples":32,"time":1792308313971}
+{"campaign":"post-close","stage":"close {\"noise\":100000} round 3","completedCases":17,"measuredSamples":34,"time":1792308327851}
+{"campaign":"post-close","stage":"close {\"noise\":100000} round 4","completedCases":18,"measuredSamples":36,"time":1792308341590}
+{"campaign":"post-close","stage":"close {\"noise\":100000} round 5","completedCases":19,"measuredSamples":38,"time":1792308355545}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000,\"expected\":true} round 0","completedCases":20,"measuredSamples":40,"time":1792308369466}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000,\"expected\":true} round 1","completedCases":21,"measuredSamples":42,"time":1792308383526}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000,\"expected\":true} round 2","completedCases":22,"measuredSamples":44,"time":1792308397558}
+{"campaign":"post-close","stage":"reconcile {\"noise\":100000,\"expected\":true} round 3","completedCases":23,"measuredSamples":46,"time":1792308411476}
+{"campaign":"post-close","stage":"close {\"noise\":100000,\"expected\":true} round 0","completedCases":24,"measuredSamples":48,"time":1792308425342}
+{"campaign":"post-close","stage":"close {\"noise\":100000,\"expected\":true} round 1","completedCases":25,"measuredSamples":50,"time":1792308439404}
+{"campaign":"post-close","stage":"close {\"noise\":100000,\"expected\":true} round 2","completedCases":26,"measuredSamples":52,"time":1792308457901}
+{"campaign":"post-close","stage":"close {\"noise\":100000,\"expected\":true} round 3","completedCases":27,"measuredSamples":54,"time":1792308471485}
+{"campaign":"post-close","stage":"reconcile {\"noise\":80000,\"relevant\":10000,\"shape\":\"paid\"} round 0","completedCases":28,"measuredSamples":56,"time":1792308485974}
+{"campaign":"post-close","stage":"reconcile {\"noise\":80000,\"relevant\":10000,\"shape\":\"paid\"} round 1","completedCases":29,"measuredSamples":58,"time":1792308504309}
+{"campaign":"post-close","stage":"reconcile {\"noise\":80000,\"relevant\":10000,\"shape\":\"paid\"} round 2","completedCases":30,"measuredSamples":60,"time":1792308522836}
+{"campaign":"post-close","stage":"reconcile {\"noise\":80000,\"relevant\":10000,\"shape\":\"paid\"} round 3","completedCases":31,"measuredSamples":62,"time":1792308541305}
+{"campaign":"post-close","stage":"close {\"noise\":80000,\"relevant\":10000,\"shape\":\"paid\"} round 0","completedCases":32,"measuredSamples":64,"time":1792308559668}
+{"campaign":"post-close","stage":"close {\"noise\":80000,\"relevant\":10000,\"shape\":\"paid\"} round 1","completedCases":33,"measuredSamples":66,"time":1792308579901}
+{"campaign":"post-close","stage":"close {\"noise\":80000,\"relevant\":10000,\"shape\":\"paid\"} round 2","completedCases":34,"measuredSamples":68,"time":1792308607366}
+{"campaign":"post-close","stage":"close {\"noise\":80000,\"relevant\":10000,\"shape\":\"paid\"} round 3","completedCases":35,"measuredSamples":70,"time":1792308627717}
+{"campaign":"post-close","stage":"complete","completedCases":36,"measuredSamples":72,"time":1792308647963}
+/sdcard/Android/data/com.smartfin.atomicityphase1.tests/files/atomicity-results/result.json: 1 file pulled, 0 skipped. 9.0 MB/s (659866 bytes in 0.070s)
+Passed 36 Android cases. Production package metadata unchanged.

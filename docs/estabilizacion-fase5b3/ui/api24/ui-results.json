@@ -1,0 +1,36 @@
+{
+  "api": 24,
+  "passed": true,
+  "cases": [
+    {
+      "case": "manual-double-navigation",
+      "passed": true,
+      "jobId": "e2c8e8f2-46a0-4981-ae96-289f19f504c2"
+    },
+    {
+      "case": "publication-progress",
+      "passed": true
+    },
+    {
+      "case": "failure-restart-original-snapshot",
+      "passed": true,
+      "jobId": "26bccc8a-4cca-4420-a606-6c360ded18a0"
+    },
+    {
+      "case": "external-manifest-recovery",
+      "passed": true,
+      "jobId": "631b0fbb-3c1d-4bbe-9716-5b67d3641740"
+    },
+    {
+      "case": "revoked-provider-access",
+      "passed": true
+    },
+    {
+      "case": "partial-bytes-restart-remain-uncertain",
+      "passed": true,
+      "jobId": "4eff6baa-4d69-45a1-84e2-3e7b3ae2e43f"
+    }
+  ],
+  "proof": "Validated actual XML/screenshots and native event transcripts; final API24 last-case read resumed after a transport-only failure",
+  "limits": "Synthetic provider faults and test-only stage gates; process restart, not OS reboot. Basic labels/disabled states, no TalkBack certification or FPS measurement."
+}

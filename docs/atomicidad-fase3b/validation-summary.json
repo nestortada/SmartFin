@@ -1,0 +1,274 @@
+{
+  "campaigns": 14,
+  "completed": 14,
+  "pending": 0,
+  "complete": true,
+  "summary": [
+    {
+      "api": 24,
+      "campaign": "phase3b",
+      "status": "passed",
+      "passed": true,
+      "cases": 157,
+      "rollbackPoints": 122,
+      "timings": [
+        {
+          "rows": 1000,
+          "flow": "create-and-associate",
+          "operationMs": 41.215799999423325,
+          "readerMs": 41.186199999414384,
+          "transactionMs": 38.46789999958128,
+          "transactionRowsReturned": 6
+        },
+        {
+          "rows": 1000,
+          "flow": "reconcile-and-close",
+          "operationMs": 21.132000000216067,
+          "readerMs": 21.092199999839067,
+          "transactionMs": 18.133799999952316,
+          "transactionRowsReturned": 0
+        },
+        {
+          "rows": 1000,
+          "flow": "reconcile",
+          "operationMs": 13.822800000198185,
+          "readerMs": 13.79410000052303,
+          "transactionMs": 11.690200000070035,
+          "transactionRowsReturned": 1
+        },
+        {
+          "rows": 10000,
+          "flow": "create-and-associate",
+          "operationMs": 56.83979999925941,
+          "readerMs": 56.80659999977797,
+          "transactionMs": 54.31350000016391,
+          "transactionRowsReturned": 6
+        },
+        {
+          "rows": 10000,
+          "flow": "reconcile-and-close",
+          "operationMs": 24.392500000074506,
+          "readerMs": 24.36519999988377,
+          "transactionMs": 21.231300000101328,
+          "transactionRowsReturned": 0
+        },
+        {
+          "rows": 10000,
+          "flow": "reconcile",
+          "operationMs": 19.802399999462068,
+          "readerMs": 19.775499999523163,
+          "transactionMs": 16.79189999960363,
+          "transactionRowsReturned": 1
+        },
+        {
+          "rows": 100000,
+          "flow": "create-and-associate",
+          "operationMs": 125.50070000067353,
+          "readerMs": 125.47000000067055,
+          "transactionMs": 122.93580000009388,
+          "transactionRowsReturned": 6
+        },
+        {
+          "rows": 100000,
+          "flow": "reconcile-and-close",
+          "operationMs": 53.8711000001058,
+          "readerMs": 53.842699999921024,
+          "transactionMs": 51.55670000053942,
+          "transactionRowsReturned": 0
+        },
+        {
+          "rows": 100000,
+          "flow": "reconcile",
+          "operationMs": 45.40290000010282,
+          "readerMs": 45.37459999974817,
+          "transactionMs": 43.14120000042021,
+          "transactionRowsReturned": 1
+        }
+      ],
+      "result": "final-api24-phase3b/result.json"
+    },
+    {
+      "api": 24,
+      "campaign": "phase3a",
+      "status": "passed",
+      "passed": true,
+      "cases": 72,
+      "rollbackPoints": 52,
+      "result": "final-api24-phase3a/result.json"
+    },
+    {
+      "api": 24,
+      "campaign": "phase2",
+      "status": "passed",
+      "passed": true,
+      "cases": 274,
+      "rollbackPoints": 268,
+      "result": "final-api24-phase2/result.json"
+    },
+    {
+      "api": 24,
+      "campaign": "core",
+      "status": "passed",
+      "passed": true,
+      "cases": 14,
+      "result": "final-api24-core/result.json"
+    },
+    {
+      "api": 24,
+      "campaign": "begin-after",
+      "status": "passed",
+      "passed": true,
+      "cases": 1,
+      "result": "final-api24-begin-after/result.json"
+    },
+    {
+      "api": 24,
+      "campaign": "commit-before",
+      "status": "passed",
+      "passed": true,
+      "cases": 1,
+      "result": "final-api24-commit-before/result.json"
+    },
+    {
+      "api": 24,
+      "campaign": "rollback-before",
+      "status": "passed",
+      "passed": true,
+      "cases": 1,
+      "result": "final-api24-rollback-before/result.json"
+    },
+    {
+      "api": 35,
+      "campaign": "phase3b",
+      "status": "passed",
+      "passed": true,
+      "cases": 157,
+      "rollbackPoints": 122,
+      "timings": [
+        {
+          "rows": 1000,
+          "flow": "create-and-associate",
+          "operationMs": 142.69130790233612,
+          "readerMs": 142.49269199371338,
+          "transactionMs": 134.2850000858307,
+          "transactionRowsReturned": 6
+        },
+        {
+          "rows": 1000,
+          "flow": "reconcile-and-close",
+          "operationMs": 70.6138459444046,
+          "readerMs": 70.4448459148407,
+          "transactionMs": 60.75807702541351,
+          "transactionRowsReturned": 0
+        },
+        {
+          "rows": 1000,
+          "flow": "reconcile",
+          "operationMs": 51.83530795574188,
+          "readerMs": 51.64330804347992,
+          "transactionMs": 38.94961500167847,
+          "transactionRowsReturned": 1
+        },
+        {
+          "rows": 10000,
+          "flow": "create-and-associate",
+          "operationMs": 197.56561493873596,
+          "readerMs": 197.3849229812622,
+          "transactionMs": 190.1514619588852,
+          "transactionRowsReturned": 6
+        },
+        {
+          "rows": 10000,
+          "flow": "reconcile-and-close",
+          "operationMs": 168.36238396167755,
+          "readerMs": 168.2018460035324,
+          "transactionMs": 158.89292299747467,
+          "transactionRowsReturned": 0
+        },
+        {
+          "rows": 10000,
+          "flow": "reconcile",
+          "operationMs": 66.05900001525879,
+          "readerMs": 65.91023004055023,
+          "transactionMs": 58.21299993991852,
+          "transactionRowsReturned": 1
+        },
+        {
+          "rows": 100000,
+          "flow": "create-and-associate",
+          "operationMs": 770.8335390090942,
+          "readerMs": 770.656308054924,
+          "transactionMs": 762.008306980133,
+          "transactionRowsReturned": 6
+        },
+        {
+          "rows": 100000,
+          "flow": "reconcile-and-close",
+          "operationMs": 7950.501308083534,
+          "readerMs": 7950.403385043144,
+          "transactionMs": 7936.945845961571,
+          "transactionRowsReturned": 0
+        },
+        {
+          "rows": 100000,
+          "flow": "reconcile",
+          "operationMs": 250.6930000782013,
+          "readerMs": 250.36592304706573,
+          "transactionMs": 242.02392303943634,
+          "transactionRowsReturned": 1
+        }
+      ],
+      "result": "final-api35-phase3b/result.json"
+    },
+    {
+      "api": 35,
+      "campaign": "phase3a",
+      "status": "passed",
+      "passed": true,
+      "cases": 72,
+      "rollbackPoints": 52,
+      "result": "final-api35-phase3a/result.json"
+    },
+    {
+      "api": 35,
+      "campaign": "phase2",
+      "status": "passed",
+      "passed": true,
+      "cases": 274,
+      "rollbackPoints": 268,
+      "result": "final-api35-phase2/result.json"
+    },
+    {
+      "api": 35,
+      "campaign": "core",
+      "status": "passed",
+      "passed": true,
+      "cases": 14,
+      "result": "final-api35-core/result.json"
+    },
+    {
+      "api": 35,
+      "campaign": "begin-after",
+      "status": "passed",
+      "passed": true,
+      "cases": 1,
+      "result": "final-api35-begin-after/result.json"
+    },
+    {
+      "api": 35,
+      "campaign": "commit-before",
+      "status": "passed",
+      "passed": true,
+      "cases": 1,
+      "result": "final-api35-commit-before/result.json"
+    },
+    {
+      "api": 35,
+      "campaign": "rollback-before",
+      "status": "passed",
+      "passed": true,
+      "cases": 1,
+      "result": "final-api35-rollback-before/result.json"
+    }
+  ]
+}

@@ -793,7 +793,7 @@ test('migration is repeatable, mutations update revision, and wipe removes share
         .query('SELECT version FROM schema_migrations ORDER BY version')
         .rows.raw(),
     ).toEqual([{ version: 1 }, { version: 2 }, { version: 3 }, { version: 4 }]);
-    await createSqliteFinancialDataRepository(f.database).deleteFinancialData();
+    await createSqliteFinancialDataRepository(f.database).deleteFinancialData('11111111-1111-4111-8111-111111111111', { workIds: [], backupJobIds: [], snapshotIds: [] });
     expect(await f.sharedRepository.getState()).toEqual({
       contacts: [],
       expenses: [],
