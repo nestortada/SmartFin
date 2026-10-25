@@ -1,0 +1,460 @@
+--------- beginning of main
+10-24 18:06:12.804  4600  4600 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 43 lines
+10-24 18:06:12.878  4600  4615 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-1 expire 8 lines
+10-24 18:06:13.103  4600  4620 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) pool-1-thread-1 expire 72 lines
+10-24 18:06:13.281  4600  4621 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) mqt_v_js expire 76 lines
+10-24 18:06:13.296  4600  4622 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) mqt_v_native expire 1 line
+10-24 18:06:13.320  4600  4611 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) HeapTaskDaemon expire 2 lines
+10-24 18:06:13.336  4600  4624 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) RenderThread expire 6 lines
+10-24 18:06:13.693  4600  4603 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) Jit thread pool expire 12 lines
+10-24 18:06:16.591  4600  4617 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-3 expire 2 lines
+10-24 18:06:16.608  4600  4616 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-2 expire 1 line
+10-24 18:06:18.228  4600  4637 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 1 line
+10-24 18:06:23.262  4600  4640 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) pool-5-thread-1 expire 1 line
+10-24 18:06:26.695  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM tax_tags;
+10-24 18:06:26.695  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM receipt_attachments;
+10-24 18:06:26.696  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM receipt_attachments;
+10-24 18:06:26.696  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM installment_purchases;
+10-24 18:06:26.698  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM installment_purchases;
+10-24 18:06:26.698  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM credit_card_statements;
+10-24 18:06:26.699  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM credit_card_statements;
+10-24 18:06:26.699  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM credit_card_profiles;
+10-24 18:06:26.702  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM credit_card_profiles;
+10-24 18:06:26.702  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM amortization_schedule_items;
+10-24 18:06:26.703  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM amortization_schedule_items;
+10-24 18:06:26.703  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM loans;
+10-24 18:06:26.706  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM loans;
+10-24 18:06:26.706  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM recurring_subscriptions;
+10-24 18:06:26.707  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM recurring_subscriptions;
+10-24 18:06:26.707  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM envelope_movements;
+10-24 18:06:26.708  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM envelope_movements;
+10-24 18:06:26.708  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM envelopes;
+10-24 18:06:26.710  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM envelopes;
+10-24 18:06:26.711  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM budgets;
+10-24 18:06:26.712  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM budgets;
+10-24 18:06:26.713  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM account_balance_history;
+10-24 18:06:26.714  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM account_balance_history;
+10-24 18:06:26.715  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM transactions;
+10-24 18:06:26.718  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM transactions;
+10-24 18:06:26.718  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM merchant_mappings;
+10-24 18:06:26.719  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM merchant_mappings;
+10-24 18:06:26.719  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM subcategories;
+10-24 18:06:26.721  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM subcategories;
+10-24 18:06:26.721  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM categories;
+10-24 18:06:26.723  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM categories;
+10-24 18:06:26.724  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM cash_flow_events;
+10-24 18:06:26.726  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM cash_flow_events;
+10-24 18:06:26.726  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM smart_alerts;
+10-24 18:06:26.728  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM smart_alerts;
+10-24 18:06:26.728  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM financial_health_scores;
+10-24 18:06:26.729  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM financial_health_scores;
+10-24 18:06:26.729  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM financial_goals;
+10-24 18:06:26.731  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM financial_goals;
+10-24 18:06:26.731  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM investment_assets;
+10-24 18:06:26.733  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM investment_assets;
+10-24 18:06:26.733  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM backup_records;
+10-24 18:06:26.735  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM backup_records;
+10-24 18:06:26.735  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM raw_financial_messages;
+10-24 18:06:26.737  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM raw_financial_messages;
+10-24 18:06:26.737  4600  4621 I ReactNativeJS: 5E_SQL_START:DELETE FROM accounts;
+10-24 18:06:26.739  4600  4621 I ReactNativeJS: 5E_SQL_END:DELETE FROM accounts;
+10-24 18:06:26.739  4600  4621 I ReactNativeJS: 5E_SQL_START:INSERT OR REPLACE INTO app_settings (setting_key, setting_value, updated_at) VALUES (?, ?, ?);
+10-24 18:06:26.741  4600  4621 I ReactNativeJS: 5E_SQL_END:INSERT OR REPLACE INTO app_settings (setting_key, setting_value, updated_at) VALUES (?, ?, ?);
+10-24 18:06:26.741  4600  4621 I ReactNativeJS: 5E_SQL_START:INSERT INTO app_settings (setting_key, setting_value, updated_at) VALUES (?, ?, ?);
+10-24 18:06:26.743  4600  4621 I ReactNativeJS: 5E_SQL_END:INSERT INTO app_settings (setting_key, setting_value, updated_at) VALUES (?, ?, ?);
+10-24 18:06:26.759  4600  4621 I ReactNativeJS: DELETE_LIFECYCLE_START:recover
+10-24 18:06:26.773  4600  4617 D WM-Processor: Processor cancelling 67222093-cbc5-4605-b39b-e1db42399117
+10-24 18:06:26.774  4600  4617 D WM-Processor: WorkerWrapper could not be found for 67222093-cbc5-4605-b39b-e1db42399117
+10-24 18:06:26.777  4600  4617 D WM-GreedyScheduler: Cancelling work ID 67222093-cbc5-4605-b39b-e1db42399117
+10-24 18:06:26.791  4600  4615 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-24 18:06:26.804  4600  4621 I ReactNativeJS: DELETE_LIFECYCLE_END:recover
+10-24 18:06:26.804  4600  4621 I ReactNativeJS: DELETE_STEP:after-wipe:{"status":"confirmed","id":"0359b6a3-7c30-4ffd-93e3-11835462905b","cleanup":"pending"}
+10-24 18:06:26.807  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name
+10-24 18:06:26.810  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name
+10-24 18:06:26.811  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("account_balance_history")
+10-24 18:06:26.813  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("account_balance_history")
+10-24 18:06:26.816  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "account_balance_history" ORDER BY "id","account_id","balance_amount","debt_balance_amount","currency","recorded_at","created_at"
+10-24 18:06:26.818  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "account_balance_history" ORDER BY "id","account_id","balance_amount","debt_balance_amount","currency","recorded_at","created_at"
+10-24 18:06:26.819  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("accounts")
+10-24 18:06:26.822  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("accounts")
+10-24 18:06:26.824  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "accounts" ORDER BY "id","name","type","status","currency","balance_amount","debt_balance_amount","credit_limit_amount","institution_name","description","created_at","updated_at"
+10-24 18:06:26.826  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "accounts" ORDER BY "id","name","type","status","currency","balance_amount","debt_balance_amount","credit_limit_amount","institution_name","description","created_at","updated_at"
+10-24 18:06:26.827  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("ai_command_drafts")
+10-24 18:06:26.830  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("ai_command_drafts")
+10-24 18:06:26.832  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "ai_command_drafts" ORDER BY "id","raw_input","plan_json","messages_json","clarification_history_json","phase","created_at","updated_at"
+10-24 18:06:26.834  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "ai_command_drafts" ORDER BY "id","raw_input","plan_json","messages_json","clarification_history_json","phase","created_at","updated_at"
+10-24 18:06:26.835  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("amortization_schedule_items")
+10-24 18:06:26.838  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("amortization_schedule_items")
+10-24 18:06:26.839  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "amortization_schedule_items" ORDER BY "id","loan_id","installment_number","due_date","payment_amount","principal_amount","interest_amount","remaining_balance","currency","status","transaction_id","created_at","updated_at"
+10-24 18:06:26.842  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "amortization_schedule_items" ORDER BY "id","loan_id","installment_number","due_date","payment_amount","principal_amount","interest_amount","remaining_balance","currency","status","transaction_id","created_at","updated_at"
+10-24 18:06:26.843  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("android_metadata")
+10-24 18:06:26.847  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("android_metadata")
+10-24 18:06:26.848  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "android_metadata" ORDER BY "locale"
+10-24 18:06:26.850  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "android_metadata" ORDER BY "locale"
+10-24 18:06:26.852  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("app_settings")
+10-24 18:06:26.854  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("app_settings")
+10-24 18:06:26.856  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "app_settings" ORDER BY "setting_key","setting_value","updated_at"
+10-24 18:06:26.858  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "app_settings" ORDER BY "setting_key","setting_value","updated_at"
+10-24 18:06:26.860  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("backup_records")
+10-24 18:06:26.862  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("backup_records")
+10-24 18:06:26.864  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "backup_records" ORDER BY "id","backup_type","local_uri","encrypted","status","created_at","completed_at","error_message"
+10-24 18:06:26.866  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "backup_records" ORDER BY "id","backup_type","local_uri","encrypted","status","created_at","completed_at","error_message"
+10-24 18:06:26.867  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("budgets")
+10-24 18:06:26.870  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("budgets")
+10-24 18:06:26.872  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "budgets" ORDER BY "id","name","scope_type","scope_id","amount","currency","period","starts_on","ends_on","alert_50_enabled","alert_80_enabled","alert_90_enabled","alert_100_enabled","is_active","created_at","updated_at"
+10-24 18:06:26.875  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "budgets" ORDER BY "id","name","scope_type","scope_id","amount","currency","period","starts_on","ends_on","alert_50_enabled","alert_80_enabled","alert_90_enabled","alert_100_enabled","is_active","created_at","updated_at"
+10-24 18:06:26.877  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("cash_flow_events")
+10-24 18:06:26.879  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("cash_flow_events")
+10-24 18:06:26.881  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "cash_flow_events" ORDER BY "id","name","event_type","amount","currency","expected_date","account_id","source_entity_type","source_entity_id","status","created_at","updated_at"
+10-24 18:06:26.883  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "cash_flow_events" ORDER BY "id","name","event_type","amount","currency","expected_date","account_id","source_entity_type","source_entity_id","status","created_at","updated_at"
+10-24 18:06:26.884  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("categories")
+10-24 18:06:26.887  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("categories")
+10-24 18:06:26.888  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "categories" ORDER BY "id","name","type","macro_category","color"
+10-24 18:06:26.891  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "categories" ORDER BY "id","name","type","macro_category","color"
+10-24 18:06:26.893  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("credit_card_profiles")
+10-24 18:06:26.895  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("credit_card_profiles")
+10-24 18:06:26.897  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "credit_card_profiles" ORDER BY "account_id","monthly_interest_rate","created_at","updated_at"
+10-24 18:06:26.899  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "credit_card_profiles" ORDER BY "account_id","monthly_interest_rate","created_at","updated_at"
+10-24 18:06:26.900  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("credit_card_statements")
+10-24 18:06:26.903  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("credit_card_statements")
+10-24 18:06:26.905  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "credit_card_statements" ORDER BY "id","account_id","statement_start_date","statement_end_date","payment_due_date","total_amount","minimum_payment_amount","currency","status","created_at","updated_at"
+10-24 18:06:26.907  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "credit_card_statements" ORDER BY "id","account_id","statement_start_date","statement_end_date","payment_due_date","total_amount","minimum_payment_amount","currency","status","created_at","updated_at"
+10-24 18:06:26.909  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("envelope_movements")
+10-24 18:06:26.912  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("envelope_movements")
+10-24 18:06:26.913  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "envelope_movements" ORDER BY "id","envelope_id","transaction_id","movement_type","amount","currency","notes","created_at"
+10-24 18:06:26.916  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "envelope_movements" ORDER BY "id","envelope_id","transaction_id","movement_type","amount","currency","notes","created_at"
+10-24 18:06:26.918  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("envelopes")
+10-24 18:06:26.921  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("envelopes")
+10-24 18:06:26.923  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "envelopes" ORDER BY "id","name","target_amount","current_amount","currency","category_id","priority","is_active","created_at","updated_at"
+10-24 18:06:26.926  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "envelopes" ORDER BY "id","name","target_amount","current_amount","currency","category_id","priority","is_active","created_at","updated_at"
+10-24 18:06:26.928  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("financial_data_revision")
+10-24 18:06:26.929  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("financial_data_revision")
+10-24 18:06:26.932  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "financial_data_revision" ORDER BY "id","revision","updated_at"
+10-24 18:06:26.934  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "financial_data_revision" ORDER BY "id","revision","updated_at"
+10-24 18:06:26.936  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("financial_goals")
+10-24 18:06:26.938  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("financial_goals")
+10-24 18:06:26.940  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "financial_goals" ORDER BY "id","name","goal_type","target_amount","current_amount","currency","target_date","priority","linked_account_id","status","created_at","updated_at"
+10-24 18:06:26.942  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "financial_goals" ORDER BY "id","name","goal_type","target_amount","current_amount","currency","target_date","priority","linked_account_id","status","created_at","updated_at"
+10-24 18:06:26.943  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("financial_health_scores")
+10-24 18:06:26.945  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("financial_health_scores")
+10-24 18:06:26.947  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "financial_health_scores" ORDER BY "id","score","savings_component","debt_component","emergency_fund_component","credit_usage_component","goals_component","variable_spending_component","calculated_at","notes","created_at"
+10-24 18:06:26.949  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "financial_health_scores" ORDER BY "id","score","savings_component","debt_component","emergency_fund_component","credit_usage_component","goals_component","variable_spending_component","calculated_at","notes","created_at"
+10-24 18:06:26.951  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("installment_purchases")
+10-24 18:06:26.954  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("installment_purchases")
+10-24 18:06:26.957  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "installment_purchases" ORDER BY "id","transaction_id","account_id","merchant_name","total_amount","currency","installment_count","paid_installments","monthly_amount","first_due_date","status","created_at","updated_at"
+10-24 18:06:26.959  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "installment_purchases" ORDER BY "id","transaction_id","account_id","merchant_name","total_amount","currency","installment_count","paid_installments","monthly_amount","first_due_date","status","created_at","updated_at"
+10-24 18:06:26.961  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("investment_assets")
+10-24 18:06:26.963  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("investment_assets")
+10-24 18:06:26.964  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "investment_assets" ORDER BY "id","account_id","name","asset_type","quantity","purchase_price","current_price","currency","platform_name","acquired_at","created_at","updated_at"
+10-24 18:06:26.966  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "investment_assets" ORDER BY "id","account_id","name","asset_type","quantity","purchase_price","current_price","currency","platform_name","acquired_at","created_at","updated_at"
+10-24 18:06:26.968  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("loans")
+10-24 18:06:26.970  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("loans")
+10-24 18:06:26.972  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "loans" ORDER BY "id","account_id","name","lender_name","principal_amount","outstanding_amount","currency","annual_interest_rate","term_months","monthly_payment_amount","start_date","expected_end_date","status","created_at","updated_at"
+10-24 18:06:26.974  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "loans" ORDER BY "id","account_id","name","lender_name","principal_amount","outstanding_amount","currency","annual_interest_rate","term_months","monthly_payment_amount","start_date","expected_end_date","status","created_at","updated_at"
+10-24 18:06:26.976  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("merchant_mappings")
+10-24 18:06:26.978  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("merchant_mappings")
+10-24 18:06:26.979  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "merchant_mappings" ORDER BY "id","raw_merchant_text","normalized_merchant_name","category_id","subcategory_id","account_id","match_pattern","match_count","last_matched_at","created_at","updated_at"
+10-24 18:06:26.982  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "merchant_mappings" ORDER BY "id","raw_merchant_text","normalized_merchant_name","category_id","subcategory_id","account_id","match_pattern","match_count","last_matched_at","created_at","updated_at"
+10-24 18:06:26.983  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("raw_financial_messages")
+10-24 18:06:26.985  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("raw_financial_messages")
+10-24 18:06:26.987  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "raw_financial_messages" ORDER BY "id","source_type","source_app","sender","raw_text","received_at","parsed_status","parsed_amount","parsed_currency","parsed_merchant_name","parsed_account_hint","parser_name","error_message","created_at","updated_at"
+10-24 18:06:26.989  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "raw_financial_messages" ORDER BY "id","source_type","source_app","sender","raw_text","received_at","parsed_status","parsed_amount","parsed_currency","parsed_merchant_name","parsed_account_hint","parser_name","error_message","created_at","updated_at"
+10-24 18:06:26.991  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("receipt_attachments")
+10-24 18:06:26.993  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("receipt_attachments")
+10-24 18:06:26.993  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "receipt_attachments" ORDER BY "id","transaction_id","local_uri","merchant_name","total_amount","tax_amount","currency","receipt_date","ocr_text","status","created_at","updated_at"
+10-24 18:06:26.996  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "receipt_attachments" ORDER BY "id","transaction_id","local_uri","merchant_name","total_amount","tax_amount","currency","receipt_date","ocr_text","status","created_at","updated_at"
+10-24 18:06:26.997  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("recurring_subscriptions")
+10-24 18:06:27.000  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("recurring_subscriptions")
+10-24 18:06:27.002  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "recurring_subscriptions" ORDER BY "id","name","merchant_name","amount","currency","category_id","subcategory_id","account_id","billing_day","periodicity","next_charge_date","status","created_at","updated_at","anchor_date","custom_interval","custom_unit","generation_cursor","reminders_json","schedule_revision"
+10-24 18:06:27.005  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "recurring_subscriptions" ORDER BY "id","name","merchant_name","amount","currency","category_id","subcategory_id","account_id","billing_day","periodicity","next_charge_date","status","created_at","updated_at","anchor_date","custom_interval","custom_unit","generation_cursor","reminders_json","schedule_revision"
+10-24 18:06:27.006  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("schema_migrations")
+10-24 18:06:27.008  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("schema_migrations")
+10-24 18:06:27.010  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "schema_migrations" ORDER BY "version","applied_at"
+10-24 18:06:27.012  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "schema_migrations" ORDER BY "version","applied_at"
+10-24 18:06:27.014  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("shared_allocations")
+10-24 18:06:27.017  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("shared_allocations")
+10-24 18:06:27.018  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "shared_allocations" ORDER BY "id","receipt_id","participation_id","participation_key","amount_minor","active","created_at","updated_at"
+10-24 18:06:27.020  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "shared_allocations" ORDER BY "id","receipt_id","participation_id","participation_key","amount_minor","active","created_at","updated_at"
+10-24 18:06:27.022  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("shared_commands")
+10-24 18:06:27.024  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("shared_commands")
+10-24 18:06:27.027  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "shared_commands" ORDER BY "id","request_json","result_json","created_at"
+10-24 18:06:27.029  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "shared_commands" ORDER BY "id","request_json","result_json","created_at"
+10-24 18:06:27.032  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("shared_contacts")
+10-24 18:06:27.034  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("shared_contacts")
+10-24 18:06:27.036  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "shared_contacts" ORDER BY "id","name","created_at","updated_at"
+10-24 18:06:27.038  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "shared_contacts" ORDER BY "id","name","created_at","updated_at"
+10-24 18:06:27.039  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("shared_expenses")
+10-24 18:06:27.042  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("shared_expenses")
+10-24 18:06:27.043  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "shared_expenses" ORDER BY "id","transaction_id","total_minor","date","description","distribution_snapshot","status","created_at","updated_at"
+10-24 18:06:27.045  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "shared_expenses" ORDER BY "id","transaction_id","total_minor","date","description","distribution_snapshot","status","created_at","updated_at"
+10-24 18:06:27.047  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("shared_loss_events")
+10-24 18:06:27.049  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("shared_loss_events")
+10-24 18:06:27.051  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "shared_loss_events" ORDER BY "id","kind","expense_id","participation_key","contact_id","amount_minor","date","reason","related_event_id","receipt_id","created_at"
+10-24 18:06:27.053  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "shared_loss_events" ORDER BY "id","kind","expense_id","participation_key","contact_id","amount_minor","date","reason","related_event_id","receipt_id","created_at"
+10-24 18:06:27.054  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("shared_receipts")
+10-24 18:06:27.057  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("shared_receipts")
+10-24 18:06:27.058  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "shared_receipts" ORDER BY "id","transaction_id","contact_id","amount_minor","date","status","created_at","updated_at"
+10-24 18:06:27.060  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "shared_receipts" ORDER BY "id","transaction_id","contact_id","amount_minor","date","status","created_at","updated_at"
+10-24 18:06:27.062  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("shared_returns")
+10-24 18:06:27.064  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("shared_returns")
+10-24 18:06:27.065  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "shared_returns" ORDER BY "id","receipt_id","transaction_id","amount_minor","date","status","created_at","updated_at"
+10-24 18:06:27.067  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "shared_returns" ORDER BY "id","receipt_id","transaction_id","amount_minor","date","status","created_at","updated_at"
+10-24 18:06:27.069  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("smart_alerts")
+10-24 18:06:27.071  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("smart_alerts")
+10-24 18:06:27.073  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "smart_alerts" ORDER BY "id","alert_type","severity","title","message","related_entity_type","related_entity_id","status","triggered_at","resolved_at","created_at","updated_at"
+10-24 18:06:27.075  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "smart_alerts" ORDER BY "id","alert_type","severity","title","message","related_entity_type","related_entity_id","status","triggered_at","resolved_at","created_at","updated_at"
+10-24 18:06:27.076  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("subcategories")
+10-24 18:06:27.079  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("subcategories")
+10-24 18:06:27.081  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "subcategories" ORDER BY "id","category_id","name","color","is_active","created_at","updated_at"
+10-24 18:06:27.084  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "subcategories" ORDER BY "id","category_id","name","color","is_active","created_at","updated_at"
+10-24 18:06:27.086  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("subscription_occurrences")
+10-24 18:06:27.089  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("subscription_occurrences")
+10-24 18:06:27.091  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "subscription_occurrences" ORDER BY "id","subscription_id","expected_date","expected_amount","actual_amount","currency","account_id","status","transaction_id","paid_at","skipped_at","skip_reason","notes","created_at","updated_at"
+10-24 18:06:27.093  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "subscription_occurrences" ORDER BY "id","subscription_id","expected_date","expected_amount","actual_amount","currency","account_id","status","transaction_id","paid_at","skipped_at","skip_reason","notes","created_at","updated_at"
+10-24 18:06:27.095  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("subscription_reminders")
+10-24 18:06:27.098  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("subscription_reminders")
+10-24 18:06:27.100  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "subscription_reminders" ORDER BY "id","occurrence_id","offset_days","revision","fire_at","title","message","desired","applied_revision","delivery_status","error","updated_at"
+10-24 18:06:27.101  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "subscription_reminders" ORDER BY "id","occurrence_id","offset_days","revision","fire_at","title","message","desired","applied_revision","delivery_status","error","updated_at"
+10-24 18:06:27.103  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("tax_tags")
+10-24 18:06:27.104  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("tax_tags")
+10-24 18:06:27.106  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "tax_tags" ORDER BY "id","name","description","is_active","created_at","updated_at"
+10-24 18:06:27.108  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "tax_tags" ORDER BY "id","name","description","is_active","created_at","updated_at"
+10-24 18:06:27.110  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("transaction_splits")
+10-24 18:06:27.113  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("transaction_splits")
+10-24 18:06:27.115  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "transaction_splits" ORDER BY "id","transaction_id","split_type","shared_expense_id","contact_id","amount_minor","shared_active","amount","currency","category_id","subcategory_id","notes","created_at","updated_at"
+10-24 18:06:27.117  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "transaction_splits" ORDER BY "id","transaction_id","split_type","shared_expense_id","contact_id","amount_minor","shared_active","amount","currency","category_id","subcategory_id","notes","created_at","updated_at"
+10-24 18:06:27.119  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("transaction_tax_tags")
+10-24 18:06:27.121  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("transaction_tax_tags")
+10-24 18:06:27.123  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "transaction_tax_tags" ORDER BY "transaction_id","tax_tag_id","created_at"
+10-24 18:06:27.126  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "transaction_tax_tags" ORDER BY "transaction_id","tax_tag_id","created_at"
+10-24 18:06:27.128  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA table_info("transactions")
+10-24 18:06:27.131  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA table_info("transactions")
+10-24 18:06:27.133  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT * FROM "transactions" ORDER BY "id","amount","currency","description","date","civil_date","local_time","time_zone","date_precision","account_id","category_id","subcategory_id","type","direction","status","target_account_id","source_message_id","merchant_name","payment_method","credit_card_hint","dedupe_key","notes","created_at","updated_at"
+10-24 18:06:27.135  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT * FROM "transactions" ORDER BY "id","amount","currency","description","date","civil_date","local_time","time_zone","date_precision","account_id","category_id","subcategory_id","type","direction","status","target_account_id","source_message_id","merchant_name","payment_method","credit_card_hint","dedupe_key","notes","created_at","updated_at"
+10-24 18:06:27.136  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA foreign_key_check
+10-24 18:06:27.139  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA foreign_key_check
+10-24 18:06:27.141  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA integrity_check
+10-24 18:06:27.145  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA integrity_check
+10-24 18:06:27.146  4600  4621 I ReactNativeJS: 5E_SQL_START:PRAGMA foreign_keys
+10-24 18:06:27.148  4600  4621 I ReactNativeJS: 5E_SQL_END:PRAGMA foreign_keys
+10-24 18:06:27.151  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           id,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           name,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           type,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           status,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           currency,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           balance_amount,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           debt_balance_amount,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           credit_limit_amount,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           institution_name,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           description,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           created_at,
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:           updated_at
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:         FROM accounts
+10-24 18:06:27.151  4600  4621 I ReactNativeJS:         ORDER BY name ASC;
+10-24 18:06:27.153  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           id,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           name,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           type,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           status,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           currency,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           balance_amount,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           debt_balance_amount,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           credit_limit_amount,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           institution_name,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           description,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           created_at,
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:           updated_at
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:         FROM accounts
+10-24 18:06:27.153  4600  4621 I ReactNativeJS:         ORDER BY name ASC;
+10-24 18:06:27.155  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT amount, type, direction, CASE
+10-24 18:06:27.155  4600  4621 I ReactNativeJS:   WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')
+10-24 18:06:27.155  4600  4621 I ReactNativeJS:     OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0
+10-24 18:06:27.155  4600  4621 I ReactNativeJS:   ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e
+10-24 18:06:27.155  4600  4621 I ReactNativeJS:     JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL
+10-24 18:06:27.155  4600  4621 I ReactNativeJS:     WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions
+10-24 18:06:27.155  4600  4621 I ReactNativeJS:          WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?
+10-24 18:06:27.155  4600  4621 I ReactNativeJS:            AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))
+10-24 18:06:27.155  4600  4621 I ReactNativeJS:          ORDER BY date DESC, created_at DESC;
+10-24 18:06:27.158  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT amount, type, direction, CASE
+10-24 18:06:27.158  4600  4621 I ReactNativeJS:   WHEN EXISTS (SELECT 1 FROM shared_receipts r WHERE r.transaction_id = transactions.id AND r.status = 'active')
+10-24 18:06:27.158  4600  4621 I ReactNativeJS:     OR EXISTS (SELECT 1 FROM shared_returns r WHERE r.transaction_id = transactions.id AND r.status = 'active') THEN 0
+10-24 18:06:27.158  4600  4621 I ReactNativeJS:   ELSE COALESCE((SELECT s.amount_minor / 100.0 FROM shared_expenses e
+10-24 18:06:27.158  4600  4621 I ReactNativeJS:     JOIN transaction_splits s ON s.shared_expense_id = e.id AND s.shared_active = 1 AND s.contact_id IS NULL
+10-24 18:06:27.158  4600  4621 I ReactNativeJS:     WHERE e.transaction_id = transactions.id AND e.status = 'active'), amount) END AS personal_amount FROM transactions
+10-24 18:06:27.158  4600  4621 I ReactNativeJS:          WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?
+10-24 18:06:27.158  4600  4621 I ReactNativeJS:            AND substr(COALESCE(civil_date, substr(date, 1, 10)), 1, ?) = ? AND ((type = ? AND direction = ?) OR (type = ? AND direction = ?))
+10-24 18:06:27.158  4600  4621 I ReactNativeJS:          ORDER BY date DESC, created_at DESC;
+10-24 18:06:27.159  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions
+10-24 18:06:27.159  4600  4621 I ReactNativeJS:          WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?
+10-24 18:06:27.159  4600  4621 I ReactNativeJS:          GROUP BY COALESCE(civil_date, substr(date, 1, 10));
+10-24 18:06:27.162  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM transactions
+10-24 18:06:27.162  4600  4621 I ReactNativeJS:          WHERE COALESCE(civil_date, substr(date, 1, 10)) >= ? AND COALESCE(civil_date, substr(date, 1, 10)) < ? AND status = ?
+10-24 18:06:27.162  4600  4621 I ReactNativeJS:          GROUP BY COALESCE(civil_date, substr(date, 1, 10));
+10-24 18:06:27.163  4600  4621 I ReactNativeJS: 5E_SQL_START:WITH
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   forgiven_by_participation AS (
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   recovered_by_contact AS (
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   applied_by_participation AS (
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     FROM shared_allocations a
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       AND p.contact_id IS NOT NULL
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     WHERE a.active = 1
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     GROUP BY a.participation_key
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   participations_by_contact AS (
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     SELECT s.contact_id,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:         OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     FROM transaction_splits s
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     LEFT JOIN applied_by_participation a ON a.participation_key = s.id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     GROUP BY s.contact_id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   receipts_by_contact AS (
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     SELECT contact_id, SUM(amount_minor) AS received_minor
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     FROM shared_receipts WHERE status = 'active'
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     GROUP BY contact_id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   returns_by_contact AS (
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     FROM shared_returns t
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     WHERE t.status = 'active'
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     GROUP BY r.contact_id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   contact_amounts AS (
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       COALESCE(p.applied_minor, 0) AS applied_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       COALESCE(r.received_minor, 0) AS received_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       COALESCE(t.returned_minor, 0) AS returned_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       COALESCE(l.recovered_minor, 0) AS recovered_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       COALESCE(p.smallest_pending, 0) AS smallest_pending,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       COALESCE(p.invalid_amount, 0) AS invalid_amount
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     FROM shared_contacts c
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     LEFT JOIN participations_by_contact p ON p.contact_id = c.id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     LEFT JOIN receipts_by_contact r ON r.contact_id = c.id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     LEFT JOIN returns_by_contact t ON t.contact_id = c.id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     LEFT JOIN recovered_by_contact l ON l.contact_id = c.id
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   checked_amounts AS (
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:       CASE WHEN invalid_amount = 1 OR smallest_pending < 0
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:         OR receivable_minor < 0 OR receivable_minor > 9007199254740991
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:         OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:         OR returned_minor > 9007199254740991
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:         OR recovered_minor < 0 OR recovered_minor > 9007199254740991
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:         OR received_minor - applied_minor - returned_minor - recovered_minor < 0
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:         THEN 1 ELSE 0 END AS invalid
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:     FROM contact_amounts
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   )
+10-24 18:06:27.163  4600  4621 I ReactNativeJS: SELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,
+10-24 18:06:27.163  4600  4621 I ReactNativeJS:   COALESCE(MAX(invalid), 0) AS invalid
+10-24 18:06:27.163  4600  4621 I ReactNativeJS: FROM checked_amounts;
+10-24 18:06:27.167  4600  4621 I ReactNativeJS: 5E_SQL_END:WITH
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   forgiven_by_participation AS (
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     SELECT participation_key, SUM(CASE kind WHEN 'forgiveness' THEN amount_minor ELSE -amount_minor END) AS forgiven_minor
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     FROM shared_loss_events WHERE kind IN ('forgiveness','forgivenessReversal') GROUP BY participation_key
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   recovered_by_contact AS (
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     SELECT r.contact_id, SUM(CASE l.kind WHEN 'recovery' THEN l.amount_minor ELSE -l.amount_minor END) AS recovered_minor
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     FROM shared_loss_events l JOIN shared_receipts r ON r.id = l.receipt_id AND r.status = 'active'
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     WHERE l.kind IN ('recovery','recoveryReversal') GROUP BY r.contact_id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   applied_by_participation AS (
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     SELECT a.participation_key, SUM(a.amount_minor) AS applied_minor
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     FROM shared_allocations a
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     JOIN shared_receipts r ON r.id = a.receipt_id AND r.status = 'active'
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     JOIN transaction_splits p ON p.id = a.participation_key AND p.shared_active = 1
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       AND p.contact_id IS NOT NULL
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     JOIN shared_expenses e ON e.id = p.shared_expense_id AND e.status = 'active'
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     WHERE a.active = 1
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     GROUP BY a.participation_key
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   participations_by_contact AS (
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     SELECT s.contact_id,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       SUM(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS receivable_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       SUM(COALESCE(a.applied_minor, 0)) AS applied_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       MIN(s.amount_minor - COALESCE(a.applied_minor, 0) - COALESCE(f.forgiven_minor, 0)) AS smallest_pending,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       MAX(CASE WHEN typeof(s.amount_minor) <> 'integer' OR s.amount_minor < 0
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:         OR s.amount_minor > 9007199254740991 THEN 1 ELSE 0 END) AS invalid_amount
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     FROM transaction_splits s
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     JOIN shared_expenses e ON e.id = s.shared_expense_id AND e.status = 'active'
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     LEFT JOIN applied_by_participation a ON a.participation_key = s.id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     LEFT JOIN forgiven_by_participation f ON f.participation_key = s.id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     WHERE s.shared_active = 1 AND s.contact_id IS NOT NULL
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     GROUP BY s.contact_id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   receipts_by_contact AS (
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     SELECT contact_id, SUM(amount_minor) AS received_minor
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     FROM shared_receipts WHERE status = 'active'
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     GROUP BY contact_id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   returns_by_contact AS (
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     SELECT r.contact_id, SUM(t.amount_minor) AS returned_minor
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     FROM shared_returns t
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     JOIN shared_receipts r ON r.id = t.receipt_id AND r.status = 'active'
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     WHERE t.status = 'active'
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     GROUP BY r.contact_id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   contact_amounts AS (
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     SELECT COALESCE(p.receivable_minor, 0) AS receivable_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       COALESCE(p.applied_minor, 0) AS applied_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       COALESCE(r.received_minor, 0) AS received_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       COALESCE(t.returned_minor, 0) AS returned_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       COALESCE(l.recovered_minor, 0) AS recovered_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       COALESCE(p.smallest_pending, 0) AS smallest_pending,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       COALESCE(p.invalid_amount, 0) AS invalid_amount
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     FROM shared_contacts c
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     LEFT JOIN participations_by_contact p ON p.contact_id = c.id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     LEFT JOIN receipts_by_contact r ON r.contact_id = c.id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     LEFT JOIN returns_by_contact t ON t.contact_id = c.id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     LEFT JOIN recovered_by_contact l ON l.contact_id = c.id
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   ),
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   checked_amounts AS (
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     SELECT receivable_minor, received_minor - applied_minor - returned_minor - recovered_minor AS advance_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:       CASE WHEN invalid_amount = 1 OR smallest_pending < 0
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:         OR receivable_minor < 0 OR receivable_minor > 9007199254740991
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:         OR applied_minor > 9007199254740991 OR received_minor > 9007199254740991
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:         OR returned_minor > 9007199254740991
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:         OR recovered_minor < 0 OR recovered_minor > 9007199254740991
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:         OR received_minor - applied_minor - returned_minor - recovered_minor < 0
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:         THEN 1 ELSE 0 END AS invalid
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:     FROM contact_amounts
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   )
+10-24 18:06:27.167  4600  4621 I ReactNativeJS: SELECT CAST(COALESCE(SUM(receivable_minor), 0) AS TEXT) AS receivable_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(advance_minor), 0) AS TEXT) AS advance_minor,
+10-24 18:06:27.167  4600  4621 I ReactNativeJS:   COALESCE(MAX(invalid), 0) AS invalid
+10-24 18:06:27.167  4600  4621 I ReactNativeJS: FROM checked_amounts;
+10-24 18:06:27.168  4600  4621 I ReactNativeJS: 5E_SQL_START:SELECT
+10-24 18:06:27.168  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,
+10-24 18:06:27.168  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,
+10-24 18:06:27.168  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,
+10-24 18:06:27.168  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals
+10-24 18:06:27.168  4600  4621 I ReactNativeJS:   FROM shared_loss_events WHERE date >= ? AND date < ?;
+10-24 18:06:27.171  4600  4621 I ReactNativeJS: 5E_SQL_END:SELECT
+10-24 18:06:27.171  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0 END),0) AS TEXT) AS losses,
+10-24 18:06:27.171  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(CASE WHEN kind = 'forgivenessReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS reversals,
+10-24 18:06:27.171  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(CASE WHEN kind = 'recovery' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recoveries,
+10-24 18:06:27.171  4600  4621 I ReactNativeJS:   CAST(COALESCE(SUM(CASE WHEN kind = 'recoveryReversal' THEN amount_minor ELSE 0 END),0) AS TEXT) AS recovery_reversals
+10-24 18:06:27.171  4600  4621 I ReactNativeJS:   FROM shared_loss_events WHERE date >= ? AND date < ?;
+10-24 18:06:27.172  4600  4621 I ReactNativeJS: DELETE_STEP:after-inspection
+10-24 18:06:27.172  4600  4621 I ReactNativeJS: DELETE_STEP:obsolete-job:95f95dd6-53e7-4046-bd26-791a3beaf5b2
+10-24 18:06:27.174  4600  4621 I ReactNativeJS: DELETE_STEP:obsolete-job:c5196e99-0cd8-4008-9703-5b1901121279
+10-24 18:06:27.177  4600  4621 I ReactNativeJS: DELETE_STEP:obsolete-job:f39b9060-9227-4d0e-a434-b6a9d7682205
+10-24 18:06:27.268  4600  4621 I ReactNativeJS: ACCEPTANCE_END:mixed-history-delete-confirmed-cleanup-pending-old-jobs-revoked

@@ -37,3 +37,10 @@ SmartFin is a React Native and TypeScript mobile app for personal finance. The p
 - Do not delete existing logic without explaining why.
 - Work with existing user changes in the repository; do not revert unrelated edits.
 - Run type checks or tests after structural changes when possible.
+
+## Performance Volumes
+
+- 100,000 movements represent about 50 years of real use (~2,000 per year, ~170 per month, ~5–6 per day), not a single load.
+- Default representative fixtures (`__tests__/helpers/representativeHistory.ts`, fixed seed, civil dates, several accounts, categories and movement types, ending on the reference day): 100,000 movements over exactly 50 calendar years, 10,000 over 5 calendar years and 1,000 over 6 months. 50 calendar years produce 50 annual CSV files, not 51.
+- Acceptance targets for history, dashboard, backups and other volume-dependent work must be measured on histories spread over that span.
+- Do not run 100,000-movement tests concentrated in one day, one month or one import (for example 100,000 movements with the same date): they are not a SmartFin scenario. Volume tests at 100,000 must spread the movements over decades (40+ years). Ties at small sizes (for example 1,000 or 10,000 rows on the same day) remain valid correctness tests.

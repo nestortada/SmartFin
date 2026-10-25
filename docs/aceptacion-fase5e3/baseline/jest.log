@@ -1,0 +1,215 @@
+PASS __tests__/transactionHistoryPhase5E2.test.ts (90.131 s)
+PASS __tests__/creditCardReconciliationEquivalence.test.ts (41.887 s)
+PASS __tests__/financialAtomicityPhase5E.test.ts (26.129 s)
+PASS __tests__/transactionHistoryPagination.test.ts (10.881 s)
+PASS __tests__/creditCardAssociationScaling.test.ts (8.023 s)
+PASS __tests__/financialAtomicityPhase2.test.ts (7.45 s)
+PASS __tests__/localSnapshotCoordination.test.ts (6.859 s)
+PASS __tests__/subscriptionAtomicityPhase4.test.ts (6.249 s)
+PASS __tests__/financialAtomicityPhase3B.test.ts (5.668 s)
+PASS __tests__/financialAtomicityPhase0.test.ts
+PASS __tests__/financialAtomicityPhase4.test.ts
+PASS __tests__/financialDeletionPhase5C.test.ts
+PASS __tests__/dashboardSummary.test.ts
+PASS __tests__/creditCardReconciliationBaseline.test.ts
+PASS __tests__/transactionsScreen.test.tsx
+PASS __tests__/subscriptions.test.ts
+PASS __tests__/sharedForgiveness.test.ts
+PASS __tests__/financialAtomicityPhase3A.test.ts
+PASS __tests__/subscriptionInterface.test.tsx
+PASS __tests__/zzTieBreakProbe.test.ts
+  ● Console
+
+    console.log
+      {
+       "amounts.current": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "first": [
+         "load-1",
+         "load-2",
+         "load-3"
+        ]
+       },
+       "full.current": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+        ]
+       },
+       "amounts.rowidDesc": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.30000000000297,
+        "first": [
+         "load-1000",
+         "load-998",
+         "load-997"
+        ]
+       },
+       "full.rowidDesc": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+        ]
+       },
+       "amounts.rowidAsc": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "first": [
+         "load-1",
+         "load-2",
+         "load-3"
+        ]
+       },
+       "full.rowidAsc": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+        ]
+       },
+       "amounts.idDesc": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000028,
+        "monthlySavings": -413.3000000000031,
+        "first": [
+         "load-998",
+         "load-997",
+         "load-996"
+        ]
+       },
+       "full.idDesc": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+        ]
+       },
+       "amounts.idAsc": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000028,
+        "monthlySavings": -413.300000000003,
+        "first": [
+         "load-1",
+         "load-10",
+         "load-100"
+        ]
+       },
+       "full.idAsc": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+        ]
+       },
+       "cardRecon": [
+        "SCAN transactions USING INDEX idx_transactions_date",
+        "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+       ]
+      }
+
+      at Object.log (__tests__/zzTieBreakProbe.test.ts:38:11)
+
+PASS __tests__/financialAtomicityPhase5E1.test.ts
+PASS __tests__/geminiCommandService.test.ts
+PASS __tests__/sharedExpenses.test.ts
+PASS __tests__/creditCardPaymentScreen.test.tsx
+PASS __tests__/sharedFinancialTotals.test.ts
+PASS __tests__/transactionHistoryRefinement.test.ts
+PASS __tests__/sharedSQLiteCoordination.test.ts
+PASS __tests__/sqliteRecoveryLifecycle.test.ts
+PASS __tests__/financialIntegrity.test.ts
+PASS __tests__/financialAtomicityInfrastructure.test.ts
+PASS __tests__/sharedCommandReads.test.ts
+PASS __tests__/transactionDates.test.ts
+PASS __tests__/manageSecurity.test.ts
+PASS __tests__/aiSubscriptions.test.ts
+PASS __tests__/useTransactionsPagination.test.tsx
+PASS __tests__/subscriptionMaintenanceComparison.test.ts
+PASS __tests__/backupControls.test.tsx
+PASS __tests__/aiDraftRepository.test.ts
+PASS __tests__/aiTransfers.test.ts
+PASS __tests__/aiConfirmationPhase4.test.tsx
+PASS __tests__/financialDeletionBaseline.test.ts
+PASS __tests__/aiCommandPlanner.test.ts
+PASS __tests__/sharedCommandReaderWait.test.ts
+PASS __tests__/financialDataRepository.test.ts
+PASS __tests__/sqliteAndroidRecoveryPatch.test.ts
+PASS __tests__/categoryManagement.test.ts
+PASS __tests__/transactionHistoryPhase5E2RangePlan.test.ts
+PASS __tests__/backupPublication.test.ts
+PASS __tests__/creditCardsOverview.test.ts
+PASS __tests__/creditCardTransactionRelations.test.ts
+PASS __tests__/creditCardRepository.test.ts
+PASS __tests__/saveManualTransaction.test.ts
+PASS __tests__/subscriptionPresentation.test.ts
+PASS __tests__/subscriptionRecurrence.test.ts
+PASS __tests__/debitCardsOverview.test.ts
+PASS __tests__/settingsTaskOwner.test.ts
+PASS __tests__/driveBackupService.test.ts
+PASS __tests__/debitCardManagement.test.ts
+PASS __tests__/transactionAccountFilter.test.ts
+PASS __tests__/settingsRepository.test.ts
+PASS __tests__/creditCardFormatters.test.ts
+PASS __tests__/copAmountInput.test.ts
+
+Test Suites: 7 skipped, 62 passed, 62 of 69 total
+Tests:       8 skipped, 762 passed, 770 total
+Snapshots:   8 passed, 8 total
+Time:        241.732 s, estimated 730 s
+Ran all test suites.

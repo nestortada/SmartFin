@@ -84,7 +84,7 @@ object SmartFinBackupPublisher {
     File(File(context.noBackupFilesDir, "smartfin-local-snapshots/${uuid(id)}"), "snapshot.db")
 
   /** Binds a private capture receipt; paths supplied by JS are never opened. */
-  private fun snapshot(context: Context, job: JSONObject, snapshotId: String?): Pair<File, JSONObject> {
+  private fun snapshot(context: Context, job: JSONObject, snapshotId: String?, timings: JSONObject? = null): Pair<File, JSONObject> {
     var id = snapshotId ?: job.optString("snapshotId").takeIf { it.isNotEmpty() }
     if (id == null) {
       val candidates = File(context.noBackupFilesDir, "smartfin-local-snapshots").listFiles().orEmpty()
@@ -103,8 +103,12 @@ object SmartFinBackupPublisher {
     val captured = receipt.getJSONObject("snapshot")
     check(captured.getString("id") == id)
     check(file.isFile && file.length() == captured.getLong("bytes")) { "Private snapshot unavailable" }
+    val hashStart = System.nanoTime()
     check(digest(file.inputStream()).second == captured.getString("sha256")) { "Private snapshot corrupt" }
-    SmartFinBackupCsv.validate(file, receipt.getJSONObject("expected"))
+    timings?.put("snapshotHashMs", elapsed(hashStart))
+    val describe = JSONObject()
+    SmartFinBackupCsv.validate(file, receipt.getJSONObject("expected"), describe)
+    timings?.put("snapshotDescribe", describe)
     job.put("snapshotId", id).put("snapshot", captured)
     return file to captured
   }
@@ -143,14 +147,20 @@ object SmartFinBackupPublisher {
         return@backup result(job, manifest)
       }
       progress("inspectingSnapshot")
+      // Observation only: stage durations never change publication decisions.
+      val stages = JSONObject()
+      var jobSaveMs = 0.0
+      var jobSaves = 0
+      fun persist(value: JSONObject) { val start = System.nanoTime(); save(context, value); jobSaveMs += elapsed(start); jobSaves++ }
       val snapshotStart = System.nanoTime()
-      val (database, captured) = snapshot(context, job, snapshotId)
+      val (database, captured) = snapshot(context, job, snapshotId, stages)
       val snapshotRevalidationMs = elapsed(snapshotStart)
-      job.put("state", "snapshotValidated"); save(context, job)
+      job.put("state", "snapshotValidated"); persist(job)
       progress(if (snapshotId == null) "continuingPublication" else "snapshotValidated")
       val staging = File(root(context), id).apply { check(isDirectory || mkdir()) }
       val csvStart = System.nanoTime()
-      val exports = SmartFinBackupCsv.export(database, staging)
+      val csvFiles = JSONArray()
+      val exports = SmartFinBackupCsv.export(database, staging, csvFiles)
       val csvExportMs = elapsed(csvStart)
       val files = listOf("smartfin-backup.db" to database) + exports
       val hashStart = System.nanoTime()
@@ -171,14 +181,15 @@ object SmartFinBackupPublisher {
         .put("components", entries).put("state", "complete").put("validation", "provider-readback-sha256")
         .put("cloudSync", "unconfirmed")
       job.put("state", "publicationPending").put("manifest", manifest)
-        .put("totalFiles", files.size + 1).put("completedFiles", 0); save(context, job)
+        .put("totalFiles", files.size + 1).put("completedFiles", 0); persist(job)
       progress("publicationPending", 0, files.size + 1)
       for ((index, pair) in files.withIndex()) {
         val entry = entries.getJSONObject(index)
         saf.writeOnce(entry.getString("name"), if (index == 0) "application/vnd.sqlite3" else "text/csv", pair.second, entry)
-        job.put("completedFiles", index + 1); save(context, job)
+        job.put("completedFiles", index + 1); persist(job)
         progress("publicationPending", index + 1, files.size + 1)
       }
+      val manifestStart = System.nanoTime()
       // This final immutable document is only a candidate: every reader must verify all components.
       val localManifest = File(staging, "manifest.json")
       localManifest.writeText(manifest.toString(2), Charsets.UTF_8)
@@ -187,12 +198,17 @@ object SmartFinBackupPublisher {
         JSONObject().put("bytes", size).put("sha256", hash))
       val published = saf.readManifest(uri)
       check(published.toString() == manifest.toString()) { "Published manifest differs" }
+      val manifestMs = elapsed(manifestStart)
       progress("validatingComponents", files.size, files.size + 1)
+      val validationStart = System.nanoTime()
       validate(saf, published, id)
+      val finalValidationMs = elapsed(validationStart)
       job.put("state", "verified").put("completedFiles", files.size + 1)
-        .put("timings", JSONObject().put("snapshotRevalidationMs", snapshotRevalidationMs)
-          .put("csvExportMs", csvExportMs).put("componentHashMs", componentHashMs)
+        .put("timings", stages.put("snapshotRevalidationMs", snapshotRevalidationMs)
+          .put("csvExportMs", csvExportMs).put("csvFiles", csvFiles).put("componentHashMs", componentHashMs)
           .put("safWriteMs", saf.writeMs).put("safReadbackMs", saf.readbackMs)
+          .put("manifestWriteAndReadMs", manifestMs).put("finalComponentValidationMs", finalValidationMs)
+          .put("jobSaveMs", jobSaveMs).put("jobSaves", jobSaves)
           .put("publicationTotalMs", elapsed(started)))
       save(context, job)
       progress("verified", files.size + 1, files.size + 1)

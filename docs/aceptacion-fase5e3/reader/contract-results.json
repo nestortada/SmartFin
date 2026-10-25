@@ -1,0 +1,283 @@
+{
+  "evaluatedAt": "2026-10-25T03:00:00.000Z",
+  "node": "v24.16.0",
+  "cases": [
+    {
+      "name": "select-latest-intact",
+      "expect": {
+        "status": "verified",
+        "generationId": "11111111-1111-4111-8111-111111111111",
+        "freshness": "withinSevenDays",
+        "datasetCurrency": "unknown",
+        "usableForWeeklyAnalysis": false
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "11111111-1111-4111-8111-111111111111",
+        "generatedAt": "2026-10-23T21:00:00.000Z",
+        "generatedAtBogota": "2026-10-23 16:00:00",
+        "revision": 40,
+        "ageHours": 30,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "rejected": [
+          {
+            "file": "smartfin-generation-22222222-2222-4222-8222-222222222222.json",
+            "reason": "missing component: cuentas.csv"
+          },
+          {
+            "file": "smartfin-generation-33333333-3333-4333-8333-333333333333.json",
+            "reason": "size/hash mismatch: categorias.csv"
+          }
+        ],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "age-168h-inclusive",
+      "expect": {
+        "freshness": "withinSevenDays"
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "44444444-4444-4444-8444-444444444444",
+        "generatedAt": "2026-10-18T03:00:00.000Z",
+        "generatedAtBogota": "2026-10-17 22:00:00",
+        "revision": 40,
+        "ageHours": 168,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "age-168h-plus-1ms",
+      "expect": {
+        "freshness": "olderThanSevenDays"
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "55555555-5555-4555-8555-555555555555",
+        "generatedAt": "2026-10-18T02:59:59.999Z",
+        "generatedAtBogota": "2026-10-17 21:59:59",
+        "revision": 40,
+        "ageHours": 168.0000002777778,
+        "freshness": "olderThanSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "future-generatedAt",
+      "expect": {
+        "freshness": "clockAnomaly"
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "66666666-6666-4666-8666-666666666666",
+        "generatedAt": "2026-10-25T03:01:00.000Z",
+        "generatedAtBogota": "2026-10-24 22:01:00",
+        "revision": 40,
+        "ageHours": -0.016666666666666666,
+        "freshness": "clockAnomaly",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "bogota-civil-day",
+      "expect": {
+        "generatedAtBogota": "2026-10-24 21:30:00"
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "77777777-7777-4777-8777-777777777777",
+        "generatedAt": "2026-10-25T02:30:00.000Z",
+        "generatedAtBogota": "2026-10-24 21:30:00",
+        "revision": 40,
+        "ageHours": 0.5,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "v1-only",
+      "expect": {
+        "status": "legacyUnverified",
+        "usableForWeeklyAnalysis": false,
+        "datasetCurrency": "unknown"
+      },
+      "result": {
+        "status": "legacyUnverified",
+        "rejected": [],
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "v1-beside-v2",
+      "expect": {
+        "status": "verified",
+        "generationId": "88888888-8888-4888-8888-888888888888"
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "88888888-8888-4888-8888-888888888888",
+        "generatedAt": "2026-10-24T22:00:00.000Z",
+        "generatedAtBogota": "2026-10-24 17:00:00",
+        "revision": 40,
+        "ageHours": 5,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "cloud-sync-claim-rejected",
+      "expect": {
+        "status": "noVerifiedGeneration"
+      },
+      "result": {
+        "status": "noVerifiedGeneration",
+        "rejected": [
+          {
+            "file": "smartfin-generation-99999999-9999-4999-8999-999999999999.json",
+            "reason": "v2 state"
+          }
+        ],
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "pre-deletion-no-context",
+      "expect": {
+        "fileIntegrity": "verified",
+        "freshness": "withinSevenDays",
+        "datasetCurrency": "unknown",
+        "usableForWeeklyAnalysis": false
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "generatedAt": "2026-10-25T01:00:00.000Z",
+        "generatedAtBogota": "2026-10-24 20:00:00",
+        "revision": 900,
+        "ageHours": 2,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "pre-deletion-with-context",
+      "expect": {
+        "datasetCurrency": "historical",
+        "usableForWeeklyAnalysis": false
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "generatedAt": "2026-10-25T01:00:00.000Z",
+        "generatedAtBogota": "2026-10-24 20:00:00",
+        "revision": 900,
+        "ageHours": 2,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "historical",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "post-deletion-older-but-current",
+      "expect": {
+        "generationId": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+        "datasetCurrency": "historical",
+        "usableForWeeklyAnalysis": false
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+        "generatedAt": "2026-10-25T01:00:00.000Z",
+        "generatedAtBogota": "2026-10-24 20:00:00",
+        "revision": 900,
+        "ageHours": 2,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "historical",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    },
+    {
+      "name": "current-with-fresh-context",
+      "expect": {
+        "datasetCurrency": "current",
+        "usableForWeeklyAnalysis": true
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+        "generatedAt": "2026-10-25T01:00:00.000Z",
+        "generatedAtBogota": "2026-10-24 20:00:00",
+        "revision": 40,
+        "ageHours": 2,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "current",
+        "rejected": [],
+        "usableForWeeklyAnalysis": true
+      }
+    },
+    {
+      "name": "stale-context-ignored",
+      "expect": {
+        "datasetCurrency": "unknown",
+        "usableForWeeklyAnalysis": false
+      },
+      "result": {
+        "status": "verified",
+        "generationId": "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+        "generatedAt": "2026-10-25T01:00:00.000Z",
+        "generatedAtBogota": "2026-10-24 20:00:00",
+        "revision": 40,
+        "ageHours": 2,
+        "freshness": "withinSevenDays",
+        "fileIntegrity": "verified",
+        "cloudSync": "unconfirmed",
+        "datasetCurrency": "unknown",
+        "rejected": [],
+        "usableForWeeklyAnalysis": false
+      }
+    }
+  ],
+  "externalAnalystUpdated": false,
+  "readerSourceSha256": "fd68213667d678f37f880f94db0c930b5865e070837a5662df4efedb9bcb948c"
+}

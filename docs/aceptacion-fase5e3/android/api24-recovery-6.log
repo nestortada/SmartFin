@@ -1,0 +1,36 @@
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-auto-stage-alarm cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 790
+TotalTime: 790
+WaitTime: 797
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 2.0 MB/s (8411 bytes in 0.004s)
+Passed 2 cases in phase5e3-auto-stage-alarm on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-auto-inspect cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 948
+TotalTime: 948
+WaitTime: 957
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 12.5 MB/s (84040 bytes in 0.006s)
+Passed 4 cases in phase5e3-auto-inspect on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-auto-stage-alarm-lost cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 984
+TotalTime: 984
+WaitTime: 990
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 2.1 MB/s (8415 bytes in 0.004s)
+Passed 2 cases in phase5e3-auto-stage-alarm-lost on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-auto-inspect cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Warning: Activity not started, its current task has been brought to the front
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 28
+TotalTime: 28
+WaitTime: 32
+Complete
+kill-alarm-lost failed: Synthetic campaign timed out. Inspect logcat.

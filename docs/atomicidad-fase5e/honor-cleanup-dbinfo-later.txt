@@ -1,0 +1,127 @@
+Applications Database Info:
+
+** Database info for pid 25067 [com.smartfin.snapshot5b2.tests] **
+Connection pool for /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb:
+  Open: true
+  Max connections: 4
+  Total execution time (ms): 9613
+  Total statements executed: 48210
+  Average time per statement (ms): 0
+  Configuration: openFlags=805306368, isLegacyCompatibilityWalEnabled=false, journalMode=WAL, syncMode=FULL
+  IsReadOnlyDatabase=false
+  Available primary connection:
+    Connection #0:
+      isPrimaryConnection: true
+      onlyAllowReadOnlyOperations: false
+      Most recently executed operations:
+        0: [2026-10-24 17:08:05.759] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        1: [2026-10-24 17:08:05.759] execute took 0ms - succeeded, sql="UPDATE room_table_modification_log SET invalidated = 0 WHERE invalidated = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        2: [2026-10-24 17:08:05.759] prepare took 0ms - succeeded, sql="UPDATE room_table_modification_log SET invalidated = 0 WHERE invalidated = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        3: [2026-10-24 17:08:05.759] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM room_table_modification_log WHERE invalidated = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        4: [2026-10-24 17:08:05.758] prepare took 0ms - succeeded, sql="SELECT * FROM room_table_modification_log WHERE invalidated = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        5: [2026-10-24 17:08:05.758] execute took 0ms - succeeded, sql="BEGIN IMMEDIATE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        6: [2026-10-24 17:08:05.758] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        7: [2026-10-24 17:08:05.757] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM workspec WHERE state=0 ORDER BY last_enqueue_time LIMIT ?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        8: [2026-10-24 17:08:05.757] prepare took 1ms - succeeded, sql="SELECT * FROM workspec WHERE state=0 ORDER BY last_enqueue_time LIMIT ?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        9: [2026-10-24 17:08:05.756] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM workspec WHERE state=0 AND schedule_requested_at=-1 ORDER BY last_enqueue_time LIMIT (SELECT MAX(?-COUNT(*), 0) FROM workspec WHERE schedule_requested_at<>-1 AND LENGTH(content_uri_triggers)=0 AND state NOT IN (2, 3, 5))", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        10: [2026-10-24 17:08:05.756] prepare took 1ms - succeeded, sql="SELECT * FROM workspec WHERE state=0 AND schedule_requested_at=-1 ORDER BY last_enqueue_time LIMIT (SELECT MAX(?-COUNT(*), 0) FROM workspec WHERE schedule_requested_at<>-1 AND LENGTH(content_uri_triggers)=0 AND state NOT IN (2, 3, 5))", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        11: [2026-10-24 17:08:05.755] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM workspec WHERE state=0 AND schedule_requested_at=-1 AND LENGTH(content_uri_triggers)<>0 ORDER BY last_enqueue_time", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        12: [2026-10-24 17:08:05.755] prepare took 0ms - succeeded, sql="SELECT * FROM workspec WHERE state=0 AND schedule_requested_at=-1 AND LENGTH(content_uri_triggers)<>0 ORDER BY last_enqueue_time", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        13: [2026-10-24 17:08:05.755] execute took 0ms - succeeded, sql="BEGIN IMMEDIATE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        14: [2026-10-24 17:08:05.752] execute took 3ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        15: [2026-10-24 17:08:05.751] execute took 0ms - succeeded, sql="DELETE FROM SystemIdInfo where work_spec_id=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        16: [2026-10-24 17:08:05.751] prepare took 0ms - succeeded, sql="DELETE FROM SystemIdInfo where work_spec_id=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        17: [2026-10-24 17:08:05.742] executeForCursorWindow took 0ms - succeeded, sql="SELECT work_spec_id FROM dependency WHERE prerequisite_id=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        18: [2026-10-24 17:08:05.742] prepare took 0ms - succeeded, sql="SELECT work_spec_id FROM dependency WHERE prerequisite_id=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        19: [2026-10-24 17:08:05.741] executeForCursorWindow took 0ms - succeeded, sql="SELECT changes()", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+  Available non-primary connections:
+    Connection #1:
+      isPrimaryConnection: false
+      onlyAllowReadOnlyOperations: true
+      Most recently executed operations:
+        0: [2026-10-24 17:08:05.765] executeForCursorWindow took 0ms - succeeded, sql="SELECT COUNT(*) > 0 FROM workspec WHERE state NOT IN (2, 3, 5) LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        1: [2026-10-24 17:08:05.765] prepare took 0ms - succeeded, sql="SELECT COUNT(*) > 0 FROM workspec WHERE state NOT IN (2, 3, 5) LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        2: [2026-10-24 17:08:05.762] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        3: [2026-10-24 17:08:05.762] executeForCursorWindow took 0ms - succeeded, sql="SELECT id, state, output, run_attempt_count, generation, required_network_type, required_network_request, requires_charging, requires_device_idle, requires_battery_not_low, requires_storage_not_low, trigger_content_update_delay, trigger_max_content_delay, content_uri_triggers, initial_delay, interval_duration, flex_duration, backoff_policy, backoff_delay_duration, last_enqueue_time, period_count, next_schedule_time_override, stop_reason FROM workspec WHERE id=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        4: [2026-10-24 17:08:05.762] prepare took 0ms - succeeded, sql="SELECT id, state, output, run_attempt_count, generation, required_network_type, required_network_request, requires_charging, requires_device_idle, requires_battery_not_low, requires_storage_not_low, trigger_content_update_delay, trigger_max_content_delay, content_uri_triggers, initial_delay, interval_duration, flex_duration, backoff_policy, backoff_delay_duration, last_enqueue_time, period_count, next_schedule_time_override, stop_reason FROM workspec WHERE id=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        5: [2026-10-24 17:08:05.762] executeForCursorWindow took 0ms - succeeded, sql="SELECT `progress`,`work_spec_id` FROM `WorkProgress` WHERE `work_spec_id` IN (?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        6: [2026-10-24 17:08:05.762] prepare took 0ms - succeeded, sql="SELECT `progress`,`work_spec_id` FROM `WorkProgress` WHERE `work_spec_id` IN (?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        7: [2026-10-24 17:08:05.761] executeForCursorWindow took 0ms - succeeded, sql="SELECT `tag`,`work_spec_id` FROM `WorkTag` WHERE `work_spec_id` IN (?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        8: [2026-10-24 17:08:05.761] prepare took 0ms - succeeded, sql="SELECT `tag`,`work_spec_id` FROM `WorkTag` WHERE `work_spec_id` IN (?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        9: [2026-10-24 17:08:05.761] executeForCursorWindow took 1ms - succeeded, sql="SELECT id, state, output, run_attempt_count, generation, required_network_type, required_network_request, requires_charging, requires_device_idle, requires_battery_not_low, requires_storage_not_low, trigger_content_update_delay, trigger_max_content_delay, content_uri_triggers, initial_delay, interval_duration, flex_duration, backoff_policy, backoff_delay_duration, last_enqueue_time, period_count, next_schedule_time_override, stop_reason FROM workspec WHERE id=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        10: [2026-10-24 17:08:05.760] prepare took 0ms - succeeded, sql="SELECT id, state, output, run_attempt_count, generation, required_network_type, required_network_request, requires_charging, requires_device_idle, requires_battery_not_low, requires_storage_not_low, trigger_content_update_delay, trigger_max_content_delay, content_uri_triggers, initial_delay, interval_duration, flex_duration, backoff_policy, backoff_delay_duration, last_enqueue_time, period_count, next_schedule_time_override, stop_reason FROM workspec WHERE id=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        11: [2026-10-24 17:08:05.760] execute took 0ms - succeeded, sql="BEGIN DEFERRED;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        12: [2026-10-24 17:08:05.519] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        13: [2026-10-24 17:08:05.519] executeForCursorWindow took 0ms - succeeded, sql="SELECT id, state, output, run_attempt_count, generation, required_network_type, required_network_request, requires_charging, requires_device_idle, requires_battery_not_low, requires_storage_not_low, trigger_content_update_delay, trigger_max_content_delay, content_uri_triggers, initial_delay, interval_duration, flex_duration, backoff_policy, backoff_delay_duration, last_enqueue_time, period_count, next_schedule_time_override, stop_reason FROM workspec WHERE id IN (SELECT work_spec_id FROM workname WHERE name=?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        14: [2026-10-24 17:08:05.519] prepare took 1ms - succeeded, sql="SELECT id, state, output, run_attempt_count, generation, required_network_type, required_network_request, requires_charging, requires_device_idle, requires_battery_not_low, requires_storage_not_low, trigger_content_update_delay, trigger_max_content_delay, content_uri_triggers, initial_delay, interval_duration, flex_duration, backoff_policy, backoff_delay_duration, last_enqueue_time, period_count, next_schedule_time_override, stop_reason FROM workspec WHERE id IN (SELECT work_spec_id FROM workname WHERE name=?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        15: [2026-10-24 17:08:05.519] executeForCursorWindow took 0ms - succeeded, sql="SELECT `progress`,`work_spec_id` FROM `WorkProgress` WHERE `work_spec_id` IN (?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        16: [2026-10-24 17:08:05.519] prepare took 0ms - succeeded, sql="SELECT `progress`,`work_spec_id` FROM `WorkProgress` WHERE `work_spec_id` IN (?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        17: [2026-10-24 17:08:05.518] executeForCursorWindow took 0ms - succeeded, sql="SELECT `tag`,`work_spec_id` FROM `WorkTag` WHERE `work_spec_id` IN (?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        18: [2026-10-24 17:08:05.518] prepare took 0ms - succeeded, sql="SELECT `tag`,`work_spec_id` FROM `WorkTag` WHERE `work_spec_id` IN (?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        19: [2026-10-24 17:08:05.518] executeForCursorWindow took 0ms - succeeded, sql="SELECT id, state, output, run_attempt_count, generation, required_network_type, required_network_request, requires_charging, requires_device_idle, requires_battery_not_low, requires_storage_not_low, trigger_content_update_delay, trigger_max_content_delay, content_uri_triggers, initial_delay, interval_duration, flex_duration, backoff_policy, backoff_delay_duration, last_enqueue_time, period_count, next_schedule_time_override, stop_reason FROM workspec WHERE id IN (SELECT work_spec_id FROM workname WHERE name=?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+  Acquired connections:
+    <none>
+  Connection waiters:
+    <none>
+Connection pool for /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db:
+  Open: true
+  Max connections: 1
+  Total execution time (ms): 86
+  Total statements executed: 541
+  Average time per statement (ms): 0
+  Configuration: openFlags=268435456, isLegacyCompatibilityWalEnabled=false, journalMode=TRUNCATE, syncMode=NORMAL
+  IsReadOnlyDatabase=false
+  Available primary connection:
+    Connection #0:
+      isPrimaryConnection: true
+      onlyAllowReadOnlyOperations: true
+      Most recently executed operations:
+        0: [2026-10-24 17:08:07.555] executeForCursorWindow took 0ms - succeeded, sql="SELECT revision FROM financial_data_revision WHERE id=1;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        1: [2026-10-24 17:08:07.555] prepare took 0ms - succeeded, sql="SELECT revision FROM financial_data_revision WHERE id=1;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        2: [2026-10-24 17:08:07.555] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        3: [2026-10-24 17:08:07.555] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        4: [2026-10-24 17:08:07.549] executeForCursorWindow took 4ms - succeeded, sql="PRAGMA integrity_check;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        5: [2026-10-24 17:08:07.547] prepare took 2ms - succeeded, sql="PRAGMA integrity_check;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        6: [2026-10-24 17:08:07.547] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        7: [2026-10-24 17:08:07.547] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        8: [2026-10-24 17:08:07.544] executeForCursorWindow took 1ms - succeeded, sql="PRAGMA foreign_key_check;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        9: [2026-10-24 17:08:07.543] prepare took 0ms - succeeded, sql="PRAGMA foreign_key_check;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        10: [2026-10-24 17:08:07.543] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        11: [2026-10-24 17:08:07.543] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        12: [2026-10-24 17:08:07.540] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA foreign_keys;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        13: [2026-10-24 17:08:07.540] prepare took 0ms - succeeded, sql="PRAGMA foreign_keys;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        14: [2026-10-24 17:08:07.539] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        15: [2026-10-24 17:08:07.539] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        16: [2026-10-24 17:08:07.537] execute took 1ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        17: [2026-10-24 17:08:07.535] executeForCursorWindow took 0ms - succeeded, sql="SELECT version FROM schema_migrations;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        18: [2026-10-24 17:08:07.534] prepare took 0ms - succeeded, sql="SELECT version FROM schema_migrations;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        19: [2026-10-24 17:08:07.534] execute took 0ms - succeeded, sql="BEGIN EXCLUSIVE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+  Available non-primary connections:
+    <none>
+  Acquired connections:
+    <none>
+  Connection waiters:
+    <none>
+Statements Executed per Database
+  /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb :    48210
+  /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db :    541
+
+Total Statements Executed for all Active Databases: 48751
+
+
+Statement Time per Database (ms)
+  /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb :    9613
+  /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db :    86
+Total Statements Time for all Active Databases (ms): 9699
+
+Database files in /data/user/0/com.smartfin.snapshot5b2.tests/databases:
+  phase5b2_synthetic.db                     573440b ctime=2026-10-24T22:08:06.630856Z mtime=2026-10-24T22:08:06.630856Z atime=2026-10-24T22:03:45.198856Z
+  phase5b2_synthetic.db-journal                  0b ctime=2026-10-24T22:03:45.202856Z mtime=2026-10-24T22:03:45.202856Z atime=2026-10-24T22:03:45.198856Z
+
+Database files in /data/user/0/com.smartfin.snapshot5b2.tests/no_backup:
+  androidx.work.workdb                      106496b ctime=2026-10-24T22:07:35.034856Z mtime=2026-10-24T22:07:35.034856Z atime=2026-10-24T22:03:44.762856Z
+  androidx.work.workdb-shm                   32768b ctime=2026-10-24T22:08:05.442856Z mtime=2026-10-24T22:08:05.442856Z atime=2026-10-24T22:03:44.774856Z
+  androidx.work.workdb-wal                  420272b ctime=2026-10-24T22:08:05.750856Z mtime=2026-10-24T22:08:05.750856Z atime=2026-10-24T22:03:44.774856Z
+  saf-synthetic                               3452b ctime=2026-10-24T22:03:45.750856Z mtime=2026-10-24T22:03:45.750856Z atime=2026-10-24T22:03:45.746856Z
+  smartfin-backup-jobs                        3452b ctime=2026-10-24T22:08:06.698856Z mtime=2026-10-24T22:08:06.698856Z atime=2026-10-24T22:03:45.810856Z
+  smartfin-local-snapshots                    3452b ctime=2026-10-24T22:08:06.906856Z mtime=2026-10-24T22:08:06.906856Z atime=2026-10-24T22:03:45.906856Z

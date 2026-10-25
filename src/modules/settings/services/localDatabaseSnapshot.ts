@@ -53,18 +53,22 @@ export function assertCompleteCheckpoint(rows: Record<string, unknown>[]): void 
     throw new Error('Checkpoint SQLite incompleto.');
 }
 
-async function describe(database: SmartFinSQLiteDatabase, journal: string) {
+type DescribeTimings = { foreignKeyCheckMs: number; integrityCheckMs: number; metadataMs: number };
+
+async function describe(database: SmartFinSQLiteDatabase, journal: string, timings: DescribeTimings) {
   const query = async (sql: string) => {
     const [result] = await database.executeSql(sql);
     return resultSetToRows(result);
   };
   if (sqliteConnectionState(database)?.owned)
     throw new Error('No se puede capturar una transacción activa.');
+  // Integrity and foreign-key checks run once, natively, on the byte-identical private
+  // copy (SHA-256) before it is accepted; the live source only supplies the metadata.
   const fk = await query('PRAGMA foreign_keys;');
-  const references = await query('PRAGMA foreign_key_check;');
-  const integrity = await query('PRAGMA integrity_check;');
-  if (fk.length !== 1 || fk[0]?.foreign_keys !== 1 || references.length ||
-      integrity.length !== 1 || integrity[0]?.integrity_check !== 'ok')
+  const stage = monotonic.now();
+  timings.foreignKeyCheckMs = 0;
+  timings.integrityCheckMs = 0;
+  if (fk.length !== 1 || fk[0]?.foreign_keys !== 1)
     throw new Error('La base de datos no supera la validación de integridad.');
   const schema = await query('SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name');
   const tables: [string, number][] = [];
@@ -76,7 +80,7 @@ async function describe(database: SmartFinSQLiteDatabase, journal: string) {
   }
   const revision = await query('SELECT revision FROM financial_data_revision WHERE id=1;');
   if (revision.length !== 1) throw new Error('Revisión SQLite ausente.');
-  return {
+  const described = {
     schema: schema.map(row => [row.type, row.name, row.tbl_name, row.sql]),
     tables,
     revision: safeInteger(revision[0]?.revision),
@@ -84,6 +88,8 @@ async function describe(database: SmartFinSQLiteDatabase, journal: string) {
     schemaVersion: safeInteger((await query('PRAGMA schema_version;'))[0]?.schema_version),
     journal,
   };
+  timings.metadataMs = monotonic.now() - stage;
+  return described;
 }
 
 function parseSnapshot(json: string): LocalDatabaseSnapshot {
@@ -125,7 +131,8 @@ export async function captureLocalDatabaseSnapshot(backupJobId?: string) {
     }
     const checkpointMs = monotonic.now() - checkpointStart;
     const verificationStart = monotonic.now();
-    const expected = await describe(owned, journal);
+    const sourceDescribe: DescribeTimings = { foreignKeyCheckMs: 0, integrityCheckMs: 0, metadataMs: 0 };
+    const expected = await describe(owned, journal, sourceDescribe);
     const sourceVerificationMs = monotonic.now() - verificationStart;
     const closeStart = monotonic.now();
     let closeMs = 0;
@@ -156,6 +163,7 @@ export async function captureLocalDatabaseSnapshot(backupJobId?: string) {
         permissionWaitMs: acquired - requested,
         checkpointMs,
         sourceVerificationMs,
+        sourceDescribe,
         closeMs,
         reopenMs,
         totalMs: monotonic.now() - requested,

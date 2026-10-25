@@ -46,7 +46,7 @@ INFO         | GPU #1
 INFO         | Graphics Adapter Vendor Google (NVIDIA Corporation)
 INFO         | Graphics Adapter Android Emulator OpenGL ES Translator (NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2)
 INFO         | Graphics API Version OpenGL ES 3.0 (4.5.0 NVIDIA 616.92)
-INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_OVR_multiview2 GL_EXT_multiview_texture_multisample GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 GL_EXT_texture_buffer 
+INFO         | Graphics API Extensions GL_OES_EGL_sync GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_depth24 GL_OES_depth32 GL_OES_element_index_uint GL_OES_texture_float GL_OES_texture_float_linear GL_OES_compressed_paletted_texture GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth_texture GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_packed_depth_stencil GL_OES_vertex_half_float GL_OES_texture_npot GL_OES_rgb8_rgba8 GL_OVR_multiview2 GL_EXT_multiview_texture_multisample GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_texture_format_BGRA8888 GL_APPLE_texture_format_BGRA8888 GL_EXT_texture_buffer
 INFO         | Graphics Device Extensions N/A
 INFO         | Verified boot params were not found.
 INFO         | Userspace boot properties:
@@ -69,3 +69,42 @@ INFO         |   qemu.skin=1080x1920
 INFO         |   qemu.vsync=60
 WHPX on Windows 10.0.26300 detected.
 Windows Hypervisor Platform accelerator is operational
+INFO         | Monitoring duration of emulator setup.
+WARNING      | The emulator now requires a signed jwt token for gRPC access! Use the -grpc flag if you really want an open unprotected grpc port
+INFO         | Using security allow list from: C:\Users\nesto\AppData\Local\Android\Sdk\emulator\lib\emulator_access.json
+INFO         | The active JSON Web Key Sets can be found here: C:\Users\nesto\AppData\Local\Temp\avd\running\36184\jwks\34639814-6bb1-4b8d-9785-6bab198d2c94\active.jwk
+INFO         | Scanning C:\Users\nesto\AppData\Local\Temp\avd\running\36184\jwks\34639814-6bb1-4b8d-9785-6bab198d2c94 for jwk keys.
+INFO         | Started GRPC server at 127.0.0.1:8554, security: Local, auth: +token
+INFO         | Advertising in: C:\Users\nesto\AppData\Local\Temp\avd\running\pid_36184.ini
+INFO         | Setting display: 0 configuration to: 1080x1920, dpi: 420x420
+INFO         | setDisplayActiveConfig: id:0, 1080x1920
+INFO         | Checking system compatibility:
+INFO         |   Checking: hasCompatibleHypervisor
+INFO         |      Ok: Hypervisor compatibility to run avd: `SmartFin_Atomicity_API24` are met
+INFO         |   Checking: hasSufficientSystem
+INFO         |      Ok: System requirements to run avd: `SmartFin_Atomicity_API24` are met
+INFO         |   Checking: hasSufficientHwGpu
+INFO         |      Ok: Hardware GPU requirements to run avd: `SmartFin_Atomicity_API24` are passed
+INFO         |   Checking: hasSufficientDiskSpace
+INFO         |      Ok: Disk space requirements to run avd: `SmartFin_Atomicity_API24` are met
+INFO         | emulatorSetupEnvironment: Environment scene is not required
+INFO         | GPU Vendor=[Google (NVIDIA Corporation)]
+INFO         | GPU Renderer=[Android Emulator OpenGL ES Translator (NVIDIA GeForce RTX 4050 Laptop GPU/PCIe/SSE2)]
+INFO         | GPU Version=[OpenGL ES 3.0 (4.5.0 NVIDIA 616.92)]
+USER_INFO    | Emulator is performing a full startup. This may take upto two minutes, or more.
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_rgbcSensorValueWidget_valueChanged() (:0, )
+INFO         | Warning: QMetaObject::connectSlotsByName: No matching signal for on_posture_valueChanged(int) (:0, )
+INFO         | TouchpadHolder: registering via hw_xr_led agent for instance=000001E04600EFF0
+INFO         | Warning: QObject::connect: Cannot queue arguments of type 'std::vector<android::emulation::control::SnapshotInfo>'
+(Make sure 'std::vector<android::emulation::control::SnapshotInfo>' is registered using qRegisterMetaType().) (:0, )
+INFO         | AVD supportsNativeGLES=1, supportsGuestAngle=0
+INFO         | Platform does not support Guest Angle
+INFO         | Created extended window in 357.864ms
+INFO         | Critical: UpdateLayeredWindowIndirect failed for ptDst=(194, 163), size=(375x26), dirty=(375x26 0, 0) (Uno de los dispositivos conectados al sistema no funciona.) (:0, )
+INFO         | Wait for emulator (pid 36184) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+WARNING      | Not saving state: RAM not mapped as shared
+INFO         | Saving snapshot 'default_boot' using 6 ms
+INFO         | Wait for emulator (pid 36184) 20 seconds to shutdown gracefully before kill;you can set environment variable ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL(in seconds) to change the default value (20 seconds)
+
+INFO         | removeAll

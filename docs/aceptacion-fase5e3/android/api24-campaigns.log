@@ -1,0 +1,503 @@
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-dashboard-precision cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1120
+TotalTime: 1120
+WaitTime: 1133
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 5.7 MB/s (34571 bytes in 0.006s)
+phase5e3-dashboard-precision failed: Synthetic campaign failed: Error: Driver error: {"message":"too many SQL variables (code 1): , while compiling: INSERT INTO transactions(id,amount,currency,description,date,account_id,type,direction,status,created_at,updated_at) VALUES\n            (?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?),(?,?,'COP','Synthetic','2026-10-24','bank',?,?,?,?,?)","code":0}
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-dashboard-selectivity cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1206
+TotalTime: 1206
+WaitTime: 1214
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 13.3 MB/s (110322 bytes in 0.008s)
+Passed 7 cases in phase5e3-dashboard-selectivity on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-civil-grouped-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 3815
+TotalTime: 3815
+WaitTime: 4062
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 13.4 MB/s (246003 bytes in 0.018s)
+Passed 20 cases in phase5e3-history-civil-grouped-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-civil-reverse-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1287
+TotalTime: 1287
+WaitTime: 1296
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 22.2 MB/s (246009 bytes in 0.011s)
+Passed 20 cases in phase5e3-history-civil-reverse-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-civil-scrambled-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 963
+TotalTime: 963
+WaitTime: 970
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 40.8 MB/s (246038 bytes in 0.006s)
+Passed 20 cases in phase5e3-history-civil-scrambled-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-civil-constant-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 943
+TotalTime: 943
+WaitTime: 955
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 28.1 MB/s (246022 bytes in 0.008s)
+Passed 20 cases in phase5e3-history-civil-constant-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-civil-mixedFormat-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1076
+TotalTime: 1076
+WaitTime: 1086
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 43.9 MB/s (246077 bytes in 0.005s)
+Passed 20 cases in phase5e3-history-civil-mixedFormat-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyDay-grouped-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1166
+TotalTime: 1166
+WaitTime: 1178
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 24.7 MB/s (246646 bytes in 0.010s)
+Passed 20 cases in phase5e3-history-legacyDay-grouped-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyDay-reverse-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1073
+TotalTime: 1073
+WaitTime: 1081
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 30.5 MB/s (246652 bytes in 0.008s)
+Passed 20 cases in phase5e3-history-legacyDay-reverse-1000 on emulator-5554.
+Skip history-legacyDay-scrambled-1000 (result present)
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyDay-constant-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 841
+TotalTime: 841
+WaitTime: 849
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 24.5 MB/s (246659 bytes in 0.010s)
+Passed 20 cases in phase5e3-history-legacyDay-constant-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyDay-mixedFormat-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1120
+TotalTime: 1120
+WaitTime: 1130
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 33.6 MB/s (246741 bytes in 0.007s)
+Passed 20 cases in phase5e3-history-legacyDay-mixedFormat-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyTied-grouped-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1126
+TotalTime: 1126
+WaitTime: 1134
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 25.0 MB/s (249627 bytes in 0.010s)
+Passed 20 cases in phase5e3-history-legacyTied-grouped-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyTied-reverse-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1062
+TotalTime: 1062
+WaitTime: 1070
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 32.0 MB/s (249656 bytes in 0.007s)
+Passed 20 cases in phase5e3-history-legacyTied-reverse-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyTied-scrambled-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1097
+TotalTime: 1097
+WaitTime: 1104
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 55.8 MB/s (249690 bytes in 0.004s)
+Passed 20 cases in phase5e3-history-legacyTied-scrambled-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyTied-constant-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 897
+TotalTime: 897
+WaitTime: 903
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 32.2 MB/s (249662 bytes in 0.007s)
+Passed 20 cases in phase5e3-history-legacyTied-constant-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyTied-mixedFormat-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1282
+TotalTime: 1282
+WaitTime: 1295
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 31.9 MB/s (251158 bytes in 0.008s)
+Passed 20 cases in phase5e3-history-legacyTied-mixedFormat-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithCivil-grouped-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 942
+TotalTime: 942
+WaitTime: 950
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 30.1 MB/s (143011 bytes in 0.005s)
+Passed 19 cases in phase5e3-history-legacyWithCivil-grouped-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithCivil-reverse-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1129
+TotalTime: 1129
+WaitTime: 1138
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 14.1 MB/s (143010 bytes in 0.010s)
+Passed 19 cases in phase5e3-history-legacyWithCivil-reverse-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithCivil-scrambled-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1106
+TotalTime: 1106
+WaitTime: 1114
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 32.2 MB/s (143052 bytes in 0.004s)
+Passed 19 cases in phase5e3-history-legacyWithCivil-scrambled-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithCivil-constant-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 978
+TotalTime: 978
+WaitTime: 983
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 31.0 MB/s (143028 bytes in 0.004s)
+Passed 19 cases in phase5e3-history-legacyWithCivil-constant-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithCivil-mixedFormat-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 907
+TotalTime: 907
+WaitTime: 913
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 25.6 MB/s (143088 bytes in 0.005s)
+Passed 19 cases in phase5e3-history-legacyWithCivil-mixedFormat-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-mixed-grouped-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1080
+TotalTime: 1080
+WaitTime: 1087
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 36.5 MB/s (260393 bytes in 0.007s)
+Passed 20 cases in phase5e3-history-mixed-grouped-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-mixed-reverse-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1076
+TotalTime: 1076
+WaitTime: 1084
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 24.0 MB/s (260391 bytes in 0.010s)
+Passed 20 cases in phase5e3-history-mixed-reverse-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-mixed-scrambled-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1117
+TotalTime: 1117
+WaitTime: 1127
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 24.0 MB/s (260423 bytes in 0.010s)
+Passed 20 cases in phase5e3-history-mixed-scrambled-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-mixed-constant-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 830
+TotalTime: 830
+WaitTime: 841
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 32.6 MB/s (260413 bytes in 0.008s)
+Passed 20 cases in phase5e3-history-mixed-constant-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-mixed-mixedFormat-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1038
+TotalTime: 1038
+WaitTime: 1042
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 40.9 MB/s (260469 bytes in 0.006s)
+Passed 20 cases in phase5e3-history-mixed-mixedFormat-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-canonicalUtc-grouped-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1084
+TotalTime: 1084
+WaitTime: 1092
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 14.3 MB/s (138777 bytes in 0.009s)
+Passed 19 cases in phase5e3-history-canonicalUtc-grouped-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-canonicalUtc-reverse-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1103
+TotalTime: 1103
+WaitTime: 1112
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 21.0 MB/s (138785 bytes in 0.006s)
+Passed 19 cases in phase5e3-history-canonicalUtc-reverse-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-canonicalUtc-scrambled-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 978
+TotalTime: 978
+WaitTime: 985
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 28.4 MB/s (138825 bytes in 0.005s)
+Passed 19 cases in phase5e3-history-canonicalUtc-scrambled-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-canonicalUtc-constant-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1110
+TotalTime: 1110
+WaitTime: 1120
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 15.7 MB/s (138799 bytes in 0.008s)
+Passed 19 cases in phase5e3-history-canonicalUtc-constant-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-canonicalUtc-mixedFormat-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1066
+TotalTime: 1066
+WaitTime: 1072
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 37.5 MB/s (138856 bytes in 0.004s)
+Passed 19 cases in phase5e3-history-canonicalUtc-mixedFormat-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithOffset-grouped-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 820
+TotalTime: 820
+WaitTime: 828
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 40.0 MB/s (142490 bytes in 0.003s)
+Passed 19 cases in phase5e3-history-legacyWithOffset-grouped-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithOffset-reverse-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1044
+TotalTime: 1044
+WaitTime: 1055
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 31.5 MB/s (142490 bytes in 0.004s)
+Passed 19 cases in phase5e3-history-legacyWithOffset-reverse-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithOffset-scrambled-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 872
+TotalTime: 872
+WaitTime: 880
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 26.1 MB/s (142517 bytes in 0.005s)
+Passed 19 cases in phase5e3-history-legacyWithOffset-scrambled-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithOffset-constant-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 994
+TotalTime: 994
+WaitTime: 1006
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 20.1 MB/s (142503 bytes in 0.007s)
+Passed 19 cases in phase5e3-history-legacyWithOffset-constant-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithOffset-mixedFormat-1000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 825
+TotalTime: 825
+WaitTime: 832
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 44.3 MB/s (142562 bytes in 0.003s)
+Passed 19 cases in phase5e3-history-legacyWithOffset-mixedFormat-1000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-civil-scrambled-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1039
+TotalTime: 1039
+WaitTime: 1048
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 51.3 MB/s (1247867 bytes in 0.023s)
+Passed 20 cases in phase5e3-history-civil-scrambled-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-civil-constant-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1168
+TotalTime: 1168
+WaitTime: 1177
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 51.7 MB/s (1253956 bytes in 0.023s)
+Passed 20 cases in phase5e3-history-civil-constant-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyDay-scrambled-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 915
+TotalTime: 915
+WaitTime: 929
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 71.2 MB/s (1260054 bytes in 0.017s)
+Passed 20 cases in phase5e3-history-legacyDay-scrambled-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyDay-constant-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 894
+TotalTime: 894
+WaitTime: 903
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 66.7 MB/s (1260029 bytes in 0.018s)
+Passed 20 cases in phase5e3-history-legacyDay-constant-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyTied-scrambled-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1088
+TotalTime: 1088
+WaitTime: 1096
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 59.6 MB/s (1282624 bytes in 0.021s)
+Passed 20 cases in phase5e3-history-legacyTied-scrambled-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyTied-constant-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 895
+TotalTime: 895
+WaitTime: 937
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 52.5 MB/s (1282746 bytes in 0.023s)
+Passed 20 cases in phase5e3-history-legacyTied-constant-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithCivil-scrambled-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1037
+TotalTime: 1037
+WaitTime: 1044
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 39.3 MB/s (363522 bytes in 0.009s)
+Passed 19 cases in phase5e3-history-legacyWithCivil-scrambled-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithCivil-constant-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1096
+TotalTime: 1096
+WaitTime: 1104
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 54.9 MB/s (363504 bytes in 0.006s)
+Passed 19 cases in phase5e3-history-legacyWithCivil-constant-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-mixed-scrambled-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1080
+TotalTime: 1080
+WaitTime: 1086
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 49.6 MB/s (1286381 bytes in 0.025s)
+Passed 20 cases in phase5e3-history-mixed-scrambled-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-mixed-constant-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1060
+TotalTime: 1060
+WaitTime: 1067
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 63.9 MB/s (1286372 bytes in 0.019s)
+Passed 20 cases in phase5e3-history-mixed-constant-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-canonicalUtc-scrambled-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1016
+TotalTime: 1016
+WaitTime: 1026
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 70.2 MB/s (360527 bytes in 0.005s)
+Passed 19 cases in phase5e3-history-canonicalUtc-scrambled-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-canonicalUtc-constant-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1049
+TotalTime: 1049
+WaitTime: 1058
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 50.4 MB/s (360507 bytes in 0.007s)
+Passed 19 cases in phase5e3-history-canonicalUtc-constant-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithOffset-scrambled-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 828
+TotalTime: 828
+WaitTime: 832
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 43.5 MB/s (355988 bytes in 0.008s)
+Passed 19 cases in phase5e3-history-legacyWithOffset-scrambled-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithOffset-constant-10000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 889
+TotalTime: 889
+WaitTime: 894
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 34.0 MB/s (355968 bytes in 0.010s)
+Passed 19 cases in phase5e3-history-legacyWithOffset-constant-10000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-civil-scrambled-100000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 850
+TotalTime: 850
+WaitTime: 860
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 60.5 MB/s (2467079 bytes in 0.039s)
+Passed 19 cases in phase5e3-history-civil-scrambled-100000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyDay-reverse-100000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1120
+TotalTime: 1120
+WaitTime: 1129
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 68.7 MB/s (2533567 bytes in 0.035s)
+Passed 19 cases in phase5e3-history-legacyDay-reverse-100000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-canonicalUtc-constant-100000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1084
+TotalTime: 1084
+WaitTime: 1092
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 58.2 MB/s (2533794 bytes in 0.042s)
+Passed 19 cases in phase5e3-history-canonicalUtc-constant-100000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyWithCivil-scrambled-100000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1014
+TotalTime: 1014
+WaitTime: 1024
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 62.7 MB/s (2452136 bytes in 0.037s)
+Passed 19 cases in phase5e3-history-legacyWithCivil-scrambled-100000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-mixed-scrambled-100000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1104
+TotalTime: 1104
+WaitTime: 1113
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 54.8 MB/s (2508154 bytes in 0.044s)
+Passed 19 cases in phase5e3-history-mixed-scrambled-100000 on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase5e3-history-legacyTied-scrambled-100000 cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 908
+TotalTime: 908
+WaitTime: 916
+Complete

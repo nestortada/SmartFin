@@ -3,7 +3,11 @@ import { createSettingsTaskRunner, type SettingsTaskOwner } from '../modules/set
 import { backupProgressMessage } from '../modules/settings/services/backupProgressPresentation';
 import { getDriveBackupJobs, verifyDriveBackupJob, retainFailedDriveBackupJob } from '../modules/settings/services/androidDriveBackupService';
 import { withExclusiveDatabase } from '../database/databaseCoordination';
-import { recoverFinancialDeletion } from '../modules/settings/services/financialDeletionLifecycle';
+import {
+  awaitFinancialDeletionRecovery,
+  recoverFinancialDeletion,
+  type DeletionRecovery,
+} from '../modules/settings/services/financialDeletionLifecycle';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, AppState } from 'react-native';
 
@@ -47,6 +51,20 @@ import { CategoriesScreen } from '../modules/categories';
 import { SubscriptionsScreen } from '../modules/subscriptions/ui/SubscriptionsScreen';
 import type { SubscriptionCharge } from '../modules/subscriptions';
 import { CreditCardsScreen } from '../modules/creditCards/ui/CreditCardsScreen';
+
+const RECOVERY_RUNNING_MESSAGE = 'Recuperación en curso...';
+
+/** Presentation only: an in-progress recovery by another owner is not an error. */
+function presentDeletionRecovery(owner: SettingsTaskOwner, recovery: DeletionRecovery, moment: 'open' | 'foreground') {
+  if (recovery.status === 'unknown') throw new Error(moment === 'open'
+    ? 'Resultado del borrado desconocido. No repitas la eliminación; requiere verificar su comprobante.'
+    : 'Resultado del borrado desconocido. No repitas la eliminación.');
+  if (recovery.status === 'completed') owner.confirmed('Último borrado confirmado. Limpieza Android completada.');
+  else if (recovery.status === 'cleanupPending') owner.confirmed(moment === 'open'
+    ? 'Datos financieros eliminados. Limpieza de recursos Android pendiente; se reanudará al iniciar o mantener la aplicación.'
+    : 'Datos financieros eliminados. Limpieza Android pendiente.');
+  else if (recovery.status === 'running') owner.confirmed('Recuperación en curso en Android. El estado se actualizará al volver a la aplicación.');
+}
 
 type AppRoute =
   | 'dashboard'
@@ -101,15 +119,21 @@ export function AppNavigator() {
 
         const repository = createSqliteSettingsRepository(openedDatabase);
         const persistedSettings = await loadSettings(repository);
+        let recoveryRunning = false;
         await settingsTaskRunner.current!('Comprobando limpieza financiera...', async owner => {
           const recovery = await recoverFinancialDeletion();
           if (!isMounted) return;
-          if (recovery.status === 'unknown') throw new Error('Resultado del borrado desconocido. No repitas la eliminación; requiere verificar su comprobante.');
-          if (recovery.status !== 'none') owner.confirmed(recovery.status === 'completed'
-            ? 'Último borrado confirmado. Limpieza Android completada.'
-            : 'Datos financieros eliminados. Limpieza de recursos Android pendiente; se reanudará al iniciar o mantener la aplicación.');
+          recoveryRunning = recovery.status === 'running';
+          presentDeletionRecovery(owner, recovery, 'open');
         });
-        
+        // Another Android owner is recovering: open now and follow its result.
+        if (recoveryRunning && isMounted) {
+          void settingsTaskRunner.current!(RECOVERY_RUNNING_MESSAGE, async owner => {
+            const recovery = await awaitFinancialDeletionRecovery({ isCurrent: () => isMounted });
+            if (isMounted) presentDeletionRecovery(owner, recovery, 'open');
+          });
+        }
+
         setDatabase(openedDatabase);
         setSettingsRepository(repository);
         setSettings(persistedSettings);
@@ -373,14 +397,15 @@ export function AppNavigator() {
   }, [database, dashboardRefreshKey, refreshDriveBackupStatus, route]);
 
   useEffect(() => {
+    let listening = true;
     const subscription = AppState.addEventListener('change', nextState => {
       if (nextState === 'active' && database) {
         void runSettingsTask('Comprobando limpieza financiera...', async owner => {
-          const recovery = await recoverFinancialDeletion();
-          if (recovery.status === 'unknown') throw new Error('Resultado del borrado desconocido. No repitas la eliminación.');
-          if (recovery.status !== 'none') owner.confirmed(recovery.status === 'completed'
-            ? 'Último borrado confirmado. Limpieza Android completada.'
-            : 'Datos financieros eliminados. Limpieza Android pendiente.');
+          const recovery = await awaitFinancialDeletionRecovery({
+            isCurrent: () => listening,
+            onRunning: () => owner.report(RECOVERY_RUNNING_MESSAGE),
+          });
+          if (listening) presentDeletionRecovery(owner, recovery, 'foreground');
         });
         void refreshDriveBackupStatus(database).catch(() => {
           // The selected Drive provider can be unavailable while offline.
@@ -388,7 +413,7 @@ export function AppNavigator() {
       }
     });
 
-    return () => subscription.remove();
+    return () => { listening = false; subscription.remove(); };
   }, [database, refreshDriveBackupStatus, runSettingsTask]);
 
   useEffect(() => {

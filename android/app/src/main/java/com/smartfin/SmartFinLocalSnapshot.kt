@@ -30,12 +30,23 @@ object SmartFinLocalSnapshot {
   private fun scalar(db: SQLiteDatabase, sql: String): String =
     db.rawQuery(sql, null).use { check(it.moveToFirst()); it.getString(0) }
 
-  fun describe(db: SQLiteDatabase): JSONObject {
+  /**
+   * `timings`, when given, only receives durations; it never changes validation.
+   * `checkIntegrity=false` is used only for the live source during capture: the private
+   * copy is byte-identical (SHA-256) under the same exclusive permit and gets the full
+   * foreign-key and integrity checks before it is accepted.
+   */
+  fun describe(db: SQLiteDatabase, timings: JSONObject? = null, checkIntegrity: Boolean = true): JSONObject {
     check(!db.inTransaction()) { "Active SQLite transaction" }
     check(scalar(db, "PRAGMA foreign_keys") == "1") { "Foreign keys disabled" }
-    db.rawQuery("PRAGMA foreign_key_check", null).use { check(!it.moveToFirst()) { "Foreign key check failed" } }
-    db.rawQuery("PRAGMA integrity_check", null).use {
-      check(it.moveToFirst() && it.getString(0) == "ok" && !it.moveToNext()) { "SQLite integrity check failed" }
+    var stage = System.nanoTime()
+    if (checkIntegrity) {
+      db.rawQuery("PRAGMA foreign_key_check", null).use { check(!it.moveToFirst()) { "Foreign key check failed" } }
+      timings?.put("foreignKeyCheckMs", elapsed(stage)); stage = System.nanoTime()
+      db.rawQuery("PRAGMA integrity_check", null).use {
+        check(it.moveToFirst() && it.getString(0) == "ok" && !it.moveToNext()) { "SQLite integrity check failed" }
+      }
+      timings?.put("integrityCheckMs", elapsed(stage)); stage = System.nanoTime()
     }
     val schema = JSONArray()
     val tables = JSONArray()
@@ -56,6 +67,7 @@ object SmartFinLocalSnapshot {
     check(names.containsAll(requiredTables)) { "Expected SmartFin tables missing" }
     val revision = scalar(db, "SELECT revision FROM financial_data_revision WHERE id=1").toLong()
     check(revision in 0..9_007_199_254_740_991L)
+    timings?.put("metadataMs", elapsed(stage))
     return JSONObject().put("schema", schema).put("tables", tables)
       .put("revision", revision).put("userVersion", scalar(db, "PRAGMA user_version").toLong())
       .put("schemaVersion", scalar(db, "PRAGMA schema_version").toLong())
@@ -81,6 +93,8 @@ object SmartFinLocalSnapshot {
       val destination = File(directory, "snapshot.db")
       try {
         val sourceValidationStart = System.nanoTime()
+        val sourceDescribe = JSONObject()
+        val snapshotDescribe = JSONObject()
         var journal = ""
         // Driver checkpoint and close have already been acknowledged. Use RO:
         // Android RW open may reset the journal mode from platform defaults.
@@ -93,7 +107,7 @@ object SmartFinLocalSnapshot {
           // Rollback modes are connection-local and a new RO connection may
           // report DELETE after PERSIST/TRUNCATE close. WAL persists in header.
           check((journal == "wal") == (expected.getString("journal") == "wal")) { "Journal family changed during capture" }
-          verify(describe(db), expected)
+          verify(describe(db, sourceDescribe, checkIntegrity = false), expected)
         }
         val sourceValidationMs = elapsed(sourceValidationStart)
         SmartFinDatabaseCoordinator.assertParticipant(permit)
@@ -109,7 +123,7 @@ object SmartFinLocalSnapshot {
         val validationStart = System.nanoTime()
         usingDatabase(SQLiteDatabase.openDatabase(destination.path, null, SQLiteDatabase.OPEN_READONLY)) { snapshot ->
           snapshot.execSQL("PRAGMA foreign_keys=ON")
-          verify(describe(snapshot), expected)
+          verify(describe(snapshot, snapshotDescribe), expected)
         }
         val snapshotVerificationMs = elapsed(validationStart)
         val hashStart = System.nanoTime()
@@ -129,6 +143,7 @@ object SmartFinLocalSnapshot {
           .put("copyMs", copyMs).put("validationAndHashMs", elapsed(validationStart))
           .put("snapshotVerificationMs", snapshotVerificationMs).put("hashMs", elapsed(hashStart))
           .put("nativeTotalMs", elapsed(started))
+          .put("sourceDescribe", sourceDescribe).put("snapshotDescribe", snapshotDescribe)
         // A capture receipt is private evidence, never an external publication or a
         // financial commit receipt. Recovery must still verify the bytes and metadata.
         val receipt = AtomicFile(File(directory, "receipt.json"))

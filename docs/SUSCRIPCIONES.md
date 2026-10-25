@@ -163,6 +163,19 @@ La detención forzada suspende ejecución hasta reabrir la app. Permiso o canal
 desactivado impiden mostrar avisos; se conserva la intención. No se garantiza una
 hora exacta ni ejecución cuando el sistema impide ejecutar la aplicación.
 
+La fase 5D conserva la identidad y el reintento de intenciones elegibles. El receptor
+adquiere exclusión nativa entre validación y acuse, cierra el cursor antes de publicar
+y no mantiene una transacción SQLite durante NotificationManager. Comprueba época,
+admisión/limpieza de 5C, revisión, estados, vencimiento civil y fire_at. Confirma
+delivered mediante UPDATE condicional posterior. Ese UPDATE incrementa la revisión
+existente por trigger, sin crear movimientos ni cambiar importes financieros.
+
+Publicar y confirmar SQLite siguen sin ser atómicos: un fallo después de notify
+puede causar otro intento. Se solicita setOnlyAlertOnce para actualizar la misma
+notificación activa; no garantiza una única alerta tras descartarla o reiniciar.
+La ausencia de una notificación activa no demuestra no entrega. No se introduce
+una reclamación previa ni estados durables nuevos. [Pruebas y límites de 5D](atomicidad-financiera-fase5d.md).
+
 ## Validación
 
 Las pruebas de dominio usan SQLite real con `node:sqlite` (Node >=22.13; verificado

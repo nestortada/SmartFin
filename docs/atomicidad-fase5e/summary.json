@@ -1,0 +1,537 @@
+{
+  "verdict": "bloqueado",
+  "complete": false,
+  "nativeApi24Campaigns": 31,
+  "productionDefects": [
+    "5E-001"
+  ],
+  "nativeApi24Controls": 249,
+  "campaigns": [
+    {
+      "name": "contender-payment",
+      "campaign": "phase5d-matrix",
+      "group": "supplemental-real-financial-contender",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 27,
+      "apkSha256": "01227069c16a1486338bb9ab3c6d127386f82f85a187e6073d236bde2d33031b"
+    },
+    {
+      "name": "integrated-final2",
+      "campaign": "phase5e-integrated",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 9,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "performance-final",
+      "campaign": "phase5e-performance",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [
+        {
+          "case": "integrated-performance-1000",
+          "status": "failed",
+          "defect": "5E-001",
+          "message": "no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;"
+        },
+        {
+          "case": "integrated-performance-10000",
+          "status": "failed",
+          "defect": "5E-001",
+          "message": "no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;"
+        },
+        {
+          "case": "integrated-performance-100000",
+          "status": "failed",
+          "defect": "5E-001",
+          "message": "no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;"
+        }
+      ],
+      "fullAcceptancePassed": false,
+      "controls": 6,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "reboot-stage",
+      "campaign": "phase5d-reboot-stage",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "reboot-verify",
+      "campaign": "phase5d-reboot-verify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-cleanup-faults",
+      "campaign": "phase5c-cleanup-matrix",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 11,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-close-lost",
+      "campaign": "close-lost",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 1,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-core",
+      "campaign": "core",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 24,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-deletion-confirmed-restart",
+      "campaign": "phase5c-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-deletion-lost-after",
+      "campaign": "phase5c-lost-after",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-deletion-lost-before",
+      "campaign": "phase5c-lost-before",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-deletion-rollback",
+      "campaign": "phase5c-matrix",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 78,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-deletion-unknown-restart",
+      "campaign": "phase5c-unknown-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-denied",
+      "campaign": "phase5d-permission",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-kill-afterAck",
+      "campaign": "phase5d-kill-afterAck",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 1,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-kill-afterNotify",
+      "campaign": "phase5d-kill-afterNotify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 1,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-kill-beforeNotify",
+      "campaign": "phase5d-kill-beforeNotify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 1,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-notification-epoch",
+      "campaign": "phase5d-epoch",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-notifications",
+      "campaign": "phase5d-matrix",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 27,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-open-lost",
+      "campaign": "open-lost",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 1,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-process-restart",
+      "campaign": "phase5d-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-process-stage",
+      "campaign": "phase5d-stage-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-publication",
+      "campaign": "publication",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 28,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-publication-after-verify",
+      "campaign": "publication-after-verify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 1,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-publication-restart-verify",
+      "campaign": "publication-restart-verify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 1,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-restart-afterAck",
+      "campaign": "phase5d-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-restart-afterNotify",
+      "campaign": "phase5d-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-restart-beforeNotify",
+      "campaign": "phase5d-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-restart-verify",
+      "campaign": "restart-verify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 1,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "regression-worker-headless",
+      "campaign": "phase5d-recovery",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 2,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    },
+    {
+      "name": "restart-final2",
+      "campaign": "phase5e-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "failedMeasurements": [],
+      "fullAcceptancePassed": true,
+      "controls": 3,
+      "apkSha256": "ce4a0aae534fca8c91d3aac6676dae734b7932954f5aceeeb82ddf0d426aa589"
+    }
+  ],
+  "nodeMatrices": {
+    "deletion": {
+      "writes": 38,
+      "positions": 76
+    },
+    "linked-transfer": {
+      "writes": 11,
+      "positions": 22
+    },
+    "linked-cardPayment": {
+      "writes": 10,
+      "positions": 20
+    },
+    "linked-ai": {
+      "writes": 13,
+      "positions": 26
+    }
+  },
+  "nodeUnknownResults": {
+    "unknown-BEGIN IMMEDIATE-before": {
+      "status": "unknown",
+      "calls": 0,
+      "bank": 993700
+    },
+    "unknown-BEGIN IMMEDIATE-after": {
+      "status": "unknown",
+      "calls": 0,
+      "bank": 993700
+    },
+    "unknown-COMMIT-before": {
+      "status": "unknown",
+      "calls": 1,
+      "bank": 993700
+    },
+    "unknown-COMMIT-after": {
+      "status": "unknown",
+      "calls": 1,
+      "bank": 993577
+    },
+    "unknown-ROLLBACK-before": {
+      "status": "unknown",
+      "calls": 1,
+      "bank": 993700
+    },
+    "unknown-ROLLBACK-after": {
+      "status": "unknown",
+      "calls": 1,
+      "bank": 993700
+    }
+  },
+  "financialFinalMetrics": {
+    "available": 1148700,
+    "wealth": 1088700,
+    "debt": 60000,
+    "income": 200000,
+    "expense": 151300
+  },
+  "samples": [
+    {
+      "count": 1000,
+      "times": {
+        "dashboardMs": 17.431799999903888,
+        "historyFailedAttemptMs": 2.925499999895692,
+        "paymentAndReconciliationMs": 36.10160000016913,
+        "subscriptionMaintenanceMs": 48.06000000005588,
+        "captureMs": 279.06689999997616,
+        "concurrentAdmissionWaitMs": 281.13329999987036,
+        "concurrentFinancialWaitMs": 315.22200000006706,
+        "publicationMs": 314.9873000001535,
+        "deletionAndCleanupMs": 252.62069999985397
+      },
+      "historyOutcome": {
+        "status": "failed",
+        "defect": "5E-001",
+        "message": "no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 0.385600000154227,
+        "checkpointMs": 0.007400000002235174,
+        "sourceVerificationMs": 41.729199999943376,
+        "closeMs": 0.8574000000953674,
+        "reopenMs": 166.05649999994785,
+        "totalMs": 278.92109999991953
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 24.2923,
+        "csvExportMs": 31.9418,
+        "componentHashMs": 5.8827,
+        "safWriteMs": 17.7602,
+        "safReadbackMs": 12.9497,
+        "publicationTotalMs": 294.5876
+      },
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": true,
+        "publicationWithinProvisional": true
+      },
+      "datasetCounts": 1002
+    },
+    {
+      "count": 10000,
+      "times": {
+        "dashboardMs": 114.89510000031441,
+        "historyFailedAttemptMs": 4.884700000286102,
+        "paymentAndReconciliationMs": 43.139599999878556,
+        "subscriptionMaintenanceMs": 46.600600000005215,
+        "captureMs": 416.41479999991134,
+        "concurrentAdmissionWaitMs": 417.6637999997474,
+        "concurrentFinancialWaitMs": 469.3432999998331,
+        "publicationMs": 490.35660000005737,
+        "deletionAndCleanupMs": 265.18790000025183
+      },
+      "historyOutcome": {
+        "status": "failed",
+        "defect": "5E-001",
+        "message": "no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 0.4795999997295439,
+        "checkpointMs": 0.007499999832361937,
+        "sourceVerificationMs": 63.95330000016838,
+        "closeMs": 0.9939999999478459,
+        "reopenMs": 189.76650000037625,
+        "totalMs": 416.26129999989644
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 84.0528,
+        "csvExportMs": 181.6735,
+        "componentHashMs": 15.5273,
+        "safWriteMs": 26.052700000000005,
+        "safReadbackMs": 38.5469,
+        "publicationTotalMs": 481.5491
+      },
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": true,
+        "publicationWithinProvisional": true
+      },
+      "datasetCounts": 10002
+    },
+    {
+      "count": 100000,
+      "times": {
+        "dashboardMs": 4512.6042999997735,
+        "historyFailedAttemptMs": 7.544899999629706,
+        "paymentAndReconciliationMs": 162.87009999994189,
+        "subscriptionMaintenanceMs": 66.82099999999627,
+        "captureMs": 2037.2996000000276,
+        "concurrentAdmissionWaitMs": 2038.2420999999158,
+        "concurrentFinancialWaitMs": 2077.7623000000603,
+        "publicationMs": 5474.07349999994,
+        "deletionAndCleanupMs": 1685.215199999977
+      },
+      "historyOutcome": {
+        "status": "failed",
+        "defect": "5E-001",
+        "message": "no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 2.112900000065565,
+        "checkpointMs": 0.006399999838322401,
+        "sourceVerificationMs": 437.33159999968484,
+        "closeMs": 3.670099999755621,
+        "reopenMs": 537.1130999997258,
+        "totalMs": 2037.2031000000425
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 443.4031,
+        "csvExportMs": 3930.3053,
+        "componentHashMs": 140.3541,
+        "safWriteMs": 512.4532,
+        "safReadbackMs": 272.8509,
+        "publicationTotalMs": 5464.6055
+      },
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": true,
+        "publicationWithinProvisional": true
+      },
+      "datasetCounts": 100002
+    }
+  ],
+  "pending": [
+    "5E-001: API 24 paginated history expression-index hint fails with no query solution; production fix not applied",
+    "External weekly analyst integration and authorized external epoch context",
+    "Production AppNavigator foreground recovery end-to-end in isolated UI not exercised",
+    "API 24 automatic alarm repair was not observed before explicit harness recovery; no automatic success claimed"
+  ],
+  "errors": [],
+  "rebootObservation": {
+    "automaticAlarm": false,
+    "explicitRecoveryMs": 368.4493000000002
+  },
+  "initialProtectedFiles": 476,
+  "changedInitialFiles": [],
+  "sourceCodeEffect": "Acceptance harness and documentation only; no production changes",
+  "backupPublicationUiEnabled": false,
+  "distributionAuthorized": false,
+  "externalAnalystUpdated": false,
+  "scopeNote": "API 24 inventory; subsequent HONOR results are tracked in summary-api35.json and summary-integrated.json. Historical phase evidence is context, not counted as a new 5E campaign. Provisional latency targets are not universal guarantees."
+}

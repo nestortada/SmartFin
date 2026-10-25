@@ -1,0 +1,8 @@
+ __tests__/transactionHistoryRefinement.test.ts     |   3 +-
+ .../java/com/smartfin/SmartFinFinancialDeletion.kt |   4 +-
+ .../SmartFinSubscriptionReminderReceiver.kt        |  95 +++++++----
+ docs/ARQUITECTURA.md                               |   6 +
+ docs/SUSCRIPCIONES.md                              |  13 ++
+ docs/atomicidad-fase5d/emulator.log                |  41 ++++-
+ .../repositories/sqliteTransactionHistory.ts       | 180 ++++++++++++++-------
+ 7 files changed, 249 insertions(+), 93 deletions(-)

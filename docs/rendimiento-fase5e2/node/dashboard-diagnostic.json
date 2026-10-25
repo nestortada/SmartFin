@@ -1,0 +1,3635 @@
+{
+  "runtime": "v24.16.0",
+  "date": "2026-10-24T12:00:00.000Z",
+  "results": [
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 8.63299999999981,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09600000000000364,
+          "awaitMs": 2.06899999999996
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 1.9239999999999782,
+          "awaitMs": 1.9577999999996791
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.30000000000297,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 3.809900000000198,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0969000000000051,
+          "awaitMs": 1.5412000000001171
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 900,
+          "engineMs": 1.1446000000000822,
+          "awaitMs": 1.4119000000000597
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.14469999999982974,
+          "awaitMs": 0.20949999999993452
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.6058000000002721,
+          "awaitMs": 0.6398000000003776
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.11659999999983484,
+          "awaitMs": 0.12460000000010041
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 2.7617999999997664,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.07689999999956854,
+          "awaitMs": 1.2912999999998647
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 900,
+          "engineMs": 0.997899999999845,
+          "awaitMs": 1.185699999999997
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.10320000000001528,
+          "awaitMs": 0.15889999999990323
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.28490000000010696,
+          "awaitMs": 0.29759999999987485
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03389999999990323,
+          "awaitMs": 0.040899999999965075
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 8.627199999999903,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.056599999999889405,
+          "awaitMs": 2.16399999999976
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.0698999999999614,
+          "awaitMs": 2.0990999999999076
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.30000000000297,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 9.596700000000055,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09499999999979991,
+          "awaitMs": 2.9198999999998705
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.7648000000003776,
+          "awaitMs": 2.8134000000000015
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.30000000000297,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 2.9503999999997177,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.1054999999996653,
+          "awaitMs": 1.398899999999685
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 900,
+          "engineMs": 1.0675000000001091,
+          "awaitMs": 1.2598000000002685
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.1091999999998734,
+          "awaitMs": 0.15619999999989886
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.29950000000008004,
+          "awaitMs": 0.3119000000001506
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03600000000005821,
+          "awaitMs": 0.04110000000036962
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 3.2226000000000568,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.04849999999987631,
+          "awaitMs": 1.402900000000045
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 900,
+          "engineMs": 1.1453999999998814,
+          "awaitMs": 1.3231000000000677
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.09660000000030777,
+          "awaitMs": 0.1514999999999418
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.303599999999733,
+          "awaitMs": 0.3251000000000204
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.11360000000013315,
+          "awaitMs": 0.12490000000025248
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 9.093800000000101,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0678000000002612,
+          "awaitMs": 2.5916000000001986
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.480999999999767,
+          "awaitMs": 2.512699999999768
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.30000000000297,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 10.11409999999978,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10809999999992215,
+          "awaitMs": 2.28879999999981
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.1396999999997206,
+          "awaitMs": 2.168999999999869
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.30000000000297,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 3.198899999999867,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09920000000010987,
+          "awaitMs": 1.5509999999999309
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 900,
+          "engineMs": 1.0826999999999316,
+          "awaitMs": 1.4126999999998588
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.19830000000001746,
+          "awaitMs": 0.2968999999998232
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.31790000000000873,
+          "awaitMs": 0.33059999999977663
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03590000000031068,
+          "awaitMs": 0.04120000000011714
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "size": 1000,
+      "load": "integratedToday",
+      "exactEqual": false,
+      "differences": [
+        {
+          "key": "monthlyIncome",
+          "baseline": 258.29999999999967,
+          "current": 258.2999999999997
+        },
+        {
+          "key": "monthlySavings",
+          "baseline": -413.30000000000297,
+          "current": -413.3000000000029
+        }
+      ],
+      "order": {
+        "currentQueryOrder": 258.2999999999997,
+        "baselineQueryOrder": 258.2999999999997,
+        "rowidAsc": 258.2999999999997,
+        "rowidDesc": 258.29999999999967
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 8.615899999999783,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09360000000015134,
+          "awaitMs": 2.487300000000232
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.3375999999998385,
+          "awaitMs": 2.3777000000000044
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 1.195600000000013,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09340000000020154,
+          "awaitMs": 0.4001000000002932
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.15229999999974098,
+          "awaitMs": 0.27880000000004657
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.05819999999994252,
+          "awaitMs": 0.11029999999982465
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3370999999997366,
+          "awaitMs": 0.3505000000000109
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03870000000006257,
+          "awaitMs": 0.04370000000017171
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 0.9165000000002692,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.05050000000028376,
+          "awaitMs": 0.29899999999997817
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.12010000000009313,
+          "awaitMs": 0.22509999999965657
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.05259999999998399,
+          "awaitMs": 0.08959999999979118
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.2880000000000109,
+          "awaitMs": 0.2986000000000786
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04800000000022919,
+          "awaitMs": 0.05250000000023647
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 8.887299999999868,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.04459999999971842,
+          "awaitMs": 2.3862999999996646
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.3090000000001965,
+          "awaitMs": 2.333299999999781
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 8.869599999999991,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.11090000000012878,
+          "awaitMs": 2.579099999999926
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.4142000000001644,
+          "awaitMs": 2.4556000000002314
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 1.199200000000019,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.12179999999989377,
+          "awaitMs": 0.4982999999997446
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.1813999999999396,
+          "awaitMs": 0.34320000000025175
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.0953999999996995,
+          "awaitMs": 0.14329999999972642
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3061999999999898,
+          "awaitMs": 0.31850000000031287
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03410000000030777,
+          "awaitMs": 0.038800000000264845
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 1.0208999999999833,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.04769999999962238,
+          "awaitMs": 0.2783999999996922
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.11310000000003129,
+          "awaitMs": 0.21800000000030195
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.06490000000030705,
+          "awaitMs": 0.09619999999995343
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.4692000000000007,
+          "awaitMs": 0.48119999999971697
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03680000000031214,
+          "awaitMs": 0.04120000000011714
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 6.853599999999915,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.045499999999719876,
+          "awaitMs": 2.862499999999727
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.766200000000026,
+          "awaitMs": 2.8125
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 6.547499999999673,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.1036999999996624,
+          "awaitMs": 2.7527000000000044
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.590299999999843,
+          "awaitMs": 2.6372999999998683
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 1.0922999999997955,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.12129999999979191,
+          "awaitMs": 0.42439999999987776
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.16089999999985594,
+          "awaitMs": 0.27559999999994034
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.05929999999989377,
+          "awaitMs": 0.0988999999999578
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.31359999999995125,
+          "awaitMs": 0.32520000000022264
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.0385999999998603,
+          "awaitMs": 0.04300000000012005
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "legacySpread",
+      "exactEqual": true,
+      "differences": [],
+      "order": {
+        "currentQueryOrder": 6.199999999999999,
+        "baselineQueryOrder": 6.199999999999999,
+        "rowidAsc": 6.199999999999999,
+        "rowidDesc": 6.2
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 6.73070000000007,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10130000000026484,
+          "awaitMs": 2.4440000000004147
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.305699999999888,
+          "awaitMs": 2.330800000000181
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 1.0464999999999236,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09860000000026048,
+          "awaitMs": 0.3766000000000531
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.14370000000008076,
+          "awaitMs": 0.2563000000000102
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.0625,
+          "awaitMs": 0.10180000000036671
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.32310000000006767,
+          "awaitMs": 0.33539999999993597
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03470000000015716,
+          "awaitMs": 0.039500000000316504
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 0.8191999999999098,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.041700000000219006,
+          "awaitMs": 0.27089999999998327
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.12910000000010768,
+          "awaitMs": 0.21860000000015134
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.05250000000023647,
+          "awaitMs": 0.07950000000028012
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.28789999999980864,
+          "awaitMs": 0.2978999999995722
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.030899999999746797,
+          "awaitMs": 0.03499999999985448
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 5.921899999999823,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.03850000000011278,
+          "awaitMs": 2.5081999999997606
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.4033000000003995,
+          "awaitMs": 2.4664999999999964
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 6.165999999999713,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10280000000011569,
+          "awaitMs": 2.456300000000283
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.3099999999999454,
+          "awaitMs": 2.3425999999999476
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 1.1338000000000648,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10039999999980864,
+          "awaitMs": 0.43029999999998836
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.1912000000002081,
+          "awaitMs": 0.30700000000024374
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.06129999999984648,
+          "awaitMs": 0.10199999999986176
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3389999999999418,
+          "awaitMs": 0.35219999999981155
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.040500000000065484,
+          "awaitMs": 0.044800000000122964
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 0.8721999999997934,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.05529999999998836,
+          "awaitMs": 0.278599999999642
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.11639999999988504,
+          "awaitMs": 0.21000000000003638
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.05120000000033542,
+          "awaitMs": 0.08110000000033324
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.30349999999998545,
+          "awaitMs": 0.3136999999996988
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03249999999979991,
+          "awaitMs": 0.03679999999985739
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 5.967399999999998,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.04070000000001528,
+          "awaitMs": 2.4570000000003347
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 2.377100000000155,
+          "awaitMs": 2.412000000000262
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 6.699399999999969,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10760000000027503,
+          "awaitMs": 3.1875
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 1000,
+          "engineMs": 3.014599999999973,
+          "awaitMs": 3.067500000000109
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 1.2665000000001783,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.16030000000000655,
+          "awaitMs": 0.5101999999997133
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 18,
+          "engineMs": 0.1716999999998734,
+          "awaitMs": 0.30189999999993233
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 26,
+          "engineMs": 0.06579999999985375,
+          "awaitMs": 0.11229999999977736
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.32799999999997453,
+          "awaitMs": 0.34169999999994616
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03670000000010987,
+          "awaitMs": 0.04129999999986467
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 6.199999999999999,
+        "monthlyExpenses": 12.299999999999999,
+        "monthlySavings": -6.1,
+        "recentTransactionCount": 23
+      }
+    },
+    {
+      "size": 1000,
+      "load": "canonicalSpread",
+      "exactEqual": true,
+      "differences": [],
+      "order": {
+        "currentQueryOrder": 6.199999999999999,
+        "baselineQueryOrder": 6.199999999999999,
+        "rowidAsc": 6.199999999999999,
+        "rowidDesc": 6.2
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 65.27749999999969,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10170000000016444,
+          "awaitMs": 27.927400000000034
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 27.75899999999956,
+          "awaitMs": 27.8128999999999
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 21.39469999999983,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09490000000005239,
+          "awaitMs": 11.871499999999742
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 9000,
+          "engineMs": 10.815099999999802,
+          "awaitMs": 11.75059999999985
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.8065999999998894,
+          "awaitMs": 0.8721999999997934
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.36120000000028085,
+          "awaitMs": 0.3793000000000575
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04010000000016589,
+          "awaitMs": 0.044800000000122964
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 19.134700000000066,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.06559999999990396,
+          "awaitMs": 10.989799999999832
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 9000,
+          "engineMs": 10.005799999999908,
+          "awaitMs": 10.9070999999999
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.7717000000002372,
+          "awaitMs": 0.8383000000003449
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.37059999999974025,
+          "awaitMs": 0.38779999999997017
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04389999999966676,
+          "awaitMs": 0.04929999999967549
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 55.84479999999985,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.06710000000020955,
+          "awaitMs": 22.905099999999948
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 22.78729999999996,
+          "awaitMs": 22.830199999999877
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 57.695700000000215,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09400000000005093,
+          "awaitMs": 20.185099999999693
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 20.0313000000001,
+          "awaitMs": 20.078199999999924
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 18.346500000000106,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09110000000009677,
+          "awaitMs": 10.472800000000007
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 9000,
+          "engineMs": 9.572599999999966,
+          "awaitMs": 10.35779999999977
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.6684000000000196,
+          "awaitMs": 0.7240999999999076
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.35659999999961656,
+          "awaitMs": 0.37299999999959255
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.0385999999998603,
+          "awaitMs": 0.04309999999986758
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 17.50490000000036,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.05989999999974316,
+          "awaitMs": 10.08909999999969
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 9000,
+          "engineMs": 9.237699999999677,
+          "awaitMs": 10.012299999999868
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.671100000000024,
+          "awaitMs": 0.7229999999999563
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3593999999998232,
+          "awaitMs": 0.3754999999996471
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04070000000001528,
+          "awaitMs": 0.04529999999977008
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 62.51870000000008,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.05830000000014479,
+          "awaitMs": 25.1862000000001
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 25.07479999999987,
+          "awaitMs": 25.120600000000195
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 69.12960000000021,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09400000000005093,
+          "awaitMs": 22.33069999999998
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 22.13590000000022,
+          "awaitMs": 22.22530000000006
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 19.534400000000005,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09619999999995343,
+          "awaitMs": 10.522600000000239
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 9000,
+          "engineMs": 9.55809999999974,
+          "awaitMs": 10.400900000000092
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.7112999999999374,
+          "awaitMs": 0.7709999999997308
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.34389999999984866,
+          "awaitMs": 0.3625999999999294
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04289999999991778,
+          "awaitMs": 0.047999999999774445
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 2583.2999999999597,
+        "monthlyExpenses": 6716.600000000222,
+        "monthlySavings": -4133.300000000263,
+        "recentTransactionCount": 9000
+      }
+    },
+    {
+      "size": 10000,
+      "load": "integratedToday",
+      "exactEqual": true,
+      "differences": [],
+      "order": {
+        "currentQueryOrder": 2583.2999999999597,
+        "baselineQueryOrder": 2583.2999999999597,
+        "rowidAsc": 2583.2999999999597,
+        "rowidDesc": 2583.2999999999597
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 55.451300000000174,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10179999999991196,
+          "awaitMs": 21.254099999999653
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 21.089600000000246,
+          "awaitMs": 21.134300000000167
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 1.558100000000195,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.08989999999994325,
+          "awaitMs": 0.7148999999999432
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.44219999999995707,
+          "awaitMs": 0.5997999999999593
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.09589999999980137,
+          "awaitMs": 0.13699999999971624
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3188999999997577,
+          "awaitMs": 0.3312999999998283
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03320000000030632,
+          "awaitMs": 0.037000000000261934
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 1.466899999999896,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.041899999999714055,
+          "awaitMs": 0.540599999999813
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.36180000000013024,
+          "awaitMs": 0.4852000000000771
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.0820000000003347,
+          "awaitMs": 0.11100000000033106
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3243999999999687,
+          "awaitMs": 0.33720000000039363
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03510000000005675,
+          "awaitMs": 0.03940000000011423
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 58.49589999999989,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.03899999999975989,
+          "awaitMs": 21.237099999999828
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 21.148299999999836,
+          "awaitMs": 21.193499999999858
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 53.267599999999675,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09600000000000364,
+          "awaitMs": 20.97250000000031
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 20.81919999999991,
+          "awaitMs": 20.86449999999968
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 1.5915999999997439,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09529999999995198,
+          "awaitMs": 0.6913999999997031
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.42250000000012733,
+          "awaitMs": 0.5721000000003187
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.09239999999999782,
+          "awaitMs": 0.129399999999805
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.34819999999990614,
+          "awaitMs": 0.36189999999987776
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.038299999999708234,
+          "awaitMs": 0.04239999999981592
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 1.2084999999997308,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.05949999999984357,
+          "awaitMs": 0.5509999999999309
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.3570999999997184,
+          "awaitMs": 0.4784999999997126
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.08159999999998035,
+          "awaitMs": 0.1089999999999236
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.2557999999999083,
+          "awaitMs": 0.26539999999977226
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03099999999994907,
+          "awaitMs": 0.03469999999970241
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 55.970900000000256,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.037000000000261934,
+          "awaitMs": 20.91060000000016
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 20.827699999999822,
+          "awaitMs": 20.87019999999984
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 59.722999999999956,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.11570000000028813,
+          "awaitMs": 22.709200000000237
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 22.536099999999806,
+          "awaitMs": 22.578599999999824
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 1.8272999999999229,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09659999999985303,
+          "awaitMs": 0.720299999999952
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.44729999999981374,
+          "awaitMs": 0.5981999999999061
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.09070000000019718,
+          "awaitMs": 0.12879999999995562
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3245999999999185,
+          "awaitMs": 0.3382000000001426
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.039900000000216096,
+          "awaitMs": 0.04460000000017317
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "legacySpread",
+      "exactEqual": true,
+      "differences": [],
+      "order": {
+        "currentQueryOrder": 55.80000000000002,
+        "baselineQueryOrder": 55.80000000000002,
+        "rowidAsc": 55.80000000000001,
+        "rowidDesc": 55.80000000000001
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 58.141000000000076,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.12579999999979918,
+          "awaitMs": 23.634000000000015
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 23.44549999999981,
+          "awaitMs": 23.491899999999987
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 1.4980000000000473,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09499999999979991,
+          "awaitMs": 0.6948999999999614
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.427599999999984,
+          "awaitMs": 0.5759000000002743
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.08950000000004366,
+          "awaitMs": 0.12710000000015498
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.28890000000001237,
+          "awaitMs": 0.31270000000040454
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03960000000006403,
+          "awaitMs": 0.04419999999981883
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 1.1507999999998901,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0409999999997126,
+          "awaitMs": 0.5214999999998327
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.35099999999965803,
+          "awaitMs": 0.46869999999989886
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.08090000000038344,
+          "awaitMs": 0.10630000000037398
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.25460000000020955,
+          "awaitMs": 0.2636999999999716
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02999999999974534,
+          "awaitMs": 0.033800000000155705
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 62.05619999999999,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.03440000000000509,
+          "awaitMs": 29.592399999999998
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 29.508499999999913,
+          "awaitMs": 29.55470000000014
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 60.404999999999745,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09780000000000655,
+          "awaitMs": 23.11830000000009
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 22.96239999999989,
+          "awaitMs": 23.008400000000165
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 1.7644999999997708,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10260000000016589,
+          "awaitMs": 0.7427999999999884
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.45240000000012515,
+          "awaitMs": 0.6118999999998778
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.09470000000010259,
+          "awaitMs": 0.1380000000003747
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.4343000000003485,
+          "awaitMs": 0.4527000000002772
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.039800000000013824,
+          "awaitMs": 0.044499999999970896
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 1.2557000000001608,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0443000000000211,
+          "awaitMs": 0.5819000000001324
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.3867000000000189,
+          "awaitMs": 0.5239000000001397
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.0886000000000422,
+          "awaitMs": 0.12000000000034561
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.25520000000005894,
+          "awaitMs": 0.2647999999999229
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.030899999999746797,
+          "awaitMs": 0.03510000000005675
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 59.36380000000008,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.040899999999965075,
+          "awaitMs": 24.246000000000095
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 24.130299999999806,
+          "awaitMs": 24.200599999999667
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 58.568800000000465,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0965000000001055,
+          "awaitMs": 23.003099999999904
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 10000,
+          "engineMs": 22.847699999999804,
+          "awaitMs": 22.893999999999778
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 2.0703000000003158,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.08889999999973952,
+          "awaitMs": 1.0108000000000175
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 197,
+          "engineMs": 0.5110999999997148,
+          "awaitMs": 0.8985999999995329
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.22029999999995198,
+          "awaitMs": 0.28549999999995634
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3686999999999898,
+          "awaitMs": 0.384900000000016
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.05140000000028522,
+          "awaitMs": 0.056199999999989814
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 55.80000000000002,
+        "monthlyExpenses": 147.69999999999987,
+        "monthlySavings": -91.89999999999986,
+        "recentTransactionCount": 253
+      }
+    },
+    {
+      "size": 10000,
+      "load": "canonicalSpread",
+      "exactEqual": true,
+      "differences": [],
+      "order": {
+        "currentQueryOrder": 55.80000000000002,
+        "baselineQueryOrder": 55.80000000000002,
+        "rowidAsc": 55.80000000000001,
+        "rowidDesc": 55.80000000000001
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 766.8532999999998,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10780000000067957,
+          "awaitMs": 373.96610000000055
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 373.78980000000047,
+          "awaitMs": 373.84259999999995
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 232.39000000000033,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10709999999926367,
+          "awaitMs": 143.32960000000003
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 90000,
+          "engineMs": 136.14039999999932,
+          "awaitMs": 143.1961999999994
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 6.863499999999476,
+          "awaitMs": 6.982500000000073
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3801000000003114,
+          "awaitMs": 0.4052000000001499
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04500000000007276,
+          "awaitMs": 0.051199999999880674
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 220.76190000000042,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09150000000045111,
+          "awaitMs": 128.6216000000004
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 90000,
+          "engineMs": 121.6234999999997,
+          "awaitMs": 128.5083999999997
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 6.727100000000064,
+          "awaitMs": 6.823900000000322
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.5666000000001077,
+          "awaitMs": 0.61200000000008
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.05879999999979191,
+          "awaitMs": 0.06430000000000291
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 761.4659000000001,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0967000000000553,
+          "awaitMs": 372.78840000000037
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 372.6275999999998,
+          "awaitMs": 372.6779999999999
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 764.3868999999995,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10069999999996071,
+          "awaitMs": 374.34880000000067
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 374.1844999999994,
+          "awaitMs": 374.2362999999996
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 215.9912000000004,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09870000000046275,
+          "awaitMs": 125.79820000000109
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 90000,
+          "engineMs": 119.41430000000037,
+          "awaitMs": 125.67530000000079
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 6.105900000000474,
+          "awaitMs": 6.196799999999712
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.408000000001266,
+          "awaitMs": 0.42810000000099535
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03919999999925494,
+          "awaitMs": 0.043900000000576256
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 204.98279999999977,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09360000000015134,
+          "awaitMs": 121.87880000000041
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 90000,
+          "engineMs": 115.21950000000106,
+          "awaitMs": 121.76499999999942
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 6.391200000000026,
+          "awaitMs": 6.481999999999971
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.40819999999985157,
+          "awaitMs": 0.42669999999998254
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03949999999895226,
+          "awaitMs": 0.044200000000273576
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 766.1055000000015,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10729999999966822,
+          "awaitMs": 393.0649999999987
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 392.8748000000014,
+          "awaitMs": 392.9446000000007
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 727.760400000001,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0967000000000553,
+          "awaitMs": 343.4352999999992
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 343.27679999999964,
+          "awaitMs": 343.3264999999992
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 214.99679999999898,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09710000000086438,
+          "awaitMs": 122.25930000000153
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 90000,
+          "engineMs": 115.11969999999928,
+          "awaitMs": 122.13760000000002
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 6.858299999999872,
+          "awaitMs": 6.958099999999831
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3958999999995285,
+          "awaitMs": 0.4187000000001717
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.05080000000089058,
+          "awaitMs": 0.057199999999284046
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 25833.29999999692,
+        "monthlyExpenses": 67166.59999998135,
+        "monthlySavings": -41333.29999998443,
+        "recentTransactionCount": 90000
+      }
+    },
+    {
+      "size": 100000,
+      "load": "integratedToday",
+      "exactEqual": true,
+      "differences": [],
+      "order": {
+        "currentQueryOrder": 25833.29999999692,
+        "baselineQueryOrder": 25833.29999999692,
+        "rowidAsc": 25833.29999999692,
+        "rowidDesc": 25833.29999999692
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 802.2443000000003,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10610000000087894,
+          "awaitMs": 430.51940000000104
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 430.3143,
+          "awaitMs": 430.39950000000135
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 7.2818999999999505,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09989999999925203,
+          "awaitMs": 4.740899999998874
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 4.16399999999885,
+          "awaitMs": 4.615299999999479
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.341099999999642,
+          "awaitMs": 0.39769999999953143
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.33250000000043656,
+          "awaitMs": 0.3463000000010652
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04589999999916472,
+          "awaitMs": 0.051199999999880674
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 6.47019999999975,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.053299999999580905,
+          "awaitMs": 4.34020000000055
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 3.844199999999546,
+          "awaitMs": 4.266599999999016
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.3274999999994179,
+          "awaitMs": 0.3754999999982829
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.2959000000009837,
+          "awaitMs": 0.3070000000006985
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03470000000015716,
+          "awaitMs": 0.038800000000264845
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 731.2733999999982,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.051500000001396984,
+          "awaitMs": 365.7374
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 365.5137999999988,
+          "awaitMs": 365.6854999999996
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 727.0041999999994,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.1599000000005617,
+          "awaitMs": 358.3906999999999
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 358.16159999999945,
+          "awaitMs": 358.21039999999994
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 6.312600000001112,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09330000000045402,
+          "awaitMs": 4.1745000000009895
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 3.6317999999992026,
+          "awaitMs": 4.055599999999686
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.32370000000082655,
+          "awaitMs": 0.37440000000060536
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3186999999998079,
+          "awaitMs": 0.3308999999990192
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03499999999985448,
+          "awaitMs": 0.03950000000077125
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 6.351199999999153,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.053699999998571,
+          "awaitMs": 4.210399999999936
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 3.6589999999996508,
+          "awaitMs": 4.140599999998813
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.35639999999875727,
+          "awaitMs": 0.4169999999994616
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.33700000000135333,
+          "awaitMs": 0.35050000000046566
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03780000000006112,
+          "awaitMs": 0.0419000000001688
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 707.1164000000008,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.04550000000017462,
+          "awaitMs": 350.90180000000146
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 350.8015000000014,
+          "awaitMs": 350.8517000000011
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 738.6393000000007,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10020000000076834,
+          "awaitMs": 348.45980000000054
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 348.29899999999907,
+          "awaitMs": 348.34679999999935
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 7.164000000000669,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09490000000005239,
+          "awaitMs": 4.201600000000326
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 3.6463000000003376,
+          "awaitMs": 4.081399999999121
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.33179999999993015,
+          "awaitMs": 0.3834999999999127
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.5789000000004307,
+          "awaitMs": 0.6032000000013795
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.0830999999998312,
+          "awaitMs": 0.09360000000015134
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "legacySpread",
+      "exactEqual": true,
+      "differences": [],
+      "order": {
+        "currentQueryOrder": 565.200000000002,
+        "baselineQueryOrder": 565.200000000002,
+        "rowidAsc": 565.200000000002,
+        "rowidDesc": 565.200000000002
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 0,
+      "totalMs": 758.829099999999,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09950000000026193,
+          "awaitMs": 383.9364000000023
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 383.77289999999994,
+          "awaitMs": 383.8237000000008
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 0,
+      "totalMs": 6.68500000000131,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09690000000045984,
+          "awaitMs": 4.3012000000017
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 3.695899999998801,
+          "awaitMs": 4.1807000000007974
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.3660999999992782,
+          "awaitMs": 0.4216000000014901
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.36639999999897555,
+          "awaitMs": 0.38249999999970896
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.045099999999365536,
+          "awaitMs": 0.05010000000038417
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 1,
+      "totalMs": 6.4144000000014785,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.04889999999795691,
+          "awaitMs": 3.9548999999969965
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 3.3263000000006286,
+          "awaitMs": 3.8919999999998254
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.4436000000023341,
+          "awaitMs": 0.5186000000030617
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.3726999999998952,
+          "awaitMs": 0.3885999999984051
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04260000000067521,
+          "awaitMs": 0.047200000000884756
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 1,
+      "totalMs": 766.654599999998,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.047299999998358544,
+          "awaitMs": 377.2404999999999
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 377.137999999999,
+          "awaitMs": 377.1885000000002
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 2,
+      "totalMs": 759.5396000000001,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0948000000025786,
+          "awaitMs": 392.2444000000032
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 392.0809999999983,
+          "awaitMs": 392.1322
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 2,
+      "totalMs": 13.571899999999005,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09469999999782885,
+          "awaitMs": 10.785400000000664
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 10.217599999999948,
+          "awaitMs": 10.666600000000471
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.3400000000001455,
+          "awaitMs": 0.3923999999969965
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.5166000000026543,
+          "awaitMs": 0.5389000000031956
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.057499999998981366,
+          "awaitMs": 0.06429999999818392
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 3,
+      "totalMs": 6.0790000000015425,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09159999999974389,
+          "awaitMs": 3.799299999998766
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 3.31079999999929,
+          "awaitMs": 3.67699999999968
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.29499999999825377,
+          "awaitMs": 0.3356999999996333
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.39579999999841675,
+          "awaitMs": 0.41019999999844003
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03889999999955762,
+          "awaitMs": 0.04349999999976717
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 3,
+      "totalMs": 738.7583999999988,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.0698999999985972,
+          "awaitMs": 377.4363999999987
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 377.3094000000019,
+          "awaitMs": 377.358400000001
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "baseline",
+      "sample": 4,
+      "totalMs": 734.0251000000026,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.10570000000006985,
+          "awaitMs": 369.72829999999885
+        },
+        "SELECT id, amount, currency, description, date, civil_date, ": {
+          "count": 1,
+          "rows": 100000,
+          "engineMs": 369.5609000000004,
+          "awaitMs": 369.60889999999927
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "version": "current",
+      "sample": 4,
+      "totalMs": 6.169799999999668,
+      "shapes": {
+        "accounts": {
+          "count": 1,
+          "rows": 8,
+          "engineMs": 0.09590000000025611,
+          "awaitMs": 4.041000000001077
+        },
+        "monthlyAmounts": {
+          "count": 1,
+          "rows": 1969,
+          "engineMs": 3.5037000000011176,
+          "awaitMs": 3.919499999999971
+        },
+        "recentDayCounts": {
+          "count": 1,
+          "rows": 34,
+          "engineMs": 0.3224999999983993,
+          "awaitMs": 0.37180000000080327
+        },
+        "sharedPosition": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.33799999999973807,
+          "awaitMs": 0.35129999999844586
+        },
+        "lossPeriod": {
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.038799999998445855,
+          "awaitMs": 0.04349999999976717
+        }
+      },
+      "summary": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "monthlyIncome": 565.200000000002,
+        "monthlyExpenses": 1469.2999999999925,
+        "monthlySavings": -904.0999999999905,
+        "recentTransactionCount": 2534
+      }
+    },
+    {
+      "size": 100000,
+      "load": "canonicalSpread",
+      "exactEqual": true,
+      "differences": [],
+      "order": {
+        "currentQueryOrder": 565.200000000002,
+        "baselineQueryOrder": 565.200000000002,
+        "rowidAsc": 565.200000000002,
+        "rowidDesc": 565.200000000002
+      }
+    }
+  ]
+}

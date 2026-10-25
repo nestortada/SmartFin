@@ -1,0 +1,90 @@
+[
+  {
+    "name": "current",
+    "samples": [
+      34.75440000000026,
+      34.986999999999625,
+      34.92480000000023
+    ],
+    "plan": [
+      {
+        "id": 6,
+        "parent": 0,
+        "notused": 203,
+        "detail": "SEARCH transactions USING INDEX idx_transactions_civil_sort (<expr><?)"
+      },
+      {
+        "id": 67,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+      }
+    ]
+  },
+  {
+    "name": "currentOldest",
+    "samples": [
+      62.85850000000028,
+      62.585199999999986,
+      59.42819999999983
+    ],
+    "plan": [
+      {
+        "id": 6,
+        "parent": 0,
+        "notused": 203,
+        "detail": "SEARCH transactions USING INDEX idx_transactions_civil_sort (<expr>>?)"
+      },
+      {
+        "id": 59,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR ORDER BY"
+      }
+    ]
+  },
+  {
+    "name": "tieGroupOnly",
+    "samples": [
+      52.091199999999844,
+      50.85410000000002,
+      56.84700000000021
+    ],
+    "plan": [
+      {
+        "id": 6,
+        "parent": 0,
+        "notused": 50,
+        "detail": "SEARCH transactions USING INDEX idx_transactions_civil_sort (<expr>=? AND created_at=? AND rowid<?)"
+      },
+      {
+        "id": 53,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR ORDER BY"
+      }
+    ]
+  },
+  {
+    "name": "firstPage",
+    "samples": [
+      45.101500000000215,
+      45.20250000000033,
+      46.683500000000095
+    ],
+    "plan": [
+      {
+        "id": 6,
+        "parent": 0,
+        "notused": 222,
+        "detail": "SCAN transactions USING INDEX idx_transactions_civil_sort"
+      },
+      {
+        "id": 51,
+        "parent": 0,
+        "notused": 0,
+        "detail": "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+      }
+    ]
+  }
+]

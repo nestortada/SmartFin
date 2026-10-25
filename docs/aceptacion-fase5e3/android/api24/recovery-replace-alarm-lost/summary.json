@@ -1,0 +1,88 @@
+{
+  "scenario": "replace-alarm-lost",
+  "serial": "emulator-5554",
+  "api": 24,
+  "stage": "phase5e3-auto-stage-alarm-lost",
+  "beforeTrigger": {
+    "label": "before-trigger",
+    "at": "2026-10-25T15:23:18.4302499Z",
+    "pid": "3857",
+    "alarmLines": [
+      "RTC_WAKEUP #0: Alarm{2f6586b type 0 when 1795770000000 com.smartfin.snapshot5b2.tests}",
+      "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+      "operation=PendingIntent{f966fc8: PendingIntentRecord{5ccb861 com.smartfin.snapshot5b2.tests broadcastIntent}}",
+      "RTC_WAKEUP #0: Alarm{b201047 type 0 when 1798362000000 com.smartfin.snapshot5b2.tests}",
+      "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+      "operation=PendingIntent{f86c074: PendingIntentRecord{8bb799d com.smartfin.snapshot5b2.tests broadcastIntent}}"
+    ],
+    "reminderAlarms": 0,
+    "jobLines": [
+      "JOB #u0a80/1: 8601d68 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "u0a80 tag=*job*/com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "Source: uid=u0a80 user=0 pkg=com.smartfin.snapshot5b2.tests",
+      "Service: com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "#u0a80/1 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+      "#u0a80/1 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+      "u0a80 / com.smartfin.snapshot5b2.tests: 1x pending 1x active-top",
+      "-2s344ms START: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-2s339ms  STOP: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService"
+    ],
+    "observeLog": [],
+    "processStarts": [
+      "10-25 15:22:02.594  1642  1755 I am_proc_start: [0,3657,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]",
+      "10-25 15:23:12.509  1642  1708 I am_proc_start: [0,3857,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]"
+    ]
+  },
+  "bootIdBefore": "53e20a80-8fde-48af-b555-61ba2e6ed7f0",
+  "installOutput": "C:\\sf-5e3-20261024\\android\\app\\build\\outputs\\apk\\release\\app-release.apk: 1 file pushed, 0 skipped. 49.9 MB/s (32637556 bytes in 0.624s)\nPerforming Push Install\nSuccess",
+  "trigger": "package replacement (adb install -r, same APK)",
+  "triggeredAt": "2026-10-25T15:23:24.1378914Z",
+  "bootIdAfter": "53e20a80-8fde-48af-b555-61ba2e6ed7f0",
+  "automaticWithinWindow": false,
+  "afterObservation": {
+    "label": "after-observation",
+    "at": "2026-10-25T15:26:28.4104747Z",
+    "pid": "4081",
+    "alarmLines": [
+      "RTC_WAKEUP #1: Alarm{87de655 type 0 when 1793091600000 com.smartfin.snapshot5b2.tests}",
+      "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+      "operation=PendingIntent{487286a: PendingIntentRecord{b9b48ac com.smartfin.snapshot5b2.tests broadcastIntent}}",
+      "RTC_WAKEUP #0: Alarm{16971a4 type 0 when 1795770000000 com.smartfin.snapshot5b2.tests}",
+      "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+      "operation=PendingIntent{35d8b0d: PendingIntentRecord{5ccb861 com.smartfin.snapshot5b2.tests broadcastIntent}}",
+      "RTC_WAKEUP #0: Alarm{319f0d3 type 0 when 1798362000000 com.smartfin.snapshot5b2.tests}",
+      "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+      "operation=PendingIntent{f9e0410: PendingIntentRecord{8bb799d com.smartfin.snapshot5b2.tests broadcastIntent}}",
+      "RTC_WAKEUP #0: Alarm{e060429 type 0 when 2108301804105 com.smartfin.snapshot5b2.tests}",
+      "operation=PendingIntent{e8a73ae: PendingIntentRecord{6c6754f com.smartfin.snapshot5b2.tests broadcastIntent}}"
+    ],
+    "reminderAlarms": 0,
+    "jobLines": [
+      "JOB #u0a80/3: 7d1b9e5 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "u0a80 tag=*job*/com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "Source: uid=u0a80 user=0 pkg=com.smartfin.snapshot5b2.tests",
+      "Service: com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "#u0a80/3 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+      "#u0a80/3 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+      "u0a80 / com.smartfin.snapshot5b2.tests: 2x pending 1x active 1x active-top",
+      "-3m12s375ms START: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-3m12s370ms  STOP: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-3m02s663ms START: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-3m02s644ms  STOP: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService"
+    ],
+    "observeLog": [
+      "10-25 15:23:24.140  4081  4081 I SmartFin5E3: receiver.start:android.intent.action.MY_PACKAGE_REPLACED",
+      "10-25 15:23:24.184  4081  4108 I SmartFin5E3: receiver.recover:completed",
+      "10-25 15:23:24.302  4081  4115 I SmartFin5E3: worker.start:6592d1f8-7152-4f44-8620-c3acac3857b8",
+      "10-25 15:23:24.864  4081  4115 I SmartFin5E3: worker.result:Success",
+      "10-25 15:23:45.183  4081  4156 I SmartFin5E3: worker.start:6592d1f8-7152-4f44-8620-c3acac3857b8",
+      "10-25 15:23:45.269  4081  4156 I SmartFin5E3: worker.result:Success"
+    ],
+    "processStarts": [
+      "10-25 15:22:02.594  1642  1755 I am_proc_start: [0,3657,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]",
+      "10-25 15:23:12.509  1642  1708 I am_proc_start: [0,3857,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]",
+      "10-25 15:23:23.906  1642  1653 I am_proc_start: [0,4081,10080,com.smartfin.snapshot5b2.tests,broadcast,com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionRecoveryReceiver]"
+    ]
+  },
+  "passed": true
+}

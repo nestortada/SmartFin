@@ -6,12 +6,29 @@ import { TRANSACTION_DAY_SQL, TRANSACTION_SORT_SQL } from '../../../shared/utils
 
 export const HISTORY_PAGE_SIZE = 50;
 const SCAN_SIZE = 200;
+// Candidate batches double up to this size. Every batch is a multiple of
+// SCAN_SIZE, so each batch end is also a 200-row boundary of earlier phases.
+const MAX_SCAN_SIZE = SCAN_SIZE * 32;
 const CACHE_LIMIT = 8;
+// SQLite 3.9.2 treats an expression-index scan in either direction as
+// satisfying every ORDER BY term, returning created_at/rowid ties in index
+// order (5E.1 fixed oldest; 5E.2 measured duplicates/omissions in newest).
+// The key is already TEXT; this equivalent expression forces the full sort.
+const ORDER_KEY_SQL = `CAST(${TRANSACTION_SORT_SQL} AS TEXT)`;
+// ordered: SQL text order refines JS Date order. ties: distinct keys share an instant.
+type DateProof = { ordered: boolean; ties: boolean };
 type HistoryChecks = {
   revision: number;
-  canonical: Map<string, boolean>;
+  canonical: Map<string, DateProof>;
   misses: { filterKey: string; search: string }[];
 };
+// Valid date-only keys may join SQL ordering only if this engine parses them as
+// UTC midnight (ES spec). Otherwise they keep the JS compatibility path.
+const DATE_ONLY_IS_UTC = new Date('1970-01-02').getTime() === 86400000
+  && new Date('2000-02-29').getTime() === Date.UTC(2000, 1, 29);
+function canonicalFor(proof: DateProof | undefined, sort: TransactionHistoryQuery['sort']) {
+  return proof !== undefined && proof.ordered && (sort === 'newest' || !proof.ties);
+}
 // Retain proofs, never complete transactions. Connection identity and the
 // trigger-maintained revision prevent reuse after writes or database changes.
 const historyChecks = new WeakMap<SmartFinSQLiteDatabase, HistoryChecks>();
@@ -35,6 +52,10 @@ function matchesSearch(row: SQLiteRow, search: string): boolean {
     const value = row[key];
     return typeof value === 'string' && value.toLowerCase().includes(query);
   });
+}
+
+function searchActive(query: TransactionHistoryQuery) {
+  return query.search.trim().length > 0;
 }
 
 function filters(query: TransactionHistoryQuery) {
@@ -75,36 +96,67 @@ function pageBoundary(sort: TransactionHistoryQuery['sort'], after: TransactionH
       after.date, after.createdAt, after.rowId] as SQLitePrimitive[] };
 }
 
-// Homogeneous canonical UTC strings have the same ordering as JS Date. Verify
+// A LIMIT n batch is the first n rows in key-major order, so all of them lie in
+// the key range ending at the key of the n-th matching row in key order. Bounding
+// the scan to that range (same predicate) leaves the result unchanged and lets
+// ORDER_KEY_SQL sort only the range instead of the whole remaining history. A
+// single-term key order is correct even on SQLite 3.9.2. With fewer than n rows
+// left, the bound is the extreme key of the table, which restricts nothing.
+// Very selective filters pay at most one more linear scan, never a full sort.
+function batchRange(direction: 'ASC' | 'DESC', filter: ReturnType<typeof filters>, boundary: { sql: string; values: SQLitePrimitive[] },
+  batchSize: number) {
+  const index = 'FROM transactions INDEXED BY idx_transactions_civil_sort';
+  return { sql: `AND ${TRANSACTION_SORT_SQL} ${direction === 'DESC' ? '>=' : '<='} COALESCE(
+      (SELECT ${TRANSACTION_SORT_SQL} ${index} WHERE ${filter.where} ${boundary.sql} ORDER BY ${TRANSACTION_SORT_SQL} ${direction} LIMIT 1 OFFSET ?),
+      (SELECT ${TRANSACTION_SORT_SQL} ${index} ORDER BY ${TRANSACTION_SORT_SQL} ${direction === 'DESC' ? 'ASC' : 'DESC'} LIMIT 1))`,
+    values: [...filter.values, ...boundary.values, batchSize - 1] };
+}
+
+const DAY_GLOB = '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]';
+const SECONDS_GLOB = DAY_GLOB + 'T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]';
+// Valid UTC keys are YYYY-MM-DD, ...THH:MM:SSZ or ...THH:MM:SS.mmmZ. Verify
 // calendar validity explicitly: older Android SQLite does not normalize Feb 31.
-async function hasCanonicalDates(database: SmartFinSQLiteDatabase, where: string, values: SQLitePrimitive[], checkCancelled: () => void) {
+const VALID_KEY_SQL = `(CASE length(history_key) WHEN 10 THEN history_key GLOB '${DAY_GLOB}'
+    WHEN 20 THEN history_key GLOB '${SECONDS_GLOB}Z' WHEN 24 THEN history_key GLOB '${SECONDS_GLOB}.[0-9][0-9][0-9]Z' ELSE 0 END
+  AND substr(history_key, 6, 2) BETWEEN '01' AND '12'
+  AND substr(history_key, 9, 2) BETWEEN '01' AND '31'
+  AND (length(history_key) = 10 OR (substr(history_key, 12, 2) BETWEEN '00' AND '23'
+    AND substr(history_key, 15, 2) BETWEEN '00' AND '59' AND substr(history_key, 18, 2) BETWEEN '00' AND '59'))
+  AND (substr(history_key, 9, 2) <= '28' OR (strftime('%d', substr(history_key, 1, 7) || '-01', '+1 month', '-1 day') IS NOT NULL
+    AND substr(history_key, 9, 2) <= strftime('%d', substr(history_key, 1, 7) || '-01', '+1 month', '-1 day'))))`;
+
+// JS sorts by Date value; SQL by text. For valid keys of one format, or
+// date-only keys with one full format, a later instant always has greater text,
+// so SQL order equals JS stable order for newest. Oldest additionally requires
+// that no D coexists with DT00:00:00(.000)Z, whose JS tie keeps newest order.
+async function proveDateOrder(database: SmartFinSQLiteDatabase, query: TransactionHistoryQuery, checkCancelled: () => void): Promise<DateProof> {
   checkCancelled();
-  const [first] = await database.executeSql(
-    `SELECT ${TRANSACTION_SORT_SQL} AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE ${where} LIMIT 1;`, values);
+  // Without a text-search predicate that would fetch every record just to validate its date.
+  const { where, values } = filters({ ...query, search: '' });
+  // A category filter can use its own plain index (then DISTINCT sorts the few
+  // keys); otherwise keep the covering date index. DISTINCT keys are plan-independent.
+  const access = query.categoryId === 'all' ? 'INDEXED BY idx_transactions_civil_sort' : '';
+  const keys = `(SELECT DISTINCT ${TRANSACTION_SORT_SQL} AS history_key FROM transactions ${access} WHERE ${where} LIMIT -1)`;
+  const [result] = await database.executeSql(
+    `SELECT
+      max(CASE WHEN ${VALID_KEY_SQL} THEN 0 ELSE 1 END) AS has_invalid,
+      max(length(history_key) = 10) AS has_day,
+      max(length(history_key) = 20) AS has_seconds,
+      max(length(history_key) = 24) AS has_millis
+    FROM ${keys};`, values);
   checkCancelled();
-  if (!first.rows.length) return true;
-  const firstRow = resultSetToRows(first)[0];
-  if (!firstRow) return true;
-  const date = readString(firstRow, 'date');
-  const length = date.length;
-  if (length !== 20 && length !== 24) return false;
-  const pattern = '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]T[0-9][0-9]:[0-9][0-9]:[0-9][0-9]' +
-    (length === 24 ? '.[0-9][0-9][0-9]Z' : 'Z');
-  const [invalid] = await database.executeSql(
-    `SELECT date FROM (
-      SELECT DISTINCT ${TRANSACTION_SORT_SQL} AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE ${where} LIMIT -1
-    ) WHERE (
-      length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?
-      OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'
-      OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'
-      OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'
-      OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'
-      OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'
-      OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL
-      OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')
-    ) LIMIT 1;`, [...values, length, pattern]);
+  const row = resultSetToRows(result)[0];
+  const flag = (key: string) => row !== undefined && row[key] === 1;
+  // An empty set has NULL aggregates and is trivially ordered.
+  const ordered = !flag('has_invalid') && !(flag('has_seconds') && flag('has_millis'))
+    && (!flag('has_day') || DATE_ONLY_IS_UTC);
+  // Cross-format instants can only tie when date-only keys join a full format.
+  if (!ordered || !flag('has_day') || !(flag('has_seconds') || flag('has_millis'))) return { ordered, ties: false };
+  const [ties] = await database.executeSql(
+    `SELECT 1 FROM ${keys} WHERE length(history_key) = 10 OR substr(history_key, 11) IN ('T00:00:00Z', 'T00:00:00.000Z')
+     GROUP BY substr(history_key, 1, 10) HAVING count(*) > 1 LIMIT 1;`, values);
   checkCancelled();
-  return invalid.rows.length === 0;
+  return { ordered, ties: ties.rows.length > 0 };
 }
 
 export async function getSQLiteTransactionHistoryPage(
@@ -136,43 +188,47 @@ export async function getSQLiteTransactionHistoryPage(
     return { transactions: [], nextCursor: undefined };
   }
   const filter = filters(query);
-  // Validate ordering through the covering date index, without a text-search
-  // predicate that would fetch every record just to validate its date.
-  const dateFilter = filters({ ...query, search: '' });
   let position: TransactionHistoryCursor = cursor ?? { revision, queryKey, legacyOffset: 0 };
-  let canonical: boolean | undefined;
+  let proof: DateProof | undefined;
+  let canonical = false;
   if (!cursor) {
-    // A true proof for the entire history also proves every filtered subset.
-    // A false global proof cannot determine a subset's ordering.
-    canonical = checks.canonical.get(allDatesKey) === true ? true : checks.canonical.get(key);
-    if (canonical === undefined) canonical = await hasCanonicalDates(database, dateFilter.where, dateFilter.values, checkCancelled);
+    // A global proof valid for this sort also proves every filtered subset.
+    // Otherwise it cannot determine a subset's ordering.
+    if (canonicalFor(checks.canonical.get(allDatesKey), query.sort)) canonical = true;
+    else {
+      proof = checks.canonical.get(key) ?? await proveDateOrder(database, query, checkCancelled);
+      canonical = canonicalFor(proof, query.sort);
+    }
   }
 
   if (!cursor && !canonical) {
     // Compatibility path: only id/date and search text in bounded SQL batches.
     // Do not retain financial records or search text for the complete history.
-    const entries: { id: string; date: string }[] = [];
+    const entries: { id: string; time: number }[] = [];
     let after: TransactionHistoryCursor['after'];
+    let batchSize = SCAN_SIZE;
     for (;;) {
       checkCancelled();
       const boundary = pageBoundary('newest', after);
+      const range = batchRange('DESC', filter, boundary, batchSize);
       const [result] = await database.executeSql(
-        `SELECT rowid AS history_rowid, id, date, ${TRANSACTION_SORT_SQL} AS history_sort_key, created_at, merchant_name, description, notes
+        `SELECT rowid AS history_rowid, id, ${TRANSACTION_SORT_SQL} AS history_sort_key, created_at${searchActive(query)
+          ? ', merchant_name, description, notes' : ''}
          FROM transactions INDEXED BY idx_transactions_civil_sort
-         WHERE ${filter.where} ${boundary.sql} ORDER BY ${TRANSACTION_SORT_SQL} DESC, created_at DESC, rowid DESC LIMIT ?;`,
-        [...filter.values, ...boundary.values, SCAN_SIZE]);
+         WHERE ${filter.where} ${boundary.sql} ${range.sql} ORDER BY ${ORDER_KEY_SQL} DESC, created_at DESC, rowid DESC LIMIT ?;`,
+        [...filter.values, ...boundary.values, ...range.values, batchSize]);
       checkCancelled();
       const rows = resultSetToRows(result);
       for (const row of rows) {
-        if (matchesSearch(row, query.search)) entries.push({ id: readString(row, 'id'), date: readString(row, 'history_sort_key') });
+        // Parse once per row; the comparator below sees identical values.
+        if (matchesSearch(row, query.search)) entries.push({ id: readString(row, 'id'), time: new Date(readString(row, 'history_sort_key')).getTime() });
         after = { date: readString(row, 'history_sort_key'), createdAt: readString(row, 'created_at'), rowId: readNumber(row, 'history_rowid') };
       }
-      if (rows.length < SCAN_SIZE) break;
+      if (rows.length < batchSize) break;
+      batchSize = Math.min(batchSize * 2, MAX_SCAN_SIZE);
     }
-    // Same stable comparator as the original hook, including NaN for invalid dates.
-    entries.sort((a, b) => query.sort === 'newest'
-      ? new Date(b.date).getTime() - new Date(a.date).getTime()
-      : new Date(a.date).getTime() - new Date(b.date).getTime());
+    // Same stable comparator and input order as the original hook, including NaN for invalid dates.
+    entries.sort((a, b) => query.sort === 'newest' ? b.time - a.time : a.time - b.time);
     position = { ...position, legacyIds: entries.map(entry => entry.id) };
   }
 
@@ -195,19 +251,21 @@ export async function getSQLiteTransactionHistoryPage(
     position = { ...position, legacyOffset: position.legacyOffset + ids.length };
     hasMore = position.legacyOffset < legacyIds.length;
   } else {
-    const searchActive = query.search.trim().length > 0;
+    const searching = searchActive(query);
     const matchingIds: string[] = [];
-    const batchSize = searchActive ? SCAN_SIZE : HISTORY_PAGE_SIZE + 1;
+    let batchSize = searching ? SCAN_SIZE : HISTORY_PAGE_SIZE + 1;
+    let consumed = 0;
     for (;;) {
       checkCancelled();
       const direction = query.sort === 'newest' ? 'DESC' : 'ASC';
       const boundary = pageBoundary(query.sort, position.after);
+      const range = batchRange(direction, filter, boundary, batchSize);
       const [result] = await database.executeSql(
-        `SELECT rowid AS history_rowid, ${TRANSACTION_SORT_SQL} AS history_sort_key, ${searchActive
-          ? 'id, date, created_at, merchant_name, description, notes' : '*'} FROM transactions INDEXED BY idx_transactions_civil_sort
-         WHERE ${filter.where} ${boundary.sql}
-         ORDER BY ${TRANSACTION_SORT_SQL} ${direction}, created_at DESC, rowid DESC LIMIT ?;`,
-        [...filter.values, ...boundary.values, batchSize]);
+        `SELECT rowid AS history_rowid, ${TRANSACTION_SORT_SQL} AS history_sort_key, ${searching
+          ? 'id, created_at, merchant_name, description, notes' : '*'} FROM transactions INDEXED BY idx_transactions_civil_sort
+         WHERE ${filter.where} ${boundary.sql} ${range.sql}
+         ORDER BY ${ORDER_KEY_SQL} ${direction}, created_at DESC, rowid DESC LIMIT ?;`,
+        [...filter.values, ...boundary.values, ...range.values, batchSize]);
       checkCancelled();
       const rows = resultSetToRows(result);
       if (rows.length === 0) hasMore = false;
@@ -215,16 +273,22 @@ export async function getSQLiteTransactionHistoryPage(
         const row = rows[index];
         if (!row) continue;
         // Leave the lookahead unconsumed for the next page.
-        if ((searchActive ? matchingIds.length : transactions.length) === HISTORY_PAGE_SIZE) { hasMore = true; break; }
+        if ((searching ? matchingIds.length : transactions.length) === HISTORY_PAGE_SIZE) { hasMore = true; break; }
         position = { ...position, after: { date: readString(row, 'history_sort_key'), createdAt: readString(row, 'created_at'),
           rowId: readNumber(row, 'history_rowid') } };
+        consumed++;
         if (matchesSearch(row, query.search)) {
-          if (searchActive) matchingIds.push(readString(row, 'id'));
+          if (searching) matchingIds.push(readString(row, 'id'));
           else transactions.push(map(row));
         }
-        hasMore = index < rows.length - 1 || rows.length === batchSize;
+        // A page filled at a 200-row boundary keeps the cursor that fixed
+        // 200-row batches produced there, even when this larger batch is shorter.
+        hasMore = index < rows.length - 1 || rows.length === batchSize
+          || (searching && consumed % SCAN_SIZE === 0 && matchingIds.length === HISTORY_PAGE_SIZE);
       }
-      if ((searchActive ? matchingIds.length : transactions.length) === HISTORY_PAGE_SIZE || rows.length < batchSize) break;
+      if ((searching ? matchingIds.length : transactions.length) === HISTORY_PAGE_SIZE || rows.length < batchSize) break;
+      // Larger batches avoid re-sorting a large date tie group 200 rows at a time.
+      if (searching) batchSize = Math.min(batchSize * 2, MAX_SCAN_SIZE);
     }
     if (matchingIds.length) {
       checkCancelled();
@@ -244,8 +308,8 @@ export async function getSQLiteTransactionHistoryPage(
   // Publish only proofs established by a complete, uncancelled same-revision
   // operation. An older concurrent request cannot replace a newer cache.
   if (historyChecks.get(database) === checks) {
-    if (canonical !== undefined) {
-      checks.canonical.set(key, canonical);
+    if (proof !== undefined) {
+      checks.canonical.set(key, proof);
       if (checks.canonical.size > CACHE_LIMIT) {
         const oldest = checks.canonical.keys().next().value;
         if (oldest !== undefined) checks.canonical.delete(oldest);

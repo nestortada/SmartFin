@@ -1,0 +1,29 @@
+  console.log
+    {"shape":"civil","density":{"n":100000,"days":18262,"october":136},"timings":{"{}":{"total":100000,"samples":[{"firstMs":120,"secondMs":1},{"firstMs":132,"secondMs":2},{"firstMs":120,"secondMs":2}],"traversalMs":7888},"{\"sort\":\"oldest\"}":{"total":100000,"samples":[{"firstMs":123,"secondMs":1},{"firstMs":120,"secondMs":1},{"firstMs":121,"secondMs":1}],"traversalMs":7593},"{\"search\":\"merchant 49\"}":{"total":1698,"samples":[{"firstMs":141,"secondMs":15},{"firstMs":140,"secondMs":17},{"firstMs":225,"secondMs":18}],"traversalMs":655},"{\"search\":\"árbol\"}":{"total":14285,"samples":[{"firstMs":122,"secondMs":4},{"firstMs":127,"secondMs":4},{"firstMs":128,"secondMs":4}],"traversalMs":1958},"{\"search\":\"İω\",\"sort\":\"oldest\"}":{"total":33333,"samples":[{"firstMs":124,"secondMs":1},{"firstMs":123,"secondMs":1},{"firstMs":121,"secondMs":2}],"traversalMs":3238},"{\"search\":\"not found\"}":{"total":0,"samples":[{"firstMs":556,"secondMs":0},{"firstMs":542,"secondMs":0},{"firstMs":594,"secondMs":0}],"traversalMs":502},"{\"month\":\"2026-10\",\"accountId\":\"savings\"}":{"total":31,"samples":[{"firstMs":288,"secondMs":0},{"firstMs":239,"secondMs":0},{"firstMs":247,"secondMs":0}],"traversalMs":174},"{\"month\":\"1999-02\",\"accountId\":\"bank\",\"categoryId\":\"food\",\"search\":\"%_\",\"sort\":\"oldest\"}":{"total":18,"samples":[{"firstMs":214,"secondMs":0},{"firstMs":187,"secondMs":0},{"firstMs":167,"secondMs":0}],"traversalMs":170}},"dashboardMs":[2,1,1],"dashboardDifferences":[{"k":"recentTransactionCount","current":134,"baseline":135}]}
+
+      at log (__tests__/transactionHistoryPhase5E3FiftyYears.test.ts:104:13)
+
+  console.log
+    {"shape":"legacy","density":{"n":100000,"days":18262,"october":136},"timings":{"{}":{"total":100000,"samples":[{"firstMs":20,"secondMs":0},{"firstMs":20,"secondMs":1},{"firstMs":19,"secondMs":1}],"traversalMs":7340},"{\"sort\":\"oldest\"}":{"total":100000,"samples":[{"firstMs":21,"secondMs":1},{"firstMs":21,"secondMs":0},{"firstMs":23,"secondMs":1}],"traversalMs":7504},"{\"search\":\"merchant 49\"}":{"total":1698,"samples":[{"firstMs":32,"secondMs":15},{"firstMs":34,"secondMs":13},{"firstMs":33,"secondMs":13}],"traversalMs":621},"{\"search\":\"árbol\"}":{"total":14285,"samples":[{"firstMs":29,"secondMs":4},{"firstMs":25,"secondMs":4},{"firstMs":25,"secondMs":3}],"traversalMs":1910},"{\"search\":\"İω\",\"sort\":\"oldest\"}":{"total":33333,"samples":[{"firstMs":23,"secondMs":2},{"firstMs":21,"secondMs":1},{"firstMs":23,"secondMs":1}],"traversalMs":3078},"{\"search\":\"not found\"}":{"total":0,"samples":[{"firstMs":411,"secondMs":0},{"firstMs":453,"secondMs":0},{"firstMs":409,"secondMs":0}],"traversalMs":430},"{\"month\":\"2026-10\",\"accountId\":\"savings\"}":{"total":31,"samples":[{"firstMs":235,"secondMs":0},{"firstMs":240,"secondMs":0},{"firstMs":239,"secondMs":0}],"traversalMs":176},"{\"month\":\"1999-02\",\"accountId\":\"bank\",\"categoryId\":\"food\",\"search\":\"%_\",\"sort\":\"oldest\"}":{"total":18,"samples":[{"firstMs":171,"secondMs":0},{"firstMs":167,"secondMs":0},{"firstMs":172,"secondMs":0}],"traversalMs":176}},"dashboardMs":[1,2,1],"dashboardDifferences":[]}
+
+      at log (__tests__/transactionHistoryPhase5E3FiftyYears.test.ts:104:13)
+
+  console.log
+    {"shape":"migrated","density":{"n":100000,"days":18262,"october":136},"timings":{"{}":{"total":100000,"samples":[{"firstMs":57,"secondMs":1},{"firstMs":57,"secondMs":1},{"firstMs":60,"secondMs":1}],"traversalMs":7222},"{\"sort\":\"oldest\"}":{"total":100000,"samples":[{"firstMs":64,"secondMs":1},{"firstMs":62,"secondMs":1},{"firstMs":67,"secondMs":0}],"traversalMs":7595},"{\"search\":\"merchant 49\"}":{"total":1698,"samples":[{"firstMs":68,"secondMs":15},{"firstMs":68,"secondMs":13},{"firstMs":65,"secondMs":14}],"traversalMs":622},"{\"search\":\"árbol\"}":{"total":14285,"samples":[{"firstMs":58,"secondMs":3},{"firstMs":60,"secondMs":3},{"firstMs":57,"secondMs":3}],"traversalMs":1863},"{\"search\":\"İω\",\"sort\":\"oldest\"}":{"total":33333,"samples":[{"firstMs":56,"secondMs":2},{"firstMs":59,"secondMs":1},{"firstMs":55,"secondMs":2}],"traversalMs":2990},"{\"search\":\"not found\"}":{"total":0,"samples":[{"firstMs":437,"secondMs":0},{"firstMs":425,"secondMs":0},{"firstMs":437,"secondMs":0}],"traversalMs":434},"{\"month\":\"2026-10\",\"accountId\":\"savings\"}":{"total":31,"samples":[{"firstMs":251,"secondMs":0},{"firstMs":258,"secondMs":0},{"firstMs":245,"secondMs":0}],"traversalMs":193},"{\"month\":\"1999-02\",\"accountId\":\"bank\",\"categoryId\":\"food\",\"search\":\"%_\",\"sort\":\"oldest\"}":{"total":18,"samples":[{"firstMs":189,"secondMs":0},{"firstMs":184,"secondMs":0},{"firstMs":173,"secondMs":0}],"traversalMs":187}},"dashboardMs":[1,1,1],"dashboardDifferences":[{"k":"recentTransactionCount","current":134,"baseline":135}]}
+
+      at log (__tests__/transactionHistoryPhase5E3FiftyYears.test.ts:104:13)
+
+PASS __tests__/transactionHistoryPhase5E3FiftyYears.test.ts (97.838 s)
+  √ 100k over 50 years, civil: every page exact, timings and dashboard (34997 ms)
+  √ 100k over 50 years, legacy: every page exact, timings and dashboard (30791 ms)
+  √ 100k over 50 years, migrated: every page exact, timings and dashboard (30894 ms)
+  ○ skipped 50-year civil shape: density and keyset path
+  ○ skipped 50-year legacy shape: density and keyset path
+  ○ skipped 50-year migrated shape: density and keyset path
+
+Test Suites: 1 passed, 1 total
+Tests:       3 skipped, 3 passed, 6 total
+Snapshots:   0 total
+Time:        97.991 s
+Ran all test suites matching /__tests__\\transactionHistoryPhase5E3FiftyYears.test.ts/i with tests matching "100k".
+exit=0

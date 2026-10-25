@@ -1,0 +1,36 @@
+{
+  "label": "poll",
+  "at": "2026-10-25T15:30:51.1660180Z",
+  "pid": "4030",
+  "alarmLines": [
+    "RTC_WAKEUP #0: Alarm{6529358 type 0 when 1795770000000 com.smartfin.snapshot5b2.tests}",
+    "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+    "operation=PendingIntent{81dbcb1: PendingIntentRecord{60d7596 com.smartfin.snapshot5b2.tests broadcastIntent}}",
+    "RTC_WAKEUP #0: Alarm{d098d04 type 0 when 1798362000000 com.smartfin.snapshot5b2.tests}",
+    "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+    "operation=PendingIntent{b2072ed: PendingIntentRecord{235522 com.smartfin.snapshot5b2.tests broadcastIntent}}"
+  ],
+  "reminderAlarms": 2,
+  "jobLines": [
+    "JOB #u0a80/1: 372eca4 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+    "u0a80 tag=*job*/com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+    "Source: uid=u0a80 user=0 pkg=com.smartfin.snapshot5b2.tests",
+    "Service: com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+    "JOB #u0a80/2: 34f1569 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+    "u0a80 tag=*job*/com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+    "Source: uid=u0a80 user=0 pkg=com.smartfin.snapshot5b2.tests",
+    "Service: com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+    "#u0a80/1 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+    "#u0a80/2 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+    "#u0a80/1 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+    "#u0a80/2 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+    "u0a80 / com.smartfin.snapshot5b2.tests: 1x pending 1x active-top",
+    "-13s589ms START: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+    "-13s554ms  STOP: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService"
+  ],
+  "observeLog": [],
+  "processStarts": [
+    "10-25 15:30:35.789  1640  1885 I am_proc_start: [0,3705,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]",
+    "10-25 15:30:43.204  1640  2969 I am_proc_start: [0,4030,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]"
+  ]
+}

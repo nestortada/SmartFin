@@ -2,7 +2,8 @@ import { NativeModules, Platform } from 'react-native';
 import { nativeDatabaseToken, type DatabasePermit } from '../../../database/databaseCoordination';
 import { parseDeletionIntent, requireDeletionId, type DeletionPlatformInventory } from '../types/financialDeletion';
 
-export type DeletionRecovery = { status: 'none' | 'unknown' | 'cleanupPending' | 'completed'; id?: string };
+/** `running`: another Android owner (receiver/Worker) holds the cleanup mutex right now. */
+export type DeletionRecovery = { status: 'none' | 'unknown' | 'cleanupPending' | 'completed' | 'running'; id?: string };
 export type FinancialDeletionLifecycle = {
   begin: () => Promise<{ status: 'admitted' | 'rejected' | 'unknown'; id?: string }>;
   inventory: (id: string, permit: DatabasePermit) => Promise<DeletionPlatformInventory>;
@@ -55,10 +56,10 @@ export function financialDeletionLifecycle(): FinancialDeletionLifecycle {
       const json = await module.recoverFinancialDeletion();
       const value: unknown = typeof json === 'string' ? JSON.parse(json) : undefined;
       if (!value || typeof value !== 'object' || !('status' in value) ||
-          !['none', 'unknown', 'cleanupPending', 'completed'].includes(String(value.status)))
+          !['none', 'unknown', 'cleanupPending', 'completed', 'running'].includes(String(value.status)))
         throw new Error('Recuperación de borrado inválida.');
       const id = 'id' in value ? requireDeletionId(value.id) : undefined;
-      if (value.status !== 'none' && !id) throw new Error('Recuperación sin identidad.');
+      if (value.status !== 'none' && value.status !== 'running' && !id) throw new Error('Recuperación sin identidad.');
       return { status: value.status as DeletionRecovery['status'], id };
     },
   };
@@ -71,9 +72,45 @@ export async function subscriptionResourceEpoch(permit: DatabasePermit): Promise
   const value = await native().resourceEpoch(token(permit));
   return value === 'legacy' ? value : requireDeletionId(value);
 }
+// JS callers that start together (App maintenance and AppNavigator on open or
+// foreground) share one native call instead of contending with each other.
+let recovering: Promise<DeletionRecovery> | undefined;
 export async function recoverFinancialDeletion(): Promise<DeletionRecovery> {
   if (Platform.OS !== 'android') return { status: 'none' };
   const module: unknown = NativeModules.SmartFinDatabaseLifecycle;
   if (!module || typeof module !== 'object' || typeof Reflect.get(module, 'recoverFinancialDeletion') !== 'function') return { status: 'none' };
-  return financialDeletionLifecycle().recover();
+  if (!recovering) {
+    recovering = financialDeletionLifecycle().recover();
+    const clear = () => { recovering = undefined; };
+    recovering.then(clear, clear);
+  }
+  return recovering;
+}
+
+export type RecoveryWaitOptions = {
+  /** Called on each observation of another owner's recovery (presentation only). */
+  onRunning?: () => void;
+  /** Stops waiting when the caller is gone (unmounted screen or superseded task). */
+  isCurrent?: () => boolean;
+  intervalMs?: number;
+  timeoutMs?: number;
+  sleep?: (ms: number) => Promise<void>;
+};
+/**
+ * Waits, bounded, while another Android owner recovers, then returns its final
+ * status. Never retries the deletion itself: recover() only reads the durable
+ * intent and resumes idempotent cleanup. Unexpected failures still reject.
+ */
+export async function awaitFinancialDeletionRecovery(options: RecoveryWaitOptions = {}): Promise<DeletionRecovery> {
+  const { onRunning, isCurrent = () => true, intervalMs = 750, timeoutMs = 30000,
+    sleep = ms => new Promise<void>(resolve => setTimeout(resolve, ms)) } = options;
+  let waited = 0;
+  for (;;) {
+    const recovery = await recoverFinancialDeletion();
+    if (recovery.status !== 'running' || !isCurrent() || waited >= timeoutMs) return recovery;
+    onRunning?.();
+    await sleep(intervalMs);
+    waited += intervalMs;
+    if (!isCurrent()) return recovery;
+  }
 }

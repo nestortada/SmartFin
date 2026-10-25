@@ -14,6 +14,7 @@ import org.json.JSONObject
 /** Process admission plus a durable fail-closed marker. SQLite is authoritative for commit/epoch.
  * Never waits for SAF, JS or WorkManager with a database participant or this monitor held. */
 object SmartFinFinancialDeletion {
+  class CleanupAlreadyRunningException : IllegalStateException("Cleanup already running")
   const val KEY = "__smartfin_financial_lifecycle_v1"
   private val admission = Any()
   private var backups = 0
@@ -132,7 +133,8 @@ object SmartFinFinancialDeletion {
     check(!target.exists() || target.deleteRecursively()) { "Private resource cleanup pending" }
   }
   fun recover(context: Context): JSONObject {
-    check(cleanup.tryLock()) { "Cleanup already running" }
+    // A contender does not own the lock and must never enter its unlock finally.
+    if (!cleanup.tryLock()) throw CleanupAlreadyRunningException()
     try {
       val pending = read(context)
       val admissionId = synchronized(admission) { markerId(context) }

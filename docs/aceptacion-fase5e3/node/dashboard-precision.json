@@ -1,0 +1,570 @@
+{
+  "runtime": "v24.16.0",
+  "date": "2026-10-24T12:00:00.000Z",
+  "results": [
+    {
+      "name": "fractionalTies1000",
+      "rows": 1000,
+      "plan": [
+        "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+        "CORRELATED SCALAR SUBQUERY 1",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 2",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 3",
+        "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+        "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+        "USE TEMP B-TREE FOR ORDER BY"
+      ],
+      "exactDecimal": {
+        "monthlyIncome": "258.30",
+        "monthlyExpenses": "671.60",
+        "monthlySavings": "-413.30"
+      },
+      "current": {
+        "summary": {
+          "monthlyIncome": 258.2999999999997,
+          "monthlyExpenses": 671.6000000000026,
+          "monthlySavings": -413.3000000000029
+        },
+        "display": {
+          "monthlyIncome": "$ 258",
+          "monthlyExpenses": "$ 672",
+          "monthlySavings": "-$ 413"
+        },
+        "equalsExplicit": [
+          "rowidAsc"
+        ]
+      },
+      "historical": {
+        "summary": {
+          "monthlyIncome": 258.29999999999967,
+          "monthlyExpenses": 671.6000000000026,
+          "monthlySavings": -413.30000000000297
+        },
+        "display": {
+          "monthlyIncome": "$ 258",
+          "monthlyExpenses": "$ 672",
+          "monthlySavings": "-$ 413"
+        },
+        "equalsExplicit": [
+          "rowidDesc"
+        ]
+      },
+      "explicit": {
+        "rowidAsc": {
+          "summary": {
+            "monthlyIncome": 258.2999999999997,
+            "monthlyExpenses": 671.6000000000026,
+            "monthlySavings": -413.3000000000029
+          },
+          "firstIds": [
+            "load-1",
+            "load-2",
+            "load-3"
+          ],
+          "display": {
+            "monthlyIncome": "$ 258",
+            "monthlyExpenses": "$ 672",
+            "monthlySavings": "-$ 413"
+          }
+        },
+        "rowidDesc": {
+          "summary": {
+            "monthlyIncome": 258.29999999999967,
+            "monthlyExpenses": 671.6000000000026,
+            "monthlySavings": -413.30000000000297
+          },
+          "firstIds": [
+            "load-1000",
+            "load-998",
+            "load-997"
+          ],
+          "display": {
+            "monthlyIncome": "$ 258",
+            "monthlyExpenses": "$ 672",
+            "monthlySavings": "-$ 413"
+          }
+        },
+        "idAsc": {
+          "summary": {
+            "monthlyIncome": 258.2999999999997,
+            "monthlyExpenses": 671.6000000000028,
+            "monthlySavings": -413.300000000003
+          },
+          "firstIds": [
+            "load-1",
+            "load-10",
+            "load-100"
+          ],
+          "display": {
+            "monthlyIncome": "$ 258",
+            "monthlyExpenses": "$ 672",
+            "monthlySavings": "-$ 413"
+          }
+        }
+      },
+      "binaryEqual": false,
+      "displayEqual": true,
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 900
+      }
+    },
+    {
+      "name": "integerTies1000",
+      "rows": 1000,
+      "plan": [
+        "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+        "CORRELATED SCALAR SUBQUERY 1",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 2",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 3",
+        "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+        "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+        "USE TEMP B-TREE FOR ORDER BY"
+      ],
+      "exactDecimal": {
+        "monthlyIncome": "998000.00",
+        "monthlyExpenses": "2999000.00",
+        "monthlySavings": "-2001000.00"
+      },
+      "current": {
+        "summary": {
+          "monthlyIncome": 998000,
+          "monthlyExpenses": 2999000,
+          "monthlySavings": -2001000
+        },
+        "display": {
+          "monthlyIncome": "$ 998.000",
+          "monthlyExpenses": "$ 2.999.000",
+          "monthlySavings": "-$ 2.001.000"
+        },
+        "equalsExplicit": [
+          "rowidAsc",
+          "rowidDesc",
+          "idAsc"
+        ]
+      },
+      "historical": {
+        "summary": {
+          "monthlyIncome": 998000,
+          "monthlyExpenses": 2999000,
+          "monthlySavings": -2001000
+        },
+        "display": {
+          "monthlyIncome": "$ 998.000",
+          "monthlyExpenses": "$ 2.999.000",
+          "monthlySavings": "-$ 2.001.000"
+        },
+        "equalsExplicit": [
+          "rowidAsc",
+          "rowidDesc",
+          "idAsc"
+        ]
+      },
+      "explicit": {
+        "rowidAsc": {
+          "summary": {
+            "monthlyIncome": 998000,
+            "monthlyExpenses": 2999000,
+            "monthlySavings": -2001000
+          },
+          "firstIds": [
+            "int-1",
+            "int-2",
+            "int-3"
+          ],
+          "display": {
+            "monthlyIncome": "$ 998.000",
+            "monthlyExpenses": "$ 2.999.000",
+            "monthlySavings": "-$ 2.001.000"
+          }
+        },
+        "rowidDesc": {
+          "summary": {
+            "monthlyIncome": 998000,
+            "monthlyExpenses": 2999000,
+            "monthlySavings": -2001000
+          },
+          "firstIds": [
+            "int-1000",
+            "int-999",
+            "int-998"
+          ],
+          "display": {
+            "monthlyIncome": "$ 998.000",
+            "monthlyExpenses": "$ 2.999.000",
+            "monthlySavings": "-$ 2.001.000"
+          }
+        },
+        "idAsc": {
+          "summary": {
+            "monthlyIncome": 998000,
+            "monthlyExpenses": 2999000,
+            "monthlySavings": -2001000
+          },
+          "firstIds": [
+            "int-1",
+            "int-10",
+            "int-100"
+          ],
+          "display": {
+            "monthlyIncome": "$ 998.000",
+            "monthlyExpenses": "$ 2.999.000",
+            "monthlySavings": "-$ 2.001.000"
+          }
+        }
+      },
+      "binaryEqual": true,
+      "displayEqual": true,
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 1000
+      }
+    },
+    {
+      "name": "centavosDisplayFlip",
+      "rows": 9,
+      "plan": [
+        "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+        "CORRELATED SCALAR SUBQUERY 1",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 2",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 3",
+        "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+        "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+        "USE TEMP B-TREE FOR ORDER BY"
+      ],
+      "exactDecimal": {
+        "monthlyIncome": "0.50",
+        "monthlyExpenses": "2.50",
+        "monthlySavings": "-2.00"
+      },
+      "current": {
+        "summary": {
+          "monthlyIncome": 0.5,
+          "monthlyExpenses": 2.4999999999999996,
+          "monthlySavings": -1.9999999999999996
+        },
+        "display": {
+          "monthlyIncome": "$ 1",
+          "monthlyExpenses": "$ 2",
+          "monthlySavings": "-$ 2"
+        },
+        "equalsExplicit": [
+          "rowidAsc",
+          "idAsc"
+        ]
+      },
+      "historical": {
+        "summary": {
+          "monthlyIncome": 0.49999999999999994,
+          "monthlyExpenses": 2.5,
+          "monthlySavings": -2
+        },
+        "display": {
+          "monthlyIncome": "$ 0",
+          "monthlyExpenses": "$ 3",
+          "monthlySavings": "-$ 2"
+        },
+        "equalsExplicit": [
+          "rowidDesc"
+        ]
+      },
+      "explicit": {
+        "rowidAsc": {
+          "summary": {
+            "monthlyIncome": 0.5,
+            "monthlyExpenses": 2.4999999999999996,
+            "monthlySavings": -1.9999999999999996
+          },
+          "firstIds": [
+            "inc-0",
+            "inc-1",
+            "inc-2"
+          ],
+          "display": {
+            "monthlyIncome": "$ 1",
+            "monthlyExpenses": "$ 2",
+            "monthlySavings": "-$ 2"
+          }
+        },
+        "rowidDesc": {
+          "summary": {
+            "monthlyIncome": 0.49999999999999994,
+            "monthlyExpenses": 2.5,
+            "monthlySavings": -2
+          },
+          "firstIds": [
+            "exp-5",
+            "exp-4",
+            "exp-3"
+          ],
+          "display": {
+            "monthlyIncome": "$ 0",
+            "monthlyExpenses": "$ 3",
+            "monthlySavings": "-$ 2"
+          }
+        },
+        "idAsc": {
+          "summary": {
+            "monthlyIncome": 0.5,
+            "monthlyExpenses": 2.4999999999999996,
+            "monthlySavings": -1.9999999999999996
+          },
+          "firstIds": [
+            "exp-0",
+            "exp-1",
+            "exp-2"
+          ],
+          "display": {
+            "monthlyIncome": "$ 1",
+            "monthlyExpenses": "$ 2",
+            "monthlySavings": "-$ 2"
+          }
+        }
+      },
+      "binaryEqual": false,
+      "displayEqual": false,
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 9
+      }
+    },
+    {
+      "name": "centavosNoTies",
+      "rows": 9,
+      "plan": [
+        "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+        "CORRELATED SCALAR SUBQUERY 1",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 2",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 3",
+        "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+        "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+        "USE TEMP B-TREE FOR ORDER BY"
+      ],
+      "exactDecimal": {
+        "monthlyIncome": "0.50",
+        "monthlyExpenses": "2.50",
+        "monthlySavings": "-2.00"
+      },
+      "current": {
+        "summary": {
+          "monthlyIncome": 0.49999999999999994,
+          "monthlyExpenses": 2.5,
+          "monthlySavings": -2
+        },
+        "display": {
+          "monthlyIncome": "$ 0",
+          "monthlyExpenses": "$ 3",
+          "monthlySavings": "-$ 2"
+        },
+        "equalsExplicit": [
+          "rowidAsc",
+          "rowidDesc",
+          "idAsc"
+        ]
+      },
+      "historical": {
+        "summary": {
+          "monthlyIncome": 0.49999999999999994,
+          "monthlyExpenses": 2.5,
+          "monthlySavings": -2
+        },
+        "display": {
+          "monthlyIncome": "$ 0",
+          "monthlyExpenses": "$ 3",
+          "monthlySavings": "-$ 2"
+        },
+        "equalsExplicit": [
+          "rowidAsc",
+          "rowidDesc",
+          "idAsc"
+        ]
+      },
+      "explicit": {
+        "rowidAsc": {
+          "summary": {
+            "monthlyIncome": 0.49999999999999994,
+            "monthlyExpenses": 2.5,
+            "monthlySavings": -2
+          },
+          "firstIds": [
+            "exp-5",
+            "exp-4",
+            "exp-3"
+          ],
+          "display": {
+            "monthlyIncome": "$ 0",
+            "monthlyExpenses": "$ 3",
+            "monthlySavings": "-$ 2"
+          }
+        },
+        "rowidDesc": {
+          "summary": {
+            "monthlyIncome": 0.49999999999999994,
+            "monthlyExpenses": 2.5,
+            "monthlySavings": -2
+          },
+          "firstIds": [
+            "exp-5",
+            "exp-4",
+            "exp-3"
+          ],
+          "display": {
+            "monthlyIncome": "$ 0",
+            "monthlyExpenses": "$ 3",
+            "monthlySavings": "-$ 2"
+          }
+        },
+        "idAsc": {
+          "summary": {
+            "monthlyIncome": 0.49999999999999994,
+            "monthlyExpenses": 2.5,
+            "monthlySavings": -2
+          },
+          "firstIds": [
+            "exp-5",
+            "exp-4",
+            "exp-3"
+          ],
+          "display": {
+            "monthlyIncome": "$ 0",
+            "monthlyExpenses": "$ 3",
+            "monthlySavings": "-$ 2"
+          }
+        }
+      },
+      "binaryEqual": true,
+      "displayEqual": true,
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 9
+      }
+    },
+    {
+      "name": "largeCentavosTies10000",
+      "rows": 10000,
+      "plan": [
+        "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+        "CORRELATED SCALAR SUBQUERY 1",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 2",
+        "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+        "CORRELATED SCALAR SUBQUERY 3",
+        "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+        "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+        "USE TEMP B-TREE FOR ORDER BY"
+      ],
+      "exactDecimal": {
+        "monthlyIncome": "3000050.00",
+        "monthlyExpenses": "11998000.00",
+        "monthlySavings": "-8997950.00"
+      },
+      "current": {
+        "summary": {
+          "monthlyIncome": 3000050,
+          "monthlyExpenses": 11997999.999999998,
+          "monthlySavings": -8997949.999999998
+        },
+        "display": {
+          "monthlyIncome": "$ 3.000.050",
+          "monthlyExpenses": "$ 11.998.000",
+          "monthlySavings": "-$ 8.997.950"
+        },
+        "equalsExplicit": [
+          "rowidAsc"
+        ]
+      },
+      "historical": {
+        "summary": {
+          "monthlyIncome": 3000050.0000000005,
+          "monthlyExpenses": 11998000.000000002,
+          "monthlySavings": -8997950.000000002
+        },
+        "display": {
+          "monthlyIncome": "$ 3.000.050",
+          "monthlyExpenses": "$ 11.998.000",
+          "monthlySavings": "-$ 8.997.950"
+        },
+        "equalsExplicit": [
+          "rowidDesc"
+        ]
+      },
+      "explicit": {
+        "rowidAsc": {
+          "summary": {
+            "monthlyIncome": 3000050,
+            "monthlyExpenses": 11997999.999999998,
+            "monthlySavings": -8997949.999999998
+          },
+          "firstIds": [
+            "big-1",
+            "big-2",
+            "big-3"
+          ],
+          "display": {
+            "monthlyIncome": "$ 3.000.050",
+            "monthlyExpenses": "$ 11.998.000",
+            "monthlySavings": "-$ 8.997.950"
+          }
+        },
+        "rowidDesc": {
+          "summary": {
+            "monthlyIncome": 3000050.0000000005,
+            "monthlyExpenses": 11998000.000000002,
+            "monthlySavings": -8997950.000000002
+          },
+          "firstIds": [
+            "big-10000",
+            "big-9999",
+            "big-9998"
+          ],
+          "display": {
+            "monthlyIncome": "$ 3.000.050",
+            "monthlyExpenses": "$ 11.998.000",
+            "monthlySavings": "-$ 8.997.950"
+          }
+        },
+        "idAsc": {
+          "summary": {
+            "monthlyIncome": 3000050,
+            "monthlyExpenses": 11997999.999999996,
+            "monthlySavings": -8997949.999999996
+          },
+          "firstIds": [
+            "big-1",
+            "big-10",
+            "big-100"
+          ],
+          "display": {
+            "monthlyIncome": "$ 3.000.050",
+            "monthlyExpenses": "$ 11.998.000",
+            "monthlySavings": "-$ 8.997.950"
+          }
+        }
+      },
+      "binaryEqual": false,
+      "displayEqual": true,
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 10000
+      }
+    }
+  ]
+}

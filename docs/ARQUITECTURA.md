@@ -272,6 +272,12 @@ SQLite y terminar el efecto protegido. Los tokens tienen dueño, generación y
 revocación. WorkManager no conserva esa participación mientras espera Headless.
 Las esperas, copia e integridad nativas ejecutan fuera del hilo principal.
 
+En fase 5D el receptor de entrega adquiere un dueño nativo exclusivo propio,
+sin esperar JS, y lo retiene hasta cerrar su conexión. Valida y copia el contenido,
+publica fuera de una transacción SQLite y confirma después con UPDATE condicional.
+Los receptores de recuperación siguen encolando sin retener permisos mientras
+Headless JS trabaja. [Garantías y límites de entrega](atomicidad-financiera-fase5d.md).
+
 `settings/services/localDatabaseSnapshot.ts` ofrece captura local privada, sin
 conectarla al botón/publicador SAF existente. Comprueba journal/checkpoint,
 metadatos/FK/integridad, cierra con recibo, copia y valida en Kotlin y reabre/verifica

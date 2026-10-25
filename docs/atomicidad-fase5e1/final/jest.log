@@ -1,0 +1,119 @@
+PASS __tests__/creditCardReconciliationEquivalence.test.ts (62.525 s)
+PASS __tests__/financialAtomicityPhase5E.test.ts (26.211 s)
+PASS __tests__/transactionHistoryPagination.test.ts (10.872 s)
+PASS __tests__/creditCardAssociationScaling.test.ts (14.366 s)
+PASS __tests__/financialAtomicityPhase2.test.ts (9.015 s)
+PASS __tests__/subscriptionAtomicityPhase4.test.ts (8.033 s)
+PASS __tests__/financialAtomicityPhase3B.test.ts (5.574 s)
+PASS __tests__/localSnapshotCoordination.test.ts (5.379 s)
+PASS __tests__/financialAtomicityPhase0.test.ts
+PASS __tests__/dashboardSummary.test.ts
+PASS __tests__/financialAtomicityPhase4.test.ts
+PASS __tests__/financialDeletionPhase5C.test.ts
+PASS __tests__/creditCardReconciliationBaseline.test.ts
+PASS __tests__/financialAtomicityPhase5E1.test.ts
+PASS __tests__/transactionsScreen.test.tsx
+PASS __tests__/subscriptions.test.ts
+PASS __tests__/financialAtomicityPhase3A.test.ts
+PASS __tests__/sharedForgiveness.test.ts
+PASS __tests__/geminiCommandService.test.ts
+PASS __tests__/subscriptionInterface.test.tsx
+PASS __tests__/sharedExpenses.test.ts
+PASS __tests__/creditCardPaymentScreen.test.tsx
+PASS __tests__/sharedFinancialTotals.test.ts
+FAIL __tests__/transactionHistoryRefinement.test.ts
+  ● cancelled date validation does not publish a reusable proof or enqueue its remaining queries
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 2
+    Received length: 3
+    Received array:  ["SELECT revision FROM financial_data_revision WHERE id = 1;", "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions WHERE 1 = 1 LIMIT 1;", "SELECT date FROM (
+          SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT -1
+        ) WHERE (
+          length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?
+          OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'
+          OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'
+          OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'
+          OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'
+          OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'
+          OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL
+          OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')
+        ) LIMIT 1;"]
+
+
+
+      at Object.<anonymous> (__tests__/transactionHistoryRefinement.test.ts:304:17)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+PASS __tests__/sharedSQLiteCoordination.test.ts
+PASS __tests__/financialIntegrity.test.ts
+PASS __tests__/sqliteRecoveryLifecycle.test.ts
+PASS __tests__/transactionDates.test.ts
+PASS __tests__/sharedCommandReads.test.ts
+PASS __tests__/financialAtomicityInfrastructure.test.ts
+PASS __tests__/aiSubscriptions.test.ts
+PASS __tests__/aiTransfers.test.ts
+PASS __tests__/aiDraftRepository.test.ts
+PASS __tests__/aiConfirmationPhase4.test.tsx
+PASS __tests__/useTransactionsPagination.test.tsx
+PASS __tests__/subscriptionMaintenanceComparison.test.ts
+PASS __tests__/aiCommandPlanner.test.ts
+PASS __tests__/financialDeletionBaseline.test.ts
+PASS __tests__/backupControls.test.tsx
+PASS __tests__/driveBackupService.test.ts
+PASS __tests__/sharedCommandReaderWait.test.ts
+PASS __tests__/manageSecurity.test.ts
+PASS __tests__/categoryManagement.test.ts
+PASS __tests__/financialDataRepository.test.ts
+PASS __tests__/creditCardsOverview.test.ts
+PASS __tests__/creditCardTransactionRelations.test.ts
+PASS __tests__/saveManualTransaction.test.ts
+PASS __tests__/creditCardRepository.test.ts
+PASS __tests__/backupPublication.test.ts
+PASS __tests__/debitCardManagement.test.ts
+PASS __tests__/creditCardFormatters.test.ts
+PASS __tests__/subscriptionPresentation.test.ts
+PASS __tests__/debitCardsOverview.test.ts
+PASS __tests__/transactionAccountFilter.test.ts
+PASS __tests__/subscriptionRecurrence.test.ts
+PASS __tests__/sqliteAndroidRecoveryPatch.test.ts
+PASS __tests__/settingsTaskOwner.test.ts
+PASS __tests__/settingsRepository.test.ts
+PASS __tests__/copAmountInput.test.ts
+
+Summary of all failing tests
+FAIL __tests__/transactionHistoryRefinement.test.ts
+  ● cancelled date validation does not publish a reusable proof or enqueue its remaining queries
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 2
+    Received length: 3
+    Received array:  ["SELECT revision FROM financial_data_revision WHERE id = 1;", "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions WHERE 1 = 1 LIMIT 1;", "SELECT date FROM (
+          SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT -1
+        ) WHERE (
+          length(date) <> CAST(? AS INTEGER) OR date NOT GLOB ?
+          OR substr(date, 6, 2) NOT BETWEEN '01' AND '12'
+          OR substr(date, 9, 2) NOT BETWEEN '01' AND '31'
+          OR substr(date, 12, 2) NOT BETWEEN '00' AND '23'
+          OR substr(date, 15, 2) NOT BETWEEN '00' AND '59'
+          OR substr(date, 18, 2) NOT BETWEEN '00' AND '59'
+          OR strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day') IS NULL
+          OR substr(date, 9, 2) > strftime('%d', substr(date, 1, 7) || '-01', '+1 month', '-1 day')
+        ) LIMIT 1;"]
+
+
+
+      at Object.<anonymous> (__tests__/transactionHistoryRefinement.test.ts:304:17)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+
+Test Suites: 1 failed, 3 skipped, 58 passed, 59 of 62 total
+Tests:       1 failed, 3 skipped, 645 passed, 649 total
+Snapshots:   8 passed, 8 total
+Time:        179.118 s
+Ran all test suites.
+Test results written to: docs\atomicidad-fase5e1\final\jest-results.json

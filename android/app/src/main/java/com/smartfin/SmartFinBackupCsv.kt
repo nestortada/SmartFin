@@ -3,39 +3,51 @@ package com.smartfin
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import java.io.File
+import org.json.JSONArray
 import org.json.JSONObject
 
 /** CSV queries preserve the historical contract; every query uses the same private snapshot. */
 object SmartFinBackupCsv {
   val fixedFileNames: Set<String> get() = EXPORTS.map { it.fileName }.toSet()
-  fun validate(file: File, expected: JSONObject) {
+  fun validate(file: File, expected: JSONObject, timings: JSONObject? = null) {
     SQLiteDatabase.openDatabase(file.path, null, SQLiteDatabase.OPEN_READONLY).use { db ->
       db.execSQL("PRAGMA foreign_keys=ON")
-      val actual = SmartFinLocalSnapshot.describe(db)
+      val actual = SmartFinLocalSnapshot.describe(db, timings)
       for (key in listOf("schema", "tables", "revision", "userVersion", "schemaVersion"))
         check(actual.get(key).toString() == expected.get(key).toString()) { "Snapshot metadata mismatch: $key" }
     }
   }
-  fun export(file: File, directory: File): List<Pair<String, File>> {
+  /** `timings`, when given, receives one {name, rows, ms} entry per file (observation only). */
+  fun export(file: File, directory: File, timings: JSONArray? = null): List<Pair<String, File>> {
     val result = mutableListOf<Pair<String, File>>()
     SQLiteDatabase.openDatabase(file.path, null, SQLiteDatabase.OPEN_READONLY).use { db ->
       db.execSQL("PRAGMA foreign_keys=ON")
       for (definition in EXPORTS) {
         val csv = File(directory, definition.fileName)
-        writeCsv(csv, db, definition.query)
+        timed(timings, definition.fileName) { writeCsv(csv, db, definition.query) }
         result.add(definition.fileName to csv)
       }
       for (year in queryYears(db)) {
         check(year.matches(Regex("[0-9]{4}"))) { "Invalid transaction year" }
         val name = "movimientos-$year.csv"
         val csv = File(directory, name)
-        writeCsv(csv, db, YEARLY_TRANSACTIONS_QUERY, arrayOf(year))
+        // The range on the indexed civil-day expression only narrows the scan; the
+        // original year predicate still decides membership and ORDER BY is unchanged.
+        timed(timings, name) {
+          if (year == "9999") writeCsv(csv, db, YEARLY_TRANSACTIONS_LAST_QUERY, arrayOf(year))
+          else writeCsv(csv, db, YEARLY_TRANSACTIONS_QUERY, arrayOf(year, (year.toInt() + 1).toString().padStart(4, '0')))
+        }
         result.add(name to csv)
       }
     }
     return result
   }
-  private fun writeCsv(file: File, database: SQLiteDatabase, query: String, args: Array<String>? = null) {
+  private inline fun timed(timings: JSONArray?, name: String, write: () -> Int) {
+    val start = System.nanoTime()
+    val rows = write()
+    timings?.put(JSONObject().put("name", name).put("rows", rows).put("ms", (System.nanoTime() - start) / 1_000_000.0))
+  }
+  private fun writeCsv(file: File, database: SQLiteDatabase, query: String, args: Array<String>? = null): Int =
     database.rawQuery(query, args).use { cursor ->
       file.outputStream().use { output ->
         output.write(byteArrayOf(0xEF.toByte(), 0xBB.toByte(), 0xBF.toByte()))
@@ -53,8 +65,8 @@ object SmartFinBackupCsv {
           }
         }
       }
+      cursor.count
     }
-  }
   private fun cursorValue(cursor: Cursor, index: Int): String =
       if (cursor.isNull(index)) "" else cursor.getString(index)
 
@@ -100,7 +112,9 @@ object SmartFinBackupCsv {
             CsvExport("devoluciones-anticipos.csv", "SELECT * FROM shared_returns ORDER BY date;"),
         )
 
-    private const val YEARLY_TRANSACTIONS_QUERY =
+    private const val YEARLY_ORDER = "ORDER BY COALESCE(t.civil_date, substr(t.date,1,10)), t.local_time, t.created_at;"
+
+    private const val YEARLY_SELECT =
         "SELECT t.id, COALESCE(t.civil_date, substr(t.date,1,10)) AS fecha, " +
             "t.local_time AS hora, t.time_zone AS zona_horaria, t.date_precision AS precision_fecha, " +
             "t.date AS fecha_original, t.description AS descripcion, " +
@@ -115,8 +129,17 @@ object SmartFinBackupCsv {
             "LEFT JOIN accounts a ON a.id = t.account_id " +
             "LEFT JOIN accounts ta ON ta.id = t.target_account_id " +
             "LEFT JOIN categories c ON c.id = t.category_id " +
-            "LEFT JOIN subcategories s ON s.id = t.subcategory_id " +
-            "WHERE substr(COALESCE(t.civil_date, t.date), 1, 4) = ? " +
-            "ORDER BY COALESCE(t.civil_date, substr(t.date,1,10)), t.local_time, t.created_at;"
+            "LEFT JOIN subcategories s ON s.id = t.subcategory_id "
 
+    private const val YEARLY_TRANSACTIONS_QUERY =
+        YEARLY_SELECT +
+            "WHERE COALESCE(t.civil_date, substr(t.date,1,10)) >= ?1 " +
+            "AND COALESCE(t.civil_date, substr(t.date,1,10)) < ?2 " +
+            "AND substr(COALESCE(t.civil_date, t.date), 1, 4) = ?1 " + YEARLY_ORDER
+
+    // Android binds only non-null strings: year 9999 has no upper bound.
+    private const val YEARLY_TRANSACTIONS_LAST_QUERY =
+        YEARLY_SELECT +
+            "WHERE COALESCE(t.civil_date, substr(t.date,1,10)) >= ?1 " +
+            "AND substr(COALESCE(t.civil_date, t.date), 1, 4) = ?1 " + YEARLY_ORDER
 }

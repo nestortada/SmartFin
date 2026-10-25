@@ -1,0 +1,729 @@
+{
+  "verdict": "bloqueado",
+  "complete": false,
+  "device": "HONOR CRT-NX3 API 35",
+  "campaigns": [
+    {
+      "name": "contender-payment",
+      "campaign": "phase5d-matrix",
+      "group": "supplemental-real-financial-contender",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 27,
+      "apkSha256": "b59858ecc5a945f4ec415dd9ba4a014f1836e59998cc6c62e7edb78598e2d9cc"
+    },
+    {
+      "name": "integrated-final2",
+      "campaign": "phase5e-integrated",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 9,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "performance-final",
+      "campaign": "phase5e-performance",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 6,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "reboot-stage",
+      "campaign": "phase5d-reboot-stage",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "reboot-verify-final2",
+      "campaign": "phase5d-reboot-verify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-cleanup-faults",
+      "campaign": "phase5c-cleanup-matrix",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 11,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-close-lost",
+      "campaign": "close-lost",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 1,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-core",
+      "campaign": "core",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 24,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-deletion-confirmed-restart",
+      "campaign": "phase5c-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-deletion-lost-after",
+      "campaign": "phase5c-lost-after",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-deletion-lost-before",
+      "campaign": "phase5c-lost-before",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-deletion-rollback",
+      "campaign": "phase5c-matrix",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 78,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-deletion-unknown-restart",
+      "campaign": "phase5c-unknown-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-denied",
+      "campaign": "phase5d-permission",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-kill-afterAck",
+      "campaign": "phase5d-kill-afterAck",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 1,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-kill-afterNotify",
+      "campaign": "phase5d-kill-afterNotify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 1,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-kill-beforeNotify",
+      "campaign": "phase5d-kill-beforeNotify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 1,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-notification-epoch",
+      "campaign": "phase5d-epoch",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-notifications",
+      "campaign": "phase5d-matrix",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 27,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-open-lost",
+      "campaign": "open-lost",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 1,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-process-restart",
+      "campaign": "phase5d-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-process-stage",
+      "campaign": "phase5d-stage-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-publication",
+      "campaign": "publication",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 28,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-publication-after-verify",
+      "campaign": "publication-after-verify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 1,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-publication-restart-verify",
+      "campaign": "publication-restart-verify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 1,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-restart-afterAck",
+      "campaign": "phase5d-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-restart-afterNotify",
+      "campaign": "phase5d-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-restart-beforeNotify",
+      "campaign": "phase5d-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-restart-verify",
+      "campaign": "restart-verify",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 1,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "regression-worker-headless",
+      "campaign": "phase5d-recovery",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 2,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "restart-final2",
+      "campaign": "phase5e-restart",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": true,
+      "failedMeasurements": [],
+      "observedDefects": [],
+      "controls": 3,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "performance-repeat",
+      "campaign": "phase5e-performance",
+      "group": "primary",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": false,
+      "failedMeasurements": [
+        {
+          "case": "integrated-performance-100000",
+          "status": "exceeded-provisional-budget",
+          "count": 100000,
+          "times": {
+            "dashboardMs": 5009.505768999457,
+            "historyPageMs": 83001.38092800044,
+            "paymentAndReconciliationMs": 466.0200000014156,
+            "subscriptionMaintenanceMs": 249.20123100094497,
+            "captureMs": 6253.927923001349,
+            "concurrentAdmissionWaitMs": 6257.004231000319,
+            "concurrentFinancialWaitMs": 6380.547923000529,
+            "publicationMs": 15688.707692999393,
+            "deletionAndCleanupMs": 3997.5120000001043
+          }
+        }
+      ],
+      "observedDefects": [],
+      "controls": 6,
+      "apkSha256": "f92f629915ef6a743f4aca7a64926b0b12fe6d39089a039b999436055a34e5c1"
+    },
+    {
+      "name": "recovery-contention",
+      "campaign": "phase5d-contention",
+      "group": "diagnostic-production-defect",
+      "harnessCompleted": true,
+      "fullAcceptancePassed": false,
+      "failedMeasurements": [],
+      "observedDefects": [
+        "5E-002"
+      ],
+      "controls": 2,
+      "apkSha256": "f6c0a1d47209776683c64cd8bcd46e0f037d75cb98a192767e63ed62c8cbe34c"
+    }
+  ],
+  "nativeApi35Campaigns": 33,
+  "campaignExecutionComplete": true,
+  "nativeApi35Controls": 257,
+  "samples": [
+    {
+      "count": 1000,
+      "times": {
+        "dashboardMs": 149.49930799938738,
+        "historyPageMs": 330.09476899914443,
+        "paymentAndReconciliationMs": 174.70823100022972,
+        "subscriptionMaintenanceMs": 265.3196930009872,
+        "captureMs": 901.105000000447,
+        "concurrentAdmissionWaitMs": 902.9990769997239,
+        "concurrentFinancialWaitMs": 978.6422310005873,
+        "publicationMs": 279.1655379999429,
+        "deletionAndCleanupMs": 637.6654619984329
+      },
+      "historyOutcome": {
+        "status": "passed"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 2.2819229997694492,
+        "checkpointMs": 0.0024619996547698975,
+        "sourceVerificationMs": 306.62361500039697,
+        "closeMs": 7.530845999717712,
+        "reopenMs": 418.46392299979925,
+        "totalMs": 900.4646150004119
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 49.750461,
+        "csvExportMs": 67.489538,
+        "componentHashMs": 5.895769,
+        "safWriteMs": 58.551384000000006,
+        "safReadbackMs": 22.403536,
+        "publicationTotalMs": 260.862154
+      },
+      "datasetCounts": 1002,
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": true,
+        "publicationWithinProvisional": true
+      }
+    },
+    {
+      "count": 10000,
+      "times": {
+        "dashboardMs": 222.53415399976075,
+        "historyPageMs": 1160.0903839990497,
+        "paymentAndReconciliationMs": 89.67423100024462,
+        "subscriptionMaintenanceMs": 78.69038499891758,
+        "captureMs": 615.0123079996556,
+        "concurrentAdmissionWaitMs": 615.8729240000248,
+        "concurrentFinancialWaitMs": 658.1436930000782,
+        "publicationMs": 476.9874609988183,
+        "deletionAndCleanupMs": 570.1833849996328
+      },
+      "historyOutcome": {
+        "status": "passed"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 0.48099999874830246,
+        "checkpointMs": 0.0006159991025924683,
+        "sourceVerificationMs": 138.56776999868453,
+        "closeMs": 2.05230800062418,
+        "reopenMs": 265.2934610005468,
+        "totalMs": 614.8293069992214
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 86.52977,
+        "csvExportMs": 240.663769,
+        "componentHashMs": 8.64123,
+        "safWriteMs": 57.07076899999999,
+        "safReadbackMs": 22.274920999999996,
+        "publicationTotalMs": 467.535
+      },
+      "datasetCounts": 10002,
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": true,
+        "publicationWithinProvisional": true
+      }
+    },
+    {
+      "count": 100000,
+      "times": {
+        "dashboardMs": 4937.56161500141,
+        "historyPageMs": 79202.5666969996,
+        "paymentAndReconciliationMs": 397.14653899893165,
+        "subscriptionMaintenanceMs": 194.73169199936092,
+        "captureMs": 5814.6193080004305,
+        "concurrentAdmissionWaitMs": 5817.4043080005795,
+        "concurrentFinancialWaitMs": 5952.63192300126,
+        "publicationMs": 15012.59807700105,
+        "deletionAndCleanupMs": 3926.7362309992313
+      },
+      "historyOutcome": {
+        "status": "passed"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 1.722537999972701,
+        "checkpointMs": 0.0011539999395608902,
+        "sourceVerificationMs": 1449.7267690002918,
+        "closeMs": 5.6585390008986,
+        "reopenMs": 1543.1593079995364,
+        "totalMs": 5814.0095380004495
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 1262.312923,
+        "csvExportMs": 13295.905847,
+        "componentHashMs": 51.024384,
+        "safWriteMs": 220.525919,
+        "safReadbackMs": 107.52269599999998,
+        "publicationTotalMs": 14995.715001
+      },
+      "datasetCounts": 100002,
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": true,
+        "publicationWithinProvisional": true
+      }
+    }
+  ],
+  "repeatSamples": [
+    {
+      "count": 1000,
+      "times": {
+        "dashboardMs": 41.37592300027609,
+        "historyPageMs": 87.94761599972844,
+        "paymentAndReconciliationMs": 63.047077000141144,
+        "subscriptionMaintenanceMs": 118.1101539991796,
+        "captureMs": 677.6492309998721,
+        "concurrentAdmissionWaitMs": 679.3332310002297,
+        "concurrentFinancialWaitMs": 737.5522310007364,
+        "publicationMs": 246.446846999228,
+        "deletionAndCleanupMs": 585.0270000007004
+      },
+      "historyOutcome": {
+        "status": "passed"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 1.181538000702858,
+        "checkpointMs": 0.0009230002760887146,
+        "sourceVerificationMs": 161.61446199938655,
+        "closeMs": 5.317230001091957,
+        "reopenMs": 402.5353850014508,
+        "totalMs": 676.9892310015857
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 59.422769,
+        "csvExportMs": 69.912616,
+        "componentHashMs": 4.447769,
+        "safWriteMs": 39.83984600000001,
+        "safReadbackMs": 14.294155999999996,
+        "publicationTotalMs": 232.154231
+      },
+      "datasetCounts": 1002,
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": true,
+        "publicationWithinProvisional": true
+      }
+    },
+    {
+      "count": 10000,
+      "times": {
+        "dashboardMs": 297.3648470006883,
+        "historyPageMs": 2406.74546200037,
+        "paymentAndReconciliationMs": 154.01846100017428,
+        "subscriptionMaintenanceMs": 199.3493069987744,
+        "captureMs": 1431.073537999764,
+        "concurrentAdmissionWaitMs": 1433.707692001015,
+        "concurrentFinancialWaitMs": 1553.3113850001246,
+        "publicationMs": 512.3366149999201,
+        "deletionAndCleanupMs": 954.1692310012877
+      },
+      "historyOutcome": {
+        "status": "passed"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 1.1772309988737106,
+        "checkpointMs": 0.002384999766945839,
+        "sourceVerificationMs": 357.6590769998729,
+        "closeMs": 3.656385000795126,
+        "reopenMs": 806.7916919998825,
+        "totalMs": 1430.4848459996283
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 114.921616,
+        "csvExportMs": 240.859923,
+        "componentHashMs": 8.207693,
+        "safWriteMs": 59.55553700000001,
+        "safReadbackMs": 22.197843999999993,
+        "publicationTotalMs": 496.784307
+      },
+      "datasetCounts": 10002,
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": true,
+        "publicationWithinProvisional": true
+      }
+    },
+    {
+      "count": 100000,
+      "times": {
+        "dashboardMs": 5009.505768999457,
+        "historyPageMs": 83001.38092800044,
+        "paymentAndReconciliationMs": 466.0200000014156,
+        "subscriptionMaintenanceMs": 249.20123100094497,
+        "captureMs": 6253.927923001349,
+        "concurrentAdmissionWaitMs": 6257.004231000319,
+        "concurrentFinancialWaitMs": 6380.547923000529,
+        "publicationMs": 15688.707692999393,
+        "deletionAndCleanupMs": 3997.5120000001043
+      },
+      "historyOutcome": {
+        "status": "passed"
+      },
+      "captureTimings": {
+        "permissionWaitMs": 2.0533070005476475,
+        "checkpointMs": 0.0027699992060661316,
+        "sourceVerificationMs": 1442.0110769998282,
+        "closeMs": 5.636077001690865,
+        "reopenMs": 2048.792539000511,
+        "totalMs": 6253.0800000000745
+      },
+      "publicationTimings": {
+        "snapshotRevalidationMs": 1232.441461,
+        "csvExportMs": 13748.767616,
+        "componentHashMs": 72.787692,
+        "safWriteMs": 324.44731,
+        "safReadbackMs": 213.853381,
+        "publicationTotalMs": 15677.44177
+      },
+      "datasetCounts": 100002,
+      "budgets": {
+        "captureAndAdmissionWithinProvisional": false,
+        "publicationWithinProvisional": true
+      }
+    }
+  ],
+  "provisionalBudgetBreaches": [
+    {
+      "campaign": "performance-repeat",
+      "sample": {
+        "count": 100000,
+        "times": {
+          "dashboardMs": 5009.505768999457,
+          "historyPageMs": 83001.38092800044,
+          "paymentAndReconciliationMs": 466.0200000014156,
+          "subscriptionMaintenanceMs": 249.20123100094497,
+          "captureMs": 6253.927923001349,
+          "concurrentAdmissionWaitMs": 6257.004231000319,
+          "concurrentFinancialWaitMs": 6380.547923000529,
+          "publicationMs": 15688.707692999393,
+          "deletionAndCleanupMs": 3997.5120000001043
+        },
+        "historyOutcome": {
+          "status": "passed"
+        },
+        "captureTimings": {
+          "permissionWaitMs": 2.0533070005476475,
+          "checkpointMs": 0.0027699992060661316,
+          "sourceVerificationMs": 1442.0110769998282,
+          "closeMs": 5.636077001690865,
+          "reopenMs": 2048.792539000511,
+          "totalMs": 6253.0800000000745
+        },
+        "publicationTimings": {
+          "snapshotRevalidationMs": 1232.441461,
+          "csvExportMs": 13748.767616,
+          "componentHashMs": 72.787692,
+          "safWriteMs": 324.44731,
+          "safReadbackMs": 213.853381,
+          "publicationTotalMs": 15677.44177
+        },
+        "datasetCounts": 100002,
+        "budgets": {
+          "captureAndAdmissionWithinProvisional": false,
+          "publicationWithinProvisional": true
+        }
+      }
+    }
+  ],
+  "quality": {
+    "results": [
+      {
+        "name": "jest",
+        "exitCode": 0,
+        "durationMs": 167121
+      },
+      {
+        "name": "typescript",
+        "exitCode": 0,
+        "durationMs": 5530
+      },
+      {
+        "name": "eslint",
+        "exitCode": 0,
+        "durationMs": 8092
+      },
+      {
+        "name": "diff-check",
+        "exitCode": 0,
+        "durationMs": 126
+      }
+    ],
+    "protectedFileCount": 477,
+    "changed": [],
+    "restoredHistoricalReports": [
+      "docs/atomicidad-fase3a1/node-equivalence.json",
+      "docs/atomicidad-fase4/node-subscriptions-matrix.json",
+      "docs/atomicidad-fase4/node-maintenance-comparison.json",
+      "docs/performance/shared-commands/node-reader-wait.json"
+    ]
+  },
+  "bootVerified": true,
+  "rebootObservation": {
+    "automaticAlarm": false,
+    "automaticRecoveryCredited": false,
+    "explicitRecoveryMs": 89.74823100003414
+  },
+  "pending": [
+    "HONOR automatic reboot repair not credited; explicit harness recovery is separate"
+  ],
+  "errors": [],
+  "changedInitialFiles": [],
+  "productionDefects": [
+    "5E-001 remains open in API 24",
+    "5E-002 unhandled recovery contention crashes process"
+  ],
+  "excludedAttempt": {
+    "folder": "android/api35/reboot-verify",
+    "reason": "Actual APP CRASH: Cleanup already running; no accepted result",
+    "evidence": "honor-reboot-dropbox.txt",
+    "successfulExplicitRetry": "android/api35/reboot-verify-final2"
+  },
+  "unresolvedSharedConditions": [
+    "External weekly analyst and authorized epoch context",
+    "Production AppNavigator foreground UI recovery end-to-end",
+    "API 24 automatic reboot repair not credited",
+    "100k history/dashboard latency needs acceptance; HONOR 100k admission exceeded provisional 6s in one of two samples"
+  ],
+  "backupPublicationUiEnabled": false,
+  "distributionAuthorized": false,
+  "externalAnalystUpdated": false
+}

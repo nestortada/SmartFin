@@ -42,7 +42,12 @@ class SmartFinDatabaseLifecycleModule(private val context: ReactApplicationConte
   @ReactMethod fun rollbackFinancialDeletion(id: String, token: String, promise: Promise) = submit(promise) {
     SmartFinFinancialDeletion.rollbackConfirmed(context, id, token); null
   }
-  @ReactMethod fun recoverFinancialDeletion(promise: Promise) = submit(promise) { SmartFinFinancialDeletion.recover(context).toString() }
+  @ReactMethod fun recoverFinancialDeletion(promise: Promise) = submit(promise) {
+    // Another owner (receiver, Worker) holds the cleanup mutex: recover() refused before
+    // touching any state. Report it as in progress; every other failure still rejects.
+    try { SmartFinFinancialDeletion.recover(context).toString() }
+    catch (_: SmartFinFinancialDeletion.CleanupAlreadyRunningException) { JSONObject().put("status", "running").toString() }
+  }
   @ReactMethod fun resourceEpoch(token: String, promise: Promise) = submit(promise) { SmartFinFinancialDeletion.resourceEpoch(context, token) }
   @ReactMethod fun discard(token: String, id: String, promise: Promise) = submit(promise) {
     SmartFinLocalSnapshot.discard(context, token, id); null

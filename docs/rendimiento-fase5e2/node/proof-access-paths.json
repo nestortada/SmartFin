@@ -1,0 +1,262 @@
+[
+  {
+    "distribution": "canonicalUtc",
+    "name": "none",
+    "hint": true,
+    "n": 100000,
+    "samples": [
+      6.177700000000186,
+      5.937199999999848,
+      6.455699999999979
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING COVERING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "canonicalUtc",
+    "name": "none",
+    "hint": false,
+    "n": 100000,
+    "samples": [
+      6.164899999999761,
+      6.329999999999927,
+      5.960799999999836
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING COVERING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "canonicalUtc",
+    "name": "category",
+    "hint": true,
+    "n": 33333,
+    "samples": [
+      71.42889999999989,
+      68.10820000000012,
+      70.72379999999976
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "canonicalUtc",
+    "name": "category",
+    "hint": false,
+    "n": 33333,
+    "samples": [
+      29.495699999999943,
+      39.151200000000244,
+      31.295399999999972
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SEARCH transactions USING INDEX idx_transactions_category_id (category_id=?)",
+      "USE TEMP B-TREE FOR DISTINCT",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "canonicalUtc",
+    "name": "account",
+    "hint": true,
+    "n": 31667,
+    "samples": [
+      80.11349999999993,
+      85.69250000000011,
+      75.60190000000011
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "canonicalUtc",
+    "name": "account",
+    "hint": false,
+    "n": 31667,
+    "samples": [
+      83.83260000000018,
+      78.34740000000056,
+      72.23989999999958
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "canonicalUtc",
+    "name": "combined",
+    "hint": true,
+    "n": 392,
+    "samples": [
+      70.0003000000006,
+      76.45740000000023,
+      68.53279999999995
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "canonicalUtc",
+    "name": "combined",
+    "hint": false,
+    "n": 392,
+    "samples": [
+      10.58259999999973,
+      11.814699999999903,
+      11.428499999999985
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SEARCH transactions USING INDEX idx_transactions_category_id (category_id=?)",
+      "USE TEMP B-TREE FOR DISTINCT",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "legacyDay",
+    "name": "none",
+    "hint": true,
+    "n": 1096,
+    "samples": [
+      3.097200000000157,
+      3.570499999999811,
+      4.238699999999881
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING COVERING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "legacyDay",
+    "name": "none",
+    "hint": false,
+    "n": 1096,
+    "samples": [
+      2.9346000000005006,
+      3.203700000000026,
+      3.790100000000166
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING COVERING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "legacyDay",
+    "name": "category",
+    "hint": true,
+    "n": 1096,
+    "samples": [
+      54.046299999999974,
+      52.28360000000066,
+      59.61020000000008
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "legacyDay",
+    "name": "category",
+    "hint": false,
+    "n": 1096,
+    "samples": [
+      14.039499999999862,
+      15.324800000000323,
+      14.633700000000317
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SEARCH transactions USING INDEX idx_transactions_category_id (category_id=?)",
+      "USE TEMP B-TREE FOR DISTINCT",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "legacyDay",
+    "name": "account",
+    "hint": true,
+    "n": 1096,
+    "samples": [
+      70.70749999999953,
+      72.55169999999998,
+      72.78029999999944
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "legacyDay",
+    "name": "account",
+    "hint": false,
+    "n": 1096,
+    "samples": [
+      70.47049999999945,
+      78.01560000000063,
+      82.1273999999994
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "legacyDay",
+    "name": "combined",
+    "hint": true,
+    "n": 29,
+    "samples": [
+      84.57110000000011,
+      76.66949999999997,
+      78.67650000000049
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SCAN transactions USING INDEX idx_transactions_civil_sort",
+      "SCAN (subquery-1)"
+    ]
+  },
+  {
+    "distribution": "legacyDay",
+    "name": "combined",
+    "hint": false,
+    "n": 29,
+    "samples": [
+      9.844100000000253,
+      9.729800000000068,
+      9.758200000000215
+    ],
+    "plan": [
+      "CO-ROUTINE (subquery-1)",
+      "SEARCH transactions USING INDEX idx_transactions_category_id (category_id=?)",
+      "USE TEMP B-TREE FOR DISTINCT",
+      "SCAN (subquery-1)"
+    ]
+  }
+]

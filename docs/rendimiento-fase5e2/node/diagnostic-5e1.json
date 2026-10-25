@@ -1,0 +1,2267 @@
+{
+  "runtime": "v24.16.0",
+  "results": [
+    {
+      "size": 1000,
+      "distribution": "canonicalUtc",
+      "name": "newest",
+      "totalMs": 4.699700000000121,
+      "mapMs": 0.2395000000001346,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 2.9850000000001273,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.12370000000009895
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.0543999999999869
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 2.342399999999998
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 0.46450000000004366
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "canonicalUtc",
+      "name": "oldest",
+      "totalMs": 2.9944000000000415,
+      "mapMs": 0.1010999999989508,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 2.4261999999998807,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.06479999999965003
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03499999999985448
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 1.9298000000003412
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 0.3966000000000349
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "canonicalUtc",
+      "name": "search",
+      "totalMs": 6.097099999999955,
+      "mapMs": 0.0409999999997126,
+      "delivered": 17,
+      "legacyIds": 0,
+      "statements": 8,
+      "rows": 470,
+      "engineMs": 4.298099999999977,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.05469999999968422
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03490000000010696
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 2.1107999999999265
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 3,
+          "rows": 450,
+          "engineMs": 1.9015000000003965
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "count": 1,
+          "rows": 17,
+          "engineMs": 0.19619999999986248
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "canonicalUtc",
+      "name": "absent",
+      "totalMs": 14.177900000000136,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 7,
+      "rows": 436,
+      "engineMs": 4.21979999999985,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.04680000000053042
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04169999999976426
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 2.0259000000000924
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 3,
+          "rows": 433,
+          "engineMs": 2.105399999999463
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "civil",
+      "name": "newest",
+      "totalMs": 1.4125000000003638,
+      "mapMs": 0.16449999999849751,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 0.8873999999996158,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.10580000000027212
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.05559999999968568
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 0.45260000000007494
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 0.2733999999995831
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "civil",
+      "name": "oldest",
+      "totalMs": 1.929700000000139,
+      "mapMs": 0.09450000000242653,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 1.4375000000004547,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.06500000000005457
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04100000000016735
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 0.8099000000001979
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 0.5216000000000349
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "civil",
+      "name": "search",
+      "totalMs": 3.2411999999999352,
+      "mapMs": 0.03380000000061045,
+      "delivered": 17,
+      "legacyIds": 0,
+      "statements": 8,
+      "rows": 470,
+      "engineMs": 2.2689000000004853,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02690000000029613
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.031199999999898864
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 0.5723000000002685
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 3,
+          "rows": 450,
+          "engineMs": 1.527299999999741
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "count": 1,
+          "rows": 17,
+          "engineMs": 0.11120000000028085
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "civil",
+      "name": "absent",
+      "totalMs": 2.8979000000003907,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 7,
+      "rows": 436,
+      "engineMs": 2.044499999999516,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.024699999999938882
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.01999999999998181
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 0.5149000000001251
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 3,
+          "rows": 433,
+          "engineMs": 1.4848999999994703
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "legacyDay",
+      "name": "newest",
+      "totalMs": 5.2323999999998705,
+      "mapMs": 0.1034999999997126,
+      "delivered": 50,
+      "legacyIds": 1000,
+      "statements": 10,
+      "rows": 1053,
+      "engineMs": 2.598099999999249,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.08280000000013388
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.036300000000210275
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 6,
+          "rows": 1000,
+          "engineMs": 2.231599999999162
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.24739999999974316
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "legacyDay",
+      "name": "oldest",
+      "totalMs": 6.505100000000311,
+      "mapMs": 0.07659999999941647,
+      "delivered": 50,
+      "legacyIds": 1000,
+      "statements": 10,
+      "rows": 1053,
+      "engineMs": 3.195499999999356,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.03559999999970387
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02570000000014261
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 6,
+          "rows": 1000,
+          "engineMs": 2.8599999999996726
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.274199999999837
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "legacyDay",
+      "name": "search",
+      "totalMs": 2.5826999999999316,
+      "mapMs": 0.02819999999974243,
+      "delivered": 17,
+      "legacyIds": 0,
+      "statements": 7,
+      "rows": 470,
+      "engineMs": 1.6983999999993102,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02699999999958891
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.025900000000092405
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 3,
+          "rows": 450,
+          "engineMs": 1.5171999999993204
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "count": 1,
+          "rows": 17,
+          "engineMs": 0.1283000000003085
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "legacyDay",
+      "name": "absent",
+      "totalMs": 2.340599999999995,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 6,
+      "rows": 436,
+      "engineMs": 1.5747999999998683,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02650000000039654
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02359999999998763
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 3,
+          "rows": 433,
+          "engineMs": 1.5246999999994841
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "legacyTied",
+      "name": "newest",
+      "totalMs": 5.871799999999894,
+      "mapMs": 0.07560000000012224,
+      "delivered": 50,
+      "legacyIds": 1000,
+      "statements": 10,
+      "rows": 1053,
+      "engineMs": 3.585299999999279,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.06359999999995125
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03499999999985448
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 6,
+          "rows": 1000,
+          "engineMs": 3.2871999999993022
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.19950000000017099
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "legacyTied",
+      "name": "oldest",
+      "totalMs": 5.138600000000224,
+      "mapMs": 0.07530000000042492,
+      "delivered": 50,
+      "legacyIds": 1000,
+      "statements": 10,
+      "rows": 1053,
+      "engineMs": 3.097799999999552,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02359999999998763
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02140000000008513
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 6,
+          "rows": 1000,
+          "engineMs": 2.851799999999457
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.20100000000002183
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "legacyTied",
+      "name": "search",
+      "totalMs": 3.8254000000001724,
+      "mapMs": 0.028299999999489955,
+      "delivered": 17,
+      "legacyIds": 0,
+      "statements": 7,
+      "rows": 470,
+      "engineMs": 2.891700000000128,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02419999999983702
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.01960000000008222
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 3,
+          "rows": 450,
+          "engineMs": 2.729500000000371
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "count": 1,
+          "rows": 17,
+          "engineMs": 0.11839999999983775
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "legacyTied",
+      "name": "absent",
+      "totalMs": 3.6920000000000073,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 6,
+      "rows": 436,
+      "engineMs": 2.8685999999997875,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.04949999999962529
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.023999999999887223
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 3,
+          "rows": 433,
+          "engineMs": 2.795100000000275
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "mixed",
+      "name": "newest",
+      "totalMs": 4.673800000000028,
+      "mapMs": 0.0761000000002241,
+      "delivered": 50,
+      "legacyIds": 1000,
+      "statements": 10,
+      "rows": 1053,
+      "engineMs": 2.438399999999092,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.07290000000011787
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.039099999999962165
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 6,
+          "rows": 1000,
+          "engineMs": 2.134299999999257
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.1920999999997548
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "mixed",
+      "name": "oldest",
+      "totalMs": 6.054399999999987,
+      "mapMs": 0.07349999999996726,
+      "delivered": 50,
+      "legacyIds": 1000,
+      "statements": 10,
+      "rows": 1053,
+      "engineMs": 3.2741999999993823,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.025500000000192813
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02110000000038781
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 6,
+          "rows": 1000,
+          "engineMs": 3.031599999998889
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.1959999999999127
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "mixed",
+      "name": "search",
+      "totalMs": 3.6626000000001113,
+      "mapMs": 0.029500000000098225,
+      "delivered": 17,
+      "legacyIds": 0,
+      "statements": 7,
+      "rows": 470,
+      "engineMs": 2.1992999999993117,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02709999999979118
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.01989999999977954
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 3,
+          "rows": 450,
+          "engineMs": 2.0099999999997635
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+          "count": 1,
+          "rows": 17,
+          "engineMs": 0.14229999999997744
+        }
+      ]
+    },
+    {
+      "size": 1000,
+      "distribution": "mixed",
+      "name": "absent",
+      "totalMs": 2.793500000000222,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 6,
+      "rows": 436,
+      "engineMs": 1.9465000000000146,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02639999999973952
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.029899999999997817
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 3,
+          "rows": 433,
+          "engineMs": 1.8902000000002772
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "canonicalUtc",
+      "name": "newest",
+      "totalMs": 15.40520000000015,
+      "mapMs": 0.11039999999957217,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 14.995299999999588,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.07189999999991414
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.037699999999858846
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 14.539099999999962
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 0.346599999999853
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "canonicalUtc",
+      "name": "oldest",
+      "totalMs": 20.276499999999942,
+      "mapMs": 0.32890000000043074,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 19.53139999999985,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.07470000000012078
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02289999999993597
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 17.956499999999778
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 1.4773000000000138
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "canonicalUtc",
+      "name": "search",
+      "totalMs": 30.363799999999628,
+      "mapMs": 0.15340000000105647,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 12,
+      "rows": 1453,
+      "engineMs": 27.342199999999593,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.05040000000008149
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.05569999999988795
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 19.622299999999996
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 7,
+          "rows": 1400,
+          "engineMs": 7.342799999999897
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.2709999999997308
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "canonicalUtc",
+      "name": "absent",
+      "totalMs": 50.55789999999979,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 26,
+      "rows": 4345,
+      "engineMs": 39.81690000000026,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.044699999999465945
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.026299999999991996
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 18.453799999999774
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 22,
+          "rows": 4342,
+          "engineMs": 21.292100000001028
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "civil",
+      "name": "newest",
+      "totalMs": 1.612500000000182,
+      "mapMs": 0.1464999999984684,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 1.1749000000004344,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.06610000000046057
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03960000000006403
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 0.7321000000001732
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 0.3370999999997366
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "civil",
+      "name": "oldest",
+      "totalMs": 2.2476000000001477,
+      "mapMs": 0.16889999999830252,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 1.7328999999999724,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.05739999999968859
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.01860000000033324
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 0.7743000000000393
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 0.8825999999999112
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "civil",
+      "name": "search",
+      "totalMs": 10.28859999999986,
+      "mapMs": 0.24170000000231084,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 8,
+      "rows": 653,
+      "engineMs": 8.212199999999939,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.06140000000004875
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02959999999984575
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 0.8854999999998654
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 3,
+          "rows": 600,
+          "engineMs": 6.642700000000332
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.5929999999998472
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "civil",
+      "name": "absent",
+      "totalMs": 29.0033999999996,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 26,
+      "rows": 4345,
+      "engineMs": 20.05979999999954,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.03660000000036234
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03609999999980573
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 0.8849999999997635
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 22,
+          "rows": 4342,
+          "engineMs": 19.10209999999961
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "legacyDay",
+      "name": "newest",
+      "totalMs": 65.78899999999976,
+      "mapMs": 0.29849999999942156,
+      "delivered": 50,
+      "legacyIds": 10000,
+      "statements": 55,
+      "rows": 10053,
+      "engineMs": 30.71639999999843,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.11110000000007858
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.05749999999989086
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 51,
+          "rows": 10000,
+          "engineMs": 30.005499999998392
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.5423000000000684
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "legacyDay",
+      "name": "oldest",
+      "totalMs": 66.9991,
+      "mapMs": 0.1552999999998974,
+      "delivered": 50,
+      "legacyIds": 10000,
+      "statements": 55,
+      "rows": 10053,
+      "engineMs": 27.448500000001786,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.043800000000373984
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.042699999999967986
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 51,
+          "rows": 10000,
+          "engineMs": 26.997200000001158
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.3648000000002867
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "legacyDay",
+      "name": "search",
+      "totalMs": 26.952499999999873,
+      "mapMs": 0.14710000000150103,
+      "delivered": 50,
+      "legacyIds": 170,
+      "statements": 27,
+      "rows": 4565,
+      "engineMs": 18.326499999999214,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.04390000000012151
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03110000000015134
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 23,
+          "rows": 4512,
+          "engineMs": 17.925399999999172
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.32609999999976935
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "legacyDay",
+      "name": "absent",
+      "totalMs": 29.437799999999697,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 25,
+      "rows": 4345,
+      "engineMs": 20.333399999999983,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.038399999999910506
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03590000000031068
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 22,
+          "rows": 4342,
+          "engineMs": 20.259099999999762
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "legacyTied",
+      "name": "newest",
+      "totalMs": 177.93910000000005,
+      "mapMs": 0.17010000000027503,
+      "delivered": 50,
+      "legacyIds": 10000,
+      "statements": 55,
+      "rows": 10053,
+      "engineMs": 153.05929999999898,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.10019999999985885
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.052299999999831925
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 51,
+          "rows": 10000,
+          "engineMs": 152.56419999999935
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.3425999999999476
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "legacyTied",
+      "name": "oldest",
+      "totalMs": 168.67509999999993,
+      "mapMs": 0.14910000000145374,
+      "delivered": 50,
+      "legacyIds": 10000,
+      "statements": 55,
+      "rows": 10053,
+      "engineMs": 144.52910000000156,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.0466999999998734
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.030899999999746797
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 51,
+          "rows": 10000,
+          "engineMs": 144.110700000002
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.3407999999999447
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "legacyTied",
+      "name": "search",
+      "totalMs": 158.87390000000005,
+      "mapMs": 0.2653000000004795,
+      "delivered": 50,
+      "legacyIds": 170,
+      "statements": 27,
+      "rows": 4565,
+      "engineMs": 148.30010000000038,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.060099999999692955
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03129999999964639
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 23,
+          "rows": 4512,
+          "engineMs": 147.935300000001
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.27340000000003783
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "legacyTied",
+      "name": "absent",
+      "totalMs": 151.1241,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 25,
+      "rows": 4345,
+      "engineMs": 142.22360000000117,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.05819999999994252
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04059999999981301
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 22,
+          "rows": 4342,
+          "engineMs": 142.12480000000141
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "mixed",
+      "name": "newest",
+      "totalMs": 77.0025999999998,
+      "mapMs": 0.14229999999997744,
+      "delivered": 50,
+      "legacyIds": 10000,
+      "statements": 55,
+      "rows": 10053,
+      "engineMs": 53.21969999999965,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.06980000000021391
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.037299999999959255
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 51,
+          "rows": 10000,
+          "engineMs": 52.794699999999466
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.31790000000000873
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "mixed",
+      "name": "oldest",
+      "totalMs": 79.87149999999974,
+      "mapMs": 0.156699999997727,
+      "delivered": 50,
+      "legacyIds": 10000,
+      "statements": 55,
+      "rows": 10053,
+      "engineMs": 52.579900000000634,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.038100000000213186
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.0261000000000422
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 51,
+          "rows": 10000,
+          "engineMs": 52.240800000000036
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.2749000000003434
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "mixed",
+      "name": "search",
+      "totalMs": 51.98329999999987,
+      "mapMs": 0.13219999999637366,
+      "delivered": 50,
+      "legacyIds": 170,
+      "statements": 27,
+      "rows": 4565,
+      "engineMs": 43.258599999999205,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02489999999943393
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02959999999984575
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 23,
+          "rows": 4512,
+          "engineMs": 42.99489999999969
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.2092000000002372
+        }
+      ]
+    },
+    {
+      "size": 10000,
+      "distribution": "mixed",
+      "name": "absent",
+      "totalMs": 53.76730000000043,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 25,
+      "rows": 4345,
+      "engineMs": 44.61439999999948,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.04989999999997963
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.01979999999912252
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 22,
+          "rows": 4342,
+          "engineMs": 44.544700000000375
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "canonicalUtc",
+      "name": "newest",
+      "totalMs": 147.23869999999988,
+      "mapMs": 0.1408000000001266,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 146.80349999999817,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.0709999999990032
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03470000000015716
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 146.3117999999995
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 0.3859999999995125
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "canonicalUtc",
+      "name": "oldest",
+      "totalMs": 181.5554000000002,
+      "mapMs": 0.13720000000193977,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 181.13979999999992,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.047700000000077125
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02309999999943102
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 174.5642000000007
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 6.504799999999705
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "canonicalUtc",
+      "name": "search",
+      "totalMs": 177.88979999999992,
+      "mapMs": 0.14970000000084838,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 12,
+      "rows": 1453,
+      "engineMs": 174.96540000000186,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.03810000000066793
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02870000000075379
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 167.13360000000011
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 7,
+          "rows": 1400,
+          "engineMs": 7.486200000000281
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.27880000000004657
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "canonicalUtc",
+      "name": "absent",
+      "totalMs": 550.7062999999998,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 222,
+      "rows": 43426,
+      "engineMs": 463.0797999999904,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.03510000000005675
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.029199999999946158
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 233.10559999999987
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 218,
+          "rows": 43423,
+          "engineMs": 229.90989999999056
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "civil",
+      "name": "newest",
+      "totalMs": 6.292599999999766,
+      "mapMs": 0.1756999999997788,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 5.811800000000403,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.09850000000005821
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03679999999985739
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 4.321200000000317
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 1.3553000000001703
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "civil",
+      "name": "oldest",
+      "totalMs": 11.45010000000002,
+      "mapMs": 0.15790000000015425,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 5,
+      "rows": 54,
+      "engineMs": 11.033000000000357,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.047400000000379805
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03210000000035507
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 4.338999999999942
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 51,
+          "engineMs": 6.61449999999968
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "civil",
+      "name": "search",
+      "totalMs": 12.6242000000002,
+      "mapMs": 0.16140000000268628,
+      "delivered": 50,
+      "legacyIds": 0,
+      "statements": 6,
+      "rows": 253,
+      "engineMs": 11.92069999999876,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.03379999999924621
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.030099999999947613
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 4.596499999999651
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 1,
+          "rows": 200,
+          "engineMs": 6.928899999999885
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.33140000000003056
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "civil",
+      "name": "absent",
+      "totalMs": 416.58979999999974,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 222,
+      "rows": 43426,
+      "engineMs": 337.87469999999576,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.030399999999644933
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02779999999984284
+        },
+        {
+          "shape": "SELECT date FROM ( SELECT DISTINCT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:",
+          "count": 1,
+          "rows": 0,
+          "engineMs": 4.857699999999568
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00')",
+          "count": 218,
+          "rows": 43423,
+          "engineMs": 332.9587999999967
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "legacyDay",
+      "name": "newest",
+      "totalMs": 500.76590000000033,
+      "mapMs": 0.14720000000670552,
+      "delivered": 50,
+      "legacyIds": 100000,
+      "statements": 505,
+      "rows": 100053,
+      "engineMs": 322.03010000001086,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.0937000000012631
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.038800000000264845
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 501,
+          "rows": 100000,
+          "engineMs": 321.5677000000087
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.32990000000063446
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "legacyDay",
+      "name": "oldest",
+      "totalMs": 520.5638999999992,
+      "mapMs": 0.15069999999650463,
+      "delivered": 50,
+      "legacyIds": 100000,
+      "statements": 505,
+      "rows": 100053,
+      "engineMs": 315.8932999999797,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.033399999998437124
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.029799999998431304
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 501,
+          "rows": 100000,
+          "engineMs": 315.4791999999834
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.35089999999945576
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "legacyDay",
+      "name": "search",
+      "totalMs": 322.11069999999927,
+      "mapMs": 0.1540999999961059,
+      "delivered": 50,
+      "legacyIds": 1698,
+      "statements": 230,
+      "rows": 45174,
+      "engineMs": 237.96510000000308,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.03240000000005239
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.026499999999941792
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 226,
+          "rows": 45121,
+          "engineMs": 237.59200000000237
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.31420000000071013
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "legacyDay",
+      "name": "absent",
+      "totalMs": 342.3543000000009,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 221,
+      "rows": 43426,
+      "engineMs": 255.50370000000476,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.02839999999923748
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02570000000014261
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 218,
+          "rows": 43423,
+          "engineMs": 255.44960000000538
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "legacyTied",
+      "name": "newest",
+      "totalMs": 14740.5615,
+      "mapMs": 0.1531000000104541,
+      "delivered": 50,
+      "legacyIds": 100000,
+      "statements": 505,
+      "rows": 100053,
+      "engineMs": 14481.758500000049,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.07340000000112923
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.038800000000264845
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 501,
+          "rows": 100000,
+          "engineMs": 14481.386200000044
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.26010000000314903
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "legacyTied",
+      "name": "oldest",
+      "totalMs": 14331.642000000003,
+      "mapMs": 0.17850000000180444,
+      "delivered": 50,
+      "legacyIds": 100000,
+      "statements": 505,
+      "rows": 100053,
+      "engineMs": 14097.082300000071,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.041499999999359716
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.028600000001461012
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 501,
+          "rows": 100000,
+          "engineMs": 14096.77950000007
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.2327000000004773
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "legacyTied",
+      "name": "search",
+      "totalMs": 15200.7192,
+      "mapMs": 0.15620000004128087,
+      "delivered": 50,
+      "legacyIds": 1698,
+      "statements": 230,
+      "rows": 45174,
+      "engineMs": 15093.40949999998,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.0328999999910593
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.02810000000317814
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 226,
+          "rows": 45121,
+          "engineMs": 15093.076599999986
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.27189999999973224
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "legacyTied",
+      "name": "absent",
+      "totalMs": 14169.043000000005,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 221,
+      "rows": 43426,
+      "engineMs": 14077.011300000013,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.06319999999686843
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.027600000001257285
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 218,
+          "rows": 43423,
+          "engineMs": 14076.920500000015
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "mixed",
+      "name": "newest",
+      "totalMs": 3854.6082000000024,
+      "mapMs": 0.3047999999980675,
+      "delivered": 50,
+      "legacyIds": 100000,
+      "statements": 505,
+      "rows": 100053,
+      "engineMs": 3628.9021000000794,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.1279999999969732
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.04080000000249129
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 501,
+          "rows": 100000,
+          "engineMs": 3628.3028000000777
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.4305000000022119
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "mixed",
+      "name": "oldest",
+      "totalMs": 3643.778900000005,
+      "mapMs": 0.15529999996942934,
+      "delivered": 50,
+      "legacyIds": 100000,
+      "statements": 505,
+      "rows": 100053,
+      "engineMs": 3428.8192999999155,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.06669999998121057
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.05109999999694992
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 501,
+          "rows": 100000,
+          "engineMs": 3428.381599999935
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.3199000000022352
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "mixed",
+      "name": "search",
+      "totalMs": 3380.145700000008,
+      "mapMs": 0.13850000000093132,
+      "delivered": 50,
+      "legacyIds": 1698,
+      "statements": 230,
+      "rows": 45174,
+      "engineMs": 3287.2148999999918,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.034200000009150244
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.03199999999196734
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 226,
+          "rows": 45121,
+          "engineMs": 3286.863699999987
+        },
+        {
+          "shape": "SELECT * FROM transactions WHERE id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,",
+          "count": 1,
+          "rows": 50,
+          "engineMs": 0.28500000000349246
+        }
+      ]
+    },
+    {
+      "size": 100000,
+      "distribution": "mixed",
+      "name": "absent",
+      "totalMs": 3223.413900000014,
+      "mapMs": 0,
+      "delivered": 0,
+      "legacyIds": 0,
+      "statements": 221,
+      "rows": 43426,
+      "engineMs": 3136.565500000128,
+      "shapes": [
+        {
+          "shape": "SELECT revision FROM financial_data_revision WHERE id = 1;",
+          "count": 2,
+          "rows": 2,
+          "engineMs": 0.05119999998714775
+        },
+        {
+          "shape": "SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS",
+          "count": 1,
+          "rows": 1,
+          "engineMs": 0.036699999996926636
+        },
+        {
+          "shape": "SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time",
+          "count": 218,
+          "rows": 43423,
+          "engineMs": 3136.477600000144
+        }
+      ]
+    }
+  ]
+}

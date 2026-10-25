@@ -1,0 +1,67 @@
+{
+  "scenario": "reboot-alarm",
+  "serial": "emulator-5554",
+  "api": 24,
+  "stage": "phase5e3-auto-stage-alarm",
+  "beforeTrigger": {
+    "label": "before-trigger",
+    "at": "2026-10-25T15:27:15.7976810Z",
+    "pid": "4652",
+    "alarmLines": [
+      "RTC_WAKEUP #1: Alarm{9945fa2 type 0 when 1793091600000 com.smartfin.snapshot5b2.tests}",
+      "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+      "operation=PendingIntent{29c4433: PendingIntentRecord{bc2c3f0 com.smartfin.snapshot5b2.tests broadcastIntent}}",
+      "RTC_WAKEUP #0: Alarm{56640fa type 0 when 1795770000000 com.smartfin.snapshot5b2.tests}",
+      "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+      "operation=PendingIntent{fb206ab: PendingIntentRecord{172108 com.smartfin.snapshot5b2.tests broadcastIntent}}",
+      "RTC_WAKEUP #0: Alarm{e4772c6 type 0 when 1798362000000 com.smartfin.snapshot5b2.tests}",
+      "tag=*walarm*:com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionReminderReceiver",
+      "operation=PendingIntent{4886287: PendingIntentRecord{78145b4 com.smartfin.snapshot5b2.tests broadcastIntent}}"
+    ],
+    "reminderAlarms": 3,
+    "jobLines": [
+      "JOB #u0a80/1: 90e95f2 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "u0a80 tag=*job*/com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "Source: uid=u0a80 user=0 pkg=com.smartfin.snapshot5b2.tests",
+      "Service: com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "JOB #u0a80/3: 7d1b9e5 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "u0a80 tag=*job*/com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "Source: uid=u0a80 user=0 pkg=com.smartfin.snapshot5b2.tests",
+      "Service: com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "#u0a80/1 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+      "#u0a80/3 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+      "#u0a80/1 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+      "#u0a80/3 from u0a80: com.smartfin.snapshot5b2.tests RUNNABLE",
+      "u0a80 / com.smartfin.snapshot5b2.tests: 3x pending 1x active 2x active-top",
+      "-3m59s755ms START: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-3m59s750ms  STOP: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-3m50s043ms START: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-3m50s024ms  STOP: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-44s833ms START: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService",
+      "-44s793ms  STOP: u0a80 com.smartfin.snapshot5b2.tests/androidx.work.impl.background.systemjob.SystemJobService"
+    ],
+    "observeLog": [],
+    "processStarts": [
+      "10-25 15:22:02.594  1642  1755 I am_proc_start: [0,3657,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]",
+      "10-25 15:23:12.509  1642  1708 I am_proc_start: [0,3857,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]",
+      "10-25 15:23:23.906  1642  1653 I am_proc_start: [0,4081,10080,com.smartfin.snapshot5b2.tests,broadcast,com.smartfin.snapshot5b2.tests/com.smartfin.SmartFinSubscriptionRecoveryReceiver]",
+      "10-25 15:27:10.360  1642  3048 I am_proc_start: [0,4652,10080,com.smartfin.snapshot5b2.tests,activity,com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity]"
+    ]
+  },
+  "bootIdBefore": "53e20a80-8fde-48af-b555-61ba2e6ed7f0",
+  "trigger": "device reboot (emulator)",
+  "triggeredAt": "2026-10-25T15:27:29.4335127Z",
+  "bootIdAfter": "f7ec2e15-7965-477e-aae3-d464f8a4401b",
+  "automaticWithinWindow": false,
+  "afterObservation": {
+    "label": "after-observation",
+    "at": "2026-10-25T15:30:33.6094949Z",
+    "pid": "",
+    "alarmLines": [],
+    "reminderAlarms": 0,
+    "jobLines": [],
+    "observeLog": [],
+    "processStarts": []
+  },
+  "passed": true
+}

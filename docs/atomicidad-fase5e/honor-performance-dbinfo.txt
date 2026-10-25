@@ -1,0 +1,124 @@
+Applications Database Info:
+
+** Database info for pid 22537 [com.smartfin.snapshot5b2.tests] **
+Connection pool for /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db:
+  Open: true
+  Max connections: 1
+  Total execution time (ms): 992
+  Total statements executed: 4968
+  Average time per statement (ms): 0
+  Configuration: openFlags=268435456, isLegacyCompatibilityWalEnabled=false, journalMode=TRUNCATE, syncMode=NORMAL
+  IsReadOnlyDatabase=false
+  Available primary connection:
+    Connection #0:
+      isPrimaryConnection: true
+      onlyAllowReadOnlyOperations: true
+      Most recently executed operations:
+        0: [2026-10-24 17:00:55.758] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM "ai_command_drafts" ORDER BY "id","raw_input","plan_json","messages_json","clarification_history_json","phase","created_at","updated_at"", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        1: [2026-10-24 17:00:55.758] prepare took 1ms - succeeded, sql="SELECT * FROM "ai_command_drafts" ORDER BY "id","raw_input","plan_json","messages_json","clarification_history_json","phase","created_at","updated_at"", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        2: [2026-10-24 17:00:55.757] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        3: [2026-10-24 17:00:55.757] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        4: [2026-10-24 17:00:55.755] executeForCursorWindow took 1ms - succeeded, sql="PRAGMA table_info("ai_command_drafts")", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        5: [2026-10-24 17:00:55.754] prepare took 0ms - succeeded, sql="PRAGMA table_info("ai_command_drafts")", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        6: [2026-10-24 17:00:55.754] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        7: [2026-10-24 17:00:55.754] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        8: [2026-10-24 17:00:55.751] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM "accounts" ORDER BY "id","name","type","status","currency","balance_amount","debt_balance_amount","credit_limit_amount","institution_name","description","created_at","updated_at"", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        9: [2026-10-24 17:00:55.751] prepare took 1ms - succeeded, sql="SELECT * FROM "accounts" ORDER BY "id","name","type","status","currency","balance_amount","debt_balance_amount","credit_limit_amount","institution_name","description","created_at","updated_at"", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        10: [2026-10-24 17:00:55.750] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        11: [2026-10-24 17:00:55.750] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        12: [2026-10-24 17:00:55.745] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA table_info("accounts")", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        13: [2026-10-24 17:00:55.745] prepare took 0ms - succeeded, sql="PRAGMA table_info("accounts")", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        14: [2026-10-24 17:00:55.745] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        15: [2026-10-24 17:00:55.745] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        16: [2026-10-24 17:00:55.742] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM "account_balance_history" ORDER BY "id","account_id","balance_amount","debt_balance_amount","currency","recorded_at","created_at"", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        17: [2026-10-24 17:00:55.741] prepare took 0ms - succeeded, sql="SELECT * FROM "account_balance_history" ORDER BY "id","account_id","balance_amount","debt_balance_amount","currency","recorded_at","created_at"", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        18: [2026-10-24 17:00:55.741] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        19: [2026-10-24 17:00:55.741] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+  Available non-primary connections:
+    <none>
+  Acquired connections:
+    <none>
+  Connection waiters:
+    <none>
+Connection pool for /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb:
+  Open: true
+  Max connections: 4
+  Total execution time (ms): 26
+  Total statements executed: 142
+  Average time per statement (ms): 0
+  Configuration: openFlags=805306368, isLegacyCompatibilityWalEnabled=false, journalMode=WAL, syncMode=FULL
+  IsReadOnlyDatabase=false
+  Available primary connection:
+    Connection #0:
+      isPrimaryConnection: true
+      onlyAllowReadOnlyOperations: false
+      Most recently executed operations:
+        0: [2026-10-24 17:00:42.646] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        1: [2026-10-24 17:00:42.646] execute took 1ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_DELETE` AFTER DELETE ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        2: [2026-10-24 17:00:42.646] prepare took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_DELETE` AFTER DELETE ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        3: [2026-10-24 17:00:42.645] execute took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_UPDATE` AFTER UPDATE ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        4: [2026-10-24 17:00:42.645] prepare took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_UPDATE` AFTER UPDATE ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        5: [2026-10-24 17:00:42.645] execute took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_INSERT` AFTER INSERT ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        6: [2026-10-24 17:00:42.645] prepare took 1ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_INSERT` AFTER INSERT ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        7: [2026-10-24 17:00:42.644] execute took 0ms - succeeded, sql="INSERT OR IGNORE INTO room_table_modification_log VALUES(1, 0)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        8: [2026-10-24 17:00:42.644] prepare took 0ms - succeeded, sql="INSERT OR IGNORE INTO room_table_modification_log VALUES(1, 0)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        9: [2026-10-24 17:00:42.644] execute took 0ms - succeeded, sql="BEGIN IMMEDIATE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        10: [2026-10-24 17:00:42.640] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        11: [2026-10-24 17:00:42.640] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM room_table_modification_log WHERE invalidated = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        12: [2026-10-24 17:00:42.640] prepare took 0ms - succeeded, sql="SELECT * FROM room_table_modification_log WHERE invalidated = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        13: [2026-10-24 17:00:42.640] execute took 1ms - succeeded, sql="BEGIN IMMEDIATE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        14: [2026-10-24 17:00:42.627] execute took 2ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        15: [2026-10-24 17:00:42.627] execute took 0ms - succeeded, sql="INSERT OR REPLACE INTO `Preference` (`key`,`long_value`) VALUES (?,?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        16: [2026-10-24 17:00:42.627] prepare took 0ms - succeeded, sql="INSERT OR REPLACE INTO `Preference` (`key`,`long_value`) VALUES (?,?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        17: [2026-10-24 17:00:42.627] execute took 0ms - succeeded, sql="BEGIN IMMEDIATE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        18: [2026-10-24 17:00:42.627] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        19: [2026-10-24 17:00:42.627] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM workspec WHERE state=0 ORDER BY last_enqueue_time LIMIT ?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+  Available non-primary connections:
+    Connection #1:
+      isPrimaryConnection: false
+      onlyAllowReadOnlyOperations: true
+      Most recently executed operations:
+        0: [2026-10-24 17:00:42.651] executeForCursorWindow took 0ms - succeeded, sql="SELECT COUNT(*) > 0 FROM workspec WHERE state NOT IN (2, 3, 5) LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        1: [2026-10-24 17:00:42.651] prepare took 0ms - succeeded, sql="SELECT COUNT(*) > 0 FROM workspec WHERE state NOT IN (2, 3, 5) LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        2: [2026-10-24 17:00:42.621] executeForCursorWindow took 0ms - succeeded, sql="SELECT long_value FROM Preference where `key`=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        3: [2026-10-24 17:00:42.621] prepare took 0ms - succeeded, sql="SELECT long_value FROM Preference where `key`=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        4: [2026-10-24 17:00:42.619] executeForCursorWindow took 0ms - succeeded, sql="SELECT long_value FROM Preference where `key`=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        5: [2026-10-24 17:00:42.618] prepare took 0ms - succeeded, sql="SELECT long_value FROM Preference where `key`=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        6: [2026-10-24 17:00:42.612] executeForCursorWindow took 0ms - succeeded, sql="SELECT DISTINCT work_spec_id FROM SystemIdInfo", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        7: [2026-10-24 17:00:42.612] prepare took 0ms - succeeded, sql="SELECT DISTINCT work_spec_id FROM SystemIdInfo", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        8: [2026-10-24 17:00:42.611] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA recursive_triggers = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        9: [2026-10-24 17:00:42.611] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA temp_store = MEMORY", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        10: [2026-10-24 17:00:42.611] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA query_only", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        11: [2026-10-24 17:00:42.610] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA foreign_keys = ON", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        12: [2026-10-24 17:00:42.610] executeForCursorWindow took 0ms - succeeded, sql="SELECT identity_hash FROM room_master_table WHERE id = 42 LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        13: [2026-10-24 17:00:42.610] prepare took 0ms - succeeded, sql="SELECT identity_hash FROM room_master_table WHERE id = 42 LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        14: [2026-10-24 17:00:42.609] executeForCursorWindow took 1ms - succeeded, sql="SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'room_master_table'", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        15: [2026-10-24 17:00:42.609] prepare took 0ms - succeeded, sql="SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'room_master_table'", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        16: [2026-10-24 17:00:42.603] executeForLong took 0ms - succeeded, sql="PRAGMA user_version;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        17: [2026-10-24 17:00:42.603] executeForLong took 0ms - succeeded, sql="PRAGMA user_version;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        18: [2026-10-24 17:00:42.602] executeForString took 0ms - succeeded, sql="PRAGMA synchronous;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        19: [2026-10-24 17:00:42.602] executeForString took 0ms - succeeded, sql="SELECT locale FROM android_metadata UNION SELECT NULL ORDER BY locale DESC LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+  Acquired connections:
+    <none>
+  Connection waiters:
+    <none>
+Statements Executed per Database
+  /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db :    4984
+  /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb :    142
+
+Total Statements Executed for all Active Databases: 5110
+
+
+Statement Time per Database (ms)
+  /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db :    994
+  /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb :    26
+Total Statements Time for all Active Databases (ms): 1018
+
+Database files in /data/user/0/com.smartfin.snapshot5b2.tests/databases:
+  phase5b2_synthetic.db                     573440b ctime=2026-10-24T22:00:55.714856Z mtime=2026-10-24T22:00:55.714856Z atime=2026-10-24T22:00:42.874856Z
+  phase5b2_synthetic.db-journal                  0b ctime=2026-10-24T22:00:42.882856Z mtime=2026-10-24T22:00:42.882856Z atime=2026-10-24T22:00:42.878856Z
+
+Database files in /data/user/0/com.smartfin.snapshot5b2.tests/no_backup:
+  androidx.work.workdb                        4096b ctime=2026-10-24T22:00:42.590856Z mtime=2026-10-24T22:00:42.590856Z atime=2026-10-24T22:00:42.582856Z
+  androidx.work.workdb-shm                   32768b ctime=2026-10-24T22:00:42.594856Z mtime=2026-10-24T22:00:42.594856Z atime=2026-10-24T22:00:42.594856Z
+  androidx.work.workdb-wal                  127752b ctime=2026-10-24T22:00:42.622856Z mtime=2026-10-24T22:00:42.622856Z atime=2026-10-24T22:00:42.594856Z

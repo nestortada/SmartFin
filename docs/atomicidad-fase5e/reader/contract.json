@@ -1,0 +1,55 @@
+{
+  "cases": [
+    {
+      "name": "same-instant",
+      "ageMs": 0,
+      "freshness": "withinSevenDays",
+      "fileIntegrity": "verified",
+      "cloudSync": "unconfirmed",
+      "datasetCurrency": "unknown"
+    },
+    {
+      "name": "seven-days-boundary",
+      "ageMs": 604800000,
+      "freshness": "withinSevenDays",
+      "fileIntegrity": "verified",
+      "cloudSync": "unconfirmed",
+      "datasetCurrency": "unknown"
+    },
+    {
+      "name": "seven-days-plus-one-ms",
+      "ageMs": 604800001,
+      "freshness": "olderThanSevenDays",
+      "fileIntegrity": "verified",
+      "cloudSync": "unconfirmed",
+      "datasetCurrency": "unknown"
+    },
+    {
+      "name": "future",
+      "ageMs": -1,
+      "freshness": "clockAnomaly",
+      "fileIntegrity": "verified",
+      "cloudSync": "unconfirmed",
+      "datasetCurrency": "unknown"
+    }
+  ],
+  "historical": {
+    "ageMs": 0,
+    "freshness": "withinSevenDays",
+    "fileIntegrity": "verified",
+    "cloudSync": "unconfirmed",
+    "datasetCurrency": "historical"
+  },
+  "bogota": "2026-10-23, 21:30",
+  "legacyStatus": "legacyUnverified",
+  "externalAnalystUpdated": false,
+  "externalIntegration": "pending",
+  "sevenDayRule": "Inclusive elapsed age <= 168h, independent of requested weekly cutoff and dataset epoch; fixture acceptance only",
+  "readerSourceSha256": "20680baffbc603739b4ef6a595ffa2a8254214c3d282c5738fd487db210ea58b",
+  "limitations": [
+    "Minimal reader database, not a restorable app snapshot",
+    "No external ChatGPT automation executed or modified",
+    "No duplicate JSON key detection by JSON.parse",
+    "No authorized external epoch channel implemented"
+  ]
+}

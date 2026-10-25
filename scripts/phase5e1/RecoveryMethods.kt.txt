@@ -1,0 +1,83 @@
+  @ReactMethod fun recoveryRace(promise: Promise) = run(promise) {
+    // Pause the real recover() after it acquires its existing mutex.
+    Phase5B2Probe.stage="cleanup.acquired"; Phase5B2Probe.fail=false
+    Phase5B2Probe.reached=CountDownLatch(1); Phase5B2Probe.proceed=CountDownLatch(1)
+    val first=java.util.concurrent.CompletableFuture<String>()
+    Thread { try { first.complete(SmartFinFinancialDeletion.recover(context).toString()) }
+      catch(e:Exception) { first.completeExceptionally(e) } }.start()
+    check(Phase5B2Probe.reached.await(5,TimeUnit.SECONDS))
+    val events=JSONObject().put("pidBefore",Process.myPid())
+    try {
+      fun contender(): String {
+        try { SmartFinFinancialDeletion.recover(context); error("Contender acquired active cleanup") }
+        catch(e:SmartFinFinancialDeletion.CleanupAlreadyRunningException) { return e.javaClass.simpleName }
+      }
+      // This thread differs from the owner; no reentrant acquisition.
+      events.put("direct",contender())
+      Phase5E1RecoveryProbe.finished=CountDownLatch(1)
+      context.sendBroadcast(Intent(context,SmartFinSubscriptionRecoveryReceiver::class.java)
+        .setAction("com.smartfin.tests.RECOVER"))
+      check(Phase5E1RecoveryProbe.finished.await(5,TimeUnit.SECONDS)) { "Actual receiver did not finish" }
+      events.put("receiverFinished",true).put("stillExcludedAfterReceiver",contender())
+      // Actual WorkManager/Worker, deliberately requested while cleanup owns its mutex.
+      val request=androidx.work.OneTimeWorkRequestBuilder<SmartFinSubscriptionWorker>().build()
+      val manager=androidx.work.WorkManager.getInstance(context)
+      manager.enqueue(request).result.get(5,TimeUnit.SECONDS)
+      val deadline=System.nanoTime()+TimeUnit.SECONDS.toNanos(10)
+      var info=manager.getWorkInfoById(request.id).get(2,TimeUnit.SECONDS)
+      while(System.nanoTime()<deadline && !((info?.runAttemptCount ?: 0)>0 && info?.state==androidx.work.WorkInfo.State.ENQUEUED)) {
+        Thread.sleep(30); info=manager.getWorkInfoById(request.id).get(2,TimeUnit.SECONDS)
+      }
+      check((info?.runAttemptCount ?: 0)>0 && info?.state==androidx.work.WorkInfo.State.ENQUEUED) { "Worker did not retry: $info" }
+      events.put("workerState",info!!.state.name).put("workerAttempt",info!!.runAttemptCount)
+      manager.cancelWorkById(request.id).result.get(5,TimeUnit.SECONDS)
+      events.put("stillExcludedAfterWorker",contender())
+    } finally { Phase5B2Probe.proceed.countDown() }
+    events.put("owner",JSONObject(first.get(10,TimeUnit.SECONDS)))
+      .put("subsequent",SmartFinFinancialDeletion.recover(context))
+      .put("pidAfter",Process.myPid()).put("uncaughtHandlerInstalled",false).toString()
+  }
+  @ReactMethod fun unexpectedRecovery(resume: Boolean, promise: Promise) = run(promise) {
+    Phase5E1RecoveryProbe.finished=CountDownLatch(1); Phase5E1RecoveryProbe.fail=true
+    val before=Process.myPid()
+    context.sendBroadcast(Intent(context,SmartFinSubscriptionRecoveryReceiver::class.java)
+      .setAction("com.smartfin.tests.RECOVER_UNEXPECTED"))
+    check(Phase5E1RecoveryProbe.finished.await(5,TimeUnit.SECONDS))
+    val result=JSONObject().put("pidBefore",before).put("pidAfter",Process.myPid())
+    if(resume) result.put("subsequent",SmartFinFinancialDeletion.recover(context))
+    result.toString()
+  }
+  @ReactMethod fun historySqlTiming(encoded: String, promise: Promise) = run(promise) {
+    val queries=JSONArray(encoded); val start=System.nanoTime()
+    SmartFinSubscriptionRemindersModule.withDatabase(context) { db ->
+      val opened=System.nanoTime(); var queryNs=0L; var rowNs=0L; var count=0L
+      for(i in 0 until queries.length()) {
+        val item=queries.getJSONObject(i); val args=item.getJSONArray("values")
+        val values=Array(args.length()) { n -> if(args.isNull(n)) "" else args.get(n).toString() }
+        val q=System.nanoTime()
+        db.rawQuery(item.getString("sql"),values).use { cursor ->
+          val exists=cursor.moveToFirst(); queryNs+=System.nanoTime()-q
+          val r=System.nanoTime()
+          if(exists) do { for(c in 0 until cursor.columnCount) { cursor.getString(c) }; count++ } while(cursor.moveToNext())
+          rowNs+=System.nanoTime()-r
+        }
+      }
+      JSONObject().put("admissionAndOpenMs",(opened-start)/1e6).put("queryToFirstRowMs",queryNs/1e6)
+        .put("cursorMaterializationMs",rowNs/1e6).put("rows",count).put("statements",queries.length()).toString()
+    } ?: error("Synthetic database unavailable")
+  }
+  @ReactMethod fun historyOrderProbe(promise: Promise) = run(promise) {
+    SmartFinSubscriptionRemindersModule.withDatabase(context) { db ->
+      val expression="COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date)"
+      val result=JSONObject()
+      for(tie in listOf("rowid","+rowid","CAST(rowid AS INTEGER)","castSortKey")) {
+        val order=if(tie=="castSortKey") "CAST($expression AS TEXT) ASC,created_at DESC,rowid DESC" else "$expression ASC,created_at DESC,$tie DESC"
+        val sql="SELECT rowid,id FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1=1 ORDER BY $order LIMIT 5"
+        val ids=JSONArray(); val plan=JSONArray()
+        db.rawQuery(sql,null).use { while(it.moveToNext()) ids.put(it.getString(1)) }
+        db.rawQuery("EXPLAIN QUERY PLAN $sql",null).use { while(it.moveToNext()) plan.put(it.getString(3)) }
+        result.put(tie,JSONObject().put("sql",sql).put("ids",ids).put("plan",plan))
+      }
+      result.toString()
+    } ?: error("Synthetic database unavailable")
+  }

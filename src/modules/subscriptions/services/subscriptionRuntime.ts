@@ -24,7 +24,7 @@ import {
   createSqliteCategoryRepository,
   createSqliteSubcategoryRepository,
 } from '../../categories/repositories';
-import { recoverFinancialDeletion, subscriptionResourceEpoch } from '../../settings/services/financialDeletionLifecycle';
+import { awaitFinancialDeletionRecovery, subscriptionResourceEpoch } from '../../settings/services/financialDeletionLifecycle';
 
 export async function getSubscriptionApi() {
   const api = await withDatabaseMaintenance(createRuntimeApi);
@@ -129,8 +129,10 @@ let maintenance: Promise<SubscriptionSyncResult> | undefined;
 function requestSubscriptionMaintenance(expectedEpoch?: string): Promise<SubscriptionSyncResult> {
   if (maintenance) return maintenance;
   const execute = async () => {
-    const recovered = await recoverFinancialDeletion();
+    // Another Android owner may be finishing cleanup; wait for its final state.
+    const recovered = await awaitFinancialDeletionRecovery();
     if (recovered.status === 'unknown' || recovered.status === 'cleanupPending') throw new Error('Borrado pendiente; mantenimiento suspendido.');
+    if (recovered.status === 'running') throw new Error('Recuperación de borrado en curso; mantenimiento aplazado.');
     const epoch = await withDatabaseMaintenance(subscriptionResourceEpoch);
     if (expectedEpoch !== undefined && epoch !== expectedEpoch) throw new Error('Trabajo de mantenimiento de una época anterior.');
     const verifyEpoch = async (permit: DatabasePermit) => {

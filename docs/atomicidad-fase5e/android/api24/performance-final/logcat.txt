@@ -1,0 +1,400 @@
+--------- beginning of main
+10-24 18:18:57.424  6301  6301 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 34 lines
+10-24 18:18:57.499  6301  6316 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-1 expire 2 lines
+10-24 18:18:57.659  6301  6318 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-3 expire 1 line
+10-24 18:18:57.715  6301  6301 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Schedule
+10-24 18:18:57.715  6301  6301 W unknown:BridgelessReact: ReactHost{0}.attachSurface(surfaceId = 0)
+10-24 18:18:57.717  6301  6321 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask()
+10-24 18:18:57.717  6301  6321 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Start
+10-24 18:18:57.717  6301  6321 W unknown:BridgelessReact: ReactHost{0}.getJSBundleLoader()
+10-24 18:18:57.718  6301  6321 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating BridgelessReactContext
+10-24 18:18:57.720  6301  6321 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+10-24 18:18:57.743  6301  6301 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+10-24 18:18:57.744  6301  6301 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+10-24 18:18:57.800  6301  6301 D         : HostConnection::get() New Host Connection established 0x71162b47c180, tid 6301
+10-24 18:18:57.803  6301  6321 I art     : Rejecting re-init on previously-failed class java.lang.Class<com.duysolo.speechrecognition.RNSpeechRecognitionModule$getSupportedLocalesInternal$1$1>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/speech/RecognitionSupportCallback;
+10-24 18:18:57.803  6301  6321 I art     :   at java.util.List com.duysolo.speechrecognition.RNSpeechRecognitionPackage.createNativeModules(com.facebook.react.bridge.ReactApplicationContext) (RNSpeechRecognitionPackage.kt:10)
+10-24 18:18:57.803  6301  6321 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.initialize(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (ReactPackageTurboModuleManagerDelegate.kt:64)
+10-24 18:18:57.803  6301  6321 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, com.facebook.jni.HybridData) (ReactPackageTurboModuleManagerDelegate.kt:42)
+10-24 18:18:57.803  6301  6321 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List) (DefaultTurboModuleManagerDelegate.kt:35)
+10-24 18:18:57.803  6301  6321 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List, kotlin.jvm.internal.DefaultConstructorMarker) (DefaultTurboModuleManagerDelegate.kt:-1)
+10-24 18:18:57.803  6301  6321 I art     :   at com.facebook.react.defaults.DefaultTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:63)
+10-24 18:18:57.803  6301  6321 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:43)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.ReactPackageTurboModuleManagerDelegate$Builder.build() (ReactPackageTurboModuleManagerDelegate.kt:222)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.ReactInstance.<init>(com.facebook.react.runtime.BridgelessReactContext, com.facebook.react.runtime.ReactHostDelegate, com.facebook.react.fabric.ComponentFactory, com.facebook.react.devsupport.interfaces.DevSupportManager, com.facebook.react.bridge.queue.QueueThreadExceptionHandler, boolean, com.facebook.react.runtime.ReactHostInspectorTarget) (ReactInstance.kt:183)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.getOrCreateReactInstanceTask$lambda$44$lambda$40(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:1039)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.$r8$lambda$kGNcmxBxZbp8b1wWTaqIXDdkV8g(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:-1)
+10-24 18:18:57.804  6301  6321 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+10-24 18:18:57.804  6301  6321 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+10-24 18:18:57.804  6301  6321 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+10-24 18:18:57.804  6301  6321 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+10-24 18:18:57.804  6301  6321 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+10-24 18:18:57.804  6301  6321 I art     : Caused by: java.lang.ClassNotFoundException: Didn't find class "android.speech.RecognitionSupportCallback" on path: DexPathList[[zip file "/data/app/com.smartfin.snapshot5b2.tests-1/base.apk"],nativeLibraryDirectories=[/data/app/com.smartfin.snapshot5b2.tests-1/lib/x86_64, /data/app/com.smartfin.snapshot5b2.tests-1/base.apk!/lib/x86_64, /system/lib64, /vendor/lib64]]
+10-24 18:18:57.804  6301  6321 I art     :   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:56)
+10-24 18:18:57.804  6301  6321 I art     :   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:380)
+10-24 18:18:57.804  6301  6321 I art     :   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+10-24 18:18:57.804  6301  6321 I art     :   at java.util.List com.duysolo.speechrecognition.RNSpeechRecognitionPackage.createNativeModules(com.facebook.react.bridge.ReactApplicationContext) (RNSpeechRecognitionPackage.kt:10)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.initialize(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (ReactPackageTurboModuleManagerDelegate.kt:64)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, com.facebook.jni.HybridData) (ReactPackageTurboModuleManagerDelegate.kt:42)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List) (DefaultTurboModuleManagerDelegate.kt:35)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List, kotlin.jvm.internal.DefaultConstructorMarker) (DefaultTurboModuleManagerDelegate.kt:-1)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.defaults.DefaultTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:63)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:43)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.ReactPackageTurboModuleManagerDelegate$Builder.build() (ReactPackageTurboModuleManagerDelegate.kt:222)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.ReactInstance.<init>(com.facebook.react.runtime.BridgelessReactContext, com.facebook.react.runtime.ReactHostDelegate, com.facebook.react.fabric.ComponentFactory, com.facebook.react.devsupport.interfaces.DevSupportManager, com.facebook.react.bridge.queue.QueueThreadExceptionHandler, boolean, com.facebook.react.runtime.ReactHostInspectorTarget) (ReactInstance.kt:183)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.getOrCreateReactInstanceTask$lambda$44$lambda$40(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:1039)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.$r8$lambda$kGNcmxBxZbp8b1wWTaqIXDdkV8g(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:-1)
+10-24 18:18:57.804  6301  6321 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+10-24 18:18:57.804  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+10-24 18:18:57.804  6301  6321 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+10-24 18:18:57.805  6301  6321 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-24 18:18:57.805  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+10-24 18:18:57.805  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-24 18:18:57.805  6301  6321 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+10-24 18:18:57.805  6301  6321 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+10-24 18:18:57.805  6301  6321 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+10-24 18:18:57.805  6301  6321 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+10-24 18:18:57.805  6301  6321 I art     : 
+10-24 18:18:57.862  6301  6325 D         : HostConnection::get() New Host Connection established 0x71162b47c2a0, tid 6325
+10-24 18:18:57.866  6301  6325 I OpenGLRenderer: Initialized EGL, version 1.4
+10-24 18:18:57.866  6301  6325 D OpenGLRenderer: Swap behavior 1
+10-24 18:18:57.868  6301  6321 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+10-24 18:18:57.868  6301  6321 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+10-24 18:18:57.869  6301  6325 D EGL_emulation: eglCreateContext: 0x71163776ffc0: maj 2 min 0 rcv 2
+10-24 18:18:57.870  6301  6321 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+10-24 18:18:57.872  6301  6325 D EGL_emulation: eglMakeCurrent: 0x71163776ffc0: ver 2 0 (tinfo 0x71162b4ad2c0)
+10-24 18:18:57.892  6301  6323 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+10-24 18:18:57.901  6301  6322 I ReactNativeJS: Running "SmartFin"
+10-24 18:18:57.909  6301  6325 D EGL_emulation: eglMakeCurrent: 0x71163776ffc0: ver 2 0 (tinfo 0x71162b4ad2c0)
+10-24 18:18:57.915  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+10-24 18:18:57.922  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+10-24 18:18:57.924  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+10-24 18:18:57.924  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+10-24 18:18:57.933  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+10-24 18:18:57.937  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+10-24 18:18:57.943  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+10-24 18:18:57.947  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+10-24 18:18:57.951  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+10-24 18:18:57.956  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+10-24 18:18:57.965  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+10-24 18:18:57.973  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+10-24 18:18:57.976  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+10-24 18:18:57.979  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+10-24 18:18:57.981  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+10-24 18:18:57.985  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+10-24 18:18:57.987  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+10-24 18:18:57.992  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+10-24 18:18:57.998  6301  6322 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+10-24 18:18:58.012  6301  6322 I ReactNativeJS: ACCEPTANCE_START:isolation
+10-24 18:18:58.013  6301  6322 I ReactNativeJS: ACCEPTANCE_END:isolation
+10-24 18:18:58.062  6301  6301 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+10-24 18:18:58.063  6301  6301 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+10-24 18:18:58.365  6301  6306 I art     : Do partial code cache collection, code=30KB, data=29KB
+10-24 18:18:58.366  6301  6306 I art     : After code cache collection, code=27KB, data=27KB
+10-24 18:18:58.366  6301  6306 I art     : Increasing code cache capacity to 128KB
+10-24 18:18:59.105  6301  6322 I ReactNativeJS: ACCEPTANCE_START:legacy-fixture-is-explicitly-unverified
+10-24 18:18:59.110  6301  6322 I ReactNativeJS: ACCEPTANCE_END:legacy-fixture-is-explicitly-unverified
+10-24 18:18:59.130  6301  6322 I ReactNativeJS: ACCEPTANCE_START:combined-real-financial-commands
+10-24 18:18:59.563  6301  6306 I art     : Do partial code cache collection, code=61KB, data=53KB
+10-24 18:18:59.564  6301  6306 I art     : After code cache collection, code=61KB, data=53KB
+10-24 18:18:59.564  6301  6306 I art     : Increasing code cache capacity to 256KB
+10-24 18:19:00.811  6301  6316 D WM-SystemJobScheduler: Scheduling work ID b7675a65-9ba5-4630-8ed4-81bea9acca6bJob ID 0
+10-24 18:19:00.815  6301  6316 D WM-GreedyScheduler: Starting work for b7675a65-9ba5-4630-8ed4-81bea9acca6b
+10-24 18:19:00.818  6301  6316 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=b7675a65-9ba5-4630-8ed4-81bea9acca6b, generation=0)
+10-24 18:19:00.825  6301  6301 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-24 18:19:00.829  6301  6318 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-24 18:19:00.831  6301  6318 I WM-WorkerWrapper: Worker result RETRY for Work [ id=b7675a65-9ba5-4630-8ed4-81bea9acca6b, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-24 18:19:00.838  6301  6301 D WM-Processor: Processor b7675a65-9ba5-4630-8ed4-81bea9acca6b executed; reschedule = true
+10-24 18:19:00.847  6301  6317 D WM-GreedyScheduler: Cancelling work ID b7675a65-9ba5-4630-8ed4-81bea9acca6b
+10-24 18:19:00.854  6301  6317 D WM-SystemJobScheduler: Scheduling work ID b7675a65-9ba5-4630-8ed4-81bea9acca6bJob ID 1
+10-24 18:19:02.855  6301  6338 D ProfileInstaller: Installing profile for com.smartfin.snapshot5b2.tests
+10-24 18:19:02.955  6301  6322 I ReactNativeJS: ACCEPTANCE_END:combined-real-financial-commands
+10-24 18:19:02.973  6301  6322 I ReactNativeJS: ACCEPTANCE_START:integrated-performance-1000
+10-24 18:19:02.996  6301  6329 E SQLiteLog: (1) no query solution
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: SQLitePlugin.executeSql[Batch]() failed
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: android.database.sqlite.SQLiteException: no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativePrepareStatement(Native Method)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.acquirePreparedStatement(SQLiteConnection.java:889)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.prepare(SQLiteConnection.java:500)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.prepare(SQLiteSession.java:588)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteProgram.<init>(SQLiteProgram.java:58)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteQuery.<init>(SQLiteQuery.java:37)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDirectCursorDriver.query(SQLiteDirectCursorDriver.java:44)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQueryWithFactory(SQLiteDatabase.java:1318)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQuery(SQLiteDatabase.java:1257)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlStatementQuery(SQLitePlugin.java:805)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:712)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: SQLitePlugin.executeSql[Batch](): failed
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: android.database.sqlite.SQLiteException: no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativePrepareStatement(Native Method)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.acquirePreparedStatement(SQLiteConnection.java:889)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.prepare(SQLiteConnection.java:500)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.prepare(SQLiteSession.java:588)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteProgram.<init>(SQLiteProgram.java:58)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteQuery.<init>(SQLiteQuery.java:37)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDirectCursorDriver.query(SQLiteDirectCursorDriver.java:44)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQueryWithFactory(SQLiteDatabase.java:1318)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQuery(SQLiteDatabase.java:1257)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlStatementQuery(SQLitePlugin.java:805)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:712)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-24 18:19:02.996  6301  6329 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+10-24 18:19:03.764  6301  6306 I art     : Do full code cache collection, code=123KB, data=108KB
+10-24 18:19:03.765  6301  6306 I art     : After code cache collection, code=92KB, data=71KB
+10-24 18:19:03.862  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:recover
+10-24 18:19:03.865  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:recover
+10-24 18:19:03.865  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:begin
+10-24 18:19:03.869  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:begin
+10-24 18:19:03.870  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:inventory
+10-24 18:19:03.886  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:inventory
+10-24 18:19:03.947  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:recover
+10-24 18:19:03.952  6301  6317 D WM-Processor: Processor cancelling b7675a65-9ba5-4630-8ed4-81bea9acca6b
+10-24 18:19:03.952  6301  6317 D WM-Processor: WorkerWrapper could not be found for b7675a65-9ba5-4630-8ed4-81bea9acca6b
+10-24 18:19:03.953  6301  6317 D WM-GreedyScheduler: Cancelling work ID b7675a65-9ba5-4630-8ed4-81bea9acca6b
+10-24 18:19:03.960  6301  6316 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-24 18:19:04.113  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:recover
+10-24 18:19:04.136  6301  6322 I ReactNativeJS: ACCEPTANCE_END:integrated-performance-1000
+10-24 18:19:05.557  6301  6318 D WM-SystemJobScheduler: Scheduling work ID a1d2d084-fde0-4a47-bd63-ca7c863afedcJob ID 2
+10-24 18:19:05.560  6301  6318 D WM-GreedyScheduler: Starting work for a1d2d084-fde0-4a47-bd63-ca7c863afedc
+10-24 18:19:05.565  6301  6318 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=a1d2d084-fde0-4a47-bd63-ca7c863afedc, generation=0)
+10-24 18:19:05.575  6301  6301 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-24 18:19:05.578  6301  6318 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-24 18:19:05.579  6301  6318 I WM-WorkerWrapper: Worker result RETRY for Work [ id=a1d2d084-fde0-4a47-bd63-ca7c863afedc, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-24 18:19:05.584  6301  6301 D WM-Processor: Processor a1d2d084-fde0-4a47-bd63-ca7c863afedc executed; reschedule = true
+10-24 18:19:05.590  6301  6317 D WM-GreedyScheduler: Cancelling work ID a1d2d084-fde0-4a47-bd63-ca7c863afedc
+10-24 18:19:05.596  6301  6317 D WM-SystemJobScheduler: Scheduling work ID a1d2d084-fde0-4a47-bd63-ca7c863afedcJob ID 3
+10-24 18:19:07.596  6301  6322 I ReactNativeJS: ACCEPTANCE_START:integrated-performance-10000
+10-24 18:19:07.718  6301  6329 E SQLiteLog: (1) no query solution
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: SQLitePlugin.executeSql[Batch]() failed
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: android.database.sqlite.SQLiteException: no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativePrepareStatement(Native Method)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.acquirePreparedStatement(SQLiteConnection.java:889)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.prepare(SQLiteConnection.java:500)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.prepare(SQLiteSession.java:588)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteProgram.<init>(SQLiteProgram.java:58)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteQuery.<init>(SQLiteQuery.java:37)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDirectCursorDriver.query(SQLiteDirectCursorDriver.java:44)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQueryWithFactory(SQLiteDatabase.java:1318)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQuery(SQLiteDatabase.java:1257)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlStatementQuery(SQLitePlugin.java:805)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:712)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: SQLitePlugin.executeSql[Batch](): failed
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: android.database.sqlite.SQLiteException: no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativePrepareStatement(Native Method)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.acquirePreparedStatement(SQLiteConnection.java:889)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.prepare(SQLiteConnection.java:500)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.prepare(SQLiteSession.java:588)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteProgram.<init>(SQLiteProgram.java:58)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteQuery.<init>(SQLiteQuery.java:37)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDirectCursorDriver.query(SQLiteDirectCursorDriver.java:44)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQueryWithFactory(SQLiteDatabase.java:1318)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQuery(SQLiteDatabase.java:1257)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlStatementQuery(SQLitePlugin.java:805)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:712)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-24 18:19:07.719  6301  6329 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+10-24 18:19:08.401  6301  6331 W CursorWindow: Window is full: requested allocation 264 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:08.488  6301  6331 W CursorWindow: Window is full: requested allocation 26 bytes, free space 0 bytes, window size 2097152 bytes
+10-24 18:19:08.932  6301  6306 I art     : Do partial code cache collection, code=123KB, data=96KB
+10-24 18:19:08.933  6301  6306 I art     : After code cache collection, code=116KB, data=91KB
+10-24 18:19:08.933  6301  6306 I art     : Increasing code cache capacity to 512KB
+10-24 18:19:08.949  6301  6327 W CursorWindow: Window is full: requested allocation 264 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:09.069  6301  6327 W CursorWindow: Window is full: requested allocation 26 bytes, free space 0 bytes, window size 2097152 bytes
+10-24 18:19:09.290  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 143 bytes, window size 2097152 bytes
+10-24 18:19:09.420  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 87 bytes, window size 2097152 bytes
+10-24 18:19:09.553  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:recover
+10-24 18:19:09.559  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:recover
+10-24 18:19:09.559  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:begin
+10-24 18:19:09.564  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:begin
+10-24 18:19:09.565  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:inventory
+10-24 18:19:09.579  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:inventory
+10-24 18:19:09.701  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:recover
+10-24 18:19:09.705  6301  6318 D WM-Processor: Processor cancelling a1d2d084-fde0-4a47-bd63-ca7c863afedc
+10-24 18:19:09.705  6301  6318 D WM-Processor: WorkerWrapper could not be found for a1d2d084-fde0-4a47-bd63-ca7c863afedc
+10-24 18:19:09.707  6301  6318 D WM-GreedyScheduler: Cancelling work ID a1d2d084-fde0-4a47-bd63-ca7c863afedc
+10-24 18:19:09.713  6301  6316 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-24 18:19:09.816  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:recover
+10-24 18:19:09.850  6301  6322 I ReactNativeJS: ACCEPTANCE_END:integrated-performance-10000
+10-24 18:19:11.851  6301  6318 D WM-SystemJobScheduler: Scheduling work ID 345ef207-530b-47d0-b76a-e901d5a679e5Job ID 4
+10-24 18:19:11.854  6301  6318 D WM-GreedyScheduler: Starting work for 345ef207-530b-47d0-b76a-e901d5a679e5
+10-24 18:19:11.857  6301  6317 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=345ef207-530b-47d0-b76a-e901d5a679e5, generation=0)
+10-24 18:19:11.863  6301  6301 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-24 18:19:11.866  6301  6317 I WM-WorkerWrapper: Worker result RETRY for Work [ id=345ef207-530b-47d0-b76a-e901d5a679e5, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-24 18:19:11.870  6301  6301 D WM-Processor: Processor 345ef207-530b-47d0-b76a-e901d5a679e5 executed; reschedule = true
+10-24 18:19:11.870  6301  6317 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-24 18:19:11.874  6301  6318 D WM-GreedyScheduler: Cancelling work ID 345ef207-530b-47d0-b76a-e901d5a679e5
+10-24 18:19:11.880  6301  6318 D WM-SystemJobScheduler: Scheduling work ID 345ef207-530b-47d0-b76a-e901d5a679e5Job ID 5
+10-24 18:19:14.987  6301  6322 I ReactNativeJS: ACCEPTANCE_START:integrated-performance-100000
+10-24 18:19:15.247  6301  6329 W CursorWindow: Window is full: requested allocation 48 bytes, free space 12 bytes, window size 2097152 bytes
+10-24 18:19:16.129  6301  6329 W CursorWindow: Window is full: requested allocation 48 bytes, free space 12 bytes, window size 2097152 bytes
+10-24 18:19:17.923  6301  6329 W CursorWindow: Window is full: requested allocation 48 bytes, free space 12 bytes, window size 2097152 bytes
+10-24 18:19:18.510  6301  6329 W CursorWindow: Window is full: requested allocation 48 bytes, free space 12 bytes, window size 2097152 bytes
+10-24 18:19:19.510  6301  6329 E SQLiteLog: (1) no query solution
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: SQLitePlugin.executeSql[Batch]() failed
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: android.database.sqlite.SQLiteException: no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativePrepareStatement(Native Method)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.acquirePreparedStatement(SQLiteConnection.java:889)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.prepare(SQLiteConnection.java:500)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.prepare(SQLiteSession.java:588)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteProgram.<init>(SQLiteProgram.java:58)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteQuery.<init>(SQLiteQuery.java:37)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDirectCursorDriver.query(SQLiteDirectCursorDriver.java:44)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQueryWithFactory(SQLiteDatabase.java:1318)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQuery(SQLiteDatabase.java:1257)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlStatementQuery(SQLitePlugin.java:805)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:712)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: SQLitePlugin.executeSql[Batch](): failed
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: android.database.sqlite.SQLiteException: no query solution (code 1): , while compiling: SELECT COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS date FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 LIMIT 1;
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativePrepareStatement(Native Method)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.acquirePreparedStatement(SQLiteConnection.java:889)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.prepare(SQLiteConnection.java:500)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.prepare(SQLiteSession.java:588)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteProgram.<init>(SQLiteProgram.java:58)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteQuery.<init>(SQLiteQuery.java:37)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDirectCursorDriver.query(SQLiteDirectCursorDriver.java:44)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQueryWithFactory(SQLiteDatabase.java:1318)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteDatabase.rawQuery(SQLiteDatabase.java:1257)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlStatementQuery(SQLitePlugin.java:805)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:712)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-24 18:19:19.510  6301  6329 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+10-24 18:19:22.348  6301  6331 W CursorWindow: Window is full: requested allocation 264 bytes, free space 2 bytes, window size 2097152 bytes
+10-24 18:19:22.540  6301  6331 W CursorWindow: Window is full: requested allocation 26 bytes, free space 0 bytes, window size 2097152 bytes
+10-24 18:19:22.615  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:22.698  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:22.766  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:22.831  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:22.905  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:22.981  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.084  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.190  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.302  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.434  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.550  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.655  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.776  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.873  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:23.981  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:24.120  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:24.276  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:24.431  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:24.611  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:24.828  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:25.047  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:25.274  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:25.504  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:25.746  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:25.945  6301  6331 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:28.678  6301  6327 W CursorWindow: Window is full: requested allocation 404 bytes, free space 45 bytes, window size 2097152 bytes
+10-24 18:19:29.131  6301  6327 W CursorWindow: Window is full: requested allocation 264 bytes, free space 2 bytes, window size 2097152 bytes
+10-24 18:19:29.346  6301  6327 W CursorWindow: Window is full: requested allocation 26 bytes, free space 0 bytes, window size 2097152 bytes
+10-24 18:19:29.398  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:29.471  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:29.535  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:29.615  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:29.705  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:29.786  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:29.866  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:29.974  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.056  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.145  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.255  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.354  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.444  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.542  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.661  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.782  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:30.895  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:31.017  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:31.138  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:31.267  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:31.408  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:31.571  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:31.720  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:31.849  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:32.017  6301  6327 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-24 18:19:32.747  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 143 bytes, window size 2097152 bytes
+10-24 18:19:32.893  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 87 bytes, window size 2097152 bytes
+10-24 18:19:32.965  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.038  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.120  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.196  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.290  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.367  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.443  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.528  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.623  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.716  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.822  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:33.920  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:34.006  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:34.115  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:34.234  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:34.336  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:34.444  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:34.548  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:34.656  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:34.931  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:35.116  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:35.311  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:35.479  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:35.645  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:35.774  6301  6327 W CursorWindow: Window is full: requested allocation 288 bytes, free space 86 bytes, window size 2097152 bytes
+10-24 18:19:35.992  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:recover
+10-24 18:19:35.995  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:recover
+10-24 18:19:35.995  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:begin
+10-24 18:19:35.997  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:begin
+10-24 18:19:35.997  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:inventory
+10-24 18:19:36.004  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:inventory
+10-24 18:19:37.448  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_START:recover
+10-24 18:19:37.459  6301  6317 D WM-Processor: Processor cancelling 345ef207-530b-47d0-b76a-e901d5a679e5
+10-24 18:19:37.459  6301  6317 D WM-Processor: WorkerWrapper could not be found for 345ef207-530b-47d0-b76a-e901d5a679e5
+10-24 18:19:37.460  6301  6317 D WM-GreedyScheduler: Cancelling work ID 345ef207-530b-47d0-b76a-e901d5a679e5
+10-24 18:19:37.477  6301  6316 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-24 18:19:37.675  6301  6322 I ReactNativeJS: DELETE_LIFECYCLE_END:recover
+10-24 18:19:37.707  6301  6322 I ReactNativeJS: ACCEPTANCE_END:integrated-performance-100000

@@ -1,0 +1,125 @@
+Applications Database Info:
+
+** Database info for pid 24404 [com.smartfin.snapshot5b2.tests] **
+Connection pool for /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db:
+  Open: true
+  Max connections: 1
+  Total execution time (ms): 1392457
+  Total statements executed: 69772
+  Average time per statement (ms): 19
+  Configuration: openFlags=268435456, isLegacyCompatibilityWalEnabled=false, journalMode=TRUNCATE, syncMode=NORMAL
+  IsReadOnlyDatabase=false
+  Available primary connection:
+    <none>
+  Available non-primary connections:
+    <none>
+  Acquired connections:
+    Connection #0:
+      isPrimaryConnection: true
+      onlyAllowReadOnlyOperations: true
+      Most recently executed operations:
+        0: [2026-10-24 18:56:03.015] executeForCursorWindow started 78ms ago - running, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        1: [2026-10-24 18:56:03.015] prepare took 0ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        2: [2026-10-24 18:56:03.015] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        3: [2026-10-24 18:56:03.015] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        4: [2026-10-24 18:56:02.890] executeForCursorWindow took 105ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        5: [2026-10-24 18:56:02.890] prepare took 0ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        6: [2026-10-24 18:56:02.890] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        7: [2026-10-24 18:56:02.890] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        8: [2026-10-24 18:56:02.754] executeForCursorWindow took 103ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        9: [2026-10-24 18:56:02.754] prepare took 0ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        10: [2026-10-24 18:56:02.754] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        11: [2026-10-24 18:56:02.753] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        12: [2026-10-24 18:56:02.617] executeForCursorWindow took 104ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        13: [2026-10-24 18:56:02.617] prepare took 0ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        14: [2026-10-24 18:56:02.617] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        15: [2026-10-24 18:56:02.617] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        16: [2026-10-24 18:56:02.479] executeForCursorWindow took 105ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        17: [2026-10-24 18:56:02.479] prepare took 0ms - succeeded, sql="SELECT rowid AS history_rowid, id, date, COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) AS history_sort_key, created_at, merchant_name, description, notes FROM transactions INDEXED BY idx_transactions_civil_sort WHERE 1 = 1 AND COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) <= ? AND (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) < ? OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at < ?) OR (COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) = ? AND created_at = ? AND rowid < ?)) ORDER BY COALESCE(civil_date || 'T' || COALESCE(local_time, '00:00') || ':00.000Z', date) DESC, created_at DESC, rowid DESC LIMIT ?;", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        18: [2026-10-24 18:56:02.479] executeForCursorWindow took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+        19: [2026-10-24 18:56:02.479] prepare took 0ms - succeeded, sql="SELECT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db
+      Status: NORMAL
+  Connection waiters:
+    <none>
+Connection pool for /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb:
+  Open: true
+  Max connections: 4
+  Total execution time (ms): 24
+  Total statements executed: 142
+  Average time per statement (ms): 0
+  Configuration: openFlags=805306368, isLegacyCompatibilityWalEnabled=false, journalMode=WAL, syncMode=FULL
+  IsReadOnlyDatabase=false
+  Available primary connection:
+    Connection #0:
+      isPrimaryConnection: true
+      onlyAllowReadOnlyOperations: false
+      Most recently executed operations:
+        0: [2026-10-24 18:07:34.188] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        1: [2026-10-24 18:07:34.188] execute took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_DELETE` AFTER DELETE ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        2: [2026-10-24 18:07:34.188] prepare took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_DELETE` AFTER DELETE ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        3: [2026-10-24 18:07:34.188] execute took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_UPDATE` AFTER UPDATE ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        4: [2026-10-24 18:07:34.188] prepare took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_UPDATE` AFTER UPDATE ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        5: [2026-10-24 18:07:34.187] execute took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_INSERT` AFTER INSERT ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        6: [2026-10-24 18:07:34.187] prepare took 0ms - succeeded, sql="CREATE TEMP TRIGGER IF NOT EXISTS `room_table_modification_trigger_workspec_INSERT` AFTER INSERT ON `workspec` BEGIN UPDATE room_table_modification_log SET invalidated = 1 WHERE table_id = 1 AND invalidated = 0; END", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        7: [2026-10-24 18:07:34.187] execute took 0ms - succeeded, sql="INSERT OR IGNORE INTO room_table_modification_log VALUES(1, 0)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        8: [2026-10-24 18:07:34.187] prepare took 0ms - succeeded, sql="INSERT OR IGNORE INTO room_table_modification_log VALUES(1, 0)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        9: [2026-10-24 18:07:34.187] execute took 0ms - succeeded, sql="BEGIN IMMEDIATE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        10: [2026-10-24 18:07:34.184] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        11: [2026-10-24 18:07:34.184] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM room_table_modification_log WHERE invalidated = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        12: [2026-10-24 18:07:34.184] prepare took 0ms - succeeded, sql="SELECT * FROM room_table_modification_log WHERE invalidated = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        13: [2026-10-24 18:07:34.183] execute took 0ms - succeeded, sql="BEGIN IMMEDIATE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        14: [2026-10-24 18:07:34.178] execute took 1ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        15: [2026-10-24 18:07:34.178] execute took 0ms - succeeded, sql="INSERT OR REPLACE INTO `Preference` (`key`,`long_value`) VALUES (?,?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        16: [2026-10-24 18:07:34.178] prepare took 0ms - succeeded, sql="INSERT OR REPLACE INTO `Preference` (`key`,`long_value`) VALUES (?,?)", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        17: [2026-10-24 18:07:34.178] execute took 0ms - succeeded, sql="BEGIN IMMEDIATE;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        18: [2026-10-24 18:07:34.177] execute took 0ms - succeeded, sql="COMMIT;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        19: [2026-10-24 18:07:34.177] executeForCursorWindow took 0ms - succeeded, sql="SELECT * FROM workspec WHERE state=0 ORDER BY last_enqueue_time LIMIT ?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+  Available non-primary connections:
+    Connection #1:
+      isPrimaryConnection: false
+      onlyAllowReadOnlyOperations: true
+      Most recently executed operations:
+        0: [2026-10-24 18:07:34.192] executeForCursorWindow took 0ms - succeeded, sql="SELECT COUNT(*) > 0 FROM workspec WHERE state NOT IN (2, 3, 5) LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        1: [2026-10-24 18:07:34.192] prepare took 0ms - succeeded, sql="SELECT COUNT(*) > 0 FROM workspec WHERE state NOT IN (2, 3, 5) LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        2: [2026-10-24 18:07:34.173] executeForCursorWindow took 0ms - succeeded, sql="SELECT long_value FROM Preference where `key`=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        3: [2026-10-24 18:07:34.173] prepare took 0ms - succeeded, sql="SELECT long_value FROM Preference where `key`=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        4: [2026-10-24 18:07:34.171] executeForCursorWindow took 0ms - succeeded, sql="SELECT long_value FROM Preference where `key`=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        5: [2026-10-24 18:07:34.171] prepare took 0ms - succeeded, sql="SELECT long_value FROM Preference where `key`=?", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        6: [2026-10-24 18:07:34.165] executeForCursorWindow took 1ms - succeeded, sql="SELECT DISTINCT work_spec_id FROM SystemIdInfo", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        7: [2026-10-24 18:07:34.165] prepare took 0ms - succeeded, sql="SELECT DISTINCT work_spec_id FROM SystemIdInfo", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        8: [2026-10-24 18:07:34.164] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA recursive_triggers = 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        9: [2026-10-24 18:07:34.164] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA temp_store = MEMORY", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        10: [2026-10-24 18:07:34.164] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA query_only", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        11: [2026-10-24 18:07:34.164] executeForCursorWindow took 0ms - succeeded, sql="PRAGMA foreign_keys = ON", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        12: [2026-10-24 18:07:34.163] executeForCursorWindow took 0ms - succeeded, sql="SELECT identity_hash FROM room_master_table WHERE id = 42 LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        13: [2026-10-24 18:07:34.163] prepare took 0ms - succeeded, sql="SELECT identity_hash FROM room_master_table WHERE id = 42 LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        14: [2026-10-24 18:07:34.162] executeForCursorWindow took 1ms - succeeded, sql="SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'room_master_table'", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        15: [2026-10-24 18:07:34.162] prepare took 0ms - succeeded, sql="SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'room_master_table'", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        16: [2026-10-24 18:07:34.157] executeForLong took 0ms - succeeded, sql="PRAGMA user_version;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        17: [2026-10-24 18:07:34.157] executeForLong took 0ms - succeeded, sql="PRAGMA user_version;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        18: [2026-10-24 18:07:34.156] executeForString took 0ms - succeeded, sql="PRAGMA synchronous;", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+        19: [2026-10-24 18:07:34.156] executeForString took 0ms - succeeded, sql="SELECT locale FROM android_metadata UNION SELECT NULL ORDER BY locale DESC LIMIT 1", path=/data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb
+  Acquired connections:
+    <none>
+  Connection waiters:
+    <none>
+Statements Executed per Database
+  /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db :    69772
+  /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb :    142
+
+Total Statements Executed for all Active Databases: 69914
+
+
+Statement Time per Database (ms)
+  /data/user/0/com.smartfin.snapshot5b2.tests/databases/phase5b2_synthetic.db :    1392457
+  /data/user/0/com.smartfin.snapshot5b2.tests/no_backup/androidx.work.workdb :    24
+Total Statements Time for all Active Databases (ms): 1392481
+
+Database files in /data/user/0/com.smartfin.snapshot5b2.tests/databases:
+  phase5b2_synthetic.db                    31768576b ctime=2026-10-24T23:07:43.896Z mtime=2026-10-24T23:07:43.896Z atime=2026-10-24T23:07:34.392Z
+  phase5b2_synthetic.db-journal                  0b ctime=2026-10-24T23:07:43.952Z mtime=2026-10-24T23:07:43.952Z atime=2026-10-24T23:07:34.392Z
+
+Database files in /data/user/0/com.smartfin.snapshot5b2.tests/no_backup:
+  androidx.work.workdb                        4096b ctime=2026-10-24T23:07:34.148Z mtime=2026-10-24T23:07:34.148Z atime=2026-10-24T23:07:34.14Z
+  androidx.work.workdb-shm                   32768b ctime=2026-10-24T23:07:34.152Z mtime=2026-10-24T23:07:34.152Z atime=2026-10-24T23:07:34.152Z
+  androidx.work.workdb-wal                  127752b ctime=2026-10-24T23:07:34.176Z mtime=2026-10-24T23:07:34.176Z atime=2026-10-24T23:07:34.152Z

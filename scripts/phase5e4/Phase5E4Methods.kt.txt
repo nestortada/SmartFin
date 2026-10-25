@@ -1,0 +1,30 @@
+  // Phase 5E.4: a real recover() owner (as receiver/Worker would) held after acquiring
+  // the production cleanup mutex, so JS observes genuine contention.
+  @ReactMethod fun holdCleanup(promise: Promise) = run(promise) {
+    Phase5B2Probe.stage="cleanup.acquired"; Phase5B2Probe.fail=false
+    Phase5B2Probe.reached=CountDownLatch(1); Phase5B2Probe.proceed=CountDownLatch(1)
+    val owner=java.util.concurrent.CompletableFuture<String>()
+    Phase5E4Hold.owner=owner
+    Thread { try { owner.complete(SmartFinFinancialDeletion.recover(context).toString()) }
+      catch(e:Exception) { owner.completeExceptionally(e) } }.start()
+    check(Phase5B2Probe.reached.await(5,TimeUnit.SECONDS)) { "Owner did not acquire cleanup" }
+    true
+  }
+  @ReactMethod fun releaseCleanup(promise: Promise) = run(promise) {
+    Phase5B2Probe.proceed.countDown()
+    Phase5E4Hold.owner!!.get(20,TimeUnit.SECONDS)
+  }
+  // Exports the published SQLite component with the frozen 5E.3 exporter (git HEAD)
+  // from a private copy and returns its digests, to compare byte for byte.
+  @ReactMethod fun legacyCsvDigests(id: String, promise: Promise) = run(promise) {
+    val published=File(File(context.noBackupFilesDir,"saf-synthetic"),"smartfin-$id--smartfin-backup.db")
+    val work=File(context.cacheDir,"phase5e4-legacy-$id").apply { deleteRecursively(); check(mkdirs()) }
+    try {
+      val copy=File(work,"snapshot.db"); published.copyTo(copy)
+      val out=File(work,"csv").apply { check(mkdirs()) }
+      val start=System.nanoTime()
+      val digests=JSONObject()
+      for ((name,file) in Phase5E4LegacyCsv.export(copy,out)) digests.put(name,SmartFinBackupPublisher.digest(file.inputStream()).second)
+      JSONObject().put("digests",digests).put("legacyExportMs",(System.nanoTime()-start)/1_000_000.0).toString()
+    } finally { work.deleteRecursively() }
+  }

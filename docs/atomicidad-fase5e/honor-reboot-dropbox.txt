@@ -1,0 +1,37 @@
+Drop box contents: 16 entries
+Max entries: 1000
+Low priority rate limit period: 2000 ms
+Low priority tags: {data_app_wtf, keymaster, system_server_wtf, system_app_strictmode, system_app_wtf, system_server_strictmode, data_app_strictmode, netstats}
+Searching for: 2026-10-24 17:18:14 data_app_crash
+
+========================================
+2026-10-24 17:18:14 data_app_crash (text, 1325 bytes)
+SystemUptimeMs: 149253
+Process: com.smartfin.snapshot5b2.tests
+PID: 10278
+UID: 10292
+Frozen: false
+PgFrozen: false
+Flags: 0x20a83e44
+Package: com.smartfin.snapshot5b2.tests v1 (1.0)
+Foreground: Yes
+Process-Runtime: 1681
+Timestamp: 2026-10-24 17:18:14.730-0500
+Lifetime: 1s
+Build: HONOR/CRT-NX3/HNCRT-M2:15/HONORCRT-N03/9.0.0.205LAMC25E6R1P2:user/release-keys
+Crash-Handler: com.android.internal.os.RuntimeInit$KillApplicationHandler
+Crash-Tag: null null
+Loading-Progress: 1.0
+KeyguardShowing: false 2026-10-24 17:16:26.848
+ScreenOnState: true Wakefulness: Awake 1969-12-31 19:00:00.000
+Dropped-Count: 0
+
+java.lang.IllegalStateException: Cleanup already running
+	at com.smartfin.SmartFinFinancialDeletion.recover(SmartFinFinancialDeletion.kt:135)
+	at com.smartfin.SmartFinSubscriptionRecoveryReceiver.onReceive$lambda$1$lambda$0(SmartFinSubscriptionReminderReceiver.kt:89)
+	at com.smartfin.SmartFinSubscriptionRecoveryReceiver.$r8$lambda$JObbw-Q3wcr1Vj0HB0q2MIYEU2M(SmartFinSubscriptionReminderReceiver.kt:0)
+	at com.smartfin.SmartFinSubscriptionRecoveryReceiver$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1100)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:1571)
+
