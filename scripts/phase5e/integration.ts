@@ -145,7 +145,11 @@ export async function buildIntegratedScenario(f: IntegratedFixture) {
   expected.available -= 1000; expected.wealth -= 1000; expected.expense += 1000;
   state = await verify('ai-confirmed');
   await executeAiCommandPlan(f.database, 'integrated-ai', plan, undefined);
-  check(JSON.stringify(state) === JSON.stringify(await inspectIntegrated(f.database)), 'AI repeated confirmed impacts');
+  const repeated = await inspectIntegrated(f.database);
+  // Diagnostic only (5E.5): name what changed, e.g. asynchronous reminder delivery acknowledgements.
+  const changed = Object.keys(repeated.tables).filter(t => JSON.stringify(state.tables[t]) !== JSON.stringify(repeated.tables[t]));
+  check(JSON.stringify(state) === JSON.stringify(repeated), 'AI repeated confirmed impacts: ' + JSON.stringify({ changed,
+    reminders: changed.includes('subscription_reminders') ? repeated.tables.subscription_reminders!.map(r => r.delivery_status) : undefined }));
   check(await drafts.loadActiveDraft() === undefined, 'Receipt still active');
   check(state.tables.ai_command_drafts!.some(r => r.phase === 'confirmed'), 'Missing AI receipt');
   check(state.tables.account_balance_history!.length > 0 && state.tables.financial_data_revision!.length === 1, 'Missing audit/revision');

@@ -1,0 +1,1146 @@
+{
+  "apkSha256": [
+    "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+    "7054bdbc3d1d3e1c06f1592af452260f8876d8fcf2423da917e3ade8727b90f5",
+    "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9"
+  ],
+  "summary": {
+    "api24": {
+      "dashboard-precision": {
+        "passed": true,
+        "cases": 6,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "epochs": {
+        "passed": true,
+        "cases": 8,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24",
+        "historical": "historical",
+        "reactivation": {
+          "errors": {
+            "g1": "Trabajo de una historia financiera anterior; publicación revocada.",
+            "pending": "Trabajo de una historia financiera anterior; publicación revocada.",
+            "pendingRecovery": "Trabajo de una historia financiera anterior; publicación revocada."
+          },
+          "written": [],
+          "counts": {
+            "accounts": 0,
+            "transactions": 0,
+            "installment_purchases": 0,
+            "subscription_occurrences": 0,
+            "shared_expenses": 0,
+            "ai_command_drafts": 0
+          }
+        },
+        "newEpoch": {
+          "status": {
+            "generationId": "3e8291d5-1945-4264-bc10-a6dcb0ac376d",
+            "remoteRevision": 2163,
+            "locationName": "saf-synthetic",
+            "validation": "verified",
+            "permissionPersistent": false,
+            "lastBackupAt": "2026-10-25T18:58:22.002Z",
+            "accessNeedsRenewal": false,
+            "outdated": true,
+            "datasetCurrency": "current",
+            "configured": true
+          },
+          "fallback": {
+            "generationId": "c512500f-2327-49fd-b2c2-bcf751555b1f",
+            "remoteRevision": 1090,
+            "locationName": "saf-synthetic",
+            "validation": "verified",
+            "permissionPersistent": false,
+            "lastBackupAt": "2026-10-25T18:58:19.688Z",
+            "accessNeedsRenewal": false,
+            "outdated": true,
+            "datasetCurrency": "historical",
+            "configured": true
+          }
+        },
+        "withoutLocalMetadata": "unknown"
+      },
+      "failures": {
+        "passed": true,
+        "cases": 18,
+        "failed": [],
+        "apkSha256": "7054bdbc3d1d3e1c06f1592af452260f8876d8fcf2423da917e3ade8727b90f5",
+        "model": "Android SDK built for x86_64",
+        "api": "24",
+        "matrix": [
+          {
+            "case": "two-integral-generations",
+            "passed": true
+          },
+          {
+            "case": "g2-incomplete-generation-annual-csv-deleted-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-corrupt-sqlite-byte-flip-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-truncated-sqlite-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-missing-component-sqlite-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-missing-fixed-csv-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-wrong-hash-in-manifest-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-invalid-manifest-json-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-invalid-manifest-version-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-missing-manifest-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-mixed-generations-sqlite-from-g1-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-mixed-generations-csv-from-g1-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "revoked-permission-status-and-publication",
+            "passed": true
+          },
+          {
+            "case": "interrupted-before-component-then-original-job-recovery",
+            "passed": true
+          },
+          {
+            "case": "interrupted-mid-component-is-not-resumable-and-is-abandoned",
+            "passed": true
+          },
+          {
+            "case": "lost-response-after-publication-is-idempotent",
+            "passed": true
+          },
+          {
+            "case": "all-table-integrity-after-failures",
+            "passed": true
+          }
+        ]
+      },
+      "failures-attempt-195127": {
+        "passed": false,
+        "cases": 14,
+        "failed": [
+          "revoked-permission-status-and-publication"
+        ],
+        "failure": "Error: SQLite connection is not usable",
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "failures-attempt-201133": {
+        "passed": false,
+        "cases": 15,
+        "failed": [
+          "interrupted-publication-then-original-job-recovery"
+        ],
+        "failure": "java.lang.IllegalStateException: Provider content verification failed",
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "history50-civil-1000": {
+        "passed": true,
+        "cases": 19,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "history50-civil-100000": {
+        "passed": true,
+        "cases": 19,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "recoverability-1000": {
+        "passed": true,
+        "cases": 10,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24",
+        "seed": {
+          "v": "3.9.2",
+          "first": "2026-04-26",
+          "last": "2026-10-25",
+          "years": 1,
+          "n": 1000
+        },
+        "g1": {
+          "id": "77ea67c4-98d8-465c-86b8-fcf12b87b200",
+          "fileCount": 14,
+          "revision": 1091,
+          "publicationMs": 375.91500000003725,
+          "snapshot": {
+            "bytes": 1011712,
+            "sha256": "43dbb59a9a90cc6df5b4f1831c3a5c00fb801b8844e718fd7b423f13cf682141",
+            "revision": 1091
+          }
+        },
+        "settled": {
+          "settledMs": 6147.9164999998175,
+          "state": {
+            "due": 0,
+            "revision": 1091
+          }
+        },
+        "orderProbe": {
+          "sqlite": "3.9.2",
+          "plans": {
+            "pre5E4": [
+              "SCAN TABLE transactions AS t USING INDEX idx_transactions_civil_day"
+            ],
+            "current": [
+              "SEARCH TABLE transactions AS t USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+            ],
+            "forcedSort": [
+              "SEARCH TABLE transactions AS t USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+              "USE TEMP B-TREE FOR ORDER BY"
+            ]
+          },
+          "sameOrderPre5E4AndCurrent": true
+        }
+      },
+      "recoverability-10000": {
+        "passed": true,
+        "cases": 9,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24",
+        "seed": {
+          "v": "3.9.2",
+          "first": "2022-01-01",
+          "last": "2026-10-25",
+          "years": 5,
+          "n": 10000
+        },
+        "g1": {
+          "id": "9017dec1-020a-4ff6-be2f-a745683d8c26",
+          "fileCount": 18,
+          "revision": 10091,
+          "publicationMs": 859.9276000000536,
+          "snapshot": {
+            "bytes": 4878336,
+            "sha256": "6d53eeea142bf010f5cfbaa1f532e6a1310b8a440457ccf661112a8c267b1a78",
+            "revision": 10091
+          }
+        },
+        "settled": {
+          "settledMs": 8187.475500000175,
+          "state": {
+            "due": 0,
+            "revision": 10091
+          }
+        }
+      },
+      "recoverability-100000": {
+        "passed": true,
+        "cases": 9,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24",
+        "seed": {
+          "v": "3.9.2",
+          "first": "1977-01-01",
+          "last": "2026-10-25",
+          "years": 50,
+          "n": 100000
+        },
+        "g1": {
+          "id": "8ef816a0-73c6-40b3-ad3a-234b2fb29ae9",
+          "fileCount": 63,
+          "revision": 100091,
+          "publicationMs": 5282.098600000143,
+          "snapshot": {
+            "bytes": 44580864,
+            "sha256": "e879ed67e7a967a75fa1c40d4e9bc1d12a497e9e8660520e8171a9c32c77e632",
+            "revision": 100091
+          }
+        },
+        "settled": {
+          "settledMs": 5128.853099999949,
+          "state": {
+            "due": 0,
+            "revision": 100091
+          }
+        }
+      },
+      "recovery-contention": {
+        "passed": true,
+        "cases": 6,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "recovery-error": {
+        "passed": true,
+        "cases": 4,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-cleanup-faults": {
+        "passed": true,
+        "cases": 11,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-cleanup-faults-attempt-195202": {
+        "passed": false,
+        "error": "no result"
+      },
+      "regression-close-lost": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-core": {
+        "passed": true,
+        "cases": 24,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-deletion-confirmed-restart": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-deletion-lost-after": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-deletion-lost-before": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-deletion-rollback": {
+        "passed": true,
+        "cases": 78,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-deletion-unknown-restart": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-denied": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-integrated": {
+        "passed": true,
+        "cases": 9,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-integrated-restart": {
+        "passed": true,
+        "cases": 3,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-kill-afterAck": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-kill-afterNotify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-kill-beforeNotify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-notification-epoch": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-notifications": {
+        "passed": true,
+        "cases": 27,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-open-lost": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-process-restart": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-process-stage": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-publication": {
+        "passed": true,
+        "cases": 28,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-publication-after-verify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-publication-restart-verify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-recovery": {
+        "passed": true,
+        "cases": 6,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-restart-afterAck": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-restart-afterNotify": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-restart-beforeNotify": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-restart-verify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      },
+      "regression-worker-headless": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "Android SDK built for x86_64",
+        "api": "24"
+      }
+    },
+    "api35": {
+      "dashboard-precision": {
+        "passed": true,
+        "cases": 6,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "epochs": {
+        "passed": true,
+        "cases": 8,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "CRT-NX3",
+        "api": "35",
+        "historical": "historical",
+        "reactivation": {
+          "errors": {
+            "g1": "Trabajo de una historia financiera anterior; publicación revocada.",
+            "pending": "Trabajo de una historia financiera anterior; publicación revocada.",
+            "pendingRecovery": "Trabajo de una historia financiera anterior; publicación revocada."
+          },
+          "written": [],
+          "counts": {
+            "accounts": 0,
+            "transactions": 0,
+            "installment_purchases": 0,
+            "subscription_occurrences": 0,
+            "shared_expenses": 0,
+            "ai_command_drafts": 0
+          }
+        },
+        "newEpoch": {
+          "status": {
+            "generationId": "81cd9423-f691-4901-b773-439d39ce3afd",
+            "remoteRevision": 2163,
+            "locationName": "saf-synthetic",
+            "validation": "verified",
+            "permissionPersistent": false,
+            "lastBackupAt": "2026-10-25T18:59:38.355Z",
+            "accessNeedsRenewal": false,
+            "outdated": true,
+            "datasetCurrency": "current",
+            "configured": true
+          },
+          "fallback": {
+            "generationId": "0b2deae5-2978-427a-8e12-37a5422c07c1",
+            "remoteRevision": 1090,
+            "locationName": "saf-synthetic",
+            "validation": "verified",
+            "permissionPersistent": false,
+            "lastBackupAt": "2026-10-25T18:59:33.779Z",
+            "accessNeedsRenewal": false,
+            "outdated": true,
+            "datasetCurrency": "historical",
+            "configured": true
+          }
+        },
+        "withoutLocalMetadata": "unknown"
+      },
+      "failures": {
+        "passed": true,
+        "cases": 18,
+        "failed": [],
+        "apkSha256": "7054bdbc3d1d3e1c06f1592af452260f8876d8fcf2423da917e3ade8727b90f5",
+        "model": "CRT-NX3",
+        "api": "35",
+        "matrix": [
+          {
+            "case": "two-integral-generations",
+            "passed": true
+          },
+          {
+            "case": "g2-incomplete-generation-annual-csv-deleted-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-corrupt-sqlite-byte-flip-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-truncated-sqlite-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-missing-component-sqlite-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-missing-fixed-csv-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-wrong-hash-in-manifest-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-invalid-manifest-json-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-invalid-manifest-version-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-missing-manifest-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-mixed-generations-sqlite-from-g1-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "g2-mixed-generations-csv-from-g1-falls-back-to-g1",
+            "passed": true,
+            "selected": "G1"
+          },
+          {
+            "case": "revoked-permission-status-and-publication",
+            "passed": true
+          },
+          {
+            "case": "interrupted-before-component-then-original-job-recovery",
+            "passed": true
+          },
+          {
+            "case": "interrupted-mid-component-is-not-resumable-and-is-abandoned",
+            "passed": true
+          },
+          {
+            "case": "lost-response-after-publication-is-idempotent",
+            "passed": true
+          },
+          {
+            "case": "all-table-integrity-after-failures",
+            "passed": true
+          }
+        ]
+      },
+      "failures-attempt-195048": {
+        "passed": false,
+        "cases": 14,
+        "failed": [
+          "revoked-permission-status-and-publication"
+        ],
+        "failure": "Error: SQLite connection is not usable",
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "failures-attempt-201134": {
+        "passed": false,
+        "cases": 15,
+        "failed": [
+          "interrupted-publication-then-original-job-recovery"
+        ],
+        "failure": "java.lang.IllegalStateException: Provider content verification failed",
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "history50-civil-1000": {
+        "passed": true,
+        "cases": 19,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "history50-civil-100000": {
+        "passed": true,
+        "cases": 19,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "history50-civil-100000-attempt-195115": {
+        "passed": false,
+        "error": "no result"
+      },
+      "recoverability-1000": {
+        "passed": true,
+        "cases": 10,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "CRT-NX3",
+        "api": "35",
+        "seed": {
+          "v": "3.44.5",
+          "first": "2026-04-26",
+          "last": "2026-10-25",
+          "years": 1,
+          "n": 1000
+        },
+        "g1": {
+          "id": "9c01257e-2162-4487-8756-280e42d904f8",
+          "fileCount": 14,
+          "revision": 1090,
+          "publicationMs": 260.9763069972396,
+          "snapshot": {
+            "bytes": 1015808,
+            "sha256": "90edb057133dc1adb7d409afb864d5e49909a4fe03214cfc8f1a9724c8f1316c",
+            "revision": 1090
+          }
+        },
+        "settled": {
+          "settledMs": 5117.548230998218,
+          "state": {
+            "due": 0,
+            "revision": 1090
+          }
+        },
+        "orderProbe": {
+          "sqlite": "3.44.5",
+          "plans": {
+            "pre5E4": [
+              "unavailable: SQLiteException"
+            ],
+            "current": [
+              "unavailable: SQLiteException"
+            ],
+            "forcedSort": [
+              "unavailable: SQLiteException"
+            ]
+          },
+          "sameOrderPre5E4AndCurrent": true
+        }
+      },
+      "recoverability-10000": {
+        "passed": true,
+        "cases": 9,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "CRT-NX3",
+        "api": "35",
+        "seed": {
+          "v": "3.44.5",
+          "first": "2022-01-01",
+          "last": "2026-10-25",
+          "years": 5,
+          "n": 10000
+        },
+        "g1": {
+          "id": "5f16aa74-ca03-4a9f-b827-55ccbfd344e4",
+          "fileCount": 18,
+          "revision": 10090,
+          "publicationMs": 615.1459229961038,
+          "snapshot": {
+            "bytes": 4878336,
+            "sha256": "387a6f65ace91c2f8af7dacc1da914e1aacf03814f219cf555a69551504449f5",
+            "revision": 10090
+          }
+        },
+        "settled": {
+          "settledMs": 5092.622154004872,
+          "state": {
+            "due": 0,
+            "revision": 10090
+          }
+        }
+      },
+      "recoverability-100000": {
+        "passed": true,
+        "cases": 9,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "CRT-NX3",
+        "api": "35",
+        "seed": {
+          "v": "3.44.5",
+          "first": "1977-01-01",
+          "last": "2026-10-25",
+          "years": 50,
+          "n": 100000
+        },
+        "g1": {
+          "id": "132cfadf-fc45-40f3-94b7-189ac7710342",
+          "fileCount": 63,
+          "revision": 100090,
+          "publicationMs": 5961.049538999796,
+          "snapshot": {
+            "bytes": 44601344,
+            "sha256": "413e290f1dacc653fadd70ca11e6805a2036c1c350b2d16c884811d3f2bfb5e2",
+            "revision": 100090
+          }
+        },
+        "settled": {
+          "settledMs": 5125.613847002387,
+          "state": {
+            "due": 0,
+            "revision": 100090
+          }
+        }
+      },
+      "recovery-contention": {
+        "passed": true,
+        "cases": 6,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "recovery-error": {
+        "passed": true,
+        "cases": 4,
+        "failed": [],
+        "apkSha256": "d04a0ee8ae0f4ae8386557fc7e20de0026423990069bff83802d9bcd0859cc63",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-cleanup-faults": {
+        "passed": true,
+        "cases": 11,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-close-lost": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-core": {
+        "passed": true,
+        "cases": 24,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-deletion-confirmed-restart": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-deletion-lost-after": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-deletion-lost-before": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-deletion-rollback": {
+        "passed": true,
+        "cases": 78,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-deletion-unknown-restart": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-denied": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-integrated": {
+        "passed": true,
+        "cases": 9,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-integrated-attempt-200806": {
+        "passed": false,
+        "cases": 3,
+        "failed": [
+          "combined-real-financial-commands"
+        ],
+        "failure": "Error: AI repeated confirmed impacts",
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-integrated-restart": {
+        "passed": true,
+        "cases": 3,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-integrated-restart-attempt-200830": {
+        "passed": false,
+        "cases": 1,
+        "failed": [],
+        "failure": "java.io.FileNotFoundException: /data/user/0/com.smartfin.snapshot5b2.tests/files/snapshot5b2-restart.json: open failed: ENOENT (No such file or directory)",
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-kill-afterAck": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-kill-afterNotify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-kill-beforeNotify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-notification-epoch": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-notifications": {
+        "passed": true,
+        "cases": 27,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-open-lost": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-process-restart": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-process-stage": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-publication": {
+        "passed": true,
+        "cases": 28,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-publication-after-verify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-publication-restart-verify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-recovery": {
+        "passed": true,
+        "cases": 6,
+        "failed": [],
+        "apkSha256": "7054bdbc3d1d3e1c06f1592af452260f8876d8fcf2423da917e3ade8727b90f5",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-recovery-attempt-200838": {
+        "passed": false,
+        "cases": 2,
+        "failed": [
+          "combined-financial-baseline"
+        ],
+        "failure": "Error: AI repeated confirmed impacts",
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-recovery-attempt-201159": {
+        "passed": false,
+        "cases": 2,
+        "failed": [
+          "combined-financial-baseline"
+        ],
+        "failure": "Error: AI repeated confirmed impacts",
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-restart-afterAck": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-restart-afterNotify": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-restart-beforeNotify": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-restart-verify": {
+        "passed": true,
+        "cases": 1,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      },
+      "regression-worker-headless": {
+        "passed": true,
+        "cases": 2,
+        "failed": [],
+        "apkSha256": "206d2581aef4b67be0f14a154cfde80fb877efa761f025f7a26db25f846767c9",
+        "model": "CRT-NX3",
+        "api": "35"
+      }
+    }
+  }
+}

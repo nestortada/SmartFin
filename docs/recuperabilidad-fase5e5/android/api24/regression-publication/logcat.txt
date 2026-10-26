@@ -1,0 +1,285 @@
+--------- beginning of main
+10-26 00:56:35.495  5582  5582 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 35 lines
+10-26 00:56:35.603  5582  5597 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-1 expire 2 lines
+10-26 00:56:35.724  5582  5599 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-3 expire 1 line
+10-26 00:56:35.769  5582  5582 W unknown:BridgelessReact: ReactHost{0}.attachSurface(surfaceId = 0)
+10-26 00:56:35.770  5582  5602 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask()
+10-26 00:56:35.770  5582  5602 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Start
+10-26 00:56:35.770  5582  5602 W unknown:BridgelessReact: ReactHost{0}.getJSBundleLoader()
+10-26 00:56:35.771  5582  5602 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating BridgelessReactContext
+10-26 00:56:35.774  5582  5602 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+10-26 00:56:35.793  5582  5582 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+10-26 00:56:35.793  5582  5582 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+10-26 00:56:35.801  5582  5602 I art     : Rejecting re-init on previously-failed class java.lang.Class<com.duysolo.speechrecognition.RNSpeechRecognitionModule$getSupportedLocalesInternal$1$1>: java.lang.NoClassDefFoundError: Failed resolution of: Landroid/speech/RecognitionSupportCallback;
+10-26 00:56:35.801  5582  5602 I art     :   at java.util.List com.duysolo.speechrecognition.RNSpeechRecognitionPackage.createNativeModules(com.facebook.react.bridge.ReactApplicationContext) (RNSpeechRecognitionPackage.kt:10)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.initialize(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (ReactPackageTurboModuleManagerDelegate.kt:64)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, com.facebook.jni.HybridData) (ReactPackageTurboModuleManagerDelegate.kt:42)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List) (DefaultTurboModuleManagerDelegate.kt:35)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List, kotlin.jvm.internal.DefaultConstructorMarker) (DefaultTurboModuleManagerDelegate.kt:-1)
+10-26 00:56:35.801  5582  5602 I art     :   at com.facebook.react.defaults.DefaultTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:63)
+10-26 00:56:35.801  5582  5602 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:43)
+10-26 00:56:35.801  5582  5602 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.ReactPackageTurboModuleManagerDelegate$Builder.build() (ReactPackageTurboModuleManagerDelegate.kt:222)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.runtime.ReactInstance.<init>(com.facebook.react.runtime.BridgelessReactContext, com.facebook.react.runtime.ReactHostDelegate, com.facebook.react.fabric.ComponentFactory, com.facebook.react.devsupport.interfaces.DevSupportManager, com.facebook.react.bridge.queue.QueueThreadExceptionHandler, boolean, com.facebook.react.runtime.ReactHostInspectorTarget) (ReactInstance.kt:183)
+10-26 00:56:35.801  5582  5602 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.getOrCreateReactInstanceTask$lambda$44$lambda$40(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:1039)
+10-26 00:56:35.801  5582  5602 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.$r8$lambda$kGNcmxBxZbp8b1wWTaqIXDdkV8g(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:-1)
+10-26 00:56:35.801  5582  5602 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+10-26 00:56:35.801  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+10-26 00:56:35.801  5582  5602 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+10-26 00:56:35.801  5582  5602 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+10-26 00:56:35.801  5582  5602 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+10-26 00:56:35.802  5582  5602 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+10-26 00:56:35.802  5582  5602 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+10-26 00:56:35.802  5582  5602 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+10-26 00:56:35.802  5582  5602 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+10-26 00:56:35.802  5582  5602 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+10-26 00:56:35.802  5582  5602 I art     : Caused by: java.lang.ClassNotFoundException: Didn't find class "android.speech.RecognitionSupportCallback" on path: DexPathList[[zip file "/data/app/com.smartfin.snapshot5b2.tests-2/base.apk"],nativeLibraryDirectories=[/data/app/com.smartfin.snapshot5b2.tests-2/lib/x86_64, /data/app/com.smartfin.snapshot5b2.tests-2/base.apk!/lib/x86_64, /system/lib64, /vendor/lib64]]
+10-26 00:56:35.802  5582  5602 I art     :   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:56)
+10-26 00:56:35.802  5582  5602 I art     :   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:380)
+10-26 00:56:35.802  5582  5602 I art     :   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+10-26 00:56:35.802  5582  5602 I art     :   at java.util.List com.duysolo.speechrecognition.RNSpeechRecognitionPackage.createNativeModules(com.facebook.react.bridge.ReactApplicationContext) (RNSpeechRecognitionPackage.kt:10)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.initialize(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (ReactPackageTurboModuleManagerDelegate.kt:64)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, com.facebook.jni.HybridData) (ReactPackageTurboModuleManagerDelegate.kt:42)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List) (DefaultTurboModuleManagerDelegate.kt:35)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List, kotlin.jvm.internal.DefaultConstructorMarker) (DefaultTurboModuleManagerDelegate.kt:-1)
+10-26 00:56:35.802  5582  5602 I art     :   at com.facebook.react.defaults.DefaultTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:63)
+10-26 00:56:35.802  5582  5602 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:43)
+10-26 00:56:35.802  5582  5602 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.ReactPackageTurboModuleManagerDelegate$Builder.build() (ReactPackageTurboModuleManagerDelegate.kt:222)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.ReactInstance.<init>(com.facebook.react.runtime.BridgelessReactContext, com.facebook.react.runtime.ReactHostDelegate, com.facebook.react.fabric.ComponentFactory, com.facebook.react.devsupport.interfaces.DevSupportManager, com.facebook.react.bridge.queue.QueueThreadExceptionHandler, boolean, com.facebook.react.runtime.ReactHostInspectorTarget) (ReactInstance.kt:183)
+10-26 00:56:35.802  5582  5602 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.getOrCreateReactInstanceTask$lambda$44$lambda$40(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:1039)
+10-26 00:56:35.802  5582  5602 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.$r8$lambda$kGNcmxBxZbp8b1wWTaqIXDdkV8g(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:-1)
+10-26 00:56:35.802  5582  5602 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+10-26 00:56:35.802  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+10-26 00:56:35.803  5582  5602 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+10-26 00:56:35.803  5582  5602 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+10-26 00:56:35.803  5582  5602 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+10-26 00:56:35.803  5582  5602 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+10-26 00:56:35.803  5582  5602 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-26 00:56:35.803  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+10-26 00:56:35.803  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-26 00:56:35.803  5582  5602 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+10-26 00:56:35.803  5582  5602 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+10-26 00:56:35.803  5582  5602 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+10-26 00:56:35.803  5582  5602 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+10-26 00:56:35.803  5582  5602 I art     : 
+10-26 00:56:35.851  5582  5582 D         : HostConnection::get() New Host Connection established 0x7f3fe5276180, tid 5582
+10-26 00:56:35.867  5582  5602 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+10-26 00:56:35.868  5582  5602 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+10-26 00:56:35.870  5582  5602 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+10-26 00:56:35.897  5582  5603 I ReactNativeJS: Running "SmartFin"
+10-26 00:56:35.906  5582  5604 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+10-26 00:56:35.919  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+10-26 00:56:35.922  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+10-26 00:56:35.927  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+10-26 00:56:35.928  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+10-26 00:56:35.936  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+10-26 00:56:35.938  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+10-26 00:56:35.947  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+10-26 00:56:35.950  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+10-26 00:56:35.955  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+10-26 00:56:35.960  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+10-26 00:56:35.971  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+10-26 00:56:35.978  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+10-26 00:56:35.981  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+10-26 00:56:35.986  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+10-26 00:56:35.989  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+10-26 00:56:35.994  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+10-26 00:56:35.997  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+10-26 00:56:36.016  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+10-26 00:56:36.031  5582  5606 D         : HostConnection::get() New Host Connection established 0x7f3fe52762a0, tid 5606
+10-26 00:56:36.033  5582  5606 I OpenGLRenderer: Initialized EGL, version 1.4
+10-26 00:56:36.033  5582  5606 D OpenGLRenderer: Swap behavior 1
+10-26 00:56:36.033  5582  5606 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-26 00:56:36.033  5582  5606 D OpenGLRenderer: Swap behavior 0
+10-26 00:56:36.034  5582  5603 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+10-26 00:56:36.042  5582  5606 D EGL_emulation: eglCreateContext: 0x7f3ff15f5d00: maj 2 min 0 rcv 2
+10-26 00:56:36.061  5582  5606 D EGL_emulation: eglMakeCurrent: 0x7f3ff15f5d00: ver 2 0 (tinfo 0x7f3ff150c520)
+10-26 00:56:36.089  5582  5582 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+10-26 00:56:36.089  5582  5582 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+10-26 00:56:36.090  5582  5582 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.RootViewManager
+10-26 00:56:36.202  5582  5606 D EGL_emulation: eglMakeCurrent: 0x7f3ff15f5d00: ver 2 0 (tinfo 0x7f3ff150c520)
+10-26 00:56:36.543  5582  5585 I art     : Do partial code cache collection, code=30KB, data=29KB
+10-26 00:56:36.544  5582  5585 I art     : After code cache collection, code=27KB, data=28KB
+10-26 00:56:36.544  5582  5585 I art     : Increasing code cache capacity to 128KB
+10-26 00:56:38.045  5582  5585 I art     : Do partial code cache collection, code=54KB, data=52KB
+10-26 00:56:38.046  5582  5585 I art     : After code cache collection, code=54KB, data=52KB
+10-26 00:56:38.046  5582  5585 I art     : Increasing code cache capacity to 256KB
+10-26 00:56:38.463  5582  5603 I ReactNativeJS: ACCEPTANCE_START:successful-publication-one-snapshot-all-csv-receipts-and-card-regression
+10-26 00:56:38.905  5582  5603 I ReactNativeJS: ACCEPTANCE_END:successful-publication-one-snapshot-all-csv-receipts-and-card-regression
+10-26 00:56:38.945  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-reuse:smartfin-backup.db-preserves-valid-generation
+10-26 00:56:39.616  5582  5585 I art     : Compiler allocated 6MB to compile org.json.JSONObject com.smartfin.SmartFinBackupPublisher.publish$lambda$37(android.content.Context, java.lang.String, java.lang.String, kotlin.jvm.functions.Function3, java.lang.String)
+10-26 00:56:39.664  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-reuse:smartfin-backup.db-preserves-valid-generation
+10-26 00:56:39.664  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-create:smartfin-backup.db-preserves-valid-generation
+10-26 00:56:40.231  5582  5613 W DocumentsContract: Failed to create document
+10-26 00:56:40.231  5582  5613 W DocumentsContract: java.io.IOException: Injected create:smartfin-backup.db
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.BackupFaults.hit(SyntheticBackupProvider.kt:25)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SyntheticBackupProvider.createDocument(SyntheticBackupProvider.kt:68)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at android.provider.DocumentsProvider.callUnchecked(DocumentsProvider.java:757)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at android.provider.DocumentsProvider.call(DocumentsProvider.java:716)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at android.content.ContentProvider$Transport.call(ContentProvider.java:400)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at android.content.ContentProviderClient.call(ContentProviderClient.java:456)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at android.provider.DocumentsContract.createDocument(DocumentsContract.java:1083)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at android.provider.DocumentsContract.createDocument(DocumentsContract.java:1066)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher$Documents.writeOnce(SmartFinBackupPublisher.kt:343)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish$lambda$37(SmartFinBackupPublisher.kt:188)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.$r8$lambda$SNL-Hqm-Z8HkMRvTsqVg-bHNCy4(SmartFinBackupPublisher.kt)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher$$ExternalSyntheticLambda1.invoke(D8$$SyntheticClass:0)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinFinancialDeletion.backup(SmartFinFinancialDeletion.kt:64)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish(SmartFinBackupPublisher.kt:116)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish$default(SmartFinBackupPublisher.kt:115)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.publishSnapshot$lambda$3(SmartFinDriveBackupModule.kt:124)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.$r8$lambda$Yy7oksAbWbeI6NOjoBWiENFA1PU(SmartFinDriveBackupModule.kt)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule$$ExternalSyntheticLambda4.invoke(D8$$SyntheticClass:0)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.submit$lambda$1(SmartFinDriveBackupModule.kt:115)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.$r8$lambda$EStOV-hU8N3bpsPT604_2qV3v9c(SmartFinDriveBackupModule.kt)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-26 00:56:40.231  5582  5613 W DocumentsContract: 	at java.lang.Thread.run(Thread.java:761)
+10-26 00:56:40.296  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-create:smartfin-backup.db-preserves-valid-generation
+10-26 00:56:40.296  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-partial:smartfin-backup.db-preserves-valid-generation
+10-26 00:56:40.939  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-partial:smartfin-backup.db-preserves-valid-generation
+10-26 00:56:40.939  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-revoked-preserves-valid-generation
+10-26 00:56:41.382  5582  5619 D ProfileInstaller: Installing profile for com.smartfin.snapshot5b2.tests
+10-26 00:56:41.405  5582  5585 I art     : Do full code cache collection, code=124KB, data=116KB
+10-26 00:56:41.406  5582  5585 I art     : After code cache collection, code=99KB, data=84KB
+10-26 00:56:41.544  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-revoked-preserves-valid-generation
+10-26 00:56:41.544  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-corrupt:cuentas.csv-preserves-valid-generation
+10-26 00:56:42.225  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-corrupt:cuentas.csv-preserves-valid-generation
+10-26 00:56:42.225  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-read:cuentas.csv-preserves-valid-generation
+10-26 00:56:42.882  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-read:cuentas.csv-preserves-valid-generation
+10-26 00:56:42.882  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-stream.close:smartfin-backup.db-preserves-valid-generation
+10-26 00:56:43.548  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-stream.close:smartfin-backup.db-preserves-valid-generation
+10-26 00:56:43.548  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-create:manifest.json-preserves-valid-generation
+10-26 00:56:44.439  5582  5617 W DocumentsContract: Failed to create document
+10-26 00:56:44.439  5582  5617 W DocumentsContract: java.io.IOException: Injected create:manifest.json
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.BackupFaults.hit(SyntheticBackupProvider.kt:25)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SyntheticBackupProvider.createDocument(SyntheticBackupProvider.kt:68)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at android.provider.DocumentsProvider.callUnchecked(DocumentsProvider.java:757)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at android.provider.DocumentsProvider.call(DocumentsProvider.java:716)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at android.content.ContentProvider$Transport.call(ContentProvider.java:400)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at android.content.ContentProviderClient.call(ContentProviderClient.java:456)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at android.provider.DocumentsContract.createDocument(DocumentsContract.java:1083)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at android.provider.DocumentsContract.createDocument(DocumentsContract.java:1066)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher$Documents.writeOnce(SmartFinBackupPublisher.kt:343)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish$lambda$37(SmartFinBackupPublisher.kt:197)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.$r8$lambda$SNL-Hqm-Z8HkMRvTsqVg-bHNCy4(SmartFinBackupPublisher.kt)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher$$ExternalSyntheticLambda1.invoke(D8$$SyntheticClass:0)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinFinancialDeletion.backup(SmartFinFinancialDeletion.kt:64)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish(SmartFinBackupPublisher.kt:116)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish$default(SmartFinBackupPublisher.kt:115)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.publishSnapshot$lambda$3(SmartFinDriveBackupModule.kt:124)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.$r8$lambda$Yy7oksAbWbeI6NOjoBWiENFA1PU(SmartFinDriveBackupModule.kt)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule$$ExternalSyntheticLambda4.invoke(D8$$SyntheticClass:0)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.submit$lambda$1(SmartFinDriveBackupModule.kt:115)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.$r8$lambda$EStOV-hU8N3bpsPT604_2qV3v9c(SmartFinDriveBackupModule.kt)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-26 00:56:44.439  5582  5617 W DocumentsContract: 	at java.lang.Thread.run(Thread.java:761)
+10-26 00:56:44.524  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-create:manifest.json-preserves-valid-generation
+10-26 00:56:44.524  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-partial:manifest.json-preserves-valid-generation
+10-26 00:56:45.431  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-partial:manifest.json-preserves-valid-generation
+10-26 00:56:45.431  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:cuentas.csv-preserves-valid-generation
+10-26 00:56:46.205  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:cuentas.csv-preserves-valid-generation
+10-26 00:56:46.205  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:categorias.csv-preserves-valid-generation
+10-26 00:56:46.911  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:categorias.csv-preserves-valid-generation
+10-26 00:56:46.911  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:subcategorias.csv-preserves-valid-generation
+10-26 00:56:47.071  5582  5585 I art     : Do partial code cache collection, code=123KB, data=108KB
+10-26 00:56:47.073  5582  5585 I art     : After code cache collection, code=123KB, data=108KB
+10-26 00:56:47.073  5582  5585 I art     : Increasing code cache capacity to 512KB
+10-26 00:56:47.704  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:subcategorias.csv-preserves-valid-generation
+10-26 00:56:47.704  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:tarjetas-credito.csv-preserves-valid-generation
+10-26 00:56:48.481  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:tarjetas-credito.csv-preserves-valid-generation
+10-26 00:56:48.481  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:compras-cuotas.csv-preserves-valid-generation
+10-26 00:56:49.367  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:compras-cuotas.csv-preserves-valid-generation
+10-26 00:56:49.367  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:personas.csv-preserves-valid-generation
+10-26 00:56:50.183  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:personas.csv-preserves-valid-generation
+10-26 00:56:50.183  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:gastos-compartidos.csv-preserves-valid-generation
+10-26 00:56:50.963  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:gastos-compartidos.csv-preserves-valid-generation
+10-26 00:56:50.963  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:participaciones.csv-preserves-valid-generation
+10-26 00:56:51.849  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:participaciones.csv-preserves-valid-generation
+10-26 00:56:51.849  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:reembolsos.csv-preserves-valid-generation
+10-26 00:56:52.759  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:reembolsos.csv-preserves-valid-generation
+10-26 00:56:52.760  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:abonos-compartidos.csv-preserves-valid-generation
+10-26 00:56:53.629  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:abonos-compartidos.csv-preserves-valid-generation
+10-26 00:56:53.629  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:devoluciones-anticipos.csv-preserves-valid-generation
+10-26 00:56:54.536  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:devoluciones-anticipos.csv-preserves-valid-generation
+10-26 00:56:54.536  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:movimientos-2019.csv-preserves-valid-generation
+10-26 00:56:55.487  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:movimientos-2019.csv-preserves-valid-generation
+10-26 00:56:55.487  5582  5603 I ReactNativeJS: ACCEPTANCE_START:provider-open:movimientos-2026.csv-preserves-valid-generation
+10-26 00:56:56.544  5582  5603 I ReactNativeJS: ACCEPTANCE_END:provider-open:movimientos-2026.csv-preserves-valid-generation
+10-26 00:56:56.544  5582  5603 I ReactNativeJS: ACCEPTANCE_START:resume-valid-snapshot-with-existing-verified-components
+10-26 00:56:57.184  5582  5617 W DocumentsContract: Failed to create document
+10-26 00:56:57.184  5582  5617 W DocumentsContract: java.io.IOException: Injected create:categorias.csv
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.BackupFaults.hit(SyntheticBackupProvider.kt:25)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SyntheticBackupProvider.createDocument(SyntheticBackupProvider.kt:68)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at android.provider.DocumentsProvider.callUnchecked(DocumentsProvider.java:757)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at android.provider.DocumentsProvider.call(DocumentsProvider.java:716)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at android.content.ContentProvider$Transport.call(ContentProvider.java:400)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at android.content.ContentProviderClient.call(ContentProviderClient.java:456)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at android.provider.DocumentsContract.createDocument(DocumentsContract.java:1083)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at android.provider.DocumentsContract.createDocument(DocumentsContract.java:1066)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher$Documents.writeOnce(SmartFinBackupPublisher.kt:343)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish$lambda$37(SmartFinBackupPublisher.kt:188)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.$r8$lambda$SNL-Hqm-Z8HkMRvTsqVg-bHNCy4(SmartFinBackupPublisher.kt)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher$$ExternalSyntheticLambda1.invoke(D8$$SyntheticClass:0)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinFinancialDeletion.backup(SmartFinFinancialDeletion.kt:64)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish(SmartFinBackupPublisher.kt:116)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish$default(SmartFinBackupPublisher.kt:115)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.publishSnapshot$lambda$3(SmartFinDriveBackupModule.kt:124)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.$r8$lambda$Yy7oksAbWbeI6NOjoBWiENFA1PU(SmartFinDriveBackupModule.kt)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule$$ExternalSyntheticLambda4.invoke(D8$$SyntheticClass:0)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.submit$lambda$1(SmartFinDriveBackupModule.kt:115)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.$r8$lambda$EStOV-hU8N3bpsPT604_2qV3v9c(SmartFinDriveBackupModule.kt)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-26 00:56:57.184  5582  5617 W DocumentsContract: 	at java.lang.Thread.run(Thread.java:761)
+10-26 00:56:57.721  5582  5603 I ReactNativeJS: ACCEPTANCE_END:resume-valid-snapshot-with-existing-verified-components
+10-26 00:56:57.721  5582  5603 I ReactNativeJS: ACCEPTANCE_START:resume-without-private-snapshot-fails-without-new-capture
+10-26 00:56:58.435  5582  5603 I ReactNativeJS: ACCEPTANCE_END:resume-without-private-snapshot-fails-without-new-capture
+10-26 00:56:58.435  5582  5603 I ReactNativeJS: ACCEPTANCE_START:concurrent-native-backup-request-rejected-and-saf-does-not-hold-financial-gate
+10-26 00:56:59.401  5582  5603 I ReactNativeJS: ACCEPTANCE_END:concurrent-native-backup-request-rejected-and-saf-does-not-hold-financial-gate
+10-26 00:56:59.401  5582  5603 I ReactNativeJS: ACCEPTANCE_START:missing-and-incomplete-manifest-never-select-partial-generation
+10-26 00:57:01.029  5582  5603 I ReactNativeJS: ACCEPTANCE_END:missing-and-incomplete-manifest-never-select-partial-generation
+10-26 00:57:01.029  5582  5603 I ReactNativeJS: ACCEPTANCE_START:stage-durable-job-before-real-process-death
+10-26 00:57:01.916  5582  5617 W DocumentsContract: Failed to create document
+10-26 00:57:01.916  5582  5617 W DocumentsContract: java.io.IOException: Injected create:manifest.json
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.BackupFaults.hit(SyntheticBackupProvider.kt:25)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SyntheticBackupProvider.createDocument(SyntheticBackupProvider.kt:68)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at android.provider.DocumentsProvider.callUnchecked(DocumentsProvider.java:757)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at android.provider.DocumentsProvider.call(DocumentsProvider.java:716)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at android.content.ContentProvider$Transport.call(ContentProvider.java:400)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at android.content.ContentProviderClient.call(ContentProviderClient.java:456)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at android.provider.DocumentsContract.createDocument(DocumentsContract.java:1083)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at android.provider.DocumentsContract.createDocument(DocumentsContract.java:1066)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher$Documents.writeOnce(SmartFinBackupPublisher.kt:343)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish$lambda$37(SmartFinBackupPublisher.kt:197)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.$r8$lambda$SNL-Hqm-Z8HkMRvTsqVg-bHNCy4(SmartFinBackupPublisher.kt)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher$$ExternalSyntheticLambda1.invoke(D8$$SyntheticClass:0)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinFinancialDeletion.backup(SmartFinFinancialDeletion.kt:64)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish(SmartFinBackupPublisher.kt:116)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinBackupPublisher.publish$default(SmartFinBackupPublisher.kt:115)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.publishSnapshot$lambda$3(SmartFinDriveBackupModule.kt:124)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.$r8$lambda$Yy7oksAbWbeI6NOjoBWiENFA1PU(SmartFinDriveBackupModule.kt)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule$$ExternalSyntheticLambda4.invoke(D8$$SyntheticClass:0)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.submit$lambda$1(SmartFinDriveBackupModule.kt:115)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule.$r8$lambda$EStOV-hU8N3bpsPT604_2qV3v9c(SmartFinDriveBackupModule.kt)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at com.smartfin.SmartFinDriveBackupModule$$ExternalSyntheticLambda7.run(D8$$SyntheticClass:0)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+10-26 00:57:01.916  5582  5617 W DocumentsContract: 	at java.lang.Thread.run(Thread.java:761)
+10-26 00:57:02.067  5582  5603 I ReactNativeJS: ACCEPTANCE_END:stage-durable-job-before-real-process-death

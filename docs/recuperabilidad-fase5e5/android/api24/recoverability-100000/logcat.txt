@@ -1,0 +1,347 @@
+--------- beginning of main
+10-25 18:54:50.401  6396  6396 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 5 lines
+10-25 18:54:50.486  6396  6411 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-1 expire 2 lines
+10-25 18:54:50.498  6396  6396 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 21 lines
+10-25 18:54:50.618  6396  6413 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-3 expire 1 line
+10-25 18:54:50.625  6396  6396 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 10 lines
+10-25 18:54:50.673  6396  6416 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) pool-1-thread-1 expire 6 lines
+10-25 18:54:50.696  6396  6396 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 2 lines
+10-25 18:54:50.702  6396  6416 I art     :   at java.util.List com.duysolo.speechrecognition.RNSpeechRecognitionPackage.createNativeModules(com.facebook.react.bridge.ReactApplicationContext) (RNSpeechRecognitionPackage.kt:10)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.initialize(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (ReactPackageTurboModuleManagerDelegate.kt:64)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, com.facebook.jni.HybridData) (ReactPackageTurboModuleManagerDelegate.kt:42)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List) (DefaultTurboModuleManagerDelegate.kt:35)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List, kotlin.jvm.internal.DefaultConstructorMarker) (DefaultTurboModuleManagerDelegate.kt:-1)
+10-25 18:54:50.702  6396  6416 I art     :   at com.facebook.react.defaults.DefaultTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:63)
+10-25 18:54:50.702  6396  6416 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:43)
+10-25 18:54:50.702  6396  6416 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.ReactPackageTurboModuleManagerDelegate$Builder.build() (ReactPackageTurboModuleManagerDelegate.kt:222)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.runtime.ReactInstance.<init>(com.facebook.react.runtime.BridgelessReactContext, com.facebook.react.runtime.ReactHostDelegate, com.facebook.react.fabric.ComponentFactory, com.facebook.react.devsupport.interfaces.DevSupportManager, com.facebook.react.bridge.queue.QueueThreadExceptionHandler, boolean, com.facebook.react.runtime.ReactHostInspectorTarget) (ReactInstance.kt:183)
+10-25 18:54:50.702  6396  6416 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.getOrCreateReactInstanceTask$lambda$44$lambda$40(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:1039)
+10-25 18:54:50.702  6396  6416 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.$r8$lambda$kGNcmxBxZbp8b1wWTaqIXDdkV8g(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:-1)
+10-25 18:54:50.702  6396  6416 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+10-25 18:54:50.702  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+10-25 18:54:50.702  6396  6416 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+10-25 18:54:50.703  6396  6416 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+10-25 18:54:50.703  6396  6416 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+10-25 18:54:50.703  6396  6416 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+10-25 18:54:50.703  6396  6416 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+10-25 18:54:50.703  6396  6416 I art     : Caused by: java.lang.ClassNotFoundException: Didn't find class "android.speech.RecognitionSupportCallback" on path: DexPathList[[zip file "/data/app/com.smartfin.snapshot5b2.tests-1/base.apk"],nativeLibraryDirectories=[/data/app/com.smartfin.snapshot5b2.tests-1/lib/x86_64, /data/app/com.smartfin.snapshot5b2.tests-1/base.apk!/lib/x86_64, /system/lib64, /vendor/lib64]]
+10-25 18:54:50.703  6396  6416 I art     :   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:56)
+10-25 18:54:50.703  6396  6416 I art     :   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:380)
+10-25 18:54:50.703  6396  6416 I art     :   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+10-25 18:54:50.703  6396  6416 I art     :   at java.util.List com.duysolo.speechrecognition.RNSpeechRecognitionPackage.createNativeModules(com.facebook.react.bridge.ReactApplicationContext) (RNSpeechRecognitionPackage.kt:10)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.initialize(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (ReactPackageTurboModuleManagerDelegate.kt:64)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, com.facebook.jni.HybridData) (ReactPackageTurboModuleManagerDelegate.kt:42)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List) (DefaultTurboModuleManagerDelegate.kt:35)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List, kotlin.jvm.internal.DefaultConstructorMarker) (DefaultTurboModuleManagerDelegate.kt:-1)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.defaults.DefaultTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:63)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:43)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.ReactPackageTurboModuleManagerDelegate$Builder.build() (ReactPackageTurboModuleManagerDelegate.kt:222)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.ReactInstance.<init>(com.facebook.react.runtime.BridgelessReactContext, com.facebook.react.runtime.ReactHostDelegate, com.facebook.react.fabric.ComponentFactory, com.facebook.react.devsupport.interfaces.DevSupportManager, com.facebook.react.bridge.queue.QueueThreadExceptionHandler, boolean, com.facebook.react.runtime.ReactHostInspectorTarget) (ReactInstance.kt:183)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.getOrCreateReactInstanceTask$lambda$44$lambda$40(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:1039)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.$r8$lambda$kGNcmxBxZbp8b1wWTaqIXDdkV8g(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:-1)
+10-25 18:54:50.703  6396  6416 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+10-25 18:54:50.703  6396  6416 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+10-25 18:54:50.703  6396  6416 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-25 18:54:50.703  6396  6416 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+10-25 18:54:50.703  6396  6416 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+10-25 18:54:50.703  6396  6416 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+10-25 18:54:50.703  6396  6416 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+10-25 18:54:50.703  6396  6416 I art     : 
+10-25 18:54:50.745  6396  6396 D         : HostConnection::get() New Host Connection established 0x71fbed87e180, tid 6396
+10-25 18:54:50.756  6396  6416 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+10-25 18:54:50.757  6396  6416 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+10-25 18:54:50.759  6396  6416 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+10-25 18:54:50.784  6396  6417 I ReactNativeJS: Running "SmartFin"
+10-25 18:54:50.793  6396  6418 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+10-25 18:54:50.807  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+10-25 18:54:50.811  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+10-25 18:54:50.814  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+10-25 18:54:50.814  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+10-25 18:54:50.820  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+10-25 18:54:50.823  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+10-25 18:54:50.832  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+10-25 18:54:50.835  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+10-25 18:54:50.841  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+10-25 18:54:50.847  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+10-25 18:54:50.857  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+10-25 18:54:50.869  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+10-25 18:54:50.873  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+10-25 18:54:50.875  6396  6421 D         : HostConnection::get() New Host Connection established 0x71fbed87e2a0, tid 6421
+10-25 18:54:50.878  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+10-25 18:54:50.878  6396  6421 I OpenGLRenderer: Initialized EGL, version 1.4
+10-25 18:54:50.878  6396  6421 D OpenGLRenderer: Swap behavior 1
+10-25 18:54:50.879  6396  6421 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-25 18:54:50.879  6396  6421 D OpenGLRenderer: Swap behavior 0
+10-25 18:54:50.881  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+10-25 18:54:50.884  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+10-25 18:54:50.887  6396  6421 D EGL_emulation: eglCreateContext: 0x71fbf9bf5d00: maj 2 min 0 rcv 2
+10-25 18:54:50.887  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+10-25 18:54:50.892  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+10-25 18:54:50.898  6396  6417 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+10-25 18:54:50.908  6396  6421 D EGL_emulation: eglMakeCurrent: 0x71fbf9bf5d00: ver 2 0 (tinfo 0x71fbf9ab4300)
+10-25 18:54:50.918  6396  6417 I ReactNativeJS: ACCEPTANCE_START:isolation
+10-25 18:54:50.920  6396  6417 I ReactNativeJS: ACCEPTANCE_END:isolation
+10-25 18:54:50.935  6396  6396 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+10-25 18:54:50.935  6396  6396 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+10-25 18:54:50.936  6396  6396 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.RootViewManager
+10-25 18:54:50.972  6396  6407 I art     : Background partial concurrent mark sweep GC freed 39402(2033KB) AllocSpace objects, 0(0B) LOS objects, 34% free, 7MB/11MB, paused 5.872ms total 27.158ms
+10-25 18:54:50.988  6396  6421 D EGL_emulation: eglMakeCurrent: 0x71fbf9bf5d00: ver 2 0 (tinfo 0x71fbf9ab4300)
+10-25 18:54:51.353  6396  6399 I art     : Do partial code cache collection, code=30KB, data=30KB
+10-25 18:54:51.354  6396  6399 I art     : After code cache collection, code=28KB, data=28KB
+10-25 18:54:51.354  6396  6399 I art     : Increasing code cache capacity to 128KB
+10-25 18:54:52.504  6396  6417 I ReactNativeJS: ACCEPTANCE_START:integrated-scenario-and-representative-history
+10-25 18:54:53.114  6396  6399 I art     : Do partial code cache collection, code=61KB, data=52KB
+10-25 18:54:53.114  6396  6399 I art     : After code cache collection, code=61KB, data=52KB
+10-25 18:54:53.114  6396  6399 I art     : Increasing code cache capacity to 256KB
+10-25 18:54:55.418  6396  6411 D WM-SystemJobScheduler: Scheduling work ID ad6718d6-35ff-47b8-b63a-9882a753faeaJob ID 0
+10-25 18:54:55.424  6396  6411 D WM-GreedyScheduler: Starting work for ad6718d6-35ff-47b8-b63a-9882a753faea
+10-25 18:54:55.434  6396  6412 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=ad6718d6-35ff-47b8-b63a-9882a753faea, generation=0)
+10-25 18:54:55.451  6396  6396 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-25 18:54:55.456  6396  6413 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-25 18:54:55.456  6396  6431 I SmartFin5E3: worker.start:legacy
+10-25 18:54:55.457  6396  6431 I SmartFin5E3: worker.result:Retry
+10-25 18:54:55.466  6396  6412 I WM-WorkerWrapper: Worker result RETRY for Work [ id=ad6718d6-35ff-47b8-b63a-9882a753faea, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-25 18:54:55.482  6396  6396 D WM-Processor: Processor ad6718d6-35ff-47b8-b63a-9882a753faea executed; reschedule = true
+10-25 18:54:55.492  6396  6413 D WM-GreedyScheduler: Cancelling work ID ad6718d6-35ff-47b8-b63a-9882a753faea
+10-25 18:54:55.507  6396  6413 D WM-SystemJobScheduler: Scheduling work ID ad6718d6-35ff-47b8-b63a-9882a753faeaJob ID 1
+10-25 18:54:56.580  6396  6433 D ProfileInstaller: Installing profile for com.smartfin.snapshot5b2.tests
+10-25 18:55:03.251  6396  6417 I ReactNativeJS: ACCEPTANCE_END:integrated-scenario-and-representative-history
+10-25 18:55:03.252  6396  6417 I ReactNativeJS: ACCEPTANCE_START:original-snapshot-g1
+10-25 18:55:23.907  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 253 bytes, window size 2097152 bytes
+10-25 18:55:24.580  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 97 bytes, window size 2097152 bytes
+10-25 18:55:24.816  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 18 bytes, window size 2097152 bytes
+10-25 18:55:25.026  6396  6425 W CursorWindow: Window is full: requested allocation 12 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:55:25.261  6396  6425 W CursorWindow: Window is full: requested allocation 15 bytes, free space 9 bytes, window size 2097152 bytes
+10-25 18:55:25.472  6396  6396 D WM-DelayedWorkTracker: Scheduling work ad6718d6-35ff-47b8-b63a-9882a753faea
+10-25 18:55:25.472  6396  6396 D WM-GreedyScheduler: Starting work for ad6718d6-35ff-47b8-b63a-9882a753faea
+10-25 18:55:25.476  6396  6411 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=ad6718d6-35ff-47b8-b63a-9882a753faea, generation=0)
+10-25 18:55:25.491  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 17 bytes, window size 2097152 bytes
+10-25 18:55:25.494  6396  6396 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=ad6718d6-35ff-47b8-b63a-9882a753faea, generation=0)
+10-25 18:55:25.495  6396  6396 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-25 18:55:25.497  6396  6476 I SmartFin5E3: worker.start:legacy
+10-25 18:55:25.498  6396  6476 I SmartFin5E3: worker.result:Retry
+10-25 18:55:25.501  6396  6413 D WM-Processor: Work WorkGenerationalId(workSpecId=ad6718d6-35ff-47b8-b63a-9882a753faea, generation=0) is already enqueued for processing
+10-25 18:55:25.502  6396  6413 I WM-WorkerWrapper: Worker result RETRY for Work [ id=ad6718d6-35ff-47b8-b63a-9882a753faea, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-25 18:55:25.511  6396  6396 D WM-Processor: Processor ad6718d6-35ff-47b8-b63a-9882a753faea executed; reschedule = true
+10-25 18:55:25.511  6396  6396 D WM-SystemJobService: ad6718d6-35ff-47b8-b63a-9882a753faea executed on JobScheduler
+10-25 18:55:25.526  6396  6411 D WM-GreedyScheduler: Cancelling work ID ad6718d6-35ff-47b8-b63a-9882a753faea
+10-25 18:55:25.549  6396  6411 D WM-SystemJobScheduler: Scheduling work ID ad6718d6-35ff-47b8-b63a-9882a753faeaJob ID 2
+10-25 18:55:25.836  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 269 bytes, window size 2097152 bytes
+10-25 18:55:26.231  6396  6425 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-25 18:55:26.531  6396  6425 W CursorWindow: Window is full: requested allocation 11 bytes, free space 8 bytes, window size 2097152 bytes
+10-25 18:55:26.844  6396  6425 W CursorWindow: Window is full: requested allocation 6 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:55:27.140  6396  6425 W CursorWindow: Window is full: requested allocation 13 bytes, free space 9 bytes, window size 2097152 bytes
+10-25 18:55:27.451  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 4 bytes, window size 2097152 bytes
+10-25 18:55:27.816  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 59 bytes, window size 2097152 bytes
+10-25 18:55:28.282  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 74 bytes, window size 2097152 bytes
+10-25 18:55:28.721  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 54 bytes, window size 2097152 bytes
+10-25 18:55:29.206  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:55:29.739  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 209 bytes, window size 2097152 bytes
+10-25 18:55:30.285  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 158 bytes, window size 2097152 bytes
+10-25 18:55:30.830  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 158 bytes, window size 2097152 bytes
+10-25 18:55:31.376  6396  6425 W CursorWindow: Window is full: requested allocation 13 bytes, free space 6 bytes, window size 2097152 bytes
+10-25 18:55:31.949  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 23 bytes, window size 2097152 bytes
+10-25 18:55:32.564  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 93 bytes, window size 2097152 bytes
+10-25 18:55:33.148  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 131 bytes, window size 2097152 bytes
+10-25 18:55:33.703  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 68 bytes, window size 2097152 bytes
+10-25 18:55:34.240  6396  6425 W CursorWindow: Window is full: requested allocation 37 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:55:34.812  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 23 bytes, window size 2097152 bytes
+10-25 18:55:35.389  6396  6425 W CursorWindow: Window is full: requested allocation 28 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:55:36.021  6396  6425 W CursorWindow: Window is full: requested allocation 8 bytes, free space 7 bytes, window size 2097152 bytes
+10-25 18:55:36.641  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 23 bytes, window size 2097152 bytes
+10-25 18:55:37.235  6396  6425 W CursorWindow: Window is full: requested allocation 14 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:55:37.889  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 13 bytes, window size 2097152 bytes
+10-25 18:55:38.706  6396  6425 W CursorWindow: Window is full: requested allocation 15 bytes, free space 8 bytes, window size 2097152 bytes
+10-25 18:55:39.457  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 112 bytes, window size 2097152 bytes
+10-25 18:55:40.192  6396  6425 W CursorWindow: Window is full: requested allocation 9 bytes, free space 6 bytes, window size 2097152 bytes
+10-25 18:55:43.848  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 253 bytes, window size 2097152 bytes
+10-25 18:55:44.692  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 97 bytes, window size 2097152 bytes
+10-25 18:55:44.946  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 18 bytes, window size 2097152 bytes
+10-25 18:55:45.204  6396  6425 W CursorWindow: Window is full: requested allocation 12 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:55:45.504  6396  6425 W CursorWindow: Window is full: requested allocation 15 bytes, free space 9 bytes, window size 2097152 bytes
+10-25 18:55:45.748  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 17 bytes, window size 2097152 bytes
+10-25 18:55:45.980  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 269 bytes, window size 2097152 bytes
+10-25 18:55:46.217  6396  6425 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-25 18:55:46.501  6396  6425 W CursorWindow: Window is full: requested allocation 11 bytes, free space 8 bytes, window size 2097152 bytes
+10-25 18:55:46.759  6396  6425 W CursorWindow: Window is full: requested allocation 6 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:55:47.048  6396  6425 W CursorWindow: Window is full: requested allocation 13 bytes, free space 9 bytes, window size 2097152 bytes
+10-25 18:55:47.316  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 4 bytes, window size 2097152 bytes
+10-25 18:55:47.646  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 59 bytes, window size 2097152 bytes
+10-25 18:55:47.955  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 74 bytes, window size 2097152 bytes
+10-25 18:55:48.254  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 54 bytes, window size 2097152 bytes
+10-25 18:55:48.560  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:55:48.869  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 209 bytes, window size 2097152 bytes
+10-25 18:55:49.211  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 158 bytes, window size 2097152 bytes
+10-25 18:55:49.520  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 158 bytes, window size 2097152 bytes
+10-25 18:55:49.859  6396  6425 W CursorWindow: Window is full: requested allocation 13 bytes, free space 6 bytes, window size 2097152 bytes
+10-25 18:55:50.218  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 23 bytes, window size 2097152 bytes
+10-25 18:55:50.602  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 93 bytes, window size 2097152 bytes
+10-25 18:55:50.929  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 131 bytes, window size 2097152 bytes
+10-25 18:55:51.310  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 68 bytes, window size 2097152 bytes
+10-25 18:55:51.670  6396  6425 W CursorWindow: Window is full: requested allocation 37 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:55:52.087  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 23 bytes, window size 2097152 bytes
+10-25 18:55:52.502  6396  6425 W CursorWindow: Window is full: requested allocation 28 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:55:52.985  6396  6425 W CursorWindow: Window is full: requested allocation 8 bytes, free space 7 bytes, window size 2097152 bytes
+10-25 18:55:53.450  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 23 bytes, window size 2097152 bytes
+10-25 18:55:53.970  6396  6425 W CursorWindow: Window is full: requested allocation 14 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:55:54.449  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 13 bytes, window size 2097152 bytes
+10-25 18:55:54.980  6396  6425 W CursorWindow: Window is full: requested allocation 15 bytes, free space 8 bytes, window size 2097152 bytes
+10-25 18:55:55.527  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 112 bytes, window size 2097152 bytes
+10-25 18:55:56.125  6396  6425 W CursorWindow: Window is full: requested allocation 9 bytes, free space 6 bytes, window size 2097152 bytes
+10-25 18:56:13.062  6396  6407 I art     : Background partial concurrent mark sweep GC freed 7561(433KB) AllocSpace objects, 3(2MB) LOS objects, 4% free, 94MB/98MB, paused 1.548ms total 118.136ms
+10-25 18:56:13.404  6396  6417 I ReactNativeJS: ACCEPTANCE_END:original-snapshot-g1
+10-25 18:56:13.404  6396  6417 I ReactNativeJS: ACCEPTANCE_START:publish-g1-protocol-v2
+10-25 18:56:13.627  6396  6399 I art     : Do full code cache collection, code=118KB, data=92KB
+10-25 18:56:13.629  6396  6399 I art     : After code cache collection, code=90KB, data=63KB
+10-25 18:56:20.360  6396  6399 I art     : Do partial code cache collection, code=118KB, data=92KB
+10-25 18:56:20.361  6396  6399 I art     : After code cache collection, code=115KB, data=90KB
+10-25 18:56:20.361  6396  6399 I art     : Increasing code cache capacity to 512KB
+10-25 18:56:20.364  6396  6399 I art     : Compiler allocated 5MB to compile org.json.JSONObject com.smartfin.SmartFinBackupPublisher.publish$lambda$37(android.content.Context, java.lang.String, java.lang.String, kotlin.jvm.functions.Function3, java.lang.String)
+10-25 18:56:22.247  6396  6417 I ReactNativeJS: ACCEPTANCE_END:publish-g1-protocol-v2
+10-25 18:56:22.248  6396  6417 I ReactNativeJS: ACCEPTANCE_START:live-database-unchanged-by-capture-and-publication-g1
+10-25 18:56:25.510  6396  6396 D WM-DelayedWorkTracker: Scheduling work ad6718d6-35ff-47b8-b63a-9882a753faea
+10-25 18:56:25.511  6396  6396 D WM-GreedyScheduler: Starting work for ad6718d6-35ff-47b8-b63a-9882a753faea
+10-25 18:56:25.515  6396  6412 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=ad6718d6-35ff-47b8-b63a-9882a753faea, generation=0)
+10-25 18:56:25.526  6396  6396 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-25 18:56:25.529  6396  6579 I SmartFin5E3: worker.start:legacy
+10-25 18:56:25.529  6396  6579 I SmartFin5E3: worker.result:Retry
+10-25 18:56:25.535  6396  6411 I WM-WorkerWrapper: Worker result RETRY for Work [ id=ad6718d6-35ff-47b8-b63a-9882a753faea, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-25 18:56:25.547  6396  6396 D WM-Processor: Processor ad6718d6-35ff-47b8-b63a-9882a753faea executed; reschedule = true
+10-25 18:56:25.566  6396  6413 D WM-GreedyScheduler: Cancelling work ID ad6718d6-35ff-47b8-b63a-9882a753faea
+10-25 18:56:25.577  6396  6413 D WM-SystemJobScheduler: Scheduling work ID ad6718d6-35ff-47b8-b63a-9882a753faeaJob ID 3
+10-25 18:56:31.718  6396  6417 I ReactNativeJS: ACCEPTANCE_END:live-database-unchanged-by-capture-and-publication-g1
+10-25 18:56:31.718  6396  6417 I ReactNativeJS: ACCEPTANCE_START:export-g1
+10-25 18:56:33.018  6396  6417 I ReactNativeJS: ACCEPTANCE_END:export-g1
+10-25 18:56:33.018  6396  6417 I ReactNativeJS: ACCEPTANCE_START:financial-change-then-g2
+10-25 18:56:33.345  6396  6425 W CursorWindow: Window is full: requested allocation 108 bytes, free space 69 bytes, window size 2097152 bytes
+10-25 18:56:34.481  6396  6425 W CursorWindow: Window is full: requested allocation 108 bytes, free space 39 bytes, window size 2097152 bytes
+10-25 18:56:55.486  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 193 bytes, window size 2097152 bytes
+10-25 18:56:56.254  6396  6425 W CursorWindow: Window is full: requested allocation 10 bytes, free space 4 bytes, window size 2097152 bytes
+10-25 18:56:56.593  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 12 bytes, window size 2097152 bytes
+10-25 18:56:56.923  6396  6425 W CursorWindow: Window is full: requested allocation 8 bytes, free space 7 bytes, window size 2097152 bytes
+10-25 18:56:57.251  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 245 bytes, window size 2097152 bytes
+10-25 18:56:57.569  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 18 bytes, window size 2097152 bytes
+10-25 18:56:57.931  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 8 bytes, window size 2097152 bytes
+10-25 18:56:58.250  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 232 bytes, window size 2097152 bytes
+10-25 18:56:58.620  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 10 bytes, window size 2097152 bytes
+10-25 18:56:59.070  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:56:59.455  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 20 bytes, window size 2097152 bytes
+10-25 18:56:59.919  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 88 bytes, window size 2097152 bytes
+10-25 18:57:00.432  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 149 bytes, window size 2097152 bytes
+10-25 18:57:01.012  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 133 bytes, window size 2097152 bytes
+10-25 18:57:01.547  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 53 bytes, window size 2097152 bytes
+10-25 18:57:02.093  6396  6425 W CursorWindow: Window is full: requested allocation 13 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:57:02.703  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 133 bytes, window size 2097152 bytes
+10-25 18:57:03.229  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 84 bytes, window size 2097152 bytes
+10-25 18:57:03.666  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 145 bytes, window size 2097152 bytes
+10-25 18:57:04.258  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 238 bytes, window size 2097152 bytes
+10-25 18:57:04.874  6396  6425 W CursorWindow: Window is full: requested allocation 9 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:57:05.457  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 107 bytes, window size 2097152 bytes
+10-25 18:57:06.073  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 89 bytes, window size 2097152 bytes
+10-25 18:57:06.751  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 104 bytes, window size 2097152 bytes
+10-25 18:57:07.426  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 19 bytes, window size 2097152 bytes
+10-25 18:57:08.105  6396  6425 W CursorWindow: Window is full: requested allocation 15 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:57:08.823  6396  6425 W CursorWindow: Window is full: requested allocation 9 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:57:09.537  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 6 bytes, window size 2097152 bytes
+10-25 18:57:10.310  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 25 bytes, window size 2097152 bytes
+10-25 18:57:11.029  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 4 bytes, window size 2097152 bytes
+10-25 18:57:11.733  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 15 bytes, window size 2097152 bytes
+10-25 18:57:12.408  6396  6425 W CursorWindow: Window is full: requested allocation 10 bytes, free space 8 bytes, window size 2097152 bytes
+10-25 18:57:13.183  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 181 bytes, window size 2097152 bytes
+10-25 18:57:13.826  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 89 bytes, window size 2097152 bytes
+10-25 18:57:17.036  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 193 bytes, window size 2097152 bytes
+10-25 18:57:17.711  6396  6425 W CursorWindow: Window is full: requested allocation 10 bytes, free space 4 bytes, window size 2097152 bytes
+10-25 18:57:17.988  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 12 bytes, window size 2097152 bytes
+10-25 18:57:18.219  6396  6425 W CursorWindow: Window is full: requested allocation 8 bytes, free space 7 bytes, window size 2097152 bytes
+10-25 18:57:18.421  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 245 bytes, window size 2097152 bytes
+10-25 18:57:18.647  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 18 bytes, window size 2097152 bytes
+10-25 18:57:18.880  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 8 bytes, window size 2097152 bytes
+10-25 18:57:19.112  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 232 bytes, window size 2097152 bytes
+10-25 18:57:19.390  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 10 bytes, window size 2097152 bytes
+10-25 18:57:19.659  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:57:19.945  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 20 bytes, window size 2097152 bytes
+10-25 18:57:20.236  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 88 bytes, window size 2097152 bytes
+10-25 18:57:20.548  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 149 bytes, window size 2097152 bytes
+10-25 18:57:20.892  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 133 bytes, window size 2097152 bytes
+10-25 18:57:21.242  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 53 bytes, window size 2097152 bytes
+10-25 18:57:21.576  6396  6425 W CursorWindow: Window is full: requested allocation 13 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:57:21.950  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 133 bytes, window size 2097152 bytes
+10-25 18:57:22.295  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 84 bytes, window size 2097152 bytes
+10-25 18:57:22.707  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 145 bytes, window size 2097152 bytes
+10-25 18:57:23.108  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 238 bytes, window size 2097152 bytes
+10-25 18:57:23.498  6396  6425 W CursorWindow: Window is full: requested allocation 9 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:57:23.880  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 107 bytes, window size 2097152 bytes
+10-25 18:57:24.331  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 89 bytes, window size 2097152 bytes
+10-25 18:57:24.802  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 104 bytes, window size 2097152 bytes
+10-25 18:57:25.269  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 19 bytes, window size 2097152 bytes
+10-25 18:57:25.777  6396  6425 W CursorWindow: Window is full: requested allocation 15 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:57:26.258  6396  6425 W CursorWindow: Window is full: requested allocation 9 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:57:26.741  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 6 bytes, window size 2097152 bytes
+10-25 18:57:27.391  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 25 bytes, window size 2097152 bytes
+10-25 18:57:27.959  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 4 bytes, window size 2097152 bytes
+10-25 18:57:28.563  6396  6425 W CursorWindow: Window is full: requested allocation 25 bytes, free space 15 bytes, window size 2097152 bytes
+10-25 18:57:29.413  6396  6425 W CursorWindow: Window is full: requested allocation 10 bytes, free space 8 bytes, window size 2097152 bytes
+10-25 18:57:29.974  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 181 bytes, window size 2097152 bytes
+10-25 18:57:30.541  6396  6425 W CursorWindow: Window is full: requested allocation 276 bytes, free space 89 bytes, window size 2097152 bytes
+10-25 18:57:50.411  6396  6417 I ReactNativeJS: ACCEPTANCE_END:financial-change-then-g2
+10-25 18:57:50.411  6396  6417 I ReactNativeJS: ACCEPTANCE_START:export-g2
+10-25 18:57:51.658  6396  6417 I ReactNativeJS: ACCEPTANCE_END:export-g2
+10-25 18:57:51.658  6396  6417 I ReactNativeJS: ACCEPTANCE_START:all-table-integrity-after-recoverability
+10-25 18:57:52.334  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 101 bytes, window size 2097152 bytes
+10-25 18:57:52.473  6396  6727 W CursorWindow: Window is full: requested allocation 13 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:57:52.534  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 126 bytes, window size 2097152 bytes
+10-25 18:57:52.594  6396  6727 W CursorWindow: Window is full: requested allocation 13 bytes, free space 9 bytes, window size 2097152 bytes
+10-25 18:57:52.657  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 177 bytes, window size 2097152 bytes
+10-25 18:57:52.719  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 193 bytes, window size 2097152 bytes
+10-25 18:57:52.781  6396  6727 W CursorWindow: Window is full: requested allocation 25 bytes, free space 19 bytes, window size 2097152 bytes
+10-25 18:57:52.846  6396  6727 W CursorWindow: Window is full: requested allocation 25 bytes, free space 24 bytes, window size 2097152 bytes
+10-25 18:57:52.908  6396  6727 W CursorWindow: Window is full: requested allocation 14 bytes, free space 4 bytes, window size 2097152 bytes
+10-25 18:57:52.973  6396  6727 W CursorWindow: Window is full: requested allocation 25 bytes, free space 4 bytes, window size 2097152 bytes
+10-25 18:57:53.039  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 73 bytes, window size 2097152 bytes
+10-25 18:57:53.104  6396  6727 W CursorWindow: Window is full: requested allocation 11 bytes, free space 10 bytes, window size 2097152 bytes
+10-25 18:57:53.173  6396  6727 W CursorWindow: Window is full: requested allocation 6 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:57:53.242  6396  6727 W CursorWindow: Window is full: requested allocation 15 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:57:53.312  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 42 bytes, window size 2097152 bytes
+10-25 18:57:53.387  6396  6727 W CursorWindow: Window is full: requested allocation 25 bytes, free space 7 bytes, window size 2097152 bytes
+10-25 18:57:53.458  6396  6727 W CursorWindow: Window is full: requested allocation 10 bytes, free space 1 bytes, window size 2097152 bytes
+10-25 18:57:53.536  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 6 bytes, window size 2097152 bytes
+10-25 18:57:53.609  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 12 bytes, window size 2097152 bytes
+10-25 18:57:53.688  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 110 bytes, window size 2097152 bytes
+10-25 18:57:53.764  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 78 bytes, window size 2097152 bytes
+10-25 18:57:53.842  6396  6727 W CursorWindow: Window is full: requested allocation 25 bytes, free space 15 bytes, window size 2097152 bytes
+10-25 18:57:53.918  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 84 bytes, window size 2097152 bytes
+10-25 18:57:53.997  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 2 bytes, window size 2097152 bytes
+10-25 18:57:54.079  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 106 bytes, window size 2097152 bytes
+10-25 18:57:54.160  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 53 bytes, window size 2097152 bytes
+10-25 18:57:54.240  6396  6727 W CursorWindow: Window is full: requested allocation 6 bytes, free space 3 bytes, window size 2097152 bytes
+10-25 18:57:54.321  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 166 bytes, window size 2097152 bytes
+10-25 18:57:54.407  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 45 bytes, window size 2097152 bytes
+10-25 18:57:54.491  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 140 bytes, window size 2097152 bytes
+10-25 18:57:54.579  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 38 bytes, window size 2097152 bytes
+10-25 18:57:54.666  6396  6727 W CursorWindow: Window is full: requested allocation 7 bytes, free space 6 bytes, window size 2097152 bytes
+10-25 18:57:54.755  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 66 bytes, window size 2097152 bytes
+10-25 18:57:54.842  6396  6727 W CursorWindow: Window is full: requested allocation 8 bytes, free space 5 bytes, window size 2097152 bytes
+10-25 18:57:54.936  6396  6727 W CursorWindow: Window is full: requested allocation 288 bytes, free space 23 bytes, window size 2097152 bytes
+10-25 18:57:55.035  6396  6417 I ReactNativeJS: ACCEPTANCE_END:all-table-integrity-after-recoverability

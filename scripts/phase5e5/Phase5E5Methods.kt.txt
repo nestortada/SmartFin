@@ -1,0 +1,120 @@
+  // Phase 5E.5 (test APK only): evidence export for the isolated recoverability verifier
+  // and controlled damage of synthetic SAF documents. Never touches production storage.
+  private val phase5e5Digests = java.util.concurrent.ConcurrentHashMap<String, Pair<java.security.MessageDigest, java.io.Writer?>>()
+  private val phase5e5Bytes = java.util.concurrent.ConcurrentHashMap<String, Long>()
+  private fun phase5e5Root() = File(context.getExternalFilesDir(null), "snapshot5e5-evidence").apply { check(isDirectory || mkdirs()) }
+  private fun phase5e5Saf() = File(context.noBackupFilesDir, "saf-synthetic")
+  private fun phase5e5Safe(path: String) = path.also { check(it.matches(Regex("[A-Za-z0-9._/-]+")) && !it.contains("..")) }
+  @ReactMethod fun evidenceClear(promise: Promise) = run(promise) {
+    File(context.getExternalFilesDir(null), "snapshot5e5-evidence").deleteRecursively()
+    File(context.cacheDir, "phase5e5-damage").deleteRecursively(); phase5e5Root(); true
+  }
+  @ReactMethod fun evidenceBegin(key: String, path: String?, promise: Promise) = run(promise) {
+    val writer = path?.let { File(phase5e5Root(), phase5e5Safe(it)).apply { parentFile!!.mkdirs() }.bufferedWriter(Charsets.UTF_8) }
+    phase5e5Digests[key] = java.security.MessageDigest.getInstance("SHA-256") to writer
+    phase5e5Bytes[key] = 0L; true
+  }
+  @ReactMethod fun evidenceAppend(key: String, text: String, promise: Promise) = run(promise) {
+    val (digest, writer) = phase5e5Digests.getValue(key)
+    val bytes = text.toByteArray(Charsets.UTF_8)
+    synchronized(digest) { digest.update(bytes); writer?.write(text); phase5e5Bytes[key] = phase5e5Bytes.getValue(key) + bytes.size }
+    true
+  }
+  @ReactMethod fun evidenceFinish(key: String, promise: Promise) = run(promise) {
+    val (digest, writer) = phase5e5Digests.remove(key)!!
+    writer?.close()
+    JSONObject().put("sha256", digest.digest().joinToString("") { "%02x".format(it) }).put("bytes", phase5e5Bytes.remove(key)).toString()
+  }
+  @ReactMethod fun evidenceWrite(path: String, text: String, promise: Promise) = run(promise) {
+    File(phase5e5Root(), phase5e5Safe(path)).apply { parentFile!!.mkdirs() }.writeText(text, Charsets.UTF_8); true
+  }
+  /** Copies every published document of one generation, byte for byte, for adb pull. */
+  @ReactMethod fun exportGeneration(id: String, label: String, promise: Promise) = run(promise) {
+    check(java.util.UUID.fromString(id).toString() == id)
+    // Several generations share one folder; evidenceClear() empties it per campaign.
+    val target = File(phase5e5Root(), phase5e5Safe(label)).apply { check(isDirectory || mkdirs()) }
+    val listing = JSONObject()
+    phase5e5Saf().listFiles().orEmpty().filter { it.name.startsWith("smartfin-$id--") || it.name == "smartfin-generation-$id.json" }
+      .sortedBy { it.name }.forEach { file ->
+        file.copyTo(File(target, file.name))
+        val (size, hash) = SmartFinBackupPublisher.digest(file.inputStream())
+        listing.put(file.name, JSONObject().put("bytes", size).put("sha256", hash))
+      }
+    listing.toString()
+  }
+  /** Damages one synthetic SAF document (or the private job record), keeping the original for restore. */
+  @ReactMethod fun damage(id: String, target: String, mode: String, promise: Promise) = run(promise) {
+    check(java.util.UUID.fromString(id).toString() == id)
+    val file = when (target) {
+      "manifest" -> File(phase5e5Saf(), "smartfin-generation-$id.json")
+      "job" -> File(File(context.noBackupFilesDir, "smartfin-backup-jobs"), "$id.json")
+      else -> File(phase5e5Saf(), "smartfin-$id--" + phase5e5Safe(target))
+    }
+    check(file.isFile) { "Damage target absent: ${file.name}" }
+    val saved = File(File(context.cacheDir, "phase5e5-damage").apply { mkdirs() }, file.name)
+    check(!saved.exists()) { "Previous damage not restored" }
+    file.copyTo(saved)
+    val bytes = file.readBytes()
+    when {
+      mode == "truncate" -> file.writeBytes(bytes.copyOf(bytes.size / 2))
+      mode == "flip" -> { val i = bytes.size / 2; bytes[i] = (bytes[i].toInt() xor 0x5A).toByte(); file.writeBytes(bytes) }
+      mode == "delete" -> check(file.delete())
+      mode == "malformed" -> file.writeText("{\"formatVersion\":2,", Charsets.UTF_8)
+      mode == "version" -> file.writeText(JSONObject(String(bytes, Charsets.UTF_8)).put("formatVersion", 3).toString(), Charsets.UTF_8)
+      mode == "hash" -> {
+        val manifest = JSONObject(String(bytes, Charsets.UTF_8))
+        val first = manifest.getJSONArray("components").getJSONObject(1)
+        first.put("sha256", "0".repeat(64)); file.writeText(manifest.toString(), Charsets.UTF_8)
+      }
+      mode.startsWith("from:") -> {
+        val other = mode.removePrefix("from:"); check(java.util.UUID.fromString(other).toString() == other)
+        File(phase5e5Saf(), "smartfin-$other--" + phase5e5Safe(target)).copyTo(file, overwrite = true)
+      }
+      else -> error("Unknown damage mode $mode")
+    }
+    JSONObject().put("file", file.name).put("mode", mode).toString()
+  }
+  @ReactMethod fun restoreDamage(promise: Promise) = run(promise) {
+    val directory = File(context.cacheDir, "phase5e5-damage")
+    val restored = JSONArray()
+    directory.listFiles().orEmpty().forEach { saved ->
+      val destination = if (saved.name.startsWith("smartfin-")) File(phase5e5Saf(), saved.name)
+        else File(File(context.noBackupFilesDir, "smartfin-backup-jobs"), saved.name)
+      saved.copyTo(destination, overwrite = true); check(saved.delete()); restored.put(saved.name)
+    }
+    restored.toString()
+  }
+  /**
+   * Annual CSV row order on this SQLite, over a private copy of one published database:
+   * the pre-5E.4 query, the current (range) query and a variant whose first ORDER BY
+   * term cannot be satisfied by the expression index. Diagnostic only.
+   */
+  @ReactMethod fun csvOrderProbe(id: String, year: String, promise: Promise) = run(promise) {
+    check(java.util.UUID.fromString(id).toString() == id && year.matches(Regex("[0-9]{4}")))
+    val work = File(context.cacheDir, "phase5e5-order").apply { deleteRecursively(); check(mkdirs()) }
+    try {
+      val copy = File(work, "snapshot.db"); File(phase5e5Saf(), "smartfin-$id--smartfin-backup.db").copyTo(copy)
+      val day = "COALESCE(t.civil_date, substr(t.date,1,10))"
+      val order = "ORDER BY $day, t.local_time, t.created_at"
+      val queries = linkedMapOf(
+        "pre5E4" to ("SELECT t.id FROM transactions t WHERE substr(COALESCE(t.civil_date, t.date), 1, 4) = ?1 $order" to arrayOf(year)),
+        "current" to ("SELECT t.id FROM transactions t WHERE $day >= ?1 AND $day < ?2 AND substr(COALESCE(t.civil_date, t.date), 1, 4) = ?1 $order"
+          to arrayOf(year, (year.toInt() + 1).toString().padStart(4, '0'))),
+        "forcedSort" to ("SELECT t.id FROM transactions t WHERE $day >= ?1 AND $day < ?2 AND substr(COALESCE(t.civil_date, t.date), 1, 4) = ?1 ORDER BY +$day, t.local_time, t.created_at"
+          to arrayOf(year, (year.toInt() + 1).toString().padStart(4, '0'))))
+      val result = JSONObject()
+      SQLiteDatabase.openDatabase(copy.path, null, SQLiteDatabase.OPEN_READONLY).use { db ->
+        db.rawQuery("SELECT sqlite_version()", null).use { it.moveToFirst(); result.put("sqlite", it.getString(0)) }
+        for ((name, pair) in queries) {
+          val plan = JSONArray()
+          // Android 15 rejects EXPLAIN through rawQuery (SQLITE_ROW); the plan is informative only.
+          try { db.rawQuery("EXPLAIN QUERY PLAN " + pair.first, pair.second).use { c -> while (c.moveToNext()) plan.put(c.getString(c.columnCount - 1)) } }
+          catch (error: Exception) { plan.put("unavailable: " + error.javaClass.simpleName) }
+          val ids = JSONArray()
+          db.rawQuery(pair.first, pair.second).use { c -> while (c.moveToNext()) ids.put(c.getString(0)) }
+          result.put(name, JSONObject().put("plan", plan).put("ids", ids))
+        }
+      }
+      result.toString()
+    } finally { work.deleteRecursively() }
+  }

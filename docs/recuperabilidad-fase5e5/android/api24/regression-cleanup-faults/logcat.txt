@@ -1,0 +1,436 @@
+--------- beginning of main
+10-26 00:52:05.190  4032  4032 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) expire 38 lines
+10-26 00:52:05.280  4032  4047 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-1 expire 2 lines
+10-26 00:52:05.471  4032  4049 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) WM.task-3 expire 1 line
+10-26 00:52:05.528  4032  4052 I chatty  : uid=10080(com.smartfin.snapshot5b2.tests) pool-1-thread-1 expire 57 lines
+10-26 00:52:05.558  4032  4052 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+10-26 00:52:05.558  4032  4052 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+10-26 00:52:05.558  4032  4052 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+10-26 00:52:05.558  4032  4052 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+10-26 00:52:05.558  4032  4052 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+10-26 00:52:05.558  4032  4052 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+10-26 00:52:05.558  4032  4052 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+10-26 00:52:05.558  4032  4052 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+10-26 00:52:05.558  4032  4052 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+10-26 00:52:05.558  4032  4052 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+10-26 00:52:05.558  4032  4052 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+10-26 00:52:05.558  4032  4052 I art     : 
+10-26 00:52:05.629  4032  4032 D         : HostConnection::get() New Host Connection established 0x7f3fe5279180, tid 4032
+10-26 00:52:05.636  4032  4052 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+10-26 00:52:05.645  4032  4052 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+10-26 00:52:05.646  4032  4052 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+10-26 00:52:05.654  4032  4053 I ReactNativeJS: Running "SmartFin"
+10-26 00:52:05.661  4032  4054 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+10-26 00:52:05.677  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+10-26 00:52:05.682  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+10-26 00:52:05.686  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+10-26 00:52:05.686  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+10-26 00:52:05.694  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+10-26 00:52:05.696  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+10-26 00:52:05.703  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+10-26 00:52:05.707  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+10-26 00:52:05.711  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+10-26 00:52:05.718  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+10-26 00:52:05.730  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+10-26 00:52:05.738  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+10-26 00:52:05.741  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+10-26 00:52:05.745  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+10-26 00:52:05.748  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+10-26 00:52:05.753  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+10-26 00:52:05.756  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+10-26 00:52:05.759  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+10-26 00:52:05.763  4032  4053 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+10-26 00:52:05.771  4032  4057 D         : HostConnection::get() New Host Connection established 0x7f3fe52792a0, tid 4057
+10-26 00:52:05.773  4032  4057 I OpenGLRenderer: Initialized EGL, version 1.4
+10-26 00:52:05.773  4032  4057 D OpenGLRenderer: Swap behavior 1
+10-26 00:52:05.774  4032  4057 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-26 00:52:05.774  4032  4057 D OpenGLRenderer: Swap behavior 0
+10-26 00:52:05.779  4032  4053 I ReactNativeJS: ACCEPTANCE_START:isolated-package-cannot-read-production-database
+10-26 00:52:05.781  4032  4053 I ReactNativeJS: ACCEPTANCE_END:isolated-package-cannot-read-production-database
+10-26 00:52:05.790  4032  4057 D EGL_emulation: eglCreateContext: 0x7f3ff156ffc0: maj 2 min 0 rcv 2
+10-26 00:52:05.810  4032  4057 D EGL_emulation: eglMakeCurrent: 0x7f3ff156ffc0: ver 2 0 (tinfo 0x7f3ff14b49a0)
+10-26 00:52:05.847  4032  4032 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+10-26 00:52:05.848  4032  4032 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+10-26 00:52:05.848  4032  4032 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.RootViewManager
+10-26 00:52:05.912  4032  4057 D EGL_emulation: eglMakeCurrent: 0x7f3ff156ffc0: ver 2 0 (tinfo 0x7f3ff14b49a0)
+10-26 00:52:06.032  4032  4035 I art     : Do partial code cache collection, code=30KB, data=29KB
+10-26 00:52:06.033  4032  4035 I art     : After code cache collection, code=27KB, data=27KB
+10-26 00:52:06.033  4032  4035 I art     : Increasing code cache capacity to 128KB
+10-26 00:52:07.728  4032  4035 I art     : Do partial code cache collection, code=56KB, data=53KB
+10-26 00:52:07.729  4032  4035 I art     : After code cache collection, code=56KB, data=53KB
+10-26 00:52:07.729  4032  4035 I art     : Increasing code cache capacity to 256KB
+10-26 00:52:08.195  4032  4047 D WM-SystemJobScheduler: Scheduling work ID b8695f4e-8f53-4b6e-97f5-59a78b652b5aJob ID 0
+10-26 00:52:08.200  4032  4047 D WM-GreedyScheduler: Starting work for b8695f4e-8f53-4b6e-97f5-59a78b652b5a
+10-26 00:52:08.220  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 17d23ce4-4558-45ec-bee5-46b6692b4243Job ID 1
+10-26 00:52:08.227  4032  4049 D WM-GreedyScheduler: Starting work for 17d23ce4-4558-45ec-bee5-46b6692b4243
+10-26 00:52:08.228  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=b8695f4e-8f53-4b6e-97f5-59a78b652b5a, generation=0)
+10-26 00:52:08.233  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=b8695f4e-8f53-4b6e-97f5-59a78b652b5a, generation=0)
+10-26 00:52:08.236  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=17d23ce4-4558-45ec-bee5-46b6692b4243, generation=0)
+10-26 00:52:08.238  4032  4049 D WM-Processor: Work WorkGenerationalId(workSpecId=b8695f4e-8f53-4b6e-97f5-59a78b652b5a, generation=0) is already enqueued for processing
+10-26 00:52:08.249  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:52:08.251  4032  4064 I SmartFin5E3: worker.start:legacy
+10-26 00:52:08.261  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:52:08.262  4032  4047 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:52:08.266  4032  4065 I SmartFin5E3: worker.start:legacy
+10-26 00:52:08.267  4032  4052 W unknown:BridgelessReact: ReactHost{0}.getOrCreateStartTask(): Schedule
+10-26 00:52:08.267  4032  4052 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask()
+10-26 00:52:09.134  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=17d23ce4-4558-45ec-bee5-46b6692b4243, generation=0)
+10-26 00:52:09.138  4032  4047 D WM-Processor: Work WorkGenerationalId(workSpecId=17d23ce4-4558-45ec-bee5-46b6692b4243, generation=0) is already enqueued for processing
+10-26 00:52:09.146  4032  4064 I SmartFin5E3: worker.result:Success
+10-26 00:52:09.147  4032  4065 I SmartFin5E3: worker.result:Success
+10-26 00:52:09.150  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=b8695f4e-8f53-4b6e-97f5-59a78b652b5a, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:52:09.158  4032  4032 D WM-Processor: Processor b8695f4e-8f53-4b6e-97f5-59a78b652b5a executed; reschedule = false
+10-26 00:52:09.158  4032  4032 D WM-SystemJobService: b8695f4e-8f53-4b6e-97f5-59a78b652b5a executed on JobScheduler
+10-26 00:52:09.161  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=17d23ce4-4558-45ec-bee5-46b6692b4243, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:52:09.167  4032  4032 D WM-Processor: Processor 17d23ce4-4558-45ec-bee5-46b6692b4243 executed; reschedule = false
+10-26 00:52:09.167  4032  4032 D WM-SystemJobService: 17d23ce4-4558-45ec-bee5-46b6692b4243 executed on JobScheduler
+10-26 00:52:09.172  4032  4048 D WM-GreedyScheduler: Cancelling work ID b8695f4e-8f53-4b6e-97f5-59a78b652b5a
+10-26 00:52:09.183  4032  4048 D WM-SystemJobScheduler: Scheduling work ID b8695f4e-8f53-4b6e-97f5-59a78b652b5aJob ID 0
+10-26 00:52:09.185  4032  4048 D WM-GreedyScheduler: Cancelling work ID 17d23ce4-4558-45ec-bee5-46b6692b4243
+10-26 00:52:09.197  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.before:workIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:52:09.492  4032  4049 D WM-Processor: Processor cancelling b8695f4e-8f53-4b6e-97f5-59a78b652b5a
+10-26 00:52:09.492  4032  4049 D WM-Processor: WorkerWrapper could not be found for b8695f4e-8f53-4b6e-97f5-59a78b652b5a
+10-26 00:52:09.495  4032  4049 D WM-GreedyScheduler: Cancelling work ID b8695f4e-8f53-4b6e-97f5-59a78b652b5a
+10-26 00:52:09.504  4032  4049 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:52:09.593  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.before:workIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:52:10.225  4032  4047 D WM-SystemJobScheduler: Scheduling work ID 724c0a3f-e5ad-4d20-840b-7ddb26986e77Job ID 2
+10-26 00:52:10.229  4032  4047 D WM-GreedyScheduler: Starting work for 724c0a3f-e5ad-4d20-840b-7ddb26986e77
+10-26 00:52:10.251  4032  4047 D WM-SystemJobScheduler: Scheduling work ID e7a3f251-df79-400d-8b13-2dfc573a2a18Job ID 3
+10-26 00:52:10.253  4032  4047 D WM-GreedyScheduler: Starting work for e7a3f251-df79-400d-8b13-2dfc573a2a18
+10-26 00:52:10.258  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=724c0a3f-e5ad-4d20-840b-7ddb26986e77, generation=0)
+10-26 00:52:10.260  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=e7a3f251-df79-400d-8b13-2dfc573a2a18, generation=0)
+10-26 00:52:10.266  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:52:10.267  4032  4070 I SmartFin5E3: worker.start:d5b12f6a-0581-44bf-bc87-fdd60b922477
+10-26 00:52:10.277  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:52:10.277  4032  4064 I SmartFin5E3: worker.start:d5b12f6a-0581-44bf-bc87-fdd60b922477
+10-26 00:52:10.278  4032  4064 I SmartFin5E3: worker.result:Retry
+10-26 00:52:10.279  4032  4049 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:52:10.281  4032  4049 I WM-WorkerWrapper: Worker result RETRY for Work [ id=e7a3f251-df79-400d-8b13-2dfc573a2a18, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:52:10.287  4032  4032 D WM-Processor: Processor e7a3f251-df79-400d-8b13-2dfc573a2a18 executed; reschedule = true
+10-26 00:52:10.296  4032  4049 D WM-GreedyScheduler: Cancelling work ID e7a3f251-df79-400d-8b13-2dfc573a2a18
+10-26 00:52:10.298  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=724c0a3f-e5ad-4d20-840b-7ddb26986e77, generation=0)
+10-26 00:52:10.310  4032  4049 D WM-SystemJobScheduler: Scheduling work ID e7a3f251-df79-400d-8b13-2dfc573a2a18Job ID 4
+10-26 00:52:10.319  4032  4049 D WM-Processor: Work WorkGenerationalId(workSpecId=724c0a3f-e5ad-4d20-840b-7ddb26986e77, generation=0) is already enqueued for processing
+10-26 00:52:10.399  4032  4070 I SmartFin5E3: worker.result:Success
+10-26 00:52:10.402  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=724c0a3f-e5ad-4d20-840b-7ddb26986e77, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:52:10.407  4032  4032 D WM-Processor: Processor 724c0a3f-e5ad-4d20-840b-7ddb26986e77 executed; reschedule = false
+10-26 00:52:10.408  4032  4032 D WM-SystemJobService: 724c0a3f-e5ad-4d20-840b-7ddb26986e77 executed on JobScheduler
+10-26 00:52:10.409  4032  4048 D WM-GreedyScheduler: Cancelling work ID 724c0a3f-e5ad-4d20-840b-7ddb26986e77
+10-26 00:52:10.416  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 724c0a3f-e5ad-4d20-840b-7ddb26986e77Job ID 2
+10-26 00:52:11.201  4032  4071 D ProfileInstaller: Installing profile for com.smartfin.snapshot5b2.tests
+10-26 00:52:15.739  4032  4035 I art     : Do full code cache collection, code=125KB, data=104KB
+10-26 00:52:15.740  4032  4035 I art     : After code cache collection, code=98KB, data=69KB
+10-26 00:52:35.366  4032  4035 I art     : Do partial code cache collection, code=124KB, data=93KB
+10-26 00:52:35.367  4032  4035 I art     : After code cache collection, code=124KB, data=93KB
+10-26 00:52:35.367  4032  4035 I art     : Increasing code cache capacity to 512KB
+10-26 00:52:40.292  4032  4032 D WM-DelayedWorkTracker: Scheduling work e7a3f251-df79-400d-8b13-2dfc573a2a18
+10-26 00:52:40.292  4032  4032 D WM-GreedyScheduler: Starting work for e7a3f251-df79-400d-8b13-2dfc573a2a18
+10-26 00:52:40.295  4032  4048 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=e7a3f251-df79-400d-8b13-2dfc573a2a18, generation=0)
+10-26 00:52:40.305  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:52:40.306  4032  4065 I SmartFin5E3: worker.start:d5b12f6a-0581-44bf-bc87-fdd60b922477
+10-26 00:52:40.400  4032  4065 I SmartFin5E3: worker.result:Success
+10-26 00:52:40.404  4032  4047 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=e7a3f251-df79-400d-8b13-2dfc573a2a18, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:52:40.407  4032  4032 D WM-Processor: Processor e7a3f251-df79-400d-8b13-2dfc573a2a18 executed; reschedule = false
+10-26 00:52:40.413  4032  4049 D WM-GreedyScheduler: Cancelling work ID e7a3f251-df79-400d-8b13-2dfc573a2a18
+10-26 00:52:40.474  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.after:workIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:52:40.625  4032  4049 D WM-Processor: Processor cancelling 724c0a3f-e5ad-4d20-840b-7ddb26986e77
+10-26 00:52:40.625  4032  4049 D WM-Processor: WorkerWrapper could not be found for 724c0a3f-e5ad-4d20-840b-7ddb26986e77
+10-26 00:52:40.628  4032  4049 D WM-GreedyScheduler: Cancelling work ID 724c0a3f-e5ad-4d20-840b-7ddb26986e77
+10-26 00:52:40.643  4032  4047 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:52:40.840  4032  4048 D WM-Processor: Processor cancelling 724c0a3f-e5ad-4d20-840b-7ddb26986e77
+10-26 00:52:40.841  4032  4048 D WM-Processor: WorkerWrapper could not be found for 724c0a3f-e5ad-4d20-840b-7ddb26986e77
+10-26 00:52:40.841  4032  4048 D WM-GreedyScheduler: Cancelling work ID 724c0a3f-e5ad-4d20-840b-7ddb26986e77
+10-26 00:52:40.961  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.after:workIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:52:41.567  4032  4047 D WM-SystemJobScheduler: Scheduling work ID 2ea0e66d-d2ff-4852-b050-69a378b2bbf1Job ID 5
+10-26 00:52:41.570  4032  4047 D WM-GreedyScheduler: Starting work for 2ea0e66d-d2ff-4852-b050-69a378b2bbf1
+10-26 00:52:41.585  4032  4048 D WM-SystemJobScheduler: Scheduling work ID d7991fe3-cb94-4693-a957-89211fe1ddb0Job ID 6
+10-26 00:52:41.587  4032  4048 D WM-GreedyScheduler: Starting work for d7991fe3-cb94-4693-a957-89211fe1ddb0
+10-26 00:52:41.591  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=2ea0e66d-d2ff-4852-b050-69a378b2bbf1, generation=0)
+10-26 00:52:41.593  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=d7991fe3-cb94-4693-a957-89211fe1ddb0, generation=0)
+10-26 00:52:41.602  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:52:41.603  4032  4064 I SmartFin5E3: worker.start:b6ccce51-9d06-4e10-b675-9238b772e210
+10-26 00:52:41.610  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:52:41.611  4032  4070 I SmartFin5E3: worker.start:b6ccce51-9d06-4e10-b675-9238b772e210
+10-26 00:52:41.611  4032  4070 I SmartFin5E3: worker.result:Retry
+10-26 00:52:41.615  4032  4048 I WM-WorkerWrapper: Worker result RETRY for Work [ id=d7991fe3-cb94-4693-a957-89211fe1ddb0, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:52:41.620  4032  4032 D WM-Processor: Processor d7991fe3-cb94-4693-a957-89211fe1ddb0 executed; reschedule = true
+10-26 00:52:41.621  4032  4047 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:52:41.633  4032  4049 D WM-GreedyScheduler: Cancelling work ID d7991fe3-cb94-4693-a957-89211fe1ddb0
+10-26 00:52:41.639  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=2ea0e66d-d2ff-4852-b050-69a378b2bbf1, generation=0)
+10-26 00:52:41.643  4032  4049 D WM-SystemJobScheduler: Scheduling work ID d7991fe3-cb94-4693-a957-89211fe1ddb0Job ID 7
+10-26 00:52:41.651  4032  4049 D WM-Processor: Work WorkGenerationalId(workSpecId=2ea0e66d-d2ff-4852-b050-69a378b2bbf1, generation=0) is already enqueued for processing
+10-26 00:52:41.727  4032  4064 I SmartFin5E3: worker.result:Success
+10-26 00:52:41.730  4032  4049 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=2ea0e66d-d2ff-4852-b050-69a378b2bbf1, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:52:41.738  4032  4032 D WM-Processor: Processor 2ea0e66d-d2ff-4852-b050-69a378b2bbf1 executed; reschedule = false
+10-26 00:52:41.738  4032  4032 D WM-SystemJobService: 2ea0e66d-d2ff-4852-b050-69a378b2bbf1 executed on JobScheduler
+10-26 00:52:41.740  4032  4049 D WM-GreedyScheduler: Cancelling work ID 2ea0e66d-d2ff-4852-b050-69a378b2bbf1
+10-26 00:52:41.754  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 2ea0e66d-d2ff-4852-b050-69a378b2bbf1Job ID 5
+10-26 00:53:11.625  4032  4032 D WM-DelayedWorkTracker: Scheduling work d7991fe3-cb94-4693-a957-89211fe1ddb0
+10-26 00:53:11.625  4032  4032 D WM-GreedyScheduler: Starting work for d7991fe3-cb94-4693-a957-89211fe1ddb0
+10-26 00:53:11.627  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=d7991fe3-cb94-4693-a957-89211fe1ddb0, generation=0)
+10-26 00:53:11.634  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:11.634  4032  4065 I SmartFin5E3: worker.start:b6ccce51-9d06-4e10-b675-9238b772e210
+10-26 00:53:11.714  4032  4065 I SmartFin5E3: worker.result:Success
+10-26 00:53:11.717  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=d7991fe3-cb94-4693-a957-89211fe1ddb0, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:11.720  4032  4032 D WM-Processor: Processor d7991fe3-cb94-4693-a957-89211fe1ddb0 executed; reschedule = false
+10-26 00:53:11.726  4032  4048 D WM-GreedyScheduler: Cancelling work ID d7991fe3-cb94-4693-a957-89211fe1ddb0
+10-26 00:53:11.736  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.before:reminderIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:11.888  4032  4049 D WM-Processor: Processor cancelling 2ea0e66d-d2ff-4852-b050-69a378b2bbf1
+10-26 00:53:11.888  4032  4049 D WM-Processor: WorkerWrapper could not be found for 2ea0e66d-d2ff-4852-b050-69a378b2bbf1
+10-26 00:53:11.891  4032  4049 D WM-GreedyScheduler: Cancelling work ID 2ea0e66d-d2ff-4852-b050-69a378b2bbf1
+10-26 00:53:11.906  4032  4047 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:53:12.244  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.before:reminderIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:13.168  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 0603ac47-a7b9-4ad8-a8f9-67766a1def37Job ID 8
+10-26 00:53:13.172  4032  4048 D WM-GreedyScheduler: Starting work for 0603ac47-a7b9-4ad8-a8f9-67766a1def37
+10-26 00:53:13.194  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 9dab670f-d4d2-4cc6-86fe-a2698921a2deJob ID 9
+10-26 00:53:13.196  4032  4049 D WM-GreedyScheduler: Starting work for 9dab670f-d4d2-4cc6-86fe-a2698921a2de
+10-26 00:53:13.205  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=0603ac47-a7b9-4ad8-a8f9-67766a1def37, generation=0)
+10-26 00:53:13.209  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=9dab670f-d4d2-4cc6-86fe-a2698921a2de, generation=0)
+10-26 00:53:13.216  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:13.216  4032  4070 I SmartFin5E3: worker.start:df36579c-cfe9-44c4-9cde-2b65c81463dc
+10-26 00:53:13.228  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:13.228  4032  4064 I SmartFin5E3: worker.start:df36579c-cfe9-44c4-9cde-2b65c81463dc
+10-26 00:53:13.229  4032  4049 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:53:14.090  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=9dab670f-d4d2-4cc6-86fe-a2698921a2de, generation=0)
+10-26 00:53:14.090  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=0603ac47-a7b9-4ad8-a8f9-67766a1def37, generation=0)
+10-26 00:53:14.092  4032  4049 D WM-Processor: Work WorkGenerationalId(workSpecId=9dab670f-d4d2-4cc6-86fe-a2698921a2de, generation=0) is already enqueued for processing
+10-26 00:53:14.094  4032  4049 D WM-Processor: Work WorkGenerationalId(workSpecId=0603ac47-a7b9-4ad8-a8f9-67766a1def37, generation=0) is already enqueued for processing
+10-26 00:53:14.099  4032  4070 I SmartFin5E3: worker.result:Success
+10-26 00:53:14.100  4032  4064 I SmartFin5E3: worker.result:Success
+10-26 00:53:14.102  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=0603ac47-a7b9-4ad8-a8f9-67766a1def37, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:14.108  4032  4032 D WM-Processor: Processor 0603ac47-a7b9-4ad8-a8f9-67766a1def37 executed; reschedule = false
+10-26 00:53:14.108  4032  4032 D WM-SystemJobService: 0603ac47-a7b9-4ad8-a8f9-67766a1def37 executed on JobScheduler
+10-26 00:53:14.110  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=9dab670f-d4d2-4cc6-86fe-a2698921a2de, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:14.111  4032  4032 D WM-Processor: Processor 9dab670f-d4d2-4cc6-86fe-a2698921a2de executed; reschedule = false
+10-26 00:53:14.111  4032  4032 D WM-SystemJobService: 9dab670f-d4d2-4cc6-86fe-a2698921a2de executed on JobScheduler
+10-26 00:53:14.114  4032  4049 D WM-GreedyScheduler: Cancelling work ID 0603ac47-a7b9-4ad8-a8f9-67766a1def37
+10-26 00:53:14.120  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 0603ac47-a7b9-4ad8-a8f9-67766a1def37Job ID 8
+10-26 00:53:14.121  4032  4049 D WM-GreedyScheduler: Cancelling work ID 9dab670f-d4d2-4cc6-86fe-a2698921a2de
+10-26 00:53:14.166  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.after:reminderIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:14.281  4032  4047 D WM-Processor: Processor cancelling 0603ac47-a7b9-4ad8-a8f9-67766a1def37
+10-26 00:53:14.281  4032  4047 D WM-Processor: WorkerWrapper could not be found for 0603ac47-a7b9-4ad8-a8f9-67766a1def37
+10-26 00:53:14.285  4032  4047 D WM-GreedyScheduler: Cancelling work ID 0603ac47-a7b9-4ad8-a8f9-67766a1def37
+10-26 00:53:14.295  4032  4048 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:53:14.622  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.after:reminderIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:15.260  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 58223541-569c-42a6-a8a0-5714d9ac801aJob ID 10
+10-26 00:53:15.264  4032  4049 D WM-GreedyScheduler: Starting work for 58223541-569c-42a6-a8a0-5714d9ac801a
+10-26 00:53:15.280  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6Job ID 11
+10-26 00:53:15.283  4032  4048 D WM-GreedyScheduler: Starting work for 5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6
+10-26 00:53:15.290  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=58223541-569c-42a6-a8a0-5714d9ac801a, generation=0)
+10-26 00:53:15.295  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6, generation=0)
+10-26 00:53:15.300  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:15.301  4032  4065 I SmartFin5E3: worker.start:6bb95a28-f587-4272-bfc8-f1bc1a4c0ea0
+10-26 00:53:15.312  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:15.312  4032  4070 I SmartFin5E3: worker.start:6bb95a28-f587-4272-bfc8-f1bc1a4c0ea0
+10-26 00:53:15.312  4032  4049 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:53:15.423  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6, generation=0)
+10-26 00:53:15.425  4032  4049 D WM-Processor: Work WorkGenerationalId(workSpecId=5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6, generation=0) is already enqueued for processing
+10-26 00:53:15.425  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=58223541-569c-42a6-a8a0-5714d9ac801a, generation=0)
+10-26 00:53:15.428  4032  4047 D WM-Processor: Work WorkGenerationalId(workSpecId=58223541-569c-42a6-a8a0-5714d9ac801a, generation=0) is already enqueued for processing
+10-26 00:53:15.433  4032  4065 I SmartFin5E3: worker.result:Success
+10-26 00:53:15.434  4032  4070 I SmartFin5E3: worker.result:Success
+10-26 00:53:15.435  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=58223541-569c-42a6-a8a0-5714d9ac801a, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:15.438  4032  4032 D WM-Processor: Processor 58223541-569c-42a6-a8a0-5714d9ac801a executed; reschedule = false
+10-26 00:53:15.438  4032  4032 D WM-SystemJobService: 58223541-569c-42a6-a8a0-5714d9ac801a executed on JobScheduler
+10-26 00:53:15.441  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:15.445  4032  4032 D WM-Processor: Processor 5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6 executed; reschedule = false
+10-26 00:53:15.445  4032  4032 D WM-SystemJobService: 5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6 executed on JobScheduler
+10-26 00:53:15.449  4032  4048 D WM-GreedyScheduler: Cancelling work ID 58223541-569c-42a6-a8a0-5714d9ac801a
+10-26 00:53:15.456  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 58223541-569c-42a6-a8a0-5714d9ac801aJob ID 10
+10-26 00:53:15.458  4032  4048 D WM-GreedyScheduler: Cancelling work ID 5a4f05ef-fe4c-414c-8aad-7f5f6254bbd6
+10-26 00:53:15.478  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.before:backupJobIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:15.638  4032  4047 D WM-Processor: Processor cancelling 58223541-569c-42a6-a8a0-5714d9ac801a
+10-26 00:53:15.639  4032  4047 D WM-Processor: WorkerWrapper could not be found for 58223541-569c-42a6-a8a0-5714d9ac801a
+10-26 00:53:15.640  4032  4047 D WM-GreedyScheduler: Cancelling work ID 58223541-569c-42a6-a8a0-5714d9ac801a
+10-26 00:53:15.653  4032  4047 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:53:15.974  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.before:backupJobIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:16.642  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 7dedccb6-809a-49bc-82be-977295b4efabJob ID 12
+10-26 00:53:16.645  4032  4049 D WM-GreedyScheduler: Starting work for 7dedccb6-809a-49bc-82be-977295b4efab
+10-26 00:53:16.660  4032  4049 D WM-SystemJobScheduler: Scheduling work ID a781e794-9963-4fe4-a2e5-26102e0be498Job ID 13
+10-26 00:53:16.662  4032  4049 D WM-GreedyScheduler: Starting work for a781e794-9963-4fe4-a2e5-26102e0be498
+10-26 00:53:16.667  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=7dedccb6-809a-49bc-82be-977295b4efab, generation=0)
+10-26 00:53:16.671  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=a781e794-9963-4fe4-a2e5-26102e0be498, generation=0)
+10-26 00:53:16.676  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:16.677  4032  4064 I SmartFin5E3: worker.start:dcdeed13-af35-40f0-b8b4-76bdc0c6a0cd
+10-26 00:53:16.685  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:16.685  4032  4070 I SmartFin5E3: worker.start:dcdeed13-af35-40f0-b8b4-76bdc0c6a0cd
+10-26 00:53:16.686  4032  4049 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:53:16.686  4032  4070 I SmartFin5E3: worker.result:Retry
+10-26 00:53:16.691  4032  4049 I WM-WorkerWrapper: Worker result RETRY for Work [ id=a781e794-9963-4fe4-a2e5-26102e0be498, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:16.696  4032  4032 D WM-Processor: Processor a781e794-9963-4fe4-a2e5-26102e0be498 executed; reschedule = true
+10-26 00:53:16.705  4032  4049 D WM-GreedyScheduler: Cancelling work ID a781e794-9963-4fe4-a2e5-26102e0be498
+10-26 00:53:16.712  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=7dedccb6-809a-49bc-82be-977295b4efab, generation=0)
+10-26 00:53:16.716  4032  4049 D WM-SystemJobScheduler: Scheduling work ID a781e794-9963-4fe4-a2e5-26102e0be498Job ID 14
+10-26 00:53:16.721  4032  4049 D WM-Processor: Work WorkGenerationalId(workSpecId=7dedccb6-809a-49bc-82be-977295b4efab, generation=0) is already enqueued for processing
+10-26 00:53:16.785  4032  4064 I SmartFin5E3: worker.result:Success
+10-26 00:53:16.786  4032  4047 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=7dedccb6-809a-49bc-82be-977295b4efab, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:16.789  4032  4032 D WM-Processor: Processor 7dedccb6-809a-49bc-82be-977295b4efab executed; reschedule = false
+10-26 00:53:16.789  4032  4032 D WM-SystemJobService: 7dedccb6-809a-49bc-82be-977295b4efab executed on JobScheduler
+10-26 00:53:16.792  4032  4049 D WM-GreedyScheduler: Cancelling work ID 7dedccb6-809a-49bc-82be-977295b4efab
+10-26 00:53:16.797  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 7dedccb6-809a-49bc-82be-977295b4efabJob ID 12
+10-26 00:53:46.705  4032  4032 D WM-DelayedWorkTracker: Scheduling work a781e794-9963-4fe4-a2e5-26102e0be498
+10-26 00:53:46.706  4032  4032 D WM-GreedyScheduler: Starting work for a781e794-9963-4fe4-a2e5-26102e0be498
+10-26 00:53:46.708  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=a781e794-9963-4fe4-a2e5-26102e0be498, generation=0)
+10-26 00:53:46.711  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:46.712  4032  4065 I SmartFin5E3: worker.start:dcdeed13-af35-40f0-b8b4-76bdc0c6a0cd
+10-26 00:53:46.779  4032  4065 I SmartFin5E3: worker.result:Success
+10-26 00:53:46.780  4032  4047 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=a781e794-9963-4fe4-a2e5-26102e0be498, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:46.783  4032  4032 D WM-Processor: Processor a781e794-9963-4fe4-a2e5-26102e0be498 executed; reschedule = false
+10-26 00:53:46.789  4032  4047 D WM-GreedyScheduler: Cancelling work ID a781e794-9963-4fe4-a2e5-26102e0be498
+10-26 00:53:46.838  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.after:backupJobIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:46.929  4032  4047 D WM-Processor: Processor cancelling 7dedccb6-809a-49bc-82be-977295b4efab
+10-26 00:53:46.929  4032  4047 D WM-Processor: WorkerWrapper could not be found for 7dedccb6-809a-49bc-82be-977295b4efab
+10-26 00:53:46.932  4032  4047 D WM-GreedyScheduler: Cancelling work ID 7dedccb6-809a-49bc-82be-977295b4efab
+10-26 00:53:46.941  4032  4048 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:53:47.239  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.after:backupJobIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:47.824  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 2da4e4a5-b337-4c20-b5c3-312fbaf1c532Job ID 15
+10-26 00:53:47.826  4032  4049 D WM-GreedyScheduler: Starting work for 2da4e4a5-b337-4c20-b5c3-312fbaf1c532
+10-26 00:53:47.833  4032  4048 D WM-SystemJobScheduler: Scheduling work ID ed301ef1-f47a-4d0b-bab9-cf470501511dJob ID 16
+10-26 00:53:47.834  4032  4048 D WM-GreedyScheduler: Starting work for ed301ef1-f47a-4d0b-bab9-cf470501511d
+10-26 00:53:47.836  4032  4048 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=2da4e4a5-b337-4c20-b5c3-312fbaf1c532, generation=0)
+10-26 00:53:47.837  4032  4048 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=ed301ef1-f47a-4d0b-bab9-cf470501511d, generation=0)
+10-26 00:53:47.840  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:47.840  4032  4070 I SmartFin5E3: worker.start:f759076a-5cd5-46ff-baea-6425c684d4f7
+10-26 00:53:47.847  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:47.847  4032  4064 I SmartFin5E3: worker.start:f759076a-5cd5-46ff-baea-6425c684d4f7
+10-26 00:53:47.848  4032  4049 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:53:48.710  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=ed301ef1-f47a-4d0b-bab9-cf470501511d, generation=0)
+10-26 00:53:48.711  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=2da4e4a5-b337-4c20-b5c3-312fbaf1c532, generation=0)
+10-26 00:53:48.713  4032  4047 D WM-Processor: Work WorkGenerationalId(workSpecId=ed301ef1-f47a-4d0b-bab9-cf470501511d, generation=0) is already enqueued for processing
+10-26 00:53:48.715  4032  4047 D WM-Processor: Work WorkGenerationalId(workSpecId=2da4e4a5-b337-4c20-b5c3-312fbaf1c532, generation=0) is already enqueued for processing
+10-26 00:53:48.717  4032  4070 I SmartFin5E3: worker.result:Success
+10-26 00:53:48.717  4032  4064 I SmartFin5E3: worker.result:Success
+10-26 00:53:48.719  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=2da4e4a5-b337-4c20-b5c3-312fbaf1c532, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:48.724  4032  4032 D WM-Processor: Processor 2da4e4a5-b337-4c20-b5c3-312fbaf1c532 executed; reschedule = false
+10-26 00:53:48.724  4032  4049 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=ed301ef1-f47a-4d0b-bab9-cf470501511d, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:48.726  4032  4032 D WM-SystemJobService: 2da4e4a5-b337-4c20-b5c3-312fbaf1c532 executed on JobScheduler
+10-26 00:53:48.728  4032  4032 D WM-Processor: Processor ed301ef1-f47a-4d0b-bab9-cf470501511d executed; reschedule = false
+10-26 00:53:48.728  4032  4032 D WM-SystemJobService: ed301ef1-f47a-4d0b-bab9-cf470501511d executed on JobScheduler
+10-26 00:53:48.730  4032  4048 D WM-GreedyScheduler: Cancelling work ID 2da4e4a5-b337-4c20-b5c3-312fbaf1c532
+10-26 00:53:48.735  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 2da4e4a5-b337-4c20-b5c3-312fbaf1c532Job ID 15
+10-26 00:53:48.737  4032  4048 D WM-GreedyScheduler: Cancelling work ID ed301ef1-f47a-4d0b-bab9-cf470501511d
+10-26 00:53:48.772  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.before:snapshotIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:48.917  4032  4047 D WM-Processor: Processor cancelling 2da4e4a5-b337-4c20-b5c3-312fbaf1c532
+10-26 00:53:48.918  4032  4047 D WM-Processor: WorkerWrapper could not be found for 2da4e4a5-b337-4c20-b5c3-312fbaf1c532
+10-26 00:53:48.921  4032  4047 D WM-GreedyScheduler: Cancelling work ID 2da4e4a5-b337-4c20-b5c3-312fbaf1c532
+10-26 00:53:48.936  4032  4048 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:53:49.362  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.before:snapshotIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:53:50.035  4032  4047 D WM-SystemJobScheduler: Scheduling work ID 23b6ca2d-989a-4408-86ef-b8802ea5ac14Job ID 17
+10-26 00:53:50.040  4032  4047 D WM-GreedyScheduler: Starting work for 23b6ca2d-989a-4408-86ef-b8802ea5ac14
+10-26 00:53:50.056  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 9796b196-4f48-4308-9d00-a6ca41d95cd7Job ID 18
+10-26 00:53:50.058  4032  4048 D WM-GreedyScheduler: Starting work for 9796b196-4f48-4308-9d00-a6ca41d95cd7
+10-26 00:53:50.062  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=23b6ca2d-989a-4408-86ef-b8802ea5ac14, generation=0)
+10-26 00:53:50.064  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=9796b196-4f48-4308-9d00-a6ca41d95cd7, generation=0)
+10-26 00:53:50.067  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:50.067  4032  4065 I SmartFin5E3: worker.start:dc784099-d5ea-451f-b32f-73b70d618e30
+10-26 00:53:50.076  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:53:50.076  4032  4070 I SmartFin5E3: worker.start:dc784099-d5ea-451f-b32f-73b70d618e30
+10-26 00:53:50.077  4032  4070 I SmartFin5E3: worker.result:Retry
+10-26 00:53:50.077  4032  4047 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:53:50.082  4032  4049 I WM-WorkerWrapper: Worker result RETRY for Work [ id=9796b196-4f48-4308-9d00-a6ca41d95cd7, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:50.089  4032  4032 D WM-Processor: Processor 9796b196-4f48-4308-9d00-a6ca41d95cd7 executed; reschedule = true
+10-26 00:53:50.105  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=23b6ca2d-989a-4408-86ef-b8802ea5ac14, generation=0)
+10-26 00:53:50.106  4032  4049 D WM-GreedyScheduler: Cancelling work ID 9796b196-4f48-4308-9d00-a6ca41d95cd7
+10-26 00:53:50.115  4032  4049 D WM-SystemJobScheduler: Scheduling work ID 9796b196-4f48-4308-9d00-a6ca41d95cd7Job ID 19
+10-26 00:53:50.121  4032  4047 D WM-Processor: Work WorkGenerationalId(workSpecId=23b6ca2d-989a-4408-86ef-b8802ea5ac14, generation=0) is already enqueued for processing
+10-26 00:53:50.199  4032  4065 I SmartFin5E3: worker.result:Success
+10-26 00:53:50.201  4032  4047 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=23b6ca2d-989a-4408-86ef-b8802ea5ac14, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:53:50.207  4032  4032 D WM-Processor: Processor 23b6ca2d-989a-4408-86ef-b8802ea5ac14 executed; reschedule = false
+10-26 00:53:50.207  4032  4032 D WM-SystemJobService: 23b6ca2d-989a-4408-86ef-b8802ea5ac14 executed on JobScheduler
+10-26 00:53:50.209  4032  4047 D WM-GreedyScheduler: Cancelling work ID 23b6ca2d-989a-4408-86ef-b8802ea5ac14
+10-26 00:53:50.216  4032  4047 D WM-SystemJobScheduler: Scheduling work ID 23b6ca2d-989a-4408-86ef-b8802ea5ac14Job ID 17
+10-26 00:54:20.083  4032  4032 D WM-DelayedWorkTracker: Scheduling work 9796b196-4f48-4308-9d00-a6ca41d95cd7
+10-26 00:54:20.083  4032  4032 D WM-GreedyScheduler: Starting work for 9796b196-4f48-4308-9d00-a6ca41d95cd7
+10-26 00:54:20.086  4032  4049 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=9796b196-4f48-4308-9d00-a6ca41d95cd7, generation=0)
+10-26 00:54:20.091  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:54:20.091  4032  4064 I SmartFin5E3: worker.start:dc784099-d5ea-451f-b32f-73b70d618e30
+10-26 00:54:20.189  4032  4064 I SmartFin5E3: worker.result:Success
+10-26 00:54:20.190  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=9796b196-4f48-4308-9d00-a6ca41d95cd7, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:54:20.193  4032  4032 D WM-Processor: Processor 9796b196-4f48-4308-9d00-a6ca41d95cd7 executed; reschedule = false
+10-26 00:54:20.199  4032  4047 D WM-GreedyScheduler: Cancelling work ID 9796b196-4f48-4308-9d00-a6ca41d95cd7
+10-26 00:54:20.247  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.after:snapshotIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:54:20.374  4032  4048 D WM-Processor: Processor cancelling 23b6ca2d-989a-4408-86ef-b8802ea5ac14
+10-26 00:54:20.374  4032  4048 D WM-Processor: WorkerWrapper could not be found for 23b6ca2d-989a-4408-86ef-b8802ea5ac14
+10-26 00:54:20.376  4032  4048 D WM-GreedyScheduler: Cancelling work ID 23b6ca2d-989a-4408-86ef-b8802ea5ac14
+10-26 00:54:20.387  4032  4048 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:54:20.760  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.after:snapshotIds-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:54:21.369  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 99e33e03-b8f5-49c2-96ff-1eb5416a103cJob ID 20
+10-26 00:54:21.372  4032  4048 D WM-GreedyScheduler: Starting work for 99e33e03-b8f5-49c2-96ff-1eb5416a103c
+10-26 00:54:21.382  4032  4047 D WM-SystemJobScheduler: Scheduling work ID b3028baf-6603-4800-bb7c-f6074cc67b34Job ID 21
+10-26 00:54:21.384  4032  4047 D WM-GreedyScheduler: Starting work for b3028baf-6603-4800-bb7c-f6074cc67b34
+10-26 00:54:21.388  4032  4048 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=99e33e03-b8f5-49c2-96ff-1eb5416a103c, generation=0)
+10-26 00:54:21.391  4032  4048 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=b3028baf-6603-4800-bb7c-f6074cc67b34, generation=0)
+10-26 00:54:21.395  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:54:21.396  4032  4070 I SmartFin5E3: worker.start:05eb831d-fe32-40fe-bef4-46f7b1cab63e
+10-26 00:54:21.405  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:54:21.405  4032  4048 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:54:21.405  4032  4065 I SmartFin5E3: worker.start:05eb831d-fe32-40fe-bef4-46f7b1cab63e
+10-26 00:54:21.405  4032  4065 I SmartFin5E3: worker.result:Retry
+10-26 00:54:21.407  4032  4048 I WM-WorkerWrapper: Worker result RETRY for Work [ id=b3028baf-6603-4800-bb7c-f6074cc67b34, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:54:21.411  4032  4032 D WM-Processor: Processor b3028baf-6603-4800-bb7c-f6074cc67b34 executed; reschedule = true
+10-26 00:54:21.418  4032  4048 D WM-GreedyScheduler: Cancelling work ID b3028baf-6603-4800-bb7c-f6074cc67b34
+10-26 00:54:21.420  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=99e33e03-b8f5-49c2-96ff-1eb5416a103c, generation=0)
+10-26 00:54:21.429  4032  4048 D WM-SystemJobScheduler: Scheduling work ID b3028baf-6603-4800-bb7c-f6074cc67b34Job ID 22
+10-26 00:54:21.435  4032  4048 D WM-Processor: Work WorkGenerationalId(workSpecId=99e33e03-b8f5-49c2-96ff-1eb5416a103c, generation=0) is already enqueued for processing
+10-26 00:54:21.512  4032  4070 I SmartFin5E3: worker.result:Success
+10-26 00:54:21.515  4032  4049 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=99e33e03-b8f5-49c2-96ff-1eb5416a103c, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:54:21.521  4032  4032 D WM-Processor: Processor 99e33e03-b8f5-49c2-96ff-1eb5416a103c executed; reschedule = false
+10-26 00:54:21.522  4032  4032 D WM-SystemJobService: 99e33e03-b8f5-49c2-96ff-1eb5416a103c executed on JobScheduler
+10-26 00:54:21.526  4032  4048 D WM-GreedyScheduler: Cancelling work ID 99e33e03-b8f5-49c2-96ff-1eb5416a103c
+10-26 00:54:21.533  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 99e33e03-b8f5-49c2-96ff-1eb5416a103cJob ID 23
+10-26 00:54:51.410  4032  4032 D WM-DelayedWorkTracker: Scheduling work b3028baf-6603-4800-bb7c-f6074cc67b34
+10-26 00:54:51.410  4032  4032 D WM-GreedyScheduler: Starting work for b3028baf-6603-4800-bb7c-f6074cc67b34
+10-26 00:54:51.414  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=b3028baf-6603-4800-bb7c-f6074cc67b34, generation=0)
+10-26 00:54:51.415  4032  4035 I art     : Do full code cache collection, code=251KB, data=213KB
+10-26 00:54:51.421  4032  4035 I art     : After code cache collection, code=238KB, data=194KB
+10-26 00:54:51.422  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:54:51.422  4032  4064 I SmartFin5E3: worker.start:05eb831d-fe32-40fe-bef4-46f7b1cab63e
+10-26 00:54:51.512  4032  4064 I SmartFin5E3: worker.result:Success
+10-26 00:54:51.515  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=b3028baf-6603-4800-bb7c-f6074cc67b34, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:54:51.519  4032  4032 D WM-Processor: Processor b3028baf-6603-4800-bb7c-f6074cc67b34 executed; reschedule = false
+10-26 00:54:51.525  4032  4047 D WM-GreedyScheduler: Cancelling work ID b3028baf-6603-4800-bb7c-f6074cc67b34
+10-26 00:54:51.558  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.beforeCompleted-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:54:51.720  4032  4049 D WM-Processor: Processor cancelling 99e33e03-b8f5-49c2-96ff-1eb5416a103c
+10-26 00:54:51.720  4032  4049 D WM-Processor: WorkerWrapper could not be found for 99e33e03-b8f5-49c2-96ff-1eb5416a103c
+10-26 00:54:51.723  4032  4049 D WM-GreedyScheduler: Cancelling work ID 99e33e03-b8f5-49c2-96ff-1eb5416a103c
+10-26 00:54:51.733  4032  4049 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:54:52.129  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.beforeCompleted-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:54:52.811  4032  4047 D WM-SystemJobScheduler: Scheduling work ID b10b5b96-5c54-48e0-8a44-568df6eecb35Job ID 24
+10-26 00:54:52.815  4032  4047 D WM-GreedyScheduler: Starting work for b10b5b96-5c54-48e0-8a44-568df6eecb35
+10-26 00:54:52.828  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 8c3f3806-440d-45b7-aac0-4e1b8ac3f81bJob ID 25
+10-26 00:54:52.831  4032  4048 D WM-GreedyScheduler: Starting work for 8c3f3806-440d-45b7-aac0-4e1b8ac3f81b
+10-26 00:54:52.835  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=b10b5b96-5c54-48e0-8a44-568df6eecb35, generation=0)
+10-26 00:54:52.838  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=8c3f3806-440d-45b7-aac0-4e1b8ac3f81b, generation=0)
+10-26 00:54:52.844  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:54:52.844  4032  4065 I SmartFin5E3: worker.start:87ec4477-dc16-4114-a92d-22013fc8f4e4
+10-26 00:54:52.851  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:54:52.851  4032  4048 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver enabled
+10-26 00:54:52.851  4032  4070 I SmartFin5E3: worker.start:87ec4477-dc16-4114-a92d-22013fc8f4e4
+10-26 00:54:52.852  4032  4070 I SmartFin5E3: worker.result:Retry
+10-26 00:54:52.858  4032  4048 I WM-WorkerWrapper: Worker result RETRY for Work [ id=8c3f3806-440d-45b7-aac0-4e1b8ac3f81b, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:54:52.866  4032  4032 D WM-Processor: Processor 8c3f3806-440d-45b7-aac0-4e1b8ac3f81b executed; reschedule = true
+10-26 00:54:52.879  4032  4032 D WM-SystemJobService: onStartJob for WorkGenerationalId(workSpecId=b10b5b96-5c54-48e0-8a44-568df6eecb35, generation=0)
+10-26 00:54:52.888  4032  4048 D WM-GreedyScheduler: Cancelling work ID 8c3f3806-440d-45b7-aac0-4e1b8ac3f81b
+10-26 00:54:52.898  4032  4048 D WM-SystemJobScheduler: Scheduling work ID 8c3f3806-440d-45b7-aac0-4e1b8ac3f81bJob ID 26
+10-26 00:54:52.903  4032  4048 D WM-Processor: Work WorkGenerationalId(workSpecId=b10b5b96-5c54-48e0-8a44-568df6eecb35, generation=0) is already enqueued for processing
+10-26 00:54:52.971  4032  4065 I SmartFin5E3: worker.result:Success
+10-26 00:54:52.973  4032  4048 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=b10b5b96-5c54-48e0-8a44-568df6eecb35, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:54:52.979  4032  4032 D WM-Processor: Processor b10b5b96-5c54-48e0-8a44-568df6eecb35 executed; reschedule = false
+10-26 00:54:52.979  4032  4032 D WM-SystemJobService: b10b5b96-5c54-48e0-8a44-568df6eecb35 executed on JobScheduler
+10-26 00:54:52.981  4032  4048 D WM-GreedyScheduler: Cancelling work ID b10b5b96-5c54-48e0-8a44-568df6eecb35
+10-26 00:54:52.987  4032  4048 D WM-SystemJobScheduler: Scheduling work ID b10b5b96-5c54-48e0-8a44-568df6eecb35Job ID 24
+10-26 00:55:22.860  4032  4032 D WM-DelayedWorkTracker: Scheduling work 8c3f3806-440d-45b7-aac0-4e1b8ac3f81b
+10-26 00:55:22.861  4032  4032 D WM-GreedyScheduler: Starting work for 8c3f3806-440d-45b7-aac0-4e1b8ac3f81b
+10-26 00:55:22.864  4032  4047 D WM-Processor: Processor: processing WorkGenerationalId(workSpecId=8c3f3806-440d-45b7-aac0-4e1b8ac3f81b, generation=0)
+10-26 00:55:22.875  4032  4032 D WM-WorkerWrapper: Starting work for com.smartfin.SmartFinSubscriptionWorker
+10-26 00:55:22.875  4032  4064 I SmartFin5E3: worker.start:87ec4477-dc16-4114-a92d-22013fc8f4e4
+10-26 00:55:22.973  4032  4064 I SmartFin5E3: worker.result:Success
+10-26 00:55:22.975  4032  4049 I WM-WorkerWrapper: Worker result SUCCESS for Work [ id=8c3f3806-440d-45b7-aac0-4e1b8ac3f81b, tags={ com.smartfin.SmartFinSubscriptionWorker } ]
+10-26 00:55:22.979  4032  4032 D WM-Processor: Processor 8c3f3806-440d-45b7-aac0-4e1b8ac3f81b executed; reschedule = false
+10-26 00:55:22.985  4032  4049 D WM-GreedyScheduler: Cancelling work ID 8c3f3806-440d-45b7-aac0-4e1b8ac3f81b
+10-26 00:55:23.042  4032  4053 I ReactNativeJS: ACCEPTANCE_START:cleanup.response-keeps-commit-and-only-repeats-idempotent-cleanup
+10-26 00:55:23.179  4032  4048 D WM-Processor: Processor cancelling b10b5b96-5c54-48e0-8a44-568df6eecb35
+10-26 00:55:23.179  4032  4048 D WM-Processor: WorkerWrapper could not be found for b10b5b96-5c54-48e0-8a44-568df6eecb35
+10-26 00:55:23.182  4032  4048 D WM-GreedyScheduler: Cancelling work ID b10b5b96-5c54-48e0-8a44-568df6eecb35
+10-26 00:55:23.202  4032  4047 D WM-PackageManagerHelper: androidx.work.impl.background.systemalarm.RescheduleReceiver disabled
+10-26 00:55:23.626  4032  4053 I ReactNativeJS: ACCEPTANCE_END:cleanup.response-keeps-commit-and-only-repeats-idempotent-cleanup

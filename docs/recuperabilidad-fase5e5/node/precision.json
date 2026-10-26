@@ -1,0 +1,150 @@
+{
+  "runtime": "v24.16.0",
+  "icu": "78.3",
+  "results": [
+    {
+      "size": 1000,
+      "profile": "representative",
+      "months": 7,
+      "productionEqualsCurrentOrder": 7,
+      "binaryDiffersFromExact": 0,
+      "displayV8DiffersFromExact": 0,
+      "exactEndsInHalfPeso": 2,
+      "rowidDescDiffersBinary": 0,
+      "rowidDescDiffersDisplay": 0,
+      "maxAbsErrorPesos": 0,
+      "examples": []
+    },
+    {
+      "size": 1000,
+      "profile": "centavos",
+      "months": 7,
+      "productionEqualsCurrentOrder": 7,
+      "binaryDiffersFromExact": 7,
+      "displayV8DiffersFromExact": 0,
+      "exactEndsInHalfPeso": 0,
+      "rowidDescDiffersBinary": 0,
+      "rowidDescDiffersDisplay": 0,
+      "maxAbsErrorPesos": 2.9802322387695312e-8,
+      "examples": []
+    },
+    {
+      "size": 10000,
+      "profile": "representative",
+      "months": 58,
+      "productionEqualsCurrentOrder": 58,
+      "binaryDiffersFromExact": 0,
+      "displayV8DiffersFromExact": 0,
+      "exactEndsInHalfPeso": 34,
+      "rowidDescDiffersBinary": 0,
+      "rowidDescDiffersDisplay": 0,
+      "maxAbsErrorPesos": 0,
+      "examples": []
+    },
+    {
+      "size": 10000,
+      "profile": "centavos",
+      "months": 58,
+      "productionEqualsCurrentOrder": 58,
+      "binaryDiffersFromExact": 53,
+      "displayV8DiffersFromExact": 0,
+      "exactEndsInHalfPeso": 3,
+      "rowidDescDiffersBinary": 0,
+      "rowidDescDiffersDisplay": 0,
+      "maxAbsErrorPesos": 2.9802322387695312e-8,
+      "examples": []
+    },
+    {
+      "size": 100000,
+      "profile": "representative",
+      "months": 598,
+      "productionEqualsCurrentOrder": 598,
+      "binaryDiffersFromExact": 0,
+      "displayV8DiffersFromExact": 0,
+      "exactEndsInHalfPeso": 295,
+      "rowidDescDiffersBinary": 0,
+      "rowidDescDiffersDisplay": 0,
+      "maxAbsErrorPesos": 0,
+      "examples": []
+    },
+    {
+      "size": 100000,
+      "profile": "centavos",
+      "months": 598,
+      "productionEqualsCurrentOrder": 598,
+      "binaryDiffersFromExact": 574,
+      "displayV8DiffersFromExact": 7,
+      "exactEndsInHalfPeso": 18,
+      "rowidDescDiffersBinary": 0,
+      "rowidDescDiffersDisplay": 0,
+      "maxAbsErrorPesos": 5.960464477539063e-8,
+      "examples": [
+        {
+          "month": "1986-12",
+          "production": {
+            "income": 72300006.94,
+            "expenses": 25249238.44000001,
+            "savings": 47050768.499999985
+          },
+          "exact": {
+            "income": "72300006.94",
+            "expenses": "25249238.44",
+            "savings": "47050768.50"
+          }
+        },
+        {
+          "month": "1989-05",
+          "production": {
+            "income": 76800005.49999999,
+            "expenses": 21986566.510000005,
+            "savings": 54813438.98999998
+          },
+          "exact": {
+            "income": "76800005.50",
+            "expenses": "21986566.51",
+            "savings": "54813438.99"
+          }
+        },
+        {
+          "month": "1990-03",
+          "production": {
+            "income": 43100005.589999996,
+            "expenses": 25119502.499999993,
+            "savings": 17980503.090000004
+          },
+          "exact": {
+            "income": "43100005.59",
+            "expenses": "25119502.50",
+            "savings": "17980503.09"
+          }
+        },
+        {
+          "month": "1998-07",
+          "production": {
+            "income": 88700009.85999997,
+            "expenses": 21575228.36000001,
+            "savings": 67124781.49999996
+          },
+          "exact": {
+            "income": "88700009.86",
+            "expenses": "21575228.36",
+            "savings": "67124781.50"
+          }
+        },
+        {
+          "month": "2001-04",
+          "production": {
+            "income": 98500010.55,
+            "expenses": 22735392.050000012,
+            "savings": 75764618.49999999
+          },
+          "exact": {
+            "income": "98500010.55",
+            "expenses": "22735392.05",
+            "savings": "75764618.50"
+          }
+        }
+      ]
+    }
+  ]
+}
