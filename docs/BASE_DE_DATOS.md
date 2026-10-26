@@ -392,7 +392,7 @@ lugar de nueve, conservando las consultas mensuales/civiles de movimientos.
 
 El dashboard ya no carga todos los movimientos mediante `getTransactions`. El repositorio de transacciones incorpora `getTransactionAmounts` (proyección mensual de importe/tipo/dirección, con filtros de fecha, estado y operaciones) y `getTransactionCountsByDay` (`COUNT(*)` agrupado por prefijo de día dentro de un rango). Ambos aprovechan `idx_transactions_date`; no se añadió esquema ni migración.
 
-El caso de uso conserva las sumas JavaScript y su orden para evitar cambios de precisión en importes `REAL`, las reglas de ingresos/gastos y el intervalo reciente de 30 × 24 horas con fechas locales. Saldos, deuda y patrimonio siguen leyendo cuentas persistidas. `getTransactions` y sus demás consumidores permanecen intactos.
+El caso de uso conserva las sumas JavaScript y su orden para evitar cambios de precisión en importes `REAL`, las reglas de ingresos/gastos y el intervalo reciente de 30 × 24 horas con fechas locales. Desde la fase 6A, ingresos, gastos y ahorro del mes se acumulan en centavos enteros cuando todos sus importes son el `Double` de un decimal de dos cifras menor que 2^46 COP (`src/shared/utils/exactCopCents.ts`); si alguno no lo es (fracción de centavo, magnitud ambigua o total inseguro), esa cifra conserva la suma binaria anterior, en el mismo orden. No se redondea ningún importe guardado ni cambia el esquema. Ver [precision-fase6a.md](precision-fase6a.md). Saldos, deuda y patrimonio siguen leyendo cuentas persistidas. `getTransactions` y sus demás consumidores permanecen intactos.
 
 [Análisis, comparación funcional, mediciones reproducibles y limitaciones](performance/dashboard-phase2.md).
 

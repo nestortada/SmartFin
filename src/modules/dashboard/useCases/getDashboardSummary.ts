@@ -17,6 +17,7 @@ import type { DashboardSummary } from '../types/DashboardSummary';
 import type { TransactionAmount } from '../../transactions/types/TransactionQuery';
 import { bogotaCalendarDate, transactionDateKey } from '../../../shared/utils/transactionDate';
 import { createSqliteSharedExpenseRepository } from '../../transactions/repositories/sqliteSharedExpenseRepository';
+import { sumExactCopCents, toExactCopCents } from '../../../shared/utils/exactCopCents';
 
 type DashboardSummaryDependencies = {
   accountRepository?: AccountRepository;
@@ -131,22 +132,51 @@ function computeSummary(
   return buildSummary(accounts, monthlyTransactions, recentTransactionCount);
 }
 
+/**
+ * Phase 6A: income, expenses and savings add exact cents when every amount is a
+ * two-decimal COP value (see exactCopCents). Otherwise each figure keeps the previous
+ * binary accumulation, in the same order, so no stored amount is rounded.
+ */
+function sumMonthlyFigures(
+  monthlyTransactions: TransactionAmount[],
+  monthlyNetLoss: number,
+): Pick<DashboardSummary, 'monthlyIncome' | 'monthlyExpenses' | 'monthlySavings'> {
+  const incomeAmounts = monthlyTransactions.filter(isIncome).map(transaction => transaction.amount);
+  const expenseAmounts = monthlyTransactions.filter(isRealExpense).map(transaction => transaction.amount);
+  const binaryIncome = incomeAmounts.reduce((total, amount) => total + amount, 0);
+  const binaryExpenses = expenseAmounts.reduce((total, amount) => total + amount, 0);
+  const incomeCents = sumExactCopCents(incomeAmounts);
+  const expenseCents = sumExactCopCents(expenseAmounts);
+  const netLossCents = toExactCopCents(monthlyNetLoss);
+  const savingsCents =
+    incomeCents === undefined || expenseCents === undefined || netLossCents === undefined
+      ? undefined
+      : incomeCents - expenseCents - netLossCents;
+
+  return {
+    monthlyIncome: incomeCents === undefined ? binaryIncome : incomeCents / 100,
+    monthlyExpenses: expenseCents === undefined ? binaryExpenses : expenseCents / 100,
+    monthlySavings:
+      savingsCents !== undefined && Number.isSafeInteger(savingsCents)
+        ? savingsCents / 100
+        : binaryIncome - binaryExpenses - monthlyNetLoss,
+  };
+}
+
 function buildSummary(
   accounts: Account[],
   monthlyTransactions: TransactionAmount[],
   recentTransactionCount: number,
+  monthlyNetLoss = 0,
 ): DashboardSummary {
   const availableBalance = sumBalances(accounts, AVAILABLE_BALANCE_ACCOUNT_TYPES);
   const totalDebt = sumDebts(accounts);
   const netWorth =
     sumBalances(accounts, NET_WORTH_ASSET_ACCOUNT_TYPES) - totalDebt;
-  const monthlyIncome = monthlyTransactions
-    .filter(isIncome)
-    .reduce((total, transaction) => total + transaction.amount, 0);
-  const monthlyExpenses = monthlyTransactions
-    .filter(isRealExpense)
-    .reduce((total, transaction) => total + transaction.amount, 0);
-  const monthlySavings = monthlyIncome - monthlyExpenses;
+  const { monthlyIncome, monthlyExpenses, monthlySavings } = sumMonthlyFigures(
+    monthlyTransactions,
+    monthlyNetLoss,
+  );
 
   return {
     currency: PRIMARY_CURRENCY,
@@ -265,9 +295,9 @@ export async function getDashboardSummaryFromDb(
     .filter(day => isRecentTransaction(day, currentDate))
     .reduce((total, day) => total + day.count, 0);
 
-  const summary = buildSummary(accounts, monthlyAmounts, recentTransactionCount);
+  const summary = buildSummary(accounts, monthlyAmounts, recentTransactionCount, losses.netLoss);
   return { ...summary, netWorth: summary.netWorth + position.receivables - position.thirdPartyAdvances,
     monthlyForgivenessLosses: losses.losses, monthlyLossReversals: losses.reversals,
     monthlyLossRecoveries: losses.recoveries, monthlyRecoveryReversals: losses.recoveryReversals,
-    monthlyNetLosses: losses.netLoss, monthlySavings: summary.monthlySavings - losses.netLoss };
+    monthlyNetLosses: losses.netLoss };
 }

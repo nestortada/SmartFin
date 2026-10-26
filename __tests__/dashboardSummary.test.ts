@@ -3,6 +3,7 @@ import {
   getEmptyDashboardSummary,
 } from '../src/modules/dashboard/useCases/getDashboardSummary';
 import { getBaselineDashboardSummaryFromDb } from './helpers/dashboardSummaryBaseline';
+import { phase6AExpectedSummary, phase6AMonthlyRows } from './helpers/phase6AExpectedSummary';
 import {
   DASHBOARD_DATE,
   dashboardFixture,
@@ -195,6 +196,8 @@ test('fractional and large amounts keep the original descending summation order,
   }
 });
 
+// Phase 6A: monthly figures of these centavo histories follow the exact decimal contract;
+// every other field still equals the frozen baseline.
 test.each([1000, 10000, 100000])(
   'identical synthetic history of %i movements matches every dashboard field',
   async size => {
@@ -204,9 +207,12 @@ test.each([1000, 10000, 100000])(
       expect(
         await getDashboardSummaryFromDb(fixture.database, DASHBOARD_DATE),
       ).toEqual(
-        await getBaselineDashboardSummaryFromDb(
-          fixture.database,
-          DASHBOARD_DATE,
+        phase6AExpectedSummary(
+          await getBaselineDashboardSummaryFromDb(
+            fixture.database,
+            DASHBOARD_DATE,
+          ),
+          phase6AMonthlyRows(fixture.native, '2026-10'),
         ),
       );
     } finally {
@@ -297,7 +303,10 @@ test('dashboard reads narrow indexed projections and daily counts without changi
     );
     spy.mockRestore();
     expect(summary).toEqual(
-      await getBaselineDashboardSummaryFromDb(fixture.database, DASHBOARD_DATE),
+      phase6AExpectedSummary(
+        await getBaselineDashboardSummaryFromDb(fixture.database, DASHBOARD_DATE),
+        phase6AMonthlyRows(fixture.native, '2026-10'),
+      ),
     );
     const historyQueries = queries.filter(query =>
       query.sql.includes('FROM transactions'),

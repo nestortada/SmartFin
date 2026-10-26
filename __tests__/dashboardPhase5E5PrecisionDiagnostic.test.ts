@@ -1,4 +1,6 @@
-import { getDashboardSummaryFromDb } from '../src/modules/dashboard/useCases/getDashboardSummary';
+// Since 6A this diagnoses the frozen pre-6A accumulation (dashboardSummaryPrePhase6A);
+// the exact-cents behavior is verified in dashboardPhase6APrecision.test.ts.
+import { getDashboardSummaryFromDbPre6A as getDashboardSummaryFromDb } from './helpers/dashboardSummaryPrePhase6A';
 import { SQLITE_SCHEMA_STATEMENTS } from '../src/database/sqliteSchema';
 import { applyVersionedMigrations } from '../src/database/migrations';
 import { PERSONAL_AMOUNT_SQL } from '../src/modules/transactions/repositories/sharedFinancialProjectionSql';

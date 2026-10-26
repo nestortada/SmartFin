@@ -1,0 +1,673 @@
+{
+  "runtime": "v24.16.0",
+  "icu": "78.3",
+  "date": "2026-10-24T12:00:00.000Z",
+  "report": [
+    {
+      "scenario": "integers",
+      "path": "exact",
+      "rows": 6,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "3700000",
+          "expectedDecimal": "3700000.00",
+          "next": "3700000",
+          "difference": "0",
+          "previousDisplay": "$ 3.700.000",
+          "nextDisplay": "$ 3.700.000",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "205400",
+          "expectedDecimal": "205400.00",
+          "next": "205400",
+          "difference": "0",
+          "previousDisplay": "$ 205.400",
+          "nextDisplay": "$ 205.400",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "3494600",
+          "expectedDecimal": "3494600.00",
+          "next": "3494600",
+          "difference": "0",
+          "previousDisplay": "$ 3.494.600",
+          "nextDisplay": "$ 3.494.600",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 6,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "halfPesos",
+      "path": "exact",
+      "rows": 4,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "3001",
+          "expectedDecimal": "3001.00",
+          "next": "3001",
+          "difference": "0",
+          "previousDisplay": "$ 3.001",
+          "nextDisplay": "$ 3.001",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "501",
+          "expectedDecimal": "501.00",
+          "next": "501",
+          "difference": "0",
+          "previousDisplay": "$ 501",
+          "nextDisplay": "$ 501",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "2500",
+          "expectedDecimal": "2500.00",
+          "next": "2500",
+          "difference": "0",
+          "previousDisplay": "$ 2.500",
+          "nextDisplay": "$ 2.500",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 4,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "oneDecimal",
+      "path": "exact",
+      "rows": 5,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "0.3000000000000000444089209850062616169452667236328125",
+          "expectedDecimal": "0.30",
+          "next": "0.299999999999999988897769753748434595763683319091796875",
+          "difference": "-0.000000000000000055511151231257827021181583404541015625",
+          "previousDisplay": "$ 0",
+          "nextDisplay": "$ 0",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "1.899999999999999911182158029987476766109466552734375",
+          "expectedDecimal": "1.90",
+          "next": "1.899999999999999911182158029987476766109466552734375",
+          "difference": "0",
+          "previousDisplay": "$ 2",
+          "nextDisplay": "$ 2",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "-1.5999999999999998667732370449812151491641998291015625",
+          "expectedDecimal": "-1.60",
+          "next": "-1.600000000000000088817841970012523233890533447265625",
+          "difference": "-0.0000000000000002220446049250313080847263336181640625",
+          "previousDisplay": "-$ 2",
+          "nextDisplay": "-$ 2",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 5,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "incomeEndsInHalf",
+      "path": "exact",
+      "rows": 4,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "81236.499999999985448084771633148193359375",
+          "expectedDecimal": "81236.50",
+          "next": "81236.5",
+          "difference": "0.000000000014551915228366851806640625",
+          "previousDisplay": "$ 81.236",
+          "nextDisplay": "$ 81.237",
+          "visibleChange": true
+        },
+        "monthlyExpenses": {
+          "previous": "5000",
+          "expectedDecimal": "5000.00",
+          "next": "5000",
+          "difference": "0",
+          "previousDisplay": "$ 5.000",
+          "nextDisplay": "$ 5.000",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "76236.499999999985448084771633148193359375",
+          "expectedDecimal": "76236.50",
+          "next": "76236.5",
+          "difference": "0.000000000014551915228366851806640625",
+          "previousDisplay": "$ 76.236",
+          "nextDisplay": "$ 76.237",
+          "visibleChange": true
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 4,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "expensesEndInHalf",
+      "path": "exact",
+      "rows": 4,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "100000",
+          "expectedDecimal": "100000.00",
+          "next": "100000",
+          "difference": "0",
+          "previousDisplay": "$ 100.000",
+          "nextDisplay": "$ 100.000",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "70000.499999999985448084771633148193359375",
+          "expectedDecimal": "70000.50",
+          "next": "70000.5",
+          "difference": "0.000000000014551915228366851806640625",
+          "previousDisplay": "$ 70.000",
+          "nextDisplay": "$ 70.001",
+          "visibleChange": true
+        },
+        "monthlySavings": {
+          "previous": "29999.500000000014551915228366851806640625",
+          "expectedDecimal": "29999.50",
+          "next": "29999.5",
+          "difference": "-0.000000000014551915228366851806640625",
+          "previousDisplay": "$ 30.000",
+          "nextDisplay": "$ 30.000",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 4,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "negativeSavingsHalf",
+      "path": "exact",
+      "rows": 4,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "3000.15000000000009094947017729282379150390625",
+          "expectedDecimal": "3000.15",
+          "next": "3000.15000000000009094947017729282379150390625",
+          "difference": "0",
+          "previousDisplay": "$ 3.000",
+          "nextDisplay": "$ 3.000",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "4500.649999999999636202119290828704833984375",
+          "expectedDecimal": "4500.65",
+          "next": "4500.649999999999636202119290828704833984375",
+          "difference": "0",
+          "previousDisplay": "$ 4.501",
+          "nextDisplay": "$ 4.501",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "-1500.49999999999954525264911353588104248046875",
+          "expectedDecimal": "-1500.50",
+          "next": "-1500.5",
+          "difference": "-0.00000000000045474735088646411895751953125",
+          "previousDisplay": "-$ 1.500",
+          "nextDisplay": "-$ 1.501",
+          "visibleChange": true
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 4,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "centavosNoTies",
+      "path": "exact",
+      "rows": 9,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "0.5",
+          "expectedDecimal": "0.50",
+          "next": "0.5",
+          "difference": "0",
+          "previousDisplay": "$ 1",
+          "nextDisplay": "$ 1",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "2.499999999999999555910790149937383830547332763671875",
+          "expectedDecimal": "2.50",
+          "next": "2.5",
+          "difference": "0.000000000000000444089209850062616169452667236328125",
+          "previousDisplay": "$ 2",
+          "nextDisplay": "$ 3",
+          "visibleChange": true
+        },
+        "monthlySavings": {
+          "previous": "-1.999999999999999555910790149937383830547332763671875",
+          "expectedDecimal": "-2.00",
+          "next": "-2",
+          "difference": "-0.000000000000000444089209850062616169452667236328125",
+          "previousDisplay": "-$ 2",
+          "nextDisplay": "-$ 2",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 9,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "centavosTies",
+      "path": "exact",
+      "rows": 9,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "0.5",
+          "expectedDecimal": "0.50",
+          "next": "0.5",
+          "difference": "0",
+          "previousDisplay": "$ 1",
+          "nextDisplay": "$ 1",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "2.499999999999999555910790149937383830547332763671875",
+          "expectedDecimal": "2.50",
+          "next": "2.5",
+          "difference": "0.000000000000000444089209850062616169452667236328125",
+          "previousDisplay": "$ 2",
+          "nextDisplay": "$ 3",
+          "visibleChange": true
+        },
+        "monthlySavings": {
+          "previous": "-1.999999999999999555910790149937383830547332763671875",
+          "expectedDecimal": "-2.00",
+          "next": "-2",
+          "difference": "-0.000000000000000444089209850062616169452667236328125",
+          "previousDisplay": "-$ 2",
+          "nextDisplay": "-$ 2",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 9,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "fractionalTies1000",
+      "path": "exact",
+      "rows": 1000,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "258.29999999999972715158946812152862548828125",
+          "expectedDecimal": "258.30",
+          "next": "258.30000000000001136868377216160297393798828125",
+          "difference": "0.00000000000028421709430404007434844970703125",
+          "previousDisplay": "$ 258",
+          "nextDisplay": "$ 258",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "671.60000000000263753463514149188995361328125",
+          "expectedDecimal": "671.60",
+          "next": "671.6000000000000227373675443232059478759765625",
+          "difference": "-0.0000000000026147972675971686840057373046875",
+          "previousDisplay": "$ 672",
+          "nextDisplay": "$ 672",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "-413.300000000002910383045673370361328125",
+          "expectedDecimal": "-413.30",
+          "next": "-413.30000000000001136868377216160297393798828125",
+          "difference": "0.00000000000289901436190120875835418701171875",
+          "previousDisplay": "-$ 413",
+          "nextDisplay": "-$ 413",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 900,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "negativeStoredAmounts",
+      "path": "exact",
+      "rows": 6,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "-1199.799999999999954525264911353588104248046875",
+          "expectedDecimal": "-1199.80",
+          "next": "-1199.799999999999954525264911353588104248046875",
+          "difference": "0",
+          "previousDisplay": "-$ 1.200",
+          "nextDisplay": "-$ 1.200",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "-0.450000000000000011102230246251565404236316680908203125",
+          "expectedDecimal": "-0.45",
+          "next": "-0.450000000000000011102230246251565404236316680908203125",
+          "difference": "0",
+          "previousDisplay": "-$ 0",
+          "nextDisplay": "-$ 0",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "-1199.34999999999990905052982270717620849609375",
+          "expectedDecimal": "-1199.35",
+          "next": "-1199.34999999999990905052982270717620849609375",
+          "difference": "0",
+          "previousDisplay": "-$ 1.199",
+          "nextDisplay": "-$ 1.199",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 6,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "cancellationsAndRefunds",
+      "path": "exact",
+      "rows": 10,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "1500.25",
+          "expectedDecimal": "1500.25",
+          "next": "1500.25",
+          "difference": "0",
+          "previousDisplay": "$ 1.500",
+          "nextDisplay": "$ 1.500",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "899.75",
+          "expectedDecimal": "899.75",
+          "next": "899.75",
+          "difference": "0",
+          "previousDisplay": "$ 900",
+          "nextDisplay": "$ 900",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "600.5",
+          "expectedDecimal": "600.50",
+          "next": "600.5",
+          "difference": "0",
+          "previousDisplay": "$ 601",
+          "nextDisplay": "$ 601",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 7,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "subCentAmounts",
+      "path": "legacy",
+      "rows": 5,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "0.30500000000000004884981308350688777863979339599609375",
+          "next": "0.30500000000000004884981308350688777863979339599609375",
+          "difference": "0",
+          "previousDisplay": "$ 0",
+          "nextDisplay": "$ 0",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "1.5340000000000000301980662698042578995227813720703125",
+          "next": "1.5340000000000000301980662698042578995227813720703125",
+          "difference": "0",
+          "previousDisplay": "$ 2",
+          "nextDisplay": "$ 2",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "-1.22900000000000009237055564881302416324615478515625",
+          "next": "-1.22900000000000009237055564881302416324615478515625",
+          "difference": "0",
+          "previousDisplay": "-$ 1",
+          "nextDisplay": "-$ 1",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 5,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "ambiguousMagnitude",
+      "path": "legacy",
+      "rows": 3,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "70368744177664.59375",
+          "next": "70368744177664.59375",
+          "difference": "0",
+          "previousDisplay": "$ 70.368.744.177.665",
+          "nextDisplay": "$ 70.368.744.177.665",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "0.200000000000000011102230246251565404236316680908203125",
+          "next": "0.200000000000000011102230246251565404236316680908203125",
+          "difference": "0",
+          "previousDisplay": "$ 0",
+          "nextDisplay": "$ 0",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "70368744177664.390625",
+          "next": "70368744177664.390625",
+          "difference": "0",
+          "previousDisplay": "$ 70.368.744.177.664",
+          "nextDisplay": "$ 70.368.744.177.664",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 3,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "unsafeTotal",
+      "path": "legacy",
+      "rows": 3,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "140000000000000.03125",
+          "next": "140000000000000.03125",
+          "difference": "0",
+          "previousDisplay": "$ 140.000.000.000.000",
+          "nextDisplay": "$ 140.000.000.000.000",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "0.1000000000000000055511151231257827021181583404541015625",
+          "next": "0.1000000000000000055511151231257827021181583404541015625",
+          "difference": "0",
+          "previousDisplay": "$ 0",
+          "nextDisplay": "$ 0",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "139999999999999.9375",
+          "next": "139999999999999.9375",
+          "difference": "0",
+          "previousDisplay": "$ 140.000.000.000.000",
+          "nextDisplay": "$ 140.000.000.000.000",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 3,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    },
+    {
+      "scenario": "multiYearCentavos",
+      "path": "exact",
+      "rows": 1020,
+      "fields": {
+        "monthlyIncome": {
+          "previous": "13600002",
+          "expectedDecimal": "13600002.00",
+          "next": "13600002",
+          "difference": "0",
+          "previousDisplay": "$ 13.600.002",
+          "nextDisplay": "$ 13.600.002",
+          "visibleChange": false
+        },
+        "monthlyExpenses": {
+          "previous": "3172833.0599999991245567798614501953125",
+          "expectedDecimal": "3172833.06",
+          "next": "3172833.0600000000558793544769287109375",
+          "difference": "0.000000000931322574615478515625",
+          "previousDisplay": "$ 3.172.833",
+          "nextDisplay": "$ 3.172.833",
+          "visibleChange": false
+        },
+        "monthlySavings": {
+          "previous": "10427168.9400000013411045074462890625",
+          "expectedDecimal": "10427168.94",
+          "next": "10427168.93999999947845935821533203125",
+          "difference": "-0.00000000186264514923095703125",
+          "previousDisplay": "$ 10.427.169",
+          "nextDisplay": "$ 10.427.169",
+          "visibleChange": false
+        }
+      },
+      "unaffected": {
+        "availableBalance": 3100,
+        "totalDebt": 1000,
+        "netWorth": 7100,
+        "recentTransactionCount": 29,
+        "monthlyForgivenessLosses": 0,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 0
+      }
+    }
+  ]
+}
