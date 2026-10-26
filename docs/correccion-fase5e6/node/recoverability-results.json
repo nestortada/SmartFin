@@ -1,0 +1,4675 @@
+{
+  "C:\\sf-5e6-evidence\\api24\\recoverability-1000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-1000",
+      "size": 1000,
+      "g1": "82a99de8-6fb1-41e2-833e-239386b8af28",
+      "g2": "34738ce5-5cfb-4204-b58c-700cfe95dae6",
+      "api": 24
+    },
+    "selected": "34738ce5-5cfb-4204-b58c-700cfe95dae6",
+    "g1": {
+      "id": "82a99de8-6fb1-41e2-833e-239386b8af28",
+      "realFormat": "exact",
+      "revision": 1083,
+      "components": 13,
+      "databaseBytes": 1011712,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 7,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 7,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 3,
+        "subcategories": 0,
+        "subscription_occurrences": 7,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1010
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 61700000,
+        "monthlyExpenses": 19481648,
+        "monthlySavings": 42208352,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 172,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1010
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "34738ce5-5cfb-4204-b58c-700cfe95dae6",
+      "realFormat": "exact",
+      "revision": 1107,
+      "components": 13,
+      "databaseBytes": 1015808,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 7,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 7,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 3,
+        "subcategories": 0,
+        "subscription_occurrences": 7,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1016
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 6827600,
+        "netWorth": 9308621.1,
+        "monthlyIncome": 62934567,
+        "monthlyExpenses": 23197693.9,
+        "monthlySavings": 39726873.1,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 178,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1016
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1039,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "orderProbe": {
+      "sqlite": "3.9.2",
+      "pre5E4": {
+        "plan": [
+          "SCAN TABLE transactions AS t USING INDEX idx_transactions_civil_day"
+        ],
+        "declaredOrder": false,
+        "sameRows": true
+      },
+      "current": {
+        "plan": [
+          "SEARCH TABLE transactions AS t USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+        ],
+        "declaredOrder": false,
+        "sameRows": true
+      },
+      "forcedSort": {
+        "plan": [
+          "SEARCH TABLE transactions AS t USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+          "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      }
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--movimientos-2026.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-W3viSk\\smartfin-generation-34738ce5-5cfb-4204-b58c-700cfe95dae6.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--smartfin-backup.db",
+          "tamaño distinto: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--cuentas.csv",
+          "tamaño distinto: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--movimientos-2026.csv",
+          "tamaño distinto: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "C:\\sf-5e6-evidence\\api24\\recoverability-10000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-10000",
+      "size": 10000,
+      "g1": "75c59f2e-a993-4f5d-99c4-0cf5a3401432",
+      "g2": "87e10bba-c346-4370-973e-a28ab952dee6",
+      "api": 24
+    },
+    "selected": "87e10bba-c346-4370-973e-a28ab952dee6",
+    "g1": {
+      "id": "75c59f2e-a993-4f5d-99c4-0cf5a3401432",
+      "realFormat": "exact",
+      "revision": 10083,
+      "components": 17,
+      "databaseBytes": 4878336,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 7,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 7,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 3,
+        "subcategories": 0,
+        "subscription_occurrences": 7,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 10010
+      },
+      "months": 58,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 77900000,
+        "monthlyExpenses": 21931338.5,
+        "monthlySavings": 55958661.5,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 176,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2022.csv": 2115,
+        "movimientos-2023.csv": 2084,
+        "movimientos-2024.csv": 2043,
+        "movimientos-2025.csv": 2051,
+        "movimientos-2026.csv": 1717
+      },
+      "csvByteIdentical": 16,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 10033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 10010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "87e10bba-c346-4370-973e-a28ab952dee6",
+      "realFormat": "exact",
+      "revision": 10107,
+      "components": 17,
+      "databaseBytes": 4882432,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 7,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 7,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 3,
+        "subcategories": 0,
+        "subscription_occurrences": 7,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 10016
+      },
+      "months": 58,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 77522500,
+        "netWorth": -61386278.9,
+        "monthlyIncome": 79134567,
+        "monthlyExpenses": 25647384.4,
+        "monthlySavings": 53477182.6,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 182,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2022.csv": 2115,
+        "movimientos-2023.csv": 2084,
+        "movimientos-2024.csv": 2043,
+        "movimientos-2025.csv": 2051,
+        "movimientos-2026.csv": 1723
+      },
+      "csvByteIdentical": 16,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 10039,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 10016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--movimientos-2022.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-NSHmnF\\smartfin-generation-87e10bba-c346-4370-973e-a28ab952dee6.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-87e10bba-c346-4370-973e-a28ab952dee6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--smartfin-backup.db",
+          "tamaño distinto: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--cuentas.csv",
+          "tamaño distinto: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--movimientos-2022.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--movimientos-2023.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--movimientos-2024.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--movimientos-2025.csv",
+          "nombre de componente inválido o repetido: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--movimientos-2026.csv",
+          "tamaño distinto: smartfin-75c59f2e-a993-4f5d-99c4-0cf5a3401432--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "C:\\sf-5e6-evidence\\api24\\recoverability-100000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-100000",
+      "size": 100000,
+      "g1": "262150ce-310f-4411-94b2-2a3a48429658",
+      "g2": "c6ea333d-4a4f-4162-91e5-0a7d7140fd89",
+      "api": 24
+    },
+    "selected": "c6ea333d-4a4f-4162-91e5-0a7d7140fd89",
+    "g1": {
+      "id": "262150ce-310f-4411-94b2-2a3a48429658",
+      "realFormat": "exact",
+      "revision": 100083,
+      "components": 62,
+      "databaseBytes": 44580864,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 7,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 7,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 3,
+        "subcategories": 0,
+        "subscription_occurrences": 7,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 100010
+      },
+      "months": 598,
+      "platformTimezoneDifferences": [
+        "$.dashboard.1993-02.recentTransactionCount: 151 ≠ 156"
+      ],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 61000000,
+        "monthlyExpenses": 20674374,
+        "monthlySavings": 40315626,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 171,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-1977.csv": 2000,
+        "movimientos-1978.csv": 1996,
+        "movimientos-1979.csv": 2008,
+        "movimientos-1980.csv": 2027,
+        "movimientos-1981.csv": 2014,
+        "movimientos-1982.csv": 1998,
+        "movimientos-1983.csv": 1997,
+        "movimientos-1984.csv": 2015,
+        "movimientos-1985.csv": 2021,
+        "movimientos-1986.csv": 2012,
+        "movimientos-1987.csv": 1999,
+        "movimientos-1988.csv": 2001,
+        "movimientos-1989.csv": 2010,
+        "movimientos-1990.csv": 2020,
+        "movimientos-1991.csv": 2010,
+        "movimientos-1992.csv": 2004,
+        "movimientos-1993.csv": 1997,
+        "movimientos-1994.csv": 2011,
+        "movimientos-1995.csv": 2021,
+        "movimientos-1996.csv": 2017,
+        "movimientos-1997.csv": 1997,
+        "movimientos-1998.csv": 1998,
+        "movimientos-1999.csv": 2012,
+        "movimientos-2000.csv": 2026,
+        "movimientos-2001.csv": 2011,
+        "movimientos-2002.csv": 1996,
+        "movimientos-2003.csv": 1999,
+        "movimientos-2004.csv": 2018,
+        "movimientos-2005.csv": 2020,
+        "movimientos-2006.csv": 2009,
+        "movimientos-2007.csv": 1996,
+        "movimientos-2008.csv": 2003,
+        "movimientos-2009.csv": 2012,
+        "movimientos-2010.csv": 2022,
+        "movimientos-2011.csv": 2007,
+        "movimientos-2012.csv": 2001,
+        "movimientos-2013.csv": 2000,
+        "movimientos-2014.csv": 2015,
+        "movimientos-2015.csv": 2020,
+        "movimientos-2016.csv": 2013,
+        "movimientos-2017.csv": 1996,
+        "movimientos-2018.csv": 2000,
+        "movimientos-2019.csv": 2016,
+        "movimientos-2020.csv": 2025,
+        "movimientos-2021.csv": 2007,
+        "movimientos-2022.csv": 1995,
+        "movimientos-2023.csv": 2001,
+        "movimientos-2024.csv": 2014,
+        "movimientos-2025.csv": 1982,
+        "movimientos-2026.csv": 1621
+      },
+      "csvByteIdentical": 61,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 100033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 100010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "c6ea333d-4a4f-4162-91e5-0a7d7140fd89",
+      "realFormat": "exact",
+      "revision": 100107,
+      "components": 62,
+      "databaseBytes": 44589056,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 7,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 7,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 3,
+        "subcategories": 0,
+        "subscription_occurrences": 7,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 100016
+      },
+      "months": 598,
+      "platformTimezoneDifferences": [
+        "$.dashboard.1993-02.recentTransactionCount: 151 ≠ 156"
+      ],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 779097300,
+        "netWorth": -762961078.9,
+        "monthlyIncome": 62234567,
+        "monthlyExpenses": 24390419.9,
+        "monthlySavings": 37834147.1,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 177,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-1977.csv": 2000,
+        "movimientos-1978.csv": 1996,
+        "movimientos-1979.csv": 2008,
+        "movimientos-1980.csv": 2027,
+        "movimientos-1981.csv": 2014,
+        "movimientos-1982.csv": 1998,
+        "movimientos-1983.csv": 1997,
+        "movimientos-1984.csv": 2015,
+        "movimientos-1985.csv": 2021,
+        "movimientos-1986.csv": 2012,
+        "movimientos-1987.csv": 1999,
+        "movimientos-1988.csv": 2001,
+        "movimientos-1989.csv": 2010,
+        "movimientos-1990.csv": 2020,
+        "movimientos-1991.csv": 2010,
+        "movimientos-1992.csv": 2004,
+        "movimientos-1993.csv": 1997,
+        "movimientos-1994.csv": 2011,
+        "movimientos-1995.csv": 2021,
+        "movimientos-1996.csv": 2017,
+        "movimientos-1997.csv": 1997,
+        "movimientos-1998.csv": 1998,
+        "movimientos-1999.csv": 2012,
+        "movimientos-2000.csv": 2026,
+        "movimientos-2001.csv": 2011,
+        "movimientos-2002.csv": 1996,
+        "movimientos-2003.csv": 1999,
+        "movimientos-2004.csv": 2018,
+        "movimientos-2005.csv": 2020,
+        "movimientos-2006.csv": 2009,
+        "movimientos-2007.csv": 1996,
+        "movimientos-2008.csv": 2003,
+        "movimientos-2009.csv": 2012,
+        "movimientos-2010.csv": 2022,
+        "movimientos-2011.csv": 2007,
+        "movimientos-2012.csv": 2001,
+        "movimientos-2013.csv": 2000,
+        "movimientos-2014.csv": 2015,
+        "movimientos-2015.csv": 2020,
+        "movimientos-2016.csv": 2013,
+        "movimientos-2017.csv": 1996,
+        "movimientos-2018.csv": 2000,
+        "movimientos-2019.csv": 2016,
+        "movimientos-2020.csv": 2025,
+        "movimientos-2021.csv": 2007,
+        "movimientos-2022.csv": 1995,
+        "movimientos-2023.csv": 2001,
+        "movimientos-2024.csv": 2014,
+        "movimientos-2025.csv": 1982,
+        "movimientos-2026.csv": 1627
+      },
+      "csvByteIdentical": 61,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 100039,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 100016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--movimientos-1977.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-bx73Zu\\smartfin-generation-c6ea333d-4a4f-4162-91e5-0a7d7140fd89.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-c6ea333d-4a4f-4162-91e5-0a7d7140fd89--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--smartfin-backup.db",
+          "tamaño distinto: smartfin-262150ce-310f-4411-94b2-2a3a48429658--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--cuentas.csv",
+          "tamaño distinto: smartfin-262150ce-310f-4411-94b2-2a3a48429658--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-262150ce-310f-4411-94b2-2a3a48429658--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1977.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1978.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1979.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1980.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1981.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1982.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1983.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1984.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1985.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1986.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1987.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1988.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1989.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1990.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1991.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1992.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1993.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1994.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1995.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1996.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1997.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1998.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-1999.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2000.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2001.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2002.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2003.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2004.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2005.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2006.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2007.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2008.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2009.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2010.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2011.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2012.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2013.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2014.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2015.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2016.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2017.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2018.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2019.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2020.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2021.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2022.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2023.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2024.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2025.csv",
+          "nombre de componente inválido o repetido: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2026.csv",
+          "tamaño distinto: smartfin-262150ce-310f-4411-94b2-2a3a48429658--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "C:\\sf-5e6-evidence\\api35\\recoverability-1000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-1000",
+      "size": 1000,
+      "g1": "debd45c2-bdee-4dab-a78c-78ee284e5705",
+      "g2": "d402ddb6-8582-4fd4-8f69-dbc6a16aed6d",
+      "api": 35
+    },
+    "selected": "d402ddb6-8582-4fd4-8f69-dbc6a16aed6d",
+    "g1": {
+      "id": "debd45c2-bdee-4dab-a78c-78ee284e5705",
+      "realFormat": "exact",
+      "revision": 1076,
+      "components": 13,
+      "databaseBytes": 1015808,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1010
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 61700000,
+        "monthlyExpenses": 19481648,
+        "monthlySavings": 42208352,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 172,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1010
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "d402ddb6-8582-4fd4-8f69-dbc6a16aed6d",
+      "realFormat": "exact",
+      "revision": 1100,
+      "components": 13,
+      "databaseBytes": 1019904,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1016
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 6827600,
+        "netWorth": 9308621.1,
+        "monthlyIncome": 62934567,
+        "monthlyExpenses": 23197693.9,
+        "monthlySavings": 39726873.1,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 178,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1016
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1039,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "orderProbe": {
+      "sqlite": "3.44.5",
+      "pre5E4": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      },
+      "current": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      },
+      "forcedSort": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      }
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--movimientos-2026.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-NG7Xt3\\smartfin-generation-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--smartfin-backup.db",
+          "tamaño distinto: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--cuentas.csv",
+          "tamaño distinto: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--movimientos-2026.csv",
+          "tamaño distinto: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "C:\\sf-5e6-evidence\\api35\\recoverability-10000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-10000",
+      "size": 10000,
+      "g1": "b9a46c4a-d45b-4894-9ae3-2aaba04b18ba",
+      "g2": "b3d98350-8e2e-4036-ad31-00f968d0359e",
+      "api": 35
+    },
+    "selected": "b3d98350-8e2e-4036-ad31-00f968d0359e",
+    "g1": {
+      "id": "b9a46c4a-d45b-4894-9ae3-2aaba04b18ba",
+      "realFormat": "exact",
+      "revision": 10076,
+      "components": 17,
+      "databaseBytes": 4878336,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 10010
+      },
+      "months": 58,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 77900000,
+        "monthlyExpenses": 21931338.5,
+        "monthlySavings": 55958661.5,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 176,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2022.csv": 2115,
+        "movimientos-2023.csv": 2084,
+        "movimientos-2024.csv": 2043,
+        "movimientos-2025.csv": 2051,
+        "movimientos-2026.csv": 1717
+      },
+      "csvByteIdentical": 16,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 10033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 10010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "b3d98350-8e2e-4036-ad31-00f968d0359e",
+      "realFormat": "exact",
+      "revision": 10100,
+      "components": 17,
+      "databaseBytes": 4882432,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 10016
+      },
+      "months": 58,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 77522500,
+        "netWorth": -61386278.9,
+        "monthlyIncome": 79134567,
+        "monthlyExpenses": 25647384.4,
+        "monthlySavings": 53477182.6,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 182,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2022.csv": 2115,
+        "movimientos-2023.csv": 2084,
+        "movimientos-2024.csv": 2043,
+        "movimientos-2025.csv": 2051,
+        "movimientos-2026.csv": 1723
+      },
+      "csvByteIdentical": 16,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 10039,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 10016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--movimientos-2022.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-clANJw\\smartfin-generation-b3d98350-8e2e-4036-ad31-00f968d0359e.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-b3d98350-8e2e-4036-ad31-00f968d0359e--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--smartfin-backup.db",
+          "tamaño distinto: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--cuentas.csv",
+          "tamaño distinto: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--movimientos-2022.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--movimientos-2023.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--movimientos-2024.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--movimientos-2025.csv",
+          "nombre de componente inválido o repetido: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--movimientos-2026.csv",
+          "tamaño distinto: smartfin-b9a46c4a-d45b-4894-9ae3-2aaba04b18ba--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "C:\\sf-5e6-evidence\\api35\\recoverability-100000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-100000",
+      "size": 100000,
+      "g1": "ab176be9-4086-4d66-860c-5451e31d35a4",
+      "g2": "689e45ce-304e-4771-bfef-4c23f31c9cf4",
+      "api": 35
+    },
+    "selected": "689e45ce-304e-4771-bfef-4c23f31c9cf4",
+    "g1": {
+      "id": "ab176be9-4086-4d66-860c-5451e31d35a4",
+      "realFormat": "exact",
+      "revision": 100076,
+      "components": 62,
+      "databaseBytes": 44601344,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 100010
+      },
+      "months": 598,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 61000000,
+        "monthlyExpenses": 20674374,
+        "monthlySavings": 40315626,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 171,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-1977.csv": 2000,
+        "movimientos-1978.csv": 1996,
+        "movimientos-1979.csv": 2008,
+        "movimientos-1980.csv": 2027,
+        "movimientos-1981.csv": 2014,
+        "movimientos-1982.csv": 1998,
+        "movimientos-1983.csv": 1997,
+        "movimientos-1984.csv": 2015,
+        "movimientos-1985.csv": 2021,
+        "movimientos-1986.csv": 2012,
+        "movimientos-1987.csv": 1999,
+        "movimientos-1988.csv": 2001,
+        "movimientos-1989.csv": 2010,
+        "movimientos-1990.csv": 2020,
+        "movimientos-1991.csv": 2010,
+        "movimientos-1992.csv": 2004,
+        "movimientos-1993.csv": 1997,
+        "movimientos-1994.csv": 2011,
+        "movimientos-1995.csv": 2021,
+        "movimientos-1996.csv": 2017,
+        "movimientos-1997.csv": 1997,
+        "movimientos-1998.csv": 1998,
+        "movimientos-1999.csv": 2012,
+        "movimientos-2000.csv": 2026,
+        "movimientos-2001.csv": 2011,
+        "movimientos-2002.csv": 1996,
+        "movimientos-2003.csv": 1999,
+        "movimientos-2004.csv": 2018,
+        "movimientos-2005.csv": 2020,
+        "movimientos-2006.csv": 2009,
+        "movimientos-2007.csv": 1996,
+        "movimientos-2008.csv": 2003,
+        "movimientos-2009.csv": 2012,
+        "movimientos-2010.csv": 2022,
+        "movimientos-2011.csv": 2007,
+        "movimientos-2012.csv": 2001,
+        "movimientos-2013.csv": 2000,
+        "movimientos-2014.csv": 2015,
+        "movimientos-2015.csv": 2020,
+        "movimientos-2016.csv": 2013,
+        "movimientos-2017.csv": 1996,
+        "movimientos-2018.csv": 2000,
+        "movimientos-2019.csv": 2016,
+        "movimientos-2020.csv": 2025,
+        "movimientos-2021.csv": 2007,
+        "movimientos-2022.csv": 1995,
+        "movimientos-2023.csv": 2001,
+        "movimientos-2024.csv": 2014,
+        "movimientos-2025.csv": 1982,
+        "movimientos-2026.csv": 1621
+      },
+      "csvByteIdentical": 61,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 100033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 100010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "689e45ce-304e-4771-bfef-4c23f31c9cf4",
+      "realFormat": "exact",
+      "revision": 100100,
+      "components": 62,
+      "databaseBytes": 44605440,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 100016
+      },
+      "months": 598,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 779097300,
+        "netWorth": -762961078.9,
+        "monthlyIncome": 62234567,
+        "monthlyExpenses": 24390419.9,
+        "monthlySavings": 37834147.1,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 177,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-1977.csv": 2000,
+        "movimientos-1978.csv": 1996,
+        "movimientos-1979.csv": 2008,
+        "movimientos-1980.csv": 2027,
+        "movimientos-1981.csv": 2014,
+        "movimientos-1982.csv": 1998,
+        "movimientos-1983.csv": 1997,
+        "movimientos-1984.csv": 2015,
+        "movimientos-1985.csv": 2021,
+        "movimientos-1986.csv": 2012,
+        "movimientos-1987.csv": 1999,
+        "movimientos-1988.csv": 2001,
+        "movimientos-1989.csv": 2010,
+        "movimientos-1990.csv": 2020,
+        "movimientos-1991.csv": 2010,
+        "movimientos-1992.csv": 2004,
+        "movimientos-1993.csv": 1997,
+        "movimientos-1994.csv": 2011,
+        "movimientos-1995.csv": 2021,
+        "movimientos-1996.csv": 2017,
+        "movimientos-1997.csv": 1997,
+        "movimientos-1998.csv": 1998,
+        "movimientos-1999.csv": 2012,
+        "movimientos-2000.csv": 2026,
+        "movimientos-2001.csv": 2011,
+        "movimientos-2002.csv": 1996,
+        "movimientos-2003.csv": 1999,
+        "movimientos-2004.csv": 2018,
+        "movimientos-2005.csv": 2020,
+        "movimientos-2006.csv": 2009,
+        "movimientos-2007.csv": 1996,
+        "movimientos-2008.csv": 2003,
+        "movimientos-2009.csv": 2012,
+        "movimientos-2010.csv": 2022,
+        "movimientos-2011.csv": 2007,
+        "movimientos-2012.csv": 2001,
+        "movimientos-2013.csv": 2000,
+        "movimientos-2014.csv": 2015,
+        "movimientos-2015.csv": 2020,
+        "movimientos-2016.csv": 2013,
+        "movimientos-2017.csv": 1996,
+        "movimientos-2018.csv": 2000,
+        "movimientos-2019.csv": 2016,
+        "movimientos-2020.csv": 2025,
+        "movimientos-2021.csv": 2007,
+        "movimientos-2022.csv": 1995,
+        "movimientos-2023.csv": 2001,
+        "movimientos-2024.csv": 2014,
+        "movimientos-2025.csv": 1982,
+        "movimientos-2026.csv": 1627
+      },
+      "csvByteIdentical": 61,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 100039,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 100016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--movimientos-1977.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-R9Gzc4\\smartfin-generation-689e45ce-304e-4771-bfef-4c23f31c9cf4.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-689e45ce-304e-4771-bfef-4c23f31c9cf4--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--smartfin-backup.db",
+          "tamaño distinto: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--cuentas.csv",
+          "tamaño distinto: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1977.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1978.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1979.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1980.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1981.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1982.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1983.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1984.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1985.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1986.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1987.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1988.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1989.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1990.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1991.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1992.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1993.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1994.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1995.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1996.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1997.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1998.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-1999.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2000.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2001.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2002.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2003.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2004.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2005.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2006.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2007.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2008.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2009.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2010.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2011.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2012.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2013.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2014.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2015.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2016.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2017.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2018.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2019.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2020.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2021.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2022.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2023.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2024.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2025.csv",
+          "nombre de componente inválido o repetido: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2026.csv",
+          "tamaño distinto: smartfin-ab176be9-4086-4d66-860c-5451e31d35a4--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "docs\\correccion-fase5e6\\evidencia\\api24-recoverability-1000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-1000",
+      "size": 1000,
+      "g1": "82a99de8-6fb1-41e2-833e-239386b8af28",
+      "g2": "34738ce5-5cfb-4204-b58c-700cfe95dae6",
+      "api": 24
+    },
+    "selected": "34738ce5-5cfb-4204-b58c-700cfe95dae6",
+    "g1": {
+      "id": "82a99de8-6fb1-41e2-833e-239386b8af28",
+      "realFormat": "exact",
+      "revision": 1083,
+      "components": 13,
+      "databaseBytes": 1011712,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 7,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 7,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 3,
+        "subcategories": 0,
+        "subscription_occurrences": 7,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1010
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 61700000,
+        "monthlyExpenses": 19481648,
+        "monthlySavings": 42208352,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 172,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1010
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "34738ce5-5cfb-4204-b58c-700cfe95dae6",
+      "realFormat": "exact",
+      "revision": 1107,
+      "components": 13,
+      "databaseBytes": 1015808,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 7,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 7,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 3,
+        "subcategories": 0,
+        "subscription_occurrences": 7,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1016
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 6827600,
+        "netWorth": 9308621.1,
+        "monthlyIncome": 62934567,
+        "monthlyExpenses": 23197693.9,
+        "monthlySavings": 39726873.1,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 178,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1016
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1039,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "orderProbe": {
+      "sqlite": "3.9.2",
+      "pre5E4": {
+        "plan": [
+          "SCAN TABLE transactions AS t USING INDEX idx_transactions_civil_day"
+        ],
+        "declaredOrder": false,
+        "sameRows": true
+      },
+      "current": {
+        "plan": [
+          "SEARCH TABLE transactions AS t USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+        ],
+        "declaredOrder": false,
+        "sameRows": true
+      },
+      "forcedSort": {
+        "plan": [
+          "SEARCH TABLE transactions AS t USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+          "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      }
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--movimientos-2026.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-4mhPec\\smartfin-generation-34738ce5-5cfb-4204-b58c-700cfe95dae6.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-34738ce5-5cfb-4204-b58c-700cfe95dae6--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--smartfin-backup.db",
+          "tamaño distinto: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--cuentas.csv",
+          "tamaño distinto: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--movimientos-2026.csv",
+          "tamaño distinto: smartfin-82a99de8-6fb1-41e2-833e-239386b8af28--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "docs\\correccion-fase5e6\\evidencia\\api35-recoverability-1000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-1000",
+      "size": 1000,
+      "g1": "debd45c2-bdee-4dab-a78c-78ee284e5705",
+      "g2": "d402ddb6-8582-4fd4-8f69-dbc6a16aed6d",
+      "api": 35
+    },
+    "selected": "d402ddb6-8582-4fd4-8f69-dbc6a16aed6d",
+    "g1": {
+      "id": "debd45c2-bdee-4dab-a78c-78ee284e5705",
+      "realFormat": "exact",
+      "revision": 1076,
+      "components": 13,
+      "databaseBytes": 1015808,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1010
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 61700000,
+        "monthlyExpenses": 19481648,
+        "monthlySavings": 42208352,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 172,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1010
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "d402ddb6-8582-4fd4-8f69-dbc6a16aed6d",
+      "realFormat": "exact",
+      "revision": 1100,
+      "components": 13,
+      "databaseBytes": 1019904,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 0,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1016
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 6827600,
+        "netWorth": 9308621.1,
+        "monthlyIncome": 62934567,
+        "monthlyExpenses": 23197693.9,
+        "monthlySavings": 39726873.1,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 178,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1016
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1039,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "orderProbe": {
+      "sqlite": "3.44.5",
+      "pre5E4": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      },
+      "current": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      },
+      "forcedSort": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      }
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--movimientos-2026.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-5455ko\\smartfin-generation-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-d402ddb6-8582-4fd4-8f69-dbc6a16aed6d--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--smartfin-backup.db",
+          "tamaño distinto: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--cuentas.csv",
+          "tamaño distinto: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--movimientos-2026.csv",
+          "tamaño distinto: smartfin-debd45c2-bdee-4dab-a78c-78ee284e5705--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "docs\\recuperabilidad-fase5e5\\evidencia\\api24-recoverability-1000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-1000",
+      "size": 1000,
+      "g1": "77ea67c4-98d8-465c-86b8-fcf12b87b200",
+      "g2": "07fdfd7c-8ae1-42df-a588-b51b6285099b",
+      "api": 24
+    },
+    "selected": "07fdfd7c-8ae1-42df-a588-b51b6285099b",
+    "g1": {
+      "id": "77ea67c4-98d8-465c-86b8-fcf12b87b200",
+      "realFormat": "printf-g",
+      "revision": 1091,
+      "components": 13,
+      "databaseBytes": 1011712,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 6,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1010
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 61700000,
+        "monthlyExpenses": 19481648,
+        "monthlySavings": 42208352,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 172,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1010
+      },
+      "csvByteIdentical": 11,
+      "csvSameRowsOtherOrder": [
+        {
+          "file": "movimientos-2026.csv",
+          "orderMatchesIndex": true,
+          "first": {
+            "line": 2,
+            "published": "rep-37,2026-04-26,09:17,America/Bogota,dateTime,2026-04-26T14:17:00.000Z,Salario,6.2e+06,COP,income,inflow,posted,Banco principal,,Salario,,,,,,2026-04-26T15:41:11.000Z,2026-04-26T15:41:11.000Z",
+            "rebuilt": "rep-518,2026-04-26,06:21,America/Bogota,dateTime,2026-04-26T11:21:00.000Z,Salario,2.3e+06,COP,income,inflow,posted,Banco principal,,Salario,,,,,\"Nota sintética, con \"\"comillas\"\" y ñ\",2026-04-26T12:50:15.000Z,2026-04-26T12:50:15.000Z"
+          }
+        }
+      ],
+      "csvFidelity": {
+        "realCells": 1033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "07fdfd7c-8ae1-42df-a588-b51b6285099b",
+      "realFormat": "printf-g",
+      "revision": 1115,
+      "components": 13,
+      "databaseBytes": 1015808,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 6,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1016
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 6827600,
+        "netWorth": 9308621.1,
+        "monthlyIncome": 62934567,
+        "monthlyExpenses": 23197693.9,
+        "monthlySavings": 39726873.1,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 178,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1016
+      },
+      "csvByteIdentical": 11,
+      "csvSameRowsOtherOrder": [
+        {
+          "file": "movimientos-2026.csv",
+          "orderMatchesIndex": true,
+          "first": {
+            "line": 2,
+            "published": "rep-37,2026-04-26,09:17,America/Bogota,dateTime,2026-04-26T14:17:00.000Z,Salario,6.2e+06,COP,income,inflow,posted,Banco principal,,Salario,,,,,,2026-04-26T15:41:11.000Z,2026-04-26T15:41:11.000Z",
+            "rebuilt": "rep-518,2026-04-26,06:21,America/Bogota,dateTime,2026-04-26T11:21:00.000Z,Salario,2.3e+06,COP,income,inflow,posted,Banco principal,,Salario,,,,,\"Nota sintética, con \"\"comillas\"\" y ñ\",2026-04-26T12:50:15.000Z,2026-04-26T12:50:15.000Z"
+          }
+        }
+      ],
+      "csvFidelity": {
+        "realCells": 1039,
+        "lossyRealCells": 6,
+        "lossyExamples": [
+          {
+            "file": "cuentas.csv",
+            "column": "balance_amount",
+            "stored": 8296299.6,
+            "csv": "8.2963e+06"
+          },
+          {
+            "file": "cuentas.csv",
+            "column": "balance_amount",
+            "stored": 2214921.5,
+            "csv": "2.21492e+06"
+          },
+          {
+            "file": "movimientos-2026.csv",
+            "column": "monto",
+            "stored": 1234567,
+            "csv": "1.23457e+06"
+          },
+          {
+            "file": "movimientos-2026.csv",
+            "column": "monto",
+            "stored": 2345678.9,
+            "csv": "2.34568e+06"
+          },
+          {
+            "file": "movimientos-2026.csv",
+            "column": "monto",
+            "stored": 123456.5,
+            "csv": "123456"
+          },
+          {
+            "file": "movimientos-2026.csv",
+            "column": "monto",
+            "stored": 1234565,
+            "csv": "1.23456e+06"
+          }
+        ]
+      },
+      "csvTransactionRows": 1016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "orderProbe": {
+      "sqlite": "3.9.2",
+      "pre5E4": {
+        "plan": [
+          "SCAN TABLE transactions AS t USING INDEX idx_transactions_civil_day"
+        ],
+        "declaredOrder": false,
+        "sameRows": true
+      },
+      "current": {
+        "plan": [
+          "SEARCH TABLE transactions AS t USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)"
+        ],
+        "declaredOrder": false,
+        "sameRows": true
+      },
+      "forcedSort": {
+        "plan": [
+          "SEARCH TABLE transactions AS t USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+          "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      }
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--movimientos-2026.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-8YJMm4\\smartfin-generation-07fdfd7c-8ae1-42df-a588-b51b6285099b.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-07fdfd7c-8ae1-42df-a588-b51b6285099b--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--smartfin-backup.db",
+          "tamaño distinto: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--cuentas.csv",
+          "tamaño distinto: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--movimientos-2026.csv",
+          "tamaño distinto: smartfin-77ea67c4-98d8-465c-86b8-fcf12b87b200--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  },
+  "docs\\recuperabilidad-fase5e5\\evidencia\\api35-recoverability-1000": {
+    "summary": {
+      "campaign": "phase5e5-recoverability-1000",
+      "size": 1000,
+      "g1": "9c01257e-2162-4487-8756-280e42d904f8",
+      "g2": "e9d7eba5-35f4-4f8a-9f47-940faade820a",
+      "api": 35
+    },
+    "selected": "e9d7eba5-35f4-4f8a-9f47-940faade820a",
+    "g1": {
+      "id": "9c01257e-2162-4487-8756-280e42d904f8",
+      "realFormat": "printf-g",
+      "revision": 1090,
+      "components": 13,
+      "databaseBytes": 1015808,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 1,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 6,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1010
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 18618700,
+        "totalDebt": 1690000,
+        "netWorth": 16928700,
+        "monthlyIncome": 61700000,
+        "monthlyExpenses": 19481648,
+        "monthlySavings": 42208352,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 172,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1010
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1033,
+        "lossyRealCells": 0,
+        "lossyExamples": []
+      },
+      "csvTransactionRows": 1010,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "g2": {
+      "id": "e9d7eba5-35f4-4f8a-9f47-940faade820a",
+      "realFormat": "printf-g",
+      "revision": 1114,
+      "components": 13,
+      "databaseBytes": 1019904,
+      "integrity": [
+        {
+          "integrity_check": "ok"
+        }
+      ],
+      "foreignKeys": [],
+      "declaredForeignKeys": 49,
+      "polymorphic": [
+        {
+          "type": "subscription_occurrence",
+          "n": 6,
+          "orphans": 0
+        }
+      ],
+      "tables": 40,
+      "rows": {
+        "account_balance_history": 1,
+        "accounts": 10,
+        "ai_command_drafts": 1,
+        "amortization_schedule_items": 0,
+        "android_metadata": 1,
+        "app_settings": 0,
+        "backup_records": 0,
+        "budgets": 0,
+        "cash_flow_events": 6,
+        "categories": 9,
+        "credit_card_profiles": 0,
+        "credit_card_statements": 3,
+        "envelope_movements": 0,
+        "envelopes": 0,
+        "financial_data_revision": 1,
+        "financial_goals": 0,
+        "financial_health_scores": 0,
+        "installment_purchases": 1,
+        "investment_assets": 0,
+        "loans": 0,
+        "merchant_mappings": 0,
+        "raw_financial_messages": 0,
+        "receipt_attachments": 0,
+        "recurring_subscriptions": 2,
+        "schema_migrations": 4,
+        "shared_allocations": 1,
+        "shared_commands": 4,
+        "shared_contacts": 1,
+        "shared_expenses": 1,
+        "shared_loss_events": 1,
+        "shared_receipts": 1,
+        "shared_returns": 0,
+        "smart_alerts": 2,
+        "subcategories": 0,
+        "subscription_occurrences": 6,
+        "subscription_reminders": 6,
+        "tax_tags": 0,
+        "transaction_splits": 2,
+        "transaction_tax_tags": 0,
+        "transactions": 1016
+      },
+      "months": 7,
+      "platformTimezoneDifferences": [],
+      "current": {
+        "currency": "COP",
+        "availableBalance": 16136221.1,
+        "totalDebt": 6827600,
+        "netWorth": 9308621.1,
+        "monthlyIncome": 62934567,
+        "monthlyExpenses": 23197693.9,
+        "monthlySavings": 39726873.1,
+        "monthlyForgivenessLosses": 10000,
+        "monthlyLossReversals": 0,
+        "monthlyLossRecoveries": 0,
+        "monthlyRecoveryReversals": 0,
+        "monthlyNetLosses": 10000,
+        "recentTransactionCount": 178,
+        "modules": [
+          {
+            "id": "accounts",
+            "title": "Cuentas",
+            "description": "Efectivo, ahorro, tarjeta y préstamo en un solo lugar."
+          },
+          {
+            "id": "categories",
+            "title": "Categorías",
+            "description": "Clasificación local para ingresos, gastos y deudas."
+          },
+          {
+            "id": "transactions",
+            "title": "Transacciones",
+            "description": "Movimientos en COP registrados localmente."
+          },
+          {
+            "id": "debts",
+            "title": "Deuda básica",
+            "description": "Tarjeta y préstamo separados de los gastos comunes."
+          }
+        ]
+      },
+      "csv": {
+        "cuentas.csv": 10,
+        "categorias.csv": 9,
+        "subcategorias.csv": 0,
+        "tarjetas-credito.csv": 3,
+        "compras-cuotas.csv": 1,
+        "personas.csv": 1,
+        "gastos-compartidos.csv": 1,
+        "participaciones.csv": 2,
+        "reembolsos.csv": 1,
+        "abonos-compartidos.csv": 1,
+        "devoluciones-anticipos.csv": 0,
+        "movimientos-2026.csv": 1016
+      },
+      "csvByteIdentical": 12,
+      "csvSameRowsOtherOrder": [],
+      "csvFidelity": {
+        "realCells": 1039,
+        "lossyRealCells": 6,
+        "lossyExamples": [
+          {
+            "file": "cuentas.csv",
+            "column": "balance_amount",
+            "stored": 8296299.6,
+            "csv": "8.2963e+06"
+          },
+          {
+            "file": "cuentas.csv",
+            "column": "balance_amount",
+            "stored": 2214921.5,
+            "csv": "2.21492e+06"
+          },
+          {
+            "file": "movimientos-2026.csv",
+            "column": "monto",
+            "stored": 1234567,
+            "csv": "1.23457e+06"
+          },
+          {
+            "file": "movimientos-2026.csv",
+            "column": "monto",
+            "stored": 2345678.9,
+            "csv": "2.34568e+06"
+          },
+          {
+            "file": "movimientos-2026.csv",
+            "column": "monto",
+            "stored": 123456.5,
+            "csv": "123456"
+          },
+          {
+            "file": "movimientos-2026.csv",
+            "column": "monto",
+            "stored": 1234565,
+            "csv": "1.23456e+06"
+          }
+        ]
+      },
+      "csvTransactionRows": 1016,
+      "transactionsWithoutCanonicalDate": 0,
+      "sourceUnchanged": true
+    },
+    "orderProbe": {
+      "sqlite": "3.44.5",
+      "pre5E4": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      },
+      "current": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      },
+      "forcedSort": {
+        "plan": [
+          "unavailable: SQLiteException"
+        ],
+        "declaredOrder": true,
+        "sameRows": true
+      }
+    },
+    "schemaEqualsCurrentCodeOnEmptyDatabase": true,
+    "failureMatrix": [
+      {
+        "case": "generación incompleta (CSV anual ausente)",
+        "g2Rejected": [
+          "componente ausente: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--movimientos-2026.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite truncado",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "SQLite corrupto (byte alterado, mismo tamaño)",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (SQLite)",
+        "g2Rejected": [
+          "componente ausente: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "componente ausente (CSV fijo)",
+        "g2Rejected": [
+          "componente ausente: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "hash incorrecto en manifiesto",
+        "g2Rejected": [
+          "SHA-256 distinto: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "tamaño incorrecto en manifiesto",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto JSON inválido",
+        "g2Rejected": [
+          "manifiesto ilegible: SyntaxError: Expected double-quoted property name in JSON at position 19 (line 1 column 20)"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con versión no soportada",
+        "g2Rejected": [
+          "formatVersion distinto de 2"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto con revisión inconsistente",
+        "g2Rejected": [
+          "revisión inválida"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto ausente",
+        "g2Rejected": [
+          "manifiesto ilegible: Error: ENOENT: no such file or directory, open 'C:\\Users\\nesto\\AppData\\Local\\Temp\\smartfin-5e5-damage-Ltq7YM\\smartfin-generation-e9d7eba5-35f4-4f8a-9f47-940faade820a.json'"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (SQLite de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--smartfin-backup.db"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "archivos mezclados (CSV de G1 con nombre de G2)",
+        "g2Rejected": [
+          "tamaño distinto: smartfin-e9d7eba5-35f4-4f8a-9f47-940faade820a--cuentas.csv"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      },
+      {
+        "case": "manifiesto de G2 apuntando a componentes de G1",
+        "g2Rejected": [
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--smartfin-backup.db",
+          "tamaño distinto: smartfin-9c01257e-2162-4487-8756-280e42d904f8--smartfin-backup.db",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--cuentas.csv",
+          "tamaño distinto: smartfin-9c01257e-2162-4487-8756-280e42d904f8--cuentas.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--categorias.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--subcategorias.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--tarjetas-credito.csv",
+          "tamaño distinto: smartfin-9c01257e-2162-4487-8756-280e42d904f8--tarjetas-credito.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--compras-cuotas.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--personas.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--gastos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--participaciones.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--reembolsos.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--abonos-compartidos.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--devoluciones-anticipos.csv",
+          "nombre de componente inválido o repetido: smartfin-9c01257e-2162-4487-8756-280e42d904f8--movimientos-2026.csv",
+          "tamaño distinto: smartfin-9c01257e-2162-4487-8756-280e42d904f8--movimientos-2026.csv",
+          "files no coincide con components",
+          "csvFiles no coincide con components"
+        ],
+        "selected": "G1",
+        "g1Unchanged": true,
+        "g1Recoverable": true
+      }
+    ]
+  }
+}

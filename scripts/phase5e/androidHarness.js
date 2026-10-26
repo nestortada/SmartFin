@@ -1,5 +1,5 @@
 /* global performance */
-import { integratedFixture, buildIntegratedScenario, inspectIntegrated, check, DATE } from './scripts/phase5e/integration';
+import { integratedFixture, buildIntegratedScenario, inspectIntegrated, check, DATE, futureReminderCase, settleReminderDeliveries } from './scripts/phase5e/integration';
 import { openSmartFinDatabase } from './src/database/sqliteDatabase';
 import { captureLocalDatabaseSnapshot } from './src/modules/settings/services/localDatabaseSnapshot';
 import { createSubscriptionReminderService } from './src/modules/subscriptions/services/androidSubscriptionReminderService';
@@ -15,6 +15,8 @@ export async function runIntegrated(campaign, { record, control, backup, owned }
   await control.recoveryEnabled(false);
   await record('isolation', () => control.isolation());
   const service = () => createSubscriptionReminderService();
+  // Deletion cases need real reminders: deliveries are awaited by completion evidence (5E.6).
+  const delivering = { reminders: 'deliver', settle: async () => settleReminderDeliveries(await openSmartFinDatabase()) };
   const access = async () => integratedFixture(await openSmartFinDatabase(), service(), false);
   const snapshot = async () => inspectIntegrated(await openSmartFinDatabase());
   const wipe = async () => {
@@ -55,8 +57,10 @@ export async function runIntegrated(campaign, { record, control, backup, owned }
       return { recovered, after };
     });
     await record('real-new-subscription-same-ids-survives-old-cleanup-and-headless', async () => {
-      const f = await integratedFixture(await openSmartFinDatabase(), service());
-      const created = await f.subscriptions.createSubscription({ name: 'New epoch', amount: 1200, accountId: 'bank', recurrence: { periodicity: 'monthly' }, anchorDate: '2026-10-25', reminders: { enabled: true, offsets: [0], hour: 15, minute: 0 } });
+      // The alarm must still be scheduled when checked: fixed case clock, reminder a day ahead (5E.6).
+      const future = futureReminderCase(new Date());
+      const f = await integratedFixture(await openSmartFinDatabase(), service(), true, future.now);
+      const created = await f.subscriptions.createSubscription({ name: 'New epoch', amount: 1200, accountId: 'bank', recurrence: { periodicity: 'monthly' }, anchorDate: future.anchorDate, reminders: { enabled: true, offsets: [0], hour: 15, minute: 0 } });
       const [row] = await f.database.executeSql("SELECT setting_value FROM app_settings WHERE setting_key='__smartfin_financial_lifecycle_v1'");
       const epoch = parse(row.rows.item(0).setting_value).epoch;
       const reminders = await f.subscriptionRepository.getReminders();
@@ -80,7 +84,7 @@ export async function runIntegrated(campaign, { record, control, backup, owned }
     return status;
   });
   const f = await integratedFixture(await openSmartFinDatabase(), service());
-  await record('combined-real-financial-commands', async () => buildIntegratedScenario(f));
+  await record('combined-real-financial-commands', async () => buildIntegratedScenario(f, delivering));
   if (campaign === 'phase5e-performance') {
     for (const count of [1000, 10000, 100000]) {
       // Synthetic historical load. No UI list is used as a reconciliation input.
@@ -133,7 +137,7 @@ export async function runIntegrated(campaign, { record, control, backup, owned }
       });
       if (count !== 100000) {
         const next = await integratedFixture(await openSmartFinDatabase(), service());
-        await buildIntegratedScenario(next);
+        await buildIntegratedScenario(next, delivering);
       }
     }
     return;

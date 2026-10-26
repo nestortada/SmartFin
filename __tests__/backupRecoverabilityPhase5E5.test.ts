@@ -3,7 +3,7 @@ import { SQLITE_SCHEMA_STATEMENTS } from '../src/database/sqliteSchema';
 import { applyVersionedMigrations } from '../src/database/migrations';
 import { canonicalTables, recoverabilityFigures, type TableDigestSink } from '../scripts/phase5e5/recoverability';
 import { Buffer, crypto, firstDifference, fs, listGenerations, path, openIndependentCopy, parseCsv, printfG, rebuildCsv, selectLatestIntegral,
-  sha256File, verifyGeneration, type NodeHash } from '../scripts/phase5e5/verifyGeneration';
+  sha256File, verifyGeneration, type NodeHash, type RealFormat } from '../scripts/phase5e5/verifyGeneration';
 
 // Phase 5E.5: recoverability of generations published by the real v2 protocol on the
 // synthetic APK, verified in an isolated workstation environment. The committed
@@ -13,7 +13,11 @@ jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn(), open
 const os = require('node:os') as { tmpdir: () => string };
 const process = require('node:process') as { env: Record<string, string | undefined> };
 
+// Each generation keeps the CSV its exporter wrote: before 5E.6 REAL cells are "%g" and API 24
+// annual rows may follow the index order (5E5-001/002); from 5E.6 they must be exact and ordered.
+// SMARTFIN_5E6_EVIDENCE=<dir> adds pulled 5E.6 campaigns (10k/100k, both devices).
 const COMMITTED = 'docs/recuperabilidad-fase5e5/evidencia';
+const COMMITTED_5E6 = 'docs/correccion-fase5e6/evidencia';
 function campaigns(root: string): string[] {
   if (!fs.existsSync(root)) return [];
   const found: string[] = [];
@@ -24,8 +28,10 @@ function campaigns(root: string): string[] {
   walk(root);
   return found.sort();
 }
-const roots = [COMMITTED, ...(process.env.SMARTFIN_5E5_EVIDENCE ? [process.env.SMARTFIN_5E5_EVIDENCE] : [])];
-const dirs = [...new Set(roots.flatMap(campaigns))];
+const roots: [string | undefined, RealFormat][] = [[COMMITTED, 'printf-g'], [COMMITTED_5E6, 'exact'],
+  [process.env.SMARTFIN_5E5_EVIDENCE, 'printf-g'], [process.env.SMARTFIN_5E6_EVIDENCE, 'exact']];
+const formats = new Map(roots.flatMap(([root, format]) => (root ? campaigns(root) : []).map(dir => [dir, format] as const)));
+const dirs = [...formats.keys()].sort();
 const results: Record<string, unknown> = {};
 
 function nodeSink(): TableDigestSink {
@@ -76,6 +82,7 @@ function difference(a: unknown, b: unknown, at = '$'): string | undefined {
 }
 
 async function recover(dir: string, label: 'g1' | 'g2', generationId: string, work: string) {
+  const format = formats.get(dir)!;
   const generations = path.join(dir, 'generations');
   const original = JSON.parse(fs.readFileSync(path.join(dir, label, 'original.json'), 'utf8'));
   const check = verifyGeneration(generations, generationId);
@@ -102,7 +109,7 @@ async function recover(dir: string, label: 'g1' | 'g2', generationId: string, wo
     const figureDifferences = differences(canonical(JSON.parse(JSON.stringify(figures))), canonical(original.figures));
     expect(figureDifferences.filter(d => !PLATFORM_TIMEZONE_DIFFERENCE.test(d))).toEqual([]);
     // Every CSV component: rebuilt independently from the recovered SQLite, byte for byte.
-    const rebuilt = rebuildCsv(copy.all);
+    const rebuilt = rebuildCsv(copy.all, format);
     const csvComponents = manifest.components.filter(c => c.logicalName !== 'smartfin-backup.db');
     expect([...rebuilt.keys()].sort()).toEqual(csvComponents.map(c => c.logicalName).sort());
     const csv: Record<string, { rows: number; identical: boolean; sameRowsOtherOrder: boolean; orderMatchesIndex?: boolean; difference?: unknown;
@@ -129,6 +136,11 @@ async function recover(dir: string, label: 'g1' | 'g2', generationId: string, wo
     }
     // Content must always be exact; a different row order is reported, never hidden.
     expect(Object.entries(csv).filter(([, v]) => !v.identical && !v.sameRowsOtherOrder)).toEqual([]);
+    // 5E.6 exporter: byte for byte in declared order, and every REAL cell reads back as the stored double.
+    if (format === 'exact') {
+      expect(Object.entries(csv).filter(([, v]) => !v.identical).map(([k, v]) => ({ file: k, first: v.difference }))).toEqual([]);
+      expect(Object.values(csv).reduce((t, v) => t + v.lossyRealCells, 0)).toBe(0);
+    }
     const reordered = Object.entries(csv).filter(([, v]) => !v.identical).map(([k, v]) => ({ file: k, orderMatchesIndex: v.orderMatchesIndex, first: v.difference }));
     const dated = copy.all("SELECT id FROM transactions WHERE date GLOB '[0-9][0-9][0-9][0-9]-*'").map(r => String(r.id));
     const undated = copy.all("SELECT count(*) AS n FROM transactions WHERE NOT date GLOB '[0-9][0-9][0-9][0-9]-*'")[0]!.n;
@@ -136,7 +148,7 @@ async function recover(dir: string, label: 'g1' | 'g2', generationId: string, wo
     expect(dated.every(id => csvIds.has(id))).toBe(true);
     expect(copy.sourceUnchanged()).toBe(true);
     return {
-      id: generationId, revision: manifest.financialRevision, components: manifest.components.length, databaseBytes: manifest.components[0]!.bytes,
+      id: generationId, realFormat: format, revision: manifest.financialRevision, components: manifest.components.length, databaseBytes: manifest.components[0]!.bytes,
       integrity, foreignKeys, declaredForeignKeys, polymorphic, tables: tables.length, rows: Object.fromEntries(tables.map(t => [t.table, t.rows])),
       months: figures.months, platformTimezoneDifferences: figureDifferences, current: figures.current, csv: Object.fromEntries(Object.entries(csv).map(([k, v]) => [k, v.rows])),
       csvByteIdentical: Object.values(csv).filter(v => v.identical).length, csvSameRowsOtherOrder: reordered,
@@ -212,10 +224,12 @@ describeEvidence('5E.5 recoverability of real v2 generations', () => {
             [k, { plan: probe[k].plan, declaredOrder: JSON.stringify(probe[k].ids) === JSON.stringify(declared), sameRows: [...probe[k].ids].sort().join() === [...declared].sort().join() }])) };
         } finally { copy.close(); }
         const value = orderProbe as Record<string, { declaredOrder: boolean; sameRows: boolean }>;
-        // Every variant returns the same rows; the "+" variant (proposed 5E5-001 fix) keeps the declared order.
+        // Every variant returns the same rows; the "+" variant (5E5-001 fix since 5E.6) keeps the declared order.
+        // "current" is the query before 5E.6: it predicts the published order only for "%g" generations.
         for (const k of ['pre5E4', 'current', 'forcedSort']) expect(value[k]!.sameRows).toBe(true);
         expect(value.forcedSort!.declaredOrder).toBe(true);
-        expect(value.current!.declaredOrder).toBe(g2.csvSameRowsOtherOrder.length === 0);
+        if (formats.get(dir) === 'printf-g') expect(value.current!.declaredOrder).toBe(g2.csvSameRowsOtherOrder.length === 0);
+        else expect(g2.csvSameRowsOtherOrder).toEqual([]);
       }
       // 5E5-001 characterization: a reordered annual CSV follows exactly the index order.
       for (const g of [g1, g2]) expect(g.csvSameRowsOtherOrder.every(r => r.file.startsWith('movimientos-') && r.orderMatchesIndex)).toBe(true);

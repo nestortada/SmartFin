@@ -3,6 +3,9 @@ package com.smartfin
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import java.io.File
+import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -67,8 +70,30 @@ object SmartFinBackupCsv {
       }
       cursor.count
     }
+  // Cursor.getString() renders REAL cells with "%g" (six significant digits): read the
+  // double itself. INTEGER and TEXT stay verbatim; non-finite REAL keeps the cursor text.
   private fun cursorValue(cursor: Cursor, index: Int): String =
-      if (cursor.isNull(index)) "" else cursor.getString(index)
+      when (cursor.getType(index)) {
+        Cursor.FIELD_TYPE_NULL -> ""
+        Cursor.FIELD_TYPE_FLOAT -> exactReal(cursor.getDouble(index)) ?: cursor.getString(index)
+        else -> cursor.getString(index)
+      }
+
+  /**
+   * Shortest plain decimal (no exponent) that parses back to exactly [value]: the binary
+   * value rounded half-up to 1..17 significant digits, the first that round-trips.
+   * No monetary rounding is applied. Null for NaN/Infinity.
+   */
+  internal fun exactReal(value: Double): String? {
+    if (!value.isFinite()) return null
+    if (value == 0.0) return if (1.0 / value < 0) "-0" else "0"
+    val exact = BigDecimal(value)
+    for (digits in 1..17) {
+      val candidate = exact.round(MathContext(digits, RoundingMode.HALF_UP))
+      if (java.lang.Double.parseDouble(candidate.toString()) == value) return candidate.stripTrailingZeros().toPlainString()
+    }
+    error("REAL without a 17-digit round trip")
+  }
 
   private fun csvEscape(value: String): String =
       if (value.contains(',') || value.contains('"') || value.contains('\n') || value.contains('\r')) {
@@ -112,7 +137,9 @@ object SmartFinBackupCsv {
             CsvExport("devoluciones-anticipos.csv", "SELECT * FROM shared_returns ORDER BY date;"),
         )
 
-    private const val YEARLY_ORDER = "ORDER BY COALESCE(t.civil_date, substr(t.date,1,10)), t.local_time, t.created_at;"
+    // Unary "+" keeps the first term from matching idx_transactions_civil_day: SQLite 3.9.2
+    // otherwise treats that index (day, status, rowid) as satisfying this ORDER BY (5E5-001).
+    private const val YEARLY_ORDER = "ORDER BY +COALESCE(t.civil_date, substr(t.date,1,10)), t.local_time, t.created_at;"
 
     private const val YEARLY_SELECT =
         "SELECT t.id, COALESCE(t.civil_date, substr(t.date,1,10)) AS fecha, " +

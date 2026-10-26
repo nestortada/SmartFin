@@ -235,8 +235,18 @@ class Phase5B2Control(private val context: ReactApplicationContext) : ReactConte
       check(actual.first() == cursor.columnNames.toList()) { "CSV headers changed" }
       var index = 1
       while (cursor.moveToNext()) {
-        val expected = (0 until cursor.columnCount).map { if (cursor.isNull(it)) "" else cursor.getString(it) }
-        check(index < actual.size && actual[index++] == expected) { "CSV cells differ from snapshot" }
+        check(index < actual.size && actual[index].size == cursor.columnCount) { "CSV cells differ from snapshot" }
+        val row = actual[index++]
+        for (column in 0 until cursor.columnCount) {
+          val cell = row[column]
+          val value = if (cursor.getType(column) == android.database.Cursor.FIELD_TYPE_FLOAT) cursor.getDouble(column) else null
+          // Since 5E.6 a finite REAL is a plain decimal that reads back as the stored double;
+          // every other cell is the cursor text, as before.
+          val same = if (value != null && value.isFinite())
+            cell.matches(Regex("-?[0-9]+(\\.[0-9]+)?")) && java.lang.Double.doubleToRawLongBits(cell.toDouble()) == java.lang.Double.doubleToRawLongBits(value)
+          else cell == (if (cursor.isNull(column)) "" else cursor.getString(column))
+          check(same) { "CSV cells differ from snapshot" }
+        }
       }
       check(index == actual.size) { "CSV has extra rows" }
       return index - 1

@@ -63,7 +63,8 @@ async function original(control,label,keepFiles){
 const service=()=>createSubscriptionReminderService();
 async function scenario(owned,size){
   const f=await integratedFixture(await openSmartFinDatabase(),service());
-  await buildIntegratedScenario(f);
+  // Recoverability compares stable financial snapshots: no reminder deliveries (5E.6).
+  await buildIntegratedScenario(f,{reminders:'stable'});
   await owned(async db=>{for(const s of representativeSeedStatements(size))await db.executeSql(s);});
   return f;
 }

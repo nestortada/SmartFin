@@ -19,7 +19,8 @@ export async function runFixes(campaign,{owned,record,control}) {
   }
   const f=await integratedFixture(database,createSubscriptionReminderService());
   if(campaign==='phase5e1-recovery') {
-    await record('combined-financial-baseline',()=>buildIntegratedScenario(f));
+    // Financial baseline only: no reminder can be delivered while states are compared (5E.6).
+    await record('combined-financial-baseline',()=>buildIntegratedScenario(f,{reminders:'stable'}));
     const wipe=()=>deleteFinancialData(createSqliteFinancialDataRepository(database),financialDeletionLifecycle());
     await record('confirmed-delete-pending-before-contention',async()=>{
       await control.arm('cleanup.beforeCompleted',true);

@@ -1,0 +1,3758 @@
+{
+  "precisionValues": [
+    {
+      "label": "1.234.567 COP",
+      "bits": "4132d68700000000",
+      "exact": "1234567",
+      "previous": "1.23457e+06",
+      "previousLossless": false
+    },
+    {
+      "label": "123.456,50 COP",
+      "bits": "40fe240800000000",
+      "exact": "123456.5",
+      "previous": "123456",
+      "previousLossless": false
+    },
+    {
+      "label": "525.357.500 COP",
+      "bits": "41bf5051bc000000",
+      "exact": "525357500",
+      "previous": "5.25358e+08",
+      "previousLossless": false
+    },
+    {
+      "label": "8.296.299,60 COP (saldo 5E.5)",
+      "bits": "415fa5dae6666666",
+      "exact": "8296299.6",
+      "previous": "8.2963e+06",
+      "previousLossless": false
+    },
+    {
+      "label": "2.345.678,90 COP",
+      "bits": "4141e56773333333",
+      "exact": "2345678.9",
+      "previous": "2.34568e+06",
+      "previousLossless": false
+    },
+    {
+      "label": "1.234.565 COP (empate %g)",
+      "bits": "4132d68500000000",
+      "exact": "1234565",
+      "previous": "1.23456e+06",
+      "previousLossless": false
+    },
+    {
+      "label": "12.345,50 COP",
+      "bits": "40c81cc000000000",
+      "exact": "12345.5",
+      "previous": "12345.5",
+      "previousLossless": true
+    },
+    {
+      "label": "44.900 COP",
+      "bits": "40e5ec8000000000",
+      "exact": "44900",
+      "previous": "44900",
+      "previousLossless": true
+    },
+    {
+      "label": "0,01 COP",
+      "bits": "3f847ae147ae147b",
+      "exact": "0.01",
+      "previous": "0.01",
+      "previousLossless": true
+    },
+    {
+      "label": "0,40 COP",
+      "bits": "3fd999999999999a",
+      "exact": "0.4",
+      "previous": "0.4",
+      "previousLossless": true
+    },
+    {
+      "label": "0,1 + 0,2",
+      "bits": "3fd3333333333334",
+      "exact": "0.30000000000000004",
+      "previous": "0.3",
+      "previousLossless": false
+    },
+    {
+      "label": "cero",
+      "bits": "0000000000000000",
+      "exact": "0",
+      "previous": "0",
+      "previousLossless": true
+    },
+    {
+      "label": "negativo -44.900,25",
+      "bits": "c0e5ec8800000000",
+      "exact": "-44900.25",
+      "previous": "-44900.2",
+      "previousLossless": false
+    },
+    {
+      "label": "negativo -525.357.500",
+      "bits": "c1bf5051bc000000",
+      "exact": "-525357500",
+      "previous": "-5.25358e+08",
+      "previousLossless": false
+    },
+    {
+      "label": "negativo -0,01",
+      "bits": "bf847ae147ae147b",
+      "exact": "-0.01",
+      "previous": "-0.01",
+      "previousLossless": true
+    },
+    {
+      "label": "billón 1.000.000.000.000",
+      "bits": "426d1a94a2000000",
+      "exact": "1000000000000",
+      "previous": "1e+12",
+      "previousLossless": true
+    },
+    {
+      "label": "98.765.432.109.876,54",
+      "bits": "42d674e79fcecd23",
+      "exact": "98765432109876.55",
+      "previous": "9.87654e+13",
+      "previousLossless": false
+    },
+    {
+      "label": "MAX_SAFE_INTEGER",
+      "bits": "433fffffffffffff",
+      "exact": "9007199254740991",
+      "previous": "9.0072e+15",
+      "previousLossless": false
+    },
+    {
+      "label": "2^53 + 2",
+      "bits": "4340000000000001",
+      "exact": "9007199254740994",
+      "previous": "9.0072e+15",
+      "previousLossless": false
+    },
+    {
+      "label": "%g exponencial 1e-05",
+      "bits": "3ee4f8b588e368f1",
+      "exact": "0.00001",
+      "previous": "1e-05",
+      "previousLossless": true
+    },
+    {
+      "label": "1e-7",
+      "bits": "3e7ad7f29abcaf48",
+      "exact": "0.0000001",
+      "previous": "1e-07",
+      "previousLossless": true
+    },
+    {
+      "label": "1e21",
+      "bits": "444b1ae4d6e2ef50",
+      "exact": "1000000000000000000000",
+      "previous": "1e+21",
+      "previousLossless": true
+    },
+    {
+      "label": "1.2345678901234567e+25",
+      "bits": "45246c993044fd54",
+      "exact": "12345678901234566000000000",
+      "previous": "1.23457e+25",
+      "previousLossless": false
+    },
+    {
+      "label": "1e300",
+      "bits": "7e37e43c8800759c",
+      "exact": "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "previous": "1e+300",
+      "previousLossless": true
+    },
+    {
+      "label": "Number.MAX_VALUE",
+      "bits": "7fefffffffffffff",
+      "exact": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "previous": "1.79769e+308",
+      "previousLossless": false
+    },
+    {
+      "label": "menor normal",
+      "bits": "0010000000000000",
+      "exact": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014",
+      "previous": "2.22507e-308",
+      "previousLossless": false
+    },
+    {
+      "label": "menor subnormal",
+      "bits": "0000000000000001",
+      "exact": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005",
+      "previous": "4.94066e-324",
+      "previousLossless": true
+    },
+    {
+      "label": "siguiente a 1",
+      "bits": "3ff0000000000001",
+      "exact": "1.0000000000000002",
+      "previous": "1",
+      "previousLossless": false
+    },
+    {
+      "label": "anterior a 1.234.567",
+      "bits": "4132d686ffffffff",
+      "exact": "1234566.9999999998",
+      "previous": "1.23457e+06",
+      "previousLossless": false
+    },
+    {
+      "label": "siguiente a 123.456,5",
+      "bits": "40fe240800000001",
+      "exact": "123456.50000000001",
+      "previous": "123457",
+      "previousLossless": false
+    },
+    {
+      "label": "1/3 (17 cifras)",
+      "bits": "3fd5555555555555",
+      "exact": "0.3333333333333333",
+      "previous": "0.333333",
+      "previousLossless": false
+    },
+    {
+      "label": "-2/3",
+      "bits": "bfe5555555555555",
+      "exact": "-0.6666666666666666",
+      "previous": "-0.666667",
+      "previousLossless": false
+    },
+    {
+      "label": "2^53 + 1 (se guarda 2^53)",
+      "bits": "4340000000000000",
+      "exact": "9007199254740992",
+      "previous": "9.0072e+15",
+      "previousLossless": false
+    }
+  ],
+  "randomRoundTrip": {
+    "count": 199944,
+    "longer": 0
+  },
+  "nodeOrder": {
+    "sqlite": "3.53.0",
+    "previousOrder": {
+      "1902": [
+        "order-01",
+        "order-02",
+        "order-03",
+        "order-04",
+        "order-05",
+        "order-06",
+        "order-07",
+        "order-08",
+        "order-09",
+        "tie-1",
+        "tie-2",
+        "tie-3",
+        "order-11"
+      ],
+      "1903": [
+        "order-10"
+      ]
+    },
+    "fixedOrder": {
+      "1902": [
+        "order-01",
+        "order-02",
+        "order-03",
+        "order-04",
+        "order-05",
+        "order-06",
+        "order-07",
+        "order-08",
+        "order-09",
+        "tie-1",
+        "tie-2",
+        "tie-3",
+        "order-11"
+      ],
+      "1903": [
+        "order-10"
+      ]
+    }
+  },
+  "docs\\correccion-fase5e6\\evidencia\\api24-probe": {
+    "sqlite": "3.9.2",
+    "cells": 66,
+    "randomAgreement": 4998,
+    "previousLossy": 42,
+    "castNotRoundTrip": [
+      {
+        "id": "probe-t-010",
+        "castText": "0.3",
+        "csv": "0.30000000000000004"
+      },
+      {
+        "id": "probe-t-016",
+        "castText": "98765432109876.5",
+        "csv": "98765432109876.55"
+      },
+      {
+        "id": "probe-t-017",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740991"
+      },
+      {
+        "id": "probe-t-018",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740994"
+      },
+      {
+        "id": "probe-t-022",
+        "castText": "1.23456789012346e+25",
+        "csv": "12345678901234566000000000"
+      },
+      {
+        "id": "probe-t-024",
+        "castText": "1.79769313486232e+308",
+        "csv": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "id": "probe-t-025",
+        "castText": "2.2250738585072e-308",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014"
+      },
+      {
+        "id": "probe-t-027",
+        "castText": "1.0",
+        "csv": "1.0000000000000002"
+      },
+      {
+        "id": "probe-t-028",
+        "castText": "1234567.0",
+        "csv": "1234566.9999999998"
+      },
+      {
+        "id": "probe-t-029",
+        "castText": "123456.5",
+        "csv": "123456.50000000001"
+      },
+      {
+        "id": "probe-t-030",
+        "castText": "0.333333333333333",
+        "csv": "0.3333333333333333"
+      },
+      {
+        "id": "probe-t-031",
+        "castText": "-0.666666666666667",
+        "csv": "-0.6666666666666666"
+      },
+      {
+        "id": "probe-t-032",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740992"
+      },
+      {
+        "id": "probe-a-010",
+        "castText": "0.3",
+        "csv": "0.30000000000000004"
+      },
+      {
+        "id": "probe-a-016",
+        "castText": "98765432109876.5",
+        "csv": "98765432109876.55"
+      },
+      {
+        "id": "probe-a-017",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740991"
+      },
+      {
+        "id": "probe-a-018",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740994"
+      },
+      {
+        "id": "probe-a-022",
+        "castText": "1.23456789012346e+25",
+        "csv": "12345678901234566000000000"
+      },
+      {
+        "id": "probe-a-024",
+        "castText": "1.79769313486232e+308",
+        "csv": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "id": "probe-a-025",
+        "castText": "2.2250738585072e-308",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014"
+      },
+      {
+        "id": "probe-a-027",
+        "castText": "1.0",
+        "csv": "1.0000000000000002"
+      },
+      {
+        "id": "probe-a-028",
+        "castText": "1234567.0",
+        "csv": "1234566.9999999998"
+      },
+      {
+        "id": "probe-a-029",
+        "castText": "123456.5",
+        "csv": "123456.50000000001"
+      },
+      {
+        "id": "probe-a-030",
+        "castText": "0.333333333333333",
+        "csv": "0.3333333333333333"
+      },
+      {
+        "id": "probe-a-031",
+        "castText": "-0.666666666666667",
+        "csv": "-0.6666666666666666"
+      },
+      {
+        "id": "probe-a-032",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740992"
+      }
+    ],
+    "storedDifferentFromIntended": [],
+    "previousOrderDeclared": false,
+    "previousOrder1902": [
+      "order-01",
+      "order-08",
+      "order-05",
+      "order-07",
+      "order-04",
+      "order-02",
+      "order-09",
+      "order-06",
+      "order-03",
+      "tie-1",
+      "tie-2",
+      "tie-3",
+      "order-11"
+    ],
+    "fixedOrder1902": [
+      "order-01",
+      "order-02",
+      "order-03",
+      "order-04",
+      "order-05",
+      "order-06",
+      "order-07",
+      "order-08",
+      "order-09",
+      "tie-1",
+      "tie-2",
+      "tie-3",
+      "order-11"
+    ],
+    "exportedOrder1902": [
+      "order-01",
+      "order-02",
+      "order-03",
+      "order-04",
+      "order-05",
+      "order-06",
+      "order-07",
+      "order-08",
+      "order-09",
+      "tie-1",
+      "tie-2",
+      "tie-3",
+      "order-11"
+    ],
+    "ties": [
+      "tie-1",
+      "tie-2",
+      "tie-3"
+    ],
+    "rows": [
+      {
+        "table": "transactions",
+        "id": "probe-t-000",
+        "bits": "4132d68700000000",
+        "csv": "1234567",
+        "previousCsv": "1.23457e+06",
+        "previousLossless": false,
+        "castText": "1234567.0",
+        "castRoundTrip": true,
+        "doubleToString": "1234567.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-001",
+        "bits": "40fe240800000000",
+        "csv": "123456.5",
+        "previousCsv": "123456",
+        "previousLossless": false,
+        "castText": "123456.5",
+        "castRoundTrip": true,
+        "doubleToString": "123456.5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-002",
+        "bits": "41bf5051bc000000",
+        "csv": "525357500",
+        "previousCsv": "5.25358e+08",
+        "previousLossless": false,
+        "castText": "525357500.0",
+        "castRoundTrip": true,
+        "doubleToString": "5.253575E8",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-003",
+        "bits": "415fa5dae6666666",
+        "csv": "8296299.6",
+        "previousCsv": "8.2963e+06",
+        "previousLossless": false,
+        "castText": "8296299.6",
+        "castRoundTrip": true,
+        "doubleToString": "8296299.6",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-004",
+        "bits": "4141e56773333333",
+        "csv": "2345678.9",
+        "previousCsv": "2.34568e+06",
+        "previousLossless": false,
+        "castText": "2345678.9",
+        "castRoundTrip": true,
+        "doubleToString": "2345678.9",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-005",
+        "bits": "4132d68500000000",
+        "csv": "1234565",
+        "previousCsv": "1.23456e+06",
+        "previousLossless": false,
+        "castText": "1234565.0",
+        "castRoundTrip": true,
+        "doubleToString": "1234565.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-006",
+        "bits": "40c81cc000000000",
+        "csv": "12345.5",
+        "previousCsv": "12345.5",
+        "previousLossless": true,
+        "castText": "12345.5",
+        "castRoundTrip": true,
+        "doubleToString": "12345.5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-007",
+        "bits": "40e5ec8000000000",
+        "csv": "44900",
+        "previousCsv": "44900",
+        "previousLossless": true,
+        "castText": "44900.0",
+        "castRoundTrip": true,
+        "doubleToString": "44900.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-008",
+        "bits": "3f847ae147ae147b",
+        "csv": "0.01",
+        "previousCsv": "0.01",
+        "previousLossless": true,
+        "castText": "0.01",
+        "castRoundTrip": true,
+        "doubleToString": "0.01",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-009",
+        "bits": "3fd999999999999a",
+        "csv": "0.4",
+        "previousCsv": "0.4",
+        "previousLossless": true,
+        "castText": "0.4",
+        "castRoundTrip": true,
+        "doubleToString": "0.4",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-010",
+        "bits": "3fd3333333333334",
+        "csv": "0.30000000000000004",
+        "previousCsv": "0.3",
+        "previousLossless": false,
+        "castText": "0.3",
+        "castRoundTrip": false,
+        "doubleToString": "0.30000000000000004",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-011",
+        "bits": "0000000000000000",
+        "csv": "0",
+        "previousCsv": "0",
+        "previousLossless": true,
+        "castText": "0.0",
+        "castRoundTrip": true,
+        "doubleToString": "0.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-012",
+        "bits": "c0e5ec8800000000",
+        "csv": "-44900.25",
+        "previousCsv": "-44900.2",
+        "previousLossless": false,
+        "castText": "-44900.25",
+        "castRoundTrip": true,
+        "doubleToString": "-44900.25",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-013",
+        "bits": "c1bf5051bc000000",
+        "csv": "-525357500",
+        "previousCsv": "-5.25358e+08",
+        "previousLossless": false,
+        "castText": "-525357500.0",
+        "castRoundTrip": true,
+        "doubleToString": "-5.253575E8",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-014",
+        "bits": "bf847ae147ae147b",
+        "csv": "-0.01",
+        "previousCsv": "-0.01",
+        "previousLossless": true,
+        "castText": "-0.01",
+        "castRoundTrip": true,
+        "doubleToString": "-0.01",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-015",
+        "bits": "426d1a94a2000000",
+        "csv": "1000000000000",
+        "previousCsv": "1e+12",
+        "previousLossless": true,
+        "castText": "1000000000000.0",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E12",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-016",
+        "bits": "42d674e79fcecd23",
+        "csv": "98765432109876.55",
+        "previousCsv": "9.87654e+13",
+        "previousLossless": false,
+        "castText": "98765432109876.5",
+        "castRoundTrip": false,
+        "doubleToString": "9.876543210987655E13",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-017",
+        "bits": "433fffffffffffff",
+        "csv": "9007199254740991",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740991E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-018",
+        "bits": "4340000000000001",
+        "csv": "9007199254740994",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740994E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-019",
+        "bits": "3ee4f8b588e368f1",
+        "csv": "0.00001",
+        "previousCsv": "1e-05",
+        "previousLossless": true,
+        "castText": "1.0e-05",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E-5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-020",
+        "bits": "3e7ad7f29abcaf48",
+        "csv": "0.0000001",
+        "previousCsv": "1e-07",
+        "previousLossless": true,
+        "castText": "1.0e-07",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E-7",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-021",
+        "bits": "444b1ae4d6e2ef50",
+        "csv": "1000000000000000000000",
+        "previousCsv": "1e+21",
+        "previousLossless": true,
+        "castText": "1.0e+21",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E21",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-022",
+        "bits": "45246c993044fd54",
+        "csv": "12345678901234566000000000",
+        "previousCsv": "1.23457e+25",
+        "previousLossless": false,
+        "castText": "1.23456789012346e+25",
+        "castRoundTrip": false,
+        "doubleToString": "1.2345678901234566E25",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-023",
+        "bits": "7e37e43c8800759c",
+        "csv": "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "previousCsv": "1e+300",
+        "previousLossless": true,
+        "castText": "1.0e+300",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E300",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-024",
+        "bits": "7fefffffffffffff",
+        "csv": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "previousCsv": "1.79769e+308",
+        "previousLossless": false,
+        "castText": "1.79769313486232e+308",
+        "castRoundTrip": false,
+        "doubleToString": "1.7976931348623157E308",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-025",
+        "bits": "0010000000000000",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014",
+        "previousCsv": "2.22507e-308",
+        "previousLossless": false,
+        "castText": "2.2250738585072e-308",
+        "castRoundTrip": false,
+        "doubleToString": "2.2250738585072014E-308",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-026",
+        "bits": "0000000000000001",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005",
+        "previousCsv": "4.94066e-324",
+        "previousLossless": true,
+        "castText": "4.94065645841247e-324",
+        "castRoundTrip": true,
+        "doubleToString": "4.9E-324",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-027",
+        "bits": "3ff0000000000001",
+        "csv": "1.0000000000000002",
+        "previousCsv": "1",
+        "previousLossless": false,
+        "castText": "1.0",
+        "castRoundTrip": false,
+        "doubleToString": "1.0000000000000002",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-028",
+        "bits": "4132d686ffffffff",
+        "csv": "1234566.9999999998",
+        "previousCsv": "1.23457e+06",
+        "previousLossless": false,
+        "castText": "1234567.0",
+        "castRoundTrip": false,
+        "doubleToString": "1234566.9999999998",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-029",
+        "bits": "40fe240800000001",
+        "csv": "123456.50000000001",
+        "previousCsv": "123457",
+        "previousLossless": false,
+        "castText": "123456.5",
+        "castRoundTrip": false,
+        "doubleToString": "123456.50000000001",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-030",
+        "bits": "3fd5555555555555",
+        "csv": "0.3333333333333333",
+        "previousCsv": "0.333333",
+        "previousLossless": false,
+        "castText": "0.333333333333333",
+        "castRoundTrip": false,
+        "doubleToString": "0.3333333333333333",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-031",
+        "bits": "bfe5555555555555",
+        "csv": "-0.6666666666666666",
+        "previousCsv": "-0.666667",
+        "previousLossless": false,
+        "castText": "-0.666666666666667",
+        "castRoundTrip": false,
+        "doubleToString": "-0.6666666666666666",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-032",
+        "bits": "4340000000000000",
+        "csv": "9007199254740992",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740992E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-000",
+        "bits": "4132d68700000000",
+        "csv": "1234567",
+        "previousCsv": "1.23457e+06",
+        "previousLossless": false,
+        "castText": "1234567.0",
+        "castRoundTrip": true,
+        "doubleToString": "1234567.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-001",
+        "bits": "40fe240800000000",
+        "csv": "123456.5",
+        "previousCsv": "123456",
+        "previousLossless": false,
+        "castText": "123456.5",
+        "castRoundTrip": true,
+        "doubleToString": "123456.5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-002",
+        "bits": "41bf5051bc000000",
+        "csv": "525357500",
+        "previousCsv": "5.25358e+08",
+        "previousLossless": false,
+        "castText": "525357500.0",
+        "castRoundTrip": true,
+        "doubleToString": "5.253575E8",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-003",
+        "bits": "415fa5dae6666666",
+        "csv": "8296299.6",
+        "previousCsv": "8.2963e+06",
+        "previousLossless": false,
+        "castText": "8296299.6",
+        "castRoundTrip": true,
+        "doubleToString": "8296299.6",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-004",
+        "bits": "4141e56773333333",
+        "csv": "2345678.9",
+        "previousCsv": "2.34568e+06",
+        "previousLossless": false,
+        "castText": "2345678.9",
+        "castRoundTrip": true,
+        "doubleToString": "2345678.9",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-005",
+        "bits": "4132d68500000000",
+        "csv": "1234565",
+        "previousCsv": "1.23456e+06",
+        "previousLossless": false,
+        "castText": "1234565.0",
+        "castRoundTrip": true,
+        "doubleToString": "1234565.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-006",
+        "bits": "40c81cc000000000",
+        "csv": "12345.5",
+        "previousCsv": "12345.5",
+        "previousLossless": true,
+        "castText": "12345.5",
+        "castRoundTrip": true,
+        "doubleToString": "12345.5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-007",
+        "bits": "40e5ec8000000000",
+        "csv": "44900",
+        "previousCsv": "44900",
+        "previousLossless": true,
+        "castText": "44900.0",
+        "castRoundTrip": true,
+        "doubleToString": "44900.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-008",
+        "bits": "3f847ae147ae147b",
+        "csv": "0.01",
+        "previousCsv": "0.01",
+        "previousLossless": true,
+        "castText": "0.01",
+        "castRoundTrip": true,
+        "doubleToString": "0.01",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-009",
+        "bits": "3fd999999999999a",
+        "csv": "0.4",
+        "previousCsv": "0.4",
+        "previousLossless": true,
+        "castText": "0.4",
+        "castRoundTrip": true,
+        "doubleToString": "0.4",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-010",
+        "bits": "3fd3333333333334",
+        "csv": "0.30000000000000004",
+        "previousCsv": "0.3",
+        "previousLossless": false,
+        "castText": "0.3",
+        "castRoundTrip": false,
+        "doubleToString": "0.30000000000000004",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-011",
+        "bits": "0000000000000000",
+        "csv": "0",
+        "previousCsv": "0",
+        "previousLossless": true,
+        "castText": "0.0",
+        "castRoundTrip": true,
+        "doubleToString": "0.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-012",
+        "bits": "c0e5ec8800000000",
+        "csv": "-44900.25",
+        "previousCsv": "-44900.2",
+        "previousLossless": false,
+        "castText": "-44900.25",
+        "castRoundTrip": true,
+        "doubleToString": "-44900.25",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-013",
+        "bits": "c1bf5051bc000000",
+        "csv": "-525357500",
+        "previousCsv": "-5.25358e+08",
+        "previousLossless": false,
+        "castText": "-525357500.0",
+        "castRoundTrip": true,
+        "doubleToString": "-5.253575E8",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-014",
+        "bits": "bf847ae147ae147b",
+        "csv": "-0.01",
+        "previousCsv": "-0.01",
+        "previousLossless": true,
+        "castText": "-0.01",
+        "castRoundTrip": true,
+        "doubleToString": "-0.01",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-015",
+        "bits": "426d1a94a2000000",
+        "csv": "1000000000000",
+        "previousCsv": "1e+12",
+        "previousLossless": true,
+        "castText": "1000000000000.0",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E12",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-016",
+        "bits": "42d674e79fcecd23",
+        "csv": "98765432109876.55",
+        "previousCsv": "9.87654e+13",
+        "previousLossless": false,
+        "castText": "98765432109876.5",
+        "castRoundTrip": false,
+        "doubleToString": "9.876543210987655E13",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-017",
+        "bits": "433fffffffffffff",
+        "csv": "9007199254740991",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740991E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-018",
+        "bits": "4340000000000001",
+        "csv": "9007199254740994",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740994E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-019",
+        "bits": "3ee4f8b588e368f1",
+        "csv": "0.00001",
+        "previousCsv": "1e-05",
+        "previousLossless": true,
+        "castText": "1.0e-05",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E-5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-020",
+        "bits": "3e7ad7f29abcaf48",
+        "csv": "0.0000001",
+        "previousCsv": "1e-07",
+        "previousLossless": true,
+        "castText": "1.0e-07",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E-7",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-021",
+        "bits": "444b1ae4d6e2ef50",
+        "csv": "1000000000000000000000",
+        "previousCsv": "1e+21",
+        "previousLossless": true,
+        "castText": "1.0e+21",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E21",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-022",
+        "bits": "45246c993044fd54",
+        "csv": "12345678901234566000000000",
+        "previousCsv": "1.23457e+25",
+        "previousLossless": false,
+        "castText": "1.23456789012346e+25",
+        "castRoundTrip": false,
+        "doubleToString": "1.2345678901234566E25",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-023",
+        "bits": "7e37e43c8800759c",
+        "csv": "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "previousCsv": "1e+300",
+        "previousLossless": true,
+        "castText": "1.0e+300",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E300",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-024",
+        "bits": "7fefffffffffffff",
+        "csv": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "previousCsv": "1.79769e+308",
+        "previousLossless": false,
+        "castText": "1.79769313486232e+308",
+        "castRoundTrip": false,
+        "doubleToString": "1.7976931348623157E308",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-025",
+        "bits": "0010000000000000",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014",
+        "previousCsv": "2.22507e-308",
+        "previousLossless": false,
+        "castText": "2.2250738585072e-308",
+        "castRoundTrip": false,
+        "doubleToString": "2.2250738585072014E-308",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-026",
+        "bits": "0000000000000001",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005",
+        "previousCsv": "4.94066e-324",
+        "previousLossless": true,
+        "castText": "4.94065645841247e-324",
+        "castRoundTrip": true,
+        "doubleToString": "4.9E-324",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-027",
+        "bits": "3ff0000000000001",
+        "csv": "1.0000000000000002",
+        "previousCsv": "1",
+        "previousLossless": false,
+        "castText": "1.0",
+        "castRoundTrip": false,
+        "doubleToString": "1.0000000000000002",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-028",
+        "bits": "4132d686ffffffff",
+        "csv": "1234566.9999999998",
+        "previousCsv": "1.23457e+06",
+        "previousLossless": false,
+        "castText": "1234567.0",
+        "castRoundTrip": false,
+        "doubleToString": "1234566.9999999998",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-029",
+        "bits": "40fe240800000001",
+        "csv": "123456.50000000001",
+        "previousCsv": "123457",
+        "previousLossless": false,
+        "castText": "123456.5",
+        "castRoundTrip": false,
+        "doubleToString": "123456.50000000001",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-030",
+        "bits": "3fd5555555555555",
+        "csv": "0.3333333333333333",
+        "previousCsv": "0.333333",
+        "previousLossless": false,
+        "castText": "0.333333333333333",
+        "castRoundTrip": false,
+        "doubleToString": "0.3333333333333333",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-031",
+        "bits": "bfe5555555555555",
+        "csv": "-0.6666666666666666",
+        "previousCsv": "-0.666667",
+        "previousLossless": false,
+        "castText": "-0.666666666666667",
+        "castRoundTrip": false,
+        "doubleToString": "-0.6666666666666666",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-032",
+        "bits": "4340000000000000",
+        "csv": "9007199254740992",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740992E15",
+        "doubleToStringRoundTrip": true
+      }
+    ]
+  },
+  "docs\\correccion-fase5e6\\evidencia\\api35-probe": {
+    "sqlite": "3.44.5",
+    "cells": 66,
+    "randomAgreement": 4998,
+    "previousLossy": 42,
+    "castNotRoundTrip": [
+      {
+        "id": "probe-t-010",
+        "castText": "0.3",
+        "csv": "0.30000000000000004"
+      },
+      {
+        "id": "probe-t-016",
+        "castText": "98765432109876.5",
+        "csv": "98765432109876.55"
+      },
+      {
+        "id": "probe-t-017",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740991"
+      },
+      {
+        "id": "probe-t-018",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740994"
+      },
+      {
+        "id": "probe-t-022",
+        "castText": "1.23456789012346e+25",
+        "csv": "12345678901234566000000000"
+      },
+      {
+        "id": "probe-t-024",
+        "castText": "1.79769313486232e+308",
+        "csv": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "id": "probe-t-025",
+        "castText": "2.2250738585072e-308",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014"
+      },
+      {
+        "id": "probe-t-027",
+        "castText": "1.0",
+        "csv": "1.0000000000000002"
+      },
+      {
+        "id": "probe-t-028",
+        "castText": "1234567.0",
+        "csv": "1234566.9999999998"
+      },
+      {
+        "id": "probe-t-029",
+        "castText": "123456.5",
+        "csv": "123456.50000000001"
+      },
+      {
+        "id": "probe-t-030",
+        "castText": "0.333333333333333",
+        "csv": "0.3333333333333333"
+      },
+      {
+        "id": "probe-t-031",
+        "castText": "-0.666666666666667",
+        "csv": "-0.6666666666666666"
+      },
+      {
+        "id": "probe-t-032",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740992"
+      },
+      {
+        "id": "probe-a-010",
+        "castText": "0.3",
+        "csv": "0.30000000000000004"
+      },
+      {
+        "id": "probe-a-016",
+        "castText": "98765432109876.5",
+        "csv": "98765432109876.55"
+      },
+      {
+        "id": "probe-a-017",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740991"
+      },
+      {
+        "id": "probe-a-018",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740994"
+      },
+      {
+        "id": "probe-a-022",
+        "castText": "1.23456789012346e+25",
+        "csv": "12345678901234566000000000"
+      },
+      {
+        "id": "probe-a-024",
+        "castText": "1.79769313486232e+308",
+        "csv": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      {
+        "id": "probe-a-025",
+        "castText": "2.2250738585072e-308",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014"
+      },
+      {
+        "id": "probe-a-027",
+        "castText": "1.0",
+        "csv": "1.0000000000000002"
+      },
+      {
+        "id": "probe-a-028",
+        "castText": "1234567.0",
+        "csv": "1234566.9999999998"
+      },
+      {
+        "id": "probe-a-029",
+        "castText": "123456.5",
+        "csv": "123456.50000000001"
+      },
+      {
+        "id": "probe-a-030",
+        "castText": "0.333333333333333",
+        "csv": "0.3333333333333333"
+      },
+      {
+        "id": "probe-a-031",
+        "castText": "-0.666666666666667",
+        "csv": "-0.6666666666666666"
+      },
+      {
+        "id": "probe-a-032",
+        "castText": "9.00719925474099e+15",
+        "csv": "9007199254740992"
+      }
+    ],
+    "storedDifferentFromIntended": [],
+    "previousOrderDeclared": true,
+    "previousOrder1902": [
+      "order-01",
+      "order-02",
+      "order-03",
+      "order-04",
+      "order-05",
+      "order-06",
+      "order-07",
+      "order-08",
+      "order-09",
+      "tie-1",
+      "tie-2",
+      "tie-3",
+      "order-11"
+    ],
+    "fixedOrder1902": [
+      "order-01",
+      "order-02",
+      "order-03",
+      "order-04",
+      "order-05",
+      "order-06",
+      "order-07",
+      "order-08",
+      "order-09",
+      "tie-1",
+      "tie-2",
+      "tie-3",
+      "order-11"
+    ],
+    "exportedOrder1902": [
+      "order-01",
+      "order-02",
+      "order-03",
+      "order-04",
+      "order-05",
+      "order-06",
+      "order-07",
+      "order-08",
+      "order-09",
+      "tie-1",
+      "tie-2",
+      "tie-3",
+      "order-11"
+    ],
+    "ties": [
+      "tie-1",
+      "tie-2",
+      "tie-3"
+    ],
+    "rows": [
+      {
+        "table": "transactions",
+        "id": "probe-t-000",
+        "bits": "4132d68700000000",
+        "csv": "1234567",
+        "previousCsv": "1.23457e+06",
+        "previousLossless": false,
+        "castText": "1234567.0",
+        "castRoundTrip": true,
+        "doubleToString": "1234567.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-001",
+        "bits": "40fe240800000000",
+        "csv": "123456.5",
+        "previousCsv": "123456",
+        "previousLossless": false,
+        "castText": "123456.5",
+        "castRoundTrip": true,
+        "doubleToString": "123456.5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-002",
+        "bits": "41bf5051bc000000",
+        "csv": "525357500",
+        "previousCsv": "5.25358e+08",
+        "previousLossless": false,
+        "castText": "525357500.0",
+        "castRoundTrip": true,
+        "doubleToString": "5.253575E8",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-003",
+        "bits": "415fa5dae6666666",
+        "csv": "8296299.6",
+        "previousCsv": "8.2963e+06",
+        "previousLossless": false,
+        "castText": "8296299.6",
+        "castRoundTrip": true,
+        "doubleToString": "8296299.6",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-004",
+        "bits": "4141e56773333333",
+        "csv": "2345678.9",
+        "previousCsv": "2.34568e+06",
+        "previousLossless": false,
+        "castText": "2345678.9",
+        "castRoundTrip": true,
+        "doubleToString": "2345678.9",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-005",
+        "bits": "4132d68500000000",
+        "csv": "1234565",
+        "previousCsv": "1.23456e+06",
+        "previousLossless": false,
+        "castText": "1234565.0",
+        "castRoundTrip": true,
+        "doubleToString": "1234565.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-006",
+        "bits": "40c81cc000000000",
+        "csv": "12345.5",
+        "previousCsv": "12345.5",
+        "previousLossless": true,
+        "castText": "12345.5",
+        "castRoundTrip": true,
+        "doubleToString": "12345.5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-007",
+        "bits": "40e5ec8000000000",
+        "csv": "44900",
+        "previousCsv": "44900",
+        "previousLossless": true,
+        "castText": "44900.0",
+        "castRoundTrip": true,
+        "doubleToString": "44900.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-008",
+        "bits": "3f847ae147ae147b",
+        "csv": "0.01",
+        "previousCsv": "0.01",
+        "previousLossless": true,
+        "castText": "0.01",
+        "castRoundTrip": true,
+        "doubleToString": "0.01",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-009",
+        "bits": "3fd999999999999a",
+        "csv": "0.4",
+        "previousCsv": "0.4",
+        "previousLossless": true,
+        "castText": "0.4",
+        "castRoundTrip": true,
+        "doubleToString": "0.4",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-010",
+        "bits": "3fd3333333333334",
+        "csv": "0.30000000000000004",
+        "previousCsv": "0.3",
+        "previousLossless": false,
+        "castText": "0.3",
+        "castRoundTrip": false,
+        "doubleToString": "0.30000000000000004",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-011",
+        "bits": "0000000000000000",
+        "csv": "0",
+        "previousCsv": "0",
+        "previousLossless": true,
+        "castText": "0.0",
+        "castRoundTrip": true,
+        "doubleToString": "0.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-012",
+        "bits": "c0e5ec8800000000",
+        "csv": "-44900.25",
+        "previousCsv": "-44900.2",
+        "previousLossless": false,
+        "castText": "-44900.25",
+        "castRoundTrip": true,
+        "doubleToString": "-44900.25",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-013",
+        "bits": "c1bf5051bc000000",
+        "csv": "-525357500",
+        "previousCsv": "-5.25358e+08",
+        "previousLossless": false,
+        "castText": "-525357500.0",
+        "castRoundTrip": true,
+        "doubleToString": "-5.253575E8",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-014",
+        "bits": "bf847ae147ae147b",
+        "csv": "-0.01",
+        "previousCsv": "-0.01",
+        "previousLossless": true,
+        "castText": "-0.01",
+        "castRoundTrip": true,
+        "doubleToString": "-0.01",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-015",
+        "bits": "426d1a94a2000000",
+        "csv": "1000000000000",
+        "previousCsv": "1e+12",
+        "previousLossless": true,
+        "castText": "1000000000000.0",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E12",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-016",
+        "bits": "42d674e79fcecd23",
+        "csv": "98765432109876.55",
+        "previousCsv": "9.87654e+13",
+        "previousLossless": false,
+        "castText": "98765432109876.5",
+        "castRoundTrip": false,
+        "doubleToString": "9.876543210987655E13",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-017",
+        "bits": "433fffffffffffff",
+        "csv": "9007199254740991",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740991E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-018",
+        "bits": "4340000000000001",
+        "csv": "9007199254740994",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740994E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-019",
+        "bits": "3ee4f8b588e368f1",
+        "csv": "0.00001",
+        "previousCsv": "1e-05",
+        "previousLossless": true,
+        "castText": "1.0e-05",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E-5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-020",
+        "bits": "3e7ad7f29abcaf48",
+        "csv": "0.0000001",
+        "previousCsv": "1e-07",
+        "previousLossless": true,
+        "castText": "1.0e-07",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E-7",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-021",
+        "bits": "444b1ae4d6e2ef50",
+        "csv": "1000000000000000000000",
+        "previousCsv": "1e+21",
+        "previousLossless": true,
+        "castText": "1.0e+21",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E21",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-022",
+        "bits": "45246c993044fd54",
+        "csv": "12345678901234566000000000",
+        "previousCsv": "1.23457e+25",
+        "previousLossless": false,
+        "castText": "1.23456789012346e+25",
+        "castRoundTrip": false,
+        "doubleToString": "1.2345678901234566E25",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-023",
+        "bits": "7e37e43c8800759c",
+        "csv": "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "previousCsv": "1e+300",
+        "previousLossless": true,
+        "castText": "1.0e+300",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E300",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-024",
+        "bits": "7fefffffffffffff",
+        "csv": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "previousCsv": "1.79769e+308",
+        "previousLossless": false,
+        "castText": "1.79769313486232e+308",
+        "castRoundTrip": false,
+        "doubleToString": "1.7976931348623157E308",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-025",
+        "bits": "0010000000000000",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014",
+        "previousCsv": "2.22507e-308",
+        "previousLossless": false,
+        "castText": "2.2250738585072e-308",
+        "castRoundTrip": false,
+        "doubleToString": "2.2250738585072014E-308",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-026",
+        "bits": "0000000000000001",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005",
+        "previousCsv": "4.94066e-324",
+        "previousLossless": true,
+        "castText": "4.94065645841247e-324",
+        "castRoundTrip": true,
+        "doubleToString": "4.9E-324",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-027",
+        "bits": "3ff0000000000001",
+        "csv": "1.0000000000000002",
+        "previousCsv": "1",
+        "previousLossless": false,
+        "castText": "1.0",
+        "castRoundTrip": false,
+        "doubleToString": "1.0000000000000002",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-028",
+        "bits": "4132d686ffffffff",
+        "csv": "1234566.9999999998",
+        "previousCsv": "1.23457e+06",
+        "previousLossless": false,
+        "castText": "1234567.0",
+        "castRoundTrip": false,
+        "doubleToString": "1234566.9999999998",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-029",
+        "bits": "40fe240800000001",
+        "csv": "123456.50000000001",
+        "previousCsv": "123457",
+        "previousLossless": false,
+        "castText": "123456.5",
+        "castRoundTrip": false,
+        "doubleToString": "123456.50000000001",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-030",
+        "bits": "3fd5555555555555",
+        "csv": "0.3333333333333333",
+        "previousCsv": "0.333333",
+        "previousLossless": false,
+        "castText": "0.333333333333333",
+        "castRoundTrip": false,
+        "doubleToString": "0.3333333333333333",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-031",
+        "bits": "bfe5555555555555",
+        "csv": "-0.6666666666666666",
+        "previousCsv": "-0.666667",
+        "previousLossless": false,
+        "castText": "-0.666666666666667",
+        "castRoundTrip": false,
+        "doubleToString": "-0.6666666666666666",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "transactions",
+        "id": "probe-t-032",
+        "bits": "4340000000000000",
+        "csv": "9007199254740992",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740992E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-000",
+        "bits": "4132d68700000000",
+        "csv": "1234567",
+        "previousCsv": "1.23457e+06",
+        "previousLossless": false,
+        "castText": "1234567.0",
+        "castRoundTrip": true,
+        "doubleToString": "1234567.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-001",
+        "bits": "40fe240800000000",
+        "csv": "123456.5",
+        "previousCsv": "123456",
+        "previousLossless": false,
+        "castText": "123456.5",
+        "castRoundTrip": true,
+        "doubleToString": "123456.5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-002",
+        "bits": "41bf5051bc000000",
+        "csv": "525357500",
+        "previousCsv": "5.25358e+08",
+        "previousLossless": false,
+        "castText": "525357500.0",
+        "castRoundTrip": true,
+        "doubleToString": "5.253575E8",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-003",
+        "bits": "415fa5dae6666666",
+        "csv": "8296299.6",
+        "previousCsv": "8.2963e+06",
+        "previousLossless": false,
+        "castText": "8296299.6",
+        "castRoundTrip": true,
+        "doubleToString": "8296299.6",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-004",
+        "bits": "4141e56773333333",
+        "csv": "2345678.9",
+        "previousCsv": "2.34568e+06",
+        "previousLossless": false,
+        "castText": "2345678.9",
+        "castRoundTrip": true,
+        "doubleToString": "2345678.9",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-005",
+        "bits": "4132d68500000000",
+        "csv": "1234565",
+        "previousCsv": "1.23456e+06",
+        "previousLossless": false,
+        "castText": "1234565.0",
+        "castRoundTrip": true,
+        "doubleToString": "1234565.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-006",
+        "bits": "40c81cc000000000",
+        "csv": "12345.5",
+        "previousCsv": "12345.5",
+        "previousLossless": true,
+        "castText": "12345.5",
+        "castRoundTrip": true,
+        "doubleToString": "12345.5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-007",
+        "bits": "40e5ec8000000000",
+        "csv": "44900",
+        "previousCsv": "44900",
+        "previousLossless": true,
+        "castText": "44900.0",
+        "castRoundTrip": true,
+        "doubleToString": "44900.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-008",
+        "bits": "3f847ae147ae147b",
+        "csv": "0.01",
+        "previousCsv": "0.01",
+        "previousLossless": true,
+        "castText": "0.01",
+        "castRoundTrip": true,
+        "doubleToString": "0.01",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-009",
+        "bits": "3fd999999999999a",
+        "csv": "0.4",
+        "previousCsv": "0.4",
+        "previousLossless": true,
+        "castText": "0.4",
+        "castRoundTrip": true,
+        "doubleToString": "0.4",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-010",
+        "bits": "3fd3333333333334",
+        "csv": "0.30000000000000004",
+        "previousCsv": "0.3",
+        "previousLossless": false,
+        "castText": "0.3",
+        "castRoundTrip": false,
+        "doubleToString": "0.30000000000000004",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-011",
+        "bits": "0000000000000000",
+        "csv": "0",
+        "previousCsv": "0",
+        "previousLossless": true,
+        "castText": "0.0",
+        "castRoundTrip": true,
+        "doubleToString": "0.0",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-012",
+        "bits": "c0e5ec8800000000",
+        "csv": "-44900.25",
+        "previousCsv": "-44900.2",
+        "previousLossless": false,
+        "castText": "-44900.25",
+        "castRoundTrip": true,
+        "doubleToString": "-44900.25",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-013",
+        "bits": "c1bf5051bc000000",
+        "csv": "-525357500",
+        "previousCsv": "-5.25358e+08",
+        "previousLossless": false,
+        "castText": "-525357500.0",
+        "castRoundTrip": true,
+        "doubleToString": "-5.253575E8",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-014",
+        "bits": "bf847ae147ae147b",
+        "csv": "-0.01",
+        "previousCsv": "-0.01",
+        "previousLossless": true,
+        "castText": "-0.01",
+        "castRoundTrip": true,
+        "doubleToString": "-0.01",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-015",
+        "bits": "426d1a94a2000000",
+        "csv": "1000000000000",
+        "previousCsv": "1e+12",
+        "previousLossless": true,
+        "castText": "1000000000000.0",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E12",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-016",
+        "bits": "42d674e79fcecd23",
+        "csv": "98765432109876.55",
+        "previousCsv": "9.87654e+13",
+        "previousLossless": false,
+        "castText": "98765432109876.5",
+        "castRoundTrip": false,
+        "doubleToString": "9.876543210987655E13",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-017",
+        "bits": "433fffffffffffff",
+        "csv": "9007199254740991",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740991E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-018",
+        "bits": "4340000000000001",
+        "csv": "9007199254740994",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740994E15",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-019",
+        "bits": "3ee4f8b588e368f1",
+        "csv": "0.00001",
+        "previousCsv": "1e-05",
+        "previousLossless": true,
+        "castText": "1.0e-05",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E-5",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-020",
+        "bits": "3e7ad7f29abcaf48",
+        "csv": "0.0000001",
+        "previousCsv": "1e-07",
+        "previousLossless": true,
+        "castText": "1.0e-07",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E-7",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-021",
+        "bits": "444b1ae4d6e2ef50",
+        "csv": "1000000000000000000000",
+        "previousCsv": "1e+21",
+        "previousLossless": true,
+        "castText": "1.0e+21",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E21",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-022",
+        "bits": "45246c993044fd54",
+        "csv": "12345678901234566000000000",
+        "previousCsv": "1.23457e+25",
+        "previousLossless": false,
+        "castText": "1.23456789012346e+25",
+        "castRoundTrip": false,
+        "doubleToString": "1.2345678901234566E25",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-023",
+        "bits": "7e37e43c8800759c",
+        "csv": "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "previousCsv": "1e+300",
+        "previousLossless": true,
+        "castText": "1.0e+300",
+        "castRoundTrip": true,
+        "doubleToString": "1.0E300",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-024",
+        "bits": "7fefffffffffffff",
+        "csv": "179769313486231570000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "previousCsv": "1.79769e+308",
+        "previousLossless": false,
+        "castText": "1.79769313486232e+308",
+        "castRoundTrip": false,
+        "doubleToString": "1.7976931348623157E308",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-025",
+        "bits": "0010000000000000",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022250738585072014",
+        "previousCsv": "2.22507e-308",
+        "previousLossless": false,
+        "castText": "2.2250738585072e-308",
+        "castRoundTrip": false,
+        "doubleToString": "2.2250738585072014E-308",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-026",
+        "bits": "0000000000000001",
+        "csv": "0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005",
+        "previousCsv": "4.94066e-324",
+        "previousLossless": true,
+        "castText": "4.94065645841247e-324",
+        "castRoundTrip": true,
+        "doubleToString": "4.9E-324",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-027",
+        "bits": "3ff0000000000001",
+        "csv": "1.0000000000000002",
+        "previousCsv": "1",
+        "previousLossless": false,
+        "castText": "1.0",
+        "castRoundTrip": false,
+        "doubleToString": "1.0000000000000002",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-028",
+        "bits": "4132d686ffffffff",
+        "csv": "1234566.9999999998",
+        "previousCsv": "1.23457e+06",
+        "previousLossless": false,
+        "castText": "1234567.0",
+        "castRoundTrip": false,
+        "doubleToString": "1234566.9999999998",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-029",
+        "bits": "40fe240800000001",
+        "csv": "123456.50000000001",
+        "previousCsv": "123457",
+        "previousLossless": false,
+        "castText": "123456.5",
+        "castRoundTrip": false,
+        "doubleToString": "123456.50000000001",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-030",
+        "bits": "3fd5555555555555",
+        "csv": "0.3333333333333333",
+        "previousCsv": "0.333333",
+        "previousLossless": false,
+        "castText": "0.333333333333333",
+        "castRoundTrip": false,
+        "doubleToString": "0.3333333333333333",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-031",
+        "bits": "bfe5555555555555",
+        "csv": "-0.6666666666666666",
+        "previousCsv": "-0.666667",
+        "previousLossless": false,
+        "castText": "-0.666666666666667",
+        "castRoundTrip": false,
+        "doubleToString": "-0.6666666666666666",
+        "doubleToStringRoundTrip": true
+      },
+      {
+        "table": "accounts",
+        "id": "probe-a-032",
+        "bits": "4340000000000000",
+        "csv": "9007199254740992",
+        "previousCsv": "9.0072e+15",
+        "previousLossless": false,
+        "castText": "9.00719925474099e+15",
+        "castRoundTrip": false,
+        "doubleToString": "9.007199254740992E15",
+        "doubleToStringRoundTrip": true
+      }
+    ]
+  },
+  "docs\\correccion-fase5e6\\evidencia\\api24-reexport": {
+    "api24/1000-g1-77ea67c4-98d8-465c-86b8-fcf12b87b200.db": {
+      "cuentas.csv": {
+        "rows": 10,
+        "reordered": false,
+        "realCells": 3,
+        "lossy": 0,
+        "notationOnly": 3,
+        "examples": [
+          {
+            "id": "rep-savings",
+            "column": "balance_amount",
+            "previous": "1.2e+07",
+            "current": "12000000"
+          },
+          {
+            "id": "rep-bank",
+            "column": "balance_amount",
+            "previous": "4.5e+06",
+            "current": "4500000"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "1.25e+06",
+            "current": "1250000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "categorias.csv": {
+        "rows": 9,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "subcategorias.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "tarjetas-credito.csv": {
+        "rows": 3,
+        "reordered": false,
+        "realCells": 1,
+        "lossy": 0,
+        "notationOnly": 1,
+        "examples": [
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "1.25e+06",
+            "current": "1250000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "compras-cuotas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "personas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "gastos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "participaciones.csv": {
+        "rows": 2,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "reembolsos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "abonos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "devoluciones-anticipos.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "movimientos-2026.csv": {
+        "rows": 1010,
+        "reordered": true,
+        "realCells": 99,
+        "lossy": 0,
+        "notationOnly": 99,
+        "examples": [
+          {
+            "id": "rep-518",
+            "column": "monto",
+            "previous": "2.3e+06",
+            "current": "2300000"
+          },
+          {
+            "id": "rep-214",
+            "column": "monto",
+            "previous": "3.7e+06",
+            "current": "3700000"
+          },
+          {
+            "id": "rep-386",
+            "column": "monto",
+            "previous": "2.6e+06",
+            "current": "2600000"
+          },
+          {
+            "id": "rep-37",
+            "column": "monto",
+            "previous": "6.2e+06",
+            "current": "6200000"
+          },
+          {
+            "id": "rep-867",
+            "column": "monto",
+            "previous": "4.7e+06",
+            "current": "4700000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      }
+    },
+    "api24/1000-g2-07fdfd7c-8ae1-42df-a588-b51b6285099b.db": {
+      "cuentas.csv": {
+        "rows": 10,
+        "reordered": false,
+        "realCells": 5,
+        "lossy": 2,
+        "notationOnly": 3,
+        "examples": [
+          {
+            "id": "rep-savings",
+            "column": "balance_amount",
+            "previous": "8.2963e+06",
+            "current": "8296299.6"
+          },
+          {
+            "id": "rep-bank",
+            "column": "balance_amount",
+            "previous": "4.5e+06",
+            "current": "4500000"
+          },
+          {
+            "id": "bank",
+            "column": "balance_amount",
+            "previous": "2.21492e+06",
+            "current": "2214921.5"
+          },
+          {
+            "id": "rep-card2",
+            "column": "debt_balance_amount",
+            "previous": "2.1472e+06",
+            "current": "2147200"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "4.6214e+06",
+            "current": "4621400"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "categorias.csv": {
+        "rows": 9,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "subcategorias.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "tarjetas-credito.csv": {
+        "rows": 3,
+        "reordered": false,
+        "realCells": 2,
+        "lossy": 0,
+        "notationOnly": 2,
+        "examples": [
+          {
+            "id": "rep-card2",
+            "column": "debt_balance_amount",
+            "previous": "2.1472e+06",
+            "current": "2147200"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "4.6214e+06",
+            "current": "4621400"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "compras-cuotas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "personas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "gastos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "participaciones.csv": {
+        "rows": 2,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "reembolsos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "abonos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "devoluciones-anticipos.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "movimientos-2026.csv": {
+        "rows": 1016,
+        "reordered": true,
+        "realCells": 103,
+        "lossy": 4,
+        "notationOnly": 99,
+        "examples": [
+          {
+            "id": "rep-518",
+            "column": "monto",
+            "previous": "2.3e+06",
+            "current": "2300000"
+          },
+          {
+            "id": "rep-214",
+            "column": "monto",
+            "previous": "3.7e+06",
+            "current": "3700000"
+          },
+          {
+            "id": "rep-386",
+            "column": "monto",
+            "previous": "2.6e+06",
+            "current": "2600000"
+          },
+          {
+            "id": "rep-37",
+            "column": "monto",
+            "previous": "6.2e+06",
+            "current": "6200000"
+          },
+          {
+            "id": "rep-867",
+            "column": "monto",
+            "previous": "4.7e+06",
+            "current": "4700000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      }
+    },
+    "api35/1000-g1-9c01257e-2162-4487-8756-280e42d904f8.db": {
+      "cuentas.csv": {
+        "rows": 10,
+        "reordered": false,
+        "realCells": 3,
+        "lossy": 0,
+        "notationOnly": 3,
+        "examples": [
+          {
+            "id": "rep-savings",
+            "column": "balance_amount",
+            "previous": "1.2e+07",
+            "current": "12000000"
+          },
+          {
+            "id": "rep-bank",
+            "column": "balance_amount",
+            "previous": "4.5e+06",
+            "current": "4500000"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "1.25e+06",
+            "current": "1250000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "categorias.csv": {
+        "rows": 9,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "subcategorias.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "tarjetas-credito.csv": {
+        "rows": 3,
+        "reordered": false,
+        "realCells": 1,
+        "lossy": 0,
+        "notationOnly": 1,
+        "examples": [
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "1.25e+06",
+            "current": "1250000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "compras-cuotas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "personas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "gastos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "participaciones.csv": {
+        "rows": 2,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "reembolsos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "abonos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "devoluciones-anticipos.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "movimientos-2026.csv": {
+        "rows": 1010,
+        "reordered": false,
+        "realCells": 99,
+        "lossy": 0,
+        "notationOnly": 99,
+        "examples": [
+          {
+            "id": "rep-518",
+            "column": "monto",
+            "previous": "2.3e+06",
+            "current": "2300000"
+          },
+          {
+            "id": "rep-214",
+            "column": "monto",
+            "previous": "3.7e+06",
+            "current": "3700000"
+          },
+          {
+            "id": "rep-386",
+            "column": "monto",
+            "previous": "2.6e+06",
+            "current": "2600000"
+          },
+          {
+            "id": "rep-37",
+            "column": "monto",
+            "previous": "6.2e+06",
+            "current": "6200000"
+          },
+          {
+            "id": "rep-867",
+            "column": "monto",
+            "previous": "4.7e+06",
+            "current": "4700000"
+          }
+        ],
+        "previousExporterReproducesPublished": false,
+        "previousExporterSameRows": true
+      }
+    },
+    "api35/1000-g2-e9d7eba5-35f4-4f8a-9f47-940faade820a.db": {
+      "cuentas.csv": {
+        "rows": 10,
+        "reordered": false,
+        "realCells": 5,
+        "lossy": 2,
+        "notationOnly": 3,
+        "examples": [
+          {
+            "id": "rep-savings",
+            "column": "balance_amount",
+            "previous": "8.2963e+06",
+            "current": "8296299.6"
+          },
+          {
+            "id": "rep-bank",
+            "column": "balance_amount",
+            "previous": "4.5e+06",
+            "current": "4500000"
+          },
+          {
+            "id": "bank",
+            "column": "balance_amount",
+            "previous": "2.21492e+06",
+            "current": "2214921.5"
+          },
+          {
+            "id": "rep-card2",
+            "column": "debt_balance_amount",
+            "previous": "2.1472e+06",
+            "current": "2147200"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "4.6214e+06",
+            "current": "4621400"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "categorias.csv": {
+        "rows": 9,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "subcategorias.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "tarjetas-credito.csv": {
+        "rows": 3,
+        "reordered": false,
+        "realCells": 2,
+        "lossy": 0,
+        "notationOnly": 2,
+        "examples": [
+          {
+            "id": "rep-card2",
+            "column": "debt_balance_amount",
+            "previous": "2.1472e+06",
+            "current": "2147200"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "4.6214e+06",
+            "current": "4621400"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "compras-cuotas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "personas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "gastos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "participaciones.csv": {
+        "rows": 2,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "reembolsos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "abonos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "devoluciones-anticipos.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "movimientos-2026.csv": {
+        "rows": 1016,
+        "reordered": false,
+        "realCells": 103,
+        "lossy": 4,
+        "notationOnly": 99,
+        "examples": [
+          {
+            "id": "rep-518",
+            "column": "monto",
+            "previous": "2.3e+06",
+            "current": "2300000"
+          },
+          {
+            "id": "rep-214",
+            "column": "monto",
+            "previous": "3.7e+06",
+            "current": "3700000"
+          },
+          {
+            "id": "rep-386",
+            "column": "monto",
+            "previous": "2.6e+06",
+            "current": "2600000"
+          },
+          {
+            "id": "rep-37",
+            "column": "monto",
+            "previous": "6.2e+06",
+            "current": "6200000"
+          },
+          {
+            "id": "rep-867",
+            "column": "monto",
+            "previous": "4.7e+06",
+            "current": "4700000"
+          }
+        ],
+        "previousExporterReproducesPublished": false,
+        "previousExporterSameRows": true
+      }
+    }
+  },
+  "docs\\correccion-fase5e6\\evidencia\\api35-reexport": {
+    "api24/1000-g1-77ea67c4-98d8-465c-86b8-fcf12b87b200.db": {
+      "cuentas.csv": {
+        "rows": 10,
+        "reordered": false,
+        "realCells": 3,
+        "lossy": 0,
+        "notationOnly": 3,
+        "examples": [
+          {
+            "id": "rep-savings",
+            "column": "balance_amount",
+            "previous": "1.2e+07",
+            "current": "12000000"
+          },
+          {
+            "id": "rep-bank",
+            "column": "balance_amount",
+            "previous": "4.5e+06",
+            "current": "4500000"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "1.25e+06",
+            "current": "1250000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "categorias.csv": {
+        "rows": 9,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "subcategorias.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "tarjetas-credito.csv": {
+        "rows": 3,
+        "reordered": false,
+        "realCells": 1,
+        "lossy": 0,
+        "notationOnly": 1,
+        "examples": [
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "1.25e+06",
+            "current": "1250000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "compras-cuotas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "personas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "gastos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "participaciones.csv": {
+        "rows": 2,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "reembolsos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "abonos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "devoluciones-anticipos.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "movimientos-2026.csv": {
+        "rows": 1010,
+        "reordered": true,
+        "realCells": 99,
+        "lossy": 0,
+        "notationOnly": 99,
+        "examples": [
+          {
+            "id": "rep-518",
+            "column": "monto",
+            "previous": "2.3e+06",
+            "current": "2300000"
+          },
+          {
+            "id": "rep-214",
+            "column": "monto",
+            "previous": "3.7e+06",
+            "current": "3700000"
+          },
+          {
+            "id": "rep-386",
+            "column": "monto",
+            "previous": "2.6e+06",
+            "current": "2600000"
+          },
+          {
+            "id": "rep-37",
+            "column": "monto",
+            "previous": "6.2e+06",
+            "current": "6200000"
+          },
+          {
+            "id": "rep-867",
+            "column": "monto",
+            "previous": "4.7e+06",
+            "current": "4700000"
+          }
+        ],
+        "previousExporterReproducesPublished": false,
+        "previousExporterSameRows": true
+      }
+    },
+    "api24/1000-g2-07fdfd7c-8ae1-42df-a588-b51b6285099b.db": {
+      "cuentas.csv": {
+        "rows": 10,
+        "reordered": false,
+        "realCells": 5,
+        "lossy": 2,
+        "notationOnly": 3,
+        "examples": [
+          {
+            "id": "rep-savings",
+            "column": "balance_amount",
+            "previous": "8.2963e+06",
+            "current": "8296299.6"
+          },
+          {
+            "id": "rep-bank",
+            "column": "balance_amount",
+            "previous": "4.5e+06",
+            "current": "4500000"
+          },
+          {
+            "id": "bank",
+            "column": "balance_amount",
+            "previous": "2.21492e+06",
+            "current": "2214921.5"
+          },
+          {
+            "id": "rep-card2",
+            "column": "debt_balance_amount",
+            "previous": "2.1472e+06",
+            "current": "2147200"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "4.6214e+06",
+            "current": "4621400"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "categorias.csv": {
+        "rows": 9,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "subcategorias.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "tarjetas-credito.csv": {
+        "rows": 3,
+        "reordered": false,
+        "realCells": 2,
+        "lossy": 0,
+        "notationOnly": 2,
+        "examples": [
+          {
+            "id": "rep-card2",
+            "column": "debt_balance_amount",
+            "previous": "2.1472e+06",
+            "current": "2147200"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "4.6214e+06",
+            "current": "4621400"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "compras-cuotas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "personas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "gastos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "participaciones.csv": {
+        "rows": 2,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "reembolsos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "abonos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "devoluciones-anticipos.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "movimientos-2026.csv": {
+        "rows": 1016,
+        "reordered": true,
+        "realCells": 103,
+        "lossy": 4,
+        "notationOnly": 99,
+        "examples": [
+          {
+            "id": "rep-518",
+            "column": "monto",
+            "previous": "2.3e+06",
+            "current": "2300000"
+          },
+          {
+            "id": "rep-214",
+            "column": "monto",
+            "previous": "3.7e+06",
+            "current": "3700000"
+          },
+          {
+            "id": "rep-386",
+            "column": "monto",
+            "previous": "2.6e+06",
+            "current": "2600000"
+          },
+          {
+            "id": "rep-37",
+            "column": "monto",
+            "previous": "6.2e+06",
+            "current": "6200000"
+          },
+          {
+            "id": "rep-867",
+            "column": "monto",
+            "previous": "4.7e+06",
+            "current": "4700000"
+          }
+        ],
+        "previousExporterReproducesPublished": false,
+        "previousExporterSameRows": true
+      }
+    },
+    "api35/1000-g1-9c01257e-2162-4487-8756-280e42d904f8.db": {
+      "cuentas.csv": {
+        "rows": 10,
+        "reordered": false,
+        "realCells": 3,
+        "lossy": 0,
+        "notationOnly": 3,
+        "examples": [
+          {
+            "id": "rep-savings",
+            "column": "balance_amount",
+            "previous": "1.2e+07",
+            "current": "12000000"
+          },
+          {
+            "id": "rep-bank",
+            "column": "balance_amount",
+            "previous": "4.5e+06",
+            "current": "4500000"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "1.25e+06",
+            "current": "1250000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "categorias.csv": {
+        "rows": 9,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "subcategorias.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "tarjetas-credito.csv": {
+        "rows": 3,
+        "reordered": false,
+        "realCells": 1,
+        "lossy": 0,
+        "notationOnly": 1,
+        "examples": [
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "1.25e+06",
+            "current": "1250000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "compras-cuotas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "personas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "gastos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "participaciones.csv": {
+        "rows": 2,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "reembolsos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "abonos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "devoluciones-anticipos.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "movimientos-2026.csv": {
+        "rows": 1010,
+        "reordered": false,
+        "realCells": 99,
+        "lossy": 0,
+        "notationOnly": 99,
+        "examples": [
+          {
+            "id": "rep-518",
+            "column": "monto",
+            "previous": "2.3e+06",
+            "current": "2300000"
+          },
+          {
+            "id": "rep-214",
+            "column": "monto",
+            "previous": "3.7e+06",
+            "current": "3700000"
+          },
+          {
+            "id": "rep-386",
+            "column": "monto",
+            "previous": "2.6e+06",
+            "current": "2600000"
+          },
+          {
+            "id": "rep-37",
+            "column": "monto",
+            "previous": "6.2e+06",
+            "current": "6200000"
+          },
+          {
+            "id": "rep-867",
+            "column": "monto",
+            "previous": "4.7e+06",
+            "current": "4700000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      }
+    },
+    "api35/1000-g2-e9d7eba5-35f4-4f8a-9f47-940faade820a.db": {
+      "cuentas.csv": {
+        "rows": 10,
+        "reordered": false,
+        "realCells": 5,
+        "lossy": 2,
+        "notationOnly": 3,
+        "examples": [
+          {
+            "id": "rep-savings",
+            "column": "balance_amount",
+            "previous": "8.2963e+06",
+            "current": "8296299.6"
+          },
+          {
+            "id": "rep-bank",
+            "column": "balance_amount",
+            "previous": "4.5e+06",
+            "current": "4500000"
+          },
+          {
+            "id": "bank",
+            "column": "balance_amount",
+            "previous": "2.21492e+06",
+            "current": "2214921.5"
+          },
+          {
+            "id": "rep-card2",
+            "column": "debt_balance_amount",
+            "previous": "2.1472e+06",
+            "current": "2147200"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "4.6214e+06",
+            "current": "4621400"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "categorias.csv": {
+        "rows": 9,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "subcategorias.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "tarjetas-credito.csv": {
+        "rows": 3,
+        "reordered": false,
+        "realCells": 2,
+        "lossy": 0,
+        "notationOnly": 2,
+        "examples": [
+          {
+            "id": "rep-card2",
+            "column": "debt_balance_amount",
+            "previous": "2.1472e+06",
+            "current": "2147200"
+          },
+          {
+            "id": "rep-card",
+            "column": "debt_balance_amount",
+            "previous": "4.6214e+06",
+            "current": "4621400"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "compras-cuotas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "personas.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "gastos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "participaciones.csv": {
+        "rows": 2,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "reembolsos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "abonos-compartidos.csv": {
+        "rows": 1,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "devoluciones-anticipos.csv": {
+        "rows": 0,
+        "reordered": false,
+        "realCells": 0,
+        "lossy": 0,
+        "notationOnly": 0,
+        "examples": [],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      },
+      "movimientos-2026.csv": {
+        "rows": 1016,
+        "reordered": false,
+        "realCells": 103,
+        "lossy": 4,
+        "notationOnly": 99,
+        "examples": [
+          {
+            "id": "rep-518",
+            "column": "monto",
+            "previous": "2.3e+06",
+            "current": "2300000"
+          },
+          {
+            "id": "rep-214",
+            "column": "monto",
+            "previous": "3.7e+06",
+            "current": "3700000"
+          },
+          {
+            "id": "rep-386",
+            "column": "monto",
+            "previous": "2.6e+06",
+            "current": "2600000"
+          },
+          {
+            "id": "rep-37",
+            "column": "monto",
+            "previous": "6.2e+06",
+            "current": "6200000"
+          },
+          {
+            "id": "rep-867",
+            "column": "monto",
+            "previous": "4.7e+06",
+            "current": "4700000"
+          }
+        ],
+        "previousExporterReproducesPublished": true,
+        "previousExporterSameRows": true
+      }
+    }
+  }
+}

@@ -150,15 +150,43 @@ export function printfG(value: number): string {
   return strip(Number(exponential).toFixed(5 - e));
 }
 
+/**
+ * 5E.6 exporter (SmartFinBackupCsv.exactReal): shortest plain decimal that reads back as the
+ * same double. Both sides round the exact binary value half-up (away from zero) to 1..17
+ * significant digits and keep the first that round-trips; non-finite values keep "%g".
+ */
+export function exactReal(value: number): string {
+  if (!Number.isFinite(value)) return printfG(value);
+  if (value === 0) return Object.is(value, -0) ? '-0' : '0';
+  for (let digits = 1; digits <= 17; digits++) {
+    const text = value.toExponential(digits - 1);
+    if (Number(text) === value) return plainDecimal(text);
+  }
+  throw new Error('REAL sin ida y vuelta en 17 cifras');
+}
+/** "d.ddde±x" to a plain decimal without exponent or trailing zeros (BigDecimal.toPlainString). */
+function plainDecimal(exponential: string) {
+  const [mantissa, exp] = exponential.split('e') as [string, string];
+  const negative = mantissa.startsWith('-');
+  const digits = mantissa.replace('-', '').replace('.', '').replace(/0+$/, '');
+  const point = Number(exp) + 1;
+  const body = point <= 0 ? '0.' + '0'.repeat(-point) + digits
+    : point >= digits.length ? digits + '0'.repeat(point - digits.length)
+    : digits.slice(0, point) + '.' + digits.slice(point);
+  return (negative ? '-' : '') + body;
+}
+
+/** How a generation's exporter rendered REAL cells: "%g" before 5E.6, exact afterwards. */
+export type RealFormat = 'printf-g' | 'exact';
 type Column = { alias: string; expression: string };
 type Cell = { text: string; real: boolean; value: unknown };
-/** Android cursor text: INTEGER and TEXT verbatim, REAL through "%g", NULL empty. */
-function cells(all: (sql: string) => Record<string, unknown>[], columns: Column[], from: string): Cell[][] {
+/** Android cursor text: INTEGER and TEXT verbatim, REAL by the exporter's format, NULL empty. */
+function cells(all: (sql: string) => Record<string, unknown>[], columns: Column[], from: string, format: RealFormat): Cell[][] {
   const select = columns.map((c, i) => `${c.expression} AS v${i}, typeof(${c.expression}) AS t${i}`).join(',');
   return all(`SELECT ${select} ${from}`).map(row => columns.map((_, i) => {
     const value = row['v' + i], type = row['t' + i];
     if (type === 'null') return { text: '', real: false, value };
-    if (type === 'real') return { text: printfG(Number(value)), real: true, value };
+    if (type === 'real') return { text: (format === 'exact' ? exactReal : printfG)(Number(value)), real: true, value };
     if (type === 'blob') throw new Error('BLOB inesperado en CSV');
     return { text: String(value), real: false, value };
   }));
@@ -187,7 +215,7 @@ function writeCsv(columns: Column[], rows: Cell[][]): RebuiltCsv {
 }
 
 /** Rebuilds every CSV of the contract from the recovered SQLite with explicit column lists. */
-export function rebuildCsv(all: (sql: string) => Record<string, unknown>[]) {
+export function rebuildCsv(all: (sql: string) => Record<string, unknown>[], format: RealFormat) {
   const columnsOf = (table: string, prefix = '') => all(`PRAGMA table_info(${quoteId(table)})`)
     .map(c => ({ alias: String(c.name), expression: prefix + quoteId(String(c.name)) }));
   const plain = (table: string, order: string, where = '') => ({ columns: columnsOf(table), from: `FROM ${quoteId(table)} ${where} ORDER BY ${order}` });
@@ -206,7 +234,7 @@ export function rebuildCsv(all: (sql: string) => Record<string, unknown>[]) {
     'devoluciones-anticipos.csv': plain('shared_returns', 'date'),
   };
   const result = new Map<string, RebuiltCsv>();
-  for (const [name, d] of Object.entries(definitions)) result.set(name, writeCsv(d.columns, cells(all, d.columns, d.from)));
+  for (const [name, d] of Object.entries(definitions)) result.set(name, writeCsv(d.columns, cells(all, d.columns, d.from, format)));
   const yearly: Column[] = ([['id', 't.id'], ['fecha', 'COALESCE(t.civil_date, substr(t.date,1,10))'], ['hora', 't.local_time'],
     ['zona_horaria', 't.time_zone'], ['precision_fecha', 't.date_precision'], ['fecha_original', 't.date'], ['descripcion', 't.description'],
     ['monto', 't.amount'], ['moneda', 't.currency'], ['tipo', 't.type'], ['direccion', 't.direction'], ['estado', 't.status'],
@@ -222,7 +250,7 @@ export function rebuildCsv(all: (sql: string) => Record<string, unknown>[]) {
       LEFT JOIN categories c ON c.id = t.category_id LEFT JOIN subcategories s ON s.id = t.subcategory_id
       WHERE substr(COALESCE(t.civil_date, t.date), 1, 4) = '${year}'
       ORDER BY COALESCE(t.civil_date, substr(t.date,1,10)), t.local_time, t.created_at`;
-    result.set(`movimientos-${year}.csv`, writeCsv(yearly, cells(all, yearly, from)));
+    result.set(`movimientos-${year}.csv`, writeCsv(yearly, cells(all, yearly, from, format)));
   }
   return result;
 }

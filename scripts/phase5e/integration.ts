@@ -41,8 +41,52 @@ export async function inspectIntegrated(database: SmartFinSQLiteDatabase) {
   } };
 }
 
-/** Synthetic acceptance only. Caller must provide an empty isolated test database. */
-export async function integratedFixture(database: SmartFinSQLiteDatabase, reminders: SubscriptionReminderService, seed = true) {
+/**
+ * Android delivers due reminders asynchronously and acknowledges them in SQLite (delivery
+ * status and financial revision). Completion evidence, not a bare sleep: no due reminder
+ * left unacknowledged, none due within `guardMs`, and the revision stable for `stableMs`.
+ * Fails with the observed state when it does not settle. Never needed with a Node double.
+ */
+export async function settleReminderDeliveries(database: SmartFinSQLiteDatabase,
+  { stableMs = 5000, guardMs = 120000, timeoutMs = 300000, pollMs = 1000 } = {}) {
+  const state = async () => {
+    const now = Date.now();
+    const [result] = await database.executeSql(`SELECT (SELECT revision FROM financial_data_revision WHERE id=1) AS revision,
+      (SELECT count(*) FROM subscription_reminders WHERE desired='scheduled' AND fire_at<=?
+        AND delivery_status NOT IN ('delivered','failed','blocked','cancelled')) AS due,
+      (SELECT count(*) FROM subscription_reminders WHERE desired='scheduled' AND fire_at>? AND fire_at<=?
+        AND delivery_status NOT IN ('delivered','failed','blocked','cancelled')) AS imminent`,
+      [new Date(now).toISOString(), new Date(now).toISOString(), new Date(now + guardMs).toISOString()]);
+    return resultSetToRows(result)[0] as { revision: unknown; due: number; imminent: number };
+  };
+  const start = Date.now();
+  let previous = await state(), stableSince = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    if (previous.due === 0 && previous.imminent === 0 && Date.now() - stableSince >= stableMs) return { settledMs: Date.now() - start, ...previous };
+    await new Promise<void>(resolve => setTimeout(() => resolve(), pollMs));
+    const current = await state();
+    if (JSON.stringify(current) !== JSON.stringify(previous)) stableSince = Date.now();
+    previous = current;
+  }
+  throw new Error('Reminder deliveries did not settle: ' + JSON.stringify(previous));
+}
+
+/**
+ * Fixed clock for a case that needs a real alarm still scheduled: fixed at the case start,
+ * with the first reminder (15:00 local of anchorDate) at least a day after it.
+ */
+export function futureReminderCase(caseStart: Date) {
+  const day = new Date(caseStart.getTime() + 2 * 86400000);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return { now: new Date(caseStart.getTime()), anchorDate: `${day.getFullYear()}-${pad(day.getMonth() + 1)}-${pad(day.getDate())}` };
+}
+
+/**
+ * Synthetic acceptance only. Caller must provide an empty isolated test database.
+ * `subscriptionNow` is the subscriptions clock; the financial clock stays DATE.
+ */
+export async function integratedFixture(database: SmartFinSQLiteDatabase, reminders: SubscriptionReminderService, seed = true,
+  subscriptionNow: Date = DATE) {
   if (seed) {
   const [existing] = await database.executeSql('SELECT count(*) AS n FROM accounts');
   check(existing.rows.item(0).n === 0, 'Fixture requires empty synthetic database');
@@ -63,7 +107,7 @@ export async function integratedFixture(database: SmartFinSQLiteDatabase, remind
   const subscriptionRepository = createSqliteSubscriptionRepository(database);
   let subscriptionId = 0;
   const subscriptions = createSubscriptionApi({ repository: subscriptionRepository, reminderService: reminders,
-    clock: { now: () => DATE }, createId: () => 'integrated-sub-' + ++subscriptionId });
+    clock: { now: () => subscriptionNow }, createId: () => 'integrated-sub-' + ++subscriptionId });
   const save = async (changes: Partial<SaveManualTransactionParams> = {}) => saveManualTransaction({
     ...dependencies, accounts: await accountRepository.getAccounts(), accountId: 'bank', amount: 44900,
     merchantName: 'Synthetic', transactionType: 'expense', operationType: 'Débito',
@@ -75,7 +119,17 @@ export async function integratedFixture(database: SmartFinSQLiteDatabase, remind
 }
 export type IntegratedFixture = Awaited<ReturnType<typeof integratedFixture>>;
 
-export async function buildIntegratedScenario(f: IntegratedFixture) {
+/**
+ * The financial clock is fixed (DATE) but Android alarms run on the real clock, so a reminder
+ * of this scenario becomes due as real time passes it. Choose explicitly:
+ * - 'stable': a financial base independent of the run time; subscriptions without reminders,
+ *   so no delivery can write while states are compared.
+ * - 'deliver': reminders enabled (15:00 local); on Android pass `settle` (completion evidence,
+ *   e.g. settleReminderDeliveries) so comparisons start after legitimate deliveries.
+ */
+export type IntegratedScenarioOptions = { reminders: 'stable' | 'deliver'; settle?: () => Promise<unknown> };
+
+export async function buildIntegratedScenario(f: IntegratedFixture, options: IntegratedScenarioOptions) {
   const evidence: { name: string; state: Awaited<ReturnType<typeof inspectIntegrated>> }[] = [];
   const expected = { available: 1050000, wealth: 1050000, debt: 0, income: 0, expense: 0 };
   const verify = async (name: string) => {
@@ -107,7 +161,7 @@ export async function buildIntegratedScenario(f: IntegratedFixture) {
   check(rejected && JSON.stringify(state) === JSON.stringify(await inspectIntegrated(f.database)), 'Zero-rounded positive payment changed data');
   const input = { name: 'Synthetic paid subscription', amount: 44900, accountId: 'bank',
     recurrence: { periodicity: 'monthly' as const }, anchorDate: '2026-10-24',
-    reminders: { enabled: true, offsets: [0], hour: 15, minute: 0 } };
+    reminders: { enabled: options.reminders === 'deliver', offsets: [0], hour: 15, minute: 0 } };
   const paid = await f.subscriptions.createSubscription(input);
   await verify('subscription-commitment-no-expense');
   const occurrences = await f.subscriptions.getSubscriptionHistory(paid.value.id, { limit: 50, offset: 0 });
@@ -120,7 +174,7 @@ export async function buildIntegratedScenario(f: IntegratedFixture) {
   state = await verify('subscription-repeat-no-expense');
   check(state.tables.transactions!.length === count, 'Duplicate subscription expense');
   await f.subscriptions.createSubscription({ ...input, name: 'Synthetic pending subscription', anchorDate: '2026-10-25' });
-  await verify('pending-obligation-and-reminders');
+  await verify(options.reminders === 'deliver' ? 'pending-obligation-and-reminders' : 'pending-obligation');
   const person = (await f.shared.saveContact('integrated-person', 'Synthetic friend')).entityId;
   const purchase = await f.shared.createPurchase('integrated-purchase', {
     purchase: { accountId: 'bank', amount: 30000, categoryId: 'food', merchantName: 'Synthetic shared', operationType: 'Débito', occurrence: { kind: 'date', date: '2026-10-24' } },
@@ -143,8 +197,11 @@ export async function buildIntegratedScenario(f: IntegratedFixture) {
   await saveAiDraftForReview(f.database, { id: 'integrated-ai', plan, phase: 'review', rawInput: 'Synthetic', messages: [], clarificationHistory: [], createdAt: DATE.toISOString(), updatedAt: DATE.toISOString() });
   await executeAiCommandPlan(f.database, 'integrated-ai', plan, undefined);
   expected.available -= 1000; expected.wealth -= 1000; expected.expense += 1000;
+  await options.settle?.();
   state = await verify('ai-confirmed');
   await executeAiCommandPlan(f.database, 'integrated-ai', plan, undefined);
+  // Waiting cannot hide a write of the repeat: it would persist and differ below.
+  await options.settle?.();
   const repeated = await inspectIntegrated(f.database);
   // Diagnostic only (5E.5): name what changed, e.g. asynchronous reminder delivery acknowledgements.
   const changed = Object.keys(repeated.tables).filter(t => JSON.stringify(state.tables[t]) !== JSON.stringify(repeated.tables[t]));

@@ -1,0 +1,126 @@
+  // Phase 5E.6 (test APK only): exercises the production CSV exporter (SmartFinBackupCsv) on
+  // private copies of synthetic databases. Published documents and pushed inputs are only read,
+  // and their SHA-256 is checked before and after. Never touches production storage.
+  private fun phase5e6Sha(file: File) = SmartFinBackupPublisher.digest(file.inputStream()).second
+  private fun phase5e6Bits(hex: String) = java.lang.Double.longBitsToDouble(java.lang.Long.parseUnsignedLong(hex, 16))
+  private fun phase5e6Hex(value: Double) = "%016x".format(java.lang.Double.doubleToRawLongBits(value))
+
+  /**
+   * Inserts the precision and order probes into a private copy of one published database,
+   * exports it with the production exporter and reports what SQLite stored for each probe:
+   * its bits, the cursor text ("%g"), CAST(x AS TEXT), Double.toString and exactReal.
+   */
+  @ReactMethod fun phase5e6Probe(id: String, payload: String, promise: Promise) = run(promise) {
+    check(java.util.UUID.fromString(id).toString() == id)
+    val input = JSONObject(payload)
+    val source = File(phase5e5Saf(), "smartfin-$id--smartfin-backup.db")
+    val before = phase5e6Sha(source)
+    val work = File(context.cacheDir, "phase5e6-probe").apply { deleteRecursively(); check(mkdirs()) }
+    try {
+      val copy = File(work, "probe.db"); source.copyTo(copy)
+      val result = JSONObject()
+      SQLiteDatabase.openDatabase(copy.path, null, SQLiteDatabase.OPEN_READWRITE).use { db ->
+        db.rawQuery("SELECT sqlite_version()", null).use { it.moveToFirst(); result.put("sqlite", it.getString(0)) }
+        db.beginTransaction()
+        try {
+          val values = input.getJSONArray("values")
+          for (i in 0 until values.length()) {
+            val value = phase5e6Bits(values.getString(i))
+            val key = "%03d".format(i)
+            db.compileStatement("INSERT INTO accounts(id,name,type,status,currency,balance_amount,created_at,updated_at) VALUES(?,?,'bankAccount','active','COP',?,'1901-01-01','1901-01-01')").use {
+              it.bindString(1, "probe-a-$key"); it.bindString(2, "Probe $key"); it.bindDouble(3, value); it.executeInsert()
+            }
+            db.compileStatement("INSERT INTO transactions(id,amount,currency,description,date,civil_date,account_id,type,direction,status,created_at,updated_at) VALUES(?,?,'COP','Probe','1901-01-01','1901-01-01',?,'expense','outflow','posted',?,?)").use {
+              val created = "1901-01-01T00:00:00.$key" + "Z"
+              it.bindString(1, "probe-t-$key"); it.bindDouble(2, value); it.bindString(3, "probe-a-$key"); it.bindString(4, created); it.bindString(5, created); it.executeInsert()
+            }
+          }
+          val rows = input.getJSONArray("orderRows")
+          for (i in 0 until rows.length()) {
+            val row = rows.getJSONObject(i)
+            db.compileStatement("INSERT INTO transactions(id,amount,currency,description,date,civil_date,local_time,account_id,type,direction,status,created_at,updated_at) VALUES(?,1000,'COP','Order probe',?,?,?,'probe-a-000','expense','outflow',?,?,?)").use {
+              it.bindString(1, row.getString("id")); it.bindString(2, row.getString("date"))
+              if (row.isNull("civilDate")) it.bindNull(3) else it.bindString(3, row.getString("civilDate"))
+              if (row.isNull("localTime")) it.bindNull(4) else it.bindString(4, row.getString("localTime"))
+              it.bindString(5, row.getString("status")); it.bindString(6, row.getString("createdAt")); it.bindString(7, row.getString("createdAt"))
+              it.executeInsert()
+            }
+          }
+          db.setTransactionSuccessful()
+        } finally { db.endTransaction() }
+        val stored = JSONArray()
+        for ((table, column) in listOf("transactions" to "amount", "accounts" to "balance_amount")) {
+          db.rawQuery("SELECT id, $column, typeof($column), CAST($column AS TEXT) FROM $table WHERE id LIKE 'probe-%' ORDER BY id", null).use { c ->
+            while (c.moveToNext()) {
+              val value = c.getDouble(1)
+              stored.put(JSONObject().put("table", table).put("id", c.getString(0)).put("type", c.getString(2)).put("bits", phase5e6Hex(value))
+                .put("cursorString", c.getString(1)).put("castText", c.getString(3)).put("doubleToString", value.toString())
+                .put("exactReal", SmartFinBackupCsv.exactReal(value)))
+            }
+          }
+        }
+        result.put("stored", stored)
+        // The old annual ORDER BY next to the production one, on the probe years.
+        val day = "COALESCE(t.civil_date, substr(t.date,1,10))"
+        for ((name, order) in listOf("previousOrder" to "ORDER BY $day, t.local_time, t.created_at", "fixedOrder" to "ORDER BY +$day, t.local_time, t.created_at")) {
+          val years = JSONObject()
+          for (year in listOf("1902", "1903")) {
+            val ids = JSONArray()
+            db.rawQuery("SELECT t.id FROM transactions t WHERE $day >= ?1 AND $day < ?2 AND substr(COALESCE(t.civil_date, t.date), 1, 4) = ?1 $order",
+              arrayOf(year, (year.toInt() + 1).toString())).use { c -> while (c.moveToNext()) ids.put(c.getString(0)) }
+            years.put(year, ids)
+          }
+          result.put(name, years)
+        }
+      }
+      val out = File(phase5e5Root(), "phase5e6-probe").apply { deleteRecursively(); check(mkdirs()) }
+      val listing = JSONObject()
+      for ((name, file) in SmartFinBackupCsv.export(copy, out)) listing.put(name, JSONObject().put("bytes", file.length()).put("sha256", phase5e6Sha(file)))
+      result.put("csv", listing)
+      val random = input.getJSONArray("random")
+      result.put("random", JSONArray().apply { for (i in 0 until random.length()) put(SmartFinBackupCsv.exactReal(phase5e6Bits(random.getString(i)))) })
+      // The same copy through the pre-5E.6 exporter: reproduces 5E5-001/002 on identical data.
+      val legacy = File(phase5e5Root(), "phase5e6-probe-previous").apply { deleteRecursively(); check(mkdirs()) }
+      val previous = JSONObject()
+      for ((name, file) in Phase5E4LegacyCsv.export(copy, legacy)) previous.put(name, JSONObject().put("bytes", file.length()).put("sha256", phase5e6Sha(file)))
+      result.put("previousCsv", previous)
+      check(phase5e6Sha(source) == before) { "Published database changed" }
+      result.put("publishedDatabaseSha256", before)
+      result.toString()
+    } finally { work.deleteRecursively() }
+  }
+
+  /**
+   * Re-exports databases of earlier generations (pushed by adb under files/phase5e6-historical/<label>)
+   * with the current production exporter. Inputs are copied first and must keep their bytes.
+   */
+  @ReactMethod fun phase5e6Reexport(label: String, promise: Promise) = run(promise) {
+    phase5e5Safe(label)
+    val input = File(context.getExternalFilesDir(null), "phase5e6-historical/$label")
+    val databases = input.listFiles().orEmpty().filter { it.name.endsWith(".db") }.sortedBy { it.name }
+    check(databases.isNotEmpty()) { "No historical databases for $label" }
+    val work = File(context.cacheDir, "phase5e6-reexport").apply { deleteRecursively(); check(mkdirs()) }
+    try {
+      val result = JSONObject()
+      for (database in databases) {
+        val before = phase5e6Sha(database)
+        val copy = File(work, database.name); database.copyTo(copy, overwrite = true)
+        check(phase5e6Sha(copy) == before) { "Copy differs: ${database.name}" }
+        val entry = JSONObject().put("sha256", before)
+        // "previous" is the pre-5E.6 exporter frozen from git HEAD by the 5E.4 workspace (Phase5E4LegacyCsv).
+        val exporters = listOf<Pair<String, (File, File) -> List<Pair<String, File>>>>(
+          "current" to { db, dir -> SmartFinBackupCsv.export(db, dir) }, "previous" to { db, dir -> Phase5E4LegacyCsv.export(db, dir) })
+        for ((exporter, export) in exporters) {
+          val out = File(phase5e5Root(), "reexport/$label/$exporter/${database.name.removeSuffix(".db")}").apply { deleteRecursively(); check(mkdirs()) }
+          val started = System.nanoTime()
+          val files = JSONObject()
+          for ((name, file) in export(copy, out)) files.put(name, JSONObject().put("bytes", file.length()).put("sha256", phase5e6Sha(file)))
+          check(phase5e6Sha(database) == before && phase5e6Sha(copy) == before) { "Database changed by export: ${database.name}" }
+          entry.put(exporter, JSONObject().put("ms", (System.nanoTime() - started) / 1_000_000.0).put("files", files))
+        }
+        result.put(database.name, entry)
+        copy.delete()
+      }
+      result.toString()
+    } finally { work.deleteRecursively() }
+  }

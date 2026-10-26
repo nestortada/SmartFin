@@ -32,7 +32,8 @@ async function fixture(full = true, syntheticPath?: string) {
   const database = manageSQLiteDatabase(sql.database);
   const service = reminders();
   const f = await integratedFixture(database, service);
-  const states = full ? await buildIntegratedScenario(f) : [];
+  // The Node double records schedules and never delivers asynchronously: reminders stay enabled.
+  const states = full ? await buildIntegratedScenario(f, { reminders: 'deliver' }) : [];
   return { ...sql, ...f, service, states };
 }
 beforeEach(() => { jest.useFakeTimers({ doNotFake: ['nextTick', 'queueMicrotask', 'setImmediate', 'setTimeout'] }); jest.setSystemTime(DATE); });
