@@ -8,6 +8,7 @@ import { formatCurrency } from '../src/shared/utils/formatCurrency';
 // The same probes run in the isolated Android APK (scripts/phase6b). No tolerance anywhere.
 // Tests named "defect 6B-…" characterize the CURRENT incorrect result on purpose: they must be
 // rewritten to the oracle value when the separate correction task is authorized.
+// Phase 6B.1 corrected 6B-D1/6B-D2 (and therefore 6B-D4): those tests now require the oracle value.
 jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn() }));
 const fs = require('node:fs') as { writeFileSync: (f: string, c: string) => void; mkdirSync: (p: string, o: object) => void };
 
@@ -44,11 +45,11 @@ describe('invariants that hold', () => {
     expect(r.final).toEqual({ bank: String(Number(r.oracle.bank)), target: String(Number(r.oracle.target)), debt: String(Number(r.oracle.debt)) });
   });
 
-  test.each(['sequenceCents', 'sequenceCents1000'] as const)('%s: 6A monthly figures stay exact; only balances/debt drift', async name => {
+  test.each(['sequenceCents', 'sequenceCents1000'] as const)('%s: 6A monthly figures stay exact; balances/debt exact since 6B.1', async name => {
     const r = await probe(name);
-    for (const field of ['monthlyIncome', 'monthlyExpenses', 'monthlySavings']) expect(r.dashboardMismatchFields[field]).toBeUndefined();
-    // Characterization of defects 6B-D1/6B-D3: persisted balances leave the two-decimal contract.
-    expect(r.counts.nonCanonicalStored).toBeGreaterThan(0);
+    for (const field of ['monthlyIncome', 'monthlyExpenses', 'monthlySavings', 'totalDebt']) expect(r.dashboardMismatchFields[field]).toBeUndefined();
+    // 6B.1: every persisted balance and debt is the canonical double of the decimal oracle.
+    expect(r.counts).toMatchObject({ storedMismatch: 0, nonCanonicalStored: 0, paymentsRejected: 0 });
   });
 
   test('6A combined savings outside the safe range falls back without changing the decimal result', async () => {
@@ -73,30 +74,34 @@ describe('invariants that hold', () => {
 });
 
 describe('defects characterized by the audit (current results, not accepted behavior)', () => {
-  test('defect 6B-D1: persisted balance accumulates binary error and shows $1 less than income', async () => {
+  test('6B-D1 corrected in 6B.1: persisted balance is the exact decimal and shows the same pesos as income', async () => {
     const r = await probe('balanceAccumulation');
-    expect(r.accountBalance).toMatchObject({ stored: '97599.49999999999', expected: '97599.50', exactDouble: false, display: formatCurrency(97599, 'COP'), visibleDifference: true });
-    expect(r.availableBalance.visibleDifference).toBe(true);
-    expect(r.netWorth.visibleDifference).toBe(true);
+    expect(r.accountBalance).toMatchObject({ stored: '97599.5', expected: '97599.50', exactDouble: true, display: formatCurrency(97600, 'COP'), visibleDifference: false });
+    expect(r.availableBalance.visibleDifference).toBe(false);
+    expect(r.netWorth.visibleDifference).toBe(false);
     expect(r.monthlyIncome).toMatchObject({ stored: '97599.5', exactDouble: true, visibleDifference: false });
   });
 
-  test('defect 6B-D1: deleting a movement does not restore the previous balance bit for bit', async () => {
+  test('6B-D1 corrected in 6B.1: deleting a movement restores the previous balance bit for bit', async () => {
     const r = await probe('reversalResidue');
-    expect(r).toMatchObject({ before: '661275.68', restoredBitExact: false, transactionsLeft: 0, monthlyExpenses: 0 });
-    expect(r.after).toMatchObject({ stored: '661275.6799999999', visibleDifference: false });
+    expect(r).toMatchObject({ before: '661275.68', restoredBitExact: true, transactionsLeft: 0, monthlyExpenses: 0 });
+    expect(r.after).toMatchObject({ stored: '661275.68', exactDouble: true, visibleDifference: false });
+    expect(r.during).toMatchObject({ stored: '567658.99', exactDouble: true });
   });
 
-  test('defect 6B-D2: binary debt residue after paying the whole debt blocks payments and closure', async () => {
+  test('6B-D2 corrected in 6B.1: paying the whole exact debt leaves exactly zero and the card can be closed', async () => {
     const above = await probe('cardResidueAbove');
-    expect(above).toMatchObject({ exactTotal: '229831.00', debtAfterFullPayment: '2.9103830456733704e-11' });
+    expect(above).toMatchObject({ exactTotal: '229831.00', debtAfterFullPayment: '0' });
+    expect(above.debtAfterPurchases).toMatchObject({ stored: '229831', exactDouble: true });
     expect(above.fullPayment.paid).toBe(229831);
-    expect(above.closure).toMatch(/^rejected/);
+    expect(above.closure).toBe('closed');
     const below = await probe('cardResidueBelow');
-    expect(below.fullPayment.rejected).toBeDefined();
-    expect(below.finalDebt).toMatchObject({ stored: '0.9999999999854481', expected: '1.00' });
-    expect(below.attempts.at(-1).rejected).toBeDefined();
-    expect(below.closure).toMatch(/^rejected/);
+    expect(below.debtAfterPurchases).toMatchObject({ stored: '94562', exactDouble: true });
+    expect(below.fullPayment.paid).toBe(94562);
+    expect(below.finalDebt).toMatchObject({ stored: '0', expected: '0.00', exactDouble: true });
+    // The extra $1 attempt is rejected because there is no debt left, not because of a residue.
+    expect(below.attempts.at(-1).rejected).toBe('La tarjeta no tiene saldo pendiente por pagar.');
+    expect(below.closure).toBe('closed');
   });
 
   test('defect 6B-D2 (contract): a legitimate cents debt can never be settled or closed', async () => {
@@ -112,10 +117,11 @@ describe('defects characterized by the audit (current results, not accepted beha
     expect(r.netWorth.visibleDifference).toBe(true);
   });
 
-  test('defect 6B-D4: a zero balance reached through cents shows a negative zero', async () => {
+  test('6B-D4 no longer reproduced after 6B.1: a zero balance reached through cents is exactly zero', async () => {
+    // The formatting cause (Intl signDisplay) remains for non-canonical values; see 6B.1 report.
     const r = await probe('negativeZero');
-    expect(r.accountBalance).toMatchObject({ stored: '-2.7755575615628914e-17', display: formatCurrency(-1e-17, 'COP') });
-    expect(r.accountBalance.display).not.toBe(formatCurrency(0, 'COP'));
+    expect(r.accountBalance).toMatchObject({ stored: '0', exactDouble: true, display: formatCurrency(0, 'COP') });
+    expect(r.availableBalance.display).toBe(formatCurrency(0, 'COP'));
     expect(r.monthlySavings.stored).toBe('0');
   });
 

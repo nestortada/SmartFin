@@ -37,6 +37,7 @@ import {
   deleteManualTransactionSafely,
   type SaveManualTransactionParams,
 } from './saveManualTransaction';
+import { addCopAmounts } from '../../../shared/utils/exactCopCents';
 import {
   sharedFinancialEffects,
   sharedFinancialSnapshot,
@@ -231,9 +232,11 @@ async function cashMovement(
     throw new Error(
       'Selecciona una cuenta activa de efectivo, banco o ahorro.',
     );
-  const amount =
-    account.balance.amount +
-    (direction === 'inflow' ? input.amount : -input.amount);
+  const amount = addCopAmounts(
+    account.balance.amount,
+    direction === 'inflow' ? input.amount : -input.amount,
+    'sharedExpense.cashMovement',
+  ).amount;
   if (!Number.isFinite(amount)) throw new Error('Saldo inválido.');
   const transaction: Transaction = {
     id: context.id('movement'),

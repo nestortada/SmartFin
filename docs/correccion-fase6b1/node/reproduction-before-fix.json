@@ -1,0 +1,767 @@
+{
+  "commit": "5656f36",
+  "production": "unchanged",
+  "results": {
+    "balanceAccumulation": {
+      "amounts": [
+        "36360.06",
+        "36224.28",
+        "19556.65",
+        "5458.51"
+      ],
+      "balance": {
+        "stored": "97599.49999999999",
+        "expected": "97599.50",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 97.599"
+      },
+      "availableBalance": {
+        "stored": "97599.49999999999",
+        "expected": "97599.50",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 97.599"
+      },
+      "netWorth": {
+        "stored": "97599.49999999999",
+        "expected": "97599.50",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 97.599"
+      },
+      "monthlyIncome": {
+        "stored": "97599.5",
+        "expected": "97599.50",
+        "canonical": true,
+        "equalsOracle": true,
+        "display": "$ 97.600"
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "reversal": {
+      "before": "661275.68",
+      "during": {
+        "stored": "567658.99",
+        "expected": "567658.99",
+        "canonical": true,
+        "equalsOracle": true,
+        "display": "$ 567.659"
+      },
+      "after": {
+        "stored": "661275.6799999999",
+        "expected": "661275.68",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 661.276"
+      },
+      "restoredBitExact": false,
+      "transactionsLeft": 0,
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "cardFullPaymentA": {
+      "purchases": [
+        "96496.10",
+        "64804.55",
+        "68530.35"
+      ],
+      "exactTotal": "229831.00",
+      "debtAfterPurchases": {
+        "stored": "229831.00000000003",
+        "expected": "229831.00",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 229.831"
+      },
+      "fullPayment": {
+        "requested": 229831,
+        "paid": 229831,
+        "remainingDebt": 2.9103830456733704e-11
+      },
+      "debtAfterPayment": {
+        "stored": "2.9103830456733704e-11",
+        "expected": "0.00",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 0"
+      },
+      "bankAfterPayment": {
+        "stored": "770169",
+        "expected": "770169.00",
+        "canonical": true,
+        "equalsOracle": true,
+        "display": "$ 770.169"
+      },
+      "statement": {
+        "total_amount": 2.9103830456733704e-11,
+        "minimum_payment_amount": 0,
+        "status": "pending"
+      },
+      "monthlyExpenses": {
+        "before": "229831",
+        "after": "229831"
+      },
+      "dashboardDebt": {
+        "stored": "2.9103830456733704e-11",
+        "expected": "0.00",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 0"
+      },
+      "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "cardFullPaymentB": {
+      "purchases": [
+        "4229.90",
+        "89392.54",
+        "939.56"
+      ],
+      "exactTotal": "94562.00",
+      "debtAfterPurchases": {
+        "stored": "94561.99999999999",
+        "expected": "94562.00",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 94.562"
+      },
+      "fullPayment": {
+        "requested": 94562,
+        "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos."
+      },
+      "debtAfterPayment": {
+        "stored": "94561.99999999999",
+        "expected": "94562.00",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 94.562"
+      },
+      "bankAfterPayment": {
+        "stored": "1000000",
+        "expected": "1000000.00",
+        "canonical": true,
+        "equalsOracle": true,
+        "display": "$ 1.000.000"
+      },
+      "statement": {
+        "total_amount": 94561.99999999999,
+        "minimum_payment_amount": 9456,
+        "status": "pending"
+      },
+      "monthlyExpenses": {
+        "before": "94562",
+        "after": "94562"
+      },
+      "dashboardDebt": {
+        "stored": "94561.99999999999",
+        "expected": "94562.00",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 94.562"
+      },
+      "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "cardCentavosDebt": {
+      "attempts": [
+        {
+          "requested": 10001,
+          "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+          "debtAfter": "10000.4"
+        },
+        {
+          "requested": 10000.4,
+          "paid": 10000,
+          "remainingDebt": 0.3999999999996362,
+          "debtAfter": "0.3999999999996362"
+        },
+        {
+          "requested": 10000,
+          "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+          "debtAfter": "0.3999999999996362"
+        },
+        {
+          "requested": 1,
+          "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+          "debtAfter": "0.3999999999996362"
+        },
+        {
+          "requested": 0.4,
+          "rejected": "El importe del pago debe ser de al menos $1 COP.",
+          "debtAfter": "0.3999999999996362"
+        }
+      ],
+      "bank": "990000",
+      "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "zeroThroughCents": {
+      "balance": {
+        "stored": "-2.7755575615628914e-17",
+        "expected": "0.00",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "-$ 0"
+      },
+      "isPositiveZero": false,
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "transfersCents": {
+      "bank": {
+        "stored": "918189.0599999999",
+        "expected": "918189.06",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 918.189"
+      },
+      "target": {
+        "stored": "81485.01",
+        "expected": "81485.01",
+        "canonical": true,
+        "equalsOracle": true,
+        "display": "$ 81.485"
+      },
+      "monthlyExpenses": {
+        "stored": "326",
+        "expected": "326.00",
+        "canonical": true,
+        "equalsOracle": true,
+        "display": "$ 326"
+      },
+      "monthlyIncome": "0",
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "editsAndRepeatedReversal": {
+      "operations": 200,
+      "editCheck": {
+        "bank": {
+          "stored": "-18420872.849999998",
+          "expected": "-18420872.85",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "-$ 18.420.873"
+        },
+        "bank2": {
+          "stored": "1",
+          "expected": "1.00",
+          "canonical": true,
+          "equalsOracle": true,
+          "display": "$ 1"
+        }
+      },
+      "finalBank": {
+        "stored": "123456.78000000717",
+        "expected": "123456.78",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 123.457"
+      },
+      "finalBank2": {
+        "stored": "0.010000000000000009",
+        "expected": "0.01",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 0"
+      },
+      "restoredBitExact": false,
+      "transactionsLeft": 0,
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "cardCycle": {
+      "steps": [
+        {
+          "label": "purchases",
+          "debt": {
+            "stored": "393622.74",
+            "expected": "393622.74",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 393.623"
+          },
+          "bank": {
+            "stored": "2000000.5",
+            "expected": "2000000.50",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 2.000.001"
+          },
+          "statement": {
+            "total_amount": 193622.44,
+            "minimum_payment_amount": 19362,
+            "status": "pending"
+          }
+        },
+        {
+          "label": "partial payment",
+          "debt": {
+            "stored": "293622.74",
+            "expected": "293622.74",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 293.623"
+          },
+          "bank": {
+            "stored": "1900000.5",
+            "expected": "1900000.50",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 1.900.001"
+          },
+          "statement": {
+            "total_amount": 93622.44,
+            "minimum_payment_amount": 9362,
+            "status": "pending"
+          }
+        },
+        {
+          "label": "payment reversed",
+          "debt": {
+            "stored": "393622.74",
+            "expected": "393622.74",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 393.623"
+          },
+          "bank": {
+            "stored": "2000000.5",
+            "expected": "2000000.50",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 2.000.001"
+          },
+          "statement": {
+            "total_amount": 193622.44,
+            "minimum_payment_amount": 19362,
+            "status": "pending"
+          }
+        },
+        {
+          "label": "installment purchase reversed",
+          "debt": {
+            "stored": "93622.43999999999",
+            "expected": "93622.44",
+            "canonical": false,
+            "equalsOracle": false,
+            "display": "$ 93.622"
+          },
+          "bank": {
+            "stored": "2000000.5",
+            "expected": "2000000.50",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 2.000.001"
+          },
+          "statement": {
+            "total_amount": 93622.43999999999,
+            "minimum_payment_amount": 9362,
+            "status": "pending"
+          }
+        },
+        {
+          "label": "full-amount attempt",
+          "debt": {
+            "stored": "93622.43999999999",
+            "expected": "93622.44",
+            "canonical": false,
+            "equalsOracle": false,
+            "display": "$ 93.622"
+          },
+          "bank": {
+            "stored": "2000000.5",
+            "expected": "2000000.50",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 2.000.001"
+          },
+          "statement": {
+            "total_amount": 93622.43999999999,
+            "minimum_payment_amount": 9362,
+            "status": "pending"
+          }
+        },
+        {
+          "label": "whole pesos paid",
+          "debt": {
+            "stored": "0.4399999999877764",
+            "expected": "0.44",
+            "canonical": false,
+            "equalsOracle": false,
+            "display": "$ 0"
+          },
+          "bank": {
+            "stored": "1906378.5",
+            "expected": "1906378.50",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 1.906.379"
+          },
+          "statement": {
+            "total_amount": 0.4399999999877764,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          }
+        },
+        {
+          "label": "purchase reversed after payment",
+          "debt": {
+            "stored": "0",
+            "expected": "0.00",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 0"
+          },
+          "bank": {
+            "stored": "1906378.5",
+            "expected": "1906378.50",
+            "canonical": true,
+            "equalsOracle": true,
+            "display": "$ 1.906.379"
+          },
+          "statement": {
+            "total_amount": 0,
+            "minimum_payment_amount": 0,
+            "status": "paid"
+          }
+        }
+      ],
+      "fullAttempt": {
+        "requested": 93623,
+        "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos."
+      },
+      "whole": {
+        "requested": 93622,
+        "paid": 93622,
+        "remainingDebt": 0.4399999999877764
+      },
+      "closure": "closed",
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "historicalDrift": {
+      "detection": {
+        "bankCanonical": false,
+        "debtCanonical": false,
+        "bankDisplay": "$ 97.599"
+      },
+      "expenseOnDriftedBalance": {
+        "stored": "97499.24999999999",
+        "equalsPreviousBinary": true,
+        "canonical": false
+      },
+      "payment": {
+        "requested": 50000,
+        "paid": 50000,
+        "remainingDebt": 44561.999999999985
+      },
+      "bankAfterPayment": "47499.249999999985",
+      "debtAfterReconciliation": {
+        "stored": "44561.999999999985",
+        "expected": "44562.00",
+        "canonical": false,
+        "equalsOracle": false,
+        "display": "$ 44.562"
+      },
+      "rowsAdded": {
+        "transactions": 2,
+        "installment_purchases": 0,
+        "credit_card_statements": 1
+      },
+      "fallbacks": {},
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "outOfContract": {
+      "results": [
+        {
+          "label": "sub-cent amount",
+          "balance": "1000",
+          "amount": "0.005",
+          "stored": "999.995",
+          "equalsPreviousBinary": true,
+          "fallbacks": {}
+        },
+        {
+          "label": "sub-cent balance",
+          "balance": "0.125",
+          "amount": "10",
+          "stored": "10.125",
+          "equalsPreviousBinary": true,
+          "fallbacks": {}
+        },
+        {
+          "label": "whole pesos below 2^46",
+          "balance": "70368744177662",
+          "amount": "1",
+          "stored": "70368744177663",
+          "equalsPreviousBinary": true,
+          "fallbacks": {}
+        },
+        {
+          "label": "whole pesos reaching 2^46",
+          "balance": "70368744177663",
+          "amount": "1",
+          "stored": "70368744177664",
+          "equalsPreviousBinary": true,
+          "fallbacks": {}
+        },
+        {
+          "label": "MAX_SAFE_INTEGER",
+          "balance": "9007199254740990",
+          "amount": "1",
+          "stored": "9007199254740991",
+          "equalsPreviousBinary": true,
+          "fallbacks": {}
+        },
+        {
+          "label": "cents near 2^46",
+          "balance": "70368744177663.5",
+          "amount": "0.5",
+          "stored": "70368744177664",
+          "equalsPreviousBinary": true,
+          "fallbacks": {}
+        }
+      ],
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "sequenceIntegers": {
+      "profile": "integers",
+      "seed": 61,
+      "counts": {
+        "steps": 150,
+        "storedMismatch": 0,
+        "nonCanonicalStored": 0,
+        "payments": 16,
+        "paymentsRejected": 0,
+        "fullPayments": 3,
+        "fullPaymentsToZero": 3,
+        "monthlyMismatch": 0,
+        "wealthMismatch": 0
+      },
+      "firstMismatches": [],
+      "final": {
+        "target": {
+          "balance": "1482246",
+          "debt": "undefined"
+        },
+        "bank": {
+          "balance": "3073904",
+          "debt": "undefined"
+        },
+        "card": {
+          "balance": "0",
+          "debt": "220714"
+        }
+      },
+      "oracle": {
+        "bank": "3073904.00",
+        "target": "1482246.00",
+        "debt": "220714.00"
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "sequenceCents": {
+      "profile": "cents",
+      "seed": 62,
+      "counts": {
+        "steps": 150,
+        "storedMismatch": 251,
+        "nonCanonicalStored": 251,
+        "payments": 9,
+        "paymentsRejected": 0,
+        "fullPayments": 0,
+        "fullPaymentsToZero": 0,
+        "monthlyMismatch": 0,
+        "wealthMismatch": 142
+      },
+      "firstMismatches": [
+        {
+          "step": 5,
+          "name": "bank",
+          "stored": "5906819.390000001",
+          "expected": "5906819.39",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 5.906.819"
+        },
+        {
+          "step": 6,
+          "name": "bank",
+          "stored": "5876324.140000001",
+          "expected": "5876324.14",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 5.876.324"
+        },
+        {
+          "step": 7,
+          "name": "bank",
+          "stored": "5876324.140000001",
+          "expected": "5876324.14",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 5.876.324"
+        },
+        {
+          "step": 8,
+          "name": "bank",
+          "stored": "5876324.140000001",
+          "expected": "5876324.14",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 5.876.324"
+        },
+        {
+          "step": 9,
+          "name": "bank",
+          "stored": "5906819.390000001",
+          "expected": "5906819.39",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 5.906.819"
+        }
+      ],
+      "final": {
+        "target": {
+          "balance": "1890972.4100000001",
+          "debt": "undefined"
+        },
+        "bank": {
+          "balance": "5981680.919999999",
+          "debt": "undefined"
+        },
+        "card": {
+          "balance": "0",
+          "debt": "327314.24"
+        }
+      },
+      "oracle": {
+        "bank": "5981680.92",
+        "target": "1890972.41",
+        "debt": "327314.24"
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "sequenceCents1000": {
+      "profile": "cents",
+      "seed": 63,
+      "counts": {
+        "steps": 1000,
+        "storedMismatch": 2350,
+        "nonCanonicalStored": 2350,
+        "payments": 84,
+        "paymentsRejected": 0,
+        "fullPayments": 0,
+        "fullPaymentsToZero": 0,
+        "monthlyMismatch": 0,
+        "wealthMismatch": 985
+      },
+      "firstMismatches": [
+        {
+          "step": 4,
+          "name": "debt",
+          "stored": "0.3499999999985448",
+          "expected": "0.35",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 0"
+        },
+        {
+          "step": 7,
+          "name": "bank",
+          "stored": "4846624.4399999995",
+          "expected": "4846624.44",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 4.846.624"
+        },
+        {
+          "step": 7,
+          "name": "target",
+          "stored": "52880.369999999995",
+          "expected": "52880.37",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 52.880"
+        },
+        {
+          "step": 8,
+          "name": "bank",
+          "stored": "4846624.4399999995",
+          "expected": "4846624.44",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 4.846.624"
+        },
+        {
+          "step": 8,
+          "name": "target",
+          "stored": "52880.369999999995",
+          "expected": "52880.37",
+          "canonical": false,
+          "equalsOracle": false,
+          "display": "$ 52.880"
+        }
+      ],
+      "final": {
+        "target": {
+          "balance": "13826022.55",
+          "debt": "undefined"
+        },
+        "bank": {
+          "balance": "2384376.3000000096",
+          "debt": "undefined"
+        },
+        "card": {
+          "balance": "0",
+          "debt": "0.7999999932944775"
+        }
+      },
+      "oracle": {
+        "bank": "2384376.30",
+        "target": "13826022.55",
+        "debt": "0.80"
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    }
+  }
+}

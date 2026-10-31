@@ -13,6 +13,7 @@ import { requireCurrentTransaction, withManualTransactionScope } from './manualT
 import { isSQLiteParticipant } from '../../../database/managedSQLite';
 import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
 import { encodeTransactionDate, type TransactionDate } from '../../../shared/utils/transactionDate';
+import { addCopAmounts } from '../../../shared/utils/exactCopCents';
 
 export type ManualTransactionOperationType = 'Débito' | 'Crédito';
 
@@ -94,13 +95,14 @@ function applyAccountImpact(
   role: 'source' | 'target' = 'source',
 ): Account {
   const impact = getAccountImpact(transaction, account, role);
-  const nextDebtAmount = (account.debtBalance?.amount ?? 0) + impact.debtDelta * multiplier;
+  // 6B.1: exact cents for canonical two-decimal values; previous binary sum otherwise.
+  const nextDebtAmount = addCopAmounts(account.debtBalance?.amount ?? 0, impact.debtDelta * multiplier, 'manualTransaction.debt').amount;
 
   return {
     ...account,
     balance: {
       ...account.balance,
-      amount: account.balance.amount + impact.balanceDelta * multiplier,
+      amount: addCopAmounts(account.balance.amount, impact.balanceDelta * multiplier, 'manualTransaction.balance').amount,
     },
     ...(account.type === 'creditCard'
       ? {

@@ -3,6 +3,7 @@ import type { Account } from '../../accounts';
 import type { SqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import type { Transaction } from '../../transactions';
 import { bogotaCalendarDate, transactionDateKey } from '../../../shared/utils/transactionDate';
+import { addCopAmounts, differenceOfCopSums } from '../../../shared/utils/exactCopCents';
 import type { SqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
 import { readCurrentManualTransaction } from '../../transactions/repositories/sqliteTransactionRepository';
 import { isSQLiteParticipant } from '../../../database/managedSQLite';
@@ -190,8 +191,8 @@ function isPaymentSourceAccount(account: Account): boolean {
   );
 }
 
-function sumAmounts(transactions: CreditCardReconciliationTransaction[]): number {
-  return transactions.reduce((total, transaction) => total + transaction.amount, 0);
+function amountsOf(transactions: CreditCardReconciliationTransaction[]): number[] {
+  return transactions.map(transaction => transaction.amount);
 }
 
 function accountMatchesHint(account: Account, hint?: string, rawText?: string): boolean {
@@ -347,22 +348,25 @@ async function reconcileCreditCardTransactionsInScope({
     const paymentTransactions = transactions.filter(transaction =>
       isPostedCreditCardPayment(transaction, card.id),
     );
-    const totalCreditUsage = sumAmounts(cardTransactions);
-    const totalPayments = sumAmounts(paymentTransactions);
-    const debtBalance = Math.max(0, totalCreditUsage - totalPayments);
+    // 6B.1: Σ purchases − Σ payments in exact cents when every amount has at most two decimals;
+    // otherwise the previous binary sums in the same order. Derived from movements, never stored history.
+    const debtBalance = Math.max(0, differenceOfCopSums(
+      amountsOf(cardTransactions), amountsOf(paymentTransactions), 'creditCard.debt',
+    ).amount);
     const statementPayments = paymentTransactions
       .filter(transaction => isDateInRange(transactionDateKey(transaction), statementRange.start, statementRange.end));
-    const statementCharges = cardTransactions
+    const statementChargeAmounts = cardTransactions
       .filter(transaction => isDateInRange(transactionDateKey(transaction), statementRange.start, statementRange.end))
-      .reduce((total, transaction) => {
+      .map(transaction => {
         const installment = installmentByTransactionId.get(transaction.id);
-        return total + (installment && installment.installmentCount > 1 && installment.status === 'active'
+        return installment && installment.installmentCount > 1 && installment.status === 'active'
           ? installment.monthlyAmount
-          : transaction.amount);
-      }, 0);
+          : transaction.amount;
+      });
+    const statementCharges = differenceOfCopSums(statementChargeAmounts, [], 'creditCard.statementCharges').amount;
     const statementTotal = Math.max(
       0,
-      statementCharges - sumAmounts(statementPayments),
+      differenceOfCopSums(statementChargeAmounts, amountsOf(statementPayments), 'creditCard.statementTotal').amount,
     );
     const statementStatus = statementCharges > 0
       ? statementTotal > 0 ? 'pending' : 'paid'
@@ -556,7 +560,7 @@ async function registerCreditCardPaymentInScope({
       ...sourceAccount,
       balance: {
         ...sourceAccount.balance,
-        amount: sourceAccount.balance.amount - paidAmount,
+        amount: addCopAmounts(sourceAccount.balance.amount, -paidAmount, 'creditCardPayment.source').amount,
       },
       updatedAt: now,
     },
@@ -572,7 +576,7 @@ async function registerCreditCardPaymentInScope({
   return {
     paidAmount,
     previousDebt,
-    remainingDebt: Math.max(previousDebt - paidAmount, 0),
+    remainingDebt: Math.max(addCopAmounts(previousDebt, -paidAmount, 'creditCardPayment.remainingDebt').amount, 0),
     transaction,
   };
 }
