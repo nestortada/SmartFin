@@ -1,5 +1,6 @@
 import type { Transaction } from '../types';
 import { bogotaToday, transactionDateKey } from '../../../shared/utils/transactionDate';
+import { withoutNegativeZero } from '../../../shared/utils/formatCurrency';
 
 export type TransactionDateGroup = {
   data: Transaction[];
@@ -56,7 +57,7 @@ export function formatCOP(value: number): string {
     style: 'currency',
     currency: 'COP',
     minimumFractionDigits: 0,
-  }).format(value);
+  }).format(withoutNegativeZero(value));
 }
 
 export function formatAmountInputForForm(value: number): string {

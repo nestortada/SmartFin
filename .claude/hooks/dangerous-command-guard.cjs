@@ -1,0 +1,87 @@
+'use strict';
+// Adapter only: all financial, Git, SQLite and Android rules live in the Codex guard.
+const core=require('../../.codex/hooks/dangerous-command-guard.cjs');
+const {checkLaunch}=require('./synthetic-emulator.cjs');
+const {checkReadOnlyAdb}=require('./readonly-adb.cjs');
+const {checkRunner}=require('./phase6b2-runner.cjs');
+const quote=value=>"'"+value.replaceAll("'","''")+"'";
+const protect=value=>value.replace(/\.claude(?=[\\/\s'";]|$)/gi,'.codex').replace(/\bCLAUDE\.md\b/gi,'AGENTS.md');
+const reject=()=>{throw Error('unsupported');};
+
+function bashToPowerShell(source){
+  // A deliberately restricted literal Bash grammar, never a shell invocation.
+  // Expansion, redirects, grouping, globbing and wrappers require separate review.
+  const commands=[];let args=[],word='',active=false,mode='';
+  const flush=()=>{if(active)args.push(word);word='';active=false;};
+  const finish=()=>{flush();if(args.length)commands.push(args);args=[];};
+  for(let i=0;i<source.length;i++){
+    const c=source[i];
+    if(mode){
+      if(c===mode){mode='';continue;}
+      if(mode==='"'&&/[$`\\]/.test(c))reject();
+      word+=c;continue;
+    }
+    if(c==="'"||c==='"'){mode=c;active=true;continue;}
+    if(/[\s]/.test(c)){if(c==='\n')finish();else flush();continue;}
+    if(/[;&|]/.test(c)){finish();if(source[i+1]===c)i++;continue;}
+    if(/[$`\\(){}<>*?\[\]~#!\x00]/.test(c))reject();
+    active=true;word+=c;
+  }
+  if(mode)reject();finish();
+  if(!commands.length)reject();
+  for(const argv of commands){
+    const name=argv[0].replaceAll('\\','/').split('/').at(-1).toLowerCase();
+    if(argv[0].includes('=')||['env','sudo','eval','exec','command','builtin','xargs','find','nohup','time','source','.'].includes(name))reject();
+  }
+  return commands.map(argv=>'& '+argv.map(value=>quote(protect(value))).join(' ')).join('; ');
+}
+
+function evaluate(event){
+  try{
+    if(!event||event.hook_event_name!=='PreToolUse'||typeof event.cwd!=='string'||typeof event.tool_name!=='string'||!event.tool_input||typeof event.tool_input!=='object')reject();
+    const input=event.tool_input;
+    if(['Bash','PowerShell','powershell'].includes(event.tool_name)){
+      if(typeof input.command!=='string'||input.command.length>131072)reject();
+      // Before ADB: the audited runner names its serial, and other runners must not reach the core.
+      const runner=checkRunner(input.command,event.tool_name,event.cwd,core,bashToPowerShell);
+      if(runner)return runner;
+      const adb=checkReadOnlyAdb(input.command,event.tool_name,bashToPowerShell);
+      if(adb)return adb;
+      const launch=checkLaunch(input.command,event.tool_name);
+      if(launch)return launch;
+      const command=event.tool_name==='Bash'?bashToPowerShell(input.command):protect(input.command);
+      return core.evaluate({...event,tool_name:'Bash',tool_input:{command}});
+    }
+    if(['Write','Edit','MultiEdit'].includes(event.tool_name)){
+      if(typeof input.file_path!=='string'||/[\r\n\0]/.test(input.file_path))reject();
+      const edits=event.tool_name==='MultiEdit'?input.edits:[input];
+      if(!Array.isArray(edits)||!edits.length)reject();
+      for(const edit of edits){
+        const content=event.tool_name==='Write'?edit.content:edit.new_string;
+        if(typeof content!=='string'||content.length>1024*1024)reject();
+        const old=event.tool_name==='Write'?'previous content':edit.old_string;
+        if(typeof old!=='string')reject();
+        const command='*** Begin Patch\n*** Update File: '+protect(input.file_path)+'\n@@\n'+
+          old.split('\n').map(line=>'-'+line).join('\n')+'\n'+
+          content.split('\n').map(line=>'+'+line).join('\n')+'\n*** End Patch';
+        const result=core.evaluate({...event,tool_name:'apply_patch',tool_input:{command}});
+        if(result.decision==='deny')return result;
+      }
+      return {decision:'allow'};
+    }
+    return {decision:'allow'}; // tools outside the configured matcher have no coverage
+  }catch{return {decision:'deny',reason:'DG-CLAUDE: Unsupported or ambiguous tool input; separate review required'};}
+}
+
+if(require.main===module){
+  let input='',oversized=false;
+  const deny=reason=>process.stdout.write(JSON.stringify({hookSpecificOutput:{hookEventName:'PreToolUse',permissionDecision:'deny',permissionDecisionReason:reason}}));
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data',chunk=>{if(input.length+chunk.length>2*1024*1024)oversized=true;else if(!oversized)input+=chunk;});
+  process.stdin.on('end',()=>{
+    try{if(oversized)reject();const result=evaluate(JSON.parse(input));if(result.decision==='deny')deny(result.reason);}
+    catch{deny('DG-CLAUDE: Invalid JSON event');}
+  });
+  process.stdin.on('error',()=>deny('DG-CLAUDE: Input stream failed'));
+}
+module.exports={evaluate,bashToPowerShell};

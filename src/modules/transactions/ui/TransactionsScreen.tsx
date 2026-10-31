@@ -23,6 +23,7 @@ import { SQLiteCommandFailure } from '../../../database/atomicSQLite';
 import { ManualTransactionConflict } from '../useCases/manualTransactionScope';
 import type { Transaction, TransactionType } from '../types';
 import { bogotaToday, transactionDateKey, TRANSACTION_TIME_ZONE } from '../../../shared/utils/transactionDate';
+import { sumCopAmounts } from '../../../shared/utils/exactCopCents';
 import { createSqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import { createSqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import { createSqliteCategoryRepository } from '../../categories/repositories/sqliteCategoryRepository';
@@ -637,10 +638,13 @@ export function TransactionsScreen({
     }
   };
 
-  // Sum available balance
-  const totalBalance = accounts
-    .filter(a => a.status === 'active' && ['cash', 'bankAccount', 'savingsAccount'].includes(a.type))
-    .reduce((sum, a) => sum + a.balance.amount, 0);
+  // Sum available balance (exact cents as the dashboard, 6B.2)
+  const totalBalance = sumCopAmounts(
+    accounts
+      .filter(a => a.status === 'active' && ['cash', 'bankAccount', 'savingsAccount'].includes(a.type))
+      .map(a => a.balance.amount),
+    'transactions.availableBalance',
+  ).amount;
 
   // Handle Bottom Nav switching
   const handleTabPress = (tab: BottomNavigationTab) => {

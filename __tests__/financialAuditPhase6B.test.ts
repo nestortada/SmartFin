@@ -9,6 +9,7 @@ import { formatCurrency } from '../src/shared/utils/formatCurrency';
 // Tests named "defect 6B-…" characterize the CURRENT incorrect result on purpose: they must be
 // rewritten to the oracle value when the separate correction task is authorized.
 // Phase 6B.1 corrected 6B-D1/6B-D2 (and therefore 6B-D4): those tests now require the oracle value.
+// Phase 6B.2 corrected 6B-D3 (dashboard aggregates): its test now requires the oracle value too.
 jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn() }));
 const fs = require('node:fs') as { writeFileSync: (f: string, c: string) => void; mkdirSync: (p: string, o: object) => void };
 
@@ -111,10 +112,10 @@ describe('defects characterized by the audit (current results, not accepted beha
     expect(r.dashboardDebt.display).toBe(formatCurrency(0, 'COP'));
   });
 
-  test('defect 6B-D3: exact account balances are aggregated in binary by the dashboard', async () => {
+  test('6B-D3 corrected in 6B.2: exact account balances are aggregated in exact cents by the dashboard', async () => {
     const r = await probe('aggregateBalances');
-    expect(r.availableBalance).toMatchObject({ stored: '97599.49999999999', expectedDisplay: formatCurrency(97600, 'COP'), visibleDifference: true });
-    expect(r.netWorth.visibleDifference).toBe(true);
+    expect(r.availableBalance).toMatchObject({ stored: '97599.5', exactDouble: true, display: formatCurrency(97600, 'COP'), visibleDifference: false });
+    expect(r.netWorth).toMatchObject({ stored: '97599.5', exactDouble: true, visibleDifference: false });
   });
 
   test('6B-D4 no longer reproduced after 6B.1: a zero balance reached through cents is exactly zero', async () => {

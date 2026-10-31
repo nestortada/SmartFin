@@ -1,0 +1,19 @@
+{
+  "description": "SmartFin dangerous-command-guard v1 (PowerShell/CMD)",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/.codex/hooks/dangerous-command-guard.cjs\"",
+            "commandWindows": "node \"C:/Users/nesto/Proyectos/SmartFin/.codex/hooks/dangerous-command-guard.cjs\"",
+            "timeout": 5,
+            "statusMessage": "SmartFin: comprobando operaciones peligrosas"
+          }
+        ]
+      }
+    ]
+  }
+}

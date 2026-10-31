@@ -1,0 +1,399 @@
+{
+  "sequenceIntegers": {
+    "profile": "integers",
+    "steps": 150,
+    "seed": 61,
+    "counts": {
+      "steps": 150,
+      "storedMismatch": 0,
+      "visibleMismatch": 0,
+      "dashboardMismatch": 0,
+      "dashboardVisibleMismatch": 0,
+      "paymentsRejected": 0,
+      "payments": 16,
+      "nonCanonicalStored": 0
+    },
+    "dashboardMismatchFields": {},
+    "visibleFields": {},
+    "firstMismatches": [],
+    "final": {
+      "bank": "3073904",
+      "target": "1482246",
+      "debt": "220714"
+    },
+    "oracle": {
+      "bank": "3073904.00",
+      "target": "1482246.00",
+      "debt": "220714.00"
+    },
+    "foreignKeyViolations": 0
+  },
+  "sequenceCents": {
+    "profile": "cents",
+    "steps": 150,
+    "seed": 62,
+    "counts": {
+      "steps": 150,
+      "storedMismatch": 0,
+      "visibleMismatch": 0,
+      "dashboardMismatch": 0,
+      "dashboardVisibleMismatch": 0,
+      "paymentsRejected": 0,
+      "payments": 9,
+      "nonCanonicalStored": 0
+    },
+    "dashboardMismatchFields": {},
+    "visibleFields": {},
+    "firstMismatches": [],
+    "final": {
+      "bank": "5981680.92",
+      "target": "1890972.41",
+      "debt": "327314.24"
+    },
+    "oracle": {
+      "bank": "5981680.92",
+      "target": "1890972.41",
+      "debt": "327314.24"
+    },
+    "foreignKeyViolations": 0
+  },
+  "sequenceCents1000": {
+    "profile": "cents",
+    "steps": 1000,
+    "seed": 63,
+    "counts": {
+      "steps": 1000,
+      "storedMismatch": 0,
+      "visibleMismatch": 0,
+      "dashboardMismatch": 0,
+      "dashboardVisibleMismatch": 0,
+      "paymentsRejected": 0,
+      "payments": 84,
+      "nonCanonicalStored": 0
+    },
+    "dashboardMismatchFields": {},
+    "visibleFields": {},
+    "firstMismatches": [],
+    "final": {
+      "bank": "2384376.3",
+      "target": "13826022.55",
+      "debt": "0.8"
+    },
+    "oracle": {
+      "bank": "2384376.30",
+      "target": "13826022.55",
+      "debt": "0.80"
+    },
+    "foreignKeyViolations": 0
+  },
+  "unsafeCombinedSavings": {
+    "monthlyIncome": "60000000000000.01",
+    "monthlyExpenses": "-60000000000000.02",
+    "monthlySavings": "120000000000000.03",
+    "savingsExpected": "120000000000000.03",
+    "savingsCentsSafe": false
+  },
+  "aggregateBalances": {
+    "balances": [
+      "36360.06",
+      "36224.28",
+      "19556.65",
+      "5458.51"
+    ],
+    "eachAccountExact": true,
+    "availableBalance": {
+      "stored": "97599.5",
+      "expected": "97599.50",
+      "exactDouble": true,
+      "display": "$ 97.600",
+      "expectedDisplay": "$ 97.600",
+      "visibleDifference": false
+    },
+    "netWorth": {
+      "stored": "97599.5",
+      "expected": "97599.50",
+      "exactDouble": true,
+      "display": "$ 97.600",
+      "expectedDisplay": "$ 97.600",
+      "visibleDifference": false
+    }
+  },
+  "balanceAccumulation": {
+    "amounts": [
+      "36360.06",
+      "36224.28",
+      "19556.65",
+      "5458.51"
+    ],
+    "accountBalance": {
+      "stored": "97599.5",
+      "expected": "97599.50",
+      "exactDouble": true,
+      "display": "$ 97.600",
+      "expectedDisplay": "$ 97.600",
+      "visibleDifference": false
+    },
+    "availableBalance": {
+      "stored": "97599.5",
+      "expected": "97599.50",
+      "exactDouble": true,
+      "display": "$ 97.600",
+      "expectedDisplay": "$ 97.600",
+      "visibleDifference": false
+    },
+    "netWorth": {
+      "stored": "97599.5",
+      "expected": "97599.50",
+      "exactDouble": true,
+      "display": "$ 97.600",
+      "expectedDisplay": "$ 97.600",
+      "visibleDifference": false
+    },
+    "monthlyIncome": {
+      "stored": "97599.5",
+      "expected": "97599.50",
+      "exactDouble": true,
+      "display": "$ 97.600",
+      "expectedDisplay": "$ 97.600",
+      "visibleDifference": false
+    },
+    "monthlySavings": {
+      "stored": "97599.5",
+      "expected": "97599.50",
+      "exactDouble": true,
+      "display": "$ 97.600",
+      "expectedDisplay": "$ 97.600",
+      "visibleDifference": false
+    },
+    "foreignKeyViolations": 0
+  },
+  "reversalResidue": {
+    "before": "661275.68",
+    "during": {
+      "stored": "567658.99",
+      "expected": "567658.99",
+      "exactDouble": true,
+      "display": "$ 567.659",
+      "expectedDisplay": "$ 567.659",
+      "visibleDifference": false
+    },
+    "after": {
+      "stored": "661275.68",
+      "expected": "661275.68",
+      "exactDouble": true,
+      "display": "$ 661.276",
+      "expectedDisplay": "$ 661.276",
+      "visibleDifference": false
+    },
+    "restoredBitExact": true,
+    "transactionsLeft": 0,
+    "monthlyExpenses": 0
+  },
+  "cardResidueAbove": {
+    "purchases": [
+      "96496.10",
+      "64804.55",
+      "68530.35"
+    ],
+    "exactTotal": "229831.00",
+    "debtAfterPurchases": {
+      "stored": "229831",
+      "expected": "229831.00",
+      "exactDouble": true,
+      "display": "$ 229.831",
+      "expectedDisplay": "$ 229.831",
+      "visibleDifference": false
+    },
+    "fullPayment": {
+      "requested": 229831,
+      "paid": 229831
+    },
+    "debtAfterFullPayment": "0",
+    "attempts": [
+      {
+        "requested": 1,
+        "rejected": "La tarjeta no tiene saldo pendiente por pagar."
+      }
+    ],
+    "finalDebt": {
+      "stored": "0",
+      "expected": "0.00",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    },
+    "finalBank": "770169",
+    "dashboardDebt": {
+      "stored": "0",
+      "expected": "0.00",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    },
+    "monthlyExpenses": {
+      "stored": "229831",
+      "expected": "229831.00",
+      "exactDouble": true,
+      "display": "$ 229.831",
+      "expectedDisplay": "$ 229.831",
+      "visibleDifference": false
+    },
+    "closure": "closed",
+    "foreignKeyViolations": 0
+  },
+  "cardResidueBelow": {
+    "purchases": [
+      "4229.90",
+      "89392.54",
+      "939.56"
+    ],
+    "exactTotal": "94562.00",
+    "debtAfterPurchases": {
+      "stored": "94562",
+      "expected": "94562.00",
+      "exactDouble": true,
+      "display": "$ 94.562",
+      "expectedDisplay": "$ 94.562",
+      "visibleDifference": false
+    },
+    "fullPayment": {
+      "requested": 94562,
+      "paid": 94562
+    },
+    "debtAfterFullPayment": "0",
+    "attempts": [
+      {
+        "requested": 1,
+        "rejected": "La tarjeta no tiene saldo pendiente por pagar."
+      }
+    ],
+    "finalDebt": {
+      "stored": "0",
+      "expected": "0.00",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    },
+    "finalBank": "905438",
+    "dashboardDebt": {
+      "stored": "0",
+      "expected": "0.00",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    },
+    "monthlyExpenses": {
+      "stored": "94562",
+      "expected": "94562.00",
+      "exactDouble": true,
+      "display": "$ 94.562",
+      "expectedDisplay": "$ 94.562",
+      "visibleDifference": false
+    },
+    "closure": "closed",
+    "foreignKeyViolations": 0
+  },
+  "cardCentavosDebt": {
+    "purchase": "10000.40",
+    "attempts": [
+      {
+        "requested": 10001,
+        "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+        "debtAfter": "10000.4"
+      },
+      {
+        "requested": 10000.4,
+        "paid": 10000,
+        "debtAfter": "0.4"
+      },
+      {
+        "requested": 10000,
+        "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+        "debtAfter": "0.4"
+      },
+      {
+        "requested": 1,
+        "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+        "debtAfter": "0.4"
+      },
+      {
+        "requested": 0.4,
+        "rejected": "El importe del pago debe ser de al menos $1 COP.",
+        "debtAfter": "0.4"
+      }
+    ],
+    "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+    "dashboardDebt": {
+      "stored": "0.4",
+      "expected": "0.40",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    },
+    "bank": "990000"
+  },
+  "negativeZero": {
+    "accountBalance": {
+      "stored": "0",
+      "expected": "0.00",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    },
+    "availableBalance": {
+      "stored": "0",
+      "expected": "0.00",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    },
+    "netWorth": {
+      "stored": "0",
+      "expected": "0.00",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    },
+    "monthlySavings": {
+      "stored": "0",
+      "expected": "0.00",
+      "exactDouble": true,
+      "display": "$ 0",
+      "expectedDisplay": "$ 0",
+      "visibleDifference": false
+    }
+  },
+  "mixedSavings": {
+    "income": [
+      "43377.24",
+      "61500.34",
+      "12772.93"
+    ],
+    "expenses": [
+      "0.005",
+      "0.005"
+    ],
+    "monthlyIncome": {
+      "value": "117650.51",
+      "display": "$ 117.651"
+    },
+    "monthlyExpenses": {
+      "value": "0.01",
+      "display": "$ 0"
+    },
+    "monthlySavings": {
+      "value": "117650.49999999999",
+      "display": "$ 117.650"
+    },
+    "savingsDecimalIntent": "117650.500",
+    "savingsIntentDisplay": "$ 117.651"
+  }
+}

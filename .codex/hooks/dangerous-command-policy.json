@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "maxCommandLength": 131072,
+  "parserTimeoutMs": 2500,
+  "powerShellExecutables": [
+    "C:/Users/nesto/.cache/codex-runtimes/codex-primary-runtime/dependencies/native/powershell/pwsh.exe",
+    "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe"
+  ],
+  "generatedDirectories": ["coverage", "android/build", "android/app/build", "ios/build"],
+  "android": {
+    "productionPackage": "com.smartfin",
+    "syntheticPackages": [
+      {"id": "com.smartfin.snapshot5b2.tests", "databases": ["phase5b2_synthetic.db"]},
+      {"id": "com.smartfin.sharedcommands.bench", "databases": []},
+      {"id": "com.smartfin.dashboardphase2.bench", "databases": []}
+    ]
+  },
+  "auditedFixtureGenerators": [
+    {
+      "path": "scripts/phase5e3/reader-contract.cjs",
+      "sha256": "fd68213667d678f37f880f94db0c930b5865e070837a5662df4efedb9bcb948c",
+      "output": "docs/aceptacion-fase5e3/reader/fixtures",
+      "arguments": []
+    }
+  ]
+}

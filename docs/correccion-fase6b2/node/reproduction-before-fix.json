@@ -1,0 +1,1755 @@
+{
+  "probes": {
+    "aggregateBalances": {
+      "balances": [
+        "36360.06",
+        "36224.28",
+        "19556.65",
+        "5458.51"
+      ],
+      "figures": {
+        "availableBalance": {
+          "expected": "97599.50",
+          "expectedDisplay": "$ 97.600",
+          "previous": "97599.49999999999",
+          "previousDisplay": "$ 97.599",
+          "next": "97599.49999999999",
+          "nextDisplay": "$ 97.599",
+          "previousEqualsOracle": false,
+          "nextEqualsOracle": false,
+          "visibleChange": false
+        },
+        "totalDebt": {
+          "expected": "0.00",
+          "expectedDisplay": "$ 0",
+          "previous": "0",
+          "previousDisplay": "$ 0",
+          "next": "0",
+          "nextDisplay": "$ 0",
+          "previousEqualsOracle": true,
+          "nextEqualsOracle": true,
+          "visibleChange": false
+        },
+        "netWorth": {
+          "expected": "97599.50",
+          "expectedDisplay": "$ 97.600",
+          "previous": "97599.49999999999",
+          "previousDisplay": "$ 97.599",
+          "next": "97599.49999999999",
+          "nextDisplay": "$ 97.599",
+          "previousEqualsOracle": false,
+          "nextEqualsOracle": false,
+          "visibleChange": false
+        }
+      },
+      "monthly": {
+        "monthlyIncome": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlyExpenses": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlySavings": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlyNetLosses": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        }
+      },
+      "dashboardFallbacks": {},
+      "databaseUnchanged": true,
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "debtAggregate": {
+      "purchases": [
+        [
+          "card1",
+          "18160.76"
+        ],
+        [
+          "card2",
+          "76543.65"
+        ],
+        [
+          "card3",
+          "28611.09"
+        ]
+      ],
+      "debts": [
+        "18160.76",
+        "76543.65",
+        "28611.09"
+      ],
+      "figures": {
+        "availableBalance": {
+          "expected": "1000000.00",
+          "expectedDisplay": "$ 1.000.000",
+          "previous": "1000000",
+          "previousDisplay": "$ 1.000.000",
+          "next": "1000000",
+          "nextDisplay": "$ 1.000.000",
+          "previousEqualsOracle": true,
+          "nextEqualsOracle": true,
+          "visibleChange": false
+        },
+        "totalDebt": {
+          "expected": "123315.50",
+          "expectedDisplay": "$ 123.316",
+          "previous": "123315.49999999999",
+          "previousDisplay": "$ 123.315",
+          "next": "123315.49999999999",
+          "nextDisplay": "$ 123.315",
+          "previousEqualsOracle": false,
+          "nextEqualsOracle": false,
+          "visibleChange": false
+        },
+        "netWorth": {
+          "expected": "876684.50",
+          "expectedDisplay": "$ 876.685",
+          "previous": "876684.5",
+          "previousDisplay": "$ 876.685",
+          "next": "876684.5",
+          "nextDisplay": "$ 876.685",
+          "previousEqualsOracle": true,
+          "nextEqualsOracle": true,
+          "visibleChange": false
+        }
+      },
+      "monthly": {
+        "monthlyIncome": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlyExpenses": {
+          "previous": "123315.5",
+          "next": "123315.5",
+          "identical": true
+        },
+        "monthlySavings": {
+          "previous": "-123315.5",
+          "next": "-123315.5",
+          "identical": true
+        },
+        "monthlyNetLosses": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        }
+      },
+      "dashboardFallbacks": {},
+      "databaseUnchanged": true,
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "netWorthMixed": {
+      "accounts": [
+        [
+          "cash",
+          "A Efectivo",
+          "cash",
+          "46554.46",
+          null
+        ],
+        [
+          "bank",
+          "B Banco",
+          "bankAccount",
+          "565664.30",
+          null
+        ],
+        [
+          "savings",
+          "C Ahorro",
+          "savingsAccount",
+          "441782.23",
+          null
+        ],
+        [
+          "investment",
+          "D Inversion",
+          "investment",
+          "21116090.88",
+          null
+        ],
+        [
+          "card",
+          "E Tarjeta",
+          "creditCard",
+          "0",
+          "985.01"
+        ],
+        [
+          "loan",
+          "F Credito",
+          "loan",
+          "0",
+          "191377.36"
+        ],
+        [
+          "closedBank",
+          "G Cerrada",
+          "bankAccount",
+          "0.49",
+          null,
+          "closed"
+        ],
+        [
+          "closedCard",
+          "H Cerrada",
+          "creditCard",
+          "0",
+          "0.51",
+          "closed"
+        ]
+      ],
+      "figures": {
+        "availableBalance": {
+          "expected": "1054000.99",
+          "expectedDisplay": "$ 1.054.001",
+          "previous": "1054000.99",
+          "previousDisplay": "$ 1.054.001",
+          "next": "1054000.99",
+          "nextDisplay": "$ 1.054.001",
+          "previousEqualsOracle": true,
+          "nextEqualsOracle": true,
+          "visibleChange": false
+        },
+        "totalDebt": {
+          "expected": "192362.37",
+          "expectedDisplay": "$ 192.362",
+          "previous": "192362.37",
+          "previousDisplay": "$ 192.362",
+          "next": "192362.37",
+          "nextDisplay": "$ 192.362",
+          "previousEqualsOracle": true,
+          "nextEqualsOracle": true,
+          "visibleChange": false
+        },
+        "netWorth": {
+          "expected": "21977729.50",
+          "expectedDisplay": "$ 21.977.730",
+          "previous": "21977729.499999996",
+          "previousDisplay": "$ 21.977.729",
+          "next": "21977729.499999996",
+          "nextDisplay": "$ 21.977.729",
+          "previousEqualsOracle": false,
+          "nextEqualsOracle": false,
+          "visibleChange": false
+        }
+      },
+      "monthly": {
+        "monthlyIncome": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlyExpenses": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlySavings": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlyNetLosses": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        }
+      },
+      "dashboardFallbacks": {},
+      "databaseUnchanged": true,
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "sharedPosition": {
+      "position": {
+        "receivables": "169806.04",
+        "thirdPartyAdvances": "58752.99",
+        "receivablesEqualOracle": true,
+        "advancesEqualOracle": true
+      },
+      "figures": {
+        "availableBalance": {
+          "expected": "8656302.45",
+          "expectedDisplay": "$ 8.656.302",
+          "previous": "8656302.45",
+          "previousDisplay": "$ 8.656.302",
+          "next": "8656302.45",
+          "nextDisplay": "$ 8.656.302",
+          "previousEqualsOracle": true,
+          "nextEqualsOracle": true,
+          "visibleChange": false
+        },
+        "totalDebt": {
+          "expected": "0.00",
+          "expectedDisplay": "$ 0",
+          "previous": "0",
+          "previousDisplay": "$ 0",
+          "next": "0",
+          "nextDisplay": "$ 0",
+          "previousEqualsOracle": true,
+          "nextEqualsOracle": true,
+          "visibleChange": false
+        },
+        "netWorth": {
+          "expected": "8767355.50",
+          "expectedDisplay": "$ 8.767.356",
+          "previous": "8767355.499999998",
+          "previousDisplay": "$ 8.767.355",
+          "next": "8767355.499999998",
+          "nextDisplay": "$ 8.767.355",
+          "previousEqualsOracle": false,
+          "nextEqualsOracle": false,
+          "visibleChange": false
+        }
+      },
+      "monthly": {
+        "monthlyIncome": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlyExpenses": {
+          "previous": "189939.69",
+          "next": "189939.69",
+          "identical": true
+        },
+        "monthlySavings": {
+          "previous": "-189939.69",
+          "next": "-189939.69",
+          "identical": true
+        },
+        "monthlyNetLosses": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        }
+      },
+      "dashboardFallbacks": {},
+      "databaseUnchanged": true,
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "zeroThroughAggregation": {
+      "figures": {
+        "availableBalance": {
+          "expected": "0.00",
+          "expectedDisplay": "$ 0",
+          "previous": "-2.7755575615628914e-17",
+          "previousDisplay": "-$ 0",
+          "next": "-2.7755575615628914e-17",
+          "nextDisplay": "-$ 0",
+          "previousEqualsOracle": false,
+          "nextEqualsOracle": false,
+          "visibleChange": false
+        },
+        "totalDebt": {
+          "expected": "0.00",
+          "expectedDisplay": "$ 0",
+          "previous": "0",
+          "previousDisplay": "$ 0",
+          "next": "0",
+          "nextDisplay": "$ 0",
+          "previousEqualsOracle": true,
+          "nextEqualsOracle": true,
+          "visibleChange": false
+        },
+        "netWorth": {
+          "expected": "0.00",
+          "expectedDisplay": "$ 0",
+          "previous": "-2.7755575615628914e-17",
+          "previousDisplay": "-$ 0",
+          "next": "-2.7755575615628914e-17",
+          "nextDisplay": "-$ 0",
+          "previousEqualsOracle": false,
+          "nextEqualsOracle": false,
+          "visibleChange": false
+        }
+      },
+      "monthly": {
+        "monthlyIncome": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlyExpenses": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlySavings": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        },
+        "monthlyNetLosses": {
+          "previous": "0",
+          "next": "0",
+          "identical": true
+        }
+      },
+      "dashboardFallbacks": {},
+      "databaseUnchanged": true,
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "smallAmounts": {
+      "negativeFortyCents": {
+        "figures": {
+          "availableBalance": {
+            "expected": "-0.40",
+            "expectedDisplay": "-$ 0",
+            "previous": "-0.4",
+            "previousDisplay": "-$ 0",
+            "next": "-0.4",
+            "nextDisplay": "-$ 0",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "0.00",
+            "expectedDisplay": "$ 0",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "-0.40",
+            "expectedDisplay": "-$ 0",
+            "previous": "-0.4",
+            "previousDisplay": "-$ 0",
+            "next": "-0.4",
+            "nextDisplay": "-$ 0",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true
+      },
+      "debtFortyCents": {
+        "figures": {
+          "availableBalance": {
+            "expected": "0.00",
+            "expectedDisplay": "$ 0",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "0.40",
+            "expectedDisplay": "$ 0",
+            "previous": "0.4",
+            "previousDisplay": "$ 0",
+            "next": "0.4",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "-0.40",
+            "expectedDisplay": "-$ 0",
+            "previous": "-0.4",
+            "previousDisplay": "-$ 0",
+            "next": "-0.4",
+            "nextDisplay": "-$ 0",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true
+      },
+      "halfPositive": {
+        "figures": {
+          "availableBalance": {
+            "expected": "1234.50",
+            "expectedDisplay": "$ 1.235",
+            "previous": "1234.5",
+            "previousDisplay": "$ 1.235",
+            "next": "1234.5",
+            "nextDisplay": "$ 1.235",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "0.00",
+            "expectedDisplay": "$ 0",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "1234.50",
+            "expectedDisplay": "$ 1.235",
+            "previous": "1234.5",
+            "previousDisplay": "$ 1.235",
+            "next": "1234.5",
+            "nextDisplay": "$ 1.235",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true
+      },
+      "halfNegative": {
+        "figures": {
+          "availableBalance": {
+            "expected": "-0.50",
+            "expectedDisplay": "-$ 1",
+            "previous": "-0.5",
+            "previousDisplay": "-$ 1",
+            "next": "-0.5",
+            "nextDisplay": "-$ 1",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "0.00",
+            "expectedDisplay": "$ 0",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "-0.50",
+            "expectedDisplay": "-$ 1",
+            "previous": "-0.5",
+            "previousDisplay": "-$ 1",
+            "next": "-0.5",
+            "nextDisplay": "-$ 1",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true
+      },
+      "overdraftAndDebt": {
+        "figures": {
+          "availableBalance": {
+            "expected": "-15000.25",
+            "expectedDisplay": "-$ 15.000",
+            "previous": "-15000.25",
+            "previousDisplay": "-$ 15.000",
+            "next": "-15000.25",
+            "nextDisplay": "-$ 15.000",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "84999.25",
+            "expectedDisplay": "$ 84.999",
+            "previous": "84999.25",
+            "previousDisplay": "$ 84.999",
+            "next": "84999.25",
+            "nextDisplay": "$ 84.999",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "-99999.50",
+            "expectedDisplay": "-$ 100.000",
+            "previous": "-99999.5",
+            "previousDisplay": "-$ 100.000",
+            "next": "-99999.5",
+            "nextDisplay": "-$ 100.000",
+            "previousEqualsOracle": true,
+            "nextEqualsOracle": true,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "outOfContract": {
+      "historicalDrift": {
+        "figures": {
+          "availableBalance": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "97699.74999999999",
+            "previousDisplay": "$ 97.700",
+            "next": "97699.74999999999",
+            "nextDisplay": "$ 97.700",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "97699.74999999999",
+            "previousDisplay": "$ 97.700",
+            "next": "97699.74999999999",
+            "nextDisplay": "$ 97.700",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true,
+        "bitIdentical": true
+      },
+      "historicalResidueZero": {
+        "figures": {
+          "availableBalance": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "-2.7755575615628914e-17",
+            "previousDisplay": "-$ 0",
+            "next": "-2.7755575615628914e-17",
+            "nextDisplay": "-$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "-2.7755575615628914e-17",
+            "previousDisplay": "-$ 0",
+            "next": "-2.7755575615628914e-17",
+            "nextDisplay": "-$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true,
+        "bitIdentical": true
+      },
+      "threeDecimals": {
+        "figures": {
+          "availableBalance": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "1.1199999999999999",
+            "previousDisplay": "$ 1",
+            "next": "1.1199999999999999",
+            "nextDisplay": "$ 1",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "0.105",
+            "previousDisplay": "$ 0",
+            "next": "0.105",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "1.015",
+            "previousDisplay": "$ 1",
+            "next": "1.015",
+            "nextDisplay": "$ 1",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true,
+        "bitIdentical": true
+      },
+      "beyond2pow46": {
+        "figures": {
+          "availableBalance": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "0.25",
+            "previousDisplay": "$ 0",
+            "next": "0.25",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "70368744177664.75",
+            "previousDisplay": "$ 70.368.744.177.665",
+            "next": "70368744177664.75",
+            "nextDisplay": "$ 70.368.744.177.665",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true,
+        "bitIdentical": true
+      },
+      "unsafeTotal": {
+        "figures": {
+          "availableBalance": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "120000000000000.03",
+            "previousDisplay": "$ 120.000.000.000.000",
+            "next": "120000000000000.03",
+            "nextDisplay": "$ 120.000.000.000.000",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "120000000000000.03",
+            "previousDisplay": "$ 120.000.000.000.000",
+            "next": "120000000000000.03",
+            "nextDisplay": "$ 120.000.000.000.000",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true,
+        "bitIdentical": true
+      },
+      "unsafeNetWorth": {
+        "figures": {
+          "availableBalance": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "0",
+            "previousDisplay": "$ 0",
+            "next": "0",
+            "nextDisplay": "$ 0",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "totalDebt": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "50000000000000.02",
+            "previousDisplay": "$ 50.000.000.000.000",
+            "next": "50000000000000.02",
+            "nextDisplay": "$ 50.000.000.000.000",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          },
+          "netWorth": {
+            "expected": "n/a",
+            "expectedDisplay": "n/a",
+            "previous": "-100000000000000.03",
+            "previousDisplay": "-$ 100.000.000.000.000",
+            "next": "-100000000000000.03",
+            "nextDisplay": "-$ 100.000.000.000.000",
+            "previousEqualsOracle": false,
+            "nextEqualsOracle": false,
+            "visibleChange": false
+          }
+        },
+        "monthly": {
+          "monthlyIncome": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyExpenses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlySavings": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        "dashboardFallbacks": {},
+        "databaseUnchanged": true,
+        "bitIdentical": true
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "economicSequence": {
+      "counts": {
+        "steps": 12,
+        "nextMismatch": 8,
+        "previousMismatch": 8,
+        "previousVisible": 0,
+        "ruleViolations": 0,
+        "databaseChanged": 0
+      },
+      "steps": [
+        {
+          "name": "income",
+          "netWorthDelta": "36360.06",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1786360.56",
+              "expectedDisplay": "$ 1.786.361",
+              "previous": "1786360.5599999998",
+              "previousDisplay": "$ 1.786.361",
+              "next": "1786360.5599999998",
+              "nextDisplay": "$ 1.786.361",
+              "previousEqualsOracle": false,
+              "nextEqualsOracle": false,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "0.00",
+              "expectedDisplay": "$ 0",
+              "previous": "0",
+              "previousDisplay": "$ 0",
+              "next": "0",
+              "nextDisplay": "$ 0",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1786360.56",
+              "expectedDisplay": "$ 1.786.361",
+              "previous": "1786360.5599999998",
+              "previousDisplay": "$ 1.786.361",
+              "next": "1786360.5599999998",
+              "nextDisplay": "$ 1.786.361",
+              "previousEqualsOracle": false,
+              "nextEqualsOracle": false,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        {
+          "name": "expense",
+          "netWorthDelta": "-19556.65",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1766803.91",
+              "expectedDisplay": "$ 1.766.804",
+              "previous": "1766803.91",
+              "previousDisplay": "$ 1.766.804",
+              "next": "1766803.91",
+              "nextDisplay": "$ 1.766.804",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "0.00",
+              "expectedDisplay": "$ 0",
+              "previous": "0",
+              "previousDisplay": "$ 0",
+              "next": "0",
+              "nextDisplay": "$ 0",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1766803.91",
+              "expectedDisplay": "$ 1.766.804",
+              "previous": "1766803.91",
+              "previousDisplay": "$ 1.766.804",
+              "next": "1766803.91",
+              "nextDisplay": "$ 1.766.804",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        {
+          "name": "ownTransfer",
+          "netWorthDelta": "0.00",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1766803.91",
+              "expectedDisplay": "$ 1.766.804",
+              "previous": "1766803.91",
+              "previousDisplay": "$ 1.766.804",
+              "next": "1766803.91",
+              "nextDisplay": "$ 1.766.804",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "0.00",
+              "expectedDisplay": "$ 0",
+              "previous": "0",
+              "previousDisplay": "$ 0",
+              "next": "0",
+              "nextDisplay": "$ 0",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1766803.91",
+              "expectedDisplay": "$ 1.766.804",
+              "previous": "1766803.91",
+              "previousDisplay": "$ 1.766.804",
+              "next": "1766803.91",
+              "nextDisplay": "$ 1.766.804",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        {
+          "name": "transferWithTax",
+          "netWorthDelta": "-320.00",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1766483.91",
+              "expectedDisplay": "$ 1.766.484",
+              "previous": "1766483.91",
+              "previousDisplay": "$ 1.766.484",
+              "next": "1766483.91",
+              "nextDisplay": "$ 1.766.484",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "0.00",
+              "expectedDisplay": "$ 0",
+              "previous": "0",
+              "previousDisplay": "$ 0",
+              "next": "0",
+              "nextDisplay": "$ 0",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1766483.91",
+              "expectedDisplay": "$ 1.766.484",
+              "previous": "1766483.91",
+              "previousDisplay": "$ 1.766.484",
+              "next": "1766483.91",
+              "nextDisplay": "$ 1.766.484",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        {
+          "name": "creditPurchase",
+          "netWorthDelta": "-76543.65",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1766483.91",
+              "expectedDisplay": "$ 1.766.484",
+              "previous": "1766483.91",
+              "previousDisplay": "$ 1.766.484",
+              "next": "1766483.91",
+              "nextDisplay": "$ 1.766.484",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "76543.65",
+              "expectedDisplay": "$ 76.544",
+              "previous": "76543.65",
+              "previousDisplay": "$ 76.544",
+              "next": "76543.65",
+              "nextDisplay": "$ 76.544",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1689940.26",
+              "expectedDisplay": "$ 1.689.940",
+              "previous": "1689940.26",
+              "previousDisplay": "$ 1.689.940",
+              "next": "1689940.26",
+              "nextDisplay": "$ 1.689.940",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        {
+          "name": "cardPayment",
+          "netWorthDelta": "0.00",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1716483.91",
+              "expectedDisplay": "$ 1.716.484",
+              "previous": "1716483.91",
+              "previousDisplay": "$ 1.716.484",
+              "next": "1716483.91",
+              "nextDisplay": "$ 1.716.484",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "26543.65",
+              "expectedDisplay": "$ 26.544",
+              "previous": "26543.65",
+              "previousDisplay": "$ 26.544",
+              "next": "26543.65",
+              "nextDisplay": "$ 26.544",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1689940.26",
+              "expectedDisplay": "$ 1.689.940",
+              "previous": "1689940.26",
+              "previousDisplay": "$ 1.689.940",
+              "next": "1689940.26",
+              "nextDisplay": "$ 1.689.940",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        {
+          "name": "sharedPurchase",
+          "netWorthDelta": "-15000.15",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1686483.61",
+              "expectedDisplay": "$ 1.686.484",
+              "previous": "1686483.6099999999",
+              "previousDisplay": "$ 1.686.484",
+              "next": "1686483.6099999999",
+              "nextDisplay": "$ 1.686.484",
+              "previousEqualsOracle": false,
+              "nextEqualsOracle": false,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "26543.65",
+              "expectedDisplay": "$ 26.544",
+              "previous": "26543.65",
+              "previousDisplay": "$ 26.544",
+              "next": "26543.65",
+              "nextDisplay": "$ 26.544",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1674940.11",
+              "expectedDisplay": "$ 1.674.940",
+              "previous": "1674940.1099999999",
+              "previousDisplay": "$ 1.674.940",
+              "next": "1674940.1099999999",
+              "nextDisplay": "$ 1.674.940",
+              "previousEqualsOracle": false,
+              "nextEqualsOracle": false,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        {
+          "name": "sharedReimbursement",
+          "netWorthDelta": "0.00",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1691483.66",
+              "expectedDisplay": "$ 1.691.484",
+              "previous": "1691483.66",
+              "previousDisplay": "$ 1.691.484",
+              "next": "1691483.66",
+              "nextDisplay": "$ 1.691.484",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "26543.65",
+              "expectedDisplay": "$ 26.544",
+              "previous": "26543.65",
+              "previousDisplay": "$ 26.544",
+              "next": "26543.65",
+              "nextDisplay": "$ 26.544",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1674940.11",
+              "expectedDisplay": "$ 1.674.940",
+              "previous": "1674940.11",
+              "previousDisplay": "$ 1.674.940",
+              "next": "1674940.11",
+              "nextDisplay": "$ 1.674.940",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "0",
+            "next": "0",
+            "identical": true
+          }
+        },
+        {
+          "name": "forgiveness",
+          "netWorthDelta": "-4000.04",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1691483.66",
+              "expectedDisplay": "$ 1.691.484",
+              "previous": "1691483.66",
+              "previousDisplay": "$ 1.691.484",
+              "next": "1691483.66",
+              "nextDisplay": "$ 1.691.484",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "26543.65",
+              "expectedDisplay": "$ 26.544",
+              "previous": "26543.65",
+              "previousDisplay": "$ 26.544",
+              "next": "26543.65",
+              "nextDisplay": "$ 26.544",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1670940.07",
+              "expectedDisplay": "$ 1.670.940",
+              "previous": "1670940.07",
+              "previousDisplay": "$ 1.670.940",
+              "next": "1670940.07",
+              "nextDisplay": "$ 1.670.940",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "4000.04",
+            "next": "4000.04",
+            "identical": true
+          }
+        },
+        {
+          "name": "advanceReceived",
+          "netWorthDelta": "0.00",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1711483.73",
+              "expectedDisplay": "$ 1.711.484",
+              "previous": "1711483.7299999997",
+              "previousDisplay": "$ 1.711.484",
+              "next": "1711483.7299999997",
+              "nextDisplay": "$ 1.711.484",
+              "previousEqualsOracle": false,
+              "nextEqualsOracle": false,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "26543.65",
+              "expectedDisplay": "$ 26.544",
+              "previous": "26543.65",
+              "previousDisplay": "$ 26.544",
+              "next": "26543.65",
+              "nextDisplay": "$ 26.544",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1670940.07",
+              "expectedDisplay": "$ 1.670.940",
+              "previous": "1670940.0699999998",
+              "previousDisplay": "$ 1.670.940",
+              "next": "1670940.0699999998",
+              "nextDisplay": "$ 1.670.940",
+              "previousEqualsOracle": false,
+              "nextEqualsOracle": false,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "4000.04",
+            "next": "4000.04",
+            "identical": true
+          }
+        },
+        {
+          "name": "advanceReturned",
+          "netWorthDelta": "0.00",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1706483.81",
+              "expectedDisplay": "$ 1.706.484",
+              "previous": "1706483.8099999998",
+              "previousDisplay": "$ 1.706.484",
+              "next": "1706483.8099999998",
+              "nextDisplay": "$ 1.706.484",
+              "previousEqualsOracle": false,
+              "nextEqualsOracle": false,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "26543.65",
+              "expectedDisplay": "$ 26.544",
+              "previous": "26543.65",
+              "previousDisplay": "$ 26.544",
+              "next": "26543.65",
+              "nextDisplay": "$ 26.544",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1670940.07",
+              "expectedDisplay": "$ 1.670.940",
+              "previous": "1670940.07",
+              "previousDisplay": "$ 1.670.940",
+              "next": "1670940.07",
+              "nextDisplay": "$ 1.670.940",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "4000.04",
+            "next": "4000.04",
+            "identical": true
+          }
+        },
+        {
+          "name": "deleteExpense",
+          "netWorthDelta": "19556.65",
+          "ruleHolds": true,
+          "figures": {
+            "availableBalance": {
+              "expected": "1726040.46",
+              "expectedDisplay": "$ 1.726.040",
+              "previous": "1726040.4599999997",
+              "previousDisplay": "$ 1.726.040",
+              "next": "1726040.4599999997",
+              "nextDisplay": "$ 1.726.040",
+              "previousEqualsOracle": false,
+              "nextEqualsOracle": false,
+              "visibleChange": false
+            },
+            "totalDebt": {
+              "expected": "26543.65",
+              "expectedDisplay": "$ 26.544",
+              "previous": "26543.65",
+              "previousDisplay": "$ 26.544",
+              "next": "26543.65",
+              "nextDisplay": "$ 26.544",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            },
+            "netWorth": {
+              "expected": "1690496.72",
+              "expectedDisplay": "$ 1.690.497",
+              "previous": "1690496.72",
+              "previousDisplay": "$ 1.690.497",
+              "next": "1690496.72",
+              "nextDisplay": "$ 1.690.497",
+              "previousEqualsOracle": true,
+              "nextEqualsOracle": true,
+              "visibleChange": false
+            }
+          },
+          "monthlyIncome": {
+            "previous": "36360.06",
+            "next": "36360.06",
+            "identical": true
+          },
+          "monthlyNetLosses": {
+            "previous": "4000.04",
+            "next": "4000.04",
+            "identical": true
+          }
+        }
+      ],
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    }
+  },
+  "sweeps": {},
+  "volume": {},
+  "intl": {
+    "+0": "$ 0",
+    "-0": "-$ 0",
+    "-2.78e-17": "-$ 0",
+    "-0.004": "-$ 0",
+    "-0.40": "-$ 0",
+    "0.40": "$ 0",
+    "-0.49999999999999994": "-$ 0",
+    "-0.50": "-$ 1",
+    "0.50": "$ 1",
+    "2.50": "$ 3",
+    "97599.49999999999": "$ 97.599",
+    "97599.50": "$ 97.600"
+  },
+  "intlPrevious": {
+    "+0": "$ 0",
+    "-0": "-$ 0",
+    "-2.78e-17": "-$ 0",
+    "-0.004": "-$ 0",
+    "-0.40": "-$ 0",
+    "0.40": "$ 0",
+    "-0.49999999999999994": "-$ 0",
+    "-0.50": "-$ 1",
+    "0.50": "$ 1",
+    "2.50": "$ 3",
+    "97599.49999999999": "$ 97.599",
+    "97599.50": "$ 97.600"
+  }
+}

@@ -17,7 +17,13 @@ import type { DashboardSummary } from '../types/DashboardSummary';
 import type { TransactionAmount } from '../../transactions/types/TransactionQuery';
 import { bogotaCalendarDate, transactionDateKey } from '../../../shared/utils/transactionDate';
 import { createSqliteSharedExpenseRepository } from '../../transactions/repositories/sqliteSharedExpenseRepository';
-import { sumExactCopCents, toExactCopCents } from '../../../shared/utils/exactCopCents';
+import type { SharedFinancialTotals } from '../../transactions/useCases/readSharedFinancialTotals';
+import {
+  addSafeCents,
+  copAggregate,
+  sumExactCopCents,
+  toExactCopCents,
+} from '../../../shared/utils/exactCopCents';
 
 type DashboardSummaryDependencies = {
   accountRepository?: AccountRepository;
@@ -44,18 +50,64 @@ function isActiveAccount(account: Account): boolean {
   return account.status === 'active';
 }
 
-function sumBalances(accounts: Account[], accountTypes: AccountType[]): number {
-  return accounts
-    .filter(account => isActiveAccount(account))
-    .filter(account => accountTypes.includes(account.type))
-    .reduce((total, account) => total + account.balance.amount, 0);
+/** A sum of amounts: exact cents when every amount is canonical (else undefined) and the previous binary sum. */
+type CopSum = { cents: number | undefined; binary: number };
+
+function sumCop(amounts: number[]): CopSum {
+  return {
+    cents: sumExactCopCents(amounts),
+    binary: amounts.reduce((total, amount) => total + amount, 0),
+  };
 }
 
-function sumDebts(accounts: Account[]): number {
-  return accounts
-    .filter(account => isActiveAccount(account))
-    .filter(account => DEBT_ACCOUNT_TYPES.includes(account.type))
-    .reduce((total, account) => total + (account.debtBalance?.amount ?? 0), 0);
+function sumBalances(accounts: Account[], accountTypes: AccountType[]): CopSum {
+  return sumCop(
+    accounts
+      .filter(account => isActiveAccount(account))
+      .filter(account => accountTypes.includes(account.type))
+      .map(account => account.balance.amount),
+  );
+}
+
+function sumDebts(accounts: Account[]): CopSum {
+  return sumCop(
+    accounts
+      .filter(account => isActiveAccount(account))
+      .filter(account => DEBT_ACCOUNT_TYPES.includes(account.type))
+      .map(account => account.debtBalance?.amount ?? 0),
+  );
+}
+
+/**
+ * Phase 6B.2: available balance, total debt and net worth (assets − debt + receivables − advances)
+ * accumulate exact cents and convert once. Each figure independently keeps its previous binary
+ * value, with the same operations and order, when an operand is not a two-decimal COP amount below
+ * 2^46 or a partial or final total is not a safe integer. Individual balances are never rounded.
+ */
+function sumBalanceFigures(
+  accounts: Account[],
+  position?: SharedFinancialTotals,
+): Pick<DashboardSummary, 'availableBalance' | 'totalDebt' | 'netWorth'> {
+  const available = sumBalances(accounts, AVAILABLE_BALANCE_ACCOUNT_TYPES);
+  const assets = sumBalances(accounts, NET_WORTH_ASSET_ACCOUNT_TYPES);
+  const debt = sumDebts(accounts);
+  let netWorthCents = addSafeCents(assets.cents, debt.cents === undefined ? undefined : -debt.cents);
+  let netWorthBinary = assets.binary - debt.binary;
+  if (position) {
+    const receivableCents = toExactCopCents(position.receivables);
+    const advanceCents = toExactCopCents(position.thirdPartyAdvances);
+    netWorthCents = addSafeCents(
+      addSafeCents(netWorthCents, receivableCents),
+      advanceCents === undefined ? undefined : -advanceCents,
+    );
+    netWorthBinary = netWorthBinary + position.receivables - position.thirdPartyAdvances;
+  }
+
+  return {
+    availableBalance: copAggregate(available.cents, available.binary, 'dashboard.availableBalance').amount,
+    totalDebt: copAggregate(debt.cents, debt.binary, 'dashboard.totalDebt').amount,
+    netWorth: copAggregate(netWorthCents, netWorthBinary, 'dashboard.netWorth').amount,
+  };
 }
 
 function toYearMonth(date: Date): string {
@@ -168,11 +220,9 @@ function buildSummary(
   monthlyTransactions: TransactionAmount[],
   recentTransactionCount: number,
   monthlyNetLoss = 0,
+  position?: SharedFinancialTotals,
 ): DashboardSummary {
-  const availableBalance = sumBalances(accounts, AVAILABLE_BALANCE_ACCOUNT_TYPES);
-  const totalDebt = sumDebts(accounts);
-  const netWorth =
-    sumBalances(accounts, NET_WORTH_ASSET_ACCOUNT_TYPES) - totalDebt;
+  const { availableBalance, totalDebt, netWorth } = sumBalanceFigures(accounts, position);
   const { monthlyIncome, monthlyExpenses, monthlySavings } = sumMonthlyFigures(
     monthlyTransactions,
     monthlyNetLoss,
@@ -295,8 +345,8 @@ export async function getDashboardSummaryFromDb(
     .filter(day => isRecentTransaction(day, currentDate))
     .reduce((total, day) => total + day.count, 0);
 
-  const summary = buildSummary(accounts, monthlyAmounts, recentTransactionCount, losses.netLoss);
-  return { ...summary, netWorth: summary.netWorth + position.receivables - position.thirdPartyAdvances,
+  const summary = buildSummary(accounts, monthlyAmounts, recentTransactionCount, losses.netLoss, position);
+  return { ...summary,
     monthlyForgivenessLosses: losses.losses, monthlyLossReversals: losses.reversals,
     monthlyLossRecoveries: losses.recoveries, monthlyRecoveryReversals: losses.recoveryReversals,
     monthlyNetLosses: losses.netLoss };

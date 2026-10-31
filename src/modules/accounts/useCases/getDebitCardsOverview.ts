@@ -6,6 +6,7 @@ import { bogotaCalendarDate, transactionDateKey, transactionSortValue } from '..
 import type { SharedExpenseState } from '../../transactions/types/SharedExpense';
 import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
 import { createSqliteSharedExpenseRepository } from '../../transactions/repositories/sqliteSharedExpenseRepository';
+import { sumCopAmounts } from '../../../shared/utils/exactCopCents';
 import {
   parseDebitCardMetadata,
   type DebitCardRecurringIncome,
@@ -248,7 +249,8 @@ export function buildDebitCardsOverview(
       };
     }),
     generatedAt: currentDate.toISOString(),
-    totalAvailable: debitAccounts.reduce((total, account) => total + account.balance.amount, 0),
+    // Exact cents as the dashboard (6B.2); out of contract, the previous binary sum.
+    totalAvailable: sumCopAmounts(debitAccounts.map(account => account.balance.amount), 'debitCards.totalAvailable').amount,
   };
 }
 

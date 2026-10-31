@@ -84,6 +84,48 @@ export function addCopAmounts(base: number, delta: number, site = 'unspecified')
   return exact === undefined ? binaryFallback(site, base + delta) : { amount: exact, path: 'exactCents' };
 }
 
+/** `a + b` of exact cents, or undefined if an operand is missing or the result is not a safe integer. */
+export function addSafeCents(a: number | undefined, b: number | undefined): number | undefined {
+  if (a === undefined || b === undefined) {
+    return undefined;
+  }
+  // Both operands are safe integers: an exact total within the safe range is computed exactly, and
+  // a total beyond it rounds to at least 2^53, so it can never come back as a wrong safe integer.
+  const total = a + b;
+  return Number.isSafeInteger(total) ? total : undefined;
+}
+
+/**
+ * Value of a derived, non-persisted aggregate (6B.2 dashboard figures): exact cents converted once
+ * when they are available and safe; otherwise the previous binary value, unchanged and recorded.
+ * Unlike persisted balances it does not require the result below 2^46: `cents / 100` is already the
+ * nearest double to the exact decimal, as in the 6A monthly figures.
+ */
+export function copAggregate(cents: number | undefined, binary: number, site = 'unspecified'): CopArithmeticResult {
+  if (cents !== undefined && Number.isSafeInteger(cents)) {
+    return { amount: cents / 100 + 0, path: 'exactCents' };
+  }
+  aggregateFallbacks.set(site, (aggregateFallbacks.get(site) ?? 0) + 1);
+  return { amount: binary, path: 'binaryLegacy' };
+}
+
+/** Like the writer record, but for derived aggregates that are read, never persisted (6B.2). */
+const aggregateFallbacks = new Map<string, number>();
+
+/** Counts of binary fallbacks by aggregate since start (or the last reset). */
+export function getCopAggregateFallbacks(): Record<string, number> {
+  return Object.fromEntries(aggregateFallbacks);
+}
+
+export function resetCopAggregateFallbacks(): void {
+  aggregateFallbacks.clear();
+}
+
+/** `Σ amounts` for a derived aggregate: exact cents, or the previous binary sum in the given order. */
+export function sumCopAmounts(amounts: readonly number[], site = 'unspecified'): CopArithmeticResult {
+  return copAggregate(sumExactCopCents(amounts), amounts.reduce((total, amount) => total + amount, 0), site);
+}
+
 /**
  * `Σ plus − Σ minus` for a derived balance (card debt, statement total). Exact when every amount
  * is a canonical two-decimal amount; otherwise the previous binary sums in the given order.
