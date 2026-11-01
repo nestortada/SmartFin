@@ -98,7 +98,15 @@ async function precision({owned,record}){
     });
     const previous=await getDashboardSummaryFromDbPre6A(database,DATE);
     const next=await getDashboardSummaryFromDb(database,DATE);
-    for(const key of UNAFFECTED)check(Object.is(next[key],previous[key]),`shared: ${key} changed`);
+    // 6B.2 made the dashboard aggregates exact (docs/correccion-fase6b2.md §8): for these three the
+    // independent decimal oracle (cents of the scenario's inputs) replaces the pre-6A binary value.
+    // Every other unaffected figure must still equal pre-6A bit for bit. No tolerance (6B.3).
+    const assets=100000010n-3000015n+200025n,debt=40015n+60020n;
+    const exact={availableBalance:assets,totalDebt:debt,netWorth:assets+500035n-debt+1500008n-100001n};
+    for(const key of UNAFFECTED){
+      if(key in exact)check(next[key]===Number(centsText(exact[key])),`shared: ${key} ${next[key]} is not ${centsText(exact[key])}`);
+      else check(Object.is(next[key],previous[key]),`shared: ${key} changed`);
+    }
     check(next.monthlyIncome===0.5&&next.monthlyExpenses===17250.4&&next.monthlyNetLosses===1000.01&&next.monthlySavings===Number(centsText(50n-1725040n-100001n)),'shared exact figures');
     const [fk]=await database.executeSql('PRAGMA foreign_key_check');
     check(fk.rows.length===0,'Foreign keys');

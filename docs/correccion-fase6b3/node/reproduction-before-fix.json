@@ -1,0 +1,1382 @@
+{
+  "scenarioA": {
+    "purchases": [
+      "10000.4"
+    ],
+    "initial": {
+      "bank": "1000000",
+      "debt": "10000.4",
+      "cardStatus": "active",
+      "available": "1000000",
+      "totalDebt": "10000.4",
+      "netWorth": "989999.6",
+      "monthlyExpenses": "10000.4",
+      "statement": {
+        "total_amount": 10000.4,
+        "minimum_payment_amount": 1000,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 10.000",
+        "bank": "$ 1.000.000"
+      }
+    },
+    "steps": [
+      {
+        "label": "partial 10000",
+        "mode": "partial",
+        "requested": "10000",
+        "paid": "10000",
+        "remainingDebt": "0.4",
+        "after": {
+          "bank": "990000",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "990000",
+          "totalDebt": "0.4",
+          "netWorth": "989999.6",
+          "monthlyExpenses": "10000.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [
+            "10000"
+          ],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 990.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      },
+      {
+        "label": "partial 0,40",
+        "mode": "partial",
+        "requested": "0.4",
+        "rejected": "El importe del pago debe ser de al menos $1 COP.",
+        "after": {
+          "bank": "990000",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "990000",
+          "totalDebt": "0.4",
+          "netWorth": "989999.6",
+          "monthlyExpenses": "10000.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [
+            "10000"
+          ],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 990.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      },
+      {
+        "label": "fullDebt 0,40",
+        "mode": "fullDebt",
+        "requested": "0.4",
+        "rejected": "El importe del pago debe ser de al menos $1 COP.",
+        "after": {
+          "bank": "990000",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "990000",
+          "totalDebt": "0.4",
+          "netWorth": "989999.6",
+          "monthlyExpenses": "10000.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [
+            "10000"
+          ],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 990.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      },
+      {
+        "label": "repeat fullDebt on zero debt",
+        "mode": "fullDebt",
+        "requested": "0.4",
+        "rejected": "El importe del pago debe ser de al menos $1 COP.",
+        "after": {
+          "bank": "990000",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "990000",
+          "totalDebt": "0.4",
+          "netWorth": "989999.6",
+          "monthlyExpenses": "10000.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [
+            "10000"
+          ],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 990.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      }
+    ],
+    "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+    "final": {
+      "bank": "990000",
+      "debt": "0.4",
+      "cardStatus": "active",
+      "available": "990000",
+      "totalDebt": "0.4",
+      "netWorth": "989999.6",
+      "monthlyExpenses": "10000.4",
+      "statement": {
+        "total_amount": 0.4,
+        "minimum_payment_amount": 0,
+        "status": "pending"
+      },
+      "payments": [
+        "10000"
+      ],
+      "display": {
+        "debt": "$ 0",
+        "bank": "$ 990.000"
+      }
+    },
+    "sqlite": {
+      "integrity": "ok",
+      "foreignKeyViolations": 0
+    }
+  },
+  "scenarioB": {
+    "purchases": [
+      "0.4"
+    ],
+    "initial": {
+      "bank": "1000000",
+      "debt": "0.4",
+      "cardStatus": "active",
+      "available": "1000000",
+      "totalDebt": "0.4",
+      "netWorth": "999999.6",
+      "monthlyExpenses": "0.4",
+      "statement": {
+        "total_amount": 0.4,
+        "minimum_payment_amount": 0,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 0",
+        "bank": "$ 1.000.000"
+      }
+    },
+    "steps": [
+      {
+        "label": "partial 0,40",
+        "mode": "partial",
+        "requested": "0.4",
+        "rejected": "El importe del pago debe ser de al menos $1 COP.",
+        "after": {
+          "bank": "1000000",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "1000000",
+          "totalDebt": "0.4",
+          "netWorth": "999999.6",
+          "monthlyExpenses": "0.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 1.000.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      },
+      {
+        "label": "fullDebt 0,40",
+        "mode": "fullDebt",
+        "requested": "0.4",
+        "rejected": "El importe del pago debe ser de al menos $1 COP.",
+        "after": {
+          "bank": "1000000",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "1000000",
+          "totalDebt": "0.4",
+          "netWorth": "999999.6",
+          "monthlyExpenses": "0.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 1.000.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      }
+    ],
+    "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+    "final": {
+      "bank": "1000000",
+      "debt": "0.4",
+      "cardStatus": "active",
+      "available": "1000000",
+      "totalDebt": "0.4",
+      "netWorth": "999999.6",
+      "monthlyExpenses": "0.4",
+      "statement": {
+        "total_amount": 0.4,
+        "minimum_payment_amount": 0,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 0",
+        "bank": "$ 1.000.000"
+      }
+    },
+    "sqlite": {
+      "integrity": "ok",
+      "foreignKeyViolations": 0
+    }
+  },
+  "scenarioC": {
+    "partial": {
+      "purchases": [
+        "10000.4"
+      ],
+      "initial": {
+        "bank": "1000000",
+        "debt": "10000.4",
+        "cardStatus": "active",
+        "available": "1000000",
+        "totalDebt": "10000.4",
+        "netWorth": "989999.6",
+        "monthlyExpenses": "10000.4",
+        "statement": {
+          "total_amount": 10000.4,
+          "minimum_payment_amount": 1000,
+          "status": "pending"
+        },
+        "payments": [],
+        "display": {
+          "debt": "$ 10.000",
+          "bank": "$ 1.000.000"
+        }
+      },
+      "steps": [
+        {
+          "label": "partial 10000,40",
+          "mode": "partial",
+          "requested": "10000.4",
+          "paid": "10000",
+          "remainingDebt": "0.4",
+          "after": {
+            "bank": "990000",
+            "debt": "0.4",
+            "cardStatus": "active",
+            "available": "990000",
+            "totalDebt": "0.4",
+            "netWorth": "989999.6",
+            "monthlyExpenses": "10000.4",
+            "statement": {
+              "total_amount": 0.4,
+              "minimum_payment_amount": 0,
+              "status": "pending"
+            },
+            "payments": [
+              "10000"
+            ],
+            "display": {
+              "debt": "$ 0",
+              "bank": "$ 990.000"
+            }
+          },
+          "oracle": {
+            "bank": true,
+            "debt": true,
+            "bankDelta": true,
+            "debtDelta": true,
+            "netWorthUnchanged": true,
+            "expensesUnchanged": true,
+            "dashboardDebt": true,
+            "ok": true
+          }
+        }
+      ],
+      "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+      "final": {
+        "bank": "990000",
+        "debt": "0.4",
+        "cardStatus": "active",
+        "available": "990000",
+        "totalDebt": "0.4",
+        "netWorth": "989999.6",
+        "monthlyExpenses": "10000.4",
+        "statement": {
+          "total_amount": 0.4,
+          "minimum_payment_amount": 0,
+          "status": "pending"
+        },
+        "payments": [
+          "10000"
+        ],
+        "display": {
+          "debt": "$ 0",
+          "bank": "$ 990.000"
+        }
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "fullDebt": {
+      "purchases": [
+        "10000.4"
+      ],
+      "initial": {
+        "bank": "1000000",
+        "debt": "10000.4",
+        "cardStatus": "active",
+        "available": "1000000",
+        "totalDebt": "10000.4",
+        "netWorth": "989999.6",
+        "monthlyExpenses": "10000.4",
+        "statement": {
+          "total_amount": 10000.4,
+          "minimum_payment_amount": 1000,
+          "status": "pending"
+        },
+        "payments": [],
+        "display": {
+          "debt": "$ 10.000",
+          "bank": "$ 1.000.000"
+        }
+      },
+      "steps": [
+        {
+          "label": "fullDebt 10000,40",
+          "mode": "fullDebt",
+          "requested": "10000.4",
+          "paid": "10000",
+          "remainingDebt": "0.4",
+          "after": {
+            "bank": "990000",
+            "debt": "0.4",
+            "cardStatus": "active",
+            "available": "990000",
+            "totalDebt": "0.4",
+            "netWorth": "989999.6",
+            "monthlyExpenses": "10000.4",
+            "statement": {
+              "total_amount": 0.4,
+              "minimum_payment_amount": 0,
+              "status": "pending"
+            },
+            "payments": [
+              "10000"
+            ],
+            "display": {
+              "debt": "$ 0",
+              "bank": "$ 990.000"
+            }
+          },
+          "oracle": {
+            "bank": true,
+            "debt": true,
+            "bankDelta": true,
+            "debtDelta": true,
+            "netWorthUnchanged": true,
+            "expensesUnchanged": true,
+            "dashboardDebt": true,
+            "ok": true
+          }
+        }
+      ],
+      "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+      "final": {
+        "bank": "990000",
+        "debt": "0.4",
+        "cardStatus": "active",
+        "available": "990000",
+        "totalDebt": "0.4",
+        "netWorth": "989999.6",
+        "monthlyExpenses": "10000.4",
+        "statement": {
+          "total_amount": 0.4,
+          "minimum_payment_amount": 0,
+          "status": "pending"
+        },
+        "payments": [
+          "10000"
+        ],
+        "display": {
+          "debt": "$ 0",
+          "bank": "$ 990.000"
+        }
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    }
+  },
+  "scenarioD": {
+    "partial": {
+      "purchases": [
+        "4229.9",
+        "89392.54",
+        "939.56"
+      ],
+      "initial": {
+        "bank": "1000000",
+        "debt": "94562",
+        "cardStatus": "active",
+        "available": "1000000",
+        "totalDebt": "94562",
+        "netWorth": "905438",
+        "monthlyExpenses": "94562",
+        "statement": {
+          "total_amount": 94562,
+          "minimum_payment_amount": 9456,
+          "status": "pending"
+        },
+        "payments": [],
+        "display": {
+          "debt": "$ 94.562",
+          "bank": "$ 1.000.000"
+        }
+      },
+      "steps": [
+        {
+          "label": "partial 94562",
+          "mode": "partial",
+          "requested": "94562",
+          "paid": "94562",
+          "remainingDebt": "0",
+          "after": {
+            "bank": "905438",
+            "debt": "0",
+            "cardStatus": "active",
+            "available": "905438",
+            "totalDebt": "0",
+            "netWorth": "905438",
+            "monthlyExpenses": "94562",
+            "statement": {
+              "total_amount": 0,
+              "minimum_payment_amount": 0,
+              "status": "paid"
+            },
+            "payments": [
+              "94562"
+            ],
+            "display": {
+              "debt": "$ 0",
+              "bank": "$ 905.438"
+            }
+          },
+          "oracle": {
+            "bank": true,
+            "debt": true,
+            "bankDelta": true,
+            "debtDelta": true,
+            "netWorthUnchanged": true,
+            "expensesUnchanged": true,
+            "dashboardDebt": true,
+            "ok": true
+          }
+        }
+      ],
+      "closure": "closed",
+      "final": {
+        "bank": "905438",
+        "debt": "0",
+        "cardStatus": "closed",
+        "available": "905438",
+        "totalDebt": "0",
+        "netWorth": "905438",
+        "monthlyExpenses": "94562",
+        "statement": {
+          "total_amount": 0,
+          "minimum_payment_amount": 0,
+          "status": "paid"
+        },
+        "payments": [
+          "94562"
+        ],
+        "display": {
+          "debt": "$ 0",
+          "bank": "$ 905.438"
+        }
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "fullDebt": {
+      "purchases": [
+        "4229.9",
+        "89392.54",
+        "939.56"
+      ],
+      "initial": {
+        "bank": "1000000",
+        "debt": "94562",
+        "cardStatus": "active",
+        "available": "1000000",
+        "totalDebt": "94562",
+        "netWorth": "905438",
+        "monthlyExpenses": "94562",
+        "statement": {
+          "total_amount": 94562,
+          "minimum_payment_amount": 9456,
+          "status": "pending"
+        },
+        "payments": [],
+        "display": {
+          "debt": "$ 94.562",
+          "bank": "$ 1.000.000"
+        }
+      },
+      "steps": [
+        {
+          "label": "fullDebt 94562",
+          "mode": "fullDebt",
+          "requested": "94562",
+          "paid": "94562",
+          "remainingDebt": "0",
+          "after": {
+            "bank": "905438",
+            "debt": "0",
+            "cardStatus": "active",
+            "available": "905438",
+            "totalDebt": "0",
+            "netWorth": "905438",
+            "monthlyExpenses": "94562",
+            "statement": {
+              "total_amount": 0,
+              "minimum_payment_amount": 0,
+              "status": "paid"
+            },
+            "payments": [
+              "94562"
+            ],
+            "display": {
+              "debt": "$ 0",
+              "bank": "$ 905.438"
+            }
+          },
+          "oracle": {
+            "bank": true,
+            "debt": true,
+            "bankDelta": true,
+            "debtDelta": true,
+            "netWorthUnchanged": true,
+            "expensesUnchanged": true,
+            "dashboardDebt": true,
+            "ok": true
+          }
+        }
+      ],
+      "closure": "closed",
+      "final": {
+        "bank": "905438",
+        "debt": "0",
+        "cardStatus": "closed",
+        "available": "905438",
+        "totalDebt": "0",
+        "netWorth": "905438",
+        "monthlyExpenses": "94562",
+        "statement": {
+          "total_amount": 0,
+          "minimum_payment_amount": 0,
+          "status": "paid"
+        },
+        "payments": [
+          "94562"
+        ],
+        "display": {
+          "debt": "$ 0",
+          "bank": "$ 905.438"
+        }
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    }
+  },
+  "settleWholePesos": {
+    "purchases": [
+      "250000"
+    ],
+    "initial": {
+      "bank": "1000000",
+      "debt": "250000",
+      "cardStatus": "active",
+      "available": "1000000",
+      "totalDebt": "250000",
+      "netWorth": "750000",
+      "monthlyExpenses": "250000",
+      "statement": {
+        "total_amount": 250000,
+        "minimum_payment_amount": 25000,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 250.000",
+        "bank": "$ 1.000.000"
+      }
+    },
+    "steps": [
+      {
+        "label": "fullDebt 250000",
+        "mode": "fullDebt",
+        "requested": "250000",
+        "paid": "250000",
+        "remainingDebt": "0",
+        "after": {
+          "bank": "750000",
+          "debt": "0",
+          "cardStatus": "active",
+          "available": "750000",
+          "totalDebt": "0",
+          "netWorth": "750000",
+          "monthlyExpenses": "250000",
+          "statement": {
+            "total_amount": 0,
+            "minimum_payment_amount": 0,
+            "status": "paid"
+          },
+          "payments": [
+            "250000"
+          ],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 750.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      }
+    ],
+    "closure": "closed",
+    "final": {
+      "bank": "750000",
+      "debt": "0",
+      "cardStatus": "closed",
+      "available": "750000",
+      "totalDebt": "0",
+      "netWorth": "750000",
+      "monthlyExpenses": "250000",
+      "statement": {
+        "total_amount": 0,
+        "minimum_payment_amount": 0,
+        "status": "paid"
+      },
+      "payments": [
+        "250000"
+      ],
+      "display": {
+        "debt": "$ 0",
+        "bank": "$ 750.000"
+      }
+    },
+    "sqlite": {
+      "integrity": "ok",
+      "foreignKeyViolations": 0
+    }
+  },
+  "partialSmallRejected": {
+    "purchases": [
+      "0.01",
+      "0.49"
+    ],
+    "initial": {
+      "bank": "1000000",
+      "debt": "0.5",
+      "cardStatus": "active",
+      "available": "1000000",
+      "totalDebt": "0.5",
+      "netWorth": "999999.5",
+      "monthlyExpenses": "0.5",
+      "statement": {
+        "total_amount": 0.5,
+        "minimum_payment_amount": 0,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 1",
+        "bank": "$ 1.000.000"
+      }
+    },
+    "steps": [
+      {
+        "label": "partial 0,01",
+        "mode": "partial",
+        "requested": "0.01",
+        "rejected": "El importe del pago debe ser de al menos $1 COP.",
+        "after": {
+          "bank": "1000000",
+          "debt": "0.5",
+          "cardStatus": "active",
+          "available": "1000000",
+          "totalDebt": "0.5",
+          "netWorth": "999999.5",
+          "monthlyExpenses": "0.5",
+          "statement": {
+            "total_amount": 0.5,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [],
+          "display": {
+            "debt": "$ 1",
+            "bank": "$ 1.000.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      },
+      {
+        "label": "partial 0,50 = debt",
+        "mode": "partial",
+        "requested": "0.5",
+        "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+        "after": {
+          "bank": "1000000",
+          "debt": "0.5",
+          "cardStatus": "active",
+          "available": "1000000",
+          "totalDebt": "0.5",
+          "netWorth": "999999.5",
+          "monthlyExpenses": "0.5",
+          "statement": {
+            "total_amount": 0.5,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [],
+          "display": {
+            "debt": "$ 1",
+            "bank": "$ 1.000.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      },
+      {
+        "label": "fullDebt 0,50",
+        "mode": "fullDebt",
+        "requested": "0.5",
+        "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+        "after": {
+          "bank": "1000000",
+          "debt": "0.5",
+          "cardStatus": "active",
+          "available": "1000000",
+          "totalDebt": "0.5",
+          "netWorth": "999999.5",
+          "monthlyExpenses": "0.5",
+          "statement": {
+            "total_amount": 0.5,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [],
+          "display": {
+            "debt": "$ 1",
+            "bank": "$ 1.000.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      }
+    ],
+    "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+    "final": {
+      "bank": "1000000",
+      "debt": "0.5",
+      "cardStatus": "active",
+      "available": "1000000",
+      "totalDebt": "0.5",
+      "netWorth": "999999.5",
+      "monthlyExpenses": "0.5",
+      "statement": {
+        "total_amount": 0.5,
+        "minimum_payment_amount": 0,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 1",
+        "bank": "$ 1.000.000"
+      }
+    },
+    "sqlite": {
+      "integrity": "ok",
+      "foreignKeyViolations": 0
+    }
+  },
+  "insufficientBalance": {
+    "purchases": [
+      "10000.4"
+    ],
+    "initial": {
+      "bank": "10000.39",
+      "debt": "10000.4",
+      "cardStatus": "active",
+      "available": "10000.39",
+      "totalDebt": "10000.4",
+      "netWorth": "-0.01",
+      "monthlyExpenses": "10000.4",
+      "statement": {
+        "total_amount": 10000.4,
+        "minimum_payment_amount": 1000,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 10.000",
+        "bank": "$ 10.000"
+      }
+    },
+    "steps": [
+      {
+        "label": "fullDebt 10000,40 from 10000,39",
+        "mode": "fullDebt",
+        "requested": "10000.4",
+        "paid": "10000",
+        "remainingDebt": "0.4",
+        "after": {
+          "bank": "0.39",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "0.39",
+          "totalDebt": "0.4",
+          "netWorth": "-0.01",
+          "monthlyExpenses": "10000.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [
+            "10000"
+          ],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 0"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      }
+    ],
+    "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+    "final": {
+      "bank": "0.39",
+      "debt": "0.4",
+      "cardStatus": "active",
+      "available": "0.39",
+      "totalDebt": "0.4",
+      "netWorth": "-0.01",
+      "monthlyExpenses": "10000.4",
+      "statement": {
+        "total_amount": 0.4,
+        "minimum_payment_amount": 0,
+        "status": "pending"
+      },
+      "payments": [
+        "10000"
+      ],
+      "display": {
+        "debt": "$ 0",
+        "bank": "$ 0"
+      }
+    },
+    "sqlite": {
+      "integrity": "ok",
+      "foreignKeyViolations": 0
+    }
+  },
+  "staleExpectedDebt": {
+    "purchases": [
+      "10000.4"
+    ],
+    "initial": {
+      "bank": "1000000",
+      "debt": "10000.4",
+      "cardStatus": "active",
+      "available": "1000000",
+      "totalDebt": "10000.4",
+      "netWorth": "989999.6",
+      "monthlyExpenses": "10000.4",
+      "statement": {
+        "total_amount": 10000.4,
+        "minimum_payment_amount": 1000,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 10.000",
+        "bank": "$ 1.000.000"
+      }
+    },
+    "steps": [
+      {
+        "label": "fullDebt with a stale 10000",
+        "mode": "fullDebt",
+        "requested": "10000",
+        "paid": "10000",
+        "remainingDebt": "0.4",
+        "after": {
+          "bank": "990000",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "990000",
+          "totalDebt": "0.4",
+          "netWorth": "989999.6",
+          "monthlyExpenses": "10000.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [
+            "10000"
+          ],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 990.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      },
+      {
+        "label": "fullDebt with a stale 10000,41",
+        "mode": "fullDebt",
+        "requested": "10000.41",
+        "rejected": "El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.",
+        "after": {
+          "bank": "990000",
+          "debt": "0.4",
+          "cardStatus": "active",
+          "available": "990000",
+          "totalDebt": "0.4",
+          "netWorth": "989999.6",
+          "monthlyExpenses": "10000.4",
+          "statement": {
+            "total_amount": 0.4,
+            "minimum_payment_amount": 0,
+            "status": "pending"
+          },
+          "payments": [
+            "10000"
+          ],
+          "display": {
+            "debt": "$ 0",
+            "bank": "$ 990.000"
+          }
+        },
+        "oracle": {
+          "bank": true,
+          "debt": true,
+          "bankDelta": true,
+          "debtDelta": true,
+          "netWorthUnchanged": true,
+          "expensesUnchanged": true,
+          "dashboardDebt": true,
+          "ok": true
+        }
+      }
+    ],
+    "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+    "final": {
+      "bank": "990000",
+      "debt": "0.4",
+      "cardStatus": "active",
+      "available": "990000",
+      "totalDebt": "0.4",
+      "netWorth": "989999.6",
+      "monthlyExpenses": "10000.4",
+      "statement": {
+        "total_amount": 0.4,
+        "minimum_payment_amount": 0,
+        "status": "pending"
+      },
+      "payments": [
+        "10000"
+      ],
+      "display": {
+        "debt": "$ 0",
+        "bank": "$ 990.000"
+      }
+    },
+    "sqlite": {
+      "integrity": "ok",
+      "foreignKeyViolations": 0
+    }
+  },
+  "driftedSource": {
+    "cents": {
+      "purchases": [
+        "0.4"
+      ],
+      "initial": {
+        "bank": "97599.49999999999",
+        "debt": "0.4",
+        "cardStatus": "active",
+        "available": "97599.49999999999",
+        "totalDebt": "0.4",
+        "netWorth": "97599.09999999999",
+        "monthlyExpenses": "0.4",
+        "statement": {
+          "total_amount": 0.4,
+          "minimum_payment_amount": 0,
+          "status": "pending"
+        },
+        "payments": [],
+        "display": {
+          "debt": "$ 0",
+          "bank": "$ 97.599"
+        }
+      },
+      "steps": [
+        {
+          "label": "fullDebt 0,40",
+          "mode": "fullDebt",
+          "requested": "0.4",
+          "rejected": "El importe del pago debe ser de al menos $1 COP.",
+          "after": {
+            "bank": "97599.49999999999",
+            "debt": "0.4",
+            "cardStatus": "active",
+            "available": "97599.49999999999",
+            "totalDebt": "0.4",
+            "netWorth": "97599.09999999999",
+            "monthlyExpenses": "0.4",
+            "statement": {
+              "total_amount": 0.4,
+              "minimum_payment_amount": 0,
+              "status": "pending"
+            },
+            "payments": [],
+            "display": {
+              "debt": "$ 0",
+              "bank": "$ 97.599"
+            }
+          },
+          "oracle": {
+            "ok": false,
+            "nonCanonicalBank": true
+          }
+        }
+      ],
+      "closure": "rejected: No puedes eliminar la tarjeta hasta que el uso del cupo este en 0%.",
+      "final": {
+        "bank": "97599.49999999999",
+        "debt": "0.4",
+        "cardStatus": "active",
+        "available": "97599.49999999999",
+        "totalDebt": "0.4",
+        "netWorth": "97599.09999999999",
+        "monthlyExpenses": "0.4",
+        "statement": {
+          "total_amount": 0.4,
+          "minimum_payment_amount": 0,
+          "status": "pending"
+        },
+        "payments": [],
+        "display": {
+          "debt": "$ 0",
+          "bank": "$ 97.599"
+        }
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    },
+    "wholePesos": {
+      "purchases": [
+        "5000"
+      ],
+      "initial": {
+        "bank": "97599.49999999999",
+        "debt": "5000",
+        "cardStatus": "active",
+        "available": "97599.49999999999",
+        "totalDebt": "5000",
+        "netWorth": "92599.49999999999",
+        "monthlyExpenses": "5000",
+        "statement": {
+          "total_amount": 5000,
+          "minimum_payment_amount": 500,
+          "status": "pending"
+        },
+        "payments": [],
+        "display": {
+          "debt": "$ 5.000",
+          "bank": "$ 97.599"
+        }
+      },
+      "steps": [
+        {
+          "label": "fullDebt 5000",
+          "mode": "fullDebt",
+          "requested": "5000",
+          "paid": "5000",
+          "remainingDebt": "0",
+          "after": {
+            "bank": "92599.49999999999",
+            "debt": "0",
+            "cardStatus": "active",
+            "available": "92599.49999999999",
+            "totalDebt": "0",
+            "netWorth": "92599.49999999999",
+            "monthlyExpenses": "5000",
+            "statement": {
+              "total_amount": 0,
+              "minimum_payment_amount": 0,
+              "status": "paid"
+            },
+            "payments": [
+              "5000"
+            ],
+            "display": {
+              "debt": "$ 0",
+              "bank": "$ 92.599"
+            }
+          },
+          "oracle": {
+            "ok": false,
+            "nonCanonicalBank": true
+          }
+        }
+      ],
+      "closure": "closed",
+      "final": {
+        "bank": "92599.49999999999",
+        "debt": "0",
+        "cardStatus": "closed",
+        "available": "92599.49999999999",
+        "totalDebt": "0",
+        "netWorth": "92599.49999999999",
+        "monthlyExpenses": "5000",
+        "statement": {
+          "total_amount": 0,
+          "minimum_payment_amount": 0,
+          "status": "paid"
+        },
+        "payments": [
+          "5000"
+        ],
+        "display": {
+          "debt": "$ 0",
+          "bank": "$ 92.599"
+        }
+      },
+      "sqlite": {
+        "integrity": "ok",
+        "foreignKeyViolations": 0
+      }
+    }
+  },
+  "settleAfterInstallments": {
+    "before": {
+      "bank": "1000000",
+      "debt": "30000.3",
+      "cardStatus": "active",
+      "available": "1000000",
+      "totalDebt": "30000.3",
+      "netWorth": "969999.7",
+      "monthlyExpenses": "30000.3",
+      "statement": {
+        "total_amount": 10000,
+        "minimum_payment_amount": 1000,
+        "status": "pending"
+      },
+      "payments": [],
+      "display": {
+        "debt": "$ 30.000",
+        "bank": "$ 1.000.000"
+      }
+    },
+    "result": {
+      "mode": "fullDebt",
+      "requested": "30000.3",
+      "paid": "30000",
+      "remainingDebt": "0.3"
+    },
+    "after": {
+      "bank": "970000",
+      "debt": "0.3",
+      "cardStatus": "active",
+      "available": "970000",
+      "totalDebt": "0.3",
+      "netWorth": "969999.7",
+      "monthlyExpenses": "30000.3",
+      "statement": {
+        "total_amount": 0,
+        "minimum_payment_amount": 0,
+        "status": "paid"
+      },
+      "payments": [
+        "30000"
+      ],
+      "display": {
+        "debt": "$ 0",
+        "bank": "$ 970.000"
+      }
+    },
+    "oracle": {
+      "bank": true,
+      "debt": true,
+      "bankDelta": true,
+      "debtDelta": true,
+      "netWorthUnchanged": true,
+      "expensesUnchanged": true,
+      "dashboardDebt": true,
+      "ok": true
+    },
+    "closure": "rejected: No puedes eliminar la tarjeta porque tiene compras a cuotas vigentes.",
+    "sqlite": {
+      "integrity": "ok",
+      "foreignKeyViolations": 0
+    }
+  }
+}

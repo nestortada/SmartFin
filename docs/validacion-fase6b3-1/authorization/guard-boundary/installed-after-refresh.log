@@ -1,0 +1,163 @@
+{
+ "stage": "after-refresh",
+ "rows": [
+  {
+   "label": "refresh exact, repo",
+   "decision": "deny",
+   "layer": "stage-a",
+   "reason": "DG-CLAUDE-6B3A: Refresher, inputs, workspace attestation, Gradle wrapper or environment are not the audited ones"
+  },
+  {
+   "label": "build exact, workspace/android",
+   "decision": "allow",
+   "layer": "stage-a",
+   "reason": ""
+  },
+  {
+   "label": "refresh in workspace",
+   "decision": "deny",
+   "layer": "stage-a",
+   "reason": "DG-CLAUDE-6B3A: Stage A command outside its exact working directory"
+  },
+  {
+   "label": "refresh in android",
+   "decision": "deny",
+   "layer": "stage-a",
+   "reason": "DG-CLAUDE-6B3A: Stage A command outside its exact working directory"
+  },
+  {
+   "label": "build in repo",
+   "decision": "deny",
+   "layer": "stage-a",
+   "reason": "DG-CLAUDE-6B3A: Stage A command outside its exact working directory"
+  },
+  {
+   "label": "build in workspace root",
+   "decision": "deny",
+   "layer": "stage-a",
+   "reason": "DG-CLAUDE-6B3A: Stage A command outside its exact working directory"
+  },
+  {
+   "label": "refresh via Bash",
+   "decision": "deny",
+   "layer": "stage-a",
+   "reason": "DG-CLAUDE-6B3A: Stage A commands are admitted only as the exact PowerShell call"
+  },
+  {
+   "label": "build via Bash",
+   "decision": "deny",
+   "layer": "stage-a",
+   "reason": "DG-CLAUDE-6B3A: Stage A commands are admitted only as the exact PowerShell call"
+  },
+  {
+   "label": "refresh + extra arg",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Repository scripts and scripts outside SmartFin run only through an exact audited pin"
+  },
+  {
+   "label": "refresh chained ;",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Repository scripts and scripts outside SmartFin run only through an exact audited pin"
+  },
+  {
+   "label": "refresh chained &&",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Repository scripts and scripts outside SmartFin run only through an exact audited pin"
+  },
+  {
+   "label": "build installRelease",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Only the exact audited Gradle build is admitted; other Gradle tasks need separate review"
+  },
+  {
+   "label": "build + installRelease",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Only the exact audited Gradle build is admitted; other Gradle tasks need separate review"
+  },
+  {
+   "label": "build without --offline",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Only the exact audited Gradle build is admitted; other Gradle tasks need separate review"
+  },
+  {
+   "label": "build + extra task",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Only the exact audited Gradle build is admitted; other Gradle tasks need separate review"
+  },
+  {
+   "label": "build chained",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Only the exact audited Gradle build is admitted; other Gradle tasks need separate review"
+  },
+  {
+   "label": "run-all API24",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-RUNNER: Only the exact audited 6B.2 API24 runner launch is allowed; other runners and scripts need separate review"
+  },
+  {
+   "label": "run-all API35",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-RUNNER: Only the exact audited 6B.2 API24 runner launch is allowed; other runners and scripts need separate review"
+  },
+  {
+   "label": "run-android UI",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-RUNNER: Only the exact audited 6B.2 API24 runner launch is allowed; other runners and scripts need separate review"
+  },
+  {
+   "label": "adb install",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-ADB: Only registered literal read-only ADB queries are allowed; device writes and runners require separate verification"
+  },
+  {
+   "label": "adb HONOR shell",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-ADB: Only registered literal read-only ADB queries are allowed; device writes and runners require separate verification"
+  },
+  {
+   "label": "adb uninstall prod",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-ADB: Only registered literal read-only ADB queries are allowed; device writes and runners require separate verification"
+  },
+  {
+   "label": "prepare-android",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Repository scripts and scripts outside SmartFin run only through an exact audited pin"
+  },
+  {
+   "label": "make-runner",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-BOUNDARY: Repository scripts and scripts outside SmartFin run only through an exact audited pin"
+  },
+  {
+   "label": "readonly adb devices (original rule)",
+   "decision": "allow",
+   "layer": "rest-of-guard",
+   "reason": ""
+  },
+  {
+   "label": "6B.2 runner (original pin, APK 6B.2 not in its harness state)",
+   "decision": "deny",
+   "layer": "rest-of-guard",
+   "reason": "DG-CLAUDE-RUNNER: Runner, dependencies, attestation, APK, outputs or AVD identity are not the audited ones"
+  }
+ ],
+ "failures": []
+}
+installed-guard: after-refresh checks passed

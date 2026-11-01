@@ -3,7 +3,7 @@ import type { Account } from '../../accounts';
 import type { SqliteAccountRepository } from '../../accounts/repositories/sqliteAccountRepository';
 import type { Transaction } from '../../transactions';
 import { bogotaCalendarDate, transactionDateKey } from '../../../shared/utils/transactionDate';
-import { addCopAmounts, differenceOfCopSums } from '../../../shared/utils/exactCopCents';
+import { addCopAmounts, differenceOfCopSums, toExactCopCents } from '../../../shared/utils/exactCopCents';
 import type { SqliteTransactionRepository } from '../../transactions/repositories/sqliteTransactionRepository';
 import { readCurrentManualTransaction } from '../../transactions/repositories/sqliteTransactionRepository';
 import { isSQLiteParticipant } from '../../../database/managedSQLite';
@@ -50,12 +50,20 @@ export type ReconcileCreditCardTransactionsParams = {
   transactionRepository: TransactionRepository;
 };
 
+/**
+ * 'partial' (default) keeps the phase 3B contract: whole pesos, at least $1 COP, limited by the debt.
+ * 'fullDebt' (6B.3) is the explicit "Pagar deuda total": `amount` is the debt the user saw, which must
+ * still be the exact current debt; it is paid exactly, with up to two decimals and also below $1.
+ */
+export type CreditCardPaymentSettlement = 'partial' | 'fullDebt';
+
 export type RegisterCreditCardPaymentParams = {
   accountId: string;
   accountRepository: AccountRepository;
   amount: number;
   creditCardRepository: CreditCardRepository;
   currentDate?: Date;
+  settlement?: CreditCardPaymentSettlement;
   sourceAccountId: string;
   transactionRepository: TransactionRepository;
 };
@@ -464,6 +472,23 @@ async function associatePendingTransactionsInScope({
   return pendingTransactions.length;
 }
 
+/**
+ * 6B.3: the exact amount of an explicit whole-debt settlement, read inside the payment scope. No
+ * rounding, tolerance or forgiveness: the debt must be canonical and equal to what the user saw.
+ */
+function fullDebtSettlementAmount(expectedDebt: number, currentDebt: number, sourceAccount: Account): number {
+  if (toExactCopCents(currentDebt) === undefined) {
+    throw new Error('La deuda tiene fracciones inferiores a un centavo y no puede liquidarse con exactitud.');
+  }
+  if (currentDebt !== expectedDebt) {
+    throw new Error('La deuda de la tarjeta cambio. Revisa el saldo pendiente antes de pagar el total.');
+  }
+  if (!Number.isInteger(currentDebt) && toExactCopCents(sourceAccount.balance.amount) === undefined) {
+    throw new Error('La cuenta origen tiene un saldo con fracciones inferiores a un centavo y no puede debitar centavos exactos.');
+  }
+  return currentDebt;
+}
+
 const paymentRequests = new WeakMap<RegisterCreditCardPaymentParams, Promise<RegisterCreditCardPaymentResult>>();
 let paymentIdSequence = 0;
 
@@ -478,7 +503,15 @@ export async function registerCreditCardPayment(
   if (!Number.isFinite(params.amount) || params.amount <= 0) {
     throw new Error('Ingresa un monto valido para el pago de la tarjeta.');
   }
-  if (Math.round(params.amount) < 1) {
+  const settlement = params.settlement ?? 'partial';
+  if (settlement !== 'partial' && settlement !== 'fullDebt') {
+    throw new Error('Tipo de pago de tarjeta no valido.');
+  }
+  if (settlement === 'fullDebt') {
+    if (toExactCopCents(params.amount) === undefined) {
+      throw new Error('El total de la deuda debe expresarse con un maximo de dos decimales.');
+    }
+  } else if (Math.round(params.amount) < 1) {
     throw new Error('El importe del pago debe ser de al menos $1 COP.');
   }
   // Capture the intention before waiting for the connection; never cache a mutable caller object.
@@ -496,6 +529,7 @@ async function registerCreditCardPaymentInScope({
   amount,
   creditCardRepository,
   currentDate = new Date(),
+  settlement = 'partial',
   sourceAccountId,
   transactionRepository,
 }: RegisterCreditCardPaymentParams): Promise<RegisterCreditCardPaymentResult> {
@@ -528,8 +562,10 @@ async function registerCreditCardPaymentInScope({
     throw new Error('La tarjeta no tiene saldo pendiente por pagar.');
   }
 
-  const paidAmount = Math.min(Math.round(amount), previousDebt);
-  if (!Number.isSafeInteger(paidAmount) || paidAmount < 1) {
+  const paidAmount = settlement === 'fullDebt'
+    ? fullDebtSettlementAmount(amount, previousDebt, sourceAccount)
+    : Math.min(Math.round(amount), previousDebt);
+  if (settlement === 'partial' && (!Number.isSafeInteger(paidAmount) || paidAmount < 1)) {
     throw new Error('El importe efectivo del pago debe ser de al menos $1 COP y expresarse en pesos enteros válidos.');
   }
   if (sourceAccount.balance.amount < paidAmount) {
@@ -572,6 +608,14 @@ async function registerCreditCardPaymentInScope({
     currentDate,
     transactionRepository,
   });
+
+  if (settlement === 'fullDebt') {
+    // Same coordinated scope: throwing here rolls back the debit, the payment and the reconciliation.
+    const settledCard = (await accountRepository.getAccounts()).find(account => account.id === card.id);
+    if (settledCard?.debtBalance?.amount !== 0) {
+      throw new Error('La liquidacion no dejo la deuda en cero. No se registro el pago.');
+    }
+  }
 
   return {
     paidAmount,

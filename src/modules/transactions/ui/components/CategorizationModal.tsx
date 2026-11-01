@@ -14,6 +14,7 @@ import {
 
 import type { Category } from '../../../categories/types';
 import type { Transaction } from '../../types';
+import { formatCOP } from '../transactionsScreenFormatters';
 
 const GRID_GAP = 12;
 const SHEET_HORIZONTAL_PADDING = 20;
@@ -165,13 +166,6 @@ export function CategorizationModal({
     const monthName = monthsSpanish[Number(month) - 1] ?? 'Enero';
     return `${Number(day)} de ${monthName} de ${year}`;
   };
-
-  const formatCOP = (val: number) =>
-    new Intl.NumberFormat('es-CO', {
-      currency: 'COP',
-      minimumFractionDigits: 0,
-      style: 'currency',
-    }).format(val);
 
   const confirmCategory = async () => {
     if (!selectedCategoryId) {

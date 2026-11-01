@@ -1,0 +1,47 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand __tests__/creditCardSettlementPhase6B3.test.tsx
+
+PASS __tests__/creditCardSettlementPhase6B3.test.tsx (29.187 s)
+  6B-C1 probes: before (frozen pre-6B.3) and after
+    √ A: 10.000,40, partial 10.000 leaves 0,40; partial 0,40 still rejected; "Pagar deuda total" pays 0,40 and the card closes (77 ms)
+    √ B: a single 0,40 debt is settled exactly; the partial form keeps rejecting it (47 ms)
+    √ C: 10.000,40 in one operation: partial keeps paying 10.000 (3B); settlement pays 10.000,40 (55 ms)
+    √ D: 94.562 (6B.1) is identical through partial and settlement (74 ms)
+    √ edge cases: small partials, insufficient balance, stale debt, drifted source, installments (243 ms)
+    √ every probe was compared (1 ms)
+  partial payments keep the phase 3B contract against the frozen copy
+    √ random debts (pesos and cents) and requested amounts: identical outcome, message and persisted state (997 ms)
+  settlement validation, atomicity and unknown results
+    √ settlement amount Infinity is rejected before any write (34 ms)
+    √ settlement amount -Infinity is rejected before any write (19 ms)
+    √ settlement amount NaN is rejected before any write (18 ms)
+    √ settlement amount 0 is rejected before any write (17 ms)
+    √ settlement amount -0.4 is rejected before any write (19 ms)
+    √ settlement amount 0.001 is rejected before any write (17 ms)
+    √ settlement amount 0.405 is rejected before any write (19 ms)
+    √ settlement amount 70368744177664 is rejected before any write (19 ms)
+    √ an unknown settlement kind is rejected before any write (11 ms)
+    √ settlement of [0.4]: fault before/after every write rolls back everything (390 ms)
+    √ settlement of [10000.4]: fault before/after every write rolls back everything (348 ms)
+    √ settlement of [4229.9, 89392.54, 939.56]: fault before/after every write rolls back everything (451 ms)
+    √ a rejection after the initial reconciliation (stale debt) rolls back its writes (16 ms)
+    √ the same confirmed request is not paid twice; a new request finds no debt (13 ms)
+    √ unknown COMMIT of a settlement is never retried for the same request (14 ms)
+    √ closure after settlement leaves no debt, pending statement or installments (12 ms)
+  presentation of amounts below $1 (6B.3)
+    √ 0 < |amount| < 1 shows two decimals; zero stays $ 0 (1 ms)
+    √ legacy residues are never shown as zero
+    √ |amount| >= 1 and non-finite values are unchanged: cent by cent 1,00–1.000,00, a seeded sample and the limits (23491 ms)
+    √ payment surfaces show the exact debt and fill the exact input text (1 ms)
+  payment screen: partial form vs "Pagar deuda total"
+    √ a 0,40 debt is visible, the partial form rejects it, and "Pagar deuda total" pays it exactly (735 ms)
+    √ editing the amount after choosing the total returns to a partial payment (80 ms)
+    √ whole-peso debts keep the previous prefill; settlement with insufficient balance is explained without effects (64 ms)
+    √ an unknown settlement blocks a second press without SQL (52 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       31 passed, 31 total
+Snapshots:   0 total
+Time:        29.326 s, estimated 50 s
+Ran all test suites matching /__tests__\\creditCardSettlementPhase6B3.test.tsx/i.

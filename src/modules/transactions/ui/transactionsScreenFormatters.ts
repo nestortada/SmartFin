@@ -1,6 +1,6 @@
 import type { Transaction } from '../types';
 import { bogotaToday, transactionDateKey } from '../../../shared/utils/transactionDate';
-import { withoutNegativeZero } from '../../../shared/utils/formatCurrency';
+import { formatBelowOnePeso, isBelowOnePeso, withoutNegativeZero } from '../../../shared/utils/formatCurrency';
 
 export type TransactionDateGroup = {
   data: Transaction[];
@@ -53,11 +53,15 @@ export function formatTransactionDateHeader(date: string): string {
 }
 
 export function formatCOP(value: number): string {
+  const amount = withoutNegativeZero(value);
+  if (isBelowOnePeso(amount)) {
+    return formatBelowOnePeso(amount, 'COP');
+  }
   return new Intl.NumberFormat('es-CO', {
     style: 'currency',
     currency: 'COP',
     minimumFractionDigits: 0,
-  }).format(withoutNegativeZero(value));
+  }).format(amount);
 }
 
 export function formatAmountInputForForm(value: number): string {

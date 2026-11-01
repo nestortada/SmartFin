@@ -119,9 +119,10 @@ test('5E.3 dashboard precision matrix: order dependence is binary, displayed pes
   // Exact totals ending in ,50 with ties: the displayed peso follows the order.
   expect(get('centavosDisplayFlip').displayEqual).toBe(false);
   expect(get('centavosDisplayFlip').current.equalsExplicit).toContain('rowidAsc');
-  // Independent of order: binary 0.49999999999999994 displays $0 for an exact 0,50.
+  // Independent of order: binary 0.49999999999999994 for an exact 0,50. It displayed $0 until 6B.3,
+  // which shows non-zero amounts below $1 with two decimals.
   expect(get('centavosNoTies').current.summary.monthlyIncome).toBe(0.49999999999999994);
-  expect(get('centavosNoTies').current.display.monthlyIncome).toBe(formatCurrency(0, 'COP'));
+  expect(get('centavosNoTies').current.display.monthlyIncome).toBe('$ 0,50');
   if (process.env.SMARTFIN_5E3_DIAGNOSTIC) {
     fs.mkdirSync('docs/aceptacion-fase5e3/node', { recursive: true });
     fs.writeFileSync('docs/aceptacion-fase5e3/node/dashboard-precision.json', JSON.stringify({ runtime: process.version, date: DATE.toISOString(), results }, null, 2));

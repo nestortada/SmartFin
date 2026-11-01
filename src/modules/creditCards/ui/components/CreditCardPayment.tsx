@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 
-import { formatCurrency } from '../../../../shared/utils/formatCurrency';
+import { formatCurrency, formatCurrencyWithCents } from '../../../../shared/utils/formatCurrency';
 import type { Account } from '../../../accounts';
 import type { CreditCardSummary } from '../../types';
 import type { CreditCardsPalette } from '../creditCardUiTypes';
@@ -31,7 +31,7 @@ export function CreditCardPaymentAction({
       <View style={styles.paymentActionTextBlock}>
         <Text style={[styles.overline, { color: palette.muted }]}>Pago de tarjeta</Text>
         <Text style={[styles.paymentActionBody, { color: palette.text }]}>
-          Saldo pendiente: {formatCurrency(card.usedCredit, card.account.currency)}
+          Saldo pendiente: {formatCurrencyWithCents(card.usedCredit, card.account.currency)}
         </Text>
       </View>
       <Pressable
@@ -56,10 +56,12 @@ export function CreditCardPaymentModal({
   accounts,
   amount,
   card,
+  fullDebtSelected,
   onAmountChange,
   onClose,
   onSave,
   onSelectAccount,
+  onSelectFullDebt,
   palette,
   saving,
   selectedAccountId,
@@ -68,10 +70,12 @@ export function CreditCardPaymentModal({
   accounts: Account[];
   amount: string;
   card?: CreditCardSummary;
+  fullDebtSelected: boolean;
   onAmountChange: (value: string) => void;
   onClose: () => void;
   onSave: () => void;
   onSelectAccount: (accountId: string) => void;
+  onSelectFullDebt: () => void;
   palette: CreditCardsPalette;
   saving: boolean;
   selectedAccountId?: string;
@@ -101,9 +105,40 @@ export function CreditCardPaymentModal({
             <Text style={[styles.overline, { color: palette.muted }]}>Tarjeta</Text>
             <Text style={[styles.paymentSummaryTitle, { color: palette.text }]}>{card.account.name}</Text>
             <Text style={[styles.paymentSummaryBody, { color: palette.muted }]}>
-              Deuda actual: {formatCurrency(card.usedCredit, card.account.currency)}
+              Deuda actual: {formatCurrencyWithCents(card.usedCredit, card.account.currency)}
             </Text>
           </View>
+
+          <Pressable
+            accessibilityRole="button"
+            accessibilityState={{ selected: fullDebtSelected }}
+            disabled={saving}
+            onPress={onSelectFullDebt}
+            style={[
+              styles.paymentAccountOption,
+              {
+                backgroundColor: fullDebtSelected ? palette.cardStrong : palette.card,
+                borderColor: fullDebtSelected ? palette.primary : palette.border,
+              },
+            ]}>
+            <View style={styles.paymentAccountText}>
+              <Text style={[styles.paymentAccountName, { color: palette.text }]}>
+                Pagar deuda total: {formatCurrencyWithCents(card.usedCredit, card.account.currency)}
+              </Text>
+              <Text style={[styles.paymentAccountBalance, { color: palette.muted }]}>
+                {fullDebtSelected
+                  ? 'Se pagara exactamente la deuda actual, incluidos los centavos.'
+                  : 'Liquida la deuda completa con centavos exactos.'}
+              </Text>
+            </View>
+            <View
+              style={[
+                styles.paymentAccountRadio,
+                { borderColor: fullDebtSelected ? palette.primary : palette.border },
+                fullDebtSelected ? { backgroundColor: palette.primary } : null,
+              ]}
+            />
+          </Pressable>
 
           <View style={styles.paymentInputGroup}>
             <Text style={[styles.inputLabel, { color: palette.primary }]}>Monto del pago</Text>

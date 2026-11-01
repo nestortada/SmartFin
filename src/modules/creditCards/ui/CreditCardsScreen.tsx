@@ -13,8 +13,8 @@ import Toast from 'react-native-toast-message';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import { SQLiteCommandFailure } from '../../../database/atomicSQLite';
 import { BottomNavigation, type BottomNavigationTab } from '../../../shared/components';
-import { formatCopAmountInput, parseCopAmountDraft } from '../../../shared/utils/copAmountInput';
-import { formatCurrency } from '../../../shared/utils/formatCurrency';
+import { formatCopAmountInput, formatExactCopAmountInput, parseCopAmountDraft } from '../../../shared/utils/copAmountInput';
+import { formatCurrencyWithCents } from '../../../shared/utils/formatCurrency';
 import type { Account } from '../../accounts';
 import type { AppTheme } from '../../settings';
 import { useCreditCardsOverview } from '../hooks';
@@ -94,6 +94,8 @@ export function CreditCardsScreen({
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [paymentAccounts, setPaymentAccounts] = useState<Account[]>([]);
   const [paymentAmount, setPaymentAmount] = useState('');
+  // 6B.3: the debt captured when the user explicitly chose "Pagar deuda total"; undefined = partial.
+  const [paymentFullDebt, setPaymentFullDebt] = useState<number>();
   const [paymentModalVisible, setPaymentModalVisible] = useState(false);
   const [paymentSourceAccountId, setPaymentSourceAccountId] = useState<string>();
   const [payingCard, setPayingCard] = useState(false);
@@ -286,7 +288,11 @@ export function CreditCardsScreen({
           ? current
           : sourceAccounts[0]?.id,
       );
-      setPaymentAmount(formatCreditLimitInput(String(Math.round(selectedCard.usedCredit))));
+      // A debt with cents is not prefilled rounded: a rounded partial payment would leave the cents unpaid.
+      setPaymentAmount(Number.isInteger(selectedCard.usedCredit)
+        ? formatCreditLimitInput(String(selectedCard.usedCredit))
+        : '');
+      setPaymentFullDebt(undefined);
       if (paymentSubmission.current === 'confirmed') paymentSubmission.current = 'idle';
       setPaymentModalVisible(true);
     } catch (loadError) {
@@ -295,6 +301,23 @@ export function CreditCardsScreen({
         loadError instanceof Error ? loadError.message : 'No se pudieron cargar las cuentas origen.',
       );
     }
+  };
+
+  const selectFullDebtPayment = () => {
+    if (!selectedCard || payingCard) return;
+    const exactText = formatExactCopAmountInput(selectedCard.usedCredit);
+    if (!exactText) {
+      Alert.alert('SmartFin', 'La deuda tiene fracciones inferiores a un centavo y no puede liquidarse con exactitud.');
+      return;
+    }
+    setPaymentFullDebt(selectedCard.usedCredit);
+    setPaymentAmount(exactText);
+  };
+
+  const changePaymentAmount = (value: string) => {
+    // Typing any amount is a partial payment, even if it equals the debt.
+    setPaymentFullDebt(undefined);
+    setPaymentAmount(formatCopAmountInput(value));
   };
 
   const closePaymentModal = () => {
@@ -313,7 +336,8 @@ export function CreditCardsScreen({
       return;
     }
 
-    const amount = parseCopAmountDraft(paymentAmount);
+    const fullDebt = paymentFullDebt !== undefined;
+    const amount = fullDebt ? paymentFullDebt : parseCopAmountDraft(paymentAmount);
     if (!paymentSourceAccountId || amount <= 0) {
       Alert.alert('SmartFin', 'Selecciona una cuenta origen e ingresa un monto valido.');
       return;
@@ -328,6 +352,7 @@ export function CreditCardsScreen({
         accountRepository: createSqliteAccountRepository(database),
         amount,
         creditCardRepository: createSqliteCreditCardRepository(database),
+        settlement: fullDebt ? 'fullDebt' : 'partial',
         sourceAccountId: paymentSourceAccountId,
         transactionRepository: createSqliteTransactionRepository(database),
       });
@@ -339,7 +364,7 @@ export function CreditCardsScreen({
       Toast.show({
         type: 'success',
         text1: 'Pago registrado',
-        text2: `Se restauro ${formatCurrency(result.paidAmount, selectedCard.account.currency)} de cupo disponible.`,
+        text2: `Se restauro ${formatCurrencyWithCents(result.paidAmount, selectedCard.account.currency)} de cupo disponible.`,
       });
     } catch (paymentError) {
       const unknown = paymentError instanceof SQLiteCommandFailure && paymentError.result.status === 'unknown';
@@ -426,10 +451,12 @@ export function CreditCardsScreen({
         accounts={paymentAccounts}
         amount={paymentAmount}
         card={selectedCard}
-        onAmountChange={value => setPaymentAmount(formatCopAmountInput(value))}
+        fullDebtSelected={paymentFullDebt !== undefined}
+        onAmountChange={changePaymentAmount}
         onClose={closePaymentModal}
         onSave={handleRegisterPayment}
         onSelectAccount={setPaymentSourceAccountId}
+        onSelectFullDebt={selectFullDebtPayment}
         palette={palette}
         saving={payingCard}
         selectedAccountId={paymentSourceAccountId}

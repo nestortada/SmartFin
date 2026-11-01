@@ -74,7 +74,10 @@ function decimalDifference(a: string, b: string): string {
   return (diff < 0n ? '-' : '') + text;
 }
 
-const exactFormat = new Intl.NumberFormat('es-CO', { currency: 'COP', maximumFractionDigits: 0, minimumFractionDigits: 0, style: 'currency' });
+const wholeFormat = new Intl.NumberFormat('es-CO', { currency: 'COP', maximumFractionDigits: 0, minimumFractionDigits: 0, style: 'currency' });
+// 6B.3: a non-zero exact decimal below $1 is shown with two decimals instead of $ 0 / $ 1.
+const centsFormat = new Intl.NumberFormat('es-CO', { currency: 'COP', maximumFractionDigits: 2, minimumFractionDigits: 2, style: 'currency' });
+const exactFormat = { format: (text: number) => (Number(text) !== 0 && Math.abs(Number(text)) < 1 ? centsFormat : wholeFormat).format(text) };
 
 function compare(previous: DashboardSummary, next: DashboardSummary, exact?: Record<(typeof MONTHLY)[number], bigint>) {
   return Object.fromEntries(MONTHLY.map(field => {

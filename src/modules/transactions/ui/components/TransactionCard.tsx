@@ -2,6 +2,7 @@ import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import type { Transaction } from '../../types';
+import { formatCOP } from '../transactionsScreenFormatters';
 
 type ThemeColors = {
   border: string;
@@ -116,14 +117,6 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     return {
       installmentCount,
     };
-  };
-
-  const formatCOP = (val: number) => {
-    return new Intl.NumberFormat('es-CO', {
-      currency: 'COP',
-      minimumFractionDigits: 0,
-      style: 'currency',
-    }).format(val);
   };
 
   const catInfo = getCategoryInfo(tx.categoryId);

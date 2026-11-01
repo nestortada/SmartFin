@@ -119,11 +119,13 @@ if (REPRODUCTION) {
       const r = await probe('smallAmounts');
       for (const evaluation of Object.values<any>(r).filter(v => v.figures)) expect(nextMatchesOracle(evaluation)).toBe(true);
       // A real −0,40 keeps its sign; a real 0,40 debt keeps its value (presentation policy unchanged, see report).
-      expect(r.negativeFortyCents.figures.availableBalance).toMatchObject({ next: '-0.4', nextDisplay: '-$ 0', previousDisplay: '-$ 0' });
-      expect(r.debtFortyCents.figures.totalDebt).toMatchObject({ next: '0.4', nextDisplay: '$ 0', visibleChange: false });
-      expect(r.debtFortyCents.figures.netWorth).toMatchObject({ next: '-0.4', nextDisplay: '-$ 0' });
+      // 6B.3: both are shown with two decimals (they read -$ 0 / $ 0 with the frozen pre-6B.2 formatter).
+      expect(r.negativeFortyCents.figures.availableBalance).toMatchObject({ next: '-0.4', nextDisplay: '-$\u00a00,40', previousDisplay: '-$\u00a00' });
+      expect(r.debtFortyCents.figures.totalDebt).toMatchObject({ next: '0.4', nextDisplay: '$\u00a00,40', visibleChange: true });
+      expect(r.debtFortyCents.figures.netWorth).toMatchObject({ next: '-0.4', nextDisplay: '-$\u00a00,40' });
       expect(r.halfPositive.figures.availableBalance).toMatchObject({ next: '1234.5', nextDisplay: formatCurrency(1235, 'COP') });
-      expect(r.halfNegative.figures.availableBalance).toMatchObject({ next: '-0.5', nextDisplay: formatCurrency(-1, 'COP') });
+      // 6B.3: −0,50 read −$ 1 before; below $1 it now keeps its two decimals.
+      expect(r.halfNegative.figures.availableBalance).toMatchObject({ next: '-0.5', nextDisplay: '-$ 0,50' });
     });
 
     test('out-of-contract operands or totals keep the previous binary aggregate bit for bit', async () => {
@@ -135,7 +137,8 @@ if (REPRODUCTION) {
       expect(r.historicalDrift.dashboardFallbacks).toMatchObject({ 'dashboard.availableBalance': 1, 'dashboard.netWorth': 1 });
       expect(r.historicalDrift.dashboardFallbacks['dashboard.totalDebt']).toBeUndefined();
       // The pre-6B.1 residue is not an exact zero: it stays visible as before.
-      expect(r.historicalResidueZero.figures.availableBalance.nextDisplay).toBe('-$ 0');
+      // 6B.3: still visible and never shown as zero.
+      expect(r.historicalResidueZero.figures.availableBalance.nextDisplay).toBe('> -$\u00a00,01');
       expect(r.unsafeTotal.dashboardFallbacks).toMatchObject({ 'dashboard.availableBalance': 1, 'dashboard.netWorth': 1 });
       expect(r.unsafeNetWorth.dashboardFallbacks).toEqual({ 'dashboard.netWorth': 1 });
     });
@@ -298,17 +301,19 @@ if (REPRODUCTION) {
   });
 
   describe('presentation (6B-D4) and consistency between screens', () => {
-    test('only the IEEE negative zero changes: −0 shows $ 0; every non-zero value is formatted as before', () => {
+    test('−0 shows $ 0; every value with |x| >= 1 is formatted as before (below $1: 6B.3 policy)', () => {
       expect(formatCurrency(-0, 'COP')).toBe(formatCurrency(0, 'COP'));
       expect(formatCOP(-0)).toBe(formatCOP(0));
       expect(previousDashboard.formatCurrency(-0, 'COP')).toBe('-$ 0');
       const values = [-2.7755575615628914e-17, -0.004, -0.4, 0.4, -0.49999999999999994, -0.5, 0.5, 2.5, 97599.49999999999, 97599.5, -97599.5, 1e15, -1e15, Number.MAX_SAFE_INTEGER];
       for (let cents = -20000; cents <= 20000; cents++) values.push(cents / 100);
-      for (const value of values.filter(v => !Object.is(v, -0))) {
+      // 6B.3: |x| >= 1 unchanged; non-zero amounts below $1 are no longer shown as $ 0 / -$ 0 / $ 1.
+      for (const value of values.filter(v => !Object.is(v, -0) && !(v !== 0 && Math.abs(v) < 1))) {
         expect(formatCurrency(value, 'COP')).toBe(previousDashboard.formatCurrency(value, 'COP'));
       }
-      expect(formatCurrency(-0.4, 'COP')).toBe('-$ 0');
-      expect(formatCurrency(-2.7755575615628914e-17, 'COP')).toBe('-$ 0');
+      expect(formatCurrency(-0.4, 'COP')).toBe('-$\u00a00,40');
+      expect(formatCurrency(-0.5, 'COP')).toBe('-$\u00a00,50');
+      expect(formatCurrency(-2.7755575615628914e-17, 'COP')).toBe('> -$\u00a00,01');
     });
 
     test('Movements and Debit cards show the same exact available balance as the dashboard', async () => {

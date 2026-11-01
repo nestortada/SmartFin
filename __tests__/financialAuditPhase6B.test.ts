@@ -109,7 +109,9 @@ describe('defects characterized by the audit (current results, not accepted beha
     const r = await probe('cardCentavosDebt');
     expect(r.attempts.map((a: any) => a.paid ?? 'rejected')).toEqual(['rejected', 10000, 'rejected', 'rejected', 'rejected']);
     expect(r.closure).toMatch(/^rejected/);
-    expect(r.dashboardDebt.display).toBe(formatCurrency(0, 'COP'));
+    // These attempts are all partial payments, whose contract 6B.3 keeps. Since 6B.3 the 0,40 debt is
+    // visible (it read $ 0) and is settled only by the explicit whole-debt mode (creditCardSettlementPhase6B3).
+    expect(r.dashboardDebt.display).toBe('$ 0,40');
   });
 
   test('6B-D3 corrected in 6B.2: exact account balances are aggregated in exact cents by the dashboard', async () => {
