@@ -8,7 +8,9 @@
     "lint": "eslint .",
     "postinstall": "node scripts/patchReactNativeSqliteStorage.js",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "test:reproductions": "jest --config jest.reproductions.config.js",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.85.3",
@@ -45,7 +47,7 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": ">= 22.11.0"
+    "node": ">=24.16.0 <25"
   },
   "overrides": {}
 }

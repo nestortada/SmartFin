@@ -1,0 +1,76 @@
+{
+  "runtime": "v24.16.0",
+  "sqlite": "3.53.0",
+  "results": {
+    "monthlyAmounts": {
+      "status": "confirmed",
+      "observed": [
+        {
+          "total": "100000",
+          "count": 3,
+          "monthlyAmount": 33333,
+          "billedTotal": 99999,
+          "differenceCop": -1
+        },
+        {
+          "total": "600000",
+          "count": 6,
+          "monthlyAmount": 100000,
+          "billedTotal": 600000,
+          "differenceCop": 0
+        },
+        {
+          "total": "100000.50",
+          "count": 3,
+          "monthlyAmount": 33334,
+          "billedTotal": 100002,
+          "differenceCop": 1.5
+        },
+        {
+          "total": "100000.01",
+          "count": 3,
+          "monthlyAmount": 33333,
+          "billedTotal": 99999,
+          "differenceCop": -1.01
+        },
+        {
+          "total": "10",
+          "count": 3,
+          "monthlyAmount": 3,
+          "billedTotal": 9,
+          "differenceCop": -1
+        },
+        {
+          "total": "2",
+          "count": 3,
+          "monthlyAmount": 1,
+          "billedTotal": 3,
+          "differenceCop": 1
+        },
+        {
+          "total": "1",
+          "count": 3,
+          "monthlyAmount": 0,
+          "billedTotal": 0,
+          "differenceCop": -1
+        },
+        {
+          "total": "0.40",
+          "count": 2,
+          "monthlyAmount": 0,
+          "billedTotal": 0,
+          "differenceCop": -0.4
+        },
+        {
+          "total": "0.01",
+          "count": 2,
+          "monthlyAmount": 0,
+          "billedTotal": 0,
+          "differenceCop": -0.01
+        }
+      ],
+      "expected": "the installments of a purchase add up exactly to its total, in cents",
+      "note": "saveTransactionInstallments stores a single Math.round(total / n); cents are dropped and amounts below n pesos give 0 per installment."
+    }
+  }
+}

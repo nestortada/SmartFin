@@ -1,0 +1,23 @@
+{
+  "runtime": "v24.16.0",
+  "sqlite": "3.53.0",
+  "results": {
+    "startOptions": {
+      "status": "notExecutable",
+      "observed": {
+        "options": {
+          "addsPunctuation": true,
+          "continuous": false,
+          "interimResults": true,
+          "lang": "es-CO",
+          "maxAlternatives": 1,
+          "recordingOptions": {
+            "persist": false
+          }
+        },
+        "networkErrorMessage": "No se pudo reconocer la voz. Puedes continuar escribiendo."
+      },
+      "note": "Without requiresOnDeviceRecognition the library calls SpeechRecognizer.createSpeechRecognizer (system default service), which may use the network. Offline behavior requires a controlled device test."
+    }
+  }
+}

@@ -109,7 +109,14 @@ Antes de una versión candidata:
 npm test -- --runInBand
 npx tsc --noEmit
 npm run lint
+npm run test:reproductions -- --runInBand
 ```
+
+Entorno (Fase 0, [línea base](linea-base-fase0.md)): Node `24.16.0` según `.nvmrc` (`engines`: `>=24.16.0 <25`). La CI (`.github/workflows/ci.yml`) repite estos pasos con `npm ci`, comprueba los parches de `react-native-sqlite-storage` y exige un árbol de trabajo limpio al terminar.
+
+Evidencias: una ejecución ordinaria de Jest no reescribe `docs/`. Las escrituras de las pruebas hacia `docs/` se redirigen a `artifacts/jest-evidence/docs/` (ignorado por Git; `SMARTFIN_EVIDENCE_DIR` cambia la carpeta). Para regenerar a propósito una evidencia versionada, ejecuta solo la suite correspondiente con `SMARTFIN_WRITE_EVIDENCE=1`.
+
+Reproducciones de defectos (`__tests__/reproductions/*.repro.ts[x]`, `jest.reproductions.config.js`): fuera de la suite estable. Cada defecto confirmado tiene una prueba de caracterización (comportamiento actual) y una prueba `test.failing` de aceptación. La suite está en verde mientras los defectos se reproducen exactamente; cuando una corrección los cambia, se vuelve roja y la prueba de aceptación se traslada a la suite estable como regresión.
 
 Además:
 
@@ -121,7 +128,7 @@ Además:
 
 ## 8. Deuda de calidad priorizada
 
-1. Añadir CI para test, TypeScript y lint.
+1. ~~Añadir CI para test, TypeScript y lint.~~ Configurada en la Fase 0; pendiente de su primera ejecución en GitHub.
 2. Añadir cobertura y umbrales graduales para `useCases` y repositorios.
 3. Añadir pruebas de migración sobre SQLite real.
 4. Añadir pruebas de componentes para formularios críticos.

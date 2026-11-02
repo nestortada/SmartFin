@@ -1,0 +1,36 @@
+{
+  "runtime": "v24.16.0",
+  "sqlite": "3.53.0",
+  "results": {
+    "freshInstall": {
+      "status": "confirmed",
+      "observed": {
+        "categories": [],
+        "accounts": []
+      },
+      "expected": "category-other («Otros») exists from the first launch"
+    },
+    "cardReferences": {
+      "status": "discarded",
+      "observed": "created lazily with valid references; no essential card row is missing on first launch"
+    },
+    "customCategoryDeletion": {
+      "status": "confirmed",
+      "observed": {
+        "deletion": "No existe la categoria Otros para reasignar movimientos.",
+        "referencesIntact": true
+      }
+    },
+    "deletionWithFallback": {
+      "status": "discarded",
+      "observed": "reassigned to category-other; foreign_key_check empty"
+    },
+    "afterFinancialDeletion": {
+      "status": "confirmed",
+      "observed": {
+        "categoriesAfterDeletion": [],
+        "deletion": "No existe la categoria Otros para reasignar movimientos."
+      }
+    }
+  }
+}

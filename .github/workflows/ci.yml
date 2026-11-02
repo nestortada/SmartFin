@@ -1,0 +1,71 @@
+# Phase 0 baseline validation. Uses only the project's own commands; no external services.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      # Same civil calendar as the development baseline (America/Bogota).
+      TZ: America/Bogota
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies (lockfile; runs the postinstall patches)
+        run: npm ci
+
+      - name: Verify the required react-native-sqlite-storage patches
+        # Checks the installed files without patching them, so a skipped postinstall fails here.
+        run: |
+          if grep -q "jcenter()" node_modules/react-native-sqlite-storage/platforms/android/build.gradle; then
+            echo "react-native-sqlite-storage Gradle patch missing (run npm ci with scripts enabled)" >&2
+            exit 1
+          fi
+          npx jest --ci __tests__/sqliteAndroidRecoveryPatch.test.ts
+
+      - name: TypeScript
+        run: npm run typecheck
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Jest (stable suite, must pass)
+        run: npm test -- --ci --runInBand
+
+      - name: Jest (defect reproductions, controlled)
+        # Confirmed defects are pinned by characterization tests plus test.failing acceptance tests:
+        # this step is green while every defect reproduces exactly and red as soon as one changes.
+        run: npm run test:reproductions -- --ci --runInBand
+
+      - name: Working tree is unchanged
+        run: |
+          git status --porcelain
+          test -z "$(git status --porcelain)"
+
+      - name: Upload Jest evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jest-evidence
+          path: artifacts/jest-evidence
+          if-no-files-found: ignore
+          retention-days: 14

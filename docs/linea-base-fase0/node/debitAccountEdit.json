@@ -1,0 +1,141 @@
+{
+  "runtime": "v24.16.0",
+  "sqlite": "3.53.0",
+  "results": {
+    "renameOnly": {
+      "status": "discarded",
+      "observed": {
+        "shownBalance": "123457",
+        "before": {
+          "balances": {
+            "bank": 123456.78,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 0,
+          "available": 123456.78,
+          "wealth": 123456.78,
+          "income": 0,
+          "expense": 0,
+          "savings": 0
+        },
+        "after": {
+          "balances": {
+            "bank": 123456.78,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 0,
+          "available": 123456.78,
+          "wealth": 123456.78,
+          "income": 0,
+          "expense": 0,
+          "savings": 0
+        },
+        "row": {
+          "name": "Banco nómina",
+          "balance_amount": 123456.78,
+          "kind": "real"
+        },
+        "alerts": [],
+        "transactionsBefore": {
+          "n": 0
+        },
+        "transactionsAfter": {
+          "n": 0
+        }
+      },
+      "note": "The form keeps the stored balance in state; the field only displays Math.round (shownBalance)."
+    },
+    "balanceFieldRounding": {
+      "status": "ambiguous",
+      "observed": {
+        "shownBalance": "123457",
+        "before": {
+          "balances": {
+            "bank": 123456.78,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 0,
+          "available": 123456.78,
+          "wealth": 123456.78,
+          "income": 0,
+          "expense": 0,
+          "savings": 0
+        },
+        "after": {
+          "balances": {
+            "bank": 123457,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 0,
+          "available": 123457,
+          "wealth": 123457,
+          "income": 0,
+          "expense": 0,
+          "savings": 0
+        },
+        "row": {
+          "name": "Banco",
+          "balance_amount": 123457,
+          "kind": "real"
+        },
+        "alerts": [],
+        "transactionsBefore": {
+          "n": 0
+        },
+        "transactionsAfter": {
+          "n": 0
+        }
+      },
+      "note": "«Saldo actual» overwrites the balance (also a direct balance edit by design); it cannot show or keep cents. Needs a rule: adjustment movement, read-only balance or cents input."
+    },
+    "negativeBalanceRename": {
+      "status": "confirmed",
+      "observed": {
+        "shownBalance": "-50000",
+        "before": {
+          "balances": {
+            "bank": -50000.25,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 0,
+          "available": -50000.25,
+          "wealth": -50000.25,
+          "income": 0,
+          "expense": 0,
+          "savings": 0
+        },
+        "after": {
+          "balances": {
+            "bank": 0,
+            "target": 0,
+            "card": 0
+          },
+          "debt": 0,
+          "available": 0,
+          "wealth": 0,
+          "income": 0,
+          "expense": 0,
+          "savings": 0
+        },
+        "row": {
+          "name": "Banco nómina",
+          "balance_amount": 0,
+          "kind": "real"
+        },
+        "alerts": [],
+        "transactionsBefore": {
+          "n": 0
+        },
+        "transactionsAfter": {
+          "n": 0
+        }
+      },
+      "note": "saveDebitCardFromForm stores Math.max(0, currentBalance): a name-only edit changes balance and wealth by +50.000,25 without a movement."
+    }
+  }
+}

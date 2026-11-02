@@ -8,7 +8,16 @@ import { applyVersionedMigrations } from '../src/database/migrations';
 import { realSQLite } from './helpers/realSQLite';
 
 jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn() }));
+const { Buffer } = require('node:buffer') as {
+  Buffer: { from: (value: string, encoding: 'utf8' | 'utf16le') => { swap16: () => { toString: (encoding: 'hex') => string }; toString: (encoding: 'hex') => string } };
+};
 const all: TransactionHistoryQuery = { month: 'all', accountId: 'all', categoryId: 'all', search: '', sort: 'newest' };
+
+// Expected stored bytes, computed by Node itself and independent of how the test driver returns TEXT.
+function storedHex(value: string, encoding: string): string {
+  const bytes = Buffer.from(value, encoding === 'UTF-8' ? 'utf8' : 'utf16le');
+  return (encoding === 'UTF-16be' ? bytes.swap16() : bytes).toString('hex').toUpperCase();
+}
 
 test.each(['UTF-8', 'UTF-16le', 'UTF-16be'])('the byte prefilter never excludes a JS ASCII match in %s storage', encoding => {
   const f = realSQLite();
@@ -16,12 +25,19 @@ test.each(['UTF-8', 'UTF-16le', 'UTF-16be'])('the byte prefilter never excludes 
     f.native.exec(`PRAGMA encoding='${encoding}'; CREATE TABLE search_text (value TEXT);`);
     const values = ['İ K', 'a\0SECRET', '\0ABC', '😀𐐀', '  %_  ',
       ...Array.from({length: 1024}, (_, index) => `prefix ${String.fromCodePoint(index)} ABC suffix`)];
-    const insert = f.native.prepare('INSERT INTO search_text VALUES (?);');
-    for (const value of values) insert.run(value);
+    const insert = f.native.prepare('INSERT INTO search_text (rowid, value) VALUES (?, ?);');
+    values.forEach((value, index) => insert.run(index + 1, value));
+    // Phase 0: rows are identified by rowid and checked by their stored bytes, never by the string the
+    // test driver returns. node:sqlite in Node 24.11.1 (SQLite 3.50.4) truncates TEXT at an embedded NUL
+    // when reading it back ('a\0SECRET' -> 'a') although SQLite stores every byte; 24.16.0 does not.
+    const stored = f.query('SELECT rowid AS id, hex(CAST(value AS BLOB)) AS bytes FROM search_text ORDER BY rowid;').rows.raw();
+    expect(stored).toEqual(values.map((value, index) => ({ id: index + 1, bytes: storedHex(value, encoding) })));
     for (const search of ['i', 'k', 'secret', 'abc', '%_', ' ', '\x7f']) {
-      const rows = f.query('SELECT value FROM search_text WHERE instr(lower(value), ?) > 0 OR length(CAST(value AS BLOB)) <> length(value);', [search]);
-      const candidates = new Set(rows.rows.raw().map(row => row.value));
-      for (const value of values.filter(text => text.toLowerCase().includes(search))) expect(candidates.has(value)).toBe(true);
+      const rows = f.query('SELECT rowid AS id FROM search_text WHERE instr(lower(value), ?) > 0 OR length(CAST(value AS BLOB)) <> length(value);', [search]);
+      const candidates = new Set(rows.rows.raw().map(row => row.id));
+      values.forEach((value, index) => {
+        if (value.toLowerCase().includes(search)) expect(candidates.has(index + 1)).toBe(true);
+      });
     }
   } finally { f.native.close(); }
 });
@@ -34,6 +50,12 @@ test('byte-length prefilter preserves Unicode, ASCII controls, NUL and literal u
       id: `text-${index}`, date: new Date(Date.UTC(2020, 0, index + 1)).toISOString(),
       description: text[index % text.length] ?? '', merchantName: text[(index + 1) % text.length], notes: text[(index + 2) % text.length],
     }));
+    // A truncating driver truncates the reference and the page alike, so NUL integrity is also checked
+    // on the stored bytes of every field.
+    for (const [column, offset] of [['description', 0], ['merchant_name', 1], ['notes', 2]] as const) {
+      const expected = Array.from({length: 217}, (_, index) => text[(index + offset) % text.length]).filter(value => value === 'a\0SECRET').length;
+      expect(f.query(`SELECT count(*) AS n FROM transactions WHERE hex(CAST(${column} AS BLOB)) = ?;`, [storedHex('a\0SECRET', 'UTF-8')]).rows.item(0)).toEqual({ n: expected });
+    }
     const repo = createSqliteTransactionRepository(f.database);
     const reference = await repo.getTransactions();
     for (const search of ['i', 'k', 'secret', '𐐨', '😀', 'i̇', 'σ', '\0', '\nabc', '\t', '\x7f', ' %_ ', '[.*]', '  ', 'ASCII', 'absent', 'ABSENT extended']) {

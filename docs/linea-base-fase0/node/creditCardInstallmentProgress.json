@@ -1,0 +1,134 @@
+{
+  "runtime": "v24.16.0",
+  "sqlite": "3.53.0",
+  "results": {
+    "installmentByInstallment": {
+      "status": "confirmed",
+      "observed": {
+        "steps": [
+          {
+            "date": "2026-10-11",
+            "paid": 100000,
+            "remainingDebt": 500000,
+            "billedCycles": 1,
+            "paidInstallments": 0,
+            "planStatus": "active"
+          },
+          {
+            "date": "2026-11-11",
+            "paid": 100000,
+            "remainingDebt": 400000,
+            "billedCycles": 1,
+            "paidInstallments": 0,
+            "planStatus": "active"
+          },
+          {
+            "date": "2026-12-11",
+            "paid": 100000,
+            "remainingDebt": 300000,
+            "billedCycles": 1,
+            "paidInstallments": 0,
+            "planStatus": "active"
+          },
+          {
+            "date": "2027-01-11",
+            "paid": 100000,
+            "remainingDebt": 200000,
+            "billedCycles": 1,
+            "paidInstallments": 0,
+            "planStatus": "active"
+          },
+          {
+            "date": "2027-02-11",
+            "paid": 100000,
+            "remainingDebt": 100000,
+            "billedCycles": 1,
+            "paidInstallments": 0,
+            "planStatus": "active"
+          },
+          {
+            "date": "2027-03-11",
+            "paid": 100000,
+            "remainingDebt": 0,
+            "billedCycles": 1,
+            "paidInstallments": 0,
+            "planStatus": "active"
+          }
+        ],
+        "close": {
+          "closed": false,
+          "message": "No puedes eliminar la tarjeta porque tiene compras a cuotas vigentes."
+        }
+      },
+      "expected": "with the whole purchase paid (debt 0) no installment is pending and the card can be closed",
+      "note": "No production code advances paid_installments (only the demo seed writes it)."
+    },
+    "fullDebtSettlement": {
+      "status": "confirmed",
+      "observed": {
+        "payment": {
+          "paidAmount": 600000,
+          "remainingDebt": 0
+        },
+        "close": {
+          "closed": false,
+          "message": "No puedes eliminar la tarjeta porque tiene compras a cuotas vigentes."
+        }
+      }
+    },
+    "billedVersusPaid": {
+      "status": "ambiguous",
+      "observed": [
+        {
+          "date": "2026-10-11",
+          "paid": 100000,
+          "remainingDebt": 500000,
+          "billedCycles": 1,
+          "paidInstallments": 0,
+          "planStatus": "active"
+        },
+        {
+          "date": "2026-11-11",
+          "paid": 100000,
+          "remainingDebt": 400000,
+          "billedCycles": 1,
+          "paidInstallments": 0,
+          "planStatus": "active"
+        },
+        {
+          "date": "2026-12-11",
+          "paid": 100000,
+          "remainingDebt": 300000,
+          "billedCycles": 1,
+          "paidInstallments": 0,
+          "planStatus": "active"
+        },
+        {
+          "date": "2027-01-11",
+          "paid": 100000,
+          "remainingDebt": 200000,
+          "billedCycles": 1,
+          "paidInstallments": 0,
+          "planStatus": "active"
+        },
+        {
+          "date": "2027-02-11",
+          "paid": 100000,
+          "remainingDebt": 100000,
+          "billedCycles": 1,
+          "paidInstallments": 0,
+          "planStatus": "active"
+        },
+        {
+          "date": "2027-03-11",
+          "paid": 100000,
+          "remainingDebt": 0,
+          "billedCycles": 1,
+          "paidInstallments": 0,
+          "planStatus": "active"
+        }
+      ],
+      "note": "Decide whether progress advances when an installment is billed, when a payment covers it (and in which order payments are allocated across purchases), or both."
+    }
+  }
+}

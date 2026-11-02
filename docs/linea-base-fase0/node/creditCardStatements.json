@@ -1,0 +1,144 @@
+{
+  "runtime": "v24.16.0",
+  "sqlite": "3.53.0",
+  "results": {
+    "sixInstallments": {
+      "status": "confirmed",
+      "observed": [
+        {
+          "statementStartDate": "2026-09-21",
+          "statementEndDate": "2026-10-20",
+          "totalAmount": 100000,
+          "status": "pending"
+        },
+        {
+          "statementStartDate": "2026-10-21",
+          "statementEndDate": "2026-11-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2026-11-21",
+          "statementEndDate": "2026-12-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2026-12-21",
+          "statementEndDate": "2027-01-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2027-01-21",
+          "statementEndDate": "2027-02-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2027-02-21",
+          "statementEndDate": "2027-03-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2027-03-21",
+          "statementEndDate": "2027-04-20",
+          "totalAmount": 0,
+          "status": "open"
+        }
+      ],
+      "expected": "six consecutive statements of 100.000 (sum 600.000)",
+      "note": "Statement charges only include purchases dated inside the cycle (creditCardTransactionRelations.ts, statementChargeAmounts)."
+    },
+    "debtAndExpense": {
+      "status": "discarded",
+      "observed": [
+        {
+          "expense": 600000,
+          "wealth": 400000,
+          "debt": 600000
+        },
+        {
+          "expense": 0,
+          "wealth": 400000,
+          "debt": 600000
+        },
+        {
+          "expense": 0,
+          "wealth": 400000,
+          "debt": 600000
+        },
+        {
+          "expense": 0,
+          "wealth": 400000,
+          "debt": 600000
+        },
+        {
+          "expense": 0,
+          "wealth": 400000,
+          "debt": 600000
+        },
+        {
+          "expense": 0,
+          "wealth": 400000,
+          "debt": 600000
+        },
+        {
+          "expense": 0,
+          "wealth": 400000,
+          "debt": 600000
+        }
+      ],
+      "note": "No accounting inconsistency: only the statement is affected."
+    },
+    "previousPurchases": {
+      "status": "confirmed",
+      "observed": [
+        {
+          "statementStartDate": "2026-09-21",
+          "statementEndDate": "2026-10-20",
+          "totalAmount": 100000,
+          "status": "pending"
+        },
+        {
+          "statementStartDate": "2026-10-21",
+          "statementEndDate": "2026-11-20",
+          "totalAmount": 100000,
+          "status": "pending"
+        },
+        {
+          "statementStartDate": "2026-11-21",
+          "statementEndDate": "2026-12-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2026-12-21",
+          "statementEndDate": "2027-01-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2027-01-21",
+          "statementEndDate": "2027-02-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2027-02-21",
+          "statementEndDate": "2027-03-20",
+          "totalAmount": 0,
+          "status": "open"
+        },
+        {
+          "statementStartDate": "2027-03-21",
+          "statementEndDate": "2027-04-20",
+          "totalAmount": 0,
+          "status": "open"
+        }
+      ],
+      "expected": "the second cycle bills installment 2 of the TV and installment 1 of the fridge; nine installments (900.000) in total"
+    }
+  }
+}

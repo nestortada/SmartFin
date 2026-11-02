@@ -1,0 +1,173 @@
+{
+  "runtime": "v24.16.0",
+  "sqlite": "3.53.0",
+  "results": {
+    "rejected": {
+      "status": "discarded",
+      "observed": {
+        "0": {
+          "error": "Monto invÃ¡lido.",
+          "amounts": [],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        },
+        "-5": {
+          "error": "Monto invÃ¡lido.",
+          "amounts": [],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        },
+        "-0.4": {
+          "error": "Monto invÃ¡lido.",
+          "amounts": [],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        },
+        "NaN": {
+          "error": "El contenido incluye un número no finito.",
+          "amounts": [],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        },
+        "Infinity": {
+          "error": "El contenido incluye un número no finito.",
+          "amounts": [],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        },
+        "-Infinity": {
+          "error": "El contenido incluye un número no finito.",
+          "amounts": [],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        }
+      }
+    },
+    "validCents": {
+      "status": "discarded",
+      "observed": {
+        "0.3": {
+          "amounts": [
+            0.3
+          ],
+          "bank": 999999.7,
+          "monthlyInstallments": []
+        },
+        "0.49": {
+          "amounts": [
+            0.49
+          ],
+          "bank": 999999.51,
+          "monthlyInstallments": []
+        },
+        "0.01": {
+          "amounts": [
+            0.01
+          ],
+          "bank": 999999.99,
+          "monthlyInstallments": []
+        },
+        "1234.56": {
+          "amounts": [
+            1234.56
+          ],
+          "bank": 998765.44,
+          "monthlyInstallments": []
+        }
+      }
+    },
+    "moreThanTwoDecimals": {
+      "status": "confirmed",
+      "observed": {
+        "0.004": {
+          "amounts": [
+            0.004
+          ],
+          "bank": 999999.996,
+          "monthlyInstallments": []
+        },
+        "0.005": {
+          "amounts": [
+            0.005
+          ],
+          "bank": 999999.995,
+          "monthlyInstallments": []
+        },
+        "10.005": {
+          "amounts": [
+            10.005
+          ],
+          "bank": 999989.995,
+          "monthlyInstallments": []
+        },
+        "1e-7": {
+          "amounts": [
+            1e-7
+          ],
+          "bank": 999999.9999999,
+          "monthlyInstallments": []
+        }
+      },
+      "note": "requiredNumber only checks finiteness (executeAiCommandPlan.ts); saveManualTransaction only checks > 0. Not stored as 0, but outside the contract: input of 6B-D5 and source of binary drift."
+    },
+    "zeroInstallments": {
+      "status": "confirmed",
+      "observed": {
+        "0.40 x 2": {
+          "amounts": [
+            0.4
+          ],
+          "bank": 1000000,
+          "monthlyInstallments": [
+            0
+          ]
+        },
+        "1.20 x 3": {
+          "amounts": [
+            1.2
+          ],
+          "bank": 1000000,
+          "monthlyInstallments": [
+            0
+          ]
+        },
+        "2 x 3": {
+          "amounts": [
+            2
+          ],
+          "bank": 1000000,
+          "monthlyInstallments": [
+            1
+          ]
+        }
+      },
+      "note": "The only flow found where a positive amount ends up as 0: the monthly installment (Math.round(total / n)); same code as the manual form (4.3)."
+    },
+    "subscriptions": {
+      "status": "ambiguous",
+      "observed": {
+        "0.004": {
+          "error": "Falta un importe válido de suscripción.",
+          "amounts": [],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        },
+        "0.005": {
+          "amounts": [
+            0.01
+          ],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        },
+        "0.3": {
+          "amounts": [
+            0.3
+          ],
+          "bank": 1000000,
+          "monthlyInstallments": []
+        }
+      },
+      "note": "roundSubscriptionMoney rounds instead of rejecting a third decimal: half a cent becomes one cent. Needs the same rule as movements."
+    }
+  }
+}
