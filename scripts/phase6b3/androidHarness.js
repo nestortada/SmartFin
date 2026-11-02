@@ -18,6 +18,7 @@ import {TransactionCard} from './src/modules/transactions/ui/components/Transact
 import {formatCurrency} from './src/shared/utils/formatCurrency';
 import {resetSyntheticData} from './phase6bProbes';
 import {PHASE6B3_DATE, PHASE6B3_PROBES, runPhase6B3Probe} from './phase6b3Probes';
+import {withPhase1A2Clock} from './phase1a2Probes';
 import * as previousCards from './pre6B3CreditCardRelations';
 import expected from './phase6b3NodeExpected.json';
 
@@ -91,23 +92,50 @@ async function confirmedRollbackVerdict({failure, faultFired, injected, before, 
   return 'rolledBack';
 }
 // </rollback-oracle>
-async function matrix(database, record) {
+// 1a.2: the matrix pins the JS clock for the seed and the payment (Node: __tests__/phase6b3HarnessRollbackOracle).
+// With the device clock the seed reconciled the device's current cycle, the payment's 11 Oct cycle became history
+// (1a.2 protection, supersededByLaterCycle) and its two statement writes (3 and 10) never ran: 8 writes, not 10.
+// 'aligned' restores the 10 writes; 'historical' keeps that 8-write case, deterministic, as protection evidence.
+export const MATRIX_CLOCKS = {
+  aligned: {clock: PHASE6B3_DATE, writes: 10, prefix: ''},
+  historical: {clock: new Date('2026-11-02T04:38:46.000Z'), writes: 8, prefix: 'historical-'},
+};
+const statementRows = async database => rows((await database.executeSql('SELECT * FROM credit_card_statements ORDER BY id'))[0]);
+export async function matrix(database, record, mode = 'aligned') {
+  const {clock, writes: expectedWrites, prefix} = MATRIX_CLOCKS[mode];
+  const at = run => withPhase1A2Clock(clock, run);
   for (const [purchases, debt] of [[[0.4], 0.4], [[10000.4], 10000.4], [[4229.9, 89392.54, 939.56], 94562]]) {
-    await seed(database, purchases);
+    await at(() => seed(database, purchases));
+    const statementsBefore = await statementRows(database);
     global.__deletionFault = {write: Number.MAX_SAFE_INTEGER, count: 0, phase: 'before'};
-    await registerCreditCardPayment(request(database, debt));
+    await at(() => registerCreditCardPayment(request(database, debt)));
     const count = global.__deletionFault.count;
     global.__deletionFault = undefined;
     check(count > 0, 'Write instrumentation missing');
-    await record(`write-count-${debt}`, async () => ({writes: count, points: count * 2}));
+    const statementsAfter = await statementRows(database);
+    await record(`${prefix}write-count-${debt}`, async () => {
+      check(count === expectedWrites, `Expected ${expectedWrites} writes with the ${mode} clock, got ${count}`);
+      if (mode === 'aligned') {
+        // The statement of the payment's cycle is written: pending debt before, settled after.
+        check(statementsBefore.length === 1 && statementsBefore[0].status === 'pending' && statementsAfter.length === 1 &&
+          statementsAfter[0].id === statementsBefore[0].id && statementsAfter[0].total_amount === 0 && statementsAfter[0].status === 'paid',
+          'Aligned payment did not write its statement');
+      } else {
+        // The later stored statement is history for the payment's cycle: nothing is written or created.
+        check(JSON.stringify(statementsAfter) === JSON.stringify(statementsBefore), 'Historical statement rewritten');
+      }
+      return {writes: count, points: count * 2, clock: clock.toISOString(),
+        statementsBefore: statementsBefore.map(s => [s.statement_end_date, s.total_amount, s.status]),
+        statementsAfter: statementsAfter.map(s => [s.statement_end_date, s.total_amount, s.status])};
+    });
     for (let write = 1; write <= count; write++) for (const phase of ['before', 'after']) {
-      await record(`rollback-${debt}-${write}-${phase}`, async () => {
-        await seed(database, purchases);
+      await record(`${prefix}rollback-${debt}-${write}-${phase}`, async () => {
+        await at(() => seed(database, purchases));
         const before = await state(database);
         const fault = {write, count: 0, phase};
         global.__deletionFault = fault;
         let failure;
-        try {await registerCreditCardPayment(request(database, debt));} catch (error) {failure = error;}
+        try {await at(() => registerCreditCardPayment(request(database, debt)));} catch (error) {failure = error;}
         finally {global.__deletionFault = undefined;}
         const status = await confirmedRollbackVerdict({
           failure, faultFired: fault.count >= write, injected: `Injected ${phase} deletion write`, before,
@@ -119,12 +147,13 @@ async function matrix(database, record) {
       });
     }
   }
+  if (mode !== 'aligned') return;
   await record('confirmed-same-request-no-duplicate', async () => {
-    await seed(database, [0.4]);
+    await at(() => seed(database, [0.4]));
     const command = request(database, 0.4);
-    const first = await registerCreditCardPayment(command);
+    const first = await at(() => registerCreditCardPayment(command));
     global.__deletionFault = {write: Number.MAX_SAFE_INTEGER, count: 0, phase: 'before'};
-    const second = await registerCreditCardPayment(command);
+    const second = await at(() => registerCreditCardPayment(command));
     const count = global.__deletionFault.count;
     global.__deletionFault = undefined;
     check(first === second && count === 0, 'Confirmed request was retried');

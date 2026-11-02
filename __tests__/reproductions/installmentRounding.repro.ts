@@ -39,15 +39,6 @@ test('characterization: one whole-peso monthly amount (Math.round(total / n)) lo
     note: 'saveTransactionInstallments stores a single Math.round(total / n); cents are dropped and amounts below n pesos give 0 per installment.' };
 });
 
-// Acceptance (fails today): the amounts billed across the cycles add up to the exact purchase. It also depends
-// on 4.1, because today only one cycle bills an installment.
-test.failing.each([['100000', 3], ['100000.50', 3], ['1', 3], ['0.40', 2]] as const)(
-  'acceptance: %s COP in %i installments is billed exactly, cent by cent', async (total, count) => {
-    const f = await creditCardFixture();
-    try {
-      await f.purchase(Number(total), count, CYCLE_DATES[0]!);
-      for (const date of CYCLE_DATES) await f.reconcile(date);
-      const billed = (await f.statements()).reduce((sum, s) => sum + cents(s.totalAmount), 0n);
-      expect(billed).toBe(cents(total));
-    } finally { f.native.close(); }
-  });
+// The acceptance test (amounts billed across the cycles add up to the exact purchase) passes since Phase 1a.2
+// and lives in the stable suite: __tests__/creditCardStatementsPhase1a2.test.ts. The stored monthly_amount is
+// still the rounded value characterized above (D7: not rewritten).

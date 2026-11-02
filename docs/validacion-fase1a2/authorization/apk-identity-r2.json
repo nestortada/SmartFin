@@ -1,0 +1,57 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-1a2-20261101/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "fb5898e12375b7365c63c2da02e4e4d0a1c3b34c87394317eec808c1670b4478",
+  "sizeBytes": 33247756,
+  "builtAt": "2026-11-02T04:58:35.085Z",
+  "attestationSha256": "b7e3bb6042e3d7a9536345ad78e53661e6ea2601285479493fd1134aa21ea039",
+  "variant": "release",
+  "productionSources": 301,
+  "phase1a2": [
+    {
+      "source": "src/modules/creditCards/useCases/installmentPlan.ts",
+      "sha256": "53ba1d43ef6ca911e38f28cd50bb51cb76a4d5fef557a5a408d9f1cdddc72b28"
+    },
+    {
+      "source": "src/modules/creditCards/useCases/creditCardStatementCharges.ts",
+      "sha256": "6627f7d7dacb3abfe2d238d70fef2ecae0ac8be9765f32ad97ea7f40d700c823"
+    },
+    {
+      "source": "src/modules/creditCards/useCases/creditCardTransactionRelations.ts",
+      "sha256": "c9cb07ec9e489ded44df21ac15dc4dc74e8bfd55478995d83c7efa6ca4e666e5"
+    },
+    {
+      "source": "src/modules/creditCards/repositories/sqliteCreditCardRepository.ts",
+      "sha256": "6460e6e13e1e78175f24bbbec120b7964fcca8ac5287df68f8830ba67308c603"
+    }
+  ],
+  "harness": [
+    {
+      "source": "scripts/phase1a2/androidHarness.js",
+      "sha256": "35f7d76ce3dd67726c8f71568a06d6e90426fd3696c30e6006d6c069894a68a3"
+    },
+    {
+      "source": "scripts/phase1a2/probes.ts",
+      "sha256": "ebe3af4c0fcd68c8293d87900a63f91e47068035dabedaf85b83ad1c784b5ccc"
+    },
+    {
+      "source": "docs/validacion-fase1a2/node/results.json",
+      "sha256": "8e58ada75f0b1006d95b37ad3a8f6cc32567955f48fd1a12822e6e50129abb13"
+    },
+    {
+      "source": "scripts/phase6b3/androidHarness.js",
+      "sha256": "94c89dc6c4b7d0cd8fd2fbb76a5e0fd892ac10eb322284ba7550203e63d50de0"
+    },
+    {
+      "source": "scripts/phase6b3/probes.ts",
+      "sha256": "2d43bb02917abbbf80392b6507b81708b108db9ab1a307fabc312f475e7c5e6b"
+    },
+    {
+      "source": "docs/correccion-fase6b3/node/results.json",
+      "sha256": "e7c12f1e2deb6cc4a26e7d41f683e6c3465708894057f50bbe8652d6b6b6b9b3"
+    }
+  ],
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-1a2-20261101/android",
+  "checksAtRun": "run-android.ps1: APK and attestation hashes, embedded attestation, aapt package/non-debuggable, Hermes at runtime"
+}

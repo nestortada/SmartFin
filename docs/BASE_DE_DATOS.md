@@ -164,9 +164,9 @@ erDiagram
 |---|---|---|---|
 | `loans` | Prestamo: principal, saldo pendiente, tasa anual, plazo, cuota y fechas. | `account_id -> accounts.id` | Esquema preparado |
 | `amortization_schedule_items` | Cuotas de un prestamo con capital, interes, saldo y estado. | Prestamo con `CASCADE`; transaccion opcional | Esquema preparado; se limpia al borrar transacciones |
-| `credit_card_statements` | Extractos por tarjeta: periodo, vencimiento, total, pago minimo y estado. | `account_id -> accounts.id` con `ON DELETE CASCADE` | Lectura y escritura |
+| `credit_card_statements` | Extractos por tarjeta: periodo, vencimiento, total, pago minimo y estado. Desde la [Fase 1a.2](correccion-fase1a2.md) la reconciliacion solo escribe el ciclo evaluado (nunca uno anterior a un extracto guardado ni uno `closed`) y cada plan de cuotas aporta la cuota de ese ciclo segun el motor. Ninguna tabla referencia esta tabla, por eso `INSERT OR REPLACE` solo renumera el `rowid`; `created_at` se conserva. | `account_id -> accounts.id` con `ON DELETE CASCADE` | Lectura y escritura |
 | `credit_card_profiles` | Configuracion financiera 1:1 de tarjeta; actualmente tasa de interes mensual. | PK/FK `account_id -> accounts.id` con `ON DELETE CASCADE` | Lectura y escritura |
-| `installment_purchases` | Compra a cuotas: transaccion, tarjeta, total, numero de cuotas, pagadas, valor mensual y estado. | Transaccion con `CASCADE`; cuenta | Lectura, escritura y reasignacion |
+| `installment_purchases` | Compra a cuotas: transaccion, tarjeta, total, numero de cuotas, pagadas, valor mensual y estado. `paid_installments` es heredado: ningun flujo de produccion lo actualiza (solo la siembra demo) y `monthly_amount` es `Math.round(total / n)` en pesos. El calendario exacto en centavos lo calcula el motor puro de la [Fase 1a.1](motor-cuotas-fase1a1.md), aun sin integrar. | Transaccion con `CASCADE`; cuenta | Lectura, escritura y reasignacion |
 | `smart_alerts` | Alertas tipadas con severidad, entidad relacionada, estado y fechas. | Referencia logica por tipo/id, no FK | Se usa para avisar tarjetas faltantes |
 
 Los metadatos visuales de una tarjeta (`closingDay`, `paymentDay`, ultimos cuatro digitos y cuota de manejo) no tienen columnas propias. Se serializan como JSON dentro de `accounts.description`, con el prefijo `smartfin:credit-card:`.

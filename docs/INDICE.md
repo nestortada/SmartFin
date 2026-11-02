@@ -13,6 +13,10 @@ Este índice separa la documentación por audiencia y fuente de verdad. El códi
 | [Guía de desarrollo](GUIA_DESARROLLO.md) | Desarrollo | Entorno, convenciones y extensión del sistema |
 | [Pruebas y calidad](PRUEBAS_Y_CALIDAD.md) | Desarrollo y QA | Comandos, cobertura funcional y estrategia |
 | [Roadmap](ROADMAP.md) | Producto y desarrollo | Brechas y fases propuestas |
+| [Extractos multiciclo (Fase 1a.2)](correccion-fase1a2.md) | Desarrollo y QA | Cuotas por ciclo con el motor, protección de extractos históricos y validación pendiente |
+| [Validación Android 1a.2 (preparada)](validacion-fase1a2/README.md) | QA | Campaña phase1a2-statements, matriz por dispositivo y procedimiento autorizable |
+| [Escenario C: pago de un ciclo anterior](analisis-escenario-c-fase1a2.md) | Producto y desarrollo | Datos necesarios para asociar pagos con extractos |
+| [Motor de cuotas (Fase 1a.1)](motor-cuotas-fase1a1.md) | Desarrollo y QA | Calendario de cuotas puro y exacto en centavos; contrato y reglas de ciclos |
 | [Contribución](../CONTRIBUTING.md) | Colaboradores | Flujo de cambios y lista de verificación |
 
 ## Fuentes de verdad

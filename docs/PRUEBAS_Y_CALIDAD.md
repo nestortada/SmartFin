@@ -116,6 +116,10 @@ Entorno (Fase 0, [línea base](linea-base-fase0.md)): Node `24.16.0` según `.nv
 
 Evidencias: una ejecución ordinaria de Jest no reescribe `docs/`. Las escrituras de las pruebas hacia `docs/` se redirigen a `artifacts/jest-evidence/docs/` (ignorado por Git; `SMARTFIN_EVIDENCE_DIR` cambia la carpeta). Para regenerar a propósito una evidencia versionada, ejecuta solo la suite correspondiente con `SMARTFIN_WRITE_EVIDENCE=1`.
 
+Motor de cuotas (`__tests__/installmentPlan.test.ts`, suite estable): redondeo D2 frente a un oráculo BigInt (1–3.000 centavos × 2–24 cuotas), ciclos D1 (día del corte, cortes 28–31, febrero normal y bisiesto, cambio de año, tarjeta sin corte), estados pendientes y determinismo con distintas zonas horarias y relojes del entorno. Ver [motor-cuotas-fase1a1.md](motor-cuotas-fase1a1.md).
+
+Extractos multiciclo (`__tests__/creditCardStatementsPhase1a2.test.ts`, suite estable): escenarios A–D comparados con `docs/correccion-fase1a2/node/before.json` (magnitudes financieras idénticas, solo cambia el extracto), protección de históricos, edición/eliminación, pagos, fallos inyectados y regresiones promovidas de la Fase 0 (`creditCardStatements.repro.ts` retirada). Ver [correccion-fase1a2.md](correccion-fase1a2.md).
+
 Reproducciones de defectos (`__tests__/reproductions/*.repro.ts[x]`, `jest.reproductions.config.js`): fuera de la suite estable. Cada defecto confirmado tiene una prueba de caracterización (comportamiento actual) y una prueba `test.failing` de aceptación. La suite está en verde mientras los defectos se reproducen exactamente; cuando una corrección los cambia, se vuelve roja y la prueba de aceptación se traslada a la suite estable como regresión.
 
 Además:

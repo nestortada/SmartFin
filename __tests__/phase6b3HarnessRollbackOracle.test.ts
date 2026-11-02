@@ -13,6 +13,7 @@ import { saveManualTransaction } from '../src/modules/transactions/useCases/save
 import { registerCreditCardPayment } from '../src/modules/creditCards/useCases/creditCardTransactionRelations';
 import { getDashboardSummaryFromDb } from '../src/modules/dashboard/useCases/getDashboardSummary';
 import { PHASE6B3_DATE } from '../scripts/phase6b3/probes';
+import { withPhase1A2Clock } from '../scripts/phase1a2/probes';
 import { resetSyntheticData } from '../scripts/phase6b/probes';
 
 // 6B.3.1 r3: the Android phase6b3-atomicity oracle. The previous assertion demanded a SQLiteCommandFailure
@@ -48,7 +49,7 @@ function firstDifference(a: unknown, b: unknown, at = '$'): string | undefined {
   return JSON.stringify(a) === JSON.stringify(b) ? undefined : `${at}: ${JSON.stringify(a)} != ${JSON.stringify(b)}`;
 }
 
-let deletionFault: { write: number; count: number; phase: string } | undefined;
+let deletionFault: { write: number; count: number; phase: string; sql?: string[] } | undefined;
 
 async function open() {
   const sql = realSQLite({ fixedSqlDate: PHASE6B3_DATE });
@@ -58,7 +59,9 @@ async function open() {
   const executeSql = sql.database.executeSql.bind(sql.database);
   (sql.database as unknown as { executeSql: unknown }).executeSql = async (query: string, values?: unknown[]) => {
     const fault = deletionFault;
-    const selected = fault && /^\s*(INSERT|UPDATE|DELETE|REPLACE)\b/i.test(query) && ++fault.count === fault.write;
+    const counted = fault && /^\s*(INSERT|UPDATE|DELETE|REPLACE)\b/i.test(query);
+    if (counted) fault.sql?.push(query);
+    const selected = counted && ++fault.count === fault.write;
     if (selected && fault.phase === 'before') throw new Error('Injected before deletion write');
     const rows = await executeSql(query, values as never);
     if (selected && fault.phase === 'after') throw new Error('Injected after deletion write');
@@ -97,15 +100,17 @@ const request = (database: SmartFinSQLiteDatabase, amount: number) => ({ ...deps
 
 /** One harness case: seed, fault, payment, then the shipped oracle. Returns the trace of that payment. */
 async function rollbackCase(sql: Sql, purchases: readonly number[], debt: number, write: number, phase: 'before' | 'after',
-  tamper?: { afterFailure?: () => void; rollbackFails?: boolean; nextOwner?: string }) {
-  await seed(sql.database, purchases);
+  tamper?: { afterFailure?: () => void; rollbackFails?: boolean; nextOwner?: string; clock?: Date }) {
+  // 1a.2: optional pinned JS clock for the seed and the payment, as the harness matrix does.
+  const at = <T,>(run: () => Promise<T>) => (tamper?.clock ? withPhase1A2Clock(tamper.clock, run) : run());
+  await at(() => seed(sql.database, purchases));
   const before = await state(sql);
   sql.resetTrace();
   if (tamper?.rollbackFails) sql.injectFault({ sql: 'ROLLBACK', phase: 'before' });
-  const fault = { write, count: 0, phase };
+  const fault = { write, count: 0, phase, sql: [] as string[] };
   deletionFault = fault;
   let failure: unknown;
-  try { await registerCreditCardPayment(request(sql.database, debt)); } catch (error) { failure = error; } finally { deletionFault = undefined; }
+  try { await at(() => registerCreditCardPayment(request(sql.database, debt))); } catch (error) { failure = error; } finally { deletionFault = undefined; }
   const paymentTrace = sql.trace.map(entry => ({ sql: entry.sql, outcome: entry.outcome }));
   tamper?.afterFailure?.();
   const legacyAssertion = failure instanceof SQLiteCommandFailure && failure.result.status === 'rolledBack';
@@ -115,7 +120,7 @@ async function rollbackCase(sql: Sql, purchases: readonly number[], debt: number
     openNextOwner: async () => tamper?.nextOwner ?? (await runSharedSQLiteTransaction(sql.database, async () => 'closed')).status,
     difference: firstDifference, CommandFailure: SQLiteCommandFailure,
   });
-  return { failure, legacyAssertion, outcome, paymentTrace };
+  return { failure, legacyAssertion, outcome, paymentTrace, faultedSql: fault.sql[write - 1] };
 }
 const controls = (trace: Array<{ sql: string; outcome: string }>, statement: string) =>
   trace.filter(entry => entry.sql.startsWith(statement));
@@ -203,4 +208,73 @@ describe('the oracle never accepts an unexpected outcome', () => {
   ])('%s', async (_label, evidence, message) => {
     await expect(verdict({ ...base, ...evidence })).rejects.toThrow(message);
   });
+});
+
+// 1a.2 matrix clock. The harness seeded with saveManualTransaction, which reconciles with Date.now(): on a device
+// (1 Nov 2026 in Bogota) it stored the November statement, and the payment dated 11 Oct then found its cycle
+// superseded (1a.2 historical protection): no statement write, 8 writes (scenario A, observed on API 24 and 35).
+// The harness now pins seed and payment to PHASE6B3_DATE (scenario B): 10 writes, two of them statement writes.
+// Scenario A stays as a deterministic historical-protection matrix with a pinned misaligned clock.
+describe('1a.2: matrix clock (historical protection vs aligned cycle)', () => {
+  const DEVICE_CLOCK = new Date('2026-11-02T04:38:46.000Z');
+  beforeEach(() => jest.setSystemTime(DEVICE_CLOCK));
+  const statements = (sql: Sql) => sql.query('SELECT * FROM credit_card_statements ORDER BY id').rows.raw();
+  const accounts = (sql: Sql) => sql.query('SELECT id,balance_amount,debt_balance_amount FROM accounts ORDER BY id').rows.raw();
+
+  async function successfulRun(sql: Sql, purchases: readonly number[], debt: number, clock: Date) {
+    await withPhase1A2Clock(clock, () => seed(sql.database, purchases));
+    const before = statements(sql);
+    deletionFault = { write: Number.MAX_SAFE_INTEGER, count: 0, phase: 'before', sql: [] };
+    const result = await withPhase1A2Clock(clock, () => registerCreditCardPayment(request(sql.database, debt)));
+    const writes = deletionFault.sql!;
+    deletionFault = undefined;
+    return { result, writes, before, after: statements(sql), accounts: accounts(sql) };
+  }
+  const statementPositions = (writes: string[]) =>
+    writes.flatMap((query, index) => (query.includes('credit_card_statements') ? [index + 1] : []));
+
+  test.each(MATRIX)('purchases %p: misaligned clock = 8 writes, no statement write, history untouched; aligned = 10',
+    async (purchases, debt) => {
+      const sql = await open();
+      try {
+        const historical = await successfulRun(sql, purchases, debt, DEVICE_CLOCK);
+        expect(historical.writes).toHaveLength(8);
+        expect(statementPositions(historical.writes)).toEqual([]);
+        expect(historical.after).toEqual(historical.before); // only the November row, unchanged
+        expect(historical.before.map(row => row.statement_end_date)).toEqual(['2026-11-30']);
+        const aligned = await successfulRun(sql, purchases, debt, PHASE6B3_DATE);
+        expect(aligned.writes).toHaveLength(10);
+        // Order: reconcile (card upsert 1-2, statement 3), source debit 4-5, payment 6-7, reconcile (card 8-9, statement 10).
+        expect(statementPositions(aligned.writes)).toEqual([3, 10]);
+        expect(aligned.before.map(row => [row.statement_end_date, row.status])).toEqual([['2026-10-31', 'pending']]);
+        expect(aligned.after.map(row => [row.statement_end_date, row.total_amount, row.status])).toEqual([['2026-10-31', 0, 'paid']]);
+        // Same financial result either way: debt settled exactly, bank debited by the debt.
+        expect(historical.accounts).toEqual(aligned.accounts);
+        expect(aligned.accounts.find(row => row.id === 'card')?.debt_balance_amount).toBe(0);
+        expect(aligned.result.remainingDebt).toBe(0);
+      } finally { sql.native.close(); }
+    });
+
+  test.each([['aligned', PHASE6B3_DATE, 10], ['historical', DEVICE_CLOCK, 8]] as const)(
+    '%s clock: every fault point (statement writes included) is a confirmed rollback with the exact state restored',
+    async (_name, clock, writes) => {
+      const sql = await open();
+      try {
+        for (const [purchases, debt] of MATRIX) {
+          let statementPoints = 0;
+          for (let write = 1; write <= writes; write++) for (const phase of ['before', 'after'] as const) {
+            const result = await rollbackCase(sql, purchases, debt, write, phase, { clock });
+            await expect(result.outcome).resolves.toBe('rolledBack');
+            expect(result.failure).toBeInstanceOf(Error);
+            expect(result.failure).not.toBeInstanceOf(SQLiteCommandFailure);
+            expect(controls(result.paymentTrace, 'BEGIN')).toEqual([{ sql: 'BEGIN IMMEDIATE;', outcome: 'ok' }]);
+            expect(controls(result.paymentTrace, 'ROLLBACK')).toEqual([{ sql: 'ROLLBACK;', outcome: 'ok' }]);
+            expect(controls(result.paymentTrace, 'COMMIT')).toEqual([]);
+            if (result.faultedSql?.includes('credit_card_statements')) statementPoints++;
+          }
+          // The two statement writes are really faulted, before and after, only with the aligned clock.
+          expect(statementPoints).toBe(writes === 10 ? 4 : 0);
+        }
+      } finally { sql.native.close(); }
+    });
 });

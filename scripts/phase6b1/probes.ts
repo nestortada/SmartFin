@@ -25,7 +25,8 @@ export type Phase6B1Implementation = {
   saveManualTransaction: typeof next.saveManualTransaction;
   deleteManualTransactionSafely: typeof next.deleteManualTransactionSafely;
   registerCreditCardPayment: typeof nextCards.registerCreditCardPayment;
-  reconcileCreditCardTransactions: typeof nextCards.reconcileCreditCardTransactions;
+  // 1a.2 returns a diagnostic report; the frozen copies return nothing. Probes ignore the value.
+  reconcileCreditCardTransactions: (params: Parameters<typeof nextCards.reconcileCreditCardTransactions>[0]) => Promise<unknown>;
 };
 
 export const NEXT_IMPLEMENTATION: Phase6B1Implementation = {

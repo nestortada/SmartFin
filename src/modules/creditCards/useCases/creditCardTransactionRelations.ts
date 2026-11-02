@@ -13,6 +13,7 @@ import { readUnclassifiedCreditTransactions } from '../repositories/readUnclassi
 import { readCreditCardReconciliationTransactions, type CreditCardReconciliationTransaction } from '../repositories/readCreditCardReconciliationTransactions';
 import type { CreditCardRepository } from '../repositories';
 import type { CreditCardStatement } from '../types';
+import { statementChargesForCycle, type StatementCharge, type StatementPlanNotice } from './creditCardStatementCharges';
 import {
   parseCreditCardVisualMetadata,
   serializeCreditCardVisualMetadata,
@@ -199,8 +200,8 @@ function isPaymentSourceAccount(account: Account): boolean {
   );
 }
 
-function amountsOf(transactions: CreditCardReconciliationTransaction[]): number[] {
-  return transactions.map(transaction => transaction.amount);
+function amountsOf(items: readonly { amount: number }[]): number[] {
+  return items.map(item => item.amount);
 }
 
 function accountMatchesHint(account: Account, hint?: string, rawText?: string): boolean {
@@ -321,10 +322,41 @@ export async function resolveCreditCardTransactionTarget({
   };
 }
 
-export async function reconcileCreditCardTransactions(params: ReconcileCreditCardTransactionsParams): Promise<void> {
+/**
+ * 1a.2: why the statement of the evaluated cycle was or was not written. Statements are written only for
+ * the cycle that contains the evaluation date, never when the card already has a statement for a later
+ * cycle (that cycle is history), and never over a stored `closed` statement.
+ */
+export type CreditCardStatementWrite = 'written' | 'supersededByLaterCycle' | 'storedClosed';
+
+export type CreditCardStatementReconciliation = {
+  accountId: string;
+  statementId: string;
+  write: CreditCardStatementWrite;
+  charges: StatementCharge[];
+  notices: StatementPlanNotice[];
+};
+
+export type CreditCardReconciliationReport = { statements: CreditCardStatementReconciliation[] };
+
+export async function reconcileCreditCardTransactions(
+  params: ReconcileCreditCardTransactionsParams,
+): Promise<CreditCardReconciliationReport> {
   const intention = { ...params, currentDate: new Date(params.currentDate?.getTime() ?? Date.now()) };
   return withCreditCardPaymentScope(intention, dependencies =>
     reconcileCreditCardTransactionsInScope({ ...intention, ...dependencies }));
+}
+
+function statementWrite(
+  storedStatements: CreditCardStatement[],
+  statementId: string,
+  statementEndDate: ISODateString,
+): CreditCardStatementWrite {
+  if (storedStatements.some(statement => statement.statementEndDate.slice(0, 10) > statementEndDate)) {
+    return 'supersededByLaterCycle';
+  }
+  return storedStatements.some(statement => statement.id === statementId && statement.status === 'closed')
+    ? 'storedClosed' : 'written';
 }
 
 async function reconcileCreditCardTransactionsInScope({
@@ -332,7 +364,7 @@ async function reconcileCreditCardTransactionsInScope({
   creditCardRepository,
   currentDate = new Date(),
   transactionRepository,
-}: ReconcileCreditCardTransactionsParams): Promise<void> {
+}: ReconcileCreditCardTransactionsParams): Promise<CreditCardReconciliationReport> {
   const accounts = await accountRepository.getAccounts();
   const creditCards = accounts.filter(isRealCreditCardAccount);
   const transactions = await readCreditCardReconciliationTransactions(
@@ -344,9 +376,11 @@ async function reconcileCreditCardTransactionsInScope({
   const installmentByTransactionId = new Map(
     installments.map(installment => [installment.transactionId, installment]),
   );
+  const storedStatements = await creditCardRepository.getStatements(creditCards.map(account => account.id));
   const now = new Date().toISOString();
   const accountUpdates: Account[] = [];
   const statements: CreditCardStatement[] = [];
+  const report: CreditCardReconciliationReport = { statements: [] };
 
   for (const card of creditCards) {
     const statementRange = getCurrentStatementRange(card, bogotaCalendarDate(currentDate));
@@ -363,14 +397,16 @@ async function reconcileCreditCardTransactionsInScope({
     ).amount);
     const statementPayments = paymentTransactions
       .filter(transaction => isDateInRange(transactionDateKey(transaction), statementRange.start, statementRange.end));
-    const statementChargeAmounts = cardTransactions
-      .filter(transaction => isDateInRange(transactionDateKey(transaction), statementRange.start, statementRange.end))
-      .map(transaction => {
-        const installment = installmentByTransactionId.get(transaction.id);
-        return installment && installment.installmentCount > 1 && installment.status === 'active'
-          ? installment.monthlyAmount
-          : transaction.amount;
-      });
+    // 1a.2: each installment plan contributes the installment of this cycle (exact cents, engine D1/D2),
+    // so earlier purchases keep appearing; plans that cannot be scheduled keep the previous rule.
+    const { charges, notices } = statementChargesForCycle({
+      closingDay: parseCreditCardVisualMetadata(card.description).closingDay,
+      cycleEnd: statementRange.end,
+      cycleStart: statementRange.start,
+      installmentsByTransactionId: installmentByTransactionId,
+      purchases: cardTransactions,
+    });
+    const statementChargeAmounts = amountsOf(charges);
     const statementCharges = differenceOfCopSums(statementChargeAmounts, [], 'creditCard.statementCharges').amount;
     const statementTotal = Math.max(
       0,
@@ -389,10 +425,19 @@ async function reconcileCreditCardTransactionsInScope({
       updatedAt: now,
     });
 
+    const statementId = `statement-auto-${card.id}-${statementRange.key}`;
+    const cardStatements = storedStatements.filter(statement => statement.accountId === card.id);
+    const write = statementWrite(cardStatements, statementId, statementRange.end);
+    report.statements.push({ accountId: card.id, statementId, write, charges, notices });
+    if (write !== 'written') {
+      // History is preserved as stored: no recalculation, overwrite or deletion.
+      continue;
+    }
+
     statements.push({
-      id: `statement-auto-${card.id}-${statementRange.key}`,
+      id: statementId,
       accountId: card.id,
-      createdAt: now,
+      createdAt: cardStatements.find(statement => statement.id === statementId)?.createdAt ?? now,
       currency: card.currency,
       minimumPaymentAmount: Math.round(statementTotal * DEFAULT_MINIMUM_PAYMENT_RATIO),
       paymentDueDate: getPaymentDueDateForStatement(card, statementRange.end),
@@ -411,6 +456,8 @@ async function reconcileCreditCardTransactionsInScope({
   if (statements.length > 0) {
     await creditCardRepository.saveStatements(statements);
   }
+
+  return report;
 }
 
 type AssociatePendingTransactionsParams = {

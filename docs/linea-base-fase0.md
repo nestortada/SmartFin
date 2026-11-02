@@ -72,7 +72,7 @@ un error del arnés.
 
 | Defecto | Estado | Evidencia | Prueba |
 |---|---|---|---|
-| Extractos multiciclo | **Confirmado** | 600.000 a 6 cuotas, 7 ciclos (cierre día 20): extractos `[100.000, 0, 0, 0, 0, 0, 0]`, del 2.º en adelante `open`. Con otra compra de 300.000×3 en el 2.º ciclo: `[100.000, 100.000, 0, …]` (esperado 900.000 en total). Deuda (600.000), gasto (una vez, en octubre) y patrimonio (400.000) **son coherentes**: solo falla el extracto, que solo suma compras fechadas dentro del ciclo. | `creditCardStatements.repro.ts` |
+| Extractos multiciclo | **Confirmado** | 600.000 a 6 cuotas, 7 ciclos (cierre día 20): extractos `[100.000, 0, 0, 0, 0, 0, 0]`, del 2.º en adelante `open`. Con otra compra de 300.000×3 en el 2.º ciclo: `[100.000, 100.000, 0, …]` (esperado 900.000 en total). Deuda (600.000), gasto (una vez, en octubre) y patrimonio (400.000) **son coherentes**: solo falla el extracto, que solo suma compras fechadas dentro del ciclo. **Corregido en la [Fase 1a.2](correccion-fase1a2.md)**: la reproducción se retiró y sus aceptaciones son regresiones estables. | `creditCardStatements.repro.ts` (retirada en 1a.2) |
 | Progreso de cuotas | **Confirmado** | Pagando 100.000 por ciclo la deuda llega a 0, `paidInstallments` sigue en 0, el plan `active` y el cierre se rechaza («compras a cuotas vigentes»). Igual con «Pagar deuda total». Ningún código de producción escribe `paid_installments` (solo la siembra demo). Facturadas vs pagadas: **pendiente de decisión** (tras 3 ciclos: 300.000 pagados, 1 extracto con cargo, progreso 0). | `creditCardInstallmentProgress.repro.ts` |
 | Redondeo | **Confirmado** | Se guarda una sola cuota `Math.round(total / n)` en pesos: 100.000/3 → 33.333 (−1); 100.000,50/3 → 33.334 (+1,50); 100.000,01/3 → −1,01; 2/3 → +1; 1/3, 0,40/2 y 0,01/2 → cuota 0. 600.000/6 exacto. Compra, deuda y gasto conservan el total exacto; solo se desvía lo facturado. | `installmentRounding.repro.ts` |
 | Primera instalación | **Confirmado** | Base nueva (mismo `applySchema` + migraciones): 0 categorías, sin «Otros». Crear una categoría funciona; borrarla falla («No existe la categoria Otros…») y el movimiento conserva su categoría (FK íntegra). Con «Otros» presente la reasignación funciona. El borrado financiero elimina «Otros» y el fallo reaparece. Referencias de tarjeta: **descartado** (la «Tarjeta por clasificar» se crea bajo demanda con FK válidas). | `firstInstallCategories.repro.ts` |
@@ -119,6 +119,11 @@ Archivos: `.nvmrc`, `.gitignore`, `package.json`, `package-lock.json` (solo `eng
    versionadas en `validacion-fase6b3-1/android/api24|api35/` terminaron con `passed: false` en ambos dispositivos
    (`scenarioA … statement.minimum_payment_amount: Android=0 Node=1000`): la aceptación Android de 6B.3 sigue abierta
    y debe resolverse antes de declarar Android validado.
+   **Actualización (Fase 1a.1):** la discrepancia ya está resuelta. Las campañas vigentes de
+   `validacion-fase6b3-1/android/api24|api35/` (`phase6a-precision`, `phase6b3-atomicity`, `phase6b3-probes`,
+   `phase6b3-unknown` y `phase6b3-unknown-restart`) aprueban 102/102 casos en cada dispositivo, con 1.715 campos
+   de equivalencia Node–Android sin diferencias por dispositivo. Los intentos fallidos se conservan en
+   `attempt-0N/` como evidencia del incidente.
 
 ### Cierre operativo (1 nov 2026)
 

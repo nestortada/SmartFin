@@ -226,6 +226,9 @@ export function createSqliteCreditCardRepository(
       return resultSetToRows(resultSet).map(profileFromRow);
     },
     saveCreditCardAccount: account => saveSqliteAccounts(database, [account]),
+    // 1a.2: INSERT OR REPLACE deletes and reinserts the row. No table references credit_card_statements, so
+    // only the rowid changes; the reconciliation passes the stored created_at and never writes a protected
+    // (historical or closed) statement. The SQL stays as validated on Android (6B.3 fault points).
     saveStatements: async statements => {
       for (const statement of statements) {
         await database.executeSql(

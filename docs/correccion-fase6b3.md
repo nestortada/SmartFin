@@ -16,6 +16,12 @@ Copia congelada del pago anterior: [`pre6B3CreditCardRelations.ts`](../__tests__
 
 **Veredicto: 6B-C1 CORREGIDO en Node. Validación Android pendiente de autorización** (secciones 10 y 13).
 
+> **Actualización (1 nov 2026, Fase 1a.1): validación Android completada.** API 24: 102/102 casos. API 35:
+> 102/102. Equivalencia Node–Android: 1.715 campos sin diferencias por dispositivo. Evidencias vigentes en
+> [`validacion-fase6b3-1/android/`](validacion-fase6b3-1/android). Los intentos fallidos anteriores
+> (`attempt-0N/`, incluida la diferencia `minimum_payment_amount` Android=0 / Node=1000) se conservan como
+> historial del incidente. Las menciones a «pendiente» que siguen describen el estado en la fecha original.
+
 ## 1. Línea base y reproducción
 
 - Git en `8985346`, árbol limpio. La primera ejecución de Jest se solapó con mis ediciones del formateador y no sirve como línea base. La línea base efectiva es la de 6B.2: 75 suites, 1.010 aprobadas y 14 omitidas. `tsc`: 0 errores. ESLint: 0 errores y 5 advertencias previas. `git diff --check`: limpio.

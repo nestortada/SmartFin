@@ -24,7 +24,10 @@ async function setup(rows:number,shape:string){
  for(const sql of seedReconciliation(rows,shape))f.native.exec(sql);
  return f;
 }
-function compareAllTables(left:Awaited<ReturnType<typeof financialIntegrityFixture>>,right:Awaited<ReturnType<typeof financialIntegrityFixture>>,leftId?:string,rightId?:string){
+// 1a.2: statements of cycles older than one already stored for the card are history. The frozen 3A.1 copy still
+// creates them when the clock moves back; the current reconciliation must not. Those reference-only rows are
+// listed (and justified) by the caller and left out; every other row is still compared bit for bit.
+function compareAllTables(left:Awaited<ReturnType<typeof financialIntegrityFixture>>,right:Awaited<ReturnType<typeof financialIntegrityFixture>>,leftId?:string,rightId?:string,historicalOnlyInLeft:Set<string>=new Set()){
  const names=(f:typeof left)=>f.query("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").rows.raw().map(row=>String(row.name));
  expect(names(left)).toEqual(names(right));
  const counts:Record<string,number>={};
@@ -34,7 +37,8 @@ function compareAllTables(left:Awaited<ReturnType<typeof financialIntegrityFixtu
   const b=right.native.prepare(`SELECT rowid AS __oracle_rowid,* FROM ${quoted} WHERE rowid > ? ORDER BY rowid LIMIT 1000`);
   let count=0;let leftCursor=Number.MIN_SAFE_INTEGER;let rightCursor=Number.MIN_SAFE_INTEGER;
   for(;;){
-   const before=a.all(leftCursor);const after=b.all(rightCursor);
+   const fetched=a.all(leftCursor);const after=b.all(rightCursor);
+   const before=table==='credit_card_statements'?fetched.filter(row=>!historicalOnlyInLeft.has(String(row.id))):fetched;
    if(before.length!==after.length)throw new Error(`Different row count: ${table}`);
    for(let index=0;index<before.length;index++){
     const original=before[index]!;const currentRow=after[index]!;
@@ -42,13 +46,17 @@ function compareAllTables(left:Awaited<ReturnType<typeof financialIntegrityFixtu
     if(keys.length!==Object.keys(currentRow).length)throw new Error(`Different columns: ${table}`);
     for(const key of keys){
      if(DERIVED_6B1[table]?.includes(key)){if(!Object.is(original[key],currentRow[key]))derivedCellsChanged++;continue;}
+     // Rowids of statements shift by the omitted rows (INSERT OR REPLACE renumbers; no table references them).
+     if(table==='credit_card_statements'&&key==='__oracle_rowid'&&historicalOnlyInLeft.size>0)continue;
+     // Each omitted historical statement is one INSERT (one backup revision) less than the frozen copy.
+     if(table==='financial_data_revision'&&key==='revision'){if(Number(original[key])-Number(currentRow[key])!==historicalOnlyInLeft.size)throw new Error('Revision difference is not the omitted historical statements');continue;}
      const expected=leftId!==undefined&&original[key]===leftId?'$payment':original[key];
      const actual=rightId!==undefined&&currentRow[key]===rightId?'$payment':currentRow[key];
      if(!Object.is(expected,actual))throw new Error(`Financial mismatch: ${table}, row ${count+index}, ${key}`);
     }
    }
-   count+=before.length;if(before.length<1000)break;
-   leftCursor=Number(before[before.length-1]!.__oracle_rowid);rightCursor=Number(after[after.length-1]!.__oracle_rowid);
+   count+=before.length;if(fetched.length<1000)break;
+   leftCursor=Number(fetched[fetched.length-1]!.__oracle_rowid);rightCursor=Number(after[after.length-1]!.__oracle_rowid);
   }
   counts[table]=count;
  }
@@ -121,16 +129,26 @@ test.each([1000,10000,100000])('%s rows: exact complete payment/reconciliation e
    expect((await f.snapshot()).debt).toBe(debts.card);
    expect(Object.is(payment.remainingDebt,debts.card)).toBe(true);
    expect({...payment,previousDebt:undefined,remainingDebt:undefined,transaction:{...payment.transaction,id:'$payment'}}).toEqual({...oldPayment,previousDebt:undefined,remainingDebt:undefined,transaction:{...oldPayment.transaction,id:'$payment'}});
+   const historical=new Set<string>();
+   const statementIds=(fixture:typeof f)=>fixture.query('SELECT id FROM credit_card_statements').rows.raw().map(row=>String(row.id));
    for(const date of ['2026-09-30T23:59:59.000Z','2026-10-16T05:00:00.000Z','2026-11-01T05:00:00.000Z']){
     jest.setSystemTime(FINANCIAL_TEST_DATE);
+    const stored=f.query('SELECT account_id,statement_end_date FROM credit_card_statements').rows.raw();
     await previous.reconcileCreditCardTransactions({...reference,currentDate:new Date(date)});
     await current.reconcileCreditCardTransactions({...f,currentDate:new Date(date)});
-    compareAllTables(reference,f,oldPayment.transaction.id,payment.transaction.id);
+    const currentIds=new Set(statementIds(f));
+    for(const id of statementIds(reference).filter(candidate=>!currentIds.has(candidate)&&!historical.has(candidate))){
+     const row=reference.query('SELECT account_id,statement_end_date FROM credit_card_statements WHERE id=?',[id]).rows.raw()[0]!;
+     // Only a cycle that ends before a statement already stored for the same card may be missing.
+     expect(stored.some(s=>s.account_id===row.account_id&&String(s.statement_end_date)>String(row.statement_end_date))).toBe(true);
+     historical.add(id);
+    }
+    compareAllTables(reference,f,oldPayment.transaction.id,payment.transaction.id,historical);
     await expectExactDerived(f,reference);
     expect(f.query('PRAGMA integrity_check').rows.raw()).toEqual([{integrity_check:'ok'}]);
     expect(f.query('PRAGMA foreign_key_check').rows.raw()).toEqual([]);
    }
-   evidence.push({rows,shape,candidates:candidates.length,fullRows:all.length,oldMs,optimizedMs,exactTables:true,comparedRows,cycles:4,derivedCellsChanged6B1:derivedCellsChanged,binaryFallbackChecks6B1:fallbackCells});
+   evidence.push({rows,shape,candidates:candidates.length,fullRows:all.length,oldMs,optimizedMs,exactTables:true,comparedRows,cycles:4,historicalStatementsNotCreated1a2:[...historical],derivedCellsChanged6B1:derivedCellsChanged,binaryFallbackChecks6B1:fallbackCells});
   }finally{f.native.close();reference.native.close();}
  }
 },120000);
