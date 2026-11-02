@@ -1,34 +1,43 @@
 {
   "packageId": "com.smartfin.snapshot5b2.tests",
   "path": "C:/sf-6b3-20261101/android/app/build/outputs/apk/release/app-release.apk",
-  "sha256": "61b6360c89a752d9820afd398de41570b524f64bb73f7feb930c13ff527dc239",
-  "sizeBytes": 33172332,
-  "builtAt": "2026-11-01T13:57:00-05:00",
-  "attestationSha256": "f1cc4bf25c33a7be6b966bd8ac20568c251ed1e4e24b0280fbab5d8cf0a6f81a",
-  "embeddedAttestationSha256": "f1cc4bf25c33a7be6b966bd8ac20568c251ed1e4e24b0280fbab5d8cf0a6f81a",
-  "bundleSha256": "9f866268ef47e5f8f98459f2d8d9a9d86416739241275506fd43046158aabdb4",
+  "sha256": "6ee559dd82b38565d979ecc08e07f2ac8986c98af1319ff9595b0b9dfc981834",
+  "sizeBytes": 33175212,
+  "builtAt": "2026-11-01T20:56:25-05:00",
+  "attestationSha256": "1352b7ddcb306df8ca5146899e1a5f66c089abb271833893d5870198720c0730",
+  "embeddedAttestationSha256": "1352b7ddcb306df8ca5146899e1a5f66c089abb271833893d5870198720c0730",
+  "bundleSha256": "777dd1fd2a3afaeeb632c1473ed3024da314f083e507213663b8f3514028d8dd",
   "variant": "release",
   "debuggable": false,
   "engine": "Hermes",
-  "hermesBytecodeVersion": 98,
   "architectures": [
     "arm64-v8a",
     "x86_64"
   ],
   "minSdk": 24,
-  "targetSdk": 36,
   "clockFix": {
     "probesSource": "scripts/phase6b3/probes.ts",
     "probesSourceSha256": "2d43bb02917abbbf80392b6507b81708b108db9ab1a307fabc312f475e7c5e6b",
-    "preparedProbesSha256": "cd13b661b81b119fa41de595c06bc1afbb03a985b8c1200eec40bd262a8ab450",
     "inBundle": "withPhase6B3Clock"
   },
-  "harnessSha256": "b9dbdee746d2b9b6784ab00a551083e9d745b526bc1069674aeb3e8c6655ee5e",
+  "rollbackOracle": {
+    "harnessSource": "scripts/phase6b3/androidHarness.js",
+    "harnessSha256": "8cdad9ef7fe71e79f1d266765cb192d4ee74ca0b7b4996241648e67ba451794e",
+    "inBundle": "confirmedRollbackVerdict",
+    "legacyAssertionInBundle": false,
+    "nodeTest": "__tests__/phase6b3HarnessRollbackOracle.test.ts"
+  },
+  "attestationDiffFromAttempt03": [
+    "originalHashes: scripts/phase6b3/androidHarness.js",
+    "hashes: phase6b3Harness.js"
+  ],
+  "productionSourcesUnchanged": "359 original and 363 prepared hashes verified byte for byte; 283 src/ production entries identical to attempt 03",
   "phase6aOracleSha256": "4146a2fe238fb8dc595816af25dac314f8d0ac2c9cc91c37873108dd8c588e0e",
   "nodeExpectedSha256": "e7c12f1e2deb6cc4a26e7d41f683e6c3465708894057f50bbe8652d6b6b6b9b3",
   "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
   "buildCwd": "C:/sf-6b3-20261101/android",
-  "refresh": "node scripts/phase6b3/refresh-harness.cjs, run by the owner at 2026-11-01 13:44",
-  "authorization": "Stage A of proposal r2 through .claude/hooks/phase6b3-stage-a.cjs (4325a65e…) and build-script-boundary.cjs (5d75cd8f…), installed by the owner; build run by the agent 2026-11-01",
-  "previous": "apk-identity-attempt-02.json (APK 49e9925f…, pre-fix, not an acceptance artifact)"
+  "buildLog": "docs/validacion-fase6b3-1/android-build-attempt-03.log",
+  "refresh": "node scripts/phase6b3/refresh-harness.cjs, run by the agent 2026-11-01",
+  "authorization": "Owner instruction of 2026-11-01 (synthetic APK rebuild for the 6B.3.1 r3 harness oracle) under the installed guard v2, which admits scripts/ and Gradle tasks without per-phase pins",
+  "previous": "apk-identity-attempt-03.json (APK 61b6360c..., clock fix, legacy rollback assertion; probes passed, atomicity stopped at rollback-0.4-1-before)"
 }

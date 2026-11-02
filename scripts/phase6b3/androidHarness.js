@@ -4,7 +4,7 @@ import {Dimensions, Pressable, ScrollView, Text, View} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import {openSmartFinDatabase} from './src/database/sqliteDatabase';
-import {SQLiteCommandFailure} from './src/database/atomicSQLite';
+import {runSharedSQLiteTransaction, SQLiteCommandFailure} from './src/database/atomicSQLite';
 import {createSqliteAccountRepository} from './src/modules/accounts/repositories/sqliteAccountRepository';
 import {createSqliteTransactionRepository} from './src/modules/transactions/repositories/sqliteTransactionRepository';
 import {createSqliteCreditCardRepository} from './src/modules/creditCards/repositories/sqliteCreditCardRepository';
@@ -71,6 +71,26 @@ async function state(database) {
 }
 const request = (database, amount) => ({...deps(database), accountId: 'card', sourceAccountId: 'bank', amount,
   settlement: 'fullDebt', currentDate: PHASE6B3_DATE});
+// <rollback-oracle> 6B.3.1 r3. Production contract (creditCardPaymentScope): after a confirmed ROLLBACK the
+// runner rethrows the original error; only an uncertain finalization becomes SQLiteCommandFailure('unknown').
+// The error alone never proves the rollback: the injected write must have been reached, the connection must
+// stay usable, a new owner must open and confirm a transaction (none was left open) and every table, metric
+// and integrity check must equal the state before the request. 'unknown' fails at once: nothing else is run.
+async function confirmedRollbackVerdict({failure, faultFired, injected, before, readState, openNextOwner, difference, CommandFailure}) {
+  if (failure === undefined) throw Error('The injected fault did not make the payment fail');
+  if (!faultFired) throw Error('The injected write was not reached');
+  if (failure instanceof CommandFailure) throw Error('Rollback not confirmed: ' + failure.result.status);
+  if (!(failure instanceof Error) || failure.message !== injected)
+    throw Error('Unexpected payment error: ' + String(failure instanceof Error ? failure.message : failure));
+  let after;
+  try {after = await readState();} catch (error) {throw Error('Connection retired: rollback not confirmed: ' + String(error));}
+  const nextOwner = await openNextOwner();
+  if (nextOwner !== 'confirmed') throw Error('Transaction left open after the failure: ' + nextOwner);
+  const changed = difference(after, before);
+  if (changed) throw Error('Rollback changed tables, audit, revision or metrics: ' + changed);
+  return 'rolledBack';
+}
+// </rollback-oracle>
 async function matrix(database, record) {
   for (const [purchases, debt] of [[[0.4], 0.4], [[10000.4], 10000.4], [[4229.9, 89392.54, 939.56], 94562]]) {
     await seed(database, purchases);
@@ -84,13 +104,18 @@ async function matrix(database, record) {
       await record(`rollback-${debt}-${write}-${phase}`, async () => {
         await seed(database, purchases);
         const before = await state(database);
-        global.__deletionFault = {write, count: 0, phase};
+        const fault = {write, count: 0, phase};
+        global.__deletionFault = fault;
         let failure;
         try {await registerCreditCardPayment(request(database, debt));} catch (error) {failure = error;}
         finally {global.__deletionFault = undefined;}
-        check(failure instanceof SQLiteCommandFailure && failure.result.status === 'rolledBack', 'Confirmed ROLLBACK required');
-        same(await state(database), before, 'Rollback changed tables, audit, revision or metrics');
-        return {write, phase, status: failure.result.status, exactStateRestored: true};
+        const status = await confirmedRollbackVerdict({
+          failure, faultFired: fault.count >= write, injected: `Injected ${phase} deletion write`, before,
+          readState: () => state(database),
+          openNextOwner: async () => (await runSharedSQLiteTransaction(database, async () => 'closed')).status,
+          difference: firstDifference, CommandFailure: SQLiteCommandFailure,
+        });
+        return {write, phase, status, originalErrorPropagated: true, nextOwnerConfirmed: true, exactStateRestored: true};
       });
     }
   }

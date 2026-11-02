@@ -1,0 +1,34 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-6b3-20261101/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "61b6360c89a752d9820afd398de41570b524f64bb73f7feb930c13ff527dc239",
+  "sizeBytes": 33172332,
+  "builtAt": "2026-11-01T13:57:00-05:00",
+  "attestationSha256": "f1cc4bf25c33a7be6b966bd8ac20568c251ed1e4e24b0280fbab5d8cf0a6f81a",
+  "embeddedAttestationSha256": "f1cc4bf25c33a7be6b966bd8ac20568c251ed1e4e24b0280fbab5d8cf0a6f81a",
+  "bundleSha256": "9f866268ef47e5f8f98459f2d8d9a9d86416739241275506fd43046158aabdb4",
+  "variant": "release",
+  "debuggable": false,
+  "engine": "Hermes",
+  "hermesBytecodeVersion": 98,
+  "architectures": [
+    "arm64-v8a",
+    "x86_64"
+  ],
+  "minSdk": 24,
+  "targetSdk": 36,
+  "clockFix": {
+    "probesSource": "scripts/phase6b3/probes.ts",
+    "probesSourceSha256": "2d43bb02917abbbf80392b6507b81708b108db9ab1a307fabc312f475e7c5e6b",
+    "preparedProbesSha256": "cd13b661b81b119fa41de595c06bc1afbb03a985b8c1200eec40bd262a8ab450",
+    "inBundle": "withPhase6B3Clock"
+  },
+  "harnessSha256": "b9dbdee746d2b9b6784ab00a551083e9d745b526bc1069674aeb3e8c6655ee5e",
+  "phase6aOracleSha256": "4146a2fe238fb8dc595816af25dac314f8d0ac2c9cc91c37873108dd8c588e0e",
+  "nodeExpectedSha256": "e7c12f1e2deb6cc4a26e7d41f683e6c3465708894057f50bbe8652d6b6b6b9b3",
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-6b3-20261101/android",
+  "refresh": "node scripts/phase6b3/refresh-harness.cjs, run by the owner at 2026-11-01 13:44",
+  "authorization": "Stage A of proposal r2 through .claude/hooks/phase6b3-stage-a.cjs (4325a65e…) and build-script-boundary.cjs (5d75cd8f…), installed by the owner; build run by the agent 2026-11-01",
+  "previous": "apk-identity-attempt-02.json (APK 49e9925f…, pre-fix, not an acceptance artifact)"
+}
