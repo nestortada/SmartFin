@@ -1,0 +1,61 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-1a3a-20261102/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "2a5d613ff99be15a1a1b52759e98d0569a076c5a5fe7e1cb57679c4348f518a3",
+  "sizeBytes": 33310716,
+  "builtAt": "2026-11-02T15:22:59.904Z",
+  "attestationSha256": "fe6d57895a37def3e6f26d7d60c636abe56e5173581b73c8294d1e417cd8417e",
+  "variant": "release",
+  "productionSources": 302,
+  "phase1a3a": [
+    {
+      "source": "src/database/saveSQLiteRowPreservingIdentity.ts",
+      "sha256": "c3174453aacf902898bb050617ded60fe893e999fa2b61b31f3b81460b8cce76"
+    },
+    {
+      "source": "src/modules/creditCards/repositories/sqliteCreditCardRepository.ts",
+      "sha256": "e2c2e73907a9ae9c4a9574397beb32df6d779500e623ccdec4518e577ccaf350"
+    }
+  ],
+  "harness": [
+    {
+      "source": "scripts/phase1a3a/androidHarness.js",
+      "sha256": "0e36d16f4f91ff5c5205d3454363ebcc9e3fc21e7d5c8927f1d3ce9ab859cd59"
+    },
+    {
+      "source": "scripts/phase1a3a/probes.ts",
+      "sha256": "6454b2636a414b758c26473c69706b69c0f77ddfda416f42dd9a1009d401fc0c"
+    },
+    {
+      "source": "docs/validacion-fase1a3a/node/results.json",
+      "sha256": "19b01c303a55d4af16a1fd036d3caf92cd7624afccf419cd10cb9bfe289abb2e"
+    },
+    {
+      "source": "scripts/phase1a2/androidHarness.js",
+      "sha256": "35f7d76ce3dd67726c8f71568a06d6e90426fd3696c30e6006d6c069894a68a3"
+    },
+    {
+      "source": "scripts/phase1a2/probes.ts",
+      "sha256": "ebe3af4c0fcd68c8293d87900a63f91e47068035dabedaf85b83ad1c784b5ccc"
+    },
+    {
+      "source": "docs/validacion-fase1a2/node/results.json",
+      "sha256": "8e58ada75f0b1006d95b37ad3a8f6cc32567955f48fd1a12822e6e50129abb13"
+    },
+    {
+      "source": "scripts/phase6b3/androidHarness.js",
+      "sha256": "94c89dc6c4b7d0cd8fd2fbb76a5e0fd892ac10eb322284ba7550203e63d50de0"
+    },
+    {
+      "source": "scripts/phase6b3/probes.ts",
+      "sha256": "2d43bb02917abbbf80392b6507b81708b108db9ab1a307fabc312f475e7c5e6b"
+    },
+    {
+      "source": "docs/correccion-fase6b3/node/results.json",
+      "sha256": "e7c12f1e2deb6cc4a26e7d41f683e6c3465708894057f50bbe8652d6b6b6b9b3"
+    }
+  ],
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-1a3a-20261102/android",
+  "checksAtRun": "run-android.ps1: APK and attestation hashes, embedded attestation, aapt package/non-debuggable, Hermes at runtime"
+}

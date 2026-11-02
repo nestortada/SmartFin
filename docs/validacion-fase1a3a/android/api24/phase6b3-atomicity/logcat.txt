@@ -1,0 +1,712 @@
+--------- beginning of main
+11-02 15:26:28.621 11356 11356 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) expire 19 lines
+11-02 15:26:28.731 11356 11372 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) WM.task-1 expire 2 lines
+11-02 15:26:28.827 11356 11356 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) expire 23 lines
+11-02 15:26:28.898 11356 11373 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) WM.task-2 expire 1 line
+11-02 15:26:28.992 11356 11377 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) pool-1-thread-1 expire 72 lines
+11-02 15:26:29.066 11356 11378 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) mqt_v_js expire 52 lines
+11-02 15:26:29.077 11356 11379 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) mqt_v_native expire 1 line
+11-02 15:26:29.331 11356 11382 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) RenderThread expire 8 lines
+11-02 15:26:29.441 11356 11358 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) Jit thread pool expire 6 lines
+11-02 15:26:30.615 11356 11385 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) pool-2-thread-1 expire 13 lines
+11-02 15:26:34.211 11356 11390 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) expire 1 line
+11-02 15:26:37.298 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-0.4-7-after
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:37.315 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:37.839 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-0.4-7-after
+11-02 15:26:37.839 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-0.4-8-before
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:37.854 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:38.446 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-0.4-8-before
+11-02 15:26:38.446 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-0.4-8-after
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:38.457 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:39.003 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-0.4-8-after
+11-02 15:26:39.003 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-0.4-9-before
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:39.011 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:39.531 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-0.4-9-before
+11-02 15:26:39.531 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-0.4-9-after
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:39.540 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:40.213 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-0.4-9-after
+11-02 15:26:40.213 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-0.4-10-before
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:40.224 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:40.876 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-0.4-10-before
+11-02 15:26:40.876 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-0.4-10-after
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:40.892 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:41.443 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-0.4-10-after
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:41.456 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:41.732 11356 11378 I ReactNativeJS: ACCEPTANCE_START:write-count-10000.4
+11-02 15:26:41.732 11356 11378 I ReactNativeJS: ACCEPTANCE_END:write-count-10000.4
+11-02 15:26:41.732 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-1-before
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:41.742 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:42.230 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-1-before
+11-02 15:26:42.230 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-1-after
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:42.247 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:42.703 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-1-after
+11-02 15:26:42.703 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-2-before
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:42.716 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:43.282 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-2-before
+11-02 15:26:43.282 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-2-after
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:43.299 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:43.815 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-2-after
+11-02 15:26:43.815 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-3-before
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:43.828 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:44.464 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-3-before
+11-02 15:26:44.464 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-3-after
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:44.484 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:45.120 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-3-after
+11-02 15:26:45.120 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-4-before
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:45.134 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:45.547 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-4-before
+11-02 15:26:45.547 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-4-after
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:45.560 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:46.108 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-4-after
+11-02 15:26:46.108 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-5-before
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:46.120 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:46.585 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-5-before
+11-02 15:26:46.585 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-5-after
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:46.594 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:47.078 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-5-after
+11-02 15:26:47.078 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-6-before
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:47.092 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:47.693 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-6-before
+11-02 15:26:47.693 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-6-after
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:47.706 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:48.293 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-6-after
+11-02 15:26:48.293 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-7-before
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:48.306 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:48.828 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-7-before
+11-02 15:26:48.828 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-7-after
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:48.836 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:49.358 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-7-after
+11-02 15:26:49.358 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-8-before
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:49.371 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:49.917 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-8-before
+11-02 15:26:49.917 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-8-after
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:49.931 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:50.493 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-8-after
+11-02 15:26:50.493 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-9-before
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:50.503 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:51.026 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-9-before
+11-02 15:26:51.026 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-9-after
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:51.035 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:51.690 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-9-after
+11-02 15:26:51.690 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-10-before
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:51.704 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:52.342 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-10-before
+11-02 15:26:52.342 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-10000.4-10-after
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:52.357 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:52.915 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-10000.4-10-after
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:52.933 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:53.264 11356 11378 I ReactNativeJS: ACCEPTANCE_START:write-count-94562
+11-02 15:26:53.264 11356 11378 I ReactNativeJS: ACCEPTANCE_END:write-count-94562
+11-02 15:26:53.264 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-1-before
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:53.275 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:53.861 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-1-before
+11-02 15:26:53.861 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-1-after
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:53.872 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:54.476 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-1-after
+11-02 15:26:54.476 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-2-before
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:54.497 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:55.102 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-2-before
+11-02 15:26:55.102 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-2-after
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:55.120 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:55.744 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-2-after
+11-02 15:26:55.744 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-3-before
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:55.753 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:56.356 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-3-before
+11-02 15:26:56.356 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-3-after
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:56.366 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:57.057 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-3-after
+11-02 15:26:57.057 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-4-before
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:57.067 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:57.579 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-4-before
+11-02 15:26:57.579 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-4-after
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:57.595 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:58.230 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-4-after
+11-02 15:26:58.230 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-5-before
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:58.238 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:58.857 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-5-before
+11-02 15:26:58.857 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-5-after
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:58.868 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:26:59.512 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-5-after
+11-02 15:26:59.512 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-6-before
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:26:59.525 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:00.136 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-6-before
+11-02 15:27:00.136 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-6-after
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:00.151 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:00.802 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-6-after
+11-02 15:27:00.802 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-7-before
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:00.817 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:01.447 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-7-before
+11-02 15:27:01.447 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-7-after
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:01.459 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:02.114 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-7-after
+11-02 15:27:02.114 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-8-before
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:02.128 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:02.746 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-8-before
+11-02 15:27:02.746 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-8-after
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:02.755 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:03.293 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-8-after
+11-02 15:27:03.294 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-9-before
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:03.308 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:03.838 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-9-before
+11-02 15:27:03.839 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-9-after
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:03.849 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:04.482 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-9-after
+11-02 15:27:04.482 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-10-before
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:04.497 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:05.136 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-10-before
+11-02 15:27:05.136 11356 11378 I ReactNativeJS: ACCEPTANCE_START:rollback-94562-10-after
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:05.162 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:05.804 11356 11378 I ReactNativeJS: ACCEPTANCE_END:rollback-94562-10-after
+11-02 15:27:05.804 11356 11378 I ReactNativeJS: ACCEPTANCE_START:confirmed-same-request-no-duplicate
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-02 15:27:05.811 11356 11385 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-02 15:27:06.080 11356 11378 I ReactNativeJS: ACCEPTANCE_END:confirmed-same-request-no-duplicate

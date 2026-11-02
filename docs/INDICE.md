@@ -16,6 +16,8 @@ Este índice separa la documentación por audiencia y fuente de verdad. El códi
 | [Extractos multiciclo (Fase 1a.2)](correccion-fase1a2.md) | Desarrollo y QA | Cuotas por ciclo con el motor, protección de extractos históricos y validación pendiente |
 | [Validación Android 1a.2 (preparada)](validacion-fase1a2/README.md) | QA | Campaña phase1a2-statements, matriz por dispositivo y procedimiento autorizable |
 | [Escenario C: pago de un ciclo anterior](analisis-escenario-c-fase1a2.md) | Producto y desarrollo | Datos necesarios para asociar pagos con extractos |
+| [Persistencia segura (Fase 1a.3A)](persistencia-segura-fase1a3A.md) | Desarrollo y QA | Sustitución de INSERT OR REPLACE en tarjetas, identidad y dependientes, validada en Android |
+| [Validación Android 1a.3A](validacion-fase1a3a/README.md) | QA | 223/223 en API 24 (SQLite 3.9.2) y API 35; identidad, atomicidad y regresiones sin diferencias |
 | [Motor de cuotas (Fase 1a.1)](motor-cuotas-fase1a1.md) | Desarrollo y QA | Calendario de cuotas puro y exacto en centavos; contrato y reglas de ciclos |
 | [Contribución](../CONTRIBUTING.md) | Colaboradores | Flujo de cambios y lista de verificación |
 

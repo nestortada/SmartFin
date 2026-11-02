@@ -180,7 +180,7 @@ test('a queued reader sees restored balances after a failed final statement writ
     const barrier = f.pauseNextExecuteSql('INSERT INTO transactions', 'after');
     const payment = registerCreditCardPayment(request(f)).catch((error: unknown) => error);
     await barrier.reached;
-    f.injectFault({ sql: 'INSERT OR REPLACE INTO credit_card_statements', phase: 'after' });
+    f.injectFault({ sql: 'UPDATE credit_card_statements', phase: 'after' });
     let observed = false;
     const reader = f.accountRepository.getAccounts().then(value => { observed = true; return value; });
     await Promise.resolve(); expect(observed).toBe(false);

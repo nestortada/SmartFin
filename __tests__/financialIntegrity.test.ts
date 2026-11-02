@@ -155,7 +155,7 @@ test('statement write failure leaves confirmed payment and debt with a stale sta
   const f = await financialIntegrityFixture({ historical: true });
   try {
     const payment = await paidCard(f);
-    f.failOn('INSERT OR REPLACE INTO credit_card_statements');
+    f.failOn('UPDATE credit_card_statements');
     await expect(f.save({ editingTransaction: payment.transaction, transactionType: 'creditCardPayment', amount: 50000 })).rejects.toThrow();
     f.failOn();
     expect(await f.snapshot()).toMatchObject({ balances: { bank: 950000 }, debt: 200000, wealth: 750000, expense: 250000 });

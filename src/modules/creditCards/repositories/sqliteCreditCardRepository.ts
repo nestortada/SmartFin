@@ -1,6 +1,7 @@
 import { saveSqliteAccounts } from '../../accounts/repositories/saveSqliteAccounts';
 import { registerSQLiteRepository } from '../../../database/sqliteRepositoryScope';
 import { runSQLiteTransaction } from '../../../database/atomicSQLite';
+import { saveSQLiteRowPreservingIdentity } from '../../../database/saveSQLiteRowPreservingIdentity';
 import type { SmartFinSQLiteDatabase } from '../../../database/sqliteDatabase';
 import {
   readNullableNumber,
@@ -226,93 +227,53 @@ export function createSqliteCreditCardRepository(
       return resultSetToRows(resultSet).map(profileFromRow);
     },
     saveCreditCardAccount: account => saveSqliteAccounts(database, [account]),
-    // 1a.2: INSERT OR REPLACE deletes and reinserts the row. No table references credit_card_statements, so
-    // only the rowid changes; the reconciliation passes the stored created_at and never writes a protected
-    // (historical or closed) statement. The SQL stays as validated on Android (6B.3 fault points).
+    // 1a.3A: no INSERT OR REPLACE. Rows are updated in place (same id, rowid and stored created_at, children
+    // and unlisted columns kept) or inserted when absent; one write per row, as with
+    // REPLACE, on the caller's participant. The reconciliation never passes a protected statement.
     saveStatements: async statements => {
       for (const statement of statements) {
-        await database.executeSql(
-          `INSERT OR REPLACE INTO credit_card_statements (
-            id,
-            account_id,
-            statement_start_date,
-            statement_end_date,
-            payment_due_date,
-            total_amount,
-            minimum_payment_amount,
-            currency,
-            status,
-            created_at,
-            updated_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-          [
-            statement.id,
-            statement.accountId,
-            statement.statementStartDate,
-            statement.statementEndDate,
-            statement.paymentDueDate,
-            statement.totalAmount,
-            statement.minimumPaymentAmount ?? null,
-            statement.currency,
-            statement.status,
-            statement.createdAt,
-            statement.updatedAt,
-          ],
-        );
+        await saveSQLiteRowPreservingIdentity(database, 'credit_card_statements', 'id', {
+          id: statement.id,
+          account_id: statement.accountId,
+          statement_start_date: statement.statementStartDate,
+          statement_end_date: statement.statementEndDate,
+          payment_due_date: statement.paymentDueDate,
+          total_amount: statement.totalAmount,
+          minimum_payment_amount: statement.minimumPaymentAmount ?? null,
+          currency: statement.currency,
+          status: statement.status,
+          created_at: statement.createdAt,
+          updated_at: statement.updatedAt,
+        });
       }
     },
     saveInstallmentPurchases: async purchases => {
       for (const purchase of purchases) {
-        await database.executeSql(
-          `INSERT OR REPLACE INTO installment_purchases (
-            id,
-            transaction_id,
-            account_id,
-            merchant_name,
-            total_amount,
-            currency,
-            installment_count,
-            paid_installments,
-            monthly_amount,
-            first_due_date,
-            status,
-            created_at,
-            updated_at
-          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
-          [
-            purchase.id,
-            purchase.transactionId,
-            purchase.accountId,
-            purchase.merchantName ?? null,
-            purchase.totalAmount,
-            purchase.currency,
-            purchase.installmentCount,
-            purchase.paidInstallments,
-            purchase.monthlyAmount,
-            purchase.firstDueDate ?? null,
-            purchase.status,
-            purchase.createdAt,
-            purchase.updatedAt,
-          ],
-        );
+        await saveSQLiteRowPreservingIdentity(database, 'installment_purchases', 'id', {
+          id: purchase.id,
+          transaction_id: purchase.transactionId,
+          account_id: purchase.accountId,
+          merchant_name: purchase.merchantName ?? null,
+          total_amount: purchase.totalAmount,
+          currency: purchase.currency,
+          installment_count: purchase.installmentCount,
+          paid_installments: purchase.paidInstallments,
+          monthly_amount: purchase.monthlyAmount,
+          first_due_date: purchase.firstDueDate ?? null,
+          status: purchase.status,
+          created_at: purchase.createdAt,
+          updated_at: purchase.updatedAt,
+        });
       }
     },
     saveProfiles: async profiles => {
       for (const profile of profiles) {
-        await database.executeSql(
-          `INSERT OR REPLACE INTO credit_card_profiles (
-            account_id,
-            monthly_interest_rate,
-            created_at,
-            updated_at
-          ) VALUES (?, ?, ?, ?);`,
-          [
-            profile.accountId,
-            profile.monthlyInterestRate,
-            profile.createdAt,
-            profile.updatedAt,
-          ],
-        );
+        await saveSQLiteRowPreservingIdentity(database, 'credit_card_profiles', 'account_id', {
+          account_id: profile.accountId,
+          monthly_interest_rate: profile.monthlyInterestRate,
+          created_at: profile.createdAt,
+          updated_at: profile.updatedAt,
+        });
       }
     },
     updateInstallmentPurchasesAccount: async (transactionIds, accountId) => {

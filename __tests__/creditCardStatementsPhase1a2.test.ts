@@ -228,7 +228,8 @@ describe('protection of historical statements', () => {
       const [again] = rowsOf(f);
       expect(rowsOf(f)).toHaveLength(1);
       expect({ ...again, r: undefined, updated_at: undefined }).toEqual({ ...first, r: undefined, updated_at: undefined });
-      // INSERT OR REPLACE renumbers the rowid; nothing references it (no child tables).
+      // 1a.3A: the statement is updated in place, so its rowid is kept too.
+      expect(again!.r).toBe(first!.r);
     } finally { f.native.close(); }
   });
 });
@@ -303,10 +304,13 @@ describe('atomicity', () => {
       await purchaseOn(f, '2026-10-11', 600000, 6);
       await reconcileOn(f, '2026-11-11');
       const before = await observe(f, '2026-11-11');
-      f.native.exec("CREATE TEMP TRIGGER fail_statement BEFORE INSERT ON credit_card_statements BEGIN SELECT RAISE(ABORT, 'injected statement failure'); END;");
+      // 1a.3A: the existing statement is now written with UPDATE (formerly INSERT OR REPLACE); fail both verbs.
+      for (const verb of ['INSERT', 'UPDATE']) {
+        f.native.exec(`CREATE TEMP TRIGGER fail_statement_${verb} BEFORE ${verb} ON credit_card_statements BEGIN SELECT RAISE(ABORT, 'injected statement failure'); END;`);
+      }
       await expect(f.pay(100000, bogotaNoon('2026-11-11'))).rejects.toThrow('injected statement failure');
       expect(await observe(f, '2026-11-11')).toEqual(before);
-      f.native.exec('DROP TRIGGER fail_statement;');
+      f.native.exec('DROP TRIGGER fail_statement_INSERT; DROP TRIGGER fail_statement_UPDATE;');
     } finally { f.native.close(); }
   });
 

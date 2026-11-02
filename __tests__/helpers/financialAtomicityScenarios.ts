@@ -106,7 +106,7 @@ export const financialAtomicityScenarios = [
   },
   {
     name: 'payment edit',
-    faultSQL: 'INSERT OR REPLACE INTO credit_card_statements',
+    faultSQL: 'UPDATE credit_card_statements',
     initial: {
       balances: { bank: 900000 },
       debt: 150000,

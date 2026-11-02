@@ -46,7 +46,7 @@ function compareAllTables(left:Awaited<ReturnType<typeof financialIntegrityFixtu
     if(keys.length!==Object.keys(currentRow).length)throw new Error(`Different columns: ${table}`);
     for(const key of keys){
      if(DERIVED_6B1[table]?.includes(key)){if(!Object.is(original[key],currentRow[key]))derivedCellsChanged++;continue;}
-     // Rowids of statements shift by the omitted rows (INSERT OR REPLACE renumbers; no table references them).
+     // Rowids of statements shift by the omitted rows (the frozen copy's INSERT OR REPLACE renumbers them).
      if(table==='credit_card_statements'&&key==='__oracle_rowid'&&historicalOnlyInLeft.size>0)continue;
      // Each omitted historical statement is one INSERT (one backup revision) less than the frozen copy.
      if(table==='financial_data_revision'&&key==='revision'){if(Number(original[key])-Number(currentRow[key])!==historicalOnlyInLeft.size)throw new Error('Revision difference is not the omitted historical statements');continue;}
