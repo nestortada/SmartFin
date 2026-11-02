@@ -1,0 +1,17 @@
+appId: com.smartfin.visualtests
+name: SmartFin visual synthetic - form input without saving
+tags:
+  - visual
+  - synthetic
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "SmartFin"
+    timeout: 30000
+- tapOn: "Movimientos"
+- assertVisible: "Buscar por comercio, notas..."
+- tapOn: "Buscar por comercio, notas..."
+- inputText: "sin-resultado-visual-12345"
+- assertVisible: "No se encontraron movimientos"
+- takeScreenshot: movement-search-synthetic
