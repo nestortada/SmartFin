@@ -25,6 +25,12 @@ const FINANCIAL_TABLES_IN_DELETE_ORDER = [
   'transaction_tax_tags',
   'tax_tags',
   'receipt_attachments',
+  // 1a.3B: revisions reference allocations; both go before purchases and movements, whose guards
+  // and history triggers then find nothing to protect or append.
+  'installment_plan_revisions',
+  'installment_allocations',
+  'installment_first_cycles',
+  'credit_card_billing_rules',
   'installment_purchases',
   'credit_card_statements',
   'credit_card_profiles',

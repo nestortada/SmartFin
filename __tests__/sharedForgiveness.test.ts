@@ -782,7 +782,7 @@ test('migration 4 retries atomically over a synthetic version 3 database and pre
       f
         .query('SELECT version FROM schema_migrations ORDER BY version')
         .rows.raw(),
-    ).toEqual([1, 2, 3, 4].map(version => ({ version })));
+    ).toEqual([1, 2, 3, 4, 5].map(version => ({ version })));
     await verifyPosition(f);
   } finally {
     f.native.close();

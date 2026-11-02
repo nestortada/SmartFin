@@ -10,6 +10,7 @@ import {
 
 import { applyVersionedMigrations } from './migrations';
 import { SHARED_LOSS_SCHEMA } from '../modules/transactions/database/sharedLossSchema';
+import { INSTALLMENT_HISTORY_SCHEMA } from '../modules/creditCards/database/installmentHistorySchema';
 import { SHARED_EXPENSE_INDEXES, SHARED_EXPENSE_SCHEMA, SHARED_EXPENSE_TRIGGERS } from '../modules/transactions/database/sharedExpenseSchema';
 import {
   withDatabaseMaintenance,
@@ -38,6 +39,8 @@ let openingFailure: { error: unknown } | undefined;
 async function applySchema(database: SmartFinSQLiteDatabase): Promise<void> {
   for (const statement of SQLITE_SCHEMA_STATEMENTS) {
     if (SHARED_LOSS_SCHEMA.includes(statement)) continue;
+    // Migration 5 creates its tables, revision 0 rows and triggers in one transaction.
+    if (INSTALLMENT_HISTORY_SCHEMA.includes(statement)) continue;
     // Installed tables acquire their new columns in the versioned migration.
     if ([...SHARED_EXPENSE_SCHEMA, ...SHARED_EXPENSE_INDEXES, ...SHARED_EXPENSE_TRIGGERS].includes(statement)) continue;
     await database.executeSql(statement);

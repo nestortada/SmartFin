@@ -49,7 +49,12 @@ const { DatabaseSync } = require('node:sqlite') as {
   DatabaseSync: new (path: string) => NativeDatabase;
 };
 
-export function realSQLite(options: { fixedSqlDate?: Date; syntheticPath?: string } = {}) {
+export function realSQLite(options: {
+  fixedSqlDate?: Date;
+  syntheticPath?: string;
+  /** Key order of returned rows; the Android driver (native maps) does not keep the column order. */
+  rowKeyOrder?: (keys: string[]) => string[];
+} = {}) {
   // File-backed mode is only for caller-created temporary synthetic restart fixtures.
   const native = new DatabaseSync(options.syntheticPath ?? ':memory:');
   if (options.fixedSqlDate) {
@@ -133,6 +138,13 @@ export function realSQLite(options: { fixedSqlDate?: Date; syntheticPath?: strin
       if (/^\s*(SELECT|PRAGMA|WITH|EXPLAIN)\b/i.test(sql))
         rows = statement.all(...values);
       else changes = Number(statement.run(...values).changes);
+      const order = options.rowKeyOrder;
+      if (order)
+        rows = rows.map(row =>
+          Object.fromEntries(
+            order(Object.keys(row)).map(key => [key, row[key] as SQLitePrimitive]),
+          ),
+        );
       return {
         rows: {
           length: rows.length,

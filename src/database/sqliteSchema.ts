@@ -1,5 +1,6 @@
 import { SHARED_EXPENSE_SCHEMA, SHARED_EXPENSE_INDEXES, SHARED_EXPENSE_TRIGGERS } from '../modules/transactions/database/sharedExpenseSchema';
 import { SHARED_LOSS_SCHEMA } from '../modules/transactions/database/sharedLossSchema';
+import { INSTALLMENT_HISTORY_SCHEMA } from '../modules/creditCards/database/installmentHistorySchema';
 export const SMARTFIN_DATABASE_NAME = 'smartfin.db';
 
 const BACKUP_TRACKED_TABLES = [
@@ -466,4 +467,6 @@ export const SQLITE_SCHEMA_STATEMENTS: string[] = [
   ...SHARED_EXPENSE_TRIGGERS,
   ...SHARED_LOSS_SCHEMA,
   ...BACKUP_REVISION_TRIGGER_STATEMENTS,
+  // Migration 5 creates these on installed databases; listed here for complete synthetic schemas.
+  ...INSTALLMENT_HISTORY_SCHEMA,
 ];

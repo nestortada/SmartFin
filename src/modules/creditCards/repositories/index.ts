@@ -7,3 +7,8 @@ export {
   type CreditCardAlertRepository,
   type MissingCreditCardAlert,
 } from './sqliteCreditCardAlertRepository';
+export {
+  createSqliteInstallmentHistoryRepository,
+  type InstallmentHistoryRepository,
+  type SaveInstallmentAllocationsResult,
+} from './sqliteInstallmentHistoryRepository';

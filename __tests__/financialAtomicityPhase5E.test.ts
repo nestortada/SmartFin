@@ -114,9 +114,10 @@ test('every deletion write rolls back the entire mixed financial history, includ
   try {
     discover.resetTrace();
     expect((await createSqliteFinancialDataRepository(discover.database).deleteFinancialData(deletionId, inventory)).status).toBe('confirmed');
-    expect(discover.trace.filter(e => /^DELETE FROM/.test(e.sql))).toHaveLength(36);
+    // 1a.3B: four more financial tables in the wipe.
+    expect(discover.trace.filter(e => /^DELETE FROM/.test(e.sql))).toHaveLength(40);
     writes = discover.trace.filter(e => e.write).length;
-    expect(writes).toBe(38);
+    expect(writes).toBe(42);
   } finally { discover.native.close(); }
   const positions = [];
   for (let write = 1; write <= writes; write++) for (const phase of ['before', 'after'] as const) {

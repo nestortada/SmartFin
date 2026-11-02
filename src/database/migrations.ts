@@ -7,6 +7,17 @@ import {
   SUBSCRIPTION_COLUMNS,
   SUBSCRIPTION_SCHEMA,
 } from '../modules/subscriptions/database/schema';
+import {
+  INSTALLMENT_HISTORY_BACKUP_TRIGGERS,
+  INSTALLMENT_HISTORY_GUARDS,
+  INSTALLMENT_HISTORY_TABLES,
+  ORIGINAL_REVISIONS_PER_INSERT,
+  insertOriginalRevisionsSql,
+} from '../modules/creditCards/database/installmentHistorySchema';
+import {
+  buildOriginalInstallmentRevision,
+  originalInstallmentRevisionValues,
+} from '../modules/creditCards/database/originalInstallmentRevisions';
 
 export async function applyVersionedMigrations(
   database: SmartFinSQLiteDatabase,
@@ -87,6 +98,22 @@ export async function applyVersionedMigrations(
     if (!versions.some(row => row.version === 4)) {
       for (const sql of SHARED_LOSS_SCHEMA) yield { sql };
       yield { sql: "INSERT INTO schema_migrations VALUES (4, strftime('%Y-%m-%dT%H:%M:%fZ','now'));" };
+    }
+    if (!versions.some(row => row.version === 5)) {
+      // 1a.3B: same transaction as versions 1-4. Purchases, movements and balances are only read.
+      for (const sql of INSTALLMENT_HISTORY_TABLES) yield { sql };
+      const purchases = yield {
+        sql: `SELECT p.id, p.total_amount, p.monthly_amount, p.installment_count FROM installment_purchases p
+          WHERE NOT EXISTS (SELECT 1 FROM installment_plan_revisions r WHERE r.installment_purchase_id = p.id)
+          ORDER BY p.id;`,
+      };
+      const revisions = purchases.map(buildOriginalInstallmentRevision);
+      for (let offset = 0; offset < revisions.length; offset += ORIGINAL_REVISIONS_PER_INSERT) {
+        const batch = revisions.slice(offset, offset + ORIGINAL_REVISIONS_PER_INSERT);
+        yield { sql: insertOriginalRevisionsSql(batch.length), values: batch.flatMap(originalInstallmentRevisionValues) };
+      }
+      for (const sql of [...INSTALLMENT_HISTORY_GUARDS, ...INSTALLMENT_HISTORY_BACKUP_TRIGGERS]) yield { sql };
+      yield { sql: "INSERT INTO schema_migrations VALUES (5, strftime('%Y-%m-%dT%H:%M:%fZ','now'));" };
     }
     return undefined;
   });

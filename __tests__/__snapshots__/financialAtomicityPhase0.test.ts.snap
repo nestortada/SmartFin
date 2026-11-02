@@ -19,7 +19,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "dfd8112f1d4d9be5806c588868021deb116972de08fcc2b411cfa53cff2540a2",
+    "stateSHA256": "2b250c8e7d7181123e8904262ea966f05d8dbb627713a2cf3c2c81afc3e19301",
     "values": [
       "Visa",
       "creditCard",
@@ -52,7 +52,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "dfd8112f1d4d9be5806c588868021deb116972de08fcc2b411cfa53cff2540a2",
+    "stateSHA256": "2b250c8e7d7181123e8904262ea966f05d8dbb627713a2cf3c2c81afc3e19301",
     "values": [
       "Visa",
       "creditCard",
@@ -85,7 +85,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "dfd8112f1d4d9be5806c588868021deb116972de08fcc2b411cfa53cff2540a2",
+    "stateSHA256": "2b250c8e7d7181123e8904262ea966f05d8dbb627713a2cf3c2c81afc3e19301",
     "values": [
       "card",
       "Visa",
@@ -120,7 +120,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "dfd8112f1d4d9be5806c588868021deb116972de08fcc2b411cfa53cff2540a2",
+    "stateSHA256": "2b250c8e7d7181123e8904262ea966f05d8dbb627713a2cf3c2c81afc3e19301",
     "values": [
       "card",
       "Visa",
@@ -157,7 +157,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE credit_card_statements SET account_id = ?, statement_start_date = ?, statement_end_date = ?, payment_due_date = ?, total_amount = ?, minimum_payment_amount = ?, currency = ?, status = ?, updated_at = ? WHERE id = ?;",
-    "stateSHA256": "58cd3fe85fd8b3f4b45456ac6f68b30ce1abf85eb15afc1dd3c97afb9f6312cb",
+    "stateSHA256": "8d9746c5faf7f75992a09de196cb47518f1d4237556b00359ffc87c71915baea",
     "values": [
       "card",
       "2026-10-01",
@@ -191,7 +191,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE credit_card_statements SET account_id = ?, statement_start_date = ?, statement_end_date = ?, payment_due_date = ?, total_amount = ?, minimum_payment_amount = ?, currency = ?, status = ?, updated_at = ? WHERE id = ?;",
-    "stateSHA256": "9421a2f96dab5b72e1dd1872288653fe4409b17e5cfac87ea1c8a0261dbaacde",
+    "stateSHA256": "fac1dc069ff817b3cd005623bb066fd1b785122a63b7020e6a4e529fde292caa",
     "values": [
       "card",
       "2026-10-01",
@@ -225,7 +225,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "9421a2f96dab5b72e1dd1872288653fe4409b17e5cfac87ea1c8a0261dbaacde",
+    "stateSHA256": "fac1dc069ff817b3cd005623bb066fd1b785122a63b7020e6a4e529fde292caa",
     "values": [
       "Banco",
       "bankAccount",
@@ -260,7 +260,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "9421a2f96dab5b72e1dd1872288653fe4409b17e5cfac87ea1c8a0261dbaacde",
+    "stateSHA256": "fac1dc069ff817b3cd005623bb066fd1b785122a63b7020e6a4e529fde292caa",
     "values": [
       "Banco",
       "bankAccount",
@@ -295,7 +295,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "9421a2f96dab5b72e1dd1872288653fe4409b17e5cfac87ea1c8a0261dbaacde",
+    "stateSHA256": "fac1dc069ff817b3cd005623bb066fd1b785122a63b7020e6a4e529fde292caa",
     "values": [
       "bank",
       "Banco",
@@ -332,7 +332,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "9421a2f96dab5b72e1dd1872288653fe4409b17e5cfac87ea1c8a0261dbaacde",
+    "stateSHA256": "fac1dc069ff817b3cd005623bb066fd1b785122a63b7020e6a4e529fde292caa",
     "values": [
       "bank",
       "Banco",
@@ -373,7 +373,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "e56f6537cff2308f8101b44b2a2acc2c1643d71cfb5392f34452b60d90a783ea",
+    "stateSHA256": "b65aad5930a6b02524177554c132fff339931b3ef4060922332c5196a5631a59",
     "values": [
       100000,
       "COP",
@@ -423,7 +423,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "e56f6537cff2308f8101b44b2a2acc2c1643d71cfb5392f34452b60d90a783ea",
+    "stateSHA256": "b65aad5930a6b02524177554c132fff339931b3ef4060922332c5196a5631a59",
     "values": [
       100000,
       "COP",
@@ -473,7 +473,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "e56f6537cff2308f8101b44b2a2acc2c1643d71cfb5392f34452b60d90a783ea",
+    "stateSHA256": "b65aad5930a6b02524177554c132fff339931b3ef4060922332c5196a5631a59",
     "values": [
       "tx-credit-card-payment-card-1791720000000",
       100000,
@@ -525,7 +525,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "e56f6537cff2308f8101b44b2a2acc2c1643d71cfb5392f34452b60d90a783ea",
+    "stateSHA256": "b65aad5930a6b02524177554c132fff339931b3ef4060922332c5196a5631a59",
     "values": [
       "tx-credit-card-payment-card-1791720000000",
       100000,
@@ -578,7 +578,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "9aa78bf0964723c85b58bf0e74718cb4b67008d6f0cdb84ab9b672f76c955a9d",
+    "stateSHA256": "d41672ee249c995b73ef1c21e1816b7e57551d938803892412d95c09eae56671",
     "values": [
       "Visa",
       "creditCard",
@@ -618,7 +618,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "9aa78bf0964723c85b58bf0e74718cb4b67008d6f0cdb84ab9b672f76c955a9d",
+    "stateSHA256": "d41672ee249c995b73ef1c21e1816b7e57551d938803892412d95c09eae56671",
     "values": [
       "Visa",
       "creditCard",
@@ -658,7 +658,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "9aa78bf0964723c85b58bf0e74718cb4b67008d6f0cdb84ab9b672f76c955a9d",
+    "stateSHA256": "d41672ee249c995b73ef1c21e1816b7e57551d938803892412d95c09eae56671",
     "values": [
       "card",
       "Visa",
@@ -700,7 +700,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "9aa78bf0964723c85b58bf0e74718cb4b67008d6f0cdb84ab9b672f76c955a9d",
+    "stateSHA256": "d41672ee249c995b73ef1c21e1816b7e57551d938803892412d95c09eae56671",
     "values": [
       "card",
       "Visa",
@@ -742,7 +742,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE credit_card_statements SET account_id = ?, statement_start_date = ?, statement_end_date = ?, payment_due_date = ?, total_amount = ?, minimum_payment_amount = ?, currency = ?, status = ?, updated_at = ? WHERE id = ?;",
-    "stateSHA256": "f2b35d1092fd95971835380223831a8a5685252c55ae5e15e7970e51f2da73e6",
+    "stateSHA256": "64447b639774765ca2d7291db13b8b8afc21c134b5f5392bd03e65d2611d2d9e",
     "values": [
       "card",
       "2026-10-01",
@@ -782,7 +782,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE credit_card_statements SET account_id = ?, statement_start_date = ?, statement_end_date = ?, payment_due_date = ?, total_amount = ?, minimum_payment_amount = ?, currency = ?, status = ?, updated_at = ? WHERE id = ?;",
-    "stateSHA256": "04decece3c819287422f57f93dcf319a86b7cd1ea262f2b8079c4db91fc7c556",
+    "stateSHA256": "fc1bb377b3120717540ea0fedc80bb25cd31c558b155cf97ed02e12445bece1e",
     "values": [
       "card",
       "2026-10-01",
@@ -882,6 +882,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       "budgets": [],
       "cash_flow_events": [],
       "categories": [],
+      "credit_card_billing_rules": [],
       "credit_card_profiles": [],
       "credit_card_statements": [
         {
@@ -909,6 +910,9 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       ],
       "financial_goals": [],
       "financial_health_scores": [],
+      "installment_allocations": [],
+      "installment_first_cycles": [],
+      "installment_plan_revisions": [],
       "installment_purchases": [],
       "investment_assets": [],
       "loans": [],
@@ -932,6 +936,10 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
         {
           "applied_at": "2026-10-11T12:00:00.000Z",
           "version": 4,
+        },
+        {
+          "applied_at": "2026-10-11T12:00:00.000Z",
+          "version": 5,
         },
       ],
       "shared_allocations": [],
@@ -1058,6 +1066,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       "budgets": [],
       "cash_flow_events": [],
       "categories": [],
+      "credit_card_billing_rules": [],
       "credit_card_profiles": [],
       "credit_card_statements": [
         {
@@ -1085,6 +1094,9 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       ],
       "financial_goals": [],
       "financial_health_scores": [],
+      "installment_allocations": [],
+      "installment_first_cycles": [],
+      "installment_plan_revisions": [],
       "installment_purchases": [],
       "investment_assets": [],
       "loans": [],
@@ -1108,6 +1120,10 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
         {
           "applied_at": "2026-10-11T12:00:00.000Z",
           "version": 4,
+        },
+        {
+          "applied_at": "2026-10-11T12:00:00.000Z",
+          "version": 5,
         },
       ],
       "shared_allocations": [],
@@ -1176,7 +1192,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "db22e248cbd1340f80d296d38bfa53a93acd4bc645592436cf7c59322e4fc791",
+    "stateSHA256": "a51e7d33d55fa2d937285d5adbc049add2a588281648de80ff1a3fc98c4f41b6",
     "values": [
       "Banco",
       "bankAccount",
@@ -1209,7 +1225,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "db22e248cbd1340f80d296d38bfa53a93acd4bc645592436cf7c59322e4fc791",
+    "stateSHA256": "a51e7d33d55fa2d937285d5adbc049add2a588281648de80ff1a3fc98c4f41b6",
     "values": [
       "Banco",
       "bankAccount",
@@ -1242,7 +1258,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "db22e248cbd1340f80d296d38bfa53a93acd4bc645592436cf7c59322e4fc791",
+    "stateSHA256": "a51e7d33d55fa2d937285d5adbc049add2a588281648de80ff1a3fc98c4f41b6",
     "values": [
       "bank",
       "Banco",
@@ -1277,7 +1293,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "db22e248cbd1340f80d296d38bfa53a93acd4bc645592436cf7c59322e4fc791",
+    "stateSHA256": "a51e7d33d55fa2d937285d5adbc049add2a588281648de80ff1a3fc98c4f41b6",
     "values": [
       "bank",
       "Banco",
@@ -1318,7 +1334,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1347,7 +1363,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1376,7 +1392,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1405,7 +1421,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1434,7 +1450,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1463,7 +1479,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1492,7 +1508,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1521,7 +1537,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1550,7 +1566,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1579,7 +1595,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1608,7 +1624,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM transactions WHERE id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1637,7 +1653,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM transactions WHERE id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-in",
     ],
@@ -1666,7 +1682,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1695,7 +1711,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1724,7 +1740,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1753,7 +1769,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1782,7 +1798,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1811,7 +1827,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1840,7 +1856,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1869,7 +1885,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1898,7 +1914,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1927,7 +1943,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1956,7 +1972,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM transactions WHERE id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -1985,7 +2001,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM transactions WHERE id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000-4x1000",
     ],
@@ -2014,7 +2030,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2043,7 +2059,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2072,7 +2088,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2101,7 +2117,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM envelope_movements WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2130,7 +2146,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2159,7 +2175,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM amortization_schedule_items WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2188,7 +2204,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2217,7 +2233,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2246,7 +2262,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2275,7 +2291,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM receipt_attachments WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2304,7 +2320,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2333,7 +2349,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM transaction_splits WHERE transaction_id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2362,7 +2378,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM transactions WHERE id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2391,7 +2407,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM transactions WHERE id = ?;",
-    "stateSHA256": "be9205594b936179bc90a22ad1f4bf78fae49fc0850f44add8278965e28ea8da",
+    "stateSHA256": "5bc576d183cb8f7f1ebc7ef066f31a54b03fc740fee83b4963904737fa195ab4",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -2482,6 +2498,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       "budgets": [],
       "cash_flow_events": [],
       "categories": [],
+      "credit_card_billing_rules": [],
       "credit_card_profiles": [],
       "credit_card_statements": [],
       "envelope_movements": [],
@@ -2495,6 +2512,9 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       ],
       "financial_goals": [],
       "financial_health_scores": [],
+      "installment_allocations": [],
+      "installment_first_cycles": [],
+      "installment_plan_revisions": [],
       "installment_purchases": [],
       "investment_assets": [],
       "loans": [],
@@ -2518,6 +2538,10 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
         {
           "applied_at": "2026-10-11T12:00:00.000Z",
           "version": 4,
+        },
+        {
+          "applied_at": "2026-10-11T12:00:00.000Z",
+          "version": 5,
         },
       ],
       "shared_allocations": [],
@@ -2644,6 +2668,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       "budgets": [],
       "cash_flow_events": [],
       "categories": [],
+      "credit_card_billing_rules": [],
       "credit_card_profiles": [],
       "credit_card_statements": [],
       "envelope_movements": [],
@@ -2657,6 +2682,9 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       ],
       "financial_goals": [],
       "financial_health_scores": [],
+      "installment_allocations": [],
+      "installment_first_cycles": [],
+      "installment_plan_revisions": [],
       "installment_purchases": [],
       "investment_assets": [],
       "loans": [],
@@ -2680,6 +2708,10 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
         {
           "applied_at": "2026-10-11T12:00:00.000Z",
           "version": 4,
+        },
+        {
+          "applied_at": "2026-10-11T12:00:00.000Z",
+          "version": 5,
         },
       ],
       "shared_allocations": [],
@@ -2748,7 +2780,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "04decece3c819287422f57f93dcf319a86b7cd1ea262f2b8079c4db91fc7c556",
+    "stateSHA256": "fc1bb377b3120717540ea0fedc80bb25cd31c558b155cf97ed02e12445bece1e",
     "values": [
       "Banco",
       "bankAccount",
@@ -2781,7 +2813,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "04decece3c819287422f57f93dcf319a86b7cd1ea262f2b8079c4db91fc7c556",
+    "stateSHA256": "fc1bb377b3120717540ea0fedc80bb25cd31c558b155cf97ed02e12445bece1e",
     "values": [
       "Banco",
       "bankAccount",
@@ -2814,7 +2846,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "04decece3c819287422f57f93dcf319a86b7cd1ea262f2b8079c4db91fc7c556",
+    "stateSHA256": "fc1bb377b3120717540ea0fedc80bb25cd31c558b155cf97ed02e12445bece1e",
     "values": [
       "bank",
       "Banco",
@@ -2849,7 +2881,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "04decece3c819287422f57f93dcf319a86b7cd1ea262f2b8079c4db91fc7c556",
+    "stateSHA256": "fc1bb377b3120717540ea0fedc80bb25cd31c558b155cf97ed02e12445bece1e",
     "values": [
       "bank",
       "Banco",
@@ -2890,7 +2922,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "b40c08c21a70ac07585afe1125df956a8d6d0d5dbf63d5b1425e887c90f1270d",
+    "stateSHA256": "9bb35ec52353b7d31ca62c9949bab646c847e2c8c4deb266572d94f1eb6935f5",
     "values": [
       50000,
       "COP",
@@ -2940,7 +2972,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "b40c08c21a70ac07585afe1125df956a8d6d0d5dbf63d5b1425e887c90f1270d",
+    "stateSHA256": "9bb35ec52353b7d31ca62c9949bab646c847e2c8c4deb266572d94f1eb6935f5",
     "values": [
       50000,
       "COP",
@@ -2990,7 +3022,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "b40c08c21a70ac07585afe1125df956a8d6d0d5dbf63d5b1425e887c90f1270d",
+    "stateSHA256": "9bb35ec52353b7d31ca62c9949bab646c847e2c8c4deb266572d94f1eb6935f5",
     "values": [
       "tx-credit-card-payment-card-1791720000000",
       50000,
@@ -3042,7 +3074,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "b40c08c21a70ac07585afe1125df956a8d6d0d5dbf63d5b1425e887c90f1270d",
+    "stateSHA256": "9bb35ec52353b7d31ca62c9949bab646c847e2c8c4deb266572d94f1eb6935f5",
     "values": [
       "tx-credit-card-payment-card-1791720000000",
       50000,
@@ -3095,7 +3127,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "4e2e39590e8f5cd123b817fd3e1757a505f430a7b8af6e6b24dbaef87ae6982c",
+    "stateSHA256": "c0ac99af848489c72ccd64a9df77f14be5bd982266dad5b68126c187f881e6d9",
     "values": [
       "tx-credit-card-payment-card-1791720000000",
     ],
@@ -3125,7 +3157,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "4e2e39590e8f5cd123b817fd3e1757a505f430a7b8af6e6b24dbaef87ae6982c",
+    "stateSHA256": "c0ac99af848489c72ccd64a9df77f14be5bd982266dad5b68126c187f881e6d9",
     "values": [
       "tx-credit-card-payment-card-1791720000000",
     ],
@@ -3155,7 +3187,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "4e2e39590e8f5cd123b817fd3e1757a505f430a7b8af6e6b24dbaef87ae6982c",
+    "stateSHA256": "c0ac99af848489c72ccd64a9df77f14be5bd982266dad5b68126c187f881e6d9",
     "values": [
       "Visa",
       "creditCard",
@@ -3195,7 +3227,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "4e2e39590e8f5cd123b817fd3e1757a505f430a7b8af6e6b24dbaef87ae6982c",
+    "stateSHA256": "c0ac99af848489c72ccd64a9df77f14be5bd982266dad5b68126c187f881e6d9",
     "values": [
       "Visa",
       "creditCard",
@@ -3235,7 +3267,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "4e2e39590e8f5cd123b817fd3e1757a505f430a7b8af6e6b24dbaef87ae6982c",
+    "stateSHA256": "c0ac99af848489c72ccd64a9df77f14be5bd982266dad5b68126c187f881e6d9",
     "values": [
       "card",
       "Visa",
@@ -3277,7 +3309,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "4e2e39590e8f5cd123b817fd3e1757a505f430a7b8af6e6b24dbaef87ae6982c",
+    "stateSHA256": "c0ac99af848489c72ccd64a9df77f14be5bd982266dad5b68126c187f881e6d9",
     "values": [
       "card",
       "Visa",
@@ -3319,7 +3351,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE credit_card_statements SET account_id = ?, statement_start_date = ?, statement_end_date = ?, payment_due_date = ?, total_amount = ?, minimum_payment_amount = ?, currency = ?, status = ?, updated_at = ? WHERE id = ?;",
-    "stateSHA256": "00f65a847a205c27a97fecfd6a8d3b75730014920343895976e0f382a1663499",
+    "stateSHA256": "0d3eba348c4208a90f97861ed579426bda7c70ca912f4a3fe520cb237d47e868",
     "values": [
       "card",
       "2026-10-01",
@@ -3359,7 +3391,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE credit_card_statements SET account_id = ?, statement_start_date = ?, statement_end_date = ?, payment_due_date = ?, total_amount = ?, minimum_payment_amount = ?, currency = ?, status = ?, updated_at = ? WHERE id = ?;",
-    "stateSHA256": "785d3611b109e4386eac1efcb8e71db8d17ee7c56ef5f0e4d352a77723649b3f",
+    "stateSHA256": "3f7b637360382de47c57d8f676a43eab7efc12bbf3368f787fc3627bf16a1ddc",
     "values": [
       "card",
       "2026-10-01",
@@ -3459,6 +3491,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       "budgets": [],
       "cash_flow_events": [],
       "categories": [],
+      "credit_card_billing_rules": [],
       "credit_card_profiles": [],
       "credit_card_statements": [
         {
@@ -3486,6 +3519,9 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       ],
       "financial_goals": [],
       "financial_health_scores": [],
+      "installment_allocations": [],
+      "installment_first_cycles": [],
+      "installment_plan_revisions": [],
       "installment_purchases": [],
       "investment_assets": [],
       "loans": [],
@@ -3509,6 +3545,10 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
         {
           "applied_at": "2026-10-11T12:00:00.000Z",
           "version": 4,
+        },
+        {
+          "applied_at": "2026-10-11T12:00:00.000Z",
+          "version": 5,
         },
       ],
       "shared_allocations": [],
@@ -3661,6 +3701,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       "budgets": [],
       "cash_flow_events": [],
       "categories": [],
+      "credit_card_billing_rules": [],
       "credit_card_profiles": [],
       "credit_card_statements": [
         {
@@ -3688,6 +3729,9 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       ],
       "financial_goals": [],
       "financial_health_scores": [],
+      "installment_allocations": [],
+      "installment_first_cycles": [],
+      "installment_plan_revisions": [],
       "installment_purchases": [],
       "investment_assets": [],
       "loans": [],
@@ -3711,6 +3755,10 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
         {
           "applied_at": "2026-10-11T12:00:00.000Z",
           "version": 4,
+        },
+        {
+          "applied_at": "2026-10-11T12:00:00.000Z",
+          "version": 5,
         },
       ],
       "shared_allocations": [],
@@ -3805,7 +3853,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "8794d9101e2582297f46b2a2a1a09ffb28dcdea8da0779a69f4e93e3b447d2b6",
+    "stateSHA256": "f673b62cf2acf21772751f9dd46c0a0b73887fc81712b252c1ad9eb37ae0d4af",
     "values": [
       "Banco",
       "bankAccount",
@@ -3838,7 +3886,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "8794d9101e2582297f46b2a2a1a09ffb28dcdea8da0779a69f4e93e3b447d2b6",
+    "stateSHA256": "f673b62cf2acf21772751f9dd46c0a0b73887fc81712b252c1ad9eb37ae0d4af",
     "values": [
       "Banco",
       "bankAccount",
@@ -3871,7 +3919,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "8794d9101e2582297f46b2a2a1a09ffb28dcdea8da0779a69f4e93e3b447d2b6",
+    "stateSHA256": "f673b62cf2acf21772751f9dd46c0a0b73887fc81712b252c1ad9eb37ae0d4af",
     "values": [
       "bank",
       "Banco",
@@ -3906,7 +3954,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "8794d9101e2582297f46b2a2a1a09ffb28dcdea8da0779a69f4e93e3b447d2b6",
+    "stateSHA256": "f673b62cf2acf21772751f9dd46c0a0b73887fc81712b252c1ad9eb37ae0d4af",
     "values": [
       "bank",
       "Banco",
@@ -3941,7 +3989,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "8794d9101e2582297f46b2a2a1a09ffb28dcdea8da0779a69f4e93e3b447d2b6",
+    "stateSHA256": "f673b62cf2acf21772751f9dd46c0a0b73887fc81712b252c1ad9eb37ae0d4af",
     "values": [
       "Destino",
       "bankAccount",
@@ -3974,7 +4022,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE accounts SET name = ?,type = ?,status = ?,currency = ?,balance_amount = ?,debt_balance_amount = ?,credit_limit_amount = ?,institution_name = ?,description = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "8794d9101e2582297f46b2a2a1a09ffb28dcdea8da0779a69f4e93e3b447d2b6",
+    "stateSHA256": "f673b62cf2acf21772751f9dd46c0a0b73887fc81712b252c1ad9eb37ae0d4af",
     "values": [
       "Destino",
       "bankAccount",
@@ -4007,7 +4055,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "8794d9101e2582297f46b2a2a1a09ffb28dcdea8da0779a69f4e93e3b447d2b6",
+    "stateSHA256": "f673b62cf2acf21772751f9dd46c0a0b73887fc81712b252c1ad9eb37ae0d4af",
     "values": [
       "target",
       "Destino",
@@ -4042,7 +4090,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_amount,credit_limit_amount,institution_name,description,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM accounts WHERE id = ?);",
-    "stateSHA256": "8794d9101e2582297f46b2a2a1a09ffb28dcdea8da0779a69f4e93e3b447d2b6",
+    "stateSHA256": "f673b62cf2acf21772751f9dd46c0a0b73887fc81712b252c1ad9eb37ae0d4af",
     "values": [
       "target",
       "Destino",
@@ -4083,7 +4131,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       100000,
       "COP",
@@ -4133,7 +4181,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       100000,
       "COP",
@@ -4183,7 +4231,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       "tx_manual_1791720000000",
       100000,
@@ -4235,7 +4283,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       "tx_manual_1791720000000",
       100000,
@@ -4287,7 +4335,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       100000,
       "COP",
@@ -4337,7 +4385,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       100000,
       "COP",
@@ -4387,7 +4435,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       "tx_manual_1791720000000-in",
       100000,
@@ -4439,7 +4487,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       "tx_manual_1791720000000-in",
       100000,
@@ -4491,7 +4539,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       400,
       "COP",
@@ -4541,7 +4589,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "UPDATE transactions SET amount = ?,currency = ?,description = ?,date = ?,account_id = ?,civil_date = ?,local_time = ?,time_zone = ?,date_precision = ?,category_id = ?,subcategory_id = ?,type = ?,direction = ?,status = ?,target_account_id = ?,merchant_name = ?,payment_method = ?,credit_card_hint = ?,dedupe_key = ?,notes = ?,updated_at = ? WHERE id = ?;",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       400,
       "COP",
@@ -4591,7 +4639,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       "tx_manual_1791720000000-4x1000",
       400,
@@ -4643,7 +4691,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "INSERT INTO transactions (id,amount,currency,description,date,account_id,civil_date,local_time,time_zone,date_precision,category_id,subcategory_id,type,direction,status,target_account_id,merchant_name,payment_method,credit_card_hint,dedupe_key,notes,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM transactions WHERE id = ?);",
-    "stateSHA256": "b54ec87de7ec0e6d0a4c6449a653a1b9be4d0292286e4921f7e41e52204a5532",
+    "stateSHA256": "9e0bf19b81e376374c810318a2b4264a3477fca8531f6131ca294252f6c77bfb",
     "values": [
       "tx_manual_1791720000000-4x1000",
       400,
@@ -4698,7 +4746,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "before",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "c411d912f34e5351de1a5ed0ad8ccedc5d14b8f8d6caa7efc6f8b28dbf90b74c",
+    "stateSHA256": "67bc163c5a44565e00f321a1e2ead74d7809f3e79ea956895a4886fe71dbeb9e",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -4730,7 +4778,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
     },
     "phase": "after",
     "sql": "DELETE FROM installment_purchases WHERE transaction_id = ?;",
-    "stateSHA256": "c411d912f34e5351de1a5ed0ad8ccedc5d14b8f8d6caa7efc6f8b28dbf90b74c",
+    "stateSHA256": "67bc163c5a44565e00f321a1e2ead74d7809f3e79ea956895a4886fe71dbeb9e",
     "values": [
       "tx_manual_1791720000000",
     ],
@@ -4821,6 +4869,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       "budgets": [],
       "cash_flow_events": [],
       "categories": [],
+      "credit_card_billing_rules": [],
       "credit_card_profiles": [],
       "credit_card_statements": [],
       "envelope_movements": [],
@@ -4834,6 +4883,9 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       ],
       "financial_goals": [],
       "financial_health_scores": [],
+      "installment_allocations": [],
+      "installment_first_cycles": [],
+      "installment_plan_revisions": [],
       "installment_purchases": [],
       "investment_assets": [],
       "loans": [],
@@ -4857,6 +4909,10 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
         {
           "applied_at": "2026-10-11T12:00:00.000Z",
           "version": 4,
+        },
+        {
+          "applied_at": "2026-10-11T12:00:00.000Z",
+          "version": 5,
         },
       ],
       "shared_allocations": [],
@@ -4956,6 +5012,7 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       "budgets": [],
       "cash_flow_events": [],
       "categories": [],
+      "credit_card_billing_rules": [],
       "credit_card_profiles": [],
       "credit_card_statements": [],
       "envelope_movements": [],
@@ -4969,6 +5026,9 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
       ],
       "financial_goals": [],
       "financial_health_scores": [],
+      "installment_allocations": [],
+      "installment_first_cycles": [],
+      "installment_plan_revisions": [],
       "installment_purchases": [],
       "investment_assets": [],
       "loans": [],
@@ -4992,6 +5052,10 @@ exports[`Phase 0: current behavior characterization (NO integral rollback guaran
         {
           "applied_at": "2026-10-11T12:00:00.000Z",
           "version": 4,
+        },
+        {
+          "applied_at": "2026-10-11T12:00:00.000Z",
+          "version": 5,
         },
       ],
       "shared_allocations": [],

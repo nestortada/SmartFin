@@ -67,7 +67,8 @@ test('one commit preserves the exact historical DELETE outcome, with only intern
     expect(f.trace.filter(entry => /^BEGIN/.test(entry.sql))).toHaveLength(1);
     expect(f.trace.filter(entry => /^COMMIT/.test(entry.sql))).toHaveLength(1);
     evidence.writes = f.trace.filter(entry => entry.write).length;
-    expect(evidence.writes).toBe(38);
+    // 1a.3B: four more financial tables in the wipe.
+    expect(evidence.writes).toBe(42);
   } finally { f.native.close(); old.native.close(); }
 });
 

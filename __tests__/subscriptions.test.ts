@@ -522,7 +522,7 @@ test('legacy migration preserves data, is repeatable and rolls back failures', a
     sql.failOn();
     await applyVersionedMigrations(sql.database);
     await applyVersionedMigrations(sql.database);
-    expect(sql.query('SELECT * FROM schema_migrations').rows.length).toBe(4);
+    expect(sql.query('SELECT * FROM schema_migrations').rows.length).toBe(5);
     expect(
       sql
         .query('SELECT anchor_date,amount FROM recurring_subscriptions')
@@ -555,7 +555,7 @@ test('closed accounts produce configuration alerts and financial wipe leaves set
     );
     expect(f.query('SELECT * FROM subscription_reminders').rows.length).toBe(0);
     expect(f.query("SELECT * FROM app_settings WHERE setting_key='theme'").rows.length).toBe(1);
-    expect(f.query('SELECT * FROM schema_migrations').rows.length).toBe(4);
+    expect(f.query('SELECT * FROM schema_migrations').rows.length).toBe(5);
     expect(f.query('PRAGMA foreign_key_check').rows.length).toBe(0);
   } finally {
     f.native.close();

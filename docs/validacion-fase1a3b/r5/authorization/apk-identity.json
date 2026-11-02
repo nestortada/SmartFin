@@ -1,0 +1,101 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-1a3b-r5-20261102/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "ec3f10125d95aca751e15e411e58b8a557b8a334b172af07c84b2c79ada2039a",
+  "sizeBytes": 33584940,
+  "builtAt": "2026-11-02T21:02:16.747Z",
+  "attestationSha256": "5ef8befd07803cf59505e7afc05cefa7f1b8ddf220beaff528e06fe2d1882433",
+  "variant": "release",
+  "productionSources": 307,
+  "phase1a3b": [
+    {
+      "source": "src/database/migrations.ts",
+      "sha256": "e72961d12f7bb5f9257f46309528f9e2e84a853ca0aef6304a6eb10fb679bbec"
+    },
+    {
+      "source": "src/database/sqliteDatabase.ts",
+      "sha256": "d56ee2fa341052c0125314892fde1702fbf4fc9cc1b9a10fd7c10fa318dddd42"
+    },
+    {
+      "source": "src/database/sqliteSchema.ts",
+      "sha256": "c749c1679cc17e1fd2ec6b32a4a158452455453e6b3ab06fedeb2c512e86a8e7"
+    },
+    {
+      "source": "src/modules/creditCards/database/installmentHistorySchema.ts",
+      "sha256": "691abc480de74b74ac6aeac67295c2c98e48b7e7aea5c20e513d8522b1281493"
+    },
+    {
+      "source": "src/modules/creditCards/database/originalInstallmentRevisions.ts",
+      "sha256": "5a6471276b366bf8dacc83a18f1922dcbce0b1db98b2a0bf6e86d3fc85046ed3"
+    },
+    {
+      "source": "src/modules/creditCards/repositories/sqliteInstallmentHistoryRepository.ts",
+      "sha256": "58dce14ff9051f36c427e49b5d31ee8a40e4001164947c79a9936631140508bf"
+    },
+    {
+      "source": "src/modules/creditCards/types/InstallmentHistory.ts",
+      "sha256": "ec6b1e766aebb1eb000be708e746aed2312c9826f5b569a7d794f84ff468c2a5"
+    },
+    {
+      "source": "src/modules/creditCards/useCases/installmentPlanRevisions.ts",
+      "sha256": "765f33dba0ef8e58be71d87ecec2709a24f78add46b9fae0143702401db2ae5d"
+    },
+    {
+      "source": "src/modules/settings/repositories/sqliteFinancialDataRepository.ts",
+      "sha256": "e9ffd48152941aa093c66793df43101991d9afe63e41c2b8983caea9011cf943"
+    }
+  ],
+  "harness": [
+    {
+      "source": "scripts/phase1a3b/androidHarness.js",
+      "sha256": "cf90b8417594b7b928097bae0855f774b262003dac47117fa3f30672df36a05f"
+    },
+    {
+      "source": "scripts/phase1a3b/probes.ts",
+      "sha256": "6182dd9859a2c9be39157963cf1eec0768feb8298c35c34afc6cdd51264ca35b"
+    },
+    {
+      "source": "docs/validacion-fase1a3b/node/results.json",
+      "sha256": "c0854ea85ce3a9ad06f18ba3ac0db840e7ca4160a2966bc94359283c05efed03"
+    },
+    {
+      "source": "scripts/phase1a3a/androidHarness.js",
+      "sha256": "0e36d16f4f91ff5c5205d3454363ebcc9e3fc21e7d5c8927f1d3ce9ab859cd59"
+    },
+    {
+      "source": "scripts/phase1a3a/probes.ts",
+      "sha256": "6454b2636a414b758c26473c69706b69c0f77ddfda416f42dd9a1009d401fc0c"
+    },
+    {
+      "source": "docs/validacion-fase1a3a/node/results.json",
+      "sha256": "19b01c303a55d4af16a1fd036d3caf92cd7624afccf419cd10cb9bfe289abb2e"
+    },
+    {
+      "source": "scripts/phase1a2/androidHarness.js",
+      "sha256": "35f7d76ce3dd67726c8f71568a06d6e90426fd3696c30e6006d6c069894a68a3"
+    },
+    {
+      "source": "scripts/phase1a2/probes.ts",
+      "sha256": "ebe3af4c0fcd68c8293d87900a63f91e47068035dabedaf85b83ad1c784b5ccc"
+    },
+    {
+      "source": "docs/validacion-fase1a2/node/results.json",
+      "sha256": "8e58ada75f0b1006d95b37ad3a8f6cc32567955f48fd1a12822e6e50129abb13"
+    },
+    {
+      "source": "scripts/phase6b3/androidHarness.js",
+      "sha256": "94c89dc6c4b7d0cd8fd2fbb76a5e0fd892ac10eb322284ba7550203e63d50de0"
+    },
+    {
+      "source": "scripts/phase6b3/probes.ts",
+      "sha256": "2d43bb02917abbbf80392b6507b81708b108db9ab1a307fabc312f475e7c5e6b"
+    },
+    {
+      "source": "docs/correccion-fase6b3/node/results.json",
+      "sha256": "e7c12f1e2deb6cc4a26e7d41f683e6c3465708894057f50bbe8652d6b6b6b9b3"
+    }
+  ],
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-1a3b-r5-20261102/android",
+  "checksAtRun": "run-android.ps1: APK and attestation hashes, embedded attestation, aapt package/non-debuggable, Hermes at runtime"
+}

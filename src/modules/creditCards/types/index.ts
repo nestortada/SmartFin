@@ -11,3 +11,17 @@ export type {
   InstallmentPurchase,
   InstallmentPurchaseStatus,
 } from './CreditCard';
+export type {
+  CreditCardBillingRules,
+  InstallmentAllocation,
+  InstallmentAllocationMode,
+  InstallmentAllocationStatus,
+  InstallmentFirstCycle,
+  InstallmentPlanPendingReason,
+  InstallmentPlanRevision,
+  InstallmentPlanRevisionBasis,
+  InstallmentPlanRevisionSource,
+  InstallmentPlanVerification,
+  NewInstallmentAllocation,
+  NewInstallmentPlanRevision,
+} from './InstallmentHistory';

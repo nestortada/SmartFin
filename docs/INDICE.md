@@ -18,6 +18,8 @@ Este índice separa la documentación por audiencia y fuente de verdad. El códi
 | [Escenario C: pago de un ciclo anterior](analisis-escenario-c-fase1a2.md) | Producto y desarrollo | Datos necesarios para asociar pagos con extractos |
 | [Persistencia segura (Fase 1a.3A)](persistencia-segura-fase1a3A.md) | Desarrollo y QA | Sustitución de INSERT OR REPLACE en tarjetas, identidad y dependientes, validada en Android |
 | [Validación Android 1a.3A](validacion-fase1a3a/README.md) | QA | 223/223 en API 24 (SQLite 3.9.2) y API 35; identidad, atomicidad y regresiones sin diferencias |
+| [Imputaciones y revisiones (Fase 1a.3B)](persistencia-imputaciones-fase1a3B.md) | Desarrollo y QA | Migración 5: imputaciones, historial de planes y metadatos D1, política de eliminación D5/D6 |
+| [Validación Android 1a.3B (preparada)](validacion-fase1a3b/README.md) | QA | 7 campañas (66 casos) + 11 regresiones, oráculo Node de 28.443 hojas y workspace sintético; no ejecutada |
 | [Motor de cuotas (Fase 1a.1)](motor-cuotas-fase1a1.md) | Desarrollo y QA | Calendario de cuotas puro y exacto en centavos; contrato y reglas de ciclos |
 | [Contribución](../CONTRIBUTING.md) | Colaboradores | Flujo de cambios y lista de verificación |
 
