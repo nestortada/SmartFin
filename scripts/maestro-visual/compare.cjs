@@ -17,7 +17,7 @@ function read(file, expected) {
   if(!Array.isArray(data.flows)) throw new Error('Expected flows array: '+file);
   const names=new Set();
   for(const f of data.flows) {
-    if(!['01-dashboard','02-navigation','03-form-readonly'].includes(f.id)) throw new Error('Unknown flow: '+f.id);
+    if(!['01-dashboard','02-navigation','03-form-readonly','04-expense-draft'].includes(f.id)) throw new Error('Unknown flow: '+f.id);
     if(names.has(f.id)) throw new Error('Duplicate flow: '+f.id);
     names.add(f.id);
     if(!['passed','failed','not_run'].includes(f.status)) throw new Error('Invalid flow status: '+f.status);
@@ -34,7 +34,7 @@ function read(file, expected) {
 }
 const codex=read(aPath,'codex'),claude=read(bPath,'claude');
 const sameApk=codex.apkSha256===claude.apkSha256;
-const ids=['01-dashboard','02-navigation','03-form-readonly'];
+const ids=['01-dashboard','02-navigation','03-form-readonly','04-expense-draft'];
 const fmt=(data,id)=>data.flows.find(f=>f.id===id)?.status||'not_run';
 const rows=ids.map(id=>[id,fmt(codex,id),fmt(claude,id)]);
 const allPassed=sameApk && rows.every(([,c,d])=>c==='passed'&&d==='passed');
