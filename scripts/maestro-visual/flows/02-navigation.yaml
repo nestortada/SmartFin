@@ -1,0 +1,20 @@
+appId: com.smartfin.visualtests
+name: SmartFin visual synthetic - read-only navigation
+tags:
+  - visual
+  - synthetic
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "SmartFin"
+    timeout: 30000
+- tapOn: "Movimientos"
+- assertVisible: "Actividad Reciente"
+- assertVisible: "Movimientos"
+- takeScreenshot: movements-synthetic
+- tapOn: "Más"
+- assertVisible: "Ajustes"
+- tapOn: "Ajustes"
+- assertVisible: "Ajustes"
+- takeScreenshot: settings-synthetic
