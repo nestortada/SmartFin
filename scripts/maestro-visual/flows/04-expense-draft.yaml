@@ -1,0 +1,23 @@
+appId: com.smartfin.visualtests
+name: SmartFin visual synthetic - expense draft without saving
+tags:
+  - visual
+  - synthetic
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "SmartFin"
+    timeout: 30000
+- tapOn: "Movimientos"
+- assertVisible: "Actividad Reciente"
+- tapOn: "+"
+- assertVisible: "Gasto"
+- assertVisible: "Guardar Gasto"
+- tapOn: "Toque para editar monto"
+- inputText: "12345"
+- tapOn: "Ej: Cena con amigos"
+- inputText: "Borrador sintético Maestro"
+- takeScreenshot: expense-draft-not-saved
+- back
+- back
