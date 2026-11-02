@@ -1,0 +1,13 @@
+appId: com.smartfin.visualtests
+name: SmartFin visual synthetic - dashboard read-only
+tags:
+  - visual
+  - synthetic
+---
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: "SmartFin"
+    timeout: 30000
+- assertVisible: "SALDO DISPONIBLE"
+- takeScreenshot: dashboard-synthetic
