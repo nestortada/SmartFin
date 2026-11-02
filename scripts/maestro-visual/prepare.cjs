@@ -110,6 +110,13 @@ for(const file of walk(nativeRoot).filter(f=>/\.(kt|java)$/.test(f))) {
   if(before!==after) fs.writeFileSync(file,after);
 }
 if(!nativeDbNames) throw new Error('Expected native database references were not found.');
+// Fail closed if a native source still names the production financial database.
+for (const file of walk(nativeRoot).filter(f=>/\.(kt|java)$/.test(f))) {
+  if (fs.readFileSync(file,'utf8').includes('smartfin.db'))
+    throw new Error('Unsafe native production database reference: '+file);
+}
+if (fs.readFileSync(path.join(target,schemaPath),'utf8').includes("'smartfin.db'"))
+  throw new Error('Unsafe TypeScript production database reference.');
 const sourceBootstrap=path.join(source,'scripts/maestro-visual/VisualBootstrap.jsx');
 fs.copyFileSync(sourceBootstrap,path.join(target,'VisualBootstrap.jsx'));
 fs.writeFileSync(path.join(target,'index.js'),
@@ -121,8 +128,8 @@ const sdk=process.env.ANDROID_HOME.replace(/\\/g,'/');
 fs.writeFileSync(path.join(target,'android/local.properties'),'sdk.dir='+sdk+'\n');
 const audit={
   source, target, packageId, dbName, nativeDbNames,
-  noProductionBackupImported: true,
-  noAutomaticSubscriptionMaintenance: true,
+  noProductionDatabaseFilesCopied: true,
+  automaticSubscriptionMaintenanceInAppDisabled: true,
   noAutomaticFinancialCampaigns: true,
   buildsOrInstallationsPerformed: false,
   files: Object.fromEntries([
