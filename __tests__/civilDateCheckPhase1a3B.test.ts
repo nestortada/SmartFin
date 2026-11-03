@@ -59,7 +59,9 @@ test('NULL is allowed only where migration 5 allows it; direct inserts and updat
   try {
     const created = await f.save({ accountId: 'card', operationType: 'Crédito', installmentCountInput: '3', amount: 300000 });
     const purchaseId = `installment-${created.transaction.id}`;
-    const run = (sql: string, values: (string | number | null)[] = []) => {
+    // 1a.4A: the purchase is saved with its revision 0; this probe inserts revision 0 by hand instead.
+    f.native.exec('DELETE FROM installment_plan_revisions');
+    const run =(sql: string, values: (string | number | null)[] = []) => {
       try { f.native.prepare(sql).run(...values); return 'accepted'; }
       catch (error) { return /CHECK|NOT NULL/.exec(String(error))?.[0] ?? String(error); }
     };

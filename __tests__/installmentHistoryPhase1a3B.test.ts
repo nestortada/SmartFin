@@ -442,16 +442,21 @@ describe('existing edit and delete flows (D5, D6)', () => {
       await f.save({ editingTransaction: toSingle.transaction, accountId: 'card', operationType: 'Crédito',
         installmentCountInput: '4', amount: 300000 });
       expect(await purchaseIdOf(f, exact.transaction.id)).toBe(id);
-      expect(selectEffectivePlanRevision(await repository.getPlanRevisions(id)).status).toBe('removed');
+      // 1a.4A: recreating the plan appends its own original revision in the same save.
+      const [, removal, original] = await repository.getPlanRevisions(id);
+      expect(removal).toMatchObject({ revisionNumber: 1, source: 'purchaseRemoval' });
+      expect(original).toMatchObject({ id: `${id}:revision:2`, revisionNumber: 2, source: 'original', remainingPrincipalCents: 30000000,
+        remainingInstallments: 4, installmentAmountCents: 7500000, effectiveCycleEnd: null, verification: 'pendingVerification',
+        pendingReasons: ['firstCycleUnconfirmed'], basis: { totalAmount: 300000, monthlyAmount: 75000, installmentCount: 4 } });
+      expect(selectEffectivePlanRevision(await repository.getPlanRevisions(id))).toMatchObject({ status: 'current', revision: original });
+      // A removed incarnation still accepts nothing but a new original revision (row recreated outside the use case).
+      f.native.exec(`CREATE TEMP TABLE kept AS SELECT * FROM installment_purchases WHERE id = '${id}'`);
+      f.native.exec(`DELETE FROM installment_purchases WHERE id = '${id}'`);
+      f.native.exec('INSERT INTO installment_purchases SELECT * FROM kept');
       const pending: NewInstallmentPlanRevision = { installmentPurchaseId: id, source: 'statement', remainingPrincipalCents: 1,
         remainingInstallments: 1, installmentAmountCents: 1, effectiveCycleEnd: '2026-10-20', verification: 'projected',
         pendingReasons: [], createdAt: 'x' };
       await expect(repository.appendPlanRevision(pending)).rejects.toThrow('revisión original');
-      const original = await repository.appendPlanRevision({ ...pending, source: 'original', remainingPrincipalCents: 30000000,
-        remainingInstallments: 4, installmentAmountCents: 7500000, effectiveCycleEnd: null, verification: 'pendingVerification',
-        pendingReasons: ['firstCycleUnconfirmed'], basis: { totalAmount: 300000, monthlyAmount: 75000, installmentCount: 4 } });
-      expect(original).toMatchObject({ id: `${id}:revision:2`, revisionNumber: 2, source: 'original' });
-      expect(selectEffectivePlanRevision(await repository.getPlanRevisions(id))).toMatchObject({ status: 'current', revision: original });
     } finally { f.native.close(); }
   });
 

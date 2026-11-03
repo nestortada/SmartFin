@@ -1,8 +1,16 @@
 // Phase 1a.3A Node reference for the Android campaigns phase1a3a-identity, -atomicity, -unknown and
 // -unknown-restart. The probes (scripts/phase1a3a/probes.ts) run the production use cases on a managed node:sqlite
-// connection, in the same order as the APK. SMARTFIN_WRITE_EVIDENCE=1 writes docs/validacion-fase1a3a/node/results.json;
-// otherwise the current run must equal that reference field by field.
+// connection, in the same order as the APK. The run must equal docs/validacion-fase1a3a/node/results.json field by
+// field (the reference is never rewritten).
 jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn(), openDatabase: jest.fn() }));
+// 1a.4A: this suite now checks HISTORICAL REPRODUCIBILITY only. The single 1a.4A step (revision 0 when a plan is
+// created) is neutralized, so the current code must still reproduce the recorded 1a.3A reference exactly. The
+// current code, with revision 0, is compared with docs/validacion-fase1a4a/node/results.json and, read only, with this
+// reference by __tests__/phase1a4aAndroidEquivalence.test.ts.
+jest.mock('../src/modules/creditCards/useCases/initialInstallmentRevision', () => ({
+  ...jest.requireActual('../src/modules/creditCards/useCases/initialInstallmentRevision'),
+  recordInitialInstallmentRevision: async () => undefined,
+}));
 import { InjectedSQLiteFailure, realSQLite } from './helpers/realSQLite';
 import { SQLITE_SCHEMA_STATEMENTS } from '../src/database/sqliteSchema';
 import { applyVersionedMigrations } from '../src/database/migrations';
@@ -124,10 +132,8 @@ test('the campaigns are deterministic and equal the recorded Node reference', as
   const second = await campaigns();
   expect(second).toEqual(first);
   const reference = { probes: first.identity, atomicity: first.atomicity, writes: first.writes, unknown: first.unknown, restart: first.restart };
-  if (nodeProcess.env.SMARTFIN_WRITE_EVIDENCE === '1') {
-    fs.mkdirSync('docs/validacion-fase1a3a/node', { recursive: true });
-    fs.writeFileSync(REFERENCE, JSON.stringify({ runtime: nodeProcess.version, ...reference }, null, 2) + '\n');
-  }
+  // Historical evidence (1a.3A) is immutable: never rewritten from this suite.
+  if (nodeProcess.env.SMARTFIN_WRITE_EVIDENCE === '1') throw Error('The 1a.3A Node reference is historical evidence');
   const recorded = JSON.parse(fs.readFileSync(REFERENCE, 'utf8')) as Record<string, unknown>;
   expect({ ...recorded, runtime: undefined }).toEqual(JSON.parse(JSON.stringify({ ...reference, runtime: undefined })));
 }, 120000);

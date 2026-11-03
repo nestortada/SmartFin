@@ -7,12 +7,13 @@ import {
   resolveCreditCardTransactionTarget,
   type ResolveCreditCardTransactionTargetResult,
 } from '../../creditCards/useCases';
+import { recordInitialInstallmentRevision } from '../../creditCards/useCases/initialInstallmentRevision';
 import { readCurrentManualTransaction, type SqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import type { Transaction, TransactionType } from '../types';
 import { requireCurrentTransaction, withManualTransactionScope } from './manualTransactionScope';
 import { isSQLiteParticipant } from '../../../database/managedSQLite';
 import { repositorySQLiteDatabase } from '../../../database/sqliteRepositoryScope';
-import { encodeTransactionDate, type TransactionDate } from '../../../shared/utils/transactionDate';
+import { encodeTransactionDate, transactionDateKey, type TransactionDate } from '../../../shared/utils/transactionDate';
 import { addCopAmounts } from '../../../shared/utils/exactCopCents';
 
 export type ManualTransactionOperationType = 'Débito' | 'Crédito';
@@ -306,6 +307,13 @@ export async function saveTransactionInstallments({
     updatedAt: transaction.updatedAt,
   };
   await creditCardRepository.saveInstallmentPurchases([purchase]);
+  // 1a.4A: a plan row created now (new purchase, or recreated after `purchaseRemoval`) gets its revision 0 in the
+  // same participant. An existing plan keeps its history: changed terms are appended by the `purchaseEdit` trigger.
+  if (!existing) {
+    await recordInitialInstallmentRevision({
+      creditCardRepository, purchase, purchaseDate: transactionDateKey(transaction), createdAt: transaction.updatedAt,
+    });
+  }
 }
 
 const requests = new WeakMap<SaveManualTransactionParams, Promise<SaveManualTransactionResult>>();

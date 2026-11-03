@@ -48,7 +48,9 @@ export type InstallmentPlanPendingReason =
   | 'termsChanged'
   | 'purchaseRemoved'
   | 'allocationReversed'
-  | 'manualReview';
+  | 'manualReview'
+  /** 1a.4A: the engine's `requiresDecision` (zero-cent installments); kept pending, never confirmed. */
+  | 'zeroCentInstallments';
 
 export const INSTALLMENT_PLAN_PENDING_REASONS: readonly InstallmentPlanPendingReason[] = [
   'firstCycleUnconfirmed',
@@ -60,6 +62,7 @@ export const INSTALLMENT_PLAN_PENDING_REASONS: readonly InstallmentPlanPendingRe
   'purchaseRemoved',
   'allocationReversed',
   'manualReview',
+  'zeroCentInstallments',
 ];
 
 /** Raw legacy values of the purchase row the revision was taken from (original and purchaseEdit only). */
@@ -79,6 +82,11 @@ export type InstallmentPlanRevision = {
   /** Null when the amount cannot be represented exactly or is unknown. */
   remainingPrincipalCents: number | null;
   remainingInstallments: number | null;
+  /**
+   * Informative, never the last installment. Revision 0 of a purchase registered since 1a.4A: the D2 base (installments
+   * 1..n-1). Revision 0 written by migration 5: the legacy `monthly_amount` when exact. Amounts per installment must be
+   * derived from `remainingPrincipalCents` and `remainingInstallments` (`distributeInstallmentCents`).
+   */
   installmentAmountCents: number | null;
   /** Closing date of the first cycle the revision applies to; null when it is not known. */
   effectiveCycleEnd: CivilDate | null;

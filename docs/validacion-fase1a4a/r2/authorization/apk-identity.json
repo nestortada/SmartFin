@@ -1,0 +1,113 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-1a4a-r2-20261102/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "a3cba3a8233d245f24b715ec896eacf05cce58a122071ea164810770b7ba29ae",
+  "sizeBytes": 33672176,
+  "builtAt": "2026-11-03T01:27:06.374Z",
+  "attestationSha256": "286642b3482d6b9b9baa3ebbec3b047697fb941f862c54ce2e06580786112465",
+  "variant": "release",
+  "productionSources": 308,
+  "phase1a4a": [
+    {
+      "source": "src/modules/creditCards/useCases/initialInstallmentRevision.ts",
+      "sha256": "ad63ef08ef86494dbed49be452ffa5fdb0cb6d40bd9fa79c363514ff87cae0e3"
+    },
+    {
+      "source": "src/modules/transactions/useCases/saveManualTransaction.ts",
+      "sha256": "64b4be731c9fba7ae4fc72f0a8b28f93679c4932857f97ff9c39cf477b8262fc"
+    },
+    {
+      "source": "src/database/migrations.ts",
+      "sha256": "e72961d12f7bb5f9257f46309528f9e2e84a853ca0aef6304a6eb10fb679bbec"
+    },
+    {
+      "source": "src/database/sqliteDatabase.ts",
+      "sha256": "d56ee2fa341052c0125314892fde1702fbf4fc9cc1b9a10fd7c10fa318dddd42"
+    },
+    {
+      "source": "src/database/sqliteSchema.ts",
+      "sha256": "c749c1679cc17e1fd2ec6b32a4a158452455453e6b3ab06fedeb2c512e86a8e7"
+    },
+    {
+      "source": "src/modules/creditCards/database/installmentHistorySchema.ts",
+      "sha256": "691abc480de74b74ac6aeac67295c2c98e48b7e7aea5c20e513d8522b1281493"
+    },
+    {
+      "source": "src/modules/creditCards/database/originalInstallmentRevisions.ts",
+      "sha256": "5a6471276b366bf8dacc83a18f1922dcbce0b1db98b2a0bf6e86d3fc85046ed3"
+    },
+    {
+      "source": "src/modules/creditCards/repositories/sqliteInstallmentHistoryRepository.ts",
+      "sha256": "ead1c0db0d44db4097165fe072b503502775394586826738060d8c5425c888f5"
+    },
+    {
+      "source": "src/modules/creditCards/types/InstallmentHistory.ts",
+      "sha256": "9a216f04332df7479c95381ef338885581bb0e4689c7972cec98b41e5d13d65c"
+    },
+    {
+      "source": "src/modules/creditCards/useCases/installmentPlanRevisions.ts",
+      "sha256": "765f33dba0ef8e58be71d87ecec2709a24f78add46b9fae0143702401db2ae5d"
+    },
+    {
+      "source": "src/modules/settings/repositories/sqliteFinancialDataRepository.ts",
+      "sha256": "e9ffd48152941aa093c66793df43101991d9afe63e41c2b8983caea9011cf943"
+    }
+  ],
+  "harness": [
+    {
+      "source": "scripts/phase1a4a/androidHarness.js",
+      "sha256": "6f50f3d21828c683f639fc3a9d2a5fc17910552aed32af54677b3cf28d5086df"
+    },
+    {
+      "source": "scripts/phase1a4a/probes.ts",
+      "sha256": "2867014f9fe4c0c67cfdf3aba4a993ed0dd25f1d8bf32f4c83783cdf12738be1"
+    },
+    {
+      "source": "scripts/phase1a4a/phase1a3bProbes.ts",
+      "sha256": "07abad2703ab53e901d56319205bbbfdb320a151dc3f56b42d325f3b683ad9d7"
+    },
+    {
+      "source": "docs/validacion-fase1a4a/r2/node/results.json",
+      "sha256": "fa0a6e8a01b86cef29d0775da3456b13e19de9eea2f912d2b4e63a80c6a0dab7"
+    },
+    {
+      "source": "scripts/phase1a3b/androidHarness.js",
+      "sha256": "cf90b8417594b7b928097bae0855f774b262003dac47117fa3f30672df36a05f"
+    },
+    {
+      "source": "scripts/phase1a3b/probes.ts",
+      "sha256": "6182dd9859a2c9be39157963cf1eec0768feb8298c35c34afc6cdd51264ca35b"
+    },
+    {
+      "source": "scripts/phase1a3a/androidHarness.js",
+      "sha256": "0e36d16f4f91ff5c5205d3454363ebcc9e3fc21e7d5c8927f1d3ce9ab859cd59"
+    },
+    {
+      "source": "scripts/phase1a3a/probes.ts",
+      "sha256": "6454b2636a414b758c26473c69706b69c0f77ddfda416f42dd9a1009d401fc0c"
+    },
+    {
+      "source": "scripts/phase1a2/androidHarness.js",
+      "sha256": "35f7d76ce3dd67726c8f71568a06d6e90426fd3696c30e6006d6c069894a68a3"
+    },
+    {
+      "source": "scripts/phase1a2/probes.ts",
+      "sha256": "ebe3af4c0fcd68c8293d87900a63f91e47068035dabedaf85b83ad1c784b5ccc"
+    },
+    {
+      "source": "scripts/phase6b3/androidHarness.js",
+      "sha256": "94c89dc6c4b7d0cd8fd2fbb76a5e0fd892ac10eb322284ba7550203e63d50de0"
+    },
+    {
+      "source": "scripts/phase6b3/probes.ts",
+      "sha256": "2d43bb02917abbbf80392b6507b81708b108db9ab1a307fabc312f475e7c5e6b"
+    },
+    {
+      "source": "docs/correccion-fase6b3/node/results.json",
+      "sha256": "e7c12f1e2deb6cc4a26e7d41f683e6c3465708894057f50bbe8652d6b6b6b9b3"
+    }
+  ],
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-1a4a-r2-20261102/android",
+  "checksAtRun": "run-android.ps1: APK and attestation hashes, embedded attestation, aapt package/non-debuggable, Hermes at runtime"
+}

@@ -272,10 +272,14 @@ export function createSqliteInstallmentHistoryRepository(
       validateRevision(revision);
       return runSQLiteTransaction(database, function* () {
         const [latest] = yield {
-          sql: 'SELECT MAX(revision_number) AS latest FROM installment_plan_revisions WHERE installment_purchase_id = ?;',
+          sql: `SELECT revision_number, source FROM installment_plan_revisions WHERE installment_purchase_id = ?
+            ORDER BY revision_number DESC LIMIT 1;`,
           values: [revision.installmentPurchaseId],
         };
-        const previous = latest?.latest;
+        // 1a.4A: one original revision per incarnation. The trigger only requires it after a removal.
+        if (revision.source === 'original' && latest && latest.source !== 'purchaseRemoval')
+          throw new Error('La compra ya tiene una revisión original vigente.');
+        const previous = latest?.revision_number;
         const revisionNumber = typeof previous === 'number' ? previous + 1 : 0;
         const id = `${revision.installmentPurchaseId}:revision:${revisionNumber}`;
         // Plain INSERT: never REPLACE. Sequence, purchase existence and incarnation are enforced by SQLite.
