@@ -9,6 +9,15 @@
 // 1a.3B and 6B.3 references are only read, to prove that every difference of the current code is an approved effect of
 // revision 0 (backup counter and revision rows), never money.
 jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn(), openDatabase: jest.fn() }));
+// 1a.4B: HISTORICAL REPRODUCIBILITY. The 1a.4B steps (D6 reversal of a payment's allocations and the guard that rejects
+// destructive changes to a purchase with active allocations) are neutralized, so the code must still reproduce the
+// recorded references exactly (the old contract blocked deleting a payment with an active allocation). The current
+// behaviour is covered by __tests__/extraordinaryInstallmentPaymentPhase1a4B.test.ts.
+jest.mock('../src/modules/creditCards/useCases/installmentAllocationReversal', () => ({
+  ...jest.requireActual('../src/modules/creditCards/useCases/installmentAllocationReversal'),
+  reverseActivePaymentAllocations: async () => [],
+  requireNoActiveInstallmentAllocations: async () => undefined,
+}));
 import { InjectedSQLiteFailure, realSQLite } from './helpers/realSQLite';
 import { SQLITE_SCHEMA_STATEMENTS } from '../src/database/sqliteSchema';
 import { applyVersionedMigrations } from '../src/database/migrations';

@@ -50,7 +50,15 @@ export type InstallmentPlanPendingReason =
   | 'allocationReversed'
   | 'manualReview'
   /** 1a.4A: the engine's `requiresDecision` (zero-cent installments); kept pending, never confirmed. */
-  | 'zeroCentInstallments';
+  | 'zeroCentInstallments'
+  /** 1a.4B: an active `unspecified` allocation; the bank has not shown how it applied the payment. */
+  | 'allocationUnconfirmed'
+  /** 1a.4B: the estimated principal reached zero; only a statement can show the plan is settled. */
+  | 'estimatedPrincipalZero'
+  /** 1a.4B: an allocation was reversed after a confirmed revision; the plan must be adjusted from a statement. */
+  | 'statementAdjustmentRequired'
+  /** 1a.4B: revision 0 written lazily before the first allocation, not when the purchase was registered. */
+  | 'lazyInitialRevision';
 
 export const INSTALLMENT_PLAN_PENDING_REASONS: readonly InstallmentPlanPendingReason[] = [
   'firstCycleUnconfirmed',
@@ -63,6 +71,10 @@ export const INSTALLMENT_PLAN_PENDING_REASONS: readonly InstallmentPlanPendingRe
   'allocationReversed',
   'manualReview',
   'zeroCentInstallments',
+  'allocationUnconfirmed',
+  'estimatedPrincipalZero',
+  'statementAdjustmentRequired',
+  'lazyInitialRevision',
 ];
 
 /** Raw legacy values of the purchase row the revision was taken from (original and purchaseEdit only). */

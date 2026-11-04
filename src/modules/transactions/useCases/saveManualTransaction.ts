@@ -8,6 +8,10 @@ import {
   type ResolveCreditCardTransactionTargetResult,
 } from '../../creditCards/useCases';
 import { recordInitialInstallmentRevision } from '../../creditCards/useCases/initialInstallmentRevision';
+import {
+  requireNoActiveInstallmentAllocations,
+  reverseActivePaymentAllocations,
+} from '../../creditCards/useCases/installmentAllocationReversal';
 import { readCurrentManualTransaction, type SqliteTransactionRepository } from '../repositories/sqliteTransactionRepository';
 import type { Transaction, TransactionType } from '../types';
 import { requireCurrentTransaction, withManualTransactionScope } from './manualTransactionScope';
@@ -281,6 +285,9 @@ export async function saveTransactionInstallments({
   previousTransaction?: Transaction | null;
 }): Promise<void> {
   if (transaction.paymentMethod !== 'credit' || installmentCount <= 1) {
+    // 1a.4B: removing a plan with active allocations is rejected before the write (debit or one installment).
+    if (previousTransaction?.paymentMethod === 'credit')
+      await requireNoActiveInstallmentAllocations({ creditCardRepository, purchaseTransactionIds: [transaction.id] });
     await transactionRepository.deleteInstallmentPurchasesByTransactionId(transaction.id);
     return;
   }
@@ -306,6 +313,12 @@ export async function saveTransactionInstallments({
     transactionId: transaction.id,
     updatedAt: transaction.updatedAt,
   };
+  // 1a.4B: the terms the `purchaseEdit` trigger watches cannot change under an active allocation.
+  if (existing && (existing.totalAmount !== purchase.totalAmount || existing.installmentCount !== purchase.installmentCount ||
+      existing.currency !== purchase.currency || existing.accountId !== purchase.accountId ||
+      existing.firstDueDate !== purchase.firstDueDate)) {
+    await requireNoActiveInstallmentAllocations({ creditCardRepository, purchaseTransactionIds: [transaction.id] });
+  }
   await creditCardRepository.saveInstallmentPurchases([purchase]);
   // 1a.4A: a plan row created now (new purchase, or recreated after `purchaseRemoval`) gets its revision 0 in the
   // same participant. An existing plan keeps its history: changed terms are appended by the `purchaseEdit` trigger.
@@ -348,6 +361,19 @@ export async function saveManualTransaction(params: SaveManualTransactionParams)
   // This is runtime protection, not a durable receipt for newly constructed commands.
   if (!participant) requests.set(params, result);
   return result;
+}
+
+/**
+ * 1a.4B: fields whose change makes an edit of a payment a real financial edit (amount, accounts, kind, state or date).
+ * Description, merchant, category and notes are not: those edits keep the allocation.
+ */
+const PAYMENT_FINANCIAL_FIELDS = [
+  'amount', 'accountId', 'targetAccountId', 'type', 'direction', 'status', 'currency',
+  'date', 'civilDate', 'localTime', 'timeZone', 'datePrecision', 'paymentMethod',
+] as const satisfies readonly (keyof Transaction)[];
+
+function paymentChangesFinancially(previous: Transaction, next: Transaction): boolean {
+  return PAYMENT_FINANCIAL_FIELDS.some(field => previous[field] !== next[field]);
 }
 
 function requirePrincipalTransaction(transaction?: Transaction) {
@@ -507,6 +533,12 @@ async function saveManualTransactionInScope(
     }
   }
 
+  // 1a.4B, D6: a real edit of a card payment reverses all its active allocations first, in this transaction.
+  // Nothing is re-imputed: a new allocation needs a new explicit command.
+  if (persisted && editingTransaction?.type === 'creditCardPayment' && paymentChangesFinancially(editingTransaction, transaction)) {
+    await reverseActivePaymentAllocations({ creditCardRepository, paymentTransactionId: editingTransaction.id, reversedAt: now });
+  }
+
   const accountUpdates = new Map<string, Account>();
   let existingTransferTax: Transaction | undefined;
 
@@ -635,6 +667,15 @@ async function deleteManualTransactionInScope({
   transaction,
   transactionRepository,
 }: DeleteManualTransactionParams): Promise<void> {
+  // 1a.4B: a purchase with active allocations is never deleted (nor cascaded); its payment must be reversed first.
+  if (transaction.paymentMethod === 'credit')
+    await requireNoActiveInstallmentAllocations({ creditCardRepository, purchaseTransactionIds: [transaction.id] });
+  // D6: deleting a payment reverses its active allocations in the same transaction, before the row disappears.
+  if (transaction.type === 'creditCardPayment') {
+    await reverseActivePaymentAllocations({
+      creditCardRepository, paymentTransactionId: transaction.id, reversedAt: new Date().toISOString(),
+    });
+  }
   const accountUpdates = new Map<string, Account>();
   applyTransactionImpact({
     accounts,

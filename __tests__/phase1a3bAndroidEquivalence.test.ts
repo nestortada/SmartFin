@@ -4,6 +4,15 @@
 // The run must equal docs/validacion-fase1a3b/node/results.json field by field (the
 // reference is never rewritten).
 jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn(), openDatabase: jest.fn() }));
+// 1a.4B: HISTORICAL REPRODUCIBILITY. The 1a.4B steps (D6 reversal of a payment's allocations and the guard that rejects
+// destructive changes to a purchase with active allocations) are neutralized, so the code must still reproduce the
+// recorded references exactly (the old contract blocked deleting a payment with an active allocation). The current
+// behaviour is covered by __tests__/extraordinaryInstallmentPaymentPhase1a4B.test.ts.
+jest.mock('../src/modules/creditCards/useCases/installmentAllocationReversal', () => ({
+  ...jest.requireActual('../src/modules/creditCards/useCases/installmentAllocationReversal'),
+  reverseActivePaymentAllocations: async () => [],
+  requireNoActiveInstallmentAllocations: async () => undefined,
+}));
 // 1a.4A: this suite now checks HISTORICAL REPRODUCIBILITY only. The single 1a.4A step (revision 0 when a plan is
 // created) is neutralized, so the current code must still reproduce the recorded 1a.3B reference exactly. The
 // current code, with revision 0, is compared with docs/validacion-fase1a4a/node/results.json and, read only, with this

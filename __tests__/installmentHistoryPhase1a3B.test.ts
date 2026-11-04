@@ -1,6 +1,15 @@
 // Phase 1a.3B: migration 5 (installment allocations, plan revisions, billing metadata) and its repositories.
 // Synthetic in-memory SQLite only.
 jest.mock('react-native-sqlite-storage', () => ({ enablePromise: jest.fn(), openDatabase: jest.fn() }));
+// 1a.4B: HISTORICAL REPRODUCIBILITY. The 1a.4B steps (D6 reversal of a payment's allocations and the guard that rejects
+// destructive changes to a purchase with active allocations) are neutralized, so the code must still reproduce the
+// recorded references exactly (the old contract blocked deleting a payment with an active allocation). The current
+// behaviour is covered by __tests__/extraordinaryInstallmentPaymentPhase1a4B.test.ts.
+jest.mock('../src/modules/creditCards/useCases/installmentAllocationReversal', () => ({
+  ...jest.requireActual('../src/modules/creditCards/useCases/installmentAllocationReversal'),
+  reverseActivePaymentAllocations: async () => [],
+  requireNoActiveInstallmentAllocations: async () => undefined,
+}));
 import { financialIntegrityFixture, FINANCIAL_TEST_DATE } from './helpers/financialIntegrityFixture';
 import { financialState, type FinancialState } from './helpers/financialState';
 import { realSQLite } from './helpers/realSQLite';

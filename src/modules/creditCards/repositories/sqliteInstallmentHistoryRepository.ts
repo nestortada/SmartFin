@@ -28,10 +28,11 @@ import {
 } from '../types/InstallmentHistory';
 
 /**
- * Phase 1a.3B persistence only: no screen, hook or payment flow uses it yet, and it has no reversal or
- * amortization logic. Every call runs on the `database` it receives, so inside a shared scope it joins the
+ * Phase 1a.3B persistence, used since 1a.4B by the internal extraordinary payment and the D6 reversals (no screen or
+ * hook). No amortization logic. Every call runs on the `database` it receives, so inside a shared scope it joins the
  * owner's transaction (never a nested BEGIN); multi-statement writes outside a scope get one local
- * transaction. History is append-only: there is no update or delete of revisions here.
+ * transaction. History is append-only: there is no update or delete of revisions here, and the only allocation update
+ * is `active → reversed`.
  */
 export type SaveInstallmentAllocationsResult = {
   /** `replayed`: the same command was already stored with identical allocations; nothing was written. */
@@ -44,6 +45,10 @@ export type InstallmentHistoryRepository = {
   getAllocationsByPayment: (paymentTransactionId: string) => Promise<InstallmentAllocation[]>;
   getAllocationsByCommand: (commandId: string) => Promise<InstallmentAllocation[]>;
   saveAllocations: (commandId: string, allocations: NewInstallmentAllocation[]) => Promise<SaveInstallmentAllocationsResult>;
+  /** 1a.4B: whether a purchase created by this original movement has an active allocation (one read). */
+  hasActiveAllocationsForPurchaseTransaction: (transactionId: string) => Promise<boolean>;
+  /** 1a.4B: the only allocation update the schema admits, `active → reversed`. Never reactivates. */
+  reverseAllocation: (allocationId: string, reversedAt: string) => Promise<InstallmentAllocation>;
   getPlanRevisions: (installmentPurchaseId: string) => Promise<InstallmentPlanRevision[]>;
   getLatestPlanRevision: (installmentPurchaseId: string) => Promise<InstallmentPlanRevision | undefined>;
   appendPlanRevision: (revision: NewInstallmentPlanRevision) => Promise<InstallmentPlanRevision>;
@@ -258,6 +263,32 @@ export function createSqliteInstallmentHistoryRepository(
           values: [commandId],
         }).map(allocationFromRow);
         return { status: 'inserted' as const, allocations: inserted };
+      });
+    },
+    hasActiveAllocationsForPurchaseTransaction: async transactionId =>
+      (await select(`SELECT 1 AS found FROM installment_allocations a
+        JOIN installment_purchases p ON p.id = a.installment_purchase_id
+        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;`, [requireText(transactionId, 'Movimiento')])).length > 0,
+    reverseAllocation: async (allocationId, reversedAt) => {
+      requireText(allocationId, 'Imputación');
+      requireText(reversedAt, 'Fecha de reversión');
+      return runSQLiteTransaction(database, function* () {
+        const [current] = yield {
+          sql: 'SELECT status FROM installment_allocations WHERE id = ?;',
+          values: [allocationId],
+        };
+        if (!current) throw new Error('La imputación no existe.');
+        if (current.status !== 'active') throw new Error('La imputación ya está revertida.');
+        yield {
+          sql: `UPDATE installment_allocations SET status = 'reversed', reversed_at = ? WHERE id = ? AND status = 'active';`,
+          values: [reversedAt, allocationId],
+        };
+        const [row] = yield {
+          sql: `SELECT ${ALLOCATION_COLUMNS} FROM installment_allocations WHERE id = ?;`,
+          values: [allocationId],
+        };
+        if (!row || row.status !== 'reversed') throw new Error('No se pudo revertir la imputación.');
+        return allocationFromRow(row);
       });
     },
     getPlanRevisions: async installmentPurchaseId =>

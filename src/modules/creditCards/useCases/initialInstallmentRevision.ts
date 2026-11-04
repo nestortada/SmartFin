@@ -118,10 +118,18 @@ export async function recordInitialInstallmentRevision({
   const history = createSqliteInstallmentHistoryRepository(database);
   const latest = await history.getLatestPlanRevision(purchase.id);
   if (latest && latest.source !== 'purchaseRemoval') return latest;
+  return history.appendPlanRevision(await initialRevisionFor(creditCardRepository, history, { purchase, purchaseDate, createdAt }));
+}
+
+async function initialRevisionFor(
+  creditCardRepository: Pick<CreditCardRepository, 'getCreditCardAccounts'>,
+  history: ReturnType<typeof createSqliteInstallmentHistoryRepository>,
+  { purchase, purchaseDate, createdAt }: { purchase: InstallmentPurchase; purchaseDate: CivilDate; createdAt: string },
+): Promise<NewInstallmentPlanRevision> {
   const card = (await creditCardRepository.getCreditCardAccounts()).find(account => account.id === purchase.accountId);
   const [rules] = await history.getBillingRules([purchase.accountId]);
   const [firstCycle] = await history.getFirstCycles([purchase.id]);
-  return history.appendPlanRevision(buildInitialInstallmentRevision({
+  return buildInitialInstallmentRevision({
     purchase,
     purchaseDate,
     billing: {
@@ -130,5 +138,46 @@ export async function recordInitialInstallmentRevision({
     },
     ...(firstCycle ? { confirmedFirstCycle: { cycleEnd: firstCycle.cycleEnd, source: firstCycle.source } } : {}),
     createdAt,
-  }));
+  });
+}
+
+/** Pure: a lazily written revision 0 is never projected or confirmed, and says it was not written at purchase time. */
+export function asLazyInitialRevision(revision: NewInstallmentPlanRevision): NewInstallmentPlanRevision {
+  return {
+    ...revision,
+    verification: 'pendingVerification',
+    pendingReasons: [...new Set<InstallmentPlanPendingReason>([...revision.pendingReasons, 'lazyInitialRevision'])].sort(),
+  };
+}
+
+export type EnsuredInitialRevision =
+  | { status: 'existing'; revision: InstallmentPlanRevision }
+  | { status: 'createdLazily'; revision: InstallmentPlanRevision };
+
+/**
+ * Phase 1a.4B: plans registered by the intermediate 1a.3B code after migration 5 have no revision 0. Before the first
+ * allocation it is written here, once, in the caller's participant, from the stored terms (exact cents or NULL, engine
+ * 1a.1) and marked `lazyInitialRevision` + `pendingVerification`. Nothing else is reconstructed: no movements, no
+ * statement confirmations, no `paid_installments`. An existing current history is returned unchanged; whether it is
+ * usable is decided by the caller (`estimatePendingPrincipal`), never repaired here.
+ */
+export async function ensureInitialInstallmentRevision({
+  creditCardRepository,
+  purchase,
+  purchaseDate,
+  createdAt,
+}: {
+  creditCardRepository: Pick<CreditCardRepository, 'getCreditCardAccounts'>;
+  purchase: InstallmentPurchase;
+  purchaseDate: CivilDate;
+  createdAt: string;
+}): Promise<EnsuredInitialRevision> {
+  const database = repositorySQLiteDatabase(creditCardRepository);
+  if (!database || !isSQLiteParticipant(database))
+    throw new Error('La revisión inicial perezosa debe registrarse en la misma transacción que la imputación.');
+  const history = createSqliteInstallmentHistoryRepository(database);
+  const latest = await history.getLatestPlanRevision(purchase.id);
+  if (latest && latest.source !== 'purchaseRemoval') return { status: 'existing', revision: latest };
+  const revision = asLazyInitialRevision(await initialRevisionFor(creditCardRepository, history, { purchase, purchaseDate, createdAt }));
+  return { status: 'createdLazily', revision: await history.appendPlanRevision(revision) };
 }

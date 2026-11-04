@@ -14,6 +14,7 @@ import { readCreditCardReconciliationTransactions, type CreditCardReconciliation
 import type { CreditCardRepository } from '../repositories';
 import type { CreditCardStatement } from '../types';
 import { statementChargesForCycle, type StatementCharge, type StatementPlanNotice } from './creditCardStatementCharges';
+import { requireNoActiveInstallmentAllocations } from './installmentAllocationReversal';
 import {
   parseCreditCardVisualMetadata,
   serializeCreditCardVisualMetadata,
@@ -497,6 +498,12 @@ async function associatePendingTransactionsInScope({
     return 0;
   }
 
+  // 1a.4B: moving a purchase to another card would orphan an active allocation from its payment's card.
+  await requireNoActiveInstallmentAllocations({
+    creditCardRepository,
+    purchaseTransactionIds: pendingTransactions.map(transaction => transaction.id),
+  });
+
   await transactionRepository.saveTransactions(
     pendingTransactions.map(transaction => ({
       ...transaction,
@@ -570,7 +577,11 @@ export async function registerCreditCardPayment(
   return result;
 }
 
-async function registerCreditCardPaymentInScope({
+/**
+ * Runs inside the caller's payment scope. Exported only for the 1a.4B extraordinary payment (not from the module
+ * index), which passes a `transactionId` derived from its command so a replay finds the same payment.
+ */
+export async function registerCreditCardPaymentInScope({
   accountId,
   accountRepository,
   amount,
@@ -579,8 +590,9 @@ async function registerCreditCardPaymentInScope({
   settlement = 'partial',
   sourceAccountId,
   transactionRepository,
-}: RegisterCreditCardPaymentParams): Promise<RegisterCreditCardPaymentResult> {
-  const transactionId = `tx-credit-card-payment-${accountId}-${Date.now()}-${++paymentIdSequence}`;
+  transactionId: requestedTransactionId,
+}: RegisterCreditCardPaymentParams & { transactionId?: string }): Promise<RegisterCreditCardPaymentResult> {
+  const transactionId = requestedTransactionId ?? `tx-credit-card-payment-${accountId}-${Date.now()}-${++paymentIdSequence}`;
   if (await readCurrentManualTransaction(transactionRepository, transactionId)) {
     throw new Error('La identidad del pago ya existe. Actualiza el historial antes de registrarlo.');
   }
