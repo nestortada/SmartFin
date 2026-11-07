@@ -1,5 +1,15 @@
 # dangerous-command-guard en Claude Code
 
+> **Estado vigente (7 de noviembre de 2026).** Este documento describe el adaptador v1, que
+> importaba el núcleo de `.codex/hooks/`. El hook instalado hoy es la **versión 2**
+> (`.claude/hooks/dangerous-command-guard.cjs`, motivos con prefijo `DG2:`). Es autocontenido:
+> no importa el guard de Codex ni usa módulos con hashes por fase. Por eso se retiraron
+> `phase6b2-runner.cjs`, `readonly-adb.cjs`, `synthetic-emulator.cjs`, las propuestas no
+> instaladas `build-script-boundary.cjs` y `phase6b3-stage-a.cjs`, sus pruebas y las copias
+> `.bak`/`.backup` del guard v1. Siguen disponibles en el historial de git. Las secciones
+> siguientes se conservan como registro histórico. La única suite vigente es
+> `node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs`.
+
 Configuración local de SmartFin para Claude Code 2.1.218 en Windows, sin dependencias
 nuevas ni modificaciones de configuración global o del hook de Codex.
 
