@@ -1,0 +1,12 @@
+C:\sf-1a4b-r2b-20261106\android\app\build\outputs\apk\release\app-release.apk: 1 file pushed, 0 skipped. 31.7 MB/s (33970456 bytes in 1.021s)
+Performing Push Install
+Success
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4b-r2-editamount cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 1567
+TotalTime: 1567
+WaitTime: 1622
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 27.2 MB/s (540551 bytes in 0.019s)
+RUNNER THREW: Synthetic campaign failed: Error: Unresolved differences (diagnostic, not accepted): [{"case":"editAmount-fresh-traced","against":"original 1a.4B reference","count":1},{"case":"editAmount-fresh-traced","against":"node trace","count":197},{"case":"editAmount-staged-warm","against":"node trace","count":185},{"case":"editAmount-warm-traced","against":"node trace","count":199}]

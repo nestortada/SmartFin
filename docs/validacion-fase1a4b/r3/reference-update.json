@@ -1,0 +1,32 @@
+{
+  "phase": "1a.4B r3",
+  "operation": "exceptional promotion of the current 1a.4B Node reference",
+  "reason": "r2 demonstrated that Node shared one database across phase1a4b-register/-reversal/-guards while Android clears it per campaign",
+  "reference": "docs/validacion-fase1a4b/node/results.json",
+  "originalSha256": "d26e3a53f5cb89d673a83886f5fd6af6932956615c42348e2e55c2b287ba675f",
+  "newSha256": "1faa219207d86d95f7b55f3e3446243d3d6194bbd974e7018089e7acce41bd1b",
+  "archivedOriginal": "docs/validacion-fase1a4b/r3/reference-before/results.json",
+  "leavesCompared": 48851,
+  "differences": [
+    {
+      "path": "$.phase1a4b.reversal.editAmount.observation.backupRevision",
+      "kind": "value",
+      "before": 31,
+      "after": 33
+    },
+    {
+      "path": "$.phase1a4b.guards.deletePurchase.observation.backupRevision",
+      "kind": "value",
+      "before": 23,
+      "after": 25
+    }
+  ],
+  "sizeBytes": {
+    "before": 2798089,
+    "after": 2798089
+  },
+  "runtime": {
+    "before": "v24.16.0",
+    "after": "v24.16.0"
+  }
+}

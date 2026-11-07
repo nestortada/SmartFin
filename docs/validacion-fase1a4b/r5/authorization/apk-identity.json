@@ -1,0 +1,51 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-1a4b-r5-20261107/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "33810542689a422099539b58fd4796f624a41172e41e175100d3371172368975",
+  "sizeBytes": 33812128,
+  "builtAt": "2026-11-07T17:52:30.147Z",
+  "attestationSha256": "13268571c86f24f13a132b5090cafb37022924863a9bec2037535987950f543e",
+  "variant": "release",
+  "purpose": "1a.4B r5 full validation (32 campaigns, 568 cases and 356 failure points per device)",
+  "productionSources": 311,
+  "differencesFromR4": [
+    {
+      "file": "phase1a3bProbes.ts",
+      "r4": "0cd6397ac501bc02ae3e09ba92f37d8cccd0ec50cbc83aabcba8911f4caf7e53",
+      "r5": "c685997c5cac03f4cf00b311f206f0c3aac56cfd37ff40499a2f5911a3e4392b"
+    }
+  ],
+  "harness": [
+    {
+      "source": "scripts/phase1a4b/androidHarness.js",
+      "sha256": "d626ef6e1d1a4d0c175caa1aa5fbecc349a52a724ad122eaaf0f6ce1bbdf7e4e"
+    },
+    {
+      "source": "scripts/phase1a4b/phase1a3bProbes.ts",
+      "sha256": "508a88e5dc97265eec2b488d9e47dcf5c7852736dc742ad2d18f395fafb53b26"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/r3/reference-update.json",
+      "sha256": "bbea726459708ba7cf35e6f191d72c16eec9c54eb087b49e73035b115dd9f3d4"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/r5/baseline/phase1a3bProbes.r4.ts.txt",
+      "sha256": "4883d7ef7cbf15514a692630b1c8d45b660c7ff9b9ccf0309a23940031e68af3"
+    },
+    {
+      "source": "scripts/phase1a4b/derive-probes.cjs",
+      "sha256": "b3db9aadcae6a9558fd197e9218a34c0a2162d95c8d4aaac2b36b79145a2b796"
+    },
+    {
+      "source": "scripts/phase1a4b/probes.ts",
+      "sha256": "0a37f0c8424ea569ecea2e684945d2caf60715fff671154a0572ad121f4e7eb4"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/node/results.json",
+      "sha256": "1faa219207d86d95f7b55f3e3446243d3d6194bbd974e7018089e7acce41bd1b"
+    }
+  ],
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-1a4b-r5-20261107/android",
+  "checksAtRun": "run-android-r5.ps1: APK and attestation hashes, embedded attestation, aapt package/non-debuggable, Hermes at runtime"
+}

@@ -1,0 +1,53 @@
+PASS __tests__/phase1a4bAndroidEquivalence.test.ts (27.125 s)
+  ● Console
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+PASS __tests__/phase1a4bCampaignIsolation.test.ts
+PASS __tests__/phase1a4bR2Diagnostic.test.ts
+PASS __tests__/phase1a4bSqliteErrorClassificationR5.test.ts
+  ● Console
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations (code 1): , while compiling: SELECT 1 AS found FROM installment_allocations a\n        JOIN installment_purchases p ON p.id = a.installment_purchase_id\n        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a\n        JOIN installment_purchases p ON p.id = a.installment_purchase_id\n        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory)"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+PASS __tests__/phase1a4bSqliteErrorClassification.test.ts
+  ● Console
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+
+Test Suites: 5 passed, 5 total
+Tests:       115 passed, 115 total
+Snapshots:   0 total
+Time:        32.173 s
+Ran all test suites matching /__tests__\\phase1a4bSqliteErrorClassificationR5.test.ts|__tests__\\phase1a4bSqliteErrorClassification.test.ts|__tests__\\phase1a4bAndroidEquivalence.test.ts|__tests__\\phase1a4bCampaignIsolation.test.ts|__tests__\\phase1a4bR2Diagnostic.test.ts/i.
+EXIT=0

@@ -1,0 +1,47 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-1a4b-r4-20261107/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "aa720dd012d2b19b10fab7f4acb843d096f246dfe25e98531797974a0842dd11",
+  "sizeBytes": 33811916,
+  "builtAt": "2026-11-07T16:06:09.242Z",
+  "attestationSha256": "97e1a907b5a27442975938f70e4ce88b9f1be78cce7682f1f1c8f1d7cdb8831e",
+  "variant": "release",
+  "purpose": "1a.4B r4 full validation (32 campaigns per device)",
+  "productionSources": 311,
+  "differencesFromR3": [
+    {
+      "file": "phase1a3bProbes.ts",
+      "r3": "b23dd092aba05efc750091210fcd6bba76007572525ed7d475c69f1a253c12e0",
+      "r4": "0cd6397ac501bc02ae3e09ba92f37d8cccd0ec50cbc83aabcba8911f4caf7e53"
+    }
+  ],
+  "harness": [
+    {
+      "source": "scripts/phase1a4b/androidHarness.js",
+      "sha256": "d626ef6e1d1a4d0c175caa1aa5fbecc349a52a724ad122eaaf0f6ce1bbdf7e4e"
+    },
+    {
+      "source": "scripts/phase1a4b/phase1a3bProbes.ts",
+      "sha256": "4883d7ef7cbf15514a692630b1c8d45b660c7ff9b9ccf0309a23940031e68af3"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/r3/reference-update.json",
+      "sha256": "bbea726459708ba7cf35e6f191d72c16eec9c54eb087b49e73035b115dd9f3d4"
+    },
+    {
+      "source": "scripts/phase1a4b/derive-probes.cjs",
+      "sha256": "4409847f1061fad6e41886941049077970c1356962406a4ea18c77a8e5ac7567"
+    },
+    {
+      "source": "scripts/phase1a4b/probes.ts",
+      "sha256": "0a37f0c8424ea569ecea2e684945d2caf60715fff671154a0572ad121f4e7eb4"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/node/results.json",
+      "sha256": "1faa219207d86d95f7b55f3e3446243d3d6194bbd974e7018089e7acce41bd1b"
+    }
+  ],
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-1a4b-r4-20261107/android",
+  "checksAtRun": "run-android-r4.ps1: APK and attestation hashes, embedded attestation, aapt package/non-debuggable, Hermes at runtime"
+}

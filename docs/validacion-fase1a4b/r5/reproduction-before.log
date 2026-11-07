@@ -1,0 +1,258 @@
+  console.log
+    PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:937:13)
+
+  console.log
+    PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations (code 1): , while compiling: SELECT 1 AS found FROM installment_allocations a\n        JOIN installment_purchases p ON p.id = a.installment_purchase_id\n        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:937:13)
+
+  console.log
+    PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a\n        JOIN installment_purchases p ON p.id = a.installment_purchase_id\n        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory)"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:937:13)
+
+FAIL __tests__/phase1a4bSqliteErrorClassificationR5.test.ts (5.575 s)
+  phase 1a.4B r5 — reproduction of the r4 API 35 stop with the r4 classifier
+    √ the real API 35 message, character for character (9 ms)
+    √ the r4 classifier recognizes Node and API 24 but not API 35 (the r4 stop) (59 ms)
+  phase 1a.4B r5 — the three real spellings give the same stable class
+    √ Node (node:sqlite)
+    √ Android API 24 (real r4 message) (3 ms)
+    × Android API 35 (real r4 message) (3 ms)
+  phase 1a.4B r5 — nothing else is recognized as that error
+    √ another missing table (API 35 spelling) is not recognized and keeps its full text (1 ms)
+    × another missing table (API 24 spelling) is not recognized and keeps its full text (1 ms)
+    √ altered table name (singular) is not recognized and keeps its full text (1 ms)
+    √ altered table name (case) is not recognized and keeps its full text
+    √ altered table name (schema-qualified) is not recognized and keeps its full text
+    √ statement on another table is not recognized and keeps its full text
+    √ statement with unexpected content (LIMIT 2) is not recognized and keeps its full text
+    √ statement with a second statement is not recognized and keeps its full text
+    √ statement with other spacing is not recognized and keeps its full text (1 ms)
+    √ statement naming the table only as a prefix is not recognized and keeps its full text
+    √ result code 11 (API 35 spelling) is not recognized and keeps its full text
+    √ result code 11 (API 24 spelling) is not recognized and keeps its full text (1 ms)
+    √ SQLITE_CONSTRAINT category is not recognized and keeps its full text
+    √ code 1 with another category is not recognized and keeps its full text
+    × r4 unobserved spelling (code 1 SQLITE_ERROR) is not recognized and keeps its full text (1 ms)
+    × r4 unobserved spelling (code 1 SQLITE_ERROR[1]) is not recognized and keeps its full text
+    √ unknown OS suffix text is not recognized and keeps its full text
+    √ another OS error code is not recognized and keeps its full text
+    √ OS error 0 is not recognized and keeps its full text (1 ms)
+    √ API 35 spelling without its OS suffix is not recognized and keeps its full text
+    × API 24 spelling with the OS suffix is not recognized and keeps its full text
+    √ OS suffix twice is not recognized and keeps its full text
+    √ truncated suffix is not recognized and keeps its full text
+    √ truncated statement is not recognized and keeps its full text
+    √ nothing after while compiling is not recognized and keeps its full text
+    √ code without statement is not recognized and keeps its full text
+    √ missing colon after code is not recognized and keeps its full text
+    √ lower-case sqlite is not recognized and keeps its full text
+    √ no table name is not recognized and keeps its full text (1 ms)
+    √ no space after colon is not recognized and keeps its full text
+    √ two errors in one message is not recognized and keeps its full text
+    √ two Node errors is not recognized and keeps its full text
+    √ trailing text is not recognized and keeps its full text (1 ms)
+    √ trailing newline is not recognized and keeps its full text
+    √ prefixed text is not recognized and keeps its full text
+    √ Node text with trailing text is not recognized and keeps its full text
+    √ another missing table (Node) keeps its own class
+    √ altered table name (Node) keeps its own class
+    √ FOREIGN KEY (Node) keeps its own class
+    √ FOREIGN KEY (API 35 spelling) keeps its own class (1 ms)
+    √ CHECK keeps its own class
+    √ UNIQUE (API 35 spelling) keeps its own class
+    √ syntax (API 35 spelling) keeps its own class
+    √ transaction (API 35 spelling) keeps its own class (1 ms)
+    √ permissions keeps its own class
+    √ locked keeps its own class
+    √ own RAISE keeps its own class (1 ms)
+    √ non-message rejections and success keep their previous classes; same as r4 outside the missing-table branch (14 ms)
+  phase 1a.4B r5 — v4-v5-flows with the node spelling
+    √ the whole flows result equals the current 1a.4B reference (version 4 and version 5) (14 ms)
+    √ version 4: the table is absent, the guard query fails with the stable class and the delivered spelling (1 ms)
+    √ version 4: writes made before the guard are rolled back; nothing is committed; the next transaction commits (1 ms)
+    √ version 5: the allocation tables exist, the whole flow runs, no missing-table error is raised (13 ms)
+  phase 1a.4B r5 — v4-v5-flows with the api24 spelling
+    √ the whole flows result equals the current 1a.4B reference (version 4 and version 5) (14 ms)
+    √ version 4: the table is absent, the guard query fails with the stable class and the delivered spelling
+    √ version 4: writes made before the guard are rolled back; nothing is committed; the next transaction commits (1 ms)
+    √ version 5: the allocation tables exist, the whole flow runs, no missing-table error is raised (17 ms)
+  phase 1a.4B r5 — v4-v5-flows with the api35 spelling
+    × the whole flows result equals the current 1a.4B reference (version 4 and version 5)
+    × version 4: the table is absent, the guard query fails with the stable class and the delivered spelling
+    × version 4: writes made before the guard are rolled back; nothing is committed; the next transaction commits
+    × version 5: the allocation tables exist, the whole flow runs, no missing-table error is raised
+
+  ● phase 1a.4B r5 — the three real spellings give the same stable class › Android API 35 (real r4 message)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "installment_allocations"
+    Received: undefined
+
+    [0m [90m 114 |[39m     [[32m'Android API 35 (real r4 message)'[39m[33m,[39m api35Message][33m,[39m
+     [90m 115 |[39m   ])([32m'%s'[39m[33m,[39m (_label[33m,[39m text) [33m=>[39m {
+    [31m[1m>[22m[39m[90m 116 |[39m     expect(missingTableName(text()))[33m.[39mtoBe([32m'installment_allocations'[39m)[33m;[39m
+     [90m     |[39m                                      [31m[1m^[22m[39m
+     [90m 117 |[39m     expect(errorClass(message(text())))[33m.[39mtoBe([33mSTABLE[39m)[33m;[39m
+     [90m 118 |[39m     expect(errorClass([36mnew[39m [33mError[39m(text())))[33m.[39mtoBe([33mSTABLE[39m)[33m;[39m
+     [90m 119 |[39m   })[33m;[39m[0m
+
+      at toBe (__tests__/phase1a4bSqliteErrorClassificationR5.test.ts:116:38)
+
+  ● phase 1a.4B r5 — nothing else is recognized as that error › another missing table (API 24 spelling) is not recognized and keeps its full text
+
+    expect(received).toBeUndefined()
+
+    Received: "installment_plan_revisions"
+
+    [0m [90m 165 |[39m     [[32m'Node text with trailing text'[39m[33m,[39m [33mNODE_MESSAGE[39m [33m+[39m [32m' (code 1)'[39m][33m,[39m
+     [90m 166 |[39m   ])([32m'%s is not recognized and keeps its full text'[39m[33m,[39m (_label[33m,[39m text) [33m=>[39m {
+    [31m[1m>[22m[39m[90m 167 |[39m     expect(missingTableName(text))[33m.[39mtoBeUndefined()[33m;[39m
+     [90m     |[39m                                    [31m[1m^[22m[39m
+     [90m 168 |[39m     expect(errorClass(message(text)))[33m.[39mtoBe([32m'other: '[39m [33m+[39m text)[33m;[39m
+     [90m 169 |[39m     expect(errorClass(message(text)))[33m.[39mnot[33m.[39mtoBe([33mSTABLE[39m)[33m;[39m
+     [90m 170 |[39m   })[33m;[39m[0m
+
+      at toBeUndefined (__tests__/phase1a4bSqliteErrorClassificationR5.test.ts:167:36)
+
+  ● phase 1a.4B r5 — nothing else is recognized as that error › r4 unobserved spelling (code 1 SQLITE_ERROR) is not recognized and keeps its full text
+
+    expect(received).toBeUndefined()
+
+    Received: "installment_allocations"
+
+    [0m [90m 165 |[39m     [[32m'Node text with trailing text'[39m[33m,[39m [33mNODE_MESSAGE[39m [33m+[39m [32m' (code 1)'[39m][33m,[39m
+     [90m 166 |[39m   ])([32m'%s is not recognized and keeps its full text'[39m[33m,[39m (_label[33m,[39m text) [33m=>[39m {
+    [31m[1m>[22m[39m[90m 167 |[39m     expect(missingTableName(text))[33m.[39mtoBeUndefined()[33m;[39m
+     [90m     |[39m                                    [31m[1m^[22m[39m
+     [90m 168 |[39m     expect(errorClass(message(text)))[33m.[39mtoBe([32m'other: '[39m [33m+[39m text)[33m;[39m
+     [90m 169 |[39m     expect(errorClass(message(text)))[33m.[39mnot[33m.[39mtoBe([33mSTABLE[39m)[33m;[39m
+     [90m 170 |[39m   })[33m;[39m[0m
+
+      at toBeUndefined (__tests__/phase1a4bSqliteErrorClassificationR5.test.ts:167:36)
+
+  ● phase 1a.4B r5 — nothing else is recognized as that error › r4 unobserved spelling (code 1 SQLITE_ERROR[1]) is not recognized and keeps its full text
+
+    expect(received).toBeUndefined()
+
+    Received: "installment_allocations"
+
+    [0m [90m 165 |[39m     [[32m'Node text with trailing text'[39m[33m,[39m [33mNODE_MESSAGE[39m [33m+[39m [32m' (code 1)'[39m][33m,[39m
+     [90m 166 |[39m   ])([32m'%s is not recognized and keeps its full text'[39m[33m,[39m (_label[33m,[39m text) [33m=>[39m {
+    [31m[1m>[22m[39m[90m 167 |[39m     expect(missingTableName(text))[33m.[39mtoBeUndefined()[33m;[39m
+     [90m     |[39m                                    [31m[1m^[22m[39m
+     [90m 168 |[39m     expect(errorClass(message(text)))[33m.[39mtoBe([32m'other: '[39m [33m+[39m text)[33m;[39m
+     [90m 169 |[39m     expect(errorClass(message(text)))[33m.[39mnot[33m.[39mtoBe([33mSTABLE[39m)[33m;[39m
+     [90m 170 |[39m   })[33m;[39m[0m
+
+      at toBeUndefined (__tests__/phase1a4bSqliteErrorClassificationR5.test.ts:167:36)
+
+  ● phase 1a.4B r5 — nothing else is recognized as that error › API 24 spelling with the OS suffix is not recognized and keeps its full text
+
+    expect(received).toBeUndefined()
+
+    Received: "installment_allocations"
+
+    [0m [90m 165 |[39m     [[32m'Node text with trailing text'[39m[33m,[39m [33mNODE_MESSAGE[39m [33m+[39m [32m' (code 1)'[39m][33m,[39m
+     [90m 166 |[39m   ])([32m'%s is not recognized and keeps its full text'[39m[33m,[39m (_label[33m,[39m text) [33m=>[39m {
+    [31m[1m>[22m[39m[90m 167 |[39m     expect(missingTableName(text))[33m.[39mtoBeUndefined()[33m;[39m
+     [90m     |[39m                                    [31m[1m^[22m[39m
+     [90m 168 |[39m     expect(errorClass(message(text)))[33m.[39mtoBe([32m'other: '[39m [33m+[39m text)[33m;[39m
+     [90m 169 |[39m     expect(errorClass(message(text)))[33m.[39mnot[33m.[39mtoBe([33mSTABLE[39m)[33m;[39m
+     [90m 170 |[39m   })[33m;[39m[0m
+
+      at toBeUndefined (__tests__/phase1a4bSqliteErrorClassificationR5.test.ts:167:36)
+
+  ● phase 1a.4B r5 — v4-v5-flows with the api35 spelling › the whole flows result equals the current 1a.4B reference (version 4 and version 5)
+
+    Version 4 guarded step: other: no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a
+            JOIN installment_purchases p ON p.id = a.installment_purchase_id
+            WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory) | raw: no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a
+            JOIN installment_purchases p ON p.id = a.installment_purchase_id
+            WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory)
+
+    [0m [90m 58 |[39m type [33mRow[39m [33m=[39m [33mRecord[39m[33m<[39m[33mstring[39m[33m,[39m unknown[33m>[39m[33m;[39m
+     [90m 59 |[39m type [33mDatabase[39m [33m=[39m [33mSmartFinSQLiteDatabase[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 60 |[39m [36mfunction[39m check(condition[33m:[39m unknown[33m,[39m message[33m:[39m string)[33m:[39m asserts condition { [36mif[39m ([33m![39mcondition) [36mthrow[39m [33mError[39m(message)[33m;[39m }
+     [90m    |[39m                                                                                                [31m[1m^[22m[39m
+     [90m 61 |[39m [36mconst[39m rowsOf [33m=[39m (result[33m:[39m { rows[33m:[39m { length[33m:[39m number[33m;[39m item[33m:[39m (index[33m:[39m number) [33m=>[39m unknown } }) [33m=>[39m
+     [90m 62 |[39m   [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m result[33m.[39mrows[33m.[39mlength }[33m,[39m (_[33m,[39m index) [33m=>[39m result[33m.[39mrows[33m.[39mitem(index) [36mas[39m [33mRow[39m)[33m;[39m
+     [90m 63 |[39m [36mconst[39m json [33m=[39m (value[33m:[39m unknown) [33m=>[39m [33mJSON[39m[33m.[39mstringify(value)[33m;[39m[0m
+
+      at Error (scripts/phase1a4b/phase1a3bProbes.ts:60:96)
+      at check (scripts/phase1a4b/phase1a3bProbes.ts:938:5)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● phase 1a.4B r5 — v4-v5-flows with the api35 spelling › version 4: the table is absent, the guard query fails with the stable class and the delivered spelling
+
+    Version 4 guarded step: other: no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a
+            JOIN installment_purchases p ON p.id = a.installment_purchase_id
+            WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory) | raw: no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a
+            JOIN installment_purchases p ON p.id = a.installment_purchase_id
+            WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory)
+
+    [0m [90m 58 |[39m type [33mRow[39m [33m=[39m [33mRecord[39m[33m<[39m[33mstring[39m[33m,[39m unknown[33m>[39m[33m;[39m
+     [90m 59 |[39m type [33mDatabase[39m [33m=[39m [33mSmartFinSQLiteDatabase[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 60 |[39m [36mfunction[39m check(condition[33m:[39m unknown[33m,[39m message[33m:[39m string)[33m:[39m asserts condition { [36mif[39m ([33m![39mcondition) [36mthrow[39m [33mError[39m(message)[33m;[39m }
+     [90m    |[39m                                                                                                [31m[1m^[22m[39m
+     [90m 61 |[39m [36mconst[39m rowsOf [33m=[39m (result[33m:[39m { rows[33m:[39m { length[33m:[39m number[33m;[39m item[33m:[39m (index[33m:[39m number) [33m=>[39m unknown } }) [33m=>[39m
+     [90m 62 |[39m   [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m result[33m.[39mrows[33m.[39mlength }[33m,[39m (_[33m,[39m index) [33m=>[39m result[33m.[39mrows[33m.[39mitem(index) [36mas[39m [33mRow[39m)[33m;[39m
+     [90m 63 |[39m [36mconst[39m json [33m=[39m (value[33m:[39m unknown) [33m=>[39m [33mJSON[39m[33m.[39mstringify(value)[33m;[39m[0m
+
+      at Error (scripts/phase1a4b/phase1a3bProbes.ts:60:96)
+      at check (scripts/phase1a4b/phase1a3bProbes.ts:938:5)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● phase 1a.4B r5 — v4-v5-flows with the api35 spelling › version 4: writes made before the guard are rolled back; nothing is committed; the next transaction commits
+
+    Version 4 guarded step: other: no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a
+            JOIN installment_purchases p ON p.id = a.installment_purchase_id
+            WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory) | raw: no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a
+            JOIN installment_purchases p ON p.id = a.installment_purchase_id
+            WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory)
+
+    [0m [90m 58 |[39m type [33mRow[39m [33m=[39m [33mRecord[39m[33m<[39m[33mstring[39m[33m,[39m unknown[33m>[39m[33m;[39m
+     [90m 59 |[39m type [33mDatabase[39m [33m=[39m [33mSmartFinSQLiteDatabase[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 60 |[39m [36mfunction[39m check(condition[33m:[39m unknown[33m,[39m message[33m:[39m string)[33m:[39m asserts condition { [36mif[39m ([33m![39mcondition) [36mthrow[39m [33mError[39m(message)[33m;[39m }
+     [90m    |[39m                                                                                                [31m[1m^[22m[39m
+     [90m 61 |[39m [36mconst[39m rowsOf [33m=[39m (result[33m:[39m { rows[33m:[39m { length[33m:[39m number[33m;[39m item[33m:[39m (index[33m:[39m number) [33m=>[39m unknown } }) [33m=>[39m
+     [90m 62 |[39m   [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m result[33m.[39mrows[33m.[39mlength }[33m,[39m (_[33m,[39m index) [33m=>[39m result[33m.[39mrows[33m.[39mitem(index) [36mas[39m [33mRow[39m)[33m;[39m
+     [90m 63 |[39m [36mconst[39m json [33m=[39m (value[33m:[39m unknown) [33m=>[39m [33mJSON[39m[33m.[39mstringify(value)[33m;[39m[0m
+
+      at Error (scripts/phase1a4b/phase1a3bProbes.ts:60:96)
+      at check (scripts/phase1a4b/phase1a3bProbes.ts:938:5)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● phase 1a.4B r5 — v4-v5-flows with the api35 spelling › version 5: the allocation tables exist, the whole flow runs, no missing-table error is raised
+
+    Version 4 guarded step: other: no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a
+            JOIN installment_purchases p ON p.id = a.installment_purchase_id
+            WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory) | raw: no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a
+            JOIN installment_purchases p ON p.id = a.installment_purchase_id
+            WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory)
+
+    [0m [90m 58 |[39m type [33mRow[39m [33m=[39m [33mRecord[39m[33m<[39m[33mstring[39m[33m,[39m unknown[33m>[39m[33m;[39m
+     [90m 59 |[39m type [33mDatabase[39m [33m=[39m [33mSmartFinSQLiteDatabase[39m[33m;[39m
+    [31m[1m>[22m[39m[90m 60 |[39m [36mfunction[39m check(condition[33m:[39m unknown[33m,[39m message[33m:[39m string)[33m:[39m asserts condition { [36mif[39m ([33m![39mcondition) [36mthrow[39m [33mError[39m(message)[33m;[39m }
+     [90m    |[39m                                                                                                [31m[1m^[22m[39m
+     [90m 61 |[39m [36mconst[39m rowsOf [33m=[39m (result[33m:[39m { rows[33m:[39m { length[33m:[39m number[33m;[39m item[33m:[39m (index[33m:[39m number) [33m=>[39m unknown } }) [33m=>[39m
+     [90m 62 |[39m   [33mArray[39m[33m.[39m[36mfrom[39m({ length[33m:[39m result[33m.[39mrows[33m.[39mlength }[33m,[39m (_[33m,[39m index) [33m=>[39m result[33m.[39mrows[33m.[39mitem(index) [36mas[39m [33mRow[39m)[33m;[39m
+     [90m 63 |[39m [36mconst[39m json [33m=[39m (value[33m:[39m unknown) [33m=>[39m [33mJSON[39m[33m.[39mstringify(value)[33m;[39m[0m
+
+      at Error (scripts/phase1a4b/phase1a3bProbes.ts:60:96)
+      at check (scripts/phase1a4b/phase1a3bProbes.ts:938:5)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       9 failed, 56 passed, 65 total
+Snapshots:   0 total
+Time:        5.883 s
+Ran all test suites matching /__tests__\\phase1a4bSqliteErrorClassificationR5.test.ts/i.

@@ -90,13 +90,20 @@ async function session<T>(run: (current: Awaited<ReturnType<typeof start>>) => P
 
 /** phase1a4b-register, -reversal, -guards, -idempotency, -atomicity, -unknown, -unknown-restart. */
 async function campaigns1a4b() {
+  // r3: one NEW database per campaign, as the Android runner (pm clear before every phase1a4b- campaign). r1/r2 showed that
+  // a shared session leaves the seed categories in place, so the backup counter of the next campaign's first case differed.
   const register: Row = {};
   const reversal: Row = {};
   const guards: Row = {};
   await session(async ({ sql, database }) => {
     const { countWrites } = nodeFaults(sql);
     for (const name of PHASE1A4B_REGISTER_CASES) register[name] = await runPhase1A4BRegister(database, name, countWrites);
+  });
+  await session(async ({ sql, database }) => {
+    const { countWrites } = nodeFaults(sql);
     for (const name of PHASE1A4B_REVERSAL_CASES) reversal[name] = await runPhase1A4BReversal(database, name, countWrites);
+  });
+  await session(async ({ database }) => {
     for (const name of PHASE1A4B_GUARD_CASES) guards[name] = await runPhase1A4BGuard(database, name);
   });
   const idempotency = await session(({ sql, database }) => runPhase1A4BIdempotency(database, nodeFaults(sql).countWrites));
@@ -326,6 +333,13 @@ describe('regressions on the real 1a.4B code against the 1a.4A r2 reference', ()
 describe('evidence reference', () => {
   test('the campaigns are deterministic and equal the recorded Node reference (explicit, non-overwriting regeneration)', async () => {
     expect(await campaigns()).toEqual(first);
+    // r3 candidate: written outside docs/ to a new path, never over the reference; promoted only by
+    // scripts/phase1a4b/r3/promote-reference.cjs after the structural comparison.
+    const candidate = nodeProcess.env.SMARTFIN_1A4B_CANDIDATE;
+    if (candidate) {
+      if (/(^|[\\/])docs[\\/]/.test(candidate) || fs.existsSync(candidate)) throw Error('Candidate path must be new and outside docs/');
+      fs.writeFileSync(candidate, JSON.stringify({ runtime: nodeProcess.version, ...first }, null, 2) + '\n');
+    }
     if (nodeProcess.env.SMARTFIN_WRITE_EVIDENCE === '1') {
       if (fs.existsSync(REFERENCE)) throw Error(`${REFERENCE} exists: review and delete it explicitly before regenerating`);
       fs.mkdirSync('docs/validacion-fase1a4b/node', { recursive: true });

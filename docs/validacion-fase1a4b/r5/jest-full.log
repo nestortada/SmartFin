@@ -1,0 +1,563 @@
+
+> SmartFin@0.0.1 test
+> jest --runInBand
+
+PASS __tests__/transactionHistoryPhase5E2.test.ts (116.14 s)
+PASS __tests__/creditCardReconciliationEquivalence.test.ts (53.848 s)
+PASS __tests__/transactionHistoryPhase5E3.test.ts (54.011 s)
+PASS __tests__/creditCardSettlementPhase6B3.test.tsx (32.703 s)
+PASS __tests__/financialAtomicityPhase5E.test.ts (31.622 s)
+PASS __tests__/financialCorrectionPhase6B1.test.ts (35.918 s)
+PASS __tests__/phase1a4bAndroidEquivalence.test.ts (25.182 s)
+  ● Console
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+PASS __tests__/phase1a4aAndroidEquivalence.test.ts (13.126 s)
+  ● Console
+
+    console.log
+      PHASE1A4A_INTEGRITY_DIFFERENCES ["$.constraints.observation.history.revisions.0.effective_cycle_end","$.constraints.observation.history.revisions.0.verification","$.constraints.observation.history.revisions.0.pending_reasons","$.constraints.observation.history.revisions.2.effective_cycle_end","$.constraints.observation.history.revisions.2.verification","$.constraints.observation.history.revisions.2.pending_reasons","$.revisionSequence.result.plan.0.effectiveCycleEnd","$.revisionSequence.result.plan.0.verification","$.revisionSequence.result.plan.0.pendingReasons.0","$.revisionSequence.result.effective.october.revision.effectiveCycleEnd","$.revisionSequence.result.effective.october.revision.verification","$.revisionSequence.result.effective.october.revision.pendingReasons.0","$.revisionSequence.observation.history.revisions.0.effective_cycle_end","$.revisionSequence.observation.history.revisions.0.verification","$.revisionSequence.observation.history.revisions.0.pending_reasons","$.revisionSequence.observation.history.revisions.4.effective_cycle_end","$.revisionSequence.observation.history.revisions.4.verification","$.revisionSequence.observation.history.revisions.4.pending_reasons","$.allocations.observation.history.revisions.0.effective_cycle_end","$.allocations.observation.history.revisions.0.verification","$.allocations.observation.history.revisions.0.pending_reasons","$.allocations.observation.history.revisions.2.effective_cycle_end","$.allocations.observation.history.revisions.2.verification","$.allocations.observation.history.revisions.2.pending_reasons","$.commandIdempotency.observation.history.revisions.0.effective_cycle_end","$.commandIdempotency.observation.history.revisions.0.verification","$.commandIdempotency.observation.history.revisions.0.pending_reasons","$.commandIdempotency.observation.history.revisions.1.effective_cycle_end","$.commandIdempotency.observation.history.revisions.1.verification","$.commandIdempotency.observation.history.revisions.1.pending_reasons","$.activeAllocationGuards.result.afterReversal.purchaseHistory.0.effectiveCycleEnd","$.activeAllocationGuards.result.afterReversal.purchaseHistory.0.verification","$.activeAllocationGuards.result.afterReversal.purchaseHistory.0.pendingReasons.0","$.activeAllocationGuards.observation.history.revisions.0.effective_cycle_end","$.activeAllocationGuards.observation.history.revisions.0.verification","$.activeAllocationGuards.observation.history.revisions.0.pending_reasons","$.activeAllocationGuards.observation.history.revisions.1.effective_cycle_end","$.activeAllocationGuards.observation.history.revisions.1.verification","$.activeAllocationGuards.observation.history.revisions.1.pending_reasons","$.purchaseEditAndRemoval.result.plan.0.effectiveCycleEnd","$.purchaseEditAndRemoval.result.plan.0.verification","$.purchaseEditAndRemoval.result.plan.0.pendingReasons.0","$.purchaseEditAndRemoval.observation.history.revisions.0.effective_cycle_end","$.purchaseEditAndRemoval.observation.history.revisions.0.verification","$.purchaseEditAndRemoval.observation.history.revisions.0.pending_reasons","$.purchaseEditAndRemoval.observation.history.revisions.1.effective_cycle_end","$.purchaseEditAndRemoval.observation.history.revisions.1.verification","$.purchaseEditAndRemoval.observation.history.revisions.1.pending_reasons","$.billingMetadata.result.metadata.revisions.0.effective_cycle_end","$.billingMetadata.result.metadata.revisions.0.verification","$.billingMetadata.result.metadata.revisions.0.pending_reasons","$.billingMetadata.result.metadata.revisions.1.effective_cycle_end","$.billingMetadata.result.metadata.revisions.1.verification","$.billingMetadata.result.metadata.revisions.1.pending_reasons","$.billingMetadata.observation.history.revisions.0.effective_cycle_end","$.billingMetadata.observation.history.revisions.0.verification","$.billingMetadata.observation.history.revisions.0.pending_reasons","$.billingMetadata.observation.history.revisions.1.effective_cycle_end","$.billingMetadata.observation.history.revisions.1.verification","$.billingMetadata.observation.history.revisions.1.pending_reasons","$.repositoryScope.observation.history.revisions.0.effective_cycle_end","$.repositoryScope.observation.history.revisions.0.verification","$.repositoryScope.observation.history.revisions.0.pending_reasons","$.repositoryScope.observation.history.revisions.1.effective_cycle_end","$.repositoryScope.observation.history.revisions.1.verification","$.repositoryScope.observation.history.revisions.1.pending_reasons"]
+
+      at Object.log (__tests__/phase1a4aAndroidEquivalence.test.ts:511:13)
+
+PASS __tests__/dashboardAggregatesPhase6B2.test.ts (11.701 s)
+PASS __tests__/creditCardAssociationScaling.test.ts (9.688 s)
+PASS __tests__/phase1a3bAndroidEquivalence.test.ts (9.935 s)
+PASS __tests__/transactionHistoryPagination.test.ts (10.866 s)
+PASS __tests__/financialAtomicityPhase3B.test.ts (6.585 s)
+PASS __tests__/backupRecoverabilityPhase5E5.test.ts (12.532 s)
+PASS __tests__/financialAtomicityPhase2.test.ts (9.021 s)
+FAIL __tests__/subscriptionAtomicityPhase4.test.ts (11.006 s)
+  ● maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs
+
+    RangeError: Maximum call stack size exceeded
+
+    [0m [90m 138 |[39m       [36mif[39m ([35m/^\s*(SELECT|PRAGMA|WITH|EXPLAIN)\b/i[39m[33m.[39mtest(sql))
+     [90m 139 |[39m         rows [33m=[39m statement[33m.[39mall([33m...[39mvalues)[33m;[39m
+    [31m[1m>[22m[39m[90m 140 |[39m       [36melse[39m changes [33m=[39m [33mNumber[39m(statement[33m.[39mrun([33m...[39mvalues)[33m.[39mchanges)[33m;[39m
+     [90m     |[39m                                       [31m[1m^[22m[39m
+     [90m 141 |[39m       [36mconst[39m order [33m=[39m options[33m.[39mrowKeyOrder[33m;[39m
+     [90m 142 |[39m       [36mif[39m (order)
+     [90m 143 |[39m         rows [33m=[39m rows[33m.[39mmap(row [33m=>[39m[0m
+
+      at run (__tests__/helpers/realSQLite.ts:140:39)
+      at execute (__tests__/helpers/realSQLite.ts:124:16)
+      at run (__tests__/helpers/realSQLite.ts:134:12)
+      at Object.query [as executeSql] (__tests__/helpers/realSQLite.ts:178:26)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+
+  ● maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 91 |[39m })[33m;[39m
+     [90m 92 |[39m
+    [31m[1m>[22m[39m[90m 93 |[39m test([32m'maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs'[39m[33m,[39m [36masync[39m () [33m=>[39m {
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 94 |[39m   [36mconst[39m f [33m=[39m [36mawait[39m financialIntegrityFixture()[33m;[39m
+     [90m 95 |[39m   [36mconst[39m service [33m=[39m makeService()[33m;[39m
+     [90m 96 |[39m   [36mconst[39m direct [33m=[39m createSubscriptionApi({ repository[33m:[39m createSqliteSubscriptionRepository(f[33m.[39mdatabase)[33m,[39m reminderService[33m:[39m service })[33m;[39m[0m
+
+      at Object.test (__tests__/subscriptionAtomicityPhase4.test.ts:93:1)
+
+PASS __tests__/installmentPlan.test.ts (7.174 s)
+PASS __tests__/extraordinaryInstallmentPaymentPhase1a4B.test.ts (7.074 s)
+PASS __tests__/localSnapshotCoordination.test.ts (6.861 s)
+PASS __tests__/dashboardPhase6APrecision.test.ts (5.905 s)
+PASS __tests__/financialAuditPhase6B.test.ts (5.688 s)
+PASS __tests__/financialAtomicityPhase0.test.ts
+PASS __tests__/financialAtomicityPhase4.test.ts
+PASS __tests__/phase1a4bCampaignIsolation.test.ts
+PASS __tests__/financialDeletionPhase5C.test.ts
+PASS __tests__/initialInstallmentRevisionPhase1a4A.test.ts
+PASS __tests__/phase1a3aAndroidEquivalence.test.ts
+PASS __tests__/dashboardSummary.test.ts
+PASS __tests__/creditCardReconciliationBaseline.test.ts
+PASS __tests__/backupCsvPhase5E6.test.ts
+PASS __tests__/installmentHistoryPhase1a3B.test.ts
+PASS __tests__/representativeHistory.test.ts
+PASS __tests__/dashboardPhase5E5PrecisionDiagnostic.test.ts
+PASS __tests__/financialAtomicityPhase3A.test.ts
+PASS __tests__/subscriptions.test.ts
+PASS __tests__/phase1a4bSqliteErrorClassification.test.ts
+  ● Console
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+PASS __tests__/phase6b3HarnessRollbackOracle.test.ts
+PASS __tests__/sharedForgiveness.test.ts
+PASS __tests__/transactionsScreen.test.tsx
+PASS __tests__/phase1a4bR2Diagnostic.test.ts
+PASS __tests__/financialAtomicityPhase5E1.test.ts
+PASS __tests__/geminiCommandService.test.ts
+PASS __tests__/subscriptionInterface.test.tsx
+PASS __tests__/sharedExpenses.test.ts
+PASS __tests__/phase1a4bSqliteErrorClassificationR5.test.ts
+  ● Console
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations (code 1): , while compiling: SELECT 1 AS found FROM installment_allocations a\n        JOIN installment_purchases p ON p.id = a.installment_purchase_id\n        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations (Sqlite code 1 SQLITE_ERROR): , while compiling: SELECT 1 AS found FROM installment_allocations a\n        JOIN installment_purchases p ON p.id = a.installment_purchase_id\n        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;, (OS error - 2:No such file or directory)"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+PASS __tests__/creditCardStatementsPhase1a2.test.ts
+PASS __tests__/phase1a2StatementsProbes.test.ts
+PASS __tests__/transactionHistoryPhase5E3FiftyYears.test.ts
+PASS __tests__/backupCsvYearQueryPhase5E4.test.ts
+PASS __tests__/dashboardPhase5E3Precision.test.ts
+PASS __tests__/creditCardPaymentScreen.test.tsx
+PASS __tests__/safePersistencePhase1a3A.test.ts
+PASS __tests__/sharedFinancialTotals.test.ts
+PASS __tests__/civilDateCheckPhase1a3B.test.ts
+PASS __tests__/financialIntegrity.test.ts
+PASS __tests__/transactionHistoryRefinement.test.ts
+PASS __tests__/sharedSQLiteCoordination.test.ts
+PASS __tests__/sqliteRecoveryLifecycle.test.ts
+PASS __tests__/financialAtomicityInfrastructure.test.ts
+PASS __tests__/phase6b3Reproduction.test.ts
+PASS __tests__/transactionDates.test.ts
+PASS __tests__/sharedCommandReads.test.ts
+PASS __tests__/aiSubscriptions.test.ts
+PASS __tests__/aiDraftRepository.test.ts
+PASS __tests__/aiTransfers.test.ts
+PASS __tests__/aiConfirmationPhase4.test.tsx
+PASS __tests__/manageSecurity.test.ts
+PASS __tests__/subscriptionMaintenanceComparison.test.ts
+PASS __tests__/useTransactionsPagination.test.tsx
+PASS __tests__/sharedCommandReaderWait.test.ts
+PASS __tests__/transactionHistoryPhase5E2RangePlan.test.ts
+PASS __tests__/financialDeletionBaseline.test.ts
+PASS __tests__/backupControls.test.tsx
+PASS __tests__/aiCommandPlanner.test.ts
+PASS __tests__/creditCardsOverview.test.ts
+PASS __tests__/creditCardTransactionRelations.test.ts
+PASS __tests__/financialDataRepository.test.ts
+PASS __tests__/categoryManagement.test.ts
+PASS __tests__/saveManualTransaction.test.ts
+PASS __tests__/creditCardRepository.test.ts
+PASS __tests__/backupPublication.test.ts
+PASS __tests__/debitCardManagement.test.ts
+PASS __tests__/zzTieBreakProbe.test.ts
+  ● Console
+
+    console.log
+      {
+       "amounts.current": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "first": [
+         "load-1",
+         "load-2",
+         "load-3"
+        ]
+       },
+       "full.current": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST TERM OF ORDER BY"
+        ]
+       },
+       "amounts.rowidDesc": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.30000000000297,
+        "first": [
+         "load-1000",
+         "load-998",
+         "load-997"
+        ]
+       },
+       "full.rowidDesc": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+        ]
+       },
+       "amounts.rowidAsc": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000026,
+        "monthlySavings": -413.3000000000029,
+        "first": [
+         "load-1",
+         "load-2",
+         "load-3"
+        ]
+       },
+       "full.rowidAsc": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+        ]
+       },
+       "amounts.idDesc": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.29999999999967,
+        "monthlyExpenses": 671.6000000000028,
+        "monthlySavings": -413.3000000000031,
+        "first": [
+         "load-998",
+         "load-997",
+         "load-996"
+        ]
+       },
+       "full.idDesc": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+        ]
+       },
+       "amounts.idAsc": {
+        "plan": [
+         "SEARCH transactions USING INDEX idx_transactions_civil_day (<expr>>? AND <expr><?)",
+         "CORRELATED SCALAR SUBQUERY 1",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_receipts_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 2",
+         "SEARCH r USING INDEX sqlite_autoindex_shared_returns_2 (transaction_id=?)",
+         "CORRELATED SCALAR SUBQUERY 3",
+         "SEARCH e USING INDEX sqlite_autoindex_shared_expenses_2 (transaction_id=?)",
+         "SEARCH s USING INDEX idx_shared_splits_expense (shared_expense_id=? AND shared_active=?)",
+         "USE TEMP B-TREE FOR ORDER BY"
+        ],
+        "monthlyIncome": 258.2999999999997,
+        "monthlyExpenses": 671.6000000000028,
+        "monthlySavings": -413.300000000003,
+        "first": [
+         "load-1",
+         "load-10",
+         "load-100"
+        ]
+       },
+       "full.idAsc": {
+        "plan": [
+         "SCAN transactions USING INDEX idx_transactions_date",
+         "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+        ]
+       },
+       "cardRecon": [
+        "SCAN transactions USING INDEX idx_transactions_date",
+        "USE TEMP B-TREE FOR LAST 2 TERMS OF ORDER BY"
+       ]
+      }
+
+      at Object.log (__tests__/zzTieBreakProbe.test.ts:38:11)
+
+PASS __tests__/subscriptionPresentation.test.ts
+PASS __tests__/driveBackupService.test.ts
+PASS __tests__/sqliteAndroidRecoveryPatch.test.ts
+PASS __tests__/creditCardFormatters.test.ts
+PASS __tests__/transactionAccountFilter.test.ts
+PASS __tests__/debitCardsOverview.test.ts
+PASS __tests__/settingsTaskOwner.test.ts
+PASS __tests__/settingsRepository.test.ts
+PASS __tests__/financialDeletionRecoveryPhase5E4.test.ts
+PASS __tests__/subscriptionRecurrence.test.ts
+PASS __tests__/copAmountInput.test.ts
+
+Summary of all failing tests
+FAIL __tests__/subscriptionAtomicityPhase4.test.ts (11.006 s)
+  ● maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs
+
+    RangeError: Maximum call stack size exceeded
+
+    [0m [90m 138 |[39m       [36mif[39m ([35m/^\s*(SELECT|PRAGMA|WITH|EXPLAIN)\b/i[39m[33m.[39mtest(sql))
+     [90m 139 |[39m         rows [33m=[39m statement[33m.[39mall([33m...[39mvalues)[33m;[39m
+    [31m[1m>[22m[39m[90m 140 |[39m       [36melse[39m changes [33m=[39m [33mNumber[39m(statement[33m.[39mrun([33m...[39mvalues)[33m.[39mchanges)[33m;[39m
+     [90m     |[39m                                       [31m[1m^[22m[39m
+     [90m 141 |[39m       [36mconst[39m order [33m=[39m options[33m.[39mrowKeyOrder[33m;[39m
+     [90m 142 |[39m       [36mif[39m (order)
+     [90m 143 |[39m         rows [33m=[39m rows[33m.[39mmap(row [33m=>[39m[0m
+
+      at run (__tests__/helpers/realSQLite.ts:140:39)
+      at execute (__tests__/helpers/realSQLite.ts:124:16)
+      at run (__tests__/helpers/realSQLite.ts:134:12)
+      at Object.query [as executeSql] (__tests__/helpers/realSQLite.ts:178:26)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+      at executeSql (src/database/atomicSQLite.ts:138:23)
+      at advance (src/database/atomicSQLite.ts:142:15)
+      at callback (src/database/managedSQLite.ts:108:46)
+      at Object.executeSql (__tests__/helpers/realSQLite.ts:179:19)
+      at Proxy.executeSql (src/database/managedSQLite.ts:104:33)
+
+  ● maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs
+
+    thrown: "Exceeded timeout of 5000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+    [0m [90m 91 |[39m })[33m;[39m
+     [90m 92 |[39m
+    [31m[1m>[22m[39m[90m 93 |[39m test([32m'maintenance requests share one run, yields between bounded batches, repairs alarms once at end and permits later fresh runs'[39m[33m,[39m [36masync[39m () [33m=>[39m {
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 94 |[39m   [36mconst[39m f [33m=[39m [36mawait[39m financialIntegrityFixture()[33m;[39m
+     [90m 95 |[39m   [36mconst[39m service [33m=[39m makeService()[33m;[39m
+     [90m 96 |[39m   [36mconst[39m direct [33m=[39m createSubscriptionApi({ repository[33m:[39m createSqliteSubscriptionRepository(f[33m.[39mdatabase)[33m,[39m reminderService[33m:[39m service })[33m;[39m[0m
+
+      at Object.test (__tests__/subscriptionAtomicityPhase4.test.ts:93:1)
+
+
+Test Suites: 1 failed, 7 skipped, 93 passed, 94 of 101 total
+Tests:       1 failed, 14 skipped, 1478 passed, 1493 total
+Snapshots:   8 passed, 8 total
+Time:        544.085 s, estimated 1122 s
+Ran all test suites.
+
+real	9m6.784s
+user	0m0.166s
+sys	0m0.122s
+JEST_EXIT=1

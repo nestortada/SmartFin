@@ -1,0 +1,58 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-1a4b-r2b-20261106/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "69f3c11926fad64be6f143747d83a2d9c94bb4aa6c2eb99a3281dc74ded81716",
+  "sizeBytes": 33970456,
+  "builtAt": "2026-11-07T03:52:40.173Z",
+  "attestationSha256": "05051e350c8e3b420cb57ff8363dee1b1ff267ea63221bd24dbbd799b3e8bfad",
+  "variant": "release",
+  "purpose": "diagnostic r2",
+  "productionSources": 311,
+  "differencesFromR1": [
+    {
+      "file": "Harness.jsx",
+      "r1": "f770343ad025a834d118e56d637496e659d9b10a2f2d28666d274d9aafd5dd95",
+      "r2": "a6d4d47e42031b2e87c6719f1308ab6f5084758edc7290082106a084016023ab"
+    },
+    {
+      "file": "phase1a4bR2Diagnostic.ts",
+      "r1": null,
+      "r2": "20df25fa1942412fc7d548b4f365e26eaac76b5c45d393633d27cbc1c5a3e870"
+    },
+    {
+      "file": "phase1a4bR2Harness.js",
+      "r1": null,
+      "r2": "f88b44178f42f355e8c11a756015696f6f80dc16413f5c50bdbc694289fd5d80"
+    },
+    {
+      "file": "phase1a4bR2NodeExpected.json",
+      "r1": null,
+      "r2": "ae93d85bdb9f2bbc1ba917cc59d014df7b00364d61cf52769e33a9bc9414eae2"
+    }
+  ],
+  "harness": [
+    {
+      "source": "scripts/phase1a4b/r2/androidHarness.js",
+      "sha256": "f88b44178f42f355e8c11a756015696f6f80dc16413f5c50bdbc694289fd5d80"
+    },
+    {
+      "source": "scripts/phase1a4b/r2/editAmountDiagnostic.ts",
+      "sha256": "dae81bb3ad834d82e10c86ff5eb10434ec6863439cf52bae6e82f749c6ca762a"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/r2/node/diagnostic.json",
+      "sha256": "143e42cdfe84d071a3f6f6b7085e0e277a69b66415e236c0242a4d1fd58074c1"
+    },
+    {
+      "source": "scripts/phase1a4b/probes.ts",
+      "sha256": "0a37f0c8424ea569ecea2e684945d2caf60715fff671154a0572ad121f4e7eb4"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/node/results.json",
+      "sha256": "d26e3a53f5cb89d673a83886f5fd6af6932956615c42348e2e55c2b287ba675f"
+    }
+  ],
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-1a4b-r2b-20261106/android",
+  "checksAtRun": "run-android-r2.ps1: APK and attestation hashes, embedded attestation, aapt package/non-debuggable, Hermes at runtime"
+}

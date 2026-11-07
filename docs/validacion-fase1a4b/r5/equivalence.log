@@ -1,0 +1,21 @@
+PASS __tests__/phase1a4bAndroidEquivalence.test.ts (30.514 s)
+  ● Console
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+    console.log
+      PHASE1A3B_V4_GUARDED_STEP_ERROR:"no such table: installment_allocations"
+
+      at log (scripts/phase1a4b/phase1a3bProbes.ts:955:13)
+
+PASS __tests__/phase1a4bCampaignIsolation.test.ts
+PASS __tests__/phase1a4bR2Diagnostic.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       23 passed, 23 total
+Snapshots:   0 total
+Time:        35.727 s, estimated 41 s
+Ran all test suites matching /__tests__\\phase1a4bAndroidEquivalence.test.ts|__tests__\\phase1a4bCampaignIsolation.test.ts|__tests__\\phase1a4bR2Diagnostic.test.ts/i.

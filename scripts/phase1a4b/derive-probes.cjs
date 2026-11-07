@@ -9,6 +9,10 @@
 // - flows: the version 4 half ran the use cases on a database without migration 5. The 1a.4B guards read the allocation
 //   tables, which exist only from version 5 (applied at every start of the app). On version 4 the first guarded step must
 //   fail without changes; the version 5 flow is unchanged and is compared with the 1a.4A r2 reference.
+// - r4/r5 (errorClass): a "no such table" error is classified by its table name, so node:sqlite and the Android driver
+//   give the same class. r3 stopped on the API 24 spelling ("(code 1): , while compiling: <SQL>") and r4 on the API 35
+//   one ("(Sqlite code 1 SQLITE_ERROR): , while compiling: <SQL>, (OS error - 2:No such file or directory)"). r5 accepts
+//   exactly those three observed spellings, with the compiled statement checked in full against the 1a.4B guard query.
 // Everything else, the migration 5 oracles included, is byte for byte the 1a.4A derived source.
 const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto');
 const root = path.resolve(__dirname, '../..');
@@ -80,8 +84,13 @@ const flowsAfter = `export async function runPhase1A3BFlows(database: Database, 
     const created = await purchase(database, '2026-10-11', 300000, 3, 'Flujo');
     await downgradeToVersion4(database);
     const before = json(await fullState(database));
-    const editTerms = await attempt(() => editPurchase(database, created.id, '2026-10-12', 6));
-    check(editTerms === 'other: no such table: installment_allocations', 'Version 4 guarded step: ' + editTerms);
+    let raw: unknown;
+    const editTerms = await attempt(async () => {
+      try { await editPurchase(database, created.id, '2026-10-12', 6); } catch (error) { raw = error; throw error; }
+    });
+    // r4: the full driver message stays in the diagnostics; only the stable class is compared.
+    console.log('PHASE1A3B_V4_GUARDED_STEP_ERROR:' + json(errorText(raw)));
+    check(editTerms === 'other: no such table: installment_allocations', 'Version 4 guarded step: ' + editTerms + ' | raw: ' + errorText(raw));
     check(json(await fullState(database)) === before, 'The failed version 4 step left changes');
     runs.version4Incompatible = { firstGuardedStep: 'editTerms', outcome: editTerms, stateUnchanged: true };
     await applyVersionedMigrations(database);
@@ -117,12 +126,60 @@ const flowsTailAfter = `    runs[\`version\${version}\`] = { start, steps };
   return canonical({ version4Incompatible: runs.version4Incompatible, version5: runs.version5 });
 }`;
 
+// r5: node:sqlite writes "no such table: <t>"; the Android driver appends its result code, the statement it compiled and,
+// on API 35, the last OS error. The three observed spellings are the same error: classified by the table name, which is
+// kept. Only those exact spellings are recognized (result code 1 / SQLITE_ERROR; the compiled statement must be, in full,
+// the listed statement for that table; the OS suffix must be the observed one); every other message keeps its previous
+// class or its full text. The r4 unobserved spellings "(code 1 SQLITE_ERROR)" and "(code 1 SQLITE_ERROR[1])" and
+// statements other than the listed one are no longer accepted.
+const classBefore = `function errorClass(error: unknown): string {
+  if (error === undefined) return 'accepted';
+  const text = errorText(error);
+`;
+const classAfter = `/**
+ * 1a.4B r5: statements whose "no such table" error may be recognized, by table, exactly as production passes them to the
+ * driver. Only the 1a.4B guard (hasActiveAllocationsForPurchaseTransaction), the one that fails on a version 4 database.
+ */
+const MISSING_TABLE_STATEMENTS: ReadonlyMap<string, readonly string[]> = new Map([
+  ['installment_allocations', ["SELECT 1 AS found FROM installment_allocations a\\n        JOIN installment_purchases p ON p.id = a.installment_purchase_id\\n        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;"]],
+]);
+/** 1a.4B r5: the two observed Android spellings: text between the table name and the statement, and after the statement. */
+const ANDROID_MISSING_TABLE_SPELLINGS: readonly { code: string; suffix: string }[] = [
+  { code: ' (code 1): , while compiling: ', suffix: '' }, // API 24 (r3/r4 emulator)
+  { code: ' (Sqlite code 1 SQLITE_ERROR): , while compiling: ', suffix: ', (OS error - 2:No such file or directory)' }, // API 35 (r4 HONOR)
+];
+/**
+ * 1a.4B r5: name of the missing table in a "no such table" error, written by node:sqlite ("no such table: <t>") or by the
+ * Android driver in one of its two observed spellings, with the compiled statement equal to a listed statement for <t>.
+ * Anything else (another code or category, another OS suffix, another statement, a second error, extra or truncated
+ * text) is not recognized (undefined) and keeps its full text.
+ */
+export function missingTableName(text: string): string | undefined {
+  const head = /^no such table: ([A-Za-z_][A-Za-z0-9_]*)/.exec(text);
+  if (!head) return undefined;
+  const table = head[1]!;
+  const rest = text.slice(head[0].length);
+  if (rest === '') return table;
+  for (const { code, suffix } of ANDROID_MISSING_TABLE_SPELLINGS) {
+    if (!rest.startsWith(code) || !rest.endsWith(suffix) || rest.length < code.length + suffix.length) continue;
+    const statement = rest.slice(code.length, rest.length - suffix.length);
+    if ((MISSING_TABLE_STATEMENTS.get(table) ?? []).includes(statement)) return table;
+  }
+  return undefined;
+}
+export function errorClass(error: unknown): string {
+  if (error === undefined) return 'accepted';
+  const text = errorText(error);
+  const missing = missingTableName(text);
+  if (missing !== undefined) return 'other: no such table: ' + missing;
+`;
+
 let text = bytes.toString();
-for (const [from, to] of [[guardsBefore, guardsAfter], [flowsBefore, flowsAfter], [flowsTailBefore, flowsTailAfter]]) {
+for (const [from, to] of [[guardsBefore, guardsAfter], [flowsBefore, flowsAfter], [flowsTailBefore, flowsTailAfter], [classBefore, classAfter]]) {
   if (text.split(from).length !== 2) throw Error('Anchor not found exactly once: ' + from.slice(0, 80));
   text = text.replace(from, to);
 }
-text = text.replace(/^\/\/ /, '// Derived for 1a.4B by scripts/phase1a4b/derive-probes.cjs (D6 guard outcome; version 4 flows incompatible).\n// ');
+text = text.replace(/^\/\/ /, '// Derived for 1a.4B by scripts/phase1a4b/derive-probes.cjs (D6 guard outcome; version 4 flows incompatible; r5 missing-table class).\n// ');
 const destination = path.join(root, 'scripts/phase1a4b/phase1a3bProbes.ts');
 if (fs.existsSync(destination)) throw Error('Derived probes already written; review and delete them explicitly before regenerating');
 fs.writeFileSync(destination, text);

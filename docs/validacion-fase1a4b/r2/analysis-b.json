@@ -1,0 +1,2564 @@
+{
+  "android": {
+    "apk": "69f3c11926fad64be6f143747d83a2d9c94bb4aa6c2eb99a3281dc74ded81716",
+    "passed": false,
+    "failure": "Error: Unresolved differences (diagnostic, not accepted): [{\"case\":\"editAmount-fresh-traced\",\"against\":\"original 1a.4B reference\",\"count\":1},{\"case\":\"editAmount-fresh-traced\",\"against\":\"node trace\",\"count\":197},{\"case\":\"editAmount-staged-warm\",\"against\":\"node trace\",\"count\":185},{\"case\":\"editAmount-warm-traced\",\"against\":\"node trace\",\"count\":199}]",
+    "runtime": {
+      "hermes": true,
+      "api": 24,
+      "sqliteVersion": "3.9.2"
+    },
+    "selfTest": {
+      "selfTest": {
+        "seq": 1,
+        "stage": "selftest",
+        "sql": "SELECT 1 AS one",
+        "paramTypes": [],
+        "outcome": "ok",
+        "driverRowsAffected": null,
+        "revisionBefore": 0,
+        "revisionAfter": 0,
+        "changesAfter": 1,
+        "totalChangesBefore": 7,
+        "totalChangesAfter": 7,
+        "inTransactionBefore": false
+      },
+      "batches": {
+        "single": 1,
+        "multi": 0,
+        "preamble": 1,
+        "preambleErrors": 0
+      }
+    },
+    "schemaDifferencesFromNode": [],
+    "sqliteVersions": {
+      "android": "3.9.2",
+      "node": "3.53.0"
+    }
+  },
+  "cases": {
+    "editAmount-fresh-traced": {
+      "differencesFromReference": [
+        {
+          "path": "$.observation.backupRevision",
+          "node": 31,
+          "android": 33,
+          "nodeType": "number(integer)",
+          "androidType": "number(integer)",
+          "table": "financial_data_revision"
+        }
+      ],
+      "differencesFromNodeSameConditions": [],
+      "nativeBatches": {
+        "single": 208,
+        "multi": 0,
+        "preamble": 208,
+        "preambleErrors": 0
+      },
+      "trace": {
+        "statements": {
+          "android": 207,
+          "androidAligned": 206,
+          "node": 206
+        },
+        "droppedAndroidOnly": [
+          {
+            "seq": 7,
+            "sql": "DELETE FROM \"android_metadata\"",
+            "outcome": "ok",
+            "directRows": 1,
+            "counterDelta": 0,
+            "error": null
+          }
+        ],
+        "differenceCount": 0,
+        "differences": [],
+        "driverRowsAffected": [
+          {
+            "i": 0,
+            "sql": "DROP TABLE IF EXISTS synthetic_phase1a4b_marker",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 1,
+            "sql": "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 42,
+            "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_a",
+            "android": 1,
+            "node": 4
+          },
+          {
+            "i": 43,
+            "sql": "INSERT OR IGNORE INTO categories (id,name,type,macro_category,color) VALUES ('ca",
+            "android": 1,
+            "node": 2
+          },
+          {
+            "i": 44,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 45,
+            "sql": "BEGIN IMMEDIATE;",
+            "android": 0,
+            "node": 2
+          },
+          {
+            "i": 46,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 47,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 48,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 49,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 50,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 51,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 52,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 53,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 54,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 55,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 56,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 57,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 58,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 59,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 60,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 63,
+            "sql": "SELECT 1 AS present FROM installment_purchases WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 65,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 66,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 67,
+            "sql": "SELECT account_id, closing_day_purchase_policy, created_at, updated_at FROM cred",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 68,
+            "sql": "SELECT installment_purchase_id, cycle_end, source, created_at, updated_at FROM i",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 69,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 71,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 72,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 73,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 74,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 75,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 80,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 82,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 84,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 85,
+            "sql": "BEGIN IMMEDIATE;",
+            "android": 0,
+            "node": 1
+          },
+          {
+            "i": 86,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 87,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 88,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 89,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 90,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 91,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 92,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 93,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 94,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 95,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 96,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 97,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 102,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 104,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 106,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 109,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 110,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 111,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 112,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 113,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 114,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 115,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 116,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 117,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 118,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 121,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 122,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 123,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 124,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 129,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 131,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 133,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 134,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 135,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 136,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 137,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 138,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 139,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 140,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 141,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 142,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 144,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 145,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 147,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 148,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 149,
+            "sql": "SELECT id, amount, currency, description, date, civil_date, local_time, time_zon",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 150,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 151,
+            "sql": "BEGIN IMMEDIATE;",
+            "android": 0,
+            "node": 1
+          },
+          {
+            "i": 152,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 153,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 154,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 155,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 156,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 157,
+            "sql": "SELECT status FROM installment_allocations WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 159,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 160,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 161,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 163,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 166,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 167,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 168,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 169,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 170,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 171,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 172,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 173,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 174,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 175,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 179,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 180,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 181,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 182,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 187,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 189,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 191,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 192,
+            "sql": "SELECT rowid AS row_id, id, balance_amount, debt_balance_amount, credit_limit_am",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 193,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 194,
+            "sql": "SELECT amount, type, direction, CASE WHEN EXISTS (SELECT 1 FROM shared_receipts ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 195,
+            "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 196,
+            "sql": "WITH forgiven_by_participation AS ( SELECT participation_key, SUM(CASE kind WHEN",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 197,
+            "sql": "SELECT CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 198,
+            "sql": "PRAGMA integrity_check",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 199,
+            "sql": "PRAGMA foreign_key_check",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 200,
+            "sql": "SELECT rowid AS row_id, * FROM transactions ORDER BY created_at, rowid",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 201,
+            "sql": "SELECT rowid AS row_id, * FROM installment_purchases ORDER BY rowid",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 202,
+            "sql": "SELECT rowid AS row_id, * FROM credit_card_statements ORDER BY account_id, state",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 203,
+            "sql": "SELECT rowid AS row_id, * FROM installment_allocations ORDER BY rowid",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 204,
+            "sql": "SELECT r.* FROM installment_plan_revisions r LEFT JOIN installment_purchases p O",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 205,
+            "sql": "SELECT revision FROM financial_data_revision WHERE id = 1",
+            "android": null,
+            "node": 0
+          }
+        ],
+        "writes": {
+          "android": 83,
+          "node": 83
+        },
+        "editWrites": {
+          "android": 0,
+          "node": 0
+        }
+      },
+      "seedCategories": {
+        "android": [
+          {
+            "seq": 45,
+            "directRows": 2,
+            "triggerRows": 2,
+            "driverRowsAffected": 1,
+            "revisionBefore": 4,
+            "revisionAfter": 6
+          }
+        ],
+        "node": [
+          {
+            "seq": 44,
+            "directRows": 2,
+            "triggerRows": 2,
+            "driverRowsAffected": 2,
+            "revisionBefore": 4,
+            "revisionAfter": 6
+          }
+        ]
+      },
+      "counterMovesAndroid": [
+        "1:DROP TABLE IF EXISTS synthetic_phase1a4b_marker:0->0",
+        "43:INSERT INTO financial_data_revision (id, revisio:null->0",
+        "44:INSERT INTO accounts (id,name,type,status,curren:0->4",
+        "45:INSERT OR IGNORE INTO categories (id,name,type,m:4->6",
+        "64:INSERT INTO transactions (id,amount,currency,des:6->7",
+        "66:INSERT INTO installment_purchases (id, transacti:7->8",
+        "72:INSERT INTO installment_plan_revisions (id, inst:8->9",
+        "78:UPDATE accounts SET name = ?,type = ?,status = ?:9->10",
+        "79:INSERT INTO accounts (id,name,type,status,curren:10->10",
+        "80:UPDATE accounts SET name = ?,type = ?,status = ?:10->11",
+        "81:INSERT INTO accounts (id,name,type,status,curren:11->11",
+        "83:INSERT INTO credit_card_statements (id, account_:11->12",
+        "85:INSERT INTO credit_card_statements (id, account_:12->13",
+        "100:UPDATE accounts SET name = ?,type = ?,status = ?:13->14",
+        "101:INSERT INTO accounts (id,name,type,status,curren:14->14",
+        "102:UPDATE accounts SET name = ?,type = ?,status = ?:14->15",
+        "103:INSERT INTO accounts (id,name,type,status,curren:15->15",
+        "105:UPDATE credit_card_statements SET account_id = ?:15->16",
+        "107:UPDATE credit_card_statements SET account_id = ?:16->17",
+        "109:UPDATE accounts SET name = ?,type = ?,status = ?:17->18",
+        "110:INSERT INTO accounts (id,name,type,status,curren:18->18",
+        "122:INSERT INTO transactions (id,amount,currency,des:18->19",
+        "127:UPDATE accounts SET name = ?,type = ?,status = ?:19->20",
+        "128:INSERT INTO accounts (id,name,type,status,curren:20->20",
+        "129:UPDATE accounts SET name = ?,type = ?,status = ?:20->21",
+        "130:INSERT INTO accounts (id,name,type,status,curren:21->21",
+        "132:UPDATE credit_card_statements SET account_id = ?:21->22",
+        "134:UPDATE credit_card_statements SET account_id = ?:22->23",
+        "145:INSERT INTO installment_allocations (id, payment:23->24",
+        "148:INSERT INTO installment_plan_revisions (id, inst:24->25",
+        "160:UPDATE installment_allocations SET status = 'rev:25->26",
+        "164:INSERT INTO installment_plan_revisions (id, inst:26->27",
+        "166:UPDATE accounts SET name = ?,type = ?,status = ?:27->28",
+        "167:INSERT INTO accounts (id,name,type,status,curren:28->28",
+        "178:UPDATE transactions SET amount = ?,currency = ?,:28->29",
+        "185:UPDATE accounts SET name = ?,type = ?,status = ?:29->30",
+        "186:INSERT INTO accounts (id,name,type,status,curren:30->30",
+        "187:UPDATE accounts SET name = ?,type = ?,status = ?:30->31",
+        "188:INSERT INTO accounts (id,name,type,status,curren:31->31",
+        "190:UPDATE credit_card_statements SET account_id = ?:31->32",
+        "192:UPDATE credit_card_statements SET account_id = ?:32->33"
+      ],
+      "counterMovesNode": [
+        "1:DROP TABLE IF EXISTS synthetic_phase1a4b_marker:0->0",
+        "42:INSERT INTO financial_data_revision (id, revisio:null->0",
+        "43:INSERT INTO accounts (id,name,type,status,curren:0->4",
+        "44:INSERT OR IGNORE INTO categories (id,name,type,m:4->6",
+        "63:INSERT INTO transactions (id,amount,currency,des:6->7",
+        "65:INSERT INTO installment_purchases (id, transacti:7->8",
+        "71:INSERT INTO installment_plan_revisions (id, inst:8->9",
+        "77:UPDATE accounts SET name = ?,type = ?,status = ?:9->10",
+        "78:INSERT INTO accounts (id,name,type,status,curren:10->10",
+        "79:UPDATE accounts SET name = ?,type = ?,status = ?:10->11",
+        "80:INSERT INTO accounts (id,name,type,status,curren:11->11",
+        "82:INSERT INTO credit_card_statements (id, account_:11->12",
+        "84:INSERT INTO credit_card_statements (id, account_:12->13",
+        "99:UPDATE accounts SET name = ?,type = ?,status = ?:13->14",
+        "100:INSERT INTO accounts (id,name,type,status,curren:14->14",
+        "101:UPDATE accounts SET name = ?,type = ?,status = ?:14->15",
+        "102:INSERT INTO accounts (id,name,type,status,curren:15->15",
+        "104:UPDATE credit_card_statements SET account_id = ?:15->16",
+        "106:UPDATE credit_card_statements SET account_id = ?:16->17",
+        "108:UPDATE accounts SET name = ?,type = ?,status = ?:17->18",
+        "109:INSERT INTO accounts (id,name,type,status,curren:18->18",
+        "121:INSERT INTO transactions (id,amount,currency,des:18->19",
+        "126:UPDATE accounts SET name = ?,type = ?,status = ?:19->20",
+        "127:INSERT INTO accounts (id,name,type,status,curren:20->20",
+        "128:UPDATE accounts SET name = ?,type = ?,status = ?:20->21",
+        "129:INSERT INTO accounts (id,name,type,status,curren:21->21",
+        "131:UPDATE credit_card_statements SET account_id = ?:21->22",
+        "133:UPDATE credit_card_statements SET account_id = ?:22->23",
+        "144:INSERT INTO installment_allocations (id, payment:23->24",
+        "147:INSERT INTO installment_plan_revisions (id, inst:24->25",
+        "159:UPDATE installment_allocations SET status = 'rev:25->26",
+        "163:INSERT INTO installment_plan_revisions (id, inst:26->27",
+        "165:UPDATE accounts SET name = ?,type = ?,status = ?:27->28",
+        "166:INSERT INTO accounts (id,name,type,status,curren:28->28",
+        "177:UPDATE transactions SET amount = ?,currency = ?,:28->29",
+        "184:UPDATE accounts SET name = ?,type = ?,status = ?:29->30",
+        "185:INSERT INTO accounts (id,name,type,status,curren:30->30",
+        "186:UPDATE accounts SET name = ?,type = ?,status = ?:30->31",
+        "187:INSERT INTO accounts (id,name,type,status,curren:31->31",
+        "189:UPDATE credit_card_statements SET account_id = ?:31->32",
+        "191:UPDATE credit_card_statements SET account_id = ?:32->33"
+      ]
+    },
+    "editAmount-warm-traced": {
+      "differencesFromReference": [],
+      "differencesFromNodeSameConditions": [],
+      "nativeBatches": {
+        "single": 612,
+        "multi": 0,
+        "preamble": 612,
+        "preambleErrors": 0
+      },
+      "trace": {
+        "statements": {
+          "android": 209,
+          "androidAligned": 208,
+          "node": 208
+        },
+        "droppedAndroidOnly": [
+          {
+            "seq": 7,
+            "sql": "DELETE FROM \"android_metadata\"",
+            "outcome": "ok",
+            "directRows": 0,
+            "counterDelta": 0,
+            "error": null
+          }
+        ],
+        "differenceCount": 0,
+        "differences": [],
+        "driverRowsAffected": [
+          {
+            "i": 0,
+            "sql": "DROP TABLE IF EXISTS synthetic_phase1a4b_marker",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 1,
+            "sql": "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 44,
+            "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_a",
+            "android": 1,
+            "node": 4
+          },
+          {
+            "i": 46,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 48,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 49,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 50,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 51,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 52,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 53,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 54,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 55,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 56,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 57,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 58,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 59,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 60,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 61,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 62,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 65,
+            "sql": "SELECT 1 AS present FROM installment_purchases WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 67,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 68,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 69,
+            "sql": "SELECT account_id, closing_day_purchase_policy, created_at, updated_at FROM cred",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 70,
+            "sql": "SELECT installment_purchase_id, cycle_end, source, created_at, updated_at FROM i",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 71,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 73,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 74,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 75,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 76,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 77,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 82,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 84,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 86,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 87,
+            "sql": "BEGIN IMMEDIATE;",
+            "android": 0,
+            "node": 1
+          },
+          {
+            "i": 88,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 89,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 90,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 91,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 92,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 93,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 94,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 95,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 96,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 97,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 98,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 99,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 104,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 106,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 108,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 111,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 112,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 113,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 114,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 115,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 116,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 117,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 118,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 119,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 120,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 123,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 124,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 125,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 126,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 131,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 133,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 135,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 136,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 137,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 138,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 139,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 140,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 141,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 142,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 143,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 144,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 146,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 147,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 149,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 150,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 151,
+            "sql": "SELECT id, amount, currency, description, date, civil_date, local_time, time_zon",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 152,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 153,
+            "sql": "BEGIN IMMEDIATE;",
+            "android": 0,
+            "node": 1
+          },
+          {
+            "i": 154,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 155,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 156,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 157,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 158,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 159,
+            "sql": "SELECT status FROM installment_allocations WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 161,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 162,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 163,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 165,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 168,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 169,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 170,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 171,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 172,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 173,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 174,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 175,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 176,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 177,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 181,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 182,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 183,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 184,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 189,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 191,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 193,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 194,
+            "sql": "SELECT rowid AS row_id, id, balance_amount, debt_balance_amount, credit_limit_am",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 195,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 196,
+            "sql": "SELECT amount, type, direction, CASE WHEN EXISTS (SELECT 1 FROM shared_receipts ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 197,
+            "sql": "SELECT COALESCE(civil_date, substr(date, 1, 10)) AS date, COUNT(*) AS count FROM",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 198,
+            "sql": "WITH forgiven_by_participation AS ( SELECT participation_key, SUM(CASE kind WHEN",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 199,
+            "sql": "SELECT CAST(COALESCE(SUM(CASE WHEN kind = 'forgiveness' THEN amount_minor ELSE 0",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 200,
+            "sql": "PRAGMA integrity_check",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 201,
+            "sql": "PRAGMA foreign_key_check",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 202,
+            "sql": "SELECT rowid AS row_id, * FROM transactions ORDER BY created_at, rowid",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 203,
+            "sql": "SELECT rowid AS row_id, * FROM installment_purchases ORDER BY rowid",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 204,
+            "sql": "SELECT rowid AS row_id, * FROM credit_card_statements ORDER BY account_id, state",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 205,
+            "sql": "SELECT rowid AS row_id, * FROM installment_allocations ORDER BY rowid",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 206,
+            "sql": "SELECT r.* FROM installment_plan_revisions r LEFT JOIN installment_purchases p O",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 207,
+            "sql": "SELECT revision FROM financial_data_revision WHERE id = 1",
+            "android": null,
+            "node": 0
+          }
+        ],
+        "writes": {
+          "android": 85,
+          "node": 85
+        },
+        "editWrites": {
+          "android": 0,
+          "node": 0
+        }
+      },
+      "seedCategories": {
+        "android": [
+          {
+            "seq": 47,
+            "directRows": 0,
+            "triggerRows": 0,
+            "driverRowsAffected": 0,
+            "revisionBefore": 4,
+            "revisionAfter": 4
+          }
+        ],
+        "node": [
+          {
+            "seq": 46,
+            "directRows": 0,
+            "triggerRows": 0,
+            "driverRowsAffected": 0,
+            "revisionBefore": 4,
+            "revisionAfter": 4
+          }
+        ]
+      },
+      "counterMovesAndroid": [
+        "1:DROP TABLE IF EXISTS synthetic_phase1a4b_marker:31->31",
+        "13:DELETE FROM \"credit_card_statements\":31->33",
+        "45:INSERT INTO financial_data_revision (id, revisio:null->0",
+        "46:INSERT INTO accounts (id,name,type,status,curren:0->4",
+        "47:INSERT OR IGNORE INTO categories (id,name,type,m:4->4",
+        "66:INSERT INTO transactions (id,amount,currency,des:4->5",
+        "68:INSERT INTO installment_purchases (id, transacti:5->6",
+        "74:INSERT INTO installment_plan_revisions (id, inst:6->7",
+        "80:UPDATE accounts SET name = ?,type = ?,status = ?:7->8",
+        "81:INSERT INTO accounts (id,name,type,status,curren:8->8",
+        "82:UPDATE accounts SET name = ?,type = ?,status = ?:8->9",
+        "83:INSERT INTO accounts (id,name,type,status,curren:9->9",
+        "85:INSERT INTO credit_card_statements (id, account_:9->10",
+        "87:INSERT INTO credit_card_statements (id, account_:10->11",
+        "102:UPDATE accounts SET name = ?,type = ?,status = ?:11->12",
+        "103:INSERT INTO accounts (id,name,type,status,curren:12->12",
+        "104:UPDATE accounts SET name = ?,type = ?,status = ?:12->13",
+        "105:INSERT INTO accounts (id,name,type,status,curren:13->13",
+        "107:UPDATE credit_card_statements SET account_id = ?:13->14",
+        "109:UPDATE credit_card_statements SET account_id = ?:14->15",
+        "111:UPDATE accounts SET name = ?,type = ?,status = ?:15->16",
+        "112:INSERT INTO accounts (id,name,type,status,curren:16->16",
+        "124:INSERT INTO transactions (id,amount,currency,des:16->17",
+        "129:UPDATE accounts SET name = ?,type = ?,status = ?:17->18",
+        "130:INSERT INTO accounts (id,name,type,status,curren:18->18",
+        "131:UPDATE accounts SET name = ?,type = ?,status = ?:18->19",
+        "132:INSERT INTO accounts (id,name,type,status,curren:19->19",
+        "134:UPDATE credit_card_statements SET account_id = ?:19->20",
+        "136:UPDATE credit_card_statements SET account_id = ?:20->21",
+        "147:INSERT INTO installment_allocations (id, payment:21->22",
+        "150:INSERT INTO installment_plan_revisions (id, inst:22->23",
+        "162:UPDATE installment_allocations SET status = 'rev:23->24",
+        "166:INSERT INTO installment_plan_revisions (id, inst:24->25",
+        "168:UPDATE accounts SET name = ?,type = ?,status = ?:25->26",
+        "169:INSERT INTO accounts (id,name,type,status,curren:26->26",
+        "180:UPDATE transactions SET amount = ?,currency = ?,:26->27",
+        "187:UPDATE accounts SET name = ?,type = ?,status = ?:27->28",
+        "188:INSERT INTO accounts (id,name,type,status,curren:28->28",
+        "189:UPDATE accounts SET name = ?,type = ?,status = ?:28->29",
+        "190:INSERT INTO accounts (id,name,type,status,curren:29->29",
+        "192:UPDATE credit_card_statements SET account_id = ?:29->30",
+        "194:UPDATE credit_card_statements SET account_id = ?:30->31"
+      ],
+      "counterMovesNode": [
+        "1:DROP TABLE IF EXISTS synthetic_phase1a4b_marker:31->31",
+        "12:DELETE FROM \"credit_card_statements\":31->33",
+        "44:INSERT INTO financial_data_revision (id, revisio:null->0",
+        "45:INSERT INTO accounts (id,name,type,status,curren:0->4",
+        "46:INSERT OR IGNORE INTO categories (id,name,type,m:4->4",
+        "65:INSERT INTO transactions (id,amount,currency,des:4->5",
+        "67:INSERT INTO installment_purchases (id, transacti:5->6",
+        "73:INSERT INTO installment_plan_revisions (id, inst:6->7",
+        "79:UPDATE accounts SET name = ?,type = ?,status = ?:7->8",
+        "80:INSERT INTO accounts (id,name,type,status,curren:8->8",
+        "81:UPDATE accounts SET name = ?,type = ?,status = ?:8->9",
+        "82:INSERT INTO accounts (id,name,type,status,curren:9->9",
+        "84:INSERT INTO credit_card_statements (id, account_:9->10",
+        "86:INSERT INTO credit_card_statements (id, account_:10->11",
+        "101:UPDATE accounts SET name = ?,type = ?,status = ?:11->12",
+        "102:INSERT INTO accounts (id,name,type,status,curren:12->12",
+        "103:UPDATE accounts SET name = ?,type = ?,status = ?:12->13",
+        "104:INSERT INTO accounts (id,name,type,status,curren:13->13",
+        "106:UPDATE credit_card_statements SET account_id = ?:13->14",
+        "108:UPDATE credit_card_statements SET account_id = ?:14->15",
+        "110:UPDATE accounts SET name = ?,type = ?,status = ?:15->16",
+        "111:INSERT INTO accounts (id,name,type,status,curren:16->16",
+        "123:INSERT INTO transactions (id,amount,currency,des:16->17",
+        "128:UPDATE accounts SET name = ?,type = ?,status = ?:17->18",
+        "129:INSERT INTO accounts (id,name,type,status,curren:18->18",
+        "130:UPDATE accounts SET name = ?,type = ?,status = ?:18->19",
+        "131:INSERT INTO accounts (id,name,type,status,curren:19->19",
+        "133:UPDATE credit_card_statements SET account_id = ?:19->20",
+        "135:UPDATE credit_card_statements SET account_id = ?:20->21",
+        "146:INSERT INTO installment_allocations (id, payment:21->22",
+        "149:INSERT INTO installment_plan_revisions (id, inst:22->23",
+        "161:UPDATE installment_allocations SET status = 'rev:23->24",
+        "165:INSERT INTO installment_plan_revisions (id, inst:24->25",
+        "167:UPDATE accounts SET name = ?,type = ?,status = ?:25->26",
+        "168:INSERT INTO accounts (id,name,type,status,curren:26->26",
+        "179:UPDATE transactions SET amount = ?,currency = ?,:26->27",
+        "186:UPDATE accounts SET name = ?,type = ?,status = ?:27->28",
+        "187:INSERT INTO accounts (id,name,type,status,curren:28->28",
+        "188:UPDATE accounts SET name = ?,type = ?,status = ?:28->29",
+        "189:INSERT INTO accounts (id,name,type,status,curren:29->29",
+        "191:UPDATE credit_card_statements SET account_id = ?:29->30",
+        "193:UPDATE credit_card_statements SET account_id = ?:30->31"
+      ]
+    },
+    "editAmount-staged-warm": {
+      "stageDifferencesFromNode": [],
+      "stageCounters": {
+        "1-initial": 4,
+        "2-afterPurchase": 11,
+        "3-afterPaymentAndAllocation": 23,
+        "4-beforeEdit": 23,
+        "5-final": 31
+      },
+      "nodeStageCounters": {
+        "1-initial": 4,
+        "2-afterPurchase": 11,
+        "3-afterPaymentAndAllocation": 23,
+        "4-beforeEdit": 23,
+        "5-final": 31
+      },
+      "nodeFreshStageCounters": {
+        "1-initial": 6,
+        "2-afterPurchase": 13,
+        "3-afterPaymentAndAllocation": 25,
+        "4-beforeEdit": 25,
+        "5-final": 33
+      },
+      "trace": {
+        "statements": {
+          "android": 195,
+          "androidAligned": 194,
+          "node": 194
+        },
+        "droppedAndroidOnly": [
+          {
+            "seq": 7,
+            "sql": "DELETE FROM \"android_metadata\"",
+            "outcome": "ok",
+            "directRows": 0,
+            "counterDelta": 0,
+            "error": null
+          }
+        ],
+        "differenceCount": 0,
+        "differences": [],
+        "driverRowsAffected": [
+          {
+            "i": 0,
+            "sql": "DROP TABLE IF EXISTS synthetic_phase1a4b_marker",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 1,
+            "sql": "SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%'",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 44,
+            "sql": "INSERT INTO accounts (id,name,type,status,currency,balance_amount,debt_balance_a",
+            "android": 1,
+            "node": 4
+          },
+          {
+            "i": 46,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 48,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 49,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 50,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 51,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 52,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 53,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 54,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 55,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 56,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 57,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 58,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 59,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 60,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 61,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 62,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 65,
+            "sql": "SELECT 1 AS present FROM installment_purchases WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 67,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 68,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 69,
+            "sql": "SELECT account_id, closing_day_purchase_policy, created_at, updated_at FROM cred",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 70,
+            "sql": "SELECT installment_purchase_id, cycle_end, source, created_at, updated_at FROM i",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 71,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 73,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 74,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 75,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 76,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 77,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 82,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 84,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 86,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 87,
+            "sql": "BEGIN IMMEDIATE;",
+            "android": 0,
+            "node": 1
+          },
+          {
+            "i": 88,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 89,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 90,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 91,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 92,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 93,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 94,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 95,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 96,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 97,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 98,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 99,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 104,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 106,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 108,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 111,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 112,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 113,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 114,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 115,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 116,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 117,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 118,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 119,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 120,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 123,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 124,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 125,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 126,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 131,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 133,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 135,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 136,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 137,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 138,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 139,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 140,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 141,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 142,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 143,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 144,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 146,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 147,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 149,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 150,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          },
+          {
+            "i": 151,
+            "sql": "SELECT id, amount, currency, description, date, civil_date, local_time, time_zon",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 152,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 153,
+            "sql": "BEGIN IMMEDIATE;",
+            "android": 0,
+            "node": 1
+          },
+          {
+            "i": 154,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 155,
+            "sql": "SELECT * FROM transactions WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 156,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 157,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 158,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 159,
+            "sql": "SELECT status FROM installment_allocations WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 161,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 162,
+            "sql": "SELECT id, payment_transaction_id, installment_purchase_id, amount_cents, mode, ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 163,
+            "sql": "SELECT revision_number, source FROM installment_plan_revisions WHERE installment",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 165,
+            "sql": "SELECT id, installment_purchase_id, revision_number, source, allocation_id, rema",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 168,
+            "sql": "SELECT transaction_id FROM shared_expenses WHERE transaction_id IN (?) UNION ALL",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 169,
+            "sql": "SELECT * FROM recurring_subscriptions;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 170,
+            "sql": "SELECT * FROM subscription_occurrences WHERE status IN ('pending','overdue') OR ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 171,
+            "sql": "SELECT * FROM subscription_occurrences WHERE transaction_id IN (?);",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 172,
+            "sql": "SELECT * FROM subscription_reminders WHERE delivery_status != 'delivered' OR occ",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 173,
+            "sql": "SELECT * FROM smart_alerts WHERE related_entity_type IN ('subscription','subscri",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 174,
+            "sql": "SELECT id,type,status,currency FROM accounts;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 175,
+            "sql": "SELECT id,type FROM categories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 176,
+            "sql": "SELECT id,category_id,is_active FROM subcategories;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 177,
+            "sql": "SELECT * FROM transactions WHERE id = ? OR id IN (SELECT transaction_id FROM sub",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 181,
+            "sql": "SELECT id, name, type, status, currency, balance_amount, debt_balance_amount, cr",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 182,
+            "sql": "SELECT id, amount, date, civil_date, account_id, target_account_id, type, direct",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 183,
+            "sql": "SELECT id, transaction_id, account_id, merchant_name, total_amount, currency, in",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 184,
+            "sql": "SELECT id, account_id, statement_start_date, statement_end_date, payment_due_dat",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 189,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 191,
+            "sql": "SELECT 1 AS present FROM credit_card_statements WHERE id = ?;",
+            "android": null,
+            "node": 0
+          },
+          {
+            "i": 193,
+            "sql": "COMMIT;",
+            "android": null,
+            "node": 1
+          }
+        ],
+        "writes": {
+          "android": 85,
+          "node": 85
+        },
+        "editWrites": {
+          "android": 13,
+          "node": 13
+        }
+      }
+    }
+  },
+  "firstDivergenceFromOracleLayout": {
+    "index": 41,
+    "android": {
+      "seq": 43,
+      "stage": "fresh:originalProbe",
+      "sql": "INSERT INTO financial_data_revision (id, revision, updated_at) VALUES (1, 0, '2026-01-01')",
+      "directRows": 1,
+      "triggerRows": 0,
+      "revisionBefore": null,
+      "revisionAfter": 0,
+      "counterDelta": null
+    },
+    "nodeOracleLayout": {
+      "seq": 42,
+      "stage": "referenceSession:originalProbe",
+      "sql": "DELETE FROM \"accounts\"",
+      "directRows": 4,
+      "triggerRows": 0,
+      "revisionBefore": null,
+      "revisionAfter": null,
+      "counterDelta": null
+    }
+  }
+}

@@ -1,0 +1,164 @@
+'use strict';
+// Phase 1a.4B: mechanical, reviewable derivative of the 1a.3B probes already derived for 1a.4A (scripts/phase1a4a/
+// phase1a3bProbes.ts, hash pinned by the 1a.4A r2 inventory). Writes a file only. Two changes, both required to run the
+// REAL 1a.4B logic (no neutralization) in the APK:
+// - activeAllocationGuards: D6 changes one outcome on purpose. Deleting a payment with an active allocation through its
+//   use case is no longer blocked: the allocation is reversed in the same transaction and the payment is deleted. Every
+//   raw SQLite guard is still probed (blocked, nothing changed); deleting the purchase is now rejected by the use case
+//   before any write (the SQLite guard stays behind it).
+// - flows: the version 4 half ran the use cases on a database without migration 5. The 1a.4B guards read the allocation
+//   tables, which exist only from version 5 (applied at every start of the app). On version 4 the first guarded step must
+//   fail without changes; the version 5 flow is unchanged and is compared with the 1a.4A r2 reference.
+// - r4 (errorClass): a "no such table" error is classified by its table name, so node:sqlite and the Android driver
+//   (which appends "(code 1): , while compiling: <SQL>") give the same class. r3 stopped on that text in v4 flows.
+// Everything else, the migration 5 oracles included, is byte for byte the 1a.4A derived source.
+const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto');
+const root = path.resolve(__dirname, '../..');
+if (process.argv.length !== 2) throw Error('No arguments');
+const source = 'scripts/phase1a4a/phase1a3bProbes.ts';
+const bytes = fs.readFileSync(path.join(root, source));
+const inventory = JSON.parse(fs.readFileSync(path.join(root, 'docs/validacion-fase1a4a/r2/authorization/inputs.sha256.json'), 'utf8'));
+const digest = crypto.createHash('sha256').update(bytes).digest('hex');
+if (digest !== '07abad2703ab53e901d56319205bbbfdb320a151dc3f56b42d325f3b683ad9d7' || inventory.sources[source] !== digest)
+  throw Error('1a.4A derived 1a.3B probes changed since r2');
+
+const guardsBefore = `      const before = json(await fullState(database));
+      const outcomes = {
+        deletePaymentUseCase: await attempt(() => deleteMovement(database, paymentId, '2026-10-14')),
+        updatePaymentAmount: await attempt(() => database.executeSql('UPDATE transactions SET amount = 1 WHERE id = ?', [paymentId])),
+        updatePaymentId: await attempt(() => database.executeSql("UPDATE transactions SET id = 'renamed' WHERE id = ?", [paymentId])),
+        deletePurchaseRow: await attempt(() => database.executeSql('DELETE FROM installment_purchases WHERE id = ?', [purchaseId])),
+        deletePurchaseUseCase: await attempt(() => deleteMovement(database, exactId, '2026-10-14')),
+        renamePurchase: await attempt(() => database.executeSql("UPDATE installment_purchases SET id = 'renamed' WHERE id = ?", [purchaseId])),
+      };
+      check(json(await fullState(database)) === before, 'A blocked operation left changes');
+      const description = await attempt(() => database.executeSql("UPDATE transactions SET description = 'Descripcion' WHERE id = ?", [paymentId]));
+      await database.executeSql("UPDATE installment_allocations SET status = 'reversed', reversed_at = '2026-10-14T17:05:00.000Z' WHERE id = 'guard:a'");
+      await deleteMovement(database, paymentId, '2026-10-15');
+      await deleteMovement(database, exactId, '2026-10-15');
+      const remaining = await repository.getAllocationsByPayment(paymentId);
+      check(remaining.length === 1 && remaining[0]!.status === 'reversed', 'Reversed allocation kept after deleting its payment');
+      return { outcomes, description, afterReversal: { allocations: remaining, purchaseHistory: await repository.getPlanRevisions(purchaseId) } };
+`;
+const guardsAfter = `      const before = json(await fullState(database));
+      // 1a.4B (D6): every raw change is still blocked by SQLite and the purchase use case rejects its deletion before
+      // writing. Deleting the payment through its use case is no longer blocked: it reverses the allocation first (below).
+      const outcomes = {
+        updatePaymentAmount: await attempt(() => database.executeSql('UPDATE transactions SET amount = 1 WHERE id = ?', [paymentId])),
+        updatePaymentId: await attempt(() => database.executeSql("UPDATE transactions SET id = 'renamed' WHERE id = ?", [paymentId])),
+        deletePurchaseRow: await attempt(() => database.executeSql('DELETE FROM installment_purchases WHERE id = ?', [purchaseId])),
+        deletePurchaseUseCase: await attempt(() => deleteMovement(database, exactId, '2026-10-14')),
+        renamePurchase: await attempt(() => database.executeSql("UPDATE installment_purchases SET id = 'renamed' WHERE id = ?", [purchaseId])),
+      };
+      check(json(await fullState(database)) === before, 'A blocked operation left changes');
+      const description = await attempt(() => database.executeSql("UPDATE transactions SET description = 'Descripcion' WHERE id = ?", [paymentId]));
+      const deletePaymentUseCase = await attempt(() => deleteMovement(database, paymentId, '2026-10-15'));
+      check(deletePaymentUseCase === 'accepted', 'D6: deleting the payment reverses its allocation and proceeds');
+      const reversed = await repository.getAllocationsByPayment(paymentId);
+      check(reversed.length === 1 && reversed[0]!.status === 'reversed', 'D6 reversed the allocation in the deletion');
+      await deleteMovement(database, exactId, '2026-10-15');
+      const remaining = await repository.getAllocationsByPayment(paymentId);
+      check(remaining.length === 1 && remaining[0]!.status === 'reversed', 'Reversed allocation kept after deleting its payment');
+      const purchaseHistory = await repository.getPlanRevisions(purchaseId);
+      check(json(purchaseHistory.map(row => row.source)) === json(['original', 'allocationReversal', 'purchaseRemoval']),
+        'D6 corrective revision before the removal');
+      return { outcomes, description, deletePaymentUseCase, afterReversal: { allocations: remaining, purchaseHistory } };
+`;
+
+const flowsBefore = `export async function runPhase1A3BFlows(database: Database, countWrites: Phase1A3BWriteCounter) {
+  const runs: Record<string, unknown> = {};
+  for (const version of [4, 5] as const) {
+    await seedAccounts(database);
+    const created = await purchase(database, '2026-10-11', 300000, 3, 'Flujo');
+    await downgradeToVersion4(database);
+    if (version === 5) await applyVersionedMigrations(database);
+`;
+const flowsAfter = `export async function runPhase1A3BFlows(database: Database, countWrites: Phase1A3BWriteCounter) {
+  const runs: Record<string, unknown> = {};
+  // 1a.4B: on version 4 (no allocation tables) the first guarded step fails and changes nothing; the app never runs it,
+  // because every start applies migration 5 first.
+  {
+    await seedAccounts(database);
+    const created = await purchase(database, '2026-10-11', 300000, 3, 'Flujo');
+    await downgradeToVersion4(database);
+    const before = json(await fullState(database));
+    let raw: unknown;
+    const editTerms = await attempt(async () => {
+      try { await editPurchase(database, created.id, '2026-10-12', 6); } catch (error) { raw = error; throw error; }
+    });
+    // r4: the full driver message stays in the diagnostics; only the stable class is compared.
+    console.log('PHASE1A3B_V4_GUARDED_STEP_ERROR:' + json(errorText(raw)));
+    check(editTerms === 'other: no such table: installment_allocations', 'Version 4 guarded step: ' + editTerms + ' | raw: ' + errorText(raw));
+    check(json(await fullState(database)) === before, 'The failed version 4 step left changes');
+    runs.version4Incompatible = { firstGuardedStep: 'editTerms', outcome: editTerms, stateUnchanged: true };
+    await applyVersionedMigrations(database);
+  }
+  for (const version of [5] as const) {
+    await seedAccounts(database);
+    const created = await purchase(database, '2026-10-11', 300000, 3, 'Flujo');
+    await downgradeToVersion4(database);
+    await applyVersionedMigrations(database);
+`;
+const flowsTailBefore = `    runs[\`version\${version}\`] = { start, steps };
+    // Leave the database at version 5 for the next campaign and the common checks.
+    if (version === 4) await applyVersionedMigrations(database);
+  }
+  type Run = { start: Awaited<ReturnType<typeof observe>>; steps: Record<string, { writes: number; observation: Awaited<ReturnType<typeof observe>> }> };
+  const v4 = runs.version4 as Run;
+  const v5 = runs.version5 as Run;
+  const accounting = (observation: Awaited<ReturnType<typeof observe>>) =>
+    json(canonical({ ...observation.financial, backupRevision: undefined }));
+  const structural: Record<string, unknown> = {};
+  for (const label of Object.keys(v4.steps)) {
+    const a = v4.steps[label]!;
+    const b = v5.steps[label]!;
+    check(a.writes === b.writes, \`\${label}: \${a.writes} writes on v4, \${b.writes} on v5\`);
+    check(accounting(a.observation) === accounting(b.observation), \`\${label}: accounting differs between v4 and v5\`);
+    structural[label] = { backupRevisionDelta: b.observation.financial.backupRevision - a.observation.financial.backupRevision,
+      revisions: b.observation.history?.revisions.map(row => [row.revision_number, row.source, row.verification, row.pending_reasons]) ?? [] };
+  }
+  return canonical({ version4: v4, version5: v5, structuralDifferences: structural });
+}`;
+const flowsTailAfter = `    runs[\`version\${version}\`] = { start, steps };
+  }
+  return canonical({ version4Incompatible: runs.version4Incompatible, version5: runs.version5 });
+}`;
+
+// r4: node:sqlite writes "no such table: <t>"; the Android driver appends its result code and the statement it compiled
+// ("no such table: <t> (code 1): , while compiling: <SQL>", "(code 1 SQLITE_ERROR)" on newer releases). Both are the same
+// error: classified by the table name, which is kept. Only that exact shape is recognized (result code 1, the compiled
+// statement must name the same table); every other message keeps its previous class or its full text.
+const classBefore = `function errorClass(error: unknown): string {
+  if (error === undefined) return 'accepted';
+  const text = errorText(error);
+`;
+const classAfter = `/**
+ * 1a.4B r4: name of the missing table in a "no such table" error, as written by node:sqlite ("no such table: <t>") or by
+ * the Android driver ("no such table: <t> (code 1): , while compiling: <SQL naming t>"; "(code 1 SQLITE_ERROR)" or
+ * "(code 1 SQLITE_ERROR[1])" on newer releases). Anything else, including a different code or a statement that does not
+ * name that table, is not recognized (undefined) and keeps its full text.
+ */
+export function missingTableName(text: string): string | undefined {
+  const match = /^no such table: ([A-Za-z_][A-Za-z0-9_]*)(?: \\(code 1(?: SQLITE_ERROR(?:\\[1\\])?)?\\): , while compiling: ([\\s\\S]+))?$/.exec(text);
+  if (!match) return undefined;
+  const [, table, statement] = match;
+  if (statement !== undefined && !new RegExp('(^|[^A-Za-z0-9_])' + table + '([^A-Za-z0-9_]|$)').test(statement)) return undefined;
+  return table;
+}
+export function errorClass(error: unknown): string {
+  if (error === undefined) return 'accepted';
+  const text = errorText(error);
+  const missing = missingTableName(text);
+  if (missing !== undefined) return 'other: no such table: ' + missing;
+`;
+
+let text = bytes.toString();
+for (const [from, to] of [[guardsBefore, guardsAfter], [flowsBefore, flowsAfter], [flowsTailBefore, flowsTailAfter], [classBefore, classAfter]]) {
+  if (text.split(from).length !== 2) throw Error('Anchor not found exactly once: ' + from.slice(0, 80));
+  text = text.replace(from, to);
+}
+text = text.replace(/^\/\/ /, '// Derived for 1a.4B by scripts/phase1a4b/derive-probes.cjs (D6 guard outcome; version 4 flows incompatible; r4 missing-table class).\n// ');
+const destination = path.join(root, 'scripts/phase1a4b/phase1a3bProbes.ts');
+if (fs.existsSync(destination)) throw Error('Derived probes already written; review and delete them explicitly before regenerating');
+fs.writeFileSync(destination, text);
+console.log('1a.4B derived 1a.3B probes written: ' + crypto.createHash('sha256').update(text).digest('hex'));

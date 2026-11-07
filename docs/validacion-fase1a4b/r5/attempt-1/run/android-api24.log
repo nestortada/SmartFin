@@ -1,0 +1,76 @@
+C:\sf-1a4b-r5-20261107\android\app\build\outputs\apk\release\app-release.apk: 1 file pushed, 0 skipped. 45.4 MB/s (33812128 bytes in 0.711s)
+Performing Push Install
+Success
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4b-register cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 868
+TotalTime: 868
+WaitTime: 877
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 28.9 MB/s (211385 bytes in 0.007s)
+Passed 9 cases in phase1a4b-register on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4b-reversal cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 636
+TotalTime: 636
+WaitTime: 642
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 23.5 MB/s (131807 bytes in 0.005s)
+Passed 13 cases in phase1a4b-reversal on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4b-guards cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 853
+TotalTime: 853
+WaitTime: 859
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 32.7 MB/s (286915 bytes in 0.008s)
+Passed 15 cases in phase1a4b-guards on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4b-idempotency cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 860
+TotalTime: 860
+WaitTime: 866
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 1.7 MB/s (12420 bytes in 0.007s)
+Passed 4 cases in phase1a4b-idempotency on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4b-atomicity cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 666
+TotalTime: 666
+WaitTime: 671
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 60.0 MB/s (3649054 bytes in 0.058s)
+Passed 165 cases in phase1a4b-atomicity on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4b-unknown cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 727
+TotalTime: 727
+WaitTime: 731
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 2.3 MB/s (8257 bytes in 0.003s)
+Passed 3 cases in phase1a4b-unknown on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4b-unknown-restart cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 855
+TotalTime: 855
+WaitTime: 861
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 1.5 MB/s (5735 bytes in 0.004s)
+Passed 4 cases in phase1a4b-unknown-restart on emulator-5554.
+Starting: Intent { act=android.intent.action.VIEW dat=snapshot5b2://campaign/phase1a4a-creation cmp=com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity }
+Status: ok
+Activity: com.smartfin.snapshot5b2.tests/com.smartfin.MainActivity
+ThisTime: 770
+TotalTime: 770
+WaitTime: 774
+Complete
+/sdcard/Android/data/com.smartfin.snapshot5b2.tests/files/snapshot5b2-results/result.json: 1 file pulled, 0 skipped. 21.5 MB/s (118404 bytes in 0.005s)
+Passed 14 cases in phase1a4a-creation on emulator-5554.
+RUN_ALL_EXIT=FAILED elapsed=00:04:05.7923525: ADB failed: shell appops set com.smartfin.snapshot5b2.tests POST_NOTIFICATION allow: Segmentation fault 

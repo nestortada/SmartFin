@@ -1,0 +1,424 @@
+--------- beginning of main
+11-07 18:10:03.249  3710  3710 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) expire 38 lines
+11-07 18:10:03.360  3710  3725 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) WM.task-1 expire 2 lines
+11-07 18:10:03.500  3710  3727 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) WM.task-3 expire 1 line
+11-07 18:10:03.570  3710  3731 I chatty  : uid=10078(com.smartfin.snapshot5b2.tests) pool-1-thread-1 expire 17 lines
+11-07 18:10:03.601  3710  3731 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+11-07 18:10:03.601  3710  3731 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+11-07 18:10:03.601  3710  3731 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+11-07 18:10:03.601  3710  3731 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+11-07 18:10:03.601  3710  3731 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+11-07 18:10:03.601  3710  3731 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+11-07 18:10:03.601  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+11-07 18:10:03.601  3710  3731 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+11-07 18:10:03.601  3710  3731 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+11-07 18:10:03.602  3710  3731 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+11-07 18:10:03.602  3710  3731 I art     : Caused by: java.lang.ClassNotFoundException: Didn't find class "android.speech.RecognitionSupportCallback" on path: DexPathList[[zip file "/data/app/com.smartfin.snapshot5b2.tests-2/base.apk"],nativeLibraryDirectories=[/data/app/com.smartfin.snapshot5b2.tests-2/lib/x86_64, /data/app/com.smartfin.snapshot5b2.tests-2/base.apk!/lib/x86_64, /system/lib64, /vendor/lib64]]
+11-07 18:10:03.602  3710  3731 I art     :   at java.lang.Class dalvik.system.BaseDexClassLoader.findClass(java.lang.String) (BaseDexClassLoader.java:56)
+11-07 18:10:03.602  3710  3731 I art     :   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String, boolean) (ClassLoader.java:380)
+11-07 18:10:03.602  3710  3731 I art     :   at java.lang.Class java.lang.ClassLoader.loadClass(java.lang.String) (ClassLoader.java:312)
+11-07 18:10:03.602  3710  3731 I art     :   at java.util.List com.duysolo.speechrecognition.RNSpeechRecognitionPackage.createNativeModules(com.facebook.react.bridge.ReactApplicationContext) (RNSpeechRecognitionPackage.kt:10)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.initialize(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (ReactPackageTurboModuleManagerDelegate.kt:64)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.ReactPackageTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, com.facebook.jni.HybridData) (ReactPackageTurboModuleManagerDelegate.kt:42)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List) (DefaultTurboModuleManagerDelegate.kt:35)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.defaults.DefaultTurboModuleManagerDelegate.<init>(com.facebook.react.bridge.ReactApplicationContext, java.util.List, java.util.List, kotlin.jvm.internal.DefaultConstructorMarker) (DefaultTurboModuleManagerDelegate.kt:-1)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.defaults.DefaultTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:63)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.defaults.DefaultTurboModuleManagerDelegate$Builder.build(com.facebook.react.bridge.ReactApplicationContext, java.util.List) (DefaultTurboModuleManagerDelegate.kt:43)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.ReactPackageTurboModuleManagerDelegate com.facebook.react.ReactPackageTurboModuleManagerDelegate$Builder.build() (ReactPackageTurboModuleManagerDelegate.kt:222)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.ReactInstance.<init>(com.facebook.react.runtime.BridgelessReactContext, com.facebook.react.runtime.ReactHostDelegate, com.facebook.react.fabric.ComponentFactory, com.facebook.react.devsupport.interfaces.DevSupportManager, com.facebook.react.bridge.queue.QueueThreadExceptionHandler, boolean, com.facebook.react.runtime.ReactHostInspectorTarget) (ReactInstance.kt:183)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.getOrCreateReactInstanceTask$lambda$44$lambda$40(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:1039)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.runtime.ReactHostImpl$CreationResult com.facebook.react.runtime.ReactHostImpl.$r8$lambda$kGNcmxBxZbp8b1wWTaqIXDdkV8g(com.facebook.react.runtime.ReactHostImpl, java.lang.String, com.facebook.react.runtime.internal.bolts.Task) (ReactHostImpl.kt:-1)
+11-07 18:10:03.602  3710  3731 I art     :   at java.lang.Object com.facebook.react.runtime.ReactHostImpl$$ExternalSyntheticLambda23.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately$lambda$3(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:360)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$b7MTC0ufkn_2TjF4BGcNqGR9qK0(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda3.run() (D8$$SyntheticClass:0)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Executors$ImmediateExecutor.execute(java.lang.Runnable) (Executors.kt:41)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeImmediately(com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:358)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.access$completeImmediately(com.facebook.react.runtime.internal.bolts.Task$Companion, com.facebook.react.runtime.internal.bolts.TaskCompletionSource, com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, java.util.concurrent.Executor) (Task.kt:254)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith(com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor) (Task.kt:133)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.continueWith$default(com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.Continuation, java.util.concurrent.Executor, int, java.lang.Object) (Task.kt:117)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.onSuccess$lambda$12(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:176)
+11-07 18:10:03.602  3710  3731 I art     :   at com.facebook.react.runtime.internal.bolts.Task com.facebook.react.runtime.internal.bolts.Task.$r8$lambda$l0wwo5AvbHxlwfI1R7CH_codxoo(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task) (Task.kt:-1)
+11-07 18:10:03.602  3710  3731 I art     :   at java.lang.Object com.facebook.react.runtime.internal.bolts.Task$$ExternalSyntheticLambda2.then(com.facebook.react.runtime.internal.bolts.Task) (D8$$SyntheticClass:0)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.completeAfterTask$lambda$5(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:394)
+11-07 18:10:03.602  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion.$r8$lambda$IPpysnehFwANEiW061YzapkMdoE(com.facebook.react.runtime.internal.bolts.Continuation, com.facebook.react.runtime.internal.bolts.Task, com.facebook.react.runtime.internal.bolts.TaskCompletionSource) (Task.kt:-1)
+11-07 18:10:03.603  3710  3731 I art     :   at void com.facebook.react.runtime.internal.bolts.Task$Companion$$ExternalSyntheticLambda4.run() (D8$$SyntheticClass:0)
+11-07 18:10:03.603  3710  3731 I art     :   at void java.util.concurrent.ThreadPoolExecutor.runWorker(java.util.concurrent.ThreadPoolExecutor$Worker) (ThreadPoolExecutor.java:1133)
+11-07 18:10:03.603  3710  3731 I art     :   at void java.util.concurrent.ThreadPoolExecutor$Worker.run() (ThreadPoolExecutor.java:607)
+11-07 18:10:03.603  3710  3731 I art     :   at void java.lang.Thread.run() (Thread.java:761)
+11-07 18:10:03.603  3710  3731 I art     : 
+11-07 18:10:03.650  3710  3710 D         : HostConnection::get() New Host Connection established 0x790e6487c300, tid 3710
+11-07 18:10:03.671  3710  3731 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+11-07 18:10:03.672  3710  3731 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+11-07 18:10:03.673  3710  3731 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+11-07 18:10:03.687  3710  3732 I ReactNativeJS: Running "SmartFin"
+11-07 18:10:03.696  3710  3733 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+11-07 18:10:03.714  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+11-07 18:10:03.724  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+11-07 18:10:03.731  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+11-07 18:10:03.732  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+11-07 18:10:03.738  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+11-07 18:10:03.741  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+11-07 18:10:03.750  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+11-07 18:10:03.756  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+11-07 18:10:03.761  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+11-07 18:10:03.766  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+11-07 18:10:03.802  3710  3735 D         : HostConnection::get() New Host Connection established 0x790e6487c1e0, tid 3735
+11-07 18:10:03.804  3710  3735 I OpenGLRenderer: Initialized EGL, version 1.4
+11-07 18:10:03.804  3710  3735 D OpenGLRenderer: Swap behavior 1
+11-07 18:10:03.804  3710  3735 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+11-07 18:10:03.805  3710  3735 D OpenGLRenderer: Swap behavior 0
+11-07 18:10:03.806  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+11-07 18:10:03.814  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+11-07 18:10:03.817  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+11-07 18:10:03.822  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+11-07 18:10:03.825  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+11-07 18:10:03.831  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+11-07 18:10:03.833  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+11-07 18:10:03.834  3710  3735 D EGL_emulation: eglCreateContext: 0x790e70b6c1e0: maj 2 min 0 rcv 2
+11-07 18:10:03.838  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+11-07 18:10:03.844  3710  3732 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+11-07 18:10:03.853  3710  3735 D EGL_emulation: eglMakeCurrent: 0x790e70b6c1e0: ver 2 0 (tinfo 0x790e667deaa0)
+11-07 18:10:03.863  3710  3710 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+11-07 18:10:03.863  3710  3710 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+11-07 18:10:03.864  3710  3710 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.RootViewManager
+11-07 18:10:03.868  3710  3732 I ReactNativeJS: ACCEPTANCE_START:isolation
+11-07 18:10:03.869  3710  3732 I ReactNativeJS: ACCEPTANCE_END:isolation
+11-07 18:10:03.940  3710  3735 D EGL_emulation: eglMakeCurrent: 0x790e70b6c1e0: ver 2 0 (tinfo 0x790e667deaa0)
+11-07 18:10:04.288  3710  3713 I art     : Do partial code cache collection, code=30KB, data=29KB
+11-07 18:10:04.289  3710  3713 I art     : After code cache collection, code=28KB, data=28KB
+11-07 18:10:04.289  3710  3713 I art     : Increasing code cache capacity to 128KB
+11-07 18:10:05.493  3710  3732 I ReactNativeJS: ACCEPTANCE_START:runtime
+11-07 18:10:05.496  3710  3732 I ReactNativeJS: ACCEPTANCE_END:runtime
+11-07 18:10:05.496  3710  3732 I ReactNativeJS: ACCEPTANCE_START:editAmount
+11-07 18:10:06.143  3710  3713 I art     : Do partial code cache collection, code=61KB, data=55KB
+11-07 18:10:06.144  3710  3713 I art     : After code cache collection, code=61KB, data=55KB
+11-07 18:10:06.144  3710  3713 I art     : Increasing code cache capacity to 256KB
+11-07 18:10:06.191  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.editAmount","fields":181}
+11-07 18:10:06.193  3710  3732 I ReactNativeJS: ACCEPTANCE_END:editAmount
+11-07 18:10:06.193  3710  3732 I ReactNativeJS: ACCEPTANCE_START:editSource
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:06.213  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:06.307  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:06.876  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.editSource","fields":181}
+11-07 18:10:06.878  3710  3732 I ReactNativeJS: ACCEPTANCE_END:editSource
+11-07 18:10:06.878  3710  3732 I ReactNativeJS: ACCEPTANCE_START:editCard
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:06.893  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:06.995  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:07.573  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.editCard","fields":181}
+11-07 18:10:07.574  3710  3732 I ReactNativeJS: ACCEPTANCE_END:editCard
+11-07 18:10:07.574  3710  3732 I ReactNativeJS: ACCEPTANCE_START:editDate
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:07.596  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:07.705  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:08.262  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.editDate","fields":181}
+11-07 18:10:08.264  3710  3732 I ReactNativeJS: ACCEPTANCE_END:editDate
+11-07 18:10:08.264  3710  3732 I ReactNativeJS: ACCEPTANCE_START:editType
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:08.304  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:08.388  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:08.939  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.editType","fields":181}
+11-07 18:10:08.941  3710  3732 I ReactNativeJS: ACCEPTANCE_END:editType
+11-07 18:10:08.941  3710  3732 I ReactNativeJS: ACCEPTANCE_START:editMixed
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:08.962  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:09.050  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:09.339  3710  3744 D ProfileInstaller: Installing profile for com.smartfin.snapshot5b2.tests
+11-07 18:10:09.629  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.editMixed","fields":181}
+11-07 18:10:09.630  3710  3732 I ReactNativeJS: ACCEPTANCE_END:editMixed
+11-07 18:10:09.630  3710  3732 I ReactNativeJS: ACCEPTANCE_START:descriptiveEdits
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:09.650  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:09.754  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:10.934  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.descriptiveEdits","fields":169}
+11-07 18:10:10.936  3710  3732 I ReactNativeJS: ACCEPTANCE_END:descriptiveEdits
+11-07 18:10:10.936  3710  3732 I ReactNativeJS: ACCEPTANCE_START:deletePayment
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:10.956  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:11.049  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: La compra tiene imputaciones activas: reviértelas antes de eliminarla (code 1811)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:11.067  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: La compra tiene imputaciones activas: reviértelas antes de eliminarla (code 1811)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:11.153  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:11.161  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:11.721  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.deletePayment","fields":156}
+11-07 18:10:11.722  3710  3732 I ReactNativeJS: ACCEPTANCE_END:deletePayment
+11-07 18:10:11.722  3710  3732 I ReactNativeJS: ACCEPTANCE_START:laterPending
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:11.742  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:11.834  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:12.567  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.laterPending","fields":206}
+11-07 18:10:12.568  3710  3732 I ReactNativeJS: ACCEPTANCE_END:laterPending
+11-07 18:10:12.568  3710  3732 I ReactNativeJS: ACCEPTANCE_START:laterConfirmed
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:12.602  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:12.694  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: La compra tiene imputaciones activas: reviértelas antes de eliminarla (code 1811)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:12.711  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: La compra tiene imputaciones activas: reviértelas antes de eliminarla (code 1811)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:12.789  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: SQLiteStatement.executeUpdateDelete() failed
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: android.database.sqlite.SQLiteConstraintException: FOREIGN KEY constraint failed (code 787)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.nativeExecuteForChangedRowCount(Native Method)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteConnection.executeForChangedRowCount(SQLiteConnection.java:734)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteSession.executeForChangedRowCount(SQLiteSession.java:754)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at android.database.sqlite.SQLiteStatement.executeUpdateDelete(SQLiteStatement.java:64)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.executeSqlBatch(SQLitePlugin.java:620)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin.-$$Nest$mexecuteSqlBatch(SQLitePlugin.java)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at org.pgsqlite.SQLitePlugin$DBRunner.run(SQLitePlugin.java:927)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1133)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:607)
+11-07 18:10:12.797  3710  3739 E unknown:SQLitePlugin: 	at java.lang.Thread.run(Thread.java:761)
+11-07 18:10:13.948  3710  3732 I ReactNativeJS: PHASE1A4B_CASE:{"campaign":"phase1a4b-reversal","label":"reversal.laterConfirmed","fields":249}
+11-07 18:10:13.950  3710  3732 I ReactNativeJS: ACCEPTANCE_END:laterConfirmed
+11-07 18:10:13.950  3710  3732 I ReactNativeJS: ACCEPTANCE_START:equivalence-summary
+11-07 18:10:13.951  3710  3732 I ReactNativeJS: ACCEPTANCE_END:equivalence-summary

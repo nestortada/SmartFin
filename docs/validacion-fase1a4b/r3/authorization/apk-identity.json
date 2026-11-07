@@ -1,0 +1,43 @@
+{
+  "packageId": "com.smartfin.snapshot5b2.tests",
+  "path": "C:/sf-1a4b-r3-20261107/android/app/build/outputs/apk/release/app-release.apk",
+  "sha256": "f4ffd9d8520cdd640be90f48031268040588f1bf2f060354c8e2562248696af5",
+  "sizeBytes": 33810364,
+  "builtAt": "2026-11-07T05:14:38.899Z",
+  "attestationSha256": "bf4a27c0292c9832a86ad5d55180e0ec03bd760a30e8552c88ede485b85daf54",
+  "variant": "release",
+  "purpose": "1a.4B r3 full validation (32 campaigns per device)",
+  "productionSources": 311,
+  "differencesFromR1": [
+    {
+      "file": "phase1a4bNodeExpected.json",
+      "r1": "4126b70dad666a2105c33c5899641e15793a3fb3ff28f5b54366a76b6f041fa6",
+      "r3": "2505b9a60b253b52f8d96796838f7700bfa00a77909e7a5641e764d490db2d18"
+    }
+  ],
+  "harness": [
+    {
+      "source": "scripts/phase1a4b/androidHarness.js",
+      "sha256": "d626ef6e1d1a4d0c175caa1aa5fbecc349a52a724ad122eaaf0f6ce1bbdf7e4e"
+    },
+    {
+      "source": "scripts/phase1a4b/phase1a3bProbes.ts",
+      "sha256": "d78e60730eb173646f2d2928490966520f2fc82afc205c05b0f6c5cd706488ce"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/r3/reference-update.json",
+      "sha256": "bbea726459708ba7cf35e6f191d72c16eec9c54eb087b49e73035b115dd9f3d4"
+    },
+    {
+      "source": "scripts/phase1a4b/probes.ts",
+      "sha256": "0a37f0c8424ea569ecea2e684945d2caf60715fff671154a0572ad121f4e7eb4"
+    },
+    {
+      "source": "docs/validacion-fase1a4b/node/results.json",
+      "sha256": "1faa219207d86d95f7b55f3e3446243d3d6194bbd974e7018089e7acce41bd1b"
+    }
+  ],
+  "buildCommand": "./gradlew.bat --offline --no-daemon --max-workers=2 assembleRelease '-PreactNativeArchitectures=arm64-v8a,x86_64'",
+  "buildCwd": "C:/sf-1a4b-r3-20261107/android",
+  "checksAtRun": "run-android-r3.ps1: APK and attestation hashes, embedded attestation, aapt package/non-debuggable, Hermes at runtime"
+}

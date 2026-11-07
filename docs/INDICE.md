@@ -22,7 +22,9 @@ Este índice separa la documentación por audiencia y fuente de verdad. El códi
 | [Validación Android 1a.3B (preparada)](validacion-fase1a3b/README.md) | QA | 7 campañas (66 casos) + 11 regresiones, oráculo Node de 28.443 hojas y workspace sintético; no ejecutada |
 | [Revisión inicial de compras nuevas (Fase 1a.4A)](revision-inicial-fase1a4A.md) | Desarrollo y QA | Revisión 0 atómica al dar de alta o recrear un plan a cuotas, con el motor 1a.1 |
 | [Validación Android 1a.4A (preparación)](validacion-fase1a4a/README.md) | QA | r2 aprobada: 355/355 casos y 198/198 puntos de fallo en API 24 y API 35 (r1 detenida y conservada) |
-| [Abonos extraordinarios «No sé» (Fase 1a.4B)](abonos-extraordinarios-fase1a4B.md) | Desarrollo y QA | Imputación limitada al capital estimado, revisión 0 perezosa, reversiones D6 y protección de compras imputadas; interno, sin interfaz; Android pendiente |
+| [Abonos extraordinarios «No sé» (Fase 1a.4B)](abonos-extraordinarios-fase1a4B.md) | Desarrollo y QA | Imputación limitada al capital estimado, revisión 0 perezosa, reversiones D6 y protección de compras imputadas; interno, sin interfaz; validado en Android r5 |
+| [Validación Android 1a.4B](validacion-fase1a4b/r5/README.md) | QA | r5 aprobada: 568/568 casos y 356/356 puntos de fallo en API 24 y API 35, 0 diferencias frente a Node (r1–r4 y r5 intento 1 conservados) |
+| [Pendientes tras 1a.4B](pendientes-fase1a4B.md) | Desarrollo | Huella del comando, reconciliación bancaria, respaldo y restauración del historial, intermitencia de pruebas; sin implementar |
 | [Motor de cuotas (Fase 1a.1)](motor-cuotas-fase1a1.md) | Desarrollo y QA | Calendario de cuotas puro y exacto en centavos; contrato y reglas de ciclos |
 | [Contribución](../CONTRIBUTING.md) | Colaboradores | Flujo de cambios y lista de verificación |
 

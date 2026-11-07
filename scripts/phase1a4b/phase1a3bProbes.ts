@@ -1,4 +1,4 @@
-// Derived for 1a.4B by scripts/phase1a4b/derive-probes.cjs (D6 guard outcome; version 4 flows incompatible).
+// Derived for 1a.4B by scripts/phase1a4b/derive-probes.cjs (D6 guard outcome; version 4 flows incompatible; r5 missing-table class).
 // DERIVED by scripts/phase1a4a/derive-probes.cjs from scripts/phase1a3b/probes.ts (sha256 6182dd9859a2c9be39157963cf1eec0768feb8298c35c34afc6cdd51264ca35b).
 // Only the integrity preparation and the purchaseRecreation scenario differ (revision 0 now comes from the use case).
 // Do not edit by hand.
@@ -77,9 +77,42 @@ const MARKER = 'synthetic_phase1a3b_marker';
 const RAISES = ['debe estar activa', 'imputada no existe', 'no corresponde a la tarjeta', 'otro pago', 'activa a revertida',
   'fuera de secuencia', 'cuotas de la revisi', 'admite una revisi', 'reiniciarse con una revisi', 'solo inserci',
   'antes de eliminarlo', 'antes de modificarlo', 'antes de eliminarla', 'cambiar de identificador'];
-function errorClass(error: unknown): string {
+/**
+ * 1a.4B r5: statements whose "no such table" error may be recognized, by table, exactly as production passes them to the
+ * driver. Only the 1a.4B guard (hasActiveAllocationsForPurchaseTransaction), the one that fails on a version 4 database.
+ */
+const MISSING_TABLE_STATEMENTS: ReadonlyMap<string, readonly string[]> = new Map([
+  ['installment_allocations', ["SELECT 1 AS found FROM installment_allocations a\n        JOIN installment_purchases p ON p.id = a.installment_purchase_id\n        WHERE p.transaction_id = ? AND a.status = 'active' LIMIT 1;"]],
+]);
+/** 1a.4B r5: the two observed Android spellings: text between the table name and the statement, and after the statement. */
+const ANDROID_MISSING_TABLE_SPELLINGS: readonly { code: string; suffix: string }[] = [
+  { code: ' (code 1): , while compiling: ', suffix: '' }, // API 24 (r3/r4 emulator)
+  { code: ' (Sqlite code 1 SQLITE_ERROR): , while compiling: ', suffix: ', (OS error - 2:No such file or directory)' }, // API 35 (r4 HONOR)
+];
+/**
+ * 1a.4B r5: name of the missing table in a "no such table" error, written by node:sqlite ("no such table: <t>") or by the
+ * Android driver in one of its two observed spellings, with the compiled statement equal to a listed statement for <t>.
+ * Anything else (another code or category, another OS suffix, another statement, a second error, extra or truncated
+ * text) is not recognized (undefined) and keeps its full text.
+ */
+export function missingTableName(text: string): string | undefined {
+  const head = /^no such table: ([A-Za-z_][A-Za-z0-9_]*)/.exec(text);
+  if (!head) return undefined;
+  const table = head[1]!;
+  const rest = text.slice(head[0].length);
+  if (rest === '') return table;
+  for (const { code, suffix } of ANDROID_MISSING_TABLE_SPELLINGS) {
+    if (!rest.startsWith(code) || !rest.endsWith(suffix) || rest.length < code.length + suffix.length) continue;
+    const statement = rest.slice(code.length, rest.length - suffix.length);
+    if ((MISSING_TABLE_STATEMENTS.get(table) ?? []).includes(statement)) return table;
+  }
+  return undefined;
+}
+export function errorClass(error: unknown): string {
   if (error === undefined) return 'accepted';
   const text = errorText(error);
+  const missing = missingTableName(text);
+  if (missing !== undefined) return 'other: no such table: ' + missing;
   const raise = RAISES.find(fragment => text.includes(fragment));
   if (raise) return 'raise:' + raise;
   if (/CHECK constraint/i.test(text)) return 'check';
@@ -914,8 +947,13 @@ export async function runPhase1A3BFlows(database: Database, countWrites: Phase1A
     const created = await purchase(database, '2026-10-11', 300000, 3, 'Flujo');
     await downgradeToVersion4(database);
     const before = json(await fullState(database));
-    const editTerms = await attempt(() => editPurchase(database, created.id, '2026-10-12', 6));
-    check(editTerms === 'other: no such table: installment_allocations', 'Version 4 guarded step: ' + editTerms);
+    let raw: unknown;
+    const editTerms = await attempt(async () => {
+      try { await editPurchase(database, created.id, '2026-10-12', 6); } catch (error) { raw = error; throw error; }
+    });
+    // r4: the full driver message stays in the diagnostics; only the stable class is compared.
+    console.log('PHASE1A3B_V4_GUARDED_STEP_ERROR:' + json(errorText(raw)));
+    check(editTerms === 'other: no such table: installment_allocations', 'Version 4 guarded step: ' + editTerms + ' | raw: ' + errorText(raw));
     check(json(await fullState(database)) === before, 'The failed version 4 step left changes');
     runs.version4Incompatible = { firstGuardedStep: 'editTerms', outcome: editTerms, stateUnchanged: true };
     await applyVersionedMigrations(database);
