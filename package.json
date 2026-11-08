@@ -10,7 +10,9 @@
     "start": "react-native start",
     "test": "jest",
     "test:reproductions": "jest --config jest.reproductions.config.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "skills:sync": "node scripts/syncAgentSkills.js",
+    "skills:check": "node scripts/syncAgentSkills.js --check"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.85.3",

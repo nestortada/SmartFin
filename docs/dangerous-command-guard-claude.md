@@ -13,7 +13,7 @@ anterior (adaptador v1, con excepciones fijadas por hash para cada fase) está a
 
 | Archivo | Función |
 |---|---|
-| `.claude/settings.json` | Registra el hook para `Bash`, `PowerShell`, `Write`, `Edit` y `MultiEdit`, con un tiempo máximo de 6 s. |
+| `.claude/settings.json` | Registra el hook para `Bash`, `PowerShell`, `Write`, `Edit` y `MultiEdit` con `node "$CLAUDE_PROJECT_DIR/.claude/hooks/dangerous-command-guard.cjs"` (shell bash), tiempo máximo de 10 s y `"onFailure": "block"`. |
 | `.claude/hooks/dangerous-command-guard.cjs` | El guard. Es autocontenido: solo usa `node:fs`, `node:os` y `node:path`. |
 | `.claude/hooks/__tests__/dangerous-command-guard.test.cjs` | Suite `node:test`: 109 casos. Evalúa los comandos y no los ejecuta. |
 
@@ -33,6 +33,15 @@ Los dos evolucionan por separado.
 - **Fallo cerrado hacia `ask`:** un evento mal formado, un comando que no se puede analizar
   (comillas sin cerrar, heredoc sin cierre) o una excepción interna terminan en `ask`, nunca en
   `allow`.
+- **Fallo cerrado si el hook no arranca** (desde el 7 de noviembre de 2026): con
+  `"onFailure": "block"`, si Node no encuentra el guard, el proceso supera los 10 s o devuelve una
+  salida inválida, Claude Code bloquea la llamada en vez de dejarla pasar. Antes de activarlo se
+  comprobó que `$CLAUDE_PROJECT_DIR` se expande en hooks reales: el hook `Stop` de recordatorio,
+  registrado con el mismo patrón, dejó su estado en dos sesiones distintas.
+- **Recuperación:** si el guard se rompe, quedan bloqueados `Bash`, `PowerShell`, `Write`, `Edit` y
+  `MultiEdit` en Claude Code. Corrige o restaura `.claude/hooks/dangerous-command-guard.cjs` con tu
+  editor (o `git checkout -- .claude/hooks/dangerous-command-guard.cjs` en tu terminal), o quita
+  temporalmente `"onFailure": "block"` de `.claude/settings.json`, y abre una sesión nueva.
 - **Raíz del proyecto:** `SMARTFIN_ROOT` o el primer directorio ascendente que contenga
   `AGENTS.md` y `package.json`. Las copias hermanas `C:\sf*` (por ejemplo `C:\sf-6b3-20261101`)
   se tratan como worktrees de SmartFin.

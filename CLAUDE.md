@@ -18,6 +18,7 @@
 - `/agent-device`: Automatización de dispositivos y emuladores (navegar, tocar, capturas, evidencia de UI).
 - `/smartfin-phase-delivery`: Protocolo de una fase numerada: estado inicial, reproducción, decisión, invariantes, atomicidad, pruebas, revisores, documento de fase, índice y pendientes.
 - `/smartfin-android-campaign`: Preparación, ejecución autorizada y aceptación de campañas de equivalencia Node–Android (workspace sintético, APK, runner, rondas rN).
+- `/verificar`: Ejecuta en local las comprobaciones de la CI y resume el resultado (solo invocación manual; `/verificar rapido` omite Jest).
 
 ## Delegación
 
@@ -40,6 +41,10 @@ npm run typecheck
 
 # Linter
 npm run lint
+
+# Copiar .claude/skills a .agents/skills (Codex) / comprobar que son idénticas
+npm run skills:sync
+npm run skills:check
 
 # Iniciar Metro Bundler
 npm start
