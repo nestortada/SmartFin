@@ -7,6 +7,7 @@
 - **Offline-first y Local-first**: Toda la lógica financiera y de persistencia es local (SQLite). No agregar servicios remotos, telemetría ni analítica sin aprobación explícita.
 - **Integridad Financiera**: Antes de modificar cálculos de balances, deudas, suscripciones, tarjetas o movimientos, revisa la skill en `.claude/skills/smartfin-financial-domain/SKILL.md`.
 - **Rendimiento React Native**: Para optimizaciones de render, listas y memoria, consulta la skill en `.claude/skills/react-native-best-practices/SKILL.md`.
+- **Reglas por ruta**: `.claude/rules/` contiene recordatorios por ruta que Claude Code carga al trabajar con archivos coincidentes; no sustituyen AGENTS.md, las skills, los revisores ni los hooks. Solo aplican a Claude Code.
 
 ## Skills Disponibles (Claude Code)
 
