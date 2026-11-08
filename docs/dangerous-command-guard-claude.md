@@ -132,7 +132,9 @@ Prueba manual del proceso real (no produce salida porque la decisión es `allow`
 echo '{"tool_name":"Bash","tool_input":{"command":"git status"},"cwd":"."}' | node .claude/hooks/dangerous-command-guard.cjs
 ```
 
-La suite no forma parte de `npm test` ni de la CI.
+La suite no forma parte de `npm test`. La CI la ejecuta en el job `guard-hooks` de
+`.github/workflows/ci.yml`, sobre `windows-latest`, porque usa rutas de Windows. Ninguno de sus
+casos depende de dónde esté clonado el repositorio.
 
 ## Cambiar o desactivar
 

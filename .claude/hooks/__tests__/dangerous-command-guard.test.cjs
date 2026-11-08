@@ -112,7 +112,8 @@ const cases={
     'rm -rf .claude',
     'rm -rf C:/sf-6b3-20261101/src',
     'rm -rf ~',
-    'rm -rf /c/Users/nesto/Proyectos',
+    // Parent of the repository in Git Bash form (/c/Users/... locally, /d/a/... on CI).
+    'rm -rf '+path.dirname(root).replaceAll('\\','/').replace(/^([A-Za-z]):/,(_,d)=>'/'+d.toLowerCase()),
     'rm -rf *',
     'rm smartfin.db-wal',
     'rm docs/*.db',

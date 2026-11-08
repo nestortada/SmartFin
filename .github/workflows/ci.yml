@@ -69,3 +69,21 @@ jobs:
           path: artifacts/jest-evidence
           if-no-files-found: ignore
           retention-days: 14
+
+  guard-hooks:
+    # The Claude Code PreToolUse guard runs on the owner's Windows machine and its suite uses
+    # Windows paths (drive letters, C:\sf* worktrees), so it is validated on Windows.
+    # Only Node built-ins: no npm install needed.
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Claude Code dangerous-command guard (node:test)
+        run: node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs
