@@ -37,7 +37,7 @@ El proyecto sigue tres principios:
 
 ## Requisitos
 
-- Node.js `22.11.0` o superior.
+- Node.js `24.16.0` o una versión 24 posterior (`engines`: `>=24.16.0 <25`; la versión exacta está en `.nvmrc`).
 - npm.
 - Entorno de React Native configurado para la plataforma elegida.
 - Android: Android SDK 36, JDK compatible y un emulador o dispositivo.

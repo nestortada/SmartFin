@@ -24,6 +24,22 @@ SmartFin is a React Native and TypeScript mobile app for personal finance. The p
 - Avoid `any`. If a boundary is unknown, model it with `unknown` and validate before use.
 - Keep imports local and simple. Do not add path aliases unless Metro/Babel runtime resolution is configured at the same time.
 
+## Money, Dates And Persistence
+
+- Financial civil dates are `YYYY-MM-DD` in `America/Bogota` (CI runs with `TZ=America/Bogota`). Do not derive civil dates from UTC timestamps.
+- The main ledger (accounts, movements, credit cards, subscriptions) stores COP amounts as `number` / SQLite `REAL`; there is no global migration to minor units.
+- Newer domains use integer cents: the installment engine and installment history (`*_cents INTEGER` columns) and shared expenses. Never mix the two representations without an explicit, validated conversion (`Number.isSafeInteger`, explicit rounding).
+- A financial action that must commit together runs inside a single transaction owner (`runSharedSQLiteTransaction` / `runSQLiteTransaction` in `src/database/atomicSQLite.ts`). A sequence of `await` calls is not a transaction. Do not pass `async` callbacks to a driver transaction and do not add nested `BEGIN`/`COMMIT`.
+- Platform side effects (reminders, notifications, backup publication, UI refresh) happen only after COMMIT. An `unknown` commit result keeps its quarantine; never retry the financial body.
+- Do not use `INSERT OR REPLACE` on parent tables (accounts, movements, cards): it deletes and re-inserts the parent and can affect children. Keep UPDATE + conditional INSERT.
+- Schema changes go through numbered, transactional migrations and must work on Android API 24 (`minSdkVersion = 24`, SQLite 3.9.2).
+- Details: `.claude/skills/smartfin-financial-domain/SKILL.md` and `.claude/skills/smartfin-sqlite-architecture/SKILL.md`.
+
+## Documentation And Agent Configuration
+
+- Start from `docs/INDICE.md`; phase documents (`docs/*-fase*`) are historical evidence, and code and tests win when they disagree.
+- Agent skills live in two identical copies: `.claude/skills/` (Claude Code) and `.agents/skills/` (Codex). Edit both in the same change; CI fails if they differ.
+
 ## Privacy And Offline Rules
 
 - Do not add network calls, telemetry, analytics, remote sync, or third-party finance services without explicit user approval.

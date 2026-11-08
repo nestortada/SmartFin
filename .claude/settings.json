@@ -1,4 +1,27 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(npm test *)",
+      "Bash(npm run typecheck *)",
+      "Bash(npm run lint *)",
+      "Bash(npm run test:reproductions *)",
+      "Bash(npx tsc --noEmit *)",
+      "Bash(node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs *)",
+      "PowerShell(git status *)",
+      "PowerShell(git diff *)",
+      "PowerShell(git log *)",
+      "PowerShell(git show *)",
+      "PowerShell(npm test *)",
+      "PowerShell(npm run typecheck *)",
+      "PowerShell(npm run lint *)",
+      "PowerShell(npm run test:reproductions *)",
+      "PowerShell(npx tsc --noEmit *)"
+    ]
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -6,7 +29,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node \"C:/Users/nesto/Proyectos/SmartFin/.claude/hooks/dangerous-command-guard.cjs\"",
+            "shell": "bash",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/dangerous-command-guard.cjs\"",
             "timeout": 6
           }
         ]

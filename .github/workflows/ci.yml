@@ -24,6 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Agent skills are identical for Claude Code and Codex
+        # .claude/skills and .agents/skills are two copies of the same skills (see AGENTS.md).
+        run: diff -r .agents/skills .claude/skills
+
       - name: Set up Node from .nvmrc
         uses: actions/setup-node@v4
         with:
