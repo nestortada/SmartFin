@@ -26,6 +26,7 @@ Este índice separa la documentación por audiencia y fuente de verdad. El códi
 | [Validación Android 1a.4B](validacion-fase1a4b/r5/README.md) | QA | r5 aprobada: 568/568 casos y 356/356 puntos de fallo en API 24 y API 35, 0 diferencias frente a Node (r1–r4 y r5 intento 1 conservados) |
 | [Pendientes tras 1a.4B](pendientes-fase1a4B.md) | Desarrollo | Huella del comando, reconciliación bancaria, respaldo y restauración del historial, intermitencia de pruebas; sin implementar |
 | [Motor de cuotas (Fase 1a.1)](motor-cuotas-fase1a1.md) | Desarrollo y QA | Calendario de cuotas puro y exacto en centavos; contrato y reglas de ciclos |
+| [Guard de comandos en Claude Code (v2)](dangerous-command-guard-claude.md) | Desarrollo | Hook PreToolUse vigente: reglas, límites y verificación; la v1 está en [historico/guard-claude-v1](historico/guard-claude-v1/dangerous-command-guard-claude-v1.md) |
 | [Contribución](../CONTRIBUTING.md) | Colaboradores | Flujo de cambios y lista de verificación |
 
 ## Fuentes de verdad
