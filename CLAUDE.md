@@ -16,11 +16,15 @@
 - `/smartfin-testing-qa`: Diseño y evaluación de pruebas Jest, React Native, SQLite y Android; regresiones financieras, atomicidad y rendimiento con datos sintéticos.
 - `/react-native-best-practices`: Guías de rendimiento, FlashList, optimizaciones Hermes y evitar re-renders.
 - `/agent-device`: Automatización de dispositivos y emuladores (navegar, tocar, capturas, evidencia de UI).
+- `/smartfin-phase-delivery`: Protocolo de una fase numerada: estado inicial, reproducción, decisión, invariantes, atomicidad, pruebas, revisores, documento de fase, índice y pendientes.
+- `/smartfin-android-campaign`: Preparación, ejecución autorizada y aceptación de campañas de equivalencia Node–Android (workspace sintético, APK, runner, rondas rN).
 
 ## Delegación
 
 - Antes de dar por terminado un cambio en `useCases`, repositorios, SQL o migraciones, invoca `financial-reviewer`.
 - Antes de dar por terminado un cambio en `android/`, servicios de plataforma o `databaseCoordination.ts`, invoca `android-native-reviewer`.
+- Antes de dar por terminado un cambio en respaldo, restauración, exportación, autenticación, permisos o servicios externos, invoca `security-privacy-reviewer`.
+- El hook `Stop` (`.claude/hooks/reviewer-reminder.cjs`) recuerda estos revisores cuando cambian esas áreas durante la sesión; no sustituye el criterio de invocarlos.
 
 ## Comandos de Verificación y Desarrollo
 

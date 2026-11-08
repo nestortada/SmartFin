@@ -89,5 +89,5 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - name: Claude Code dangerous-command guard (node:test)
-        run: node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs
+      - name: Claude Code hooks (node:test)
+        run: node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs .claude/hooks/__tests__/reviewer-reminder.test.cjs
