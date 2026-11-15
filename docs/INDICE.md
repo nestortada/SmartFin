@@ -86,16 +86,11 @@ Documentos de evidencia por fase, en orden. Son históricos: describen el códig
 | [Auditoría de gastos compartidos en Android](AUDITORIA_GASTOS_COMPARTIDOS_ANDROID.md) | Base funcional comprobada; interfaz no lista |
 | [Validación Android de operaciones compartidas](VALIDACION_OPERACIONES_COMPARTIDAS_ANDROID.md) | Campaña sintética de los comandos del módulo |
 
-### Línea base y respaldo y restauración (etapa C)
+### Línea base
 
 | Documento | Estado declarado |
 |---|---|
 | [Línea base fase 0 y reproducciones](linea-base-fase0.md) | Origen de `__tests__/reproductions/` (`npm run test:reproductions`) |
-| [Auditoría de respaldo y recuperación](auditoria-respaldo-restauracion-fase1a4B.md) | SmartFin no puede restaurar íntegramente: no hay mecanismo de restauración |
-| [Diseño de restauración segura (C1)](diseno-restauracion-segura-smartfin.md) | Restauración completa y explícita, validada en copia privada; solo diseño y prueba de concepto |
-| [Validación de respaldos (C2)](validacion-respaldos-smartfin-c2.md) | Opción B (generaciones con puntero durable) viable; validador de candidatos en Node |
-| [Resolvedor SQLite (C3A)](implementacion-resolvedor-smartfin-c3a.md) | Resolvedor, adopción de `smartfin.db` y control de conexiones; no restaura ni activa generaciones |
-| Validaciones C3A: [Android](validacion-resolvedor-smartfin-c3a-android.md), [r2](validacion-resolvedor-smartfin-c3a-r2.md), [r3](validacion-resolvedor-smartfin-c3a-r3.md), [r4](validacion-resolvedor-smartfin-c3a-r4.md), [r5](validacion-resolvedor-smartfin-c3a-r5.md), [r6](validacion-resolvedor-smartfin-c3a-r6.md), [r7](validacion-resolvedor-smartfin-c3a-r7.md), [r8](validacion-resolvedor-smartfin-c3a-r8.md) | r8: **validada en API 24 (61/61); no validada en API 35** (adopción anticipada por el receptor nativo con cambio físico de bytes sin divergencia lógica demostrada). No se avanza a C3B |
 
 ## Fuentes de verdad
 

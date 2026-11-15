@@ -15,4 +15,4 @@ Al cambiar estos archivos:
 - Una dependencia nueva o actualizada requiere aprobación explícita. Revisa versión resuelta, dependencias transitivas y scripts `postinstall`; no ejecutes `npm audit fix`.
 - `.nvmrc` y `engines` fijan Node 24; no los cambies sin aprobación.
 - `scripts/syncAgentSkills.js` solo copia skills; no le añadas otras responsabilidades.
-- Los scripts de campañas Android (`scripts/phase*/`, `scripts/c3a/`) solo se ejecutan con autorización y la skill `smartfin-android-campaign`.
+- Los scripts de campañas Android (`scripts/phase*/` y los de cada etapa) solo se ejecutan con autorización y la skill `smartfin-android-campaign`.
