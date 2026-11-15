@@ -21,7 +21,8 @@ let nativeQuarantined: boolean;
 let lifecycle: typeof import('../src/database/sqliteDatabase');
 let snapshotApi: typeof import('../src/modules/settings/services/localDatabaseSnapshot');
 let coordinator: typeof import('../src/database/databaseCoordination');
-let native: { acquire: jest.Mock; checkOwner: jest.Mock; release: jest.Mock; quarantine: jest.Mock; capture: jest.Mock; discard: jest.Mock };
+let native: { acquire: jest.Mock; checkOwner: jest.Mock; release: jest.Mock; quarantine: jest.Mock; capture: jest.Mock; discard: jest.Mock;
+  resolveDatabase: jest.Mock; confirmFreshInstall: jest.Mock; releaseDatabaseBinding: jest.Mock };
 
 beforeEach(() => {
   jest.resetModules();
@@ -56,6 +57,16 @@ beforeEach(() => {
         sha256: 'a'.repeat(64), journal: expected.journal, journalBeforeClose: expected.journal, sourceValidationMs: 0, copyMs: 0, validationAndHashMs: 0, nativeTotalMs: 0 });
     }),
     discard: jest.fn(async () => undefined),
+    // C3A: Node stand-in for SmartFinDatabaseLocation (not Android evidence). Untraced on purpose so the
+    // 5B.1 sequences asserted below stay exactly as before; it refuses like Kotlin once quarantined.
+    resolveDatabase: jest.fn(async () => {
+      if (nativeQuarantined) throw new Error('Native quarantine');
+      return JSON.stringify({ status: 'open', fileName: 'smartfin.db', generationId: '11111111-1111-4111-8111-111111111111',
+        installationId: '22222222-2222-4222-8222-222222222222', datasetId: '33333333-3333-4333-8333-333333333333',
+        locationEpoch: 1, fileIdentity: '1:1' });
+    }),
+    confirmFreshInstall: jest.fn(async () => undefined),
+    releaseDatabaseBinding: jest.fn(async () => undefined),
   };
   NativeModules.SmartFinDatabaseLifecycle = native;
   const driver = require('react-native-sqlite-storage') as { openDatabase: jest.Mock };

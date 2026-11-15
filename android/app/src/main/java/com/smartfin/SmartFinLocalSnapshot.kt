@@ -83,7 +83,8 @@ object SmartFinLocalSnapshot {
     SmartFinDatabaseCoordinator.withParticipant(token) { permit ->
       SmartFinFinancialDeletion.assertCaptureAdmitted(context)
       val started = System.nanoTime()
-      val source = context.getDatabasePath("smartfin.db")
+      // C3A: only the active generation, and only the one JavaScript described in `expected`.
+      val source = SmartFinDatabaseLocation.activeFile(context, expected.optString("generationId").takeIf { it.isNotEmpty() })
       check(source.isFile) { "Database file unavailable" }
       val root = File(context.noBackupFilesDir, "smartfin-local-snapshots")
       check(root.isDirectory || root.mkdirs())

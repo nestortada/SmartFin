@@ -144,7 +144,10 @@ export async function captureLocalDatabaseSnapshot(backupJobId?: string) {
     try {
       await closeSmartFinDatabase(permit);
       closeMs = monotonic.now() - closeStart;
-      snapshot = parseSnapshot(await native.capture(token, JSON.stringify({ ...expected, backupJobId })));
+      // C3A: Kotlin copies only the active generation, and only if it is the one described here.
+      const binding = sqliteConnectionState(database)?.binding;
+      const generationId = binding?.managed ? binding.generationId : undefined;
+      snapshot = parseSnapshot(await native.capture(token, JSON.stringify({ ...expected, backupJobId, generationId })));
       if (snapshot.revision !== expected.revision) throw new Error('Revisión de captura incompatible.');
     } catch (error) {
       captureError = error;

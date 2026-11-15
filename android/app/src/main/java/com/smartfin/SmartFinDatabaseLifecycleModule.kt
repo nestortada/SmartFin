@@ -32,6 +32,16 @@ class SmartFinDatabaseLifecycleModule(private val context: ReactApplicationConte
   @ReactMethod fun quarantine(promise: Promise) = submit(promise) {
     SmartFinDatabaseCoordinator.quarantine(); null
   }
+  // C3A: the JS driver opens only the file named by SmartFinDatabaseLocation, under its exclusive owner.
+  @ReactMethod fun resolveDatabase(token: String, promise: Promise) = submit(promise) {
+    SmartFinDatabaseCoordinator.withParticipant(token) { SmartFinDatabaseLocation.resolveForJs(context) }
+  }
+  @ReactMethod fun confirmFreshInstall(token: String, generationId: String, promise: Promise) = submit(promise) {
+    SmartFinDatabaseCoordinator.withParticipant(token) { SmartFinDatabaseLocation.confirmFreshInstall(context, generationId) }; null
+  }
+  @ReactMethod fun releaseDatabaseBinding(token: String, generationId: String, promise: Promise) = submit(promise) {
+    SmartFinDatabaseCoordinator.withParticipant(token) { SmartFinDatabaseLocation.releaseJsBinding(generationId) }; null
+  }
   @ReactMethod fun capture(token: String, expected: String, promise: Promise) = submit(promise) {
     SmartFinLocalSnapshot.capture(context, token, JSONObject(expected)).toString()
   }

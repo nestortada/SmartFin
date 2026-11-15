@@ -7,6 +7,7 @@ import {
   withDatabaseMaintenance,
   type DatabasePermit,
 } from './databaseCoordination';
+import { isDatabaseBindingCurrent, type DatabaseBinding } from './databaseLocation';
 
 type Connection = {
   raw: SmartFinSQLiteDatabase;
@@ -14,6 +15,8 @@ type Connection = {
   status: 'open' | 'quarantined' | 'closed';
   transactionOwner?: DatabasePermit;
   closeFailure?: { error: unknown };
+  /** C3A: database generation this connection was opened for (absent for unbound test/adapter handles). */
+  binding?: DatabaseBinding;
 };
 type Handle = {
   connection: Connection;
@@ -41,9 +44,12 @@ const controlSQL = (sql: string) =>
     sql.replace(/^(?:\s|;|--[^\r\n]*(?:\r?\n|$)|\/\*[\s\S]*?\*\/)*\s*/, ''),
   );
 
-function validate(handle: Handle) {
+function validate(handle: Handle, allowObsoleteGeneration = false) {
   if (handle.connection.status !== 'open')
     throw new Error('SQLite connection is not usable');
+  // C3A: a handle of an invalidated or replaced generation can never read or write again (closing is allowed).
+  if (!allowObsoleteGeneration && handle.connection.binding && !isDatabaseBindingCurrent(handle.connection.binding))
+    throw new Error('SQLite connection belongs to an obsolete database generation');
   if (handle.permit) assertDatabasePermit(handle.permit);
   if (
     handle.scope &&
@@ -54,11 +60,11 @@ function validate(handle: Handle) {
   }
 }
 function makeHandle(handle: Handle): SmartFinSQLiteDatabase {
-  const access = <T>(operation: (owner: DatabasePermit) => Promise<T>) => {
-    validate(handle);
+  const access = <T>(operation: (owner: DatabasePermit) => Promise<T>, allowObsoleteGeneration = false) => {
+    validate(handle, allowObsoleteGeneration);
     if (handle.permit) return operation(handle.permit);
     return withDatabaseMaintenance(async owner => {
-      validate(handle);
+      validate(handle, allowObsoleteGeneration);
       return operation(owner);
     });
   };
@@ -142,7 +148,7 @@ function makeHandle(handle: Handle): SmartFinSQLiteDatabase {
             if (handle.connection.transactionOwner)
               throw new Error('Cannot close an active transaction scope');
             await closeConnection(handle.connection);
-          });
+          }, true);
       // Never expose driver internals or an uncoordinated bound method.
       throw new Error(`Unsupported managed SQLite member: ${String(key)}`);
     },
@@ -152,12 +158,13 @@ function makeHandle(handle: Handle): SmartFinSQLiteDatabase {
 }
 export function manageSQLiteDatabase(
   raw: SmartFinSQLiteDatabase,
+  binding?: DatabaseBinding,
 ): SmartFinSQLiteDatabase {
   if (handles.has(raw)) return raw;
   const previous = managed.get(raw);
   if (previous) return previous;
   const result = makeHandle({
-    connection: { raw, generation: ++generation, status: 'open' },
+    connection: { raw, generation: ++generation, status: 'open', ...(binding ? { binding } : {}) },
   });
   managed.set(raw, result);
   return result;
@@ -182,6 +189,7 @@ export function sqliteConnectionState(database: SmartFinSQLiteDatabase) {
         generation: handle.connection.generation,
         status: handle.connection.status,
         owned: !!handle.connection.transactionOwner,
+        binding: handle.connection.binding,
       }
     : undefined;
 }

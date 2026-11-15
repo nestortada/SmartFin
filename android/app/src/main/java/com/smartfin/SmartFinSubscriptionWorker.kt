@@ -44,6 +44,10 @@ class SmartFinSubscriptionWorker(context: Context,params: WorkerParameters) : Wo
         } catch (_: Exception) { headless.remove(runId); result.complete(false) }
       }
       return if (result.get(60,TimeUnit.SECONDS)) Result.success() else Result.retry()
+    } catch (error: SmartFinDatabaseLocation.Unavailable) {
+      // C3A: a pending restore may clear later (bounded WorkManager backoff); a lost, corrupt or
+      // foreign database is permanent for this run and must not loop. Never initializes the database.
+      return if (error.retryable) Result.retry() else Result.failure()
     } catch (_: Exception) { return Result.retry() }
     finally {
       executing.remove(id)

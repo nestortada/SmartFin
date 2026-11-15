@@ -3,10 +3,15 @@ import {
   type SQLiteDatabase,
 } from 'react-native-sqlite-storage';
 
+import { SQLITE_SCHEMA_STATEMENTS } from './sqliteSchema';
 import {
-  SMARTFIN_DATABASE_NAME,
-  SQLITE_SCHEMA_STATEMENTS,
-} from './sqliteSchema';
+  activateDatabaseBinding,
+  assertResolutionUsable,
+  confirmFreshDatabase,
+  isDatabaseBindingCurrent,
+  releaseDatabaseBinding,
+  resolveSmartFinDatabase,
+} from './databaseLocation';
 
 import { applyVersionedMigrations } from './migrations';
 import { SHARED_LOSS_SCHEMA } from '../modules/transactions/database/sharedLossSchema';
@@ -66,19 +71,27 @@ export async function openSmartFinDatabase(
 
     if (databasePromise) {
       const previous = await databasePromise;
-      if (sqliteConnectionState(previous)?.status !== 'open') {
-        if (sqliteConnectionState(previous)?.status !== 'closed')
+      const state = sqliteConnectionState(previous);
+      // C3A: a connection of an invalidated generation is closed and never reused.
+      const obsolete = state?.binding !== undefined && !isDatabaseBindingCurrent(state.binding);
+      if (state?.status !== 'open' || obsolete) {
+        if (state?.status !== 'closed')
           await discardSQLiteConnection(previous, owner);
+        if (state?.binding) await releaseDatabaseBinding(owner, state.binding);
         databasePromise = undefined;
       }
     }
     if (!databasePromise) {
+      // Resolution happens before any driver call; a refusal (pending recovery, lost database, invalid
+      // metadata) is thrown as DatabaseResolutionError and no file name is ever guessed or created.
+      const resolution = await resolveSmartFinDatabase(owner);
+      assertResolutionUsable(resolution.binding);
       databasePromise = openConfirmedSQLiteConnection({
         location: 'default',
-        name: SMARTFIN_DATABASE_NAME,
+        name: resolution.binding.fileName,
       })
         .then(async database => {
-          const managedDatabase = manageSQLiteDatabase(database);
+          const managedDatabase = manageSQLiteDatabase(database, resolution.binding);
           try {
             // Initialization uses a borrowed handle, so migration transactions never requeue.
             const owned = borrowSQLiteDatabase(managedDatabase, owner);
@@ -113,10 +126,14 @@ export async function openSmartFinDatabase(
               })(),
               'state verification',
             );
+            // A fresh installation becomes "active" only after schema, migrations and checks passed.
+            if (resolution.freshInstall) await confirmFreshDatabase(owner, resolution.binding);
+            activateDatabaseBinding(resolution.binding);
             return managedDatabase;
           } catch (error) {
             try {
               await discardSQLiteConnection(managedDatabase, owner);
+              await releaseDatabaseBinding(owner, resolution.binding);
             } catch {
               failedInitialization = managedDatabase;
             }
@@ -149,9 +166,12 @@ export async function closeSmartFinDatabase(
       return;
     }
 
-    if (sqliteConnectionState(database)?.status !== 'closed')
+    const state = sqliteConnectionState(database);
+    if (state?.status !== 'closed')
       await discardSQLiteConnection(database, owner);
     databasePromise = undefined;
+    // Native side: no JS connection of this generation remains open (precondition of a future activation).
+    if (state?.binding) await releaseDatabaseBinding(owner, state.binding);
   }, permit);
 }
 

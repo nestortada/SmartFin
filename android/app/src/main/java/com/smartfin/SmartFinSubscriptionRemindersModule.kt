@@ -176,7 +176,14 @@ class SmartFinSubscriptionRemindersModule(private val context: ReactApplicationC
     fun <T> withDatabase(context: Context, permit: SmartFinDatabaseCoordinator.Participant,
         block: (SQLiteDatabase) -> T): T? {
       SmartFinDatabaseCoordinator.assertParticipant(permit)
-      val file = context.getDatabasePath("smartfin.db")
+      // C3A: resolve the active generation; never initialize or guess. Not initialized keeps the
+      // previous "no database yet" result (null); every other refusal is a typed, controlled error.
+      val file = try {
+        SmartFinDatabaseLocation.resolve(context, SmartFinDatabaseLocation.Policy.NO_RECOVERY).file
+      } catch (error: SmartFinDatabaseLocation.Unavailable) {
+        if (error.code == "NOT_INITIALIZED") return null
+        throw error
+      }
       if (!file.exists()) return null
       val db = SQLiteDatabase.openDatabase(file.path,null,SQLiteDatabase.OPEN_READWRITE)
       try {
