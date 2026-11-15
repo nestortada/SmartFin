@@ -16,6 +16,15 @@
       "Bash(npm run skills:sync *)",
       "Bash(npx tsc --noEmit *)",
       "Bash(node --test .claude/hooks/__tests__/*)",
+      "Bash(node --test .codex/hooks/__tests__/*)",
+      "Bash(npx jest *)",
+      "Bash(npx eslint *)",
+      "Bash(git branch --show-current)",
+      "Bash(git rev-parse *)",
+      "Bash(git merge-base *)",
+      "Bash(git ls-files *)",
+      "Bash(git blame *)",
+      "Bash(git worktree list *)",
       "PowerShell(git status *)",
       "PowerShell(git diff *)",
       "PowerShell(git log *)",
@@ -27,7 +36,16 @@
       "PowerShell(npm run skills:check *)",
       "PowerShell(npm run skills:sync *)",
       "PowerShell(npx tsc --noEmit *)",
-      "PowerShell(node --test .claude/hooks/__tests__/*)"
+      "PowerShell(node --test .claude/hooks/__tests__/*)",
+      "PowerShell(node --test .codex/hooks/__tests__/*)",
+      "PowerShell(npx jest *)",
+      "PowerShell(npx eslint *)",
+      "PowerShell(git branch --show-current)",
+      "PowerShell(git rev-parse *)",
+      "PowerShell(git merge-base *)",
+      "PowerShell(git ls-files *)",
+      "PowerShell(git blame *)",
+      "PowerShell(git worktree list *)"
     ],
     "deny": [
       "Read(**/.env)",
@@ -67,6 +85,19 @@
         ]
       }
     ],
+    "PostToolUse": [
+      {
+        "matcher": "^(Bash|PowerShell|powershell)$",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/reviewer-reminder.cjs\" verified",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
@@ -74,6 +105,12 @@
             "type": "command",
             "shell": "bash",
             "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/reviewer-reminder.cjs\" baseline",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-context.cjs\"",
             "timeout": 10
           }
         ]
