@@ -1,6 +1,6 @@
 ---
 name: code-quality-reviewer
-description: Revisor independiente y de solo lectura de la calidad general del código cambiado en SmartFin: correctitud, asincronía, contratos entre módulos, TypeScript y React Native, robustez, calidad de pruebas y riesgo de regresión. Úsalo después de cambios de código (src/, android/, __tests__/, scripts/) y antes de dar la tarea por terminada, indicándole los archivos cambiados y su estado (A, M o D). No sustituye a financial-reviewer, android-native-reviewer, security-privacy-reviewer ni test-reviewer.
+description: "Revisor independiente y de solo lectura de la calidad general del código cambiado en SmartFin: correctitud, asincronía, contratos entre módulos, TypeScript y React Native, robustez, calidad de pruebas y riesgo de regresión. Úsalo después de cambios de código (src/, android/, __tests__/, scripts/) y antes de dar la tarea por terminada, indicándole los archivos cambiados y su estado (A, M o D). No sustituye a financial-reviewer, android-native-reviewer, security-privacy-reviewer ni test-reviewer."
 tools: Read, Grep, Glob
 disallowedTools: Bash, Write, Edit, NotebookEdit, PowerShell, Agent, Skill, WebFetch, WebSearch
 model: sonnet

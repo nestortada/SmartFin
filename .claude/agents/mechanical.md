@@ -1,6 +1,6 @@
 ---
 name: mechanical
-description: Tareas mecánicas sin lógica de negocio en SmartFin: corregir lint, formato, imports no usados, renombres de variables locales en UI y tipos triviales. No usar para casos de uso, repositorios, SQL, migraciones ni código Android.
+description: "Tareas mecánicas sin lógica de negocio en SmartFin: corregir lint, formato, imports no usados, renombres de variables locales en UI y tipos triviales. No usar para casos de uso, repositorios, SQL, migraciones ni código Android."
 tools: Read, Edit, Grep, Glob, Bash
 model: haiku
 ---

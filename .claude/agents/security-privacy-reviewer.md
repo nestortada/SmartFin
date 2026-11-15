@@ -1,6 +1,6 @@
 ---
 name: security-privacy-reviewer
-description: Revisor independiente de seguridad y privacidad en SmartFin: respaldos, exportaciones CSV, copia local, restauración y validación de archivos elegidos por el usuario, SAF y permisos, PIN/biometría/Keystore, secretos, logs, IA y dependencias. Úsalo después de cambiar respaldo, restauración, exportación, autenticación, integraciones externas o manifest/permisos, y antes de dar la tarea por terminada.
+description: "Revisor independiente de seguridad y privacidad en SmartFin: respaldos, exportaciones CSV, copia local, restauración y validación de archivos elegidos por el usuario, SAF y permisos, PIN/biometría/Keystore, secretos, logs, IA y dependencias. Úsalo después de cambiar respaldo, restauración, exportación, autenticación, integraciones externas o manifest/permisos, y antes de dar la tarea por terminada."
 tools: Read, Grep, Glob, Bash
 model: inherit
 skills:

@@ -1,6 +1,6 @@
 ---
 name: financial-reviewer
-description: Revisor independiente de cambios que afectan dinero en SmartFin: saldos, transferencias, tarjetas, cuotas, gastos compartidos, condonaciones, suscripciones, migraciones y atomicidad SQLite. Úsalo después de implementar y antes de dar una tarea por terminada.
+description: "Revisor independiente de cambios que afectan dinero en SmartFin: saldos, transferencias, tarjetas, cuotas, gastos compartidos, condonaciones, suscripciones, migraciones y atomicidad SQLite. Úsalo después de implementar y antes de dar una tarea por terminada."
 tools: Read, Grep, Glob, Bash
 model: inherit
 skills:
