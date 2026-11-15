@@ -17,9 +17,18 @@ const write = (file, text) => {
   fs.writeFileSync(path.join(repo, file), text);
 };
 const git = (...args) => execFileSync('git', ['-C', repo, ...args], {stdio: 'ignore'});
-const stop = (session, extra = {}) => run('stop', {session_id: session, cwd: repo, stop_hook_active: false, ...extra});
+// The reviewer tests below assume the session already ran every check in CHECKS, so `stop` records that first;
+// the verification tests at the end use `rawStop` to exercise the verification reminder itself.
+const ALL_CHECKS = 'npm run typecheck && npm test -- --runInBand && node --test .claude/hooks/__tests__/x.test.cjs';
+const verify = (session, command = ALL_CHECKS) => run('verified', {session_id: session, cwd: repo, tool_input: {command}});
+const rawStop = (session, extra = {}) => run('stop', {session_id: session, cwd: repo, stop_hook_active: false, ...extra});
+const stop = (session, extra = {}) => {
+  verify(session);
+  return rawStop(session, extra);
+};
 const baseline = session => run('baseline', {session_id: session, cwd: repo});
 const reviewers = result => (result ? [...result.reason.matchAll(/^- ([\w-]+)/gm)].map(m => m[1]) : []);
+const checks = result => (result ? [...result.reason.matchAll(/^• ([\w-]+)/gm)].map(m => m[1]) : []);
 
 before(() => {
   fs.mkdirSync(repo);
@@ -189,4 +198,83 @@ test('CLI: silent when nothing is due, JSON block when a reviewer is due, silent
   assert.equal(broken.status, 0);
   assert.equal(broken.stdout, '');
   git('checkout', '--', '.');
+});
+
+test('code changed in the session asks for typecheck and Jest once per version, without listing them as reviewers', () => {
+  baseline('v1');
+  write('src/modules/transactions/ui/Screen.tsx', 'unverified\n');
+  const first = rawStop('v1');
+  assert.equal(first.decision, 'block');
+  assert.deepEqual(checks(first), ['typecheck', 'jest']);
+  assert.deepEqual(reviewers(first), [], 'checks are not reviewers');
+  assert.match(first.reason, /ui\/Screen\.tsx/);
+  assert.match(first.reason, /code-quality-reviewer/, 'production code mentions the quality reviewer');
+  assert.equal(rawStop('v1'), null, 'the same version is not reminded again even if no check ran');
+  write('src/modules/transactions/ui/Screen.tsx', 'edited again\n');
+  assert.deepEqual(checks(rawStop('v1')), ['typecheck', 'jest'], 'a new version is reminded again');
+  git('checkout', '--', '.');
+});
+
+test('a check that ran after the last edit is not reminded; one that ran before it is', () => {
+  baseline('v2');
+  write('src/modules/transactions/ui/Screen.tsx', 'a\n');
+  verify('v2', 'npm run typecheck 2>&1 | Select-Object -Last 20');
+  assert.deepEqual(checks(rawStop('v2')), ['jest'], 'typecheck ran on this version');
+  write('src/modules/transactions/ui/Screen.tsx', 'b\n');
+  verify('v2', 'npx jest __tests__/screen.test.tsx');
+  assert.deepEqual(checks(rawStop('v2')), ['typecheck'], 'typecheck ran on the previous version only');
+  write('src/modules/transactions/ui/Screen.tsx', 'c\n');
+  verify('v2', 'npx tsc --noEmit');
+  verify('v2', 'npm run test:reproductions -- --runInBand');
+  assert.equal(rawStop('v2'), null);
+  git('checkout', '--', '.');
+});
+
+test('commands that do not run a check, and changes no check covers, never count', () => {
+  baseline('v3');
+  write('src/modules/transactions/ui/Screen.tsx', 'x\n');
+  for (const command of ['git status', 'cat jest.config.js', 'grep -rn tsc src', 'node --test other/x.test.cjs']) verify('v3', command);
+  assert.deepEqual(checks(rawStop('v3')), ['typecheck', 'jest']);
+  git('checkout', '--', '.');
+  baseline('v4');
+  write('docs/fase.md', 'doc only\n');
+  write('android/app/src/main/java/com/smartfin/Module.kt', 'kotlin\n');
+  assert.deepEqual(checks(rawStop('v4')), [], 'docs and Kotlin are outside typecheck, Jest and hook tests');
+  git('checkout', '--', '.');
+});
+
+test('test-only and hook changes ask only for the checks that cover them', () => {
+  baseline('v5');
+  write('__tests__/newCase.test.ts', 'new\n');
+  const testOnly = rawStop('v5');
+  assert.deepEqual(checks(testOnly), ['typecheck', 'jest']);
+  assert.doesNotMatch(testOnly.reason, /code-quality-reviewer/, 'tests alone are not production code');
+  fs.rmSync(path.join(repo, '__tests__/newCase.test.ts'));
+  write('.claude/hooks/demo.cjs', 'hook\n');
+  assert.deepEqual(checks(rawStop('v5')), ['hooks']);
+  write('.claude/hooks/demo.cjs', 'hook v2\n');
+  verify('v5', 'node --test .claude/hooks/__tests__/demo.test.cjs');
+  assert.equal(rawStop('v5'), null);
+  fs.rmSync(path.join(repo, '.claude/hooks'), {recursive: true});
+});
+
+test('pending work from before the session never asks for checks, and a reminder is merged with reviewers', () => {
+  write('src/modules/transactions/useCases/save.ts', 'user change\n');
+  baseline('v6');
+  assert.equal(rawStop('v6'), null);
+  write('src/modules/transactions/useCases/save.ts', 'claude change\n');
+  const both = rawStop('v6');
+  assert.deepEqual(reviewers(both), ['financial-reviewer']);
+  assert.deepEqual(checks(both), ['typecheck', 'jest']);
+  git('checkout', '--', '.');
+});
+
+test('CLI verified mode is silent, ignores unrelated commands and survives bad input', () => {
+  const cli = input => spawnSync(process.execPath, [script, 'verified'], {input, encoding: 'utf8', timeout: 10000, env: process.env});
+  for (const input of [JSON.stringify({session_id: 'c9', cwd: repo, tool_input: {command: 'npm run typecheck'}}),
+    JSON.stringify({session_id: 'c9', cwd: repo, tool_input: {command: 'git status'}}), 'not json']) {
+    const result = cli(input);
+    assert.equal(result.status, 0);
+    assert.equal(result.stdout, '');
+  }
 });

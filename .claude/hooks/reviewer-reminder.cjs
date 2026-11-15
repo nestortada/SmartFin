@@ -8,7 +8,12 @@
 //                 their areas (REVIEWERS, by path; the smartfin-development workflow replicates these rules);
 //               - run test-reviewer when an existing tracked test under __tests__/ was modified or deleted
 //                 (new test files alone do not trigger it);
-//               - run `npm run skills:sync` when .claude/skills or .agents/skills changed and the copies differ.
+//               - run `npm run skills:sync` when .claude/skills or .agents/skills changed and the copies differ;
+//               - run the checks in CHECKS (typecheck, Jest, hook tests) for code changed in this session after
+//                 the last time that check ran.
+//   verified: on PostToolUse (Bash/PowerShell), when the command runs one of CHECKS, records the content of the
+//             changed files at that moment. It records that the check ran, not whether it passed, and a command
+//             sent to the background counts when it starts: Claude still reports the real result.
 // Never blocks twice in a row (stop_hook_active), never runs Git commands that write, and fails open: any error
 // ends silently, so the hook can never trap a session.
 const fs = require('node:fs');
@@ -46,6 +51,28 @@ const TEST_REVIEWER = {
   why: 'pruebas existentes modificadas o eliminadas',
   test: (file, status) => /^__tests__\//.test(file) && status !== '??' && !status.includes('A'),
 };
+// Verification Claude runs itself before finishing. `files` selects the session changes each check covers;
+// `command` recognises a Bash/PowerShell command that runs it (in any working directory and with any pipes).
+const CHECKS = [
+  {
+    name: 'typecheck',
+    how: '`npm run typecheck`',
+    files: file => /^(?:src|__tests__)\/.*\.tsx?$/.test(file),
+    command: text => /\bnpm\s+run\s+typecheck\b|\btsc\b[^\n]*--noEmit\b/.test(text),
+  },
+  {
+    name: 'jest',
+    how: 'Jest de las pruebas afectadas (`npx jest <rutas>` o `npm test -- --runInBand`)',
+    files: file => /^(?:src|__tests__)\/.*\.(?:tsx?|jsx?|cjs)$/.test(file) || /^scripts\/[^/]+\.js$/.test(file),
+    command: text => /\b(?:npx\s+|node_modules[\\/]\.bin[\\/])jest\b|\bnpm\s+(?:run\s+)?test\b|\bnpm\s+t\b/.test(text),
+  },
+  {
+    name: 'hooks',
+    how: '`node --test .claude/hooks/__tests__/<archivo>.test.cjs`',
+    files: file => /^\.claude\/(?:hooks|workflows)\/.*\.c?js$/.test(file),
+    command: text => /\bnode\s+--test\b[^\n]*\.claude[\\/]hooks/.test(text),
+  },
+];
 const SKILL_COPIES = ['.claude/skills', '.agents/skills'];
 const touchesSkills = file => SKILL_COPIES.some(dir => file.startsWith(dir + '/'));
 
@@ -108,7 +135,11 @@ function readState(session) {
 }
 function writeState(session, state) {
   fs.mkdirSync(stateDir(), {recursive: true});
-  fs.writeFileSync(stateFile(session), JSON.stringify(state));
+  // Write and rename, so a parallel PostToolUse never reads a half-written file.
+  const target = stateFile(session);
+  const temporary = `${target}.${process.pid}.tmp`;
+  fs.writeFileSync(temporary, JSON.stringify(state));
+  fs.renameSync(temporary, target);
 }
 const digests = files => Object.fromEntries([...files].map(([file, info]) => [file, info.digest]));
 const shown = files => files.slice(0, 6).join(', ') + (files.length > 6 ? ` y ${files.length - 6} más` : '');
@@ -117,22 +148,41 @@ function run(mode, event) {
   const session = event.session_id;
   const cwd = typeof event.cwd === 'string' ? event.cwd : process.env.CLAUDE_PROJECT_DIR || process.cwd();
   if (!session) return null;
+  if (mode === 'verified') {
+    // Cheap test first: most commands are not checks and must not pay for git status.
+    const command = typeof event.tool_input?.command === 'string' ? event.tool_input.command : '';
+    const ran = CHECKS.filter(check => check.command(command));
+    if (!ran.length) return null;
+    const root = git(cwd, ['rev-parse', '--show-toplevel']).trim();
+    const known = readState(session);
+    if (!known) return null; // Hook loaded mid-session: Stop adopts the tree first.
+    const snapshot = digests(changedFiles(root));
+    known.verified = known.verified || {};
+    for (const check of ran) known.verified[check.name] = snapshot;
+    writeState(session, known);
+    return null;
+  }
   const root = git(cwd, ['rev-parse', '--show-toplevel']).trim();
   const known = readState(session);
   if (mode === 'baseline') {
     // A resumed or compacted session keeps its state; only a new one records the baseline.
-    if (!known) writeState(session, {seen: digests(changedFiles(root))});
+    if (!known) {
+      const seen = digests(changedFiles(root));
+      writeState(session, {seen, base: {...seen}});
+    }
     return null;
   }
   if (event.stop_hook_active) return null;
   const current = changedFiles(root);
   if (!known) {
     // Hook loaded mid-session: take the current tree as the baseline instead of guessing.
-    writeState(session, {seen: digests(current)});
+    const seen = digests(current);
+    writeState(session, {seen, base: {...seen}});
     return null;
   }
   const fresh = [...current].filter(([file, info]) => known.seen[file] !== info.digest);
   for (const [file, info] of fresh) known.seen[file] = info.digest;
+  const unverified = pendingChecks(known, current);
   writeState(session, known);
 
   const reviewed = fresh.map(([file]) => file).filter(file => !IGNORED(file));
@@ -141,7 +191,7 @@ function run(mode, event) {
   const due = needed.filter(r => r.files.length);
   const skillFiles = fresh.map(([file]) => file).filter(touchesSkills);
   const skillsDrift = skillFiles.length > 0 && skillCopiesDiffer(root);
-  if (!due.length && !skillsDrift) return null;
+  if (!due.length && !skillsDrift && !unverified.length) return null;
 
   const parts = ['Recordatorio de SmartFin (CLAUDE.md, Delegación).'];
   if (due.length) {
@@ -155,7 +205,34 @@ function run(mode, event) {
       'La fuente es .claude/skills: ejecuta `npm run skills:sync` y comprueba con `npm run skills:check` (la CI falla si difieren). ' +
       'Si editaste .agents/skills directamente, lleva el cambio a .claude/skills antes de sincronizar.');
   }
+  if (unverified.length) {
+    const production = unverified.some(check => check.files.some(file => /^src\//.test(file)));
+    parts.push('Cambiaste código en esta sesión después de la última vez que se ejecutaron estas comprobaciones:\n' +
+      unverified.map(check => `• ${check.name}, con ${check.how}: ${shown(check.files)}`).join('\n') +
+      '\nEjecútalas y reporta su resultado real antes de terminar (el hook registra que se ejecutaron, no si pasaron). ' +
+      'Si ya se verificaron por otra vía (por ejemplo, dentro de /smartfin-development), no pueden ejecutarse (por ejemplo, ' +
+      'sin node_modules) o el cambio no puede afectarlas, termina indicando al usuario cuál es el caso.' +
+      (production ? ' Si el cambio en src/ no es trivial, invoca también code-quality-reviewer con los archivos cambiados y su estado.' : ''));
+  }
   return {decision: 'block', reason: parts.join('\n')};
+}
+
+// Checks whose covered files changed in this session (against `base`) after the check last ran. Each file
+// version is reminded once per check, so finishing without running a check that cannot apply never loops.
+function pendingChecks(known, current) {
+  if (!known.base) return []; // State written by an earlier version of this hook.
+  const session = [...current].filter(([file, info]) => known.base[file] !== info.digest);
+  known.verified = known.verified || {};
+  known.reminded = known.reminded || {};
+  const pending = [];
+  for (const check of CHECKS) {
+    const verified = known.verified[check.name] || {};
+    const reminded = known.reminded[check.name] = known.reminded[check.name] || {};
+    const files = session.filter(([file, info]) => check.files(file) && verified[file] !== info.digest && reminded[file] !== info.digest);
+    for (const [file, info] of files) reminded[file] = info.digest;
+    if (files.length) pending.push({...check, files: files.map(([file]) => file)});
+  }
+  return pending;
 }
 
 if (require.main === module) {
@@ -172,4 +249,4 @@ if (require.main === module) {
     }
   });
 }
-module.exports = {run, REVIEWERS, IGNORED, TEST_REVIEWER};
+module.exports = {run, REVIEWERS, IGNORED, TEST_REVIEWER, CHECKS};
