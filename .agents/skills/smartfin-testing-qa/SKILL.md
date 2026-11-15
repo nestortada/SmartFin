@@ -46,7 +46,7 @@ Lee solo las referencias relevantes:
 - `smartfin-financial-domain` determina reglas y deltas financieros; cárgala cuando se evalúen esos efectos. Sus observaciones históricas deben contrastarse con el código actual.
 - `smartfin-sqlite-architecture` determina contratos de persistencia y límites transaccionales; cárgala para repositorios, concurrencia, esquema, recuperación o driver. Esta skill organiza escenarios y evidencia, no redefine esos contratos.
 - Localiza las skills en las rutas descubiertas por cada agente; no presupongas igualdad entre copias. Si falta una referencia necesaria, consulta el código/documentación y comunica la limitación sin instalarla implícitamente.
-- Verifica el estado real de `financial-integrity-guard` antes de atribuirle selección automática o evidencia. En la auditoría de 2026-11-01 no se encontró implementado en las rutas de proyecto inspeccionadas.
+- Ningún hook del proyecto selecciona ni ejecuta pruebas automáticamente; no atribuyas evidencia a un hook. El agente `test-reviewer` revisa cambios en pruebas existentes.
 - `dangerous-command-guard` protege comandos. Conserva sus decisiones; no lo desactives, no cambies hooks/permisos/configuración ni uses otra herramienta para evadir una denegación. Si impide instalar la skill, entrega staging e instalación manual.
 
 ## Cerrar con alcance explícito

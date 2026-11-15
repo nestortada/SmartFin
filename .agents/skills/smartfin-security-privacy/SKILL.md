@@ -48,7 +48,7 @@ Por decisión del propietario registrada el 2026-11-01, los respaldos financiero
 - `smartfin-sqlite-architecture`: transacciones, coordinación, migraciones y driver; cárgala para modificar esas garantías. Esta skill aporta confidencialidad y fronteras de entrada/salida.
 - `smartfin-testing-qa`: selección, aislamiento y evidencia de pruebas; cárgala al diseñar o ejecutar QA. Esta skill aporta hipótesis y aceptación de seguridad.
 - Localiza sus rutas descubiertas para el agente actual; no presupongas igualdad de copias. Si faltan, consulta código y comunica la limitación. Sus observaciones históricas no prevalecen sobre evidencia actual.
-- `dangerous-command-guard` es infraestructura existente para comandos. Verifica registro y alcance real en cada agente antes de atribuir protección. `financial-integrity-guard` no se encontró en los hooks de proyecto auditados; comprueba si ahora existe. No lo instales implícitamente ni atribuyas selección automática de pruebas al guard de comandos.
+- `dangerous-command-guard` es infraestructura existente para comandos y escrituras (en Claude Code no cubre `Read`, `Grep` ni `Glob`; esas lecturas las limitan las reglas `permissions.deny` de `.claude/settings.json`). Verifica registro y alcance real en cada agente antes de atribuir protección y no le atribuyas selección automática de pruebas.
 
 ## Entregar un resultado verificable
 
