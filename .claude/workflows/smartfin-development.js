@@ -8,7 +8,7 @@ export const meta = {
     { title: 'Análisis', detail: 'audit: riesgos y comprobaciones seguras, sin escrituras' },
     { title: 'Implementación', detail: 'un único escritor en el árbol de trabajo' },
     { title: 'Verificación rápida', detail: 'typecheck y Jest de las pruebas afectadas' },
-    { title: 'Revisión', detail: 'revisores según reviewer-reminder.cjs y criterio semántico' },
+    { title: 'Revisión', detail: 'revisores según reviewer-reminder.cjs, criterio semántico y calidad general si cambia código' },
     { title: 'Corrección', detail: 'una ronda: defectos confirmados dentro del alcance' },
     { title: 'Verificación final', detail: 'comandos secuenciales proporcionales al riesgo' },
     { title: 'Informe', detail: 'estado, evidencia y siguiente paso' },
@@ -43,7 +43,8 @@ const TYPE_SKILLS = {
 // patrones y de su exclusión de __tests__/, .md y .test.ts(x). Si cambian allí, actualizar aquí en el mismo
 // cambio: una divergencia haría que el workflow omita un revisor que el hook Stop exige. La prueba
 // .claude/hooks/__tests__/reviewer-reminder.test.cjs compara ambas selecciones sobre todos los archivos del
-// repositorio y falla si divergen. (El test-reviewer del hook depende del estado Git y no se replica aquí.)
+// repositorio y falla si divergen. (El test-reviewer del hook depende del estado Git: se replica aparte, en
+// «Coordinación con especialistas», sin tocar estas reglas.)
 const baseName = file => file.split('/').pop()
 const REVIEWER_RULES = [
   {
@@ -67,6 +68,35 @@ const REVIEWER_RULES = [
   },
 ]
 const IGNORED = file => /(?:^|\/)__tests__\//.test(file) || /\.(?:md|test\.tsx?)$/.test(file)
+
+// --- Revisor de calidad general -----------------------------------------------------------------------
+// Responsabilidad independiente: no forma parte de REVIEWER_RULES (réplica de reviewer-reminder.cjs) ni de
+// REVIEWER_NAMES (revisores especializados que usan el analista del audit, el clasificador y
+// recommendOtherReviewers). Se selecciona cuando el diff contiene código ejecutable, pruebas incluidas; los cambios
+// solo de documentación, datos, imágenes o snapshots no lo lanzan. Los archivos generados están ignorados por Git y
+// no aparecen en el diff.
+const QUALITY_REVIEWER = 'code-quality-reviewer'
+const QUALITY_CODE = f => (/^(?:src|android|__tests__|scripts)\//.test(f) && /\.(?:[cm]?[jt]sx?|kts?|java|gradle)$/.test(f)) ||
+  /^android\/.*AndroidManifest\.xml$/.test(f) || /^\.claude\/(?:workflows|hooks)\/.*\.[cm]?js$/.test(f)
+const qualityFiles = files => files.filter(QUALITY_CODE)
+
+// --- Coordinación con especialistas -------------------------------------------------------------------
+// Lógica aparte de REVIEWER_RULES, IGNORED y REVIEWER_NAMES (la equivalencia con el hook no cambia). Un hallazgo
+// pertenece a un especialista (i) por la ruta de su archivo, según REVIEWER_RULES o el contrato de test-reviewer, o
+// (ii) por la etiqueta «specialist» que su revisor le pone junto con la evidencia (recomendación fundamentada; la de
+// un especialista solo puede nombrar REVIEWER_NAMES). Un dueño que no se lanzó en la ronda se lanza una sola vez,
+// acotado a esos hallazgos; lo que él derive o recomiende no lanza a nadie más (condición). Sin resultado de su
+// especialista, un hallazgo no se corrige y: high o critical → blocked (cualquier especialidad); medium de finanzas o
+// seguridad → rejected; medium de Android o pruebas → approved_with_conditions. Hay un tope absoluto de lanzamientos
+// obligatorios (MAX_MANDATORY_LAUNCHES); superarlo → blocked.
+const TEST_REVIEWER_NAME = 'test-reviewer'
+// FUENTE: TEST_REVIEWER de .claude/hooks/reviewer-reminder.cjs: prueba existente bajo __tests__/ modificada o
+// eliminada (estado distinto de «??» y sin «A»); una prueba nueva no lo activa.
+const isExistingTestChange = (file, xy) => /^__tests__\//.test(file) && !!xy && xy !== '??' && !xy.includes('A')
+const SPECIALISTS = [...REVIEWER_NAMES, TEST_REVIEWER_NAME]
+const STRICT_SPECIALISTS = ['financial-reviewer', 'security-privacy-reviewer']
+const findingFile = f => String(f.location || '').trim().replace(/(?::\d+(?:[-:]\d+)*)+$/, '')
+const locKey = f => String(f.location || '').replace(/\s+/g, '').toLowerCase()
 
 // --- Decisiones del propietario (CLAUDE.md/AGENTS.md y sección de autonomía del encargo) --------------
 const OWNER_DECISIONS = {
@@ -104,7 +134,7 @@ const MAX_TARGETED_TESTS = 25
 const SUITE_SHARDS = 3
 
 // Revisión del script: aparece en el informe para comprobar qué copia se ejecutó (por nombre o por ruta).
-const WORKFLOW_REVISION = '2026-11-12.1'
+const WORKFLOW_REVISION = '2026-11-15.3'
 
 // Evidencia de Jest: __tests__/setup/redirectEvidenceWrites.js redirige a artifacts/jest-evidence toda escritura
 // dirigida a docs/, sobrescribiendo evidencia que el usuario puede querer conservar. El workflow ejecuta Jest con
@@ -142,6 +172,13 @@ const TOLERATED_IGNORED = p => /^artifacts(?:\/|$)/.test(p)
 // disallowedTools quita herramientas del agente y bashCommandClamp limita Bash a formas de comando fijas
 // (cada tramo de una tubería debe coincidir; rechaza sustituciones, cd y prefijos no listados). Los hooks y los
 // permisos de la sesión siguen aplicándose además de esto.
+// LÍMITE CONOCIDO (runtime 2.1.325, probado el 2026-11-15): bashCommandClamp NO bloquea redirecciones. Divide el
+// comando en tramos y solo exige que cada tramo coincida con una forma: incluso una forma exacta como
+// «Bash(git diff --stat)» admitió «>», «>>», «2>», «&>», «<», «2>&1», «&», «||» y saltos de línea, y creó archivos
+// fuera del repositorio. Lo que sí rechaza: tramos que no coinciden («; rm …», «| tee …»), sustituciones y «$(…)».
+// Los verificadores, el inventario y el analista del audit necesitan Bash y dependen de los inventarios de etapa
+// (detectan escrituras dentro del repositorio, no fuera). El JS del workflow no puede ejecutar git ni procesos. Un
+// hook PreToolUse de proyecto que cierre este hueco queda para un PR aparte. El revisor de calidad no tiene Bash.
 const EXTERNAL_TOOLS = ['mcp__*', 'Artifact', 'ArtifactComments', 'ArtifactData', 'WebFetch', 'WebSearch', 'SendUserFile',
   'SendMessage', 'PushNotification', 'RemoteTrigger', 'CronCreate', 'CronDelete', 'EnterWorktree', 'ExitWorktree', 'DesignSync']
 const READONLY_DENY = [...EXTERNAL_TOOLS, 'Edit', 'Write', 'NotebookEdit', 'PowerShell', 'Skill', 'Monitor', 'TaskStop', 'ToolSearch']
@@ -151,6 +188,14 @@ const TZ_CMD = 'node -p "Intl.DateTimeFormat().resolvedOptions().timeZone"'
 // redirigida. Sin git diff/log/show (admiten --output=<archivo>) ni node -e/-p arbitrarios.
 const AUDIT_CLAMP = ['Bash(pwd)', 'Bash(git status *)', 'Bash(git ls-files *)', 'Bash(npm run typecheck)', 'Bash(npx tsc --noEmit)',
   `Bash(${EVIDENCE_ENV} npm test -- --runInBand __tests__/*)`]
+// Revisor de calidad: solo lectura (Read, Grep, Glob). Sin Bash no hay clamp que aplicar (un clamp sobre un agente sin
+// Bash hace que el runtime rechace el spawn). Recibe en el prompt los archivos cambiados con su estado, no el diff.
+const QUALITY_DENY = [...READONLY_DENY, 'Bash']
+// Tope absoluto de lanzamientos de revisores obligatorios en una ejecución (primera ronda, derivaciones y
+// re-revisión). Por construcción son como mucho 10: cinco revisores distintos (tres de ruta, calidad y pruebas), una
+// vez en la primera ronda o la derivación y otra en la re-revisión. El tope 8 limita el coste y la ejecución que lo
+// superaría queda blocked sin lanzar el lote.
+const MAX_MANDATORY_LAUNCHES = 8
 // Presupuesto mínimo de tokens de salida antes de cada etapa (solo si el usuario fijó un presupuesto «+Nk»).
 const STAGE_RESERVE = { inventory: 4000, scout: 10000, classifier: 10000, analyst: 40000, implementer: 60000, verify: 12000, review: 30000 }
 
@@ -172,6 +217,7 @@ const FINDING = {
     inScope: { type: 'boolean', description: 'el defecto está en archivos o comportamiento del alcance de la tarea' },
     recommendedTest: str,
     suggestedFix: str,
+    specialist: { type: 'string', enum: SPECIALISTS, description: 'solo si el hallazgo pertenece a otra especialidad: el revisor competente (recomendación fundamentada en esta evidencia)' },
   },
   required: ['severity', 'location', 'title', 'evidence', 'kind', 'inScope', 'recommendedTest'],
 }
@@ -280,7 +326,7 @@ const REVIEW_SCHEMA = {
     findings: { type: 'array', items: FINDING },
     commandsRun: { type: 'array', items: { type: 'object', properties: { command: str, result: str }, required: ['command', 'result'] } },
     pendingDeviceChecks: strArr,
-    recommendOtherReviewers: { type: 'array', items: { type: 'string', enum: REVIEWER_NAMES } },
+    recommendOtherReviewers: { type: 'array', items: { type: 'string', enum: SPECIALISTS } },
   },
   required: ['verdict', 'findings', 'commandsRun'],
 }
@@ -456,6 +502,8 @@ const report = {
   agentsUsed: [],
   skillsConsulted: [],
   reviewers: [],
+  qualityReview: null,
+  coordination: null,
   findings: { fixed: [], pending: [], potential: [], contradictions: [] },
   commands: [],
   notRun: [],
@@ -615,6 +663,9 @@ function renderSummary() {
   lines.push(`Agentes: ${r.agentsUsed.map(a => `${a.label} [${a.agentType}; ${a.restrictions}; ${a.outcome}${a.outputTokens ? `; ~${a.outputTokens.approx} tokens de salida${a.outputTokens.sharedWithConcurrentAgents ? ' (compartido con agentes en paralelo)' : ''}` : ''}]`).join('; ') || 'ninguno'}`)
   lines.push(`Skills consultadas: ${r.skillsConsulted.length ? r.skillsConsulted.join(', ') : 'ninguna'}`)
   lines.push(`Revisores: ${r.reviewers.length ? r.reviewers.map(v => `${v.name} (${v.reason}; ${v.executed ? v.verdict : 'NO ejecutado'})`).join('; ') : 'ninguno requerido'}`)
+  if (r.coordination && (r.coordination.expanded.length || r.coordination.secondLevel.length || r.coordination.orphans.length))
+    lines.push(`Coordinación: derivados una vez: ${r.coordination.expanded.join(', ') || 'ninguno'}; segundo nivel sin lanzar: ${r.coordination.secondLevel.join(', ') || 'ninguno'}; hallazgos sin especialista: ${r.coordination.orphans.map(o => o.location).join(', ') || 'ninguno'}`)
+  if (r.qualityReview) lines.push(`Revisión de calidad: ${r.qualityReview.selected ? 'seleccionada' : 'omitida'} (${r.qualityReview.reason})${r.qualityReview.recommendedNotRun ? `; recomendó revisores no ejecutados: ${r.qualityReview.recommendedNotRun.join(', ')}` : ''}`)
   lines.push(`Hallazgos corregidos: ${r.findings.fixed.length}; pendientes confirmados: ${r.findings.pending.length}; riesgos potenciales: ${r.findings.potential.length}; contradicciones: ${r.findings.contradictions.length}`)
   for (const f of r.findings.pending) lines.push(`  - [${f.severity}] ${f.location} ${f.title} (${f.reviewers.join(', ')})`)
   lines.push('Comandos:')
@@ -895,41 +946,88 @@ async function implement() {
     if (!affordable(60000)) { note(`Presupuesto insuficiente: se omite el revisor semántico opcional ${extra.name}`); report.residualRisks.push(`revisor semántico ${extra.name} omitido por presupuesto`); continue }
     selected.push({ name: extra.name, reason: `criterio semántico del clasificador: ${extra.reason}`, mandatory: false, files: changed })
   }
+  // Calidad general: obligatorio si el diff contiene código; corre en paralelo con los especializados. Si no se
+  // ejecuta (presupuesto, null o resultado inválido) el informe queda con condiciones, nunca aprobado sin más.
+  const qFiles = qualityFiles(changed)
+  report.qualityReview = qFiles.length
+    ? { selected: true, reason: `cambios de código: ${qFiles.join(', ')}`, files: qFiles }
+    : { selected: false, reason: 'el diff no contiene código ejecutable (solo documentación, datos u otros archivos sin lógica)', files: [] }
+  if (qFiles.length) selected.push({ name: QUALITY_REVIEWER, reason: `calidad general: cambios de código en ${qFiles.join(', ')}`, mandatory: true, quality: true, files: qFiles })
+  else note(`${QUALITY_REVIEWER} omitido: ${report.qualityReview.reason}`)
+  // test-reviewer con el contrato del hook (estado Git del inventario actual, no la ruta sola).
+  const xyOf = f => (parseInventory(current).entries.get(f) || { xy: '' }).xy
+  const testChanges = changed.filter(f => isExistingTestChange(f, xyOf(f)))
+  if (testChanges.length) selected.push({ name: TEST_REVIEWER_NAME, reason: `obligatorio por estado Git (reviewer-reminder.cjs: pruebas existentes modificadas o eliminadas): ${testChanges.join(', ')}`, mandatory: true, files: testChanges })
 
+  // Estado de cada archivo cambiado respecto a la línea base, tomado de los inventarios (A nuevo, M modificado, D eliminado).
+  const changedWithState = () => {
+    const d = diffInventory(baseline, current)
+    return (d.ok ? d.changed : changed).map(f => `${d.ok && d.created.includes(f) ? 'A' : d.ok && d.deleted.includes(f) ? 'D' : 'M'} ${f}`)
+  }
+  const qualityRestrictions = () => [
+    'Eres de solo lectura: tienes Read, Grep y Glob; no tienes shell, no ejecutas git ni Jest y no ves el diff. La verificación del workflow ya ejecutó typecheck y las pruebas afectadas.',
+    `Archivos cambiados con su estado respecto al inicio del workflow (A nuevo, M modificado, D eliminado):\n${changedWithState().map(l => '  ' + l).join('\n')}`,
+    `Revisa con prioridad el código: ${qualityFiles(changed).join(', ') || '(ningún archivo de código)'}. En un archivo M no atribuyas un defecto al cambio sin evidencia directa; si no puedes distinguir introducido de preexistente, márcalo potential, inScope false y «Confianza menor». No inventes hallazgos por no ver el diff.`,
+    'No recibes la explicación del implementador: juzga el código. No dupliques la auditoría de los revisores especializados; si un problema es de su área, indícalo en «specialist». No edites archivos.',
+  ].join('\n')
   const reviewPrompt = (sel, extra) => [
     `Revisión independiente solicitada por el workflow smartfin-development. Tarea implementada: ${input.task}`,
     `Motivo de tu selección: ${sel.reason}`,
     `Archivos cambiados por el workflow (incluye archivos nuevos sin seguimiento; revísalos aunque git diff no los muestre): ${changed.join(', ')}`,
     'Alcance de la tarea: ' + scopeFiles.join(', '),
     extra || '',
-    `Restricciones de este workflow: no edites archivos; NO ejecutes la suite completa de Jest ni test:reproductions (la verificación final las ejecuta en secuencia y otros revisores trabajan en paralelo); puedes ejecutar typecheck o Jest de archivos concretos para confirmar un hallazgo, siempre con el prefijo «${EVIDENCE_ENV}» (la evidencia preexistente de artifacts/ no debe cambiar). No toques dispositivos.`,
-    'Devuelve cada hallazgo con severidad, ruta:línea, evidencia, si es confirmado o riesgo potencial, si está dentro del alcance y la prueba recomendada.',
+    sel.quality ? qualityRestrictions() : `Restricciones de este workflow: no edites archivos; NO ejecutes la suite completa de Jest ni test:reproductions (la verificación final las ejecuta en secuencia y otros revisores trabajan en paralelo); puedes ejecutar typecheck o Jest de archivos concretos para confirmar un hallazgo, siempre con el prefijo «${EVIDENCE_ENV}» (la evidencia preexistente de artifacts/ no debe cambiar). No toques dispositivos.`,
+    'Devuelve cada hallazgo con severidad, ruta:línea, evidencia, si es confirmado o riesgo potencial, si está dentro del alcance y la prueba recomendada. Si un hallazgo pertenece a otra especialidad, indica su revisor en «specialist».',
   ].join('\n')
 
-  const runReviews = (list, extraFor) => parallel(list.map(sel => () =>
-    run(reviewPrompt(sel, extraFor ? extraFor(sel) : ''), { label: `review:${sel.name}`, phase: 'Revisión', agentType: sel.name, schema: REVIEW_SCHEMA }, null, 'review')
-      .then(value => ({ sel, value }))))
+  // Los revisores obligatorios no se descartan por la reserva de presupuesto: se lanzan siempre y, si el runtime los
+  // corta, su null se trata según la tabla de estados. Solo los opcionales respetan STAGE_RESERVE.review.
+  // Tope de lanzamientos obligatorios: se comprueba por lote antes de lanzarlo; si el lote lo superaría, no se lanza
+  // ninguno y la ejecución termina blocked en el punto de llamada (capExceeded).
+  let mandatoryLaunches = 0
+  let capExceeded = null
+  const runReviews = (list, extraFor) => {
+    const mandatoryCount = list.filter(sel => sel.mandatory).length
+    if (mandatoryLaunches + mandatoryCount > MAX_MANDATORY_LAUNCHES) {
+      capExceeded = `el lote de ${mandatoryCount} revisores obligatorios (${list.filter(s => s.mandatory).map(s => s.name).join(', ')}) superaría el tope de ${MAX_MANDATORY_LAUNCHES} lanzamientos (ya van ${mandatoryLaunches})`
+      note(`Tope de lanzamientos obligatorios: ${capExceeded}`)
+      return Promise.resolve([])
+    }
+    mandatoryLaunches += mandatoryCount
+    return parallel(list.map(sel => () =>
+      run(reviewPrompt(sel, extraFor ? extraFor(sel) : ''), { label: `review:${sel.name}`, phase: 'Revisión', agentType: sel.name, schema: REVIEW_SCHEMA,
+        ...(sel.quality ? { disallowedTools: QUALITY_DENY } : {}) }, null, sel.mandatory ? null : 'review')
+        .then(value => ({ sel, value }))))
+  }
+  const capStop = () => finish('blocked', `Tope absoluto de revisores obligatorios alcanzado: ${capExceeded}.`, 'Revisar por qué la ejecución necesita tantas revisiones; invocar manualmente los revisores pendientes sobre el diff actual.')
 
   const reviewSnapshot = current
   const reviewResults = selected.length ? await runReviews(selected) : []
+  if (capExceeded) return capStop()
   if (!selected.length) note('Ningún revisor requerido por rutas ni por criterio semántico')
   const byReviewer = new Map()
-  for (const item of reviewResults.filter(Boolean)) {
-    byReviewer.set(item.sel.name, item.value)
-    report.reviewers.push({ name: item.sel.name, reason: item.sel.reason, mandatory: item.sel.mandatory, executed: !!item.value,
-      verdict: item.value ? item.value.verdict : null, files: item.sel.files, reviewedSnapshot: reviewSnapshot })
+  const reviewerRow = (sel, value, snapshot) => ({ name: sel.name, reason: sel.reason, mandatory: sel.mandatory, quality: !!sel.quality, expansion: !!sel.expansion,
+    executed: !!value, verdict: value ? value.verdict : null, files: sel.files, reviewedSnapshot: snapshot })
+  const recordRound = (results, list) => {
+    for (const item of results.filter(Boolean)) {
+      byReviewer.set(item.sel.name, item.value)
+      report.reviewers.push(reviewerRow(item.sel, item.value, reviewSnapshot))
+    }
+    for (const sel of list) if (!report.reviewers.some(r => r.name === sel.name)) report.reviewers.push(reviewerRow(sel, null, reviewSnapshot))
   }
-  for (const sel of selected) if (!report.reviewers.some(r => r.name === sel.name))
-    report.reviewers.push({ name: sel.name, reason: sel.reason, mandatory: sel.mandatory, executed: false, verdict: null, files: sel.files })
+  recordRound(reviewResults, selected)
+  const hasResult = name => report.reviewers.some(r => r.name === name && r.executed)
 
   const consolidate = () => {
     const groups = new Map()
     for (const [name, value] of byReviewer) {
       if (!value) continue
+      const canTag = name === QUALITY_REVIEWER ? SPECIALISTS : REVIEWER_NAMES
       for (const f of value.findings) {
-        const key = f.location.replace(/\s+/g, '').toLowerCase()
-        const g = groups.get(key) || { ...f, reviewers: [], kinds: new Set(), severities: new Set() }
+        const key = locKey(f)
+        const g = groups.get(key) || { ...f, reviewers: [], kinds: new Set(), severities: new Set(), tags: new Set() }
         g.reviewers.push(name); g.kinds.add(f.kind); g.severities.add(f.severity)
+        if (f.specialist && canTag.includes(f.specialist) && f.specialist !== name) g.tags.add(f.specialist)
         if (SEVERITY_RANK[f.severity] > SEVERITY_RANK[g.severity]) g.severity = f.severity
         if (f.kind === 'confirmed') g.kind = 'confirmed'
         if (f.inScope) g.inScope = true
@@ -943,13 +1041,43 @@ async function implement() {
       if (value && value.verdict === 'rejected' && !value.findings.some(f => f.kind === 'confirmed' && SEVERITY_RANK[f.severity] >= 2))
         contradictions.push({ location: '(veredicto)', reviewers: [name], kinds: ['rejected sin hallazgos críticos/altos confirmados'], severities: [] })
     }
-    return { list: list.map(({ kinds, severities, ...rest }) => rest), contradictions }
+    return { list: list.map(({ kinds, severities, tags, ...rest }) => ({ ...rest, specialists: [...tags] })), contradictions }
   }
   let merged = consolidate()
 
+  // Dueños de un hallazgo: por ruta (REVIEWER_RULES o contrato de test-reviewer) y por etiqueta fundamentada.
+  const ownersOf = f => {
+    const file = findingFile(f)
+    return uniq([...requiredReviewers([file]).map(r => r.name), ...(isExistingTestChange(file, xyOf(file)) ? [TEST_REVIEWER_NAME] : []), ...(f.specialists || [])])
+  }
+  // Derivación única: especialistas dueños de algún hallazgo que no se lanzaron en esta ronda. Se lanzan una vez, en
+  // paralelo y acotados a esos hallazgos; lo que ellos deriven queda como condición (sin recursión).
+  const attempted = new Set(selected.map(s => s.name))
+  const pendingByOwner = new Map()
+  for (const f of merged.list) for (const name of ownersOf(f)) if (!attempted.has(name)) pendingByOwner.set(name, [...(pendingByOwner.get(name) || []), f])
+  report.coordination = { expanded: [...pendingByOwner.keys()], secondLevel: [], orphans: [], recommendedNotRun: [] }
+  if (pendingByOwner.size) {
+    const expSel = [...pendingByOwner].map(([name, list]) => ({ name, reason: `derivado por hallazgos de su especialidad: ${list.map(f => f.location).join(', ')}`,
+      mandatory: true, expansion: true, files: uniq(list.map(findingFile)) }))
+    note(`Derivación única a especialistas no lanzados: ${expSel.map(s => s.name).join(', ')}`)
+    selected.push(...expSel)
+    for (const sel of expSel) attempted.add(sel.name)
+    const expResults = await runReviews(expSel, sel => `Revisión DERIVADA y acotada: otro revisor atribuyó a tu especialidad estos hallazgos. Confírmalos, ajusta su severidad o refútalos con evidencia; no revises el resto del diff. Lo que derives o recomiendes no lanzará más revisiones. Hallazgos: ${JSON.stringify(pendingByOwner.get(sel.name).map(f => ({ location: f.location, title: f.title, severity: f.severity, kind: f.kind, evidence: f.evidence })))}`)
+    if (capExceeded) return capStop()
+    recordRound(expResults, expSel)
+    merged = consolidate()
+  }
+  report.coordination.secondLevel = uniq(merged.list.flatMap(ownersOf)).filter(n => !attempted.has(n))
+  if (report.coordination.secondLevel.length) note(`Derivaciones de segundo nivel no ejecutadas (condición): ${report.coordination.secondLevel.join(', ')}`)
+
   // ---------------------------------------------------------------- Fase 5: corrección controlada (una ronda)
   phase('Corrección')
-  const fixable = merged.list.filter(f => f.kind === 'confirmed' && f.inScope)
+  // Un hallazgo que solo reporta el revisor de calidad entra en la ronda si es al menos «medium»; los «low» quedan
+  // pendientes como condición, sin gastar la única ronda de corrección. Ningún hallazgo se corrige sin resultado de
+  // todos sus especialistas dueños.
+  const fixable = merged.list.filter(f => f.kind === 'confirmed' && f.inScope &&
+    (f.reviewers.some(n => n !== QUALITY_REVIEWER) || SEVERITY_RANK[f.severity] >= SEVERITY_RANK.medium) &&
+    ownersOf(f).every(hasResult))
   let fixedOk = false
   if (fixable.length && affordable(80000)) {
     // El preflight se compara con el inventario anterior a la revisión: detecta escrituras de los revisores o
@@ -984,24 +1112,30 @@ async function implement() {
       const notMine2 = changed.filter(f => !declared.includes(f))
       if (stillOk.length || out2.length || notMine2.length)
         return finish('blocked', `La corrección salió del alcance, tocó áreas no autorizadas o dejó cambios no declarados: ${[...out2, ...notMine2, ...stillOk.map(k => OWNER_DECISIONS[k])].join(', ')}.`, 'Revisar el diff manualmente.')
-      // Solo vuelven los revisores de las áreas corregidas, más los que exija el delta por rutas.
-      const again = uniq([...fixable.flatMap(f => f.reviewers), ...requiredReviewers(delta).map(r => r.name)])
+      // Solo vuelven los revisores de las áreas corregidas, más los que exija el delta por rutas y el de calidad si la
+      // corrección (de cualquier revisor) tocó código. Es una única re-revisión: no hay otra ronda de corrección.
+      const again = uniq([...fixable.flatMap(f => f.reviewers), ...fixable.flatMap(ownersOf), ...requiredReviewers(delta).map(r => r.name),
+        ...(qualityFiles(delta).length ? [QUALITY_REVIEWER] : []), ...(delta.some(f => isExistingTestChange(f, xyOf(f))) ? [TEST_REVIEWER_NAME] : [])])
       const reSel = again.map(name => {
         const prev = selected.find(s => s.name === name)
+        if (name === QUALITY_REVIEWER)
+          return { name, reason: `${prev ? prev.reason : 'calidad general: la corrección tocó código'} — re-revisión tras corrección`, mandatory: true, quality: true, files: qualityFiles(changed) }
+        if (name === TEST_REVIEWER_NAME && !prev)
+          return { name, reason: 'obligatorio por estado Git tras la corrección (pruebas existentes modificadas o eliminadas) — re-revisión tras corrección', mandatory: true, files: changed.filter(f => isExistingTestChange(f, xyOf(f))) }
         const rule = requiredReviewers(changed).find(r => r.name === name)
-        return { name, reason: (prev ? prev.reason : `obligatorio por rutas tras la corrección: ${rule ? rule.files.join(', ') : ''}`) + ' — re-revisión tras corrección', mandatory: !!rule || (prev && prev.mandatory), files: rule ? rule.files : changed }
+        return { name, reason: (prev ? prev.reason : `obligatorio por rutas tras la corrección: ${rule ? rule.files.join(', ') : ''}`) + ' — re-revisión tras corrección', mandatory: !!rule || !!(prev && prev.mandatory), expansion: !!(prev && prev.expansion), files: rule ? rule.files : prev ? prev.files : changed }
       })
       const reResults = await runReviews(reSel, sel => `Re-revisión tras una ronda de corrección. Archivos tocados por la corrección: ${delta.join(', ') || '(ninguno)'}. Hallazgos previos a verificar: ${JSON.stringify(fixable.filter(f => f.reviewers.includes(sel.name)).map(f => ({ location: f.location, title: f.title })))}`)
+      if (capExceeded) return capStop()
       for (const item of reResults.filter(Boolean)) {
         byReviewer.set(item.sel.name, item.value)
         const row = report.reviewers.find(r => r.name === item.sel.name)
-        const entry = { name: item.sel.name, reason: item.sel.reason, mandatory: item.sel.mandatory, executed: !!item.value, verdict: item.value ? item.value.verdict : null, files: item.sel.files, reviewedSnapshot: current }
+        const entry = reviewerRow(item.sel, item.value, current)
         if (row) Object.assign(row, entry, { rounds: 2 }); else report.reviewers.push(entry)
       }
       merged = consolidate()
-      const keyOf = f => f.location.replace(/\s+/g, '').toLowerCase()
-      const remaining = new Set(merged.list.filter(f => f.kind === 'confirmed').map(keyOf))
-      report.findings.fixed = fixable.filter(f => !remaining.has(keyOf(f)))
+      const remaining = new Set(merged.list.filter(f => f.kind === 'confirmed').map(locKey))
+      report.findings.fixed = fixable.filter(f => !remaining.has(locKey(f)))
       fixedOk = true
     }
   } else if (fixable.length) {
@@ -1011,6 +1145,22 @@ async function implement() {
   report.findings.contradictions = merged.contradictions
   report.findings.pending = merged.list.filter(f => f.kind === 'confirmed')
   report.findings.potential = merged.list.filter(f => f.kind === 'potential')
+  // Hallazgos ≥ medium sin resultado de algún especialista dueño: no se corrigieron (ver fixable).
+  //   high o critical, cualquier especialidad → blocked (prevalece);
+  //   medium de finanzas o seguridad → rejected;   medium de Android o pruebas → condición.
+  const orphans = merged.list.filter(f => SEVERITY_RANK[f.severity] >= SEVERITY_RANK.medium)
+    .map(f => ({ location: f.location, title: f.title, severity: f.severity, kind: f.kind, reviewers: f.reviewers, missing: ownersOf(f).filter(n => !hasResult(n)) }))
+    .filter(o => o.missing.length)
+  report.coordination.orphans = orphans
+  const describeOrphans = list => list.map(o => `${o.location} [${o.severity}] (${o.missing.join(', ')})`).join('; ')
+  const highOrphans = orphans.filter(o => SEVERITY_RANK[o.severity] >= SEVERITY_RANK.high)
+  const strictOrphans = orphans.filter(o => SEVERITY_RANK[o.severity] < SEVERITY_RANK.high && o.missing.some(n => STRICT_SPECIALISTS.includes(n)))
+  if (highOrphans.length)
+    return finish('blocked', `${highOrphans.length} hallazgos high o critical sin resultado de su especialista; no se corrigieron: ${describeOrphans(highOrphans)}${strictOrphans.length ? `. Además, medium de finanzas o seguridad sin especialista: ${describeOrphans(strictOrphans)}` : ''}.`,
+      'Invocar manualmente al especialista sobre esos hallazgos antes de cualquier corrección.')
+  if (strictOrphans.length)
+    return finish('rejected', `${strictOrphans.length} hallazgos medium de finanzas o seguridad sin resultado de su especialista; no se corrigieron: ${describeOrphans(strictOrphans)}.`,
+      'Invocar manualmente al especialista sobre esos hallazgos antes de cualquier corrección.')
   const blocking = report.findings.pending.filter(f => SEVERITY_RANK[f.severity] >= 2)
   if (blocking.length)
     return finish('blocked', `Persisten ${blocking.length} hallazgos críticos o altos confirmados${fixedOk ? ' tras la ronda de corrección' : ''}.`,
@@ -1066,7 +1216,7 @@ async function implement() {
       : 'Ninguna ruta del diff exige revisor según reviewer-reminder.cjs.',
     finalInventory: final.result.after,
   }
-  if (report.filesModified.filter(f => !IGNORED(f)).length <= 1 && report.reviewers.length === 0)
+  if (report.filesModified.filter(f => !IGNORED(f)).length <= 1 && report.reviewers.filter(r => !r.quality).length === 0)
     report.efficiencyNote = 'Cambio de un archivo sin revisores: una sesión normal habría sido más eficiente que el workflow.'
   for (const f of report.findings.potential) report.residualRisks.push(`[potencial ${f.severity}] ${f.location}: ${f.title}`)
   report.residualRisks.push('comportamiento en dispositivo (Kotlin, permisos, proveedor real, API 24 frente a 34+) no validado: el workflow no ejecuta campañas Android')
@@ -1075,11 +1225,28 @@ async function implement() {
   const conditions = []
   if (final.notRun.length) conditions.push('verificaciones no ejecutadas')
   if (reviewersMissing.some(r => !r.mandatory)) conditions.push('revisores semánticos sin resultado (un null no aprueba)')
+  if (reviewersMissing.some(r => r.quality)) {
+    conditions.push(`revisión de calidad general pendiente (${QUALITY_REVIEWER} sin resultado: presupuesto, null o resultado inválido)`)
+    report.residualRisks.push(`${QUALITY_REVIEWER} no revisó la versión final del código`)
+  }
+  if (reviewersMissing.some(r => r.expansion)) conditions.push(`especialistas derivados sin resultado: ${reviewersMissing.filter(r => r.expansion).map(r => r.name).join(', ')}`)
+  if (report.coordination.orphans.length)
+    conditions.push(`hallazgos medium de Android o pruebas sin su especialista, no corregidos: ${report.coordination.orphans.map(o => `${o.location} (${o.missing.join(', ')})`).join('; ')}`)
+  // Recomendaciones sin hallazgo que las fundamente (recommendOtherReviewers) y derivaciones de segundo nivel: nunca
+  // lanzan revisores; si el recomendado no se ejecutó, quedan como condición. Un especialista solo nombra REVIEWER_NAMES.
+  const recommendedNotRun = uniq([...report.coordination.secondLevel, ...[...byReviewer].flatMap(([name, value]) =>
+    value && Array.isArray(value.recommendOtherReviewers) ? value.recommendOtherReviewers.filter(n => (name === QUALITY_REVIEWER ? SPECIALISTS : REVIEWER_NAMES).includes(n)) : [])])
+    .filter(n => !hasResult(n))
+  report.coordination.recommendedNotRun = recommendedNotRun
+  const qualityResult = byReviewer.get(QUALITY_REVIEWER)
+  if (qualityResult && Array.isArray(qualityResult.recommendOtherReviewers))
+    report.qualityReview.recommendedNotRun = uniq(qualityResult.recommendOtherReviewers).filter(n => recommendedNotRun.includes(n))
+  if (recommendedNotRun.length) conditions.push(`revisores recomendados o derivados en segundo nivel no ejecutados: ${recommendedNotRun.join(', ')}`)
   if (report.findings.pending.length) conditions.push('hallazgos medios o bajos confirmados pendientes')
   if (report.findings.contradictions.length) conditions.push('hallazgos contradictorios entre revisores')
   if (!tests.length) conditions.push('sin pruebas Jest afectadas')
   if (report.timezone && !/America\/Bogota/.test(`${report.timezone.resolved} ${report.timezone.tzEnv}`)) conditions.push('Jest no confirmó la zona America/Bogota')
-  if (reviewersMissing.some(r => r.mandatory))
+  if (reviewersMissing.some(r => r.mandatory && !r.quality && !r.expansion))
     return finish('blocked', 'Un revisor obligatorio no produjo resultado; un null nunca equivale a aprobación.', 'Invocar manualmente los revisores faltantes sobre el diff actual.')
   if (conditions.length) return finish('approved_with_conditions', `Implementación verificada con condiciones: ${conditions.join('; ')}.`, 'Atender las condiciones listadas antes de confirmar el cambio (el workflow no hace commit).')
   return finish('approved', 'Implementación verificada: verificaciones obligatorias en verde y sin hallazgos confirmados pendientes.', 'Revisar el diff y confirmar el cambio manualmente (el workflow no hace commit, push ni PR).')
