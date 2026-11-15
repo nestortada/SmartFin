@@ -8,7 +8,8 @@ const {execFileSync, spawnSync} = require('node:child_process');
 
 const script = path.resolve(__dirname, '../session-context.cjs');
 const {build} = require(script);
-const work = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'smartfin-context-')));
+// The native realpath expands Windows 8.3 short names (C:\Users\RUNNER~1 on CI), as Git does in its output.
+const work = fs.realpathSync.native(fs.mkdtempSync(path.join(os.tmpdir(), 'smartfin-context-')));
 const main = path.join(work, 'main');
 const tree = path.join(work, 'tree');
 const git = (cwd, ...args) => execFileSync('git', ['-C', cwd, ...args], {stdio: 'ignore'});
