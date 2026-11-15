@@ -39,7 +39,7 @@ No cargues todas las referencias por defecto. El [inventario JSON](references/sc
 
 `smartfin-financial-domain` define efectos de saldo, deuda, patrimonio, impuestos, cuotas y reglas de edición. Cárgala si esos efectos pueden cambiar; esta skill define cómo persistirlos y verificarlos. Localízala en las rutas descubiertas del agente; no presupongas sincronía entre sus copias. Su texto contiene observaciones históricas: prevalece la evidencia actual contrastada, y se informa la contradicción.
 
-Si existe `smartfin-testing-qa`, úsala para metodología general y conserva aquí las exigencias SQLite. Comprueba la existencia y alcance real de `financial-integrity-guard` antes de atribuirle verificaciones automáticas. `dangerous-command-guard` es infraestructura de hooks, no una skill financiera ni un sustituto de las pruebas. En la auditoría inicial no se encontraron `smartfin-testing-qa` ni un hook `financial-integrity-guard` en las rutas de proyecto revisadas; no los instales implícitamente.
+Usa `smartfin-testing-qa` para metodología general de pruebas y conserva aquí las exigencias SQLite. `dangerous-command-guard` es infraestructura de hooks, no una skill financiera ni un sustituto de las pruebas; ningún hook del proyecto selecciona ni ejecuta pruebas automáticamente.
 
 ## Entregar un resultado comprobable
 

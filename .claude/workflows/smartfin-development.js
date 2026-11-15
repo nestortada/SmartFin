@@ -41,19 +41,23 @@ const TYPE_SKILLS = {
 // --- Selección mínima de revisores --------------------------------------------------------------------
 // FUENTE: .claude/hooks/reviewer-reminder.cjs (constantes REVIEWERS e IGNORED). Réplica literal de sus
 // patrones y de su exclusión de __tests__/, .md y .test.ts(x). Si cambian allí, actualizar aquí en el mismo
-// cambio: una divergencia haría que el workflow omita un revisor que el hook Stop exige.
+// cambio: una divergencia haría que el workflow omita un revisor que el hook Stop exige. La prueba
+// .claude/hooks/__tests__/reviewer-reminder.test.cjs compara ambas selecciones sobre todos los archivos del
+// repositorio y falla si divergen. (El test-reviewer del hook depende del estado Git y no se replica aquí.)
 const baseName = file => file.split('/').pop()
 const REVIEWER_RULES = [
   {
     name: 'financial-reviewer',
-    why: 'casos de uso, repositorios, SQL o migraciones',
-    test: file => /^src\/database\//.test(file) || /^src\/modules\/[^/]+\/(?:useCases|repositories|database)\//.test(file),
+    why: 'casos de uso, repositorios, SQL, migraciones, tipos o utilidades monetarias',
+    test: file => /^src\/database\//.test(file) || /^src\/modules\/[^/]+\/(?:useCases|repositories|database|types)\//.test(file) ||
+      file === 'src/shared/types/finance.ts' || /^src\/shared\/utils\/(?:exactCopCents|copAmountInput|transactionDate)\.ts$/.test(file),
   },
   {
     name: 'android-native-reviewer',
-    why: 'código Android, servicios de plataforma o coordinación SQLite',
+    why: 'código Android, servicios de plataforma, coordinación SQLite o parches del driver',
     test: file => /^android\//.test(file) || /^src\/native\//.test(file) || /^src\/services\//.test(file) ||
-      /^src\/modules\/[^/]+\/services\//.test(file) || file === 'src/database/databaseCoordination.ts',
+      /^src\/modules\/[^/]+\/services\//.test(file) || file === 'src/database/databaseCoordination.ts' ||
+      /^scripts\/(?:patchReactNativeSqliteStorage|sqlite[\w-]*Patch)\.js$/.test(file),
   },
   {
     name: 'security-privacy-reviewer',
@@ -100,7 +104,7 @@ const MAX_TARGETED_TESTS = 25
 const SUITE_SHARDS = 3
 
 // Revisión del script: aparece en el informe para comprobar qué copia se ejecutó (por nombre o por ruta).
-const WORKFLOW_REVISION = '2026-11-08.5'
+const WORKFLOW_REVISION = '2026-11-12.1'
 
 // Evidencia de Jest: __tests__/setup/redirectEvidenceWrites.js redirige a artifacts/jest-evidence toda escritura
 // dirigida a docs/, sobrescribiendo evidencia que el usuario puede querer conservar. El workflow ejecuta Jest con

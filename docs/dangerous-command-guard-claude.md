@@ -42,6 +42,14 @@ Los dos evolucionan por separado.
   `MultiEdit` en Claude Code. Corrige o restaura `.claude/hooks/dangerous-command-guard.cjs` con tu
   editor (o `git checkout -- .claude/hooks/dangerous-command-guard.cjs` en tu terminal), o quita
   temporalmente `"onFailure": "block"` de `.claude/settings.json`, y abre una sesión nueva.
+- **Fallo transitorio al arrancar** (observado el 12 de noviembre de 2026): durante varios minutos el
+  hook terminó con `its program could not be started (ENOENT)` y después con `failed` sin stderr, y
+  bloqueó todas las llamadas a `Bash`, `PowerShell`, `Write` y `Edit`. El guard no había cambiado y
+  se recuperó solo; la causa no se determinó (el proceso `bash` que lanza el hook no llegó a
+  arrancar). Si ocurre: `Read`, `Grep` y `Glob` siguen funcionando porque no pasan por el hook;
+  reintenta con un comando trivial (`pwd`) pasado un momento; si persiste, comprueba en tu terminal
+  que `bash` y `node` responden (`bash -c "node --version"`) y aplica la recuperación anterior. No
+  quites `onFailure` de forma permanente por un fallo transitorio.
 - **Raíz del proyecto:** `SMARTFIN_ROOT` o el primer directorio ascendente que contenga
   `AGENTS.md` y `package.json`. Las copias hermanas `C:\sf*` (por ejemplo `C:\sf-6b3-20261101`)
   se tratan como worktrees de SmartFin.
@@ -126,6 +134,8 @@ una escritura o un borrado: ask. Las llamadas .NET de PowerShell que modifican a
   aprobación (`ask`); no intenta adivinar.
 - Solo cubre las herramientas registradas. Las herramientas MCP y la automatización del
   navegador o del escritorio no pasan por este hook.
+- `Read`, `Grep` y `Glob` tampoco pasan por el guard. La lectura de bases SQLite, `.env`, keystores
+  y exportaciones CSV de usuario la impiden las reglas `permissions.deny` de `.claude/settings.json`.
 - Las reglas de `adb` se basan en el nombre del paquete. Un APK sintético que se instale con el
   id `com.smartfin` recibe el trato de producción.
 
