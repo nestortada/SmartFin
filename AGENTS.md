@@ -38,7 +38,7 @@ SmartFin is a React Native and TypeScript mobile app for personal finance. The p
 ## Documentation And Agent Configuration
 
 - Start from `docs/INDICE.md`; phase documents (`docs/*-fase*`) are historical evidence, and code and tests win when they disagree.
-- Agent skills live in two identical copies: `.claude/skills/` (Claude Code, source of truth) and `.agents/skills/` (Codex). Edit `.claude/skills/` and run `npm run skills:sync`; `npm run skills:check` compares them, and CI fails if they differ. When a third-party skill listed in `skills-lock.json` is updated, make sure the update lands in `.claude/skills/` before syncing, or the sync will revert it.
+- Agent skills live in two identical copies: `.claude/skills/` (Claude Code, source of truth) and `.agents/skills/` (Codex). Do not create a third copy under `.codex/skills/` (removed on 2026-11-12: it duplicated names in the Codex catalog). Edit `.claude/skills/` and run `npm run skills:sync`; `npm run skills:check` compares them, and CI fails if they differ. When a third-party skill listed in `skills-lock.json` is updated, make sure the update lands in `.claude/skills/` before syncing, or the sync will revert it.
 
 ## Privacy And Offline Rules
 

@@ -50,7 +50,7 @@ P/I y severidad siguen [modelo de amenazas](threat-modeling.md). No se identific
 - La tabla `app_settings` se describe como guardando credencial: código solo guarda flags y tema entre ajustes públicos; el derivado cifrado reside en preferencias nativas. La base contiene además claves internas de ciclo/comprobantes.
 - Secciones antiguas describen nombres fijos de backup/reemplazo; secciones posteriores y publicador vigente usan generaciones exclusivas y activación UI pendiente. La capacidad histórica no sustituye el estado del flag.
 - `docs/ARQUITECTURA.md` resume dos puentes nativos, pero hay además ciclo de base/recordatorios y coordinación. `securityService.ts` no aplica la validación runtime `unknown` atribuida genéricamente a puentes.
-- Skills financieras/SQLite contienen observaciones históricas; la skill SQLite decía no encontrar `smartfin-testing-qa` en su auditoría inicial, pero ambas copias QA existen actualmente como cambios locales sin seguimiento. No se modificaron para corregir textos históricos.
+- Skills financieras/SQLite contienen observaciones históricas; contrástalas con el código vigente. `smartfin-testing-qa` existe y está versionada en ambas copias.
 
 ## Pruebas y protecciones del repositorio
 

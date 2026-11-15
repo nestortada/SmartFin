@@ -7,6 +7,7 @@
 - **Offline-first y Local-first**: Toda la lógica financiera y de persistencia es local (SQLite). No agregar servicios remotos, telemetría ni analítica sin aprobación explícita.
 - **Integridad Financiera**: Antes de modificar cálculos de balances, deudas, suscripciones, tarjetas o movimientos, revisa la skill en `.claude/skills/smartfin-financial-domain/SKILL.md`.
 - **Rendimiento React Native**: Para optimizaciones de render, listas y memoria, consulta la skill en `.claude/skills/react-native-best-practices/SKILL.md`.
+- **Lecturas bloqueadas**: `.claude/settings.json` impide leer `.env`, keystores, claves y bases SQLite con `Read`/`Grep`/`Glob` (el guard de comandos no cubre esas herramientas). No intentes leerlos por otra vía.
 - **Reglas por ruta**: `.claude/rules/` contiene recordatorios por ruta que Claude Code carga al trabajar con archivos coincidentes; no sustituyen AGENTS.md, las skills, los revisores ni los hooks. Solo aplican a Claude Code.
 
 ## Skills Disponibles (Claude Code)
@@ -23,10 +24,12 @@
 
 ## Delegación
 
-- Antes de dar por terminado un cambio en `useCases`, repositorios, SQL o migraciones, invoca `financial-reviewer`.
-- Antes de dar por terminado un cambio en `android/`, servicios de plataforma o `databaseCoordination.ts`, invoca `android-native-reviewer`.
+- Antes de dar por terminado un cambio en `useCases`, repositorios, SQL, migraciones, tipos de dominio o utilidades monetarias y de fecha (`exactCopCents`, `copAmountInput`, `transactionDate`), invoca `financial-reviewer`.
+- Antes de dar por terminado un cambio en `android/`, servicios de plataforma, `databaseCoordination.ts` o los parches del driver SQLite (`scripts/*Patch.js`), invoca `android-native-reviewer`.
 - Antes de dar por terminado un cambio en respaldo, restauración, exportación, autenticación, permisos o servicios externos, invoca `security-privacy-reviewer`.
-- El hook `Stop` (`.claude/hooks/reviewer-reminder.cjs`) recuerda estos revisores cuando cambian esas áreas durante la sesión; no sustituye el criterio de invocarlos.
+- Antes de dar por terminado un cambio que modifique o elimine pruebas, reproducciones, helpers u oráculos existentes en `__tests__/`, invoca `test-reviewer`.
+- El hook `Stop` (`.claude/hooks/reviewer-reminder.cjs`) recuerda estos revisores cuando cambian esas áreas durante la sesión, y `npm run skills:sync` cuando las copias de skills difieren; no sustituye el criterio de invocarlos.
+- Para tareas que necesitan exploración, un escritor y varios revisores, existe el workflow `/smartfin-development` (`audit` por defecto, `implement` con comportamiento esperado verificable).
 
 ## Comandos de Verificación y Desarrollo
 

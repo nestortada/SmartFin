@@ -102,6 +102,80 @@ test('a session without baseline adopts the current tree instead of guessing', (
   git('checkout', '--', '.');
 });
 
+test('money types and helpers ask for financial-reviewer; driver patches ask for android-native-reviewer', () => {
+  baseline('s8');
+  write('src/shared/utils/exactCopCents.ts', 'cents\n');
+  write('src/modules/transactions/types/SharedExpense.ts', 'types\n');
+  const money = stop('s8');
+  assert.deepEqual(reviewers(money), ['financial-reviewer']);
+  assert.match(money.reason, /exactCopCents\.ts/);
+  assert.match(money.reason, /types\/SharedExpense\.ts/);
+  write('scripts/sqliteAndroidOpenExistingPatch.js', 'patch\n');
+  assert.deepEqual(reviewers(stop('s8')), ['android-native-reviewer']);
+  write('scripts/syncAgentSkills.js', 'sync\n');
+  assert.equal(stop('s8'), null, 'other scripts need no reviewer');
+  fs.rmSync(path.join(repo, 'scripts'), {recursive: true});
+  fs.rmSync(path.join(repo, 'src/shared'), {recursive: true});
+  fs.rmSync(path.join(repo, 'src/modules/transactions/types'), {recursive: true});
+});
+
+test('modifying or deleting an existing test asks for test-reviewer; a new test does not', () => {
+  write('__tests__/existing.test.ts', 'expect(1).toBe(1)\n');
+  git('add', '.');
+  git('commit', '-q', '-m', 'test');
+  baseline('s9');
+  write('__tests__/brandNew.test.ts', 'new\n');
+  assert.equal(stop('s9'), null);
+  write('__tests__/existing.test.ts', 'expect(1).toBeTruthy()\n');
+  const changed = stop('s9');
+  assert.deepEqual(reviewers(changed), ['test-reviewer']);
+  assert.match(changed.reason, /__tests__\/existing\.test\.ts/);
+  fs.rmSync(path.join(repo, '__tests__/existing.test.ts'));
+  assert.deepEqual(reviewers(stop('s9')), ['test-reviewer'], 'deleting an existing test is reminded too');
+  git('checkout', '--', '.');
+  fs.rmSync(path.join(repo, '__tests__/brandNew.test.ts'));
+});
+
+test('a skill change reminds skills:sync only while the two copies differ', () => {
+  write('.claude/skills/demo/SKILL.md', 'v0\n');
+  write('.agents/skills/demo/SKILL.md', 'v0\n');
+  git('add', '.');
+  git('commit', '-q', '-m', 'skills');
+  baseline('s10');
+  write('.claude/skills/demo/SKILL.md', 'v1\n');
+  const drift = stop('s10');
+  assert.equal(drift.decision, 'block');
+  assert.match(drift.reason, /npm run skills:sync/);
+  assert.deepEqual(reviewers(drift), []);
+  write('.agents/skills/demo/SKILL.md', 'v1\n');
+  write('.claude/skills/demo/SKILL.md', 'v1\n');
+  assert.equal(stop('s10'), null, 'identical copies need no reminder');
+  write('.claude/skills/demo/references/new.md', 'extra\n');
+  assert.match(stop('s10').reason, /references\/new\.md/, 'a file missing from one copy is a difference');
+  git('checkout', '--', '.');
+  fs.rmSync(path.join(repo, '.claude/skills/demo/references'), {recursive: true});
+});
+
+test('the smartfin-development workflow selects exactly the same reviewers as the hook', () => {
+  const {REVIEWERS, IGNORED} = require(script);
+  const source = fs.readFileSync(path.resolve(__dirname, '../../workflows/smartfin-development.js'), 'utf8');
+  const start = source.indexOf('const baseName =');
+  const end = source.indexOf('\n', source.indexOf('const IGNORED ='));
+  assert.ok(start > 0 && end > start, 'workflow reviewer rules not found');
+  const workflow = new Function(source.slice(start, end) + '\nreturn {REVIEWER_RULES, IGNORED};')();
+  const select = (rules, ignored, file) => (ignored(file) ? [] : rules.filter(rule => rule.test(file)).map(rule => `${rule.name}: ${rule.why}`));
+  const projectRoot = path.resolve(__dirname, '../../..');
+  // Only the trees the rules can match; docs/ evidence alone lists megabytes of paths.
+  const tracked = execFileSync('git', ['-C', projectRoot, 'ls-files', '--', 'src', 'android', 'scripts', '__tests__'],
+    {encoding: 'utf8', maxBuffer: 64 * 1024 * 1024}).split('\n').filter(Boolean);
+  assert.ok(tracked.length > 100, 'expected the project file list');
+  const samples = ['src/shared/utils/copAmountInput.ts', 'src/shared/utils/transactionDate.ts', 'src/shared/types/finance.ts',
+    'src/modules/loans/types/Loan.ts', 'scripts/patchReactNativeSqliteStorage.js', 'scripts/sqliteAndroidRecoveryPatch.js',
+    'android/app/src/main/AndroidManifest.xml', 'src/modules/settings/ui/DriveBackupSection.tsx', '__tests__/x.test.ts', 'docs/a.md'];
+  for (const file of [...tracked, ...samples])
+    assert.deepEqual(select(workflow.REVIEWER_RULES, workflow.IGNORED, file), select(REVIEWERS, IGNORED, file), file);
+});
+
 test('CLI: silent when nothing is due, JSON block when a reviewer is due, silent on bad input', () => {
   const cli = (mode, input) => spawnSync(process.execPath, [script, mode], {input, encoding: 'utf8', timeout: 10000, env: process.env});
   const event = session => JSON.stringify({session_id: session, cwd: repo, stop_hook_active: false});

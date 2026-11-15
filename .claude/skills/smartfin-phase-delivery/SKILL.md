@@ -62,7 +62,7 @@ Si una prueba falla o se omitió, dilo con su salida. Si una cifra se obtuvo con
 
 ## 7. Pasar los revisores
 
-Según los archivos tocados, invoca `financial-reviewer` (useCases, repositorios, SQL, migraciones), `android-native-reviewer` (`android/`, servicios de plataforma, `databaseCoordination.ts`) y `security-privacy-reviewer` (respaldo, restauración, exportación, autenticación, permisos). Corrige o registra cada hallazgo antes de cerrar.
+Según los archivos tocados, invoca `financial-reviewer` (useCases, repositorios, SQL, migraciones), `android-native-reviewer` (`android/`, servicios de plataforma, `databaseCoordination.ts`) , `security-privacy-reviewer` (respaldo, restauración, exportación, autenticación, permisos) y `test-reviewer` (pruebas, reproducciones, helpers u oráculos existentes modificados o eliminados). Corrige o registra cada hallazgo antes de cerrar.
 
 ## 8. Documentar
 
