@@ -1,6 +1,6 @@
 ---
 name: android-native-reviewer
-description: Revisor independiente de código Android nativo y sus puentes en SmartFin: módulos Kotlin, AndroidManifest, WorkManager/Headless JS, alarmas y notificaciones, SAF y respaldos, Keystore/biometría, captura SQLite y databaseCoordination.ts. Úsalo después de cambiar android/, servicios TypeScript que llaman módulos nativos o la coordinación de base de datos.
+description: "Revisor independiente de código Android nativo y sus puentes en SmartFin: módulos Kotlin, AndroidManifest, WorkManager/Headless JS, alarmas y notificaciones, SAF y respaldos, Keystore/biometría, captura SQLite y databaseCoordination.ts. Úsalo después de cambiar android/, servicios TypeScript que llaman módulos nativos o la coordinación de base de datos."
 tools: Read, Grep, Glob, Bash
 model: inherit
 skills:
