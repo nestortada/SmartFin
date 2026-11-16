@@ -63,6 +63,7 @@ Si no está claro en qué lista cae un cambio, trátalo como si necesitara aprob
 - **Integraciones**: `src/services/` (IA Gemini), `src/native/` y los `services/` de cada módulo (respaldo, copia local, notificaciones); su lado Kotlin está en `android/app/src/main/java/com/smartfin/`.
 - **Pruebas**: SQLite real en Node con `__tests__/helpers/realSQLite.ts`; históricos representativos en `__tests__/helpers/representativeHistory.ts`; defectos confirmados en `__tests__/reproductions/` (`jest.reproductions.config.js`). Las evidencias de las pruebas se redirigen con `__tests__/setup/redirectEvidenceWrites.js`.
 - **Documentación**: empieza por `docs/INDICE.md`; `docs/MODULOS_Y_FLUJOS.md` describe los recorridos funcionales y `docs/BASE_DE_DATOS.md` las tablas.
+- **Memoria de agentes**: `.claude/agent-memory/` (por ahora solo `financial-reviewer`). Los agentes la consultan y proponen cambios en su informe; solo se actualiza con aprobación explícita, en commits de documentación separados. Mantenimiento: `.claude/agent-memory/README.md`.
 
 ## Comandos de Verificación y Desarrollo
 
