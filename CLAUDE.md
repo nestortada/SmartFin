@@ -75,7 +75,7 @@ npm test -- --runInBand
 npx jest --runInBand <rutas-de-prueba>
 
 # Pruebas de los hooks de Claude Code (igual que la CI, job guard-hooks)
-node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs .claude/hooks/__tests__/reviewer-reminder.test.cjs .claude/hooks/__tests__/session-context.test.cjs
+node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs .claude/hooks/__tests__/reviewer-reminder.test.cjs .claude/hooks/__tests__/session-context.test.cjs .claude/hooks/__tests__/agent-config-policy.test.cjs
 
 # Reproducciones de defectos (test.failing controlados; igual que la CI)
 npm run test:reproductions -- --runInBand

@@ -40,12 +40,15 @@ const TYPE_SKILLS = {
 
 // --- Selección mínima de revisores --------------------------------------------------------------------
 // FUENTE: .claude/hooks/reviewer-reminder.cjs (constantes REVIEWERS e IGNORED). Réplica literal de sus
-// patrones y de su exclusión de __tests__/, .md y .test.ts(x). Si cambian allí, actualizar aquí en el mismo
+// patrones, de CONTROL_REVIEW (plano de control de los agentes, que exige security-privacy-reviewer y no se ignora
+// aunque sea Markdown o prueba) y de su exclusión de __tests__/, .md y .test.ts(x). Si cambian allí, actualizar aquí en el mismo
 // cambio: una divergencia haría que el workflow omita un revisor que el hook Stop exige. La prueba
 // .claude/hooks/__tests__/reviewer-reminder.test.cjs compara ambas selecciones sobre todos los archivos del
 // repositorio y falla si divergen. (El test-reviewer del hook depende del estado Git: se replica aparte, en
 // «Coordinación con especialistas», sin tocar estas reglas.)
 const baseName = file => file.split('/').pop()
+const CONTROL_REVIEW = file => /^\.claude\/(?:agent-memory(?:-local)?|agents|rules|hooks|workflows)\//.test(file) ||
+  /^\.claude\/settings(?:\.local)?\.json$/.test(file) || file === '.mcp.json'
 const REVIEWER_RULES = [
   {
     name: 'financial-reviewer',
@@ -62,12 +65,13 @@ const REVIEWER_RULES = [
   },
   {
     name: 'security-privacy-reviewer',
-    why: 'respaldo, restauración, exportación, autenticación, permisos o servicios externos',
+    why: 'respaldo, restauración, exportación, autenticación, permisos, servicios externos o configuración de agentes (memoria, agentes, reglas, hooks, settings, workflows)',
     test: file => /^src\/modules\/security\//.test(file) || /AndroidManifest\.xml$/.test(file) || /^src\/services\//.test(file) ||
-      (/^(?:src|android)\//.test(file) && /backup|snapshot|restor|security|csv|drive|gemini|publication|deletion/i.test(baseName(file))),
+      (/^(?:src|android)\//.test(file) && /backup|snapshot|restor|security|csv|drive|gemini|publication|deletion/i.test(baseName(file))) ||
+      CONTROL_REVIEW(file),
   },
 ]
-const IGNORED = file => /(?:^|\/)__tests__\//.test(file) || /\.(?:md|test\.tsx?)$/.test(file)
+const IGNORED = file => !CONTROL_REVIEW(file) && (/(?:^|\/)__tests__\//.test(file) || /\.(?:md|test\.tsx?)$/.test(file))
 
 // --- Revisor de calidad general -----------------------------------------------------------------------
 // Responsabilidad independiente: no forma parte de REVIEWER_RULES (réplica de reviewer-reminder.cjs) ni de
@@ -109,7 +113,7 @@ const OWNER_DECISIONS = {
   device_campaign: 'campañas en dispositivo o emulador',
   real_data: 'acceso a bases o respaldos reales',
   external_publication: 'publicación externa (commit, push, PR, publicación)',
-  agent_config: 'modificar hooks, guards, settings.json, AGENTS.md, CLAUDE.md o workflows',
+  agent_config: 'modificar hooks, guards, settings.json, AGENTS.md, CLAUDE.md, workflows, agentes, memoria de agentes o reglas',
   new_phase: 'iniciar otra fase',
 }
 const DECISION_KEYS = Object.keys(OWNER_DECISIONS)
@@ -119,8 +123,11 @@ const PATH_DECISIONS = [
   { key: 'sqlite_driver', test: f => f === 'scripts/patchReactNativeSqliteStorage.js' || /^android\/.*sqlite/i.test(f) },
   { key: 'android_permissions', test: f => /AndroidManifest\.xml$/.test(f) },
   { key: 'dependencies', test: f => /^(?:package\.json|package-lock\.json|\.nvmrc)$/.test(f) || /^android\/(?:.*\/)?build\.gradle(?:\.kts)?$/.test(f) },
-  { key: 'agent_config', test: f => /^\.claude\/(?:hooks|workflows)\//.test(f) || /^\.claude\/settings(?:\.local)?\.json$/.test(f) ||
-      f === 'AGENTS.md' || f === 'CLAUDE.md' || /^\.codex\//.test(f) || f === '.github/workflows/ci.yml' },
+  // Configuración de agentes: memoria (.claude/agent-memory y agent-memory-local), definiciones (.claude/agents), reglas
+  // (.claude/rules) y servidores MCP del proyecto (.mcp.json) incluidos. Sin la cita literal en la tarea, el diff que las
+  // toque termina en blocked.
+  { key: 'agent_config', test: f => /^\.claude\/(?:hooks|workflows|agents|agent-memory(?:-local)?|rules)\//.test(f) || /^\.claude\/settings(?:\.local)?\.json$/.test(f) ||
+      f === 'AGENTS.md' || f === 'CLAUDE.md' || f === '.mcp.json' || /^\.codex\//.test(f) || f === '.github/workflows/ci.yml' },
 ]
 
 // Restricciones declaradas en .claude/agents/mechanical.md (zona permitida).
@@ -134,7 +141,7 @@ const MAX_TARGETED_TESTS = 25
 const SUITE_SHARDS = 3
 
 // Revisión del script: aparece en el informe para comprobar qué copia se ejecutó (por nombre o por ruta).
-const WORKFLOW_REVISION = '2026-11-15.3'
+const WORKFLOW_REVISION = '2026-11-16.1'
 
 // Evidencia de Jest: __tests__/setup/redirectEvidenceWrites.js redirige a artifacts/jest-evidence toda escritura
 // dirigida a docs/, sobrescribiendo evidencia que el usuario puede querer conservar. El workflow ejecuta Jest con
@@ -177,8 +184,10 @@ const TOLERATED_IGNORED = p => /^artifacts(?:\/|$)/.test(p)
 // «Bash(git diff --stat)» admitió «>», «>>», «2>», «&>», «<», «2>&1», «&», «||» y saltos de línea, y creó archivos
 // fuera del repositorio. Lo que sí rechaza: tramos que no coinciden («; rm …», «| tee …»), sustituciones y «$(…)».
 // Los verificadores, el inventario y el analista del audit necesitan Bash y dependen de los inventarios de etapa
-// (detectan escrituras dentro del repositorio, no fuera). El JS del workflow no puede ejecutar git ni procesos. Un
-// hook PreToolUse de proyecto que cierre este hueco queda para un PR aparte. El revisor de calidad no tiene Bash.
+// (detectan escrituras dentro del repositorio, no fuera). El JS del workflow no puede ejecutar git ni procesos. El
+// guard PreToolUse (.claude/hooks/dangerous-command-guard.cjs) pide aprobación ante redirecciones y otras escrituras
+// hacia el plano de control de los agentes (memoria, agentes, reglas, hooks, workflows, skills, settings); las
+// redirecciones a otras rutas siguen sin bloquearse. El revisor de calidad no tiene Bash.
 const EXTERNAL_TOOLS = ['mcp__*', 'Artifact', 'ArtifactComments', 'ArtifactData', 'WebFetch', 'WebSearch', 'SendUserFile',
   'SendMessage', 'PushNotification', 'RemoteTrigger', 'CronCreate', 'CronDelete', 'EnterWorktree', 'ExitWorktree', 'DesignSync']
 const READONLY_DENY = [...EXTERNAL_TOOLS, 'Edit', 'Write', 'NotebookEdit', 'PowerShell', 'Skill', 'Monitor', 'TaskStop', 'ToolSearch']

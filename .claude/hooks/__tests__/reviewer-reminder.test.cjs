@@ -158,9 +158,19 @@ test('a skill change reminds skills:sync only while the two copies differ', () =
   assert.deepEqual(reviewers(drift), []);
   write('.agents/skills/demo/SKILL.md', 'v1\n');
   write('.claude/skills/demo/SKILL.md', 'v1\n');
-  assert.equal(stop('s10'), null, 'identical copies need no reminder');
+  // Skills are protected by the guard, so the owner-review reminder still fires for the .agents copy; what must not
+  // appear once the copies are identical is the skills:sync reminder.
+  const synced = stop('s10');
+  assert.ok(synced, 'a changed .agents/skills file is control plane: the owner-review reminder fires');
+  assert.match(synced.reason, /plano de control/);
+  assert.doesNotMatch(synced.reason, /skills:sync/, 'identical copies need no skills:sync reminder');
+  assert.deepEqual(reviewers(synced), []);
+  assert.deepEqual(checks(synced), []);
   write('.claude/skills/demo/references/new.md', 'extra\n');
-  assert.match(stop('s10').reason, /references\/new\.md/, 'a file missing from one copy is a difference');
+  // The owner-review reminder also names the file, so the difference itself is proven by the skills:sync request.
+  const missing = stop('s10');
+  assert.match(missing.reason, /skills:sync/, 'a file missing from one copy is a difference');
+  assert.match(missing.reason, /references\/new\.md/);
   git('checkout', '--', '.');
   fs.rmSync(path.join(repo, '.claude/skills/demo/references'), {recursive: true});
 });
@@ -175,14 +185,65 @@ test('the smartfin-development workflow selects exactly the same reviewers as th
   const select = (rules, ignored, file) => (ignored(file) ? [] : rules.filter(rule => rule.test(file)).map(rule => `${rule.name}: ${rule.why}`));
   const projectRoot = path.resolve(__dirname, '../../..');
   // Only the trees the rules can match; docs/ evidence alone lists megabytes of paths.
-  const tracked = execFileSync('git', ['-C', projectRoot, 'ls-files', '--', 'src', 'android', 'scripts', '__tests__'],
-    {encoding: 'utf8', maxBuffer: 64 * 1024 * 1024}).split('\n').filter(Boolean);
+  const tracked = execFileSync('git', ['-C', projectRoot, 'ls-files', '--', 'src', 'android', 'scripts', '__tests__',
+    '.claude', '.codex', '.agents', '.github', 'AGENTS.md', 'CLAUDE.md'],
+  {encoding: 'utf8', maxBuffer: 64 * 1024 * 1024}).split('\n').filter(Boolean);
   assert.ok(tracked.length > 100, 'expected the project file list');
+  assert.ok(tracked.some(file => file.startsWith('.claude/agent-memory/')), 'expected the agent memory in the file list');
   const samples = ['src/shared/utils/copAmountInput.ts', 'src/shared/utils/transactionDate.ts', 'src/shared/types/finance.ts',
     'src/modules/loans/types/Loan.ts', 'scripts/patchReactNativeSqliteStorage.js', 'scripts/sqliteAndroidRecoveryPatch.js',
-    'android/app/src/main/AndroidManifest.xml', 'src/modules/settings/ui/DriveBackupSection.tsx', '__tests__/x.test.ts', 'docs/a.md'];
+    'android/app/src/main/AndroidManifest.xml', 'src/modules/settings/ui/DriveBackupSection.tsx', '__tests__/x.test.ts', 'docs/a.md',
+    '.claude/agent-memory/financial-reviewer/nuevo-tema.md', '.claude/agents/nuevo.md', '.claude/rules/nueva.md',
+    '.claude/hooks/__tests__/nuevo.test.cjs', '.claude/settings.local.json', '.claude/workflows/otro.js', '.claude/skills/x/SKILL.md'];
   for (const file of [...tracked, ...samples])
     assert.deepEqual(select(workflow.REVIEWER_RULES, workflow.IGNORED, file), select(REVIEWERS, IGNORED, file), file);
+});
+
+test('agent memory, agents, rules, hooks, settings and workflows ask for security review and owner diff review', () => {
+  write('.claude/agent-memory/demo/MEMORY.md', '- [Tema](tema.md)\n');
+  write('.claude/agents/demo.md', '---\nname: demo\n---\n');
+  write('.claude/rules/demo.md', 'regla\n');
+  write('.claude/settings.json', '{}\n');
+  write('.claude/workflows/demo.js', 'export const meta = {}\n');
+  write('CLAUDE.md', 'instrucciones\n');
+  git('add', '.');
+  git('commit', '-q', '-m', 'control plane');
+  for (const [file, text] of [['.claude/agent-memory/demo/MEMORY.md', '- [Tema](tema.md) v2\n'],
+    ['.claude/agent-memory/demo/nuevo.md', 'recuerdo sintético\n'], ['.claude/agents/demo.md', '---\nname: demo2\n---\n'],
+    ['.claude/rules/demo.md', 'regla v2\n'], ['.claude/settings.json', '{"x":1}\n'], ['.claude/workflows/demo.js', 'v2\n']]) {
+    const session = `cp-${file}`;
+    baseline(session);
+    write(file, text);
+    const result = stop(session);
+    assert.ok(result, `${file} must be reminded`);
+    assert.deepEqual(reviewers(result), ['security-privacy-reviewer'], file);
+    assert.match(result.reason, /plano de control/, file);
+    assert.match(result.reason, /revisar el diff/, file);
+    assert.equal(stop(session), null, `${file}: the same version is reminded once`);
+  }
+  baseline('cp-delete');
+  fs.rmSync(path.join(repo, '.claude/agent-memory/demo/MEMORY.md'));
+  assert.deepEqual(reviewers(stop('cp-delete')), ['security-privacy-reviewer'], 'deleting a memory file is reminded too');
+  baseline('cp-claude');
+  write('CLAUDE.md', 'instrucciones v2\n');
+  const instructions = stop('cp-claude');
+  assert.deepEqual(reviewers(instructions), [], 'CLAUDE.md is protected but has no path reviewer');
+  assert.match(instructions.reason, /revisar el diff/);
+  git('checkout', '--', '.');
+  fs.rmSync(path.join(repo, '.claude/agent-memory/demo/nuevo.md'), {force: true});
+});
+
+test('the reminder protects exactly the control-plane paths of the guard', () => {
+  const {PROTECTED} = require(script);
+  const {controlPath} = require(path.resolve(__dirname, '../dangerous-command-guard.cjs'));
+  const projectRoot = path.resolve(__dirname, '../../..');
+  const tracked = execFileSync('git', ['-C', projectRoot, 'ls-files'], {encoding: 'utf8', maxBuffer: 256 * 1024 * 1024})
+    .split('\n').filter(Boolean);
+  // Git reports paths with their real case (CLAUDE.md), and PROTECTED compares that form; the guard compares lower
+  // case because Windows paths are case-insensitive. The samples use the repository's real spelling.
+  const samples = ['.claude/agent-memory/x/MEMORY.md', '.claude/commands/x.md', '.mcp.json', '.claude/settings.local.json',
+    '.codex/hooks.json', '.agents/skills/x/SKILL.md', 'docs/CLAUDE.md', 'src/AGENTS.md', '.claude/worktrees/x/CLAUDE.md'];
+  for (const file of [...tracked, ...samples]) assert.equal(PROTECTED(file), controlPath(file.toLowerCase()), file);
 });
 
 test('CLI: silent when nothing is due, JSON block when a reviewer is due, silent on bad input', () => {
@@ -254,7 +315,11 @@ test('test-only and hook changes ask only for the checks that cover them', () =>
   assert.deepEqual(checks(rawStop('v5')), ['hooks']);
   write('.claude/hooks/demo.cjs', 'hook v2\n');
   verify('v5', 'node --test .claude/hooks/__tests__/demo.test.cjs');
-  assert.equal(rawStop('v5'), null);
+  // A hook is control plane: the new version still asks for the security review, but no longer for the hook tests.
+  const afterTests = rawStop('v5');
+  assert.deepEqual(checks(afterTests), []);
+  assert.deepEqual(reviewers(afterTests), ['security-privacy-reviewer']);
+  assert.match(afterTests.reason, /plano de control/);
   fs.rmSync(path.join(repo, '.claude/hooks'), {recursive: true});
 });
 
