@@ -9,6 +9,8 @@
 //               - run test-reviewer when an existing tracked test under __tests__/ was modified or deleted
 //                 (new test files alone do not trigger it);
 //               - run `npm run skills:sync` when .claude/skills or .agents/skills changed and the copies differ;
+//               - tell the user that the owner reviews the diff of changed control-plane files (PROTECTED, the
+//                 paths the PreToolUse guard protects) before committing them;
 //               - run the checks in CHECKS (typecheck, Jest, hook tests) for code changed in this session after
 //                 the last time that check ran.
 //   verified: on PostToolUse (Bash/PowerShell), when the command runs one of CHECKS, records the content of the
@@ -22,6 +24,10 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const {execFileSync} = require('node:child_process');
 
+// Agents' control plane that needs an independent security review: agent memory and definitions, rules, hooks,
+// settings and workflows (their tests included). The smartfin-development workflow replicates it.
+const CONTROL_REVIEW = file => /^\.claude\/(?:agent-memory(?:-local)?|agents|rules|hooks|workflows)\//.test(file) ||
+  /^\.claude\/settings(?:\.local)?\.json$/.test(file) || file === '.mcp.json';
 const REVIEWERS = [
   {
     name: 'financial-reviewer',
@@ -38,13 +44,20 @@ const REVIEWERS = [
   },
   {
     name: 'security-privacy-reviewer',
-    why: 'respaldo, restauración, exportación, autenticación, permisos o servicios externos',
+    why: 'respaldo, restauración, exportación, autenticación, permisos, servicios externos o configuración de agentes (memoria, agentes, reglas, hooks, settings, workflows)',
     test: file => /^src\/modules\/security\//.test(file) || /AndroidManifest\.xml$/.test(file) || /^src\/services\//.test(file) ||
-      (/^(?:src|android)\//.test(file) && /backup|snapshot|restor|security|csv|drive|gemini|publication|deletion/i.test(path.basename(file))),
+      (/^(?:src|android)\//.test(file) && /backup|snapshot|restor|security|csv|drive|gemini|publication|deletion/i.test(path.basename(file))) ||
+      CONTROL_REVIEW(file),
   },
 ];
-// Tests and documentation never need a path reviewer by themselves.
-const IGNORED = file => /(?:^|\/)__tests__\//.test(file) || /\.(?:md|test\.tsx?)$/.test(file);
+// Tests and documentation never need a path reviewer by themselves, except in the control plane: agent memory,
+// agent definitions and rules are Markdown, and the hook tests are the guard's contract.
+const IGNORED = file => !CONTROL_REVIEW(file) && (/(?:^|\/)__tests__\//.test(file) || /\.(?:md|test\.tsx?)$/.test(file));
+// Paths the PreToolUse guard protects (controlPath in dangerous-command-guard.cjs; a test compares both): any change
+// reminds that the owner reviews the diff before committing. It is a process control, not an authorization.
+const PROTECTED = file => /^\.claude\/(?:agent-memory(?:-local)?|agents|rules|workflows|hooks|skills|commands)\//.test(file) ||
+  /^\.claude\/settings(?:\.local)?\.json$/.test(file) || /^\.(?:codex|agents)\//.test(file) ||
+  ['AGENTS.md', 'CLAUDE.md', '.mcp.json'].includes(file);
 // Changing or deleting an existing product test can weaken what it proves; adding a new one cannot.
 const TEST_REVIEWER = {
   name: 'test-reviewer',
@@ -191,7 +204,8 @@ function run(mode, event) {
   const due = needed.filter(r => r.files.length);
   const skillFiles = fresh.map(([file]) => file).filter(touchesSkills);
   const skillsDrift = skillFiles.length > 0 && skillCopiesDiffer(root);
-  if (!due.length && !skillsDrift && !unverified.length) return null;
+  const controlFiles = fresh.map(([file]) => file).filter(PROTECTED);
+  if (!due.length && !skillsDrift && !unverified.length && !controlFiles.length) return null;
 
   const parts = ['Recordatorio de SmartFin (CLAUDE.md, Delegación).'];
   if (due.length) {
@@ -199,6 +213,11 @@ function run(mode, event) {
       due.map(r => `- ${r.name} (${r.why}): ${shown(r.files)}`).join('\n') +
       '\nInvoca esos revisores sobre el diff antes de terminar. Si ya los invocaste para estos mismos cambios, o el cambio es ' +
       'puramente mecánico y no altera comportamiento, termina indicando al usuario cuál es el caso.');
+  }
+  if (controlFiles.length) {
+    parts.push(`Cambiaron archivos del plano de control de los agentes (protegidos por el guard): ${shown(controlFiles)}. ` +
+      'Indica al usuario que el propietario debe revisar el diff de esos archivos antes de confirmarlos (commit). ' +
+      'Este recordatorio es un control de proceso: no autoriza ni valida el cambio.');
   }
   if (skillsDrift) {
     parts.push(`Las copias de skills difieren (${SKILL_COPIES.join(' y ')}) tras cambiar: ${shown(skillFiles)}. ` +
@@ -249,4 +268,4 @@ if (require.main === module) {
     }
   });
 }
-module.exports = {run, REVIEWERS, IGNORED, TEST_REVIEWER, CHECKS};
+module.exports = {run, REVIEWERS, IGNORED, TEST_REVIEWER, CHECKS, CONTROL_REVIEW, PROTECTED};

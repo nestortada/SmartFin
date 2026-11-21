@@ -17,7 +17,7 @@ Desde la raíz del repositorio, en este orden (primero las rápidas, para detect
 | 1 | TypeScript | `npm run typecheck` |
 | 2 | ESLint | `npm run lint` |
 | 3 | Copias de skills (`.claude` frente a `.agents`) | `npm run skills:check` |
-| 4 | Hooks de Claude Code | `node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs .claude/hooks/__tests__/reviewer-reminder.test.cjs .claude/hooks/__tests__/session-context.test.cjs` |
+| 4 | Hooks de Claude Code | `node --test .claude/hooks/__tests__/dangerous-command-guard.test.cjs .claude/hooks/__tests__/reviewer-reminder.test.cjs .claude/hooks/__tests__/session-context.test.cjs .claude/hooks/__tests__/agent-config-policy.test.cjs` |
 | 5 | Jest estable | `npm test -- --runInBand` |
 | 6 | Reproducciones de defectos | `npm run test:reproductions -- --runInBand` |
 | 7 | Espacios y conflictos en el diff | `git diff --check` |
